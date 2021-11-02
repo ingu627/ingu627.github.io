@@ -105,7 +105,7 @@ author:
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
   bio              : "개인 블로그입니다."
   location         : "South Korea"
-  email            : "rjsdudans@naver.com"
+  # email            : "rjsdudans@naver.com"
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
