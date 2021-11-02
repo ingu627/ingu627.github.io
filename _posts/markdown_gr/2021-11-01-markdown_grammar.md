@@ -11,8 +11,7 @@ date: 2021-11-01
 last_modified_at: 2021-11-02
 ---
 
-# MarkDown (md) 
-
+## MarkDown (md) 
 : 텍스트에 양식을 입히는 마크업 언어의 일종, HTML과 연동이 가능하다. (정의)
 
 - 다양한 협업 툴에서 활용 (Notion, Slack...)
