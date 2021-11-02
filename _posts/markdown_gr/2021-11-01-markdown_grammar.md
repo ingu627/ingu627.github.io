@@ -24,7 +24,6 @@ sidebar:
 [toc]
 
 
---- 
 ## 크기 지정
 - \# 을 활용하여 크기를 설정하면 됩니다.
 # 이건 h1(header 1)입니다.
@@ -42,7 +41,7 @@ sidebar:
 #### tip! 
 \#를 5개 이상 쓴다는 것? -> 잘못된 분류!!
 
----
+
 ## 글꼴
 
 - *만약 기울임체(이탤릭체)를 쓰고 싶다면 `*`로 감싸줍니다.* (또는 _로 감싸줘도 됩니다.)
@@ -53,7 +52,7 @@ _italic_
 
 - 취소선은 `~~` 로 감싸줍니다.
 ~~hello~~
-- **와 _를 동시에 감싸줘도 됩니다.
+- \*\*와 \_를 동시에 감싸줘도 됩니다.
 **_italic+bold_**
 
 *그래서* **한번에 쓰고 싶으면**  `ctrl + i`(i는 italic의 약자) / `ctrl + b`(b는 bold의 약자)
@@ -66,10 +65,10 @@ _italic_
 
 ## 구분선
 
----
+
 
 -(하이픈)를 3개 작성하고 엔터를 누르면 구분선이 만들어집니다.
-
+`---`
 
 
 ## 목록
@@ -86,8 +85,7 @@ _italic_
    1. tab 키를 눌러서 하위 목록을 생성할 수 있고
    2. 나가고 싶으면 shift + tab을 눌러서 밖으로 나올 수 있습니다.
 
-
---- 
+ 
 ## 코드 블럭
 
 
@@ -106,11 +104,11 @@ print('Hello World!')
 
 - `https://gist.github.com/` [gist](https://gist.github.com/)
   - 추가 방법 : 조금 더 이쁘게 하고 싶을 때 github의 gist를 들어가시면
-  <img src=https://ingu627.github.io/images/gist1.png></img>
+  <img src="https://ingu627.github.io/images/gist1.png"></img>
   창이 보일 겁니다.
     1. 제목은 제목명.언어확장자(py, ipynb, java...)로 하시면 해당 언어로 코드가 완성됩니다.
     2. 코드를 썼으면 Create secret gist를 누르시고
-  <img src=https://ingu627.github.io/images/gist2.png></img>
+  <img src="https://ingu627.github.io/images/gist2.png"></img>
     2_1. private, public 모두 상관없습니다. 공개 여부의 차이만 있을 뿐입니다.
     3. 해당 주소를 카피해서 원하는 줄에 넣으시면 코드가 이쁘게 나오는 걸 볼 수 있습니다.
   <script src="https://gist.github.com/ingu627/58d1f351b58acf3571f5089436a505e6.js"></script>
@@ -160,12 +158,11 @@ print('Hello World!')
 `<img src="그림 주소" width="가로 길이" height="세로 길이" alt="그림 설명" />`
 
 
-<img src="https://ingu627.github.io/images/2021-10-29-first/bukdu.jpg" width="500" height="100" alt="북두칠성"></img>
+<img src="https://ingu627.github.io/images/2021-10-29-first/bukdu.jpg" width="500" height="100" alt="북두칠성"/>
 
 ![star](../../images/2021-10-29-first/bukdu.jpg)
 
 
---- 
 ## 링크
 
 `[글](링크를 넣어주세요)`
@@ -176,25 +173,24 @@ print('Hello World!')
 `<a href="naver.com">링크이름</a>`
 
 
---- 
 ## 수식
 
 - \$로 감싸면 수식이 마치 문서처럼 써집니다.
-$a+b=c$
-$y = 3x$
-$a^2+b^2=c^2$
-`$a^2 + b^2 = c^2$`
-$3x^2_1 + 3x_2 = 10$
-`$3x^2_1 + 3x_2 = 10$`
+  - $a+b=c$
+  - $y = 3x$
+  - $a^2+b^2=c^2$
+  - `$a^2 + b^2 = c^2$`
+  - $3x^2_1 + 3x_2 = 10$
+  - `$3x^2_1 + 3x_2 = 10$`
 
 - \$\$ 달러 2개는 항상 중앙에 쓰도록 해줍니다.
-$$a+b=c$$
-`$$a+b=c$$`
-$$(\alpha + \beta)^2 = \alpha^2 + 2\alpha\beta+\beta^2 $$
-`$$(\alpha + \beta)^2 = \alpha^2 + 2\alpha\beta+\beta^2 $$`
+  - $$a+b=c$$
+  - `$$a+b=c$$`
+   - $$(\alpha + \beta)^2 = \alpha^2 + 2\alpha\beta+\beta^2 $$
+   - `$$(\alpha + \beta)^2 = \alpha^2 + 2\alpha\beta+\beta^2 $$`
 
-$min_a$
-$min_b$
+- $min_a$
+- $min_b$
 
 #### tip!
 만약 특수문자 그대로 사용하고 싶다면 앞에 \(역슬래시)를 추가해주면 됩니다.
@@ -205,7 +201,7 @@ $min_b$
 $y=3x$ #수직을 $로 감싸주기
 ```
 
----
+
 ## 그래프로 표시하기
 
 ```mermaid
@@ -215,7 +211,6 @@ graph LR
   2-->3
   3-->2
   5-->3
-
 ```
 
 ```markdown
