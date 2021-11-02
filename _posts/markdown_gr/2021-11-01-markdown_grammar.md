@@ -9,7 +9,7 @@ sidebar:
     nav: "docs"
 ---
 
-# 마크다운 
+# MarkDown (md) 
 
 : 텍스트에 양식을 입히는 마크업 언어의 일종, HTML과 연동이 가능하다. (정의)
 
