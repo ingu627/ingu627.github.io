@@ -17,8 +17,6 @@ sidebar:
 - 다양한 Markdown용 Editor (Typora...)
 
 
-
---- 
 ## `[toc]` + enter (table of contents)
 
 [toc]
@@ -26,6 +24,7 @@ sidebar:
 
 ## 크기 지정
 - \# 을 활용하여 크기를 설정하면 됩니다.
+
 # 이건 h1(header 1)입니다.
 
 ## 이건 h2입니다.
@@ -57,18 +56,56 @@ _italic_
 
 *그래서* **한번에 쓰고 싶으면**  `ctrl + i`(i는 italic의 약자) / `ctrl + b`(b는 bold의 약자)
 
-#### tip!
-- 만약 인용구를 넣고 싶다면?
+- 밑줄을 그어주려면 <u></u>로 글을 감싸줍니다.
+<u>우리를 움직이게 하는 건 동기</u>
+`<u>우리를 움직이게 하는 건 동기</u>`
+
+## 글자 색깔
+- style에 색깔만 바꿔주세요.
+
+<center><span style="color:red">빨간 글씨</span></center>
+<center><span style="color:blue">파란 글씨</span></center>
+<center><span style="color:green">초록 글씨</span></center>
+<center><span style="color:yellow">노란 글씨</span></center>
+<center><span style="color:purple">보라 글씨</span></center>
+
+```html
+<center><span style="color:red">빨간 글씨</span></center>
+<center><span style="color:blue">파란 글씨</span></center>
+<center><span style="color:green">초록 글씨</span></center>
+<center><span style="color:yellow">노란 글씨</span></center>
+<center><span style="color:purple">보라 글씨</span></center>
+```
+
+## 인용문 : 만약 인용구를 넣고 싶다면?
 > `>` + space를 누르면 인용구를 만들 수 있습니다.
 
 > 안녕하세요
 
+> 안녕하세요
+>> 안녕하세요
+>>> 안녕하세요
+>>>> 안녕하세요
+
+더 넣고 싶을 땐 추가로 `>`를 넣습니다.
+
+
+## 가운데 정렬
+`<center>가운데</center>`로 지정해주시면 됩니다~~
+<center> 안녕하세요 </center> 
+
+## 줄을 바꿀 때
+띄어쓰기(스페이스)를 2번 누릅니다.
+
+
 ## 구분선
-
-
-
 -(하이픈)를 3개 작성하고 엔터를 누르면 구분선이 만들어집니다.
 `---`
+
+## check box
+- [ ] 체크가 안 되었다. `[ ]`
+- [x] 체크가 되었다. `[x]`
+
 
 
 ## 목록
@@ -88,7 +125,7 @@ _italic_
  
 ## 코드 블럭
 
-
+### inline 코드 블록
 - `(백틱 -> 숫자 1 왼쪽)을 세 번 누르고 (언어 ex)python 치고) enter
  
 ```python
@@ -127,8 +164,8 @@ print('Hello World!')
 
 `|컬럼1|컬럼2|` + enter 
 
-|---| 을 입력해서 표(table) 입력임을 표시합니다. (- 수는 상관없습니다.)
-(|-| 기호로도 입력할 수 있습니다.)
+`|---|` 을 입력해서 표(table) 입력임을 표시합니다. (- 수는 상관없습니다.)
+(`|-|` 기호로도 입력할 수 있습니다.)
 
 | 순번 | 이름   | 나이 |
 | :--: | ------ | ---- |
@@ -162,8 +199,12 @@ print('Hello World!')
 
 ![star](../../images/2021-10-29-first/bukdu.jpg)
 
+## 이미지에 링크를 걸고 싶을땐
+  `[![이미지설명](이미지 파일 저장 경로)](이미지 주소 링크)`
 
-## 링크
+[![star](../../images/2021-10-29-first/bukdu.jpg)](https://ko.wikipedia.org/wiki/%EB%B6%81%EB%91%90%EC%B9%A0%EC%84%B1)
+
+## 글 링크
 
 `[글](링크를 넣어주세요)`
 
