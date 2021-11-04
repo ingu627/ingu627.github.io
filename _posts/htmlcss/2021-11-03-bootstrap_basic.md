@@ -12,6 +12,7 @@ last_modified_at: 2021-11-03
 ---
 
 ## 부트스트랩
+[bootstrap 공식링크](https://getbootstrap.com/)
 
 ### 앞서 복습.
 
@@ -36,5 +37,44 @@ last_modified_at: 2021-11-03
 - 부트스트랩을 도입하면 이미 구현이 되어져 있는 UI를 프로젝트에 가져올 수 있다.
 
 
-## Layout - Containers
+- Layout - Containers
 
+## Layout - Columns
+
+![image](https://user-images.githubusercontent.com/78655692/140313418-0debb790-517f-4cae-8f2b-193c72d2e1a6.png)
+
+<script src="https://gist.github.com/ingu627/09243f1afd3104f755e3047e9e35e536.js"></script>
+
+<script src="https://gist.github.com/ingu627/640f33779b136811924800527310b398.js"></script>
+
+-`<div class="row"></div>` : row는 하나의 줄을 의미 (줄 = 행)
+  - 하나의 행당 12개의 열이 기본적으로 차지.
+  - `class="col-3 col-md-7 box"` : 총 3개의 class를 가지고 있다.
+    - `md` 는 medium의 약자. viewport의 가로가 medium이 될 때
+
+![image](https://user-images.githubusercontent.com/78655692/140315174-94b0440e-4a84-4a33-af25-d32487a7b756.png)
+
+## Forms
+
+![image](https://user-images.githubusercontent.com/78655692/140316778-86e7fe9c-e473-483b-8a5a-587a12af286a.png)
+
+<script src="https://gist.github.com/ingu627/011a2494605e05991c2492e93ab7c49c.js"></script>
+
+
+- `placeholder` : 칸에 힌트를 주는
+- `value` : 미리 입력된 값
+- `disabled` : 비활성화 처리
+
+#### sass (scss) : css 전처리기
+- css가 처리되기 전에 처리할 수 있는 또 다른 스타일 작업할 수 있는 도구
+
+
+## Components
+
+- 버튼을 만들 때는 `div`보다 `button` 태그로 만든다.
+- Offcanvas : 숨겨져 있는 네비게이션을 쓸 때 사용
+- toggle : 껐다 켰다를 반복함
+
+## Utilities
+- `d-none` == `display: none`
+- 어디까지나 유틸은 편리성을 위한 작성된 것.
