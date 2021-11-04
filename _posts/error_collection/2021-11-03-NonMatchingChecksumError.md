@@ -28,3 +28,15 @@ celeb_a = tfds.load('celeb_a')
 ### 구글 공식 사이트 답변
 ![image](https://user-images.githubusercontent.com/78655692/140298711-f4d0ec60-67a1-4d9a-a179-ae8904687412.png)
 
+[tfds 및 Google 클라우드 스토리지](https://www.tensorflow.org/datasets/gcs)
+
+#### colab에서 실행할 때 이 코드를 실행
+```python
+from google.colab import auth
+auth.authenticate_user()
+```
+
+[구글 클라우드 인증](https://cloud.google.com/docs/authentication/getting-started#windows)
+
+#### + 만약 KeyError: <ExtractMethod.NO_EXTRACT: 1>가 나왔다면?
+(해결 찾는 중) 
