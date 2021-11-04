@@ -1,0 +1,30 @@
+---
+layout: single
+title: 'NonMatchingChecksumError: Artifact https://drive.google.com/uc?export=download&id=0B7EVK8r0v71pZjFTYXZWM3FlRnM 에러 해결 방법'
+categories: error
+tag : [error, solution]
+toc: true
+author_profile: false
+
+date: 2021-11-04
+last_modified_at: 2021-11-04
+---
+
+## 원인 : NonMatchingChecksumError: Artifact https://drive.google.com/uc?export=download&id=0B7EVK8r0v71pZjFTYXZWM3FlRnM 
+
+tfds (TensorFlow 데이터세트)를 load하는 과정에서 생긴 에러
+(celeb_a)
+
+```python
+celeb_a = tfds.load('celeb_a')
+```
+
+![image](https://user-images.githubusercontent.com/78655692/140298490-78dacbbc-1b79-4299-865d-17c9d9e6b495.png)
+
+
+
+## 해결방법
+
+### 구글 공식 사이트 답변
+![image](https://user-images.githubusercontent.com/78655692/140298711-f4d0ec60-67a1-4d9a-a179-ae8904687412.png)
+
