@@ -11,8 +11,7 @@ date: 2021-11-03
 last_modified_at: 2021-11-03
 ---
 
-## 부트스트랩
-[bootstrap 공식링크](https://getbootstrap.com/)
+# 부트스트랩
 
 ### 앞서 복습.
 
@@ -78,3 +77,36 @@ last_modified_at: 2021-11-03
 ## Utilities
 - `d-none` == `display: none`
 - 어디까지나 유틸은 편리성을 위한 작성된 것.
+
+# github 예제로 실습 
+
+<script src="https://gist.github.com/ingu627/28c8a3cb0b9760dbaf1d14857c6fb100.js"></script>
+
+- `favicon'` : favorite icon의 약어 (html)
+- `rel` : relation의 약어 (html)
+  - `rel:"icon"` : icon을 가져온다.
+- `link` : 외부에서 특정한 문서를 가져올 때 (html)
+- `stylesheet` : css파일을 가져올 때 쓰는 명칭 (html)
+
+<script src="https://gist.github.com/ingu627/524a26d8c275e6f43f93042769f62f2a.js"></script>
+
+- `font-family` : 글꼴 설정 (css)
+  - `sans-serif` : 고딕체
+- `font-weight` : 글꼴의 가중치(두께)
+
+
+## Header
+
+- `<a calss="logo" href="#">` : \#은 경로가 아직 준비되지 않았다를 의미
+- `<ul class="nav"></ul>` : nav = navigation (내부 경로)
+
+- `align-items: center` : 수직 정렬을 가운데로
+- `padding-top:` : 요소의 위쪽 내부 여백
+- `padding-bottom:` : 요소의 아래쪽 내부 여백 
+- `me-2` : margin end(=right) (bootstrap)
+- `text-light`가 li 태그에 있는데 a태그에 이미 색깔이 부여되어 있으므로 적용 X -> 바로 a태그에 붙여준다.
+#### CSS를 건드리지 않아도 부트스트랩으로 테마 적용할 수 있다.
+
+## Reference
+[fastcampus](https://fastcampus.co.kr/dev_online_pyweb)
+[bootstrap 공식링크](https://getbootstrap.com/)
