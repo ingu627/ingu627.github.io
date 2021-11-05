@@ -20,7 +20,7 @@ title                    : "POEUN. Artificial Intelligence"
 title_separator          : "|"
 subtitle                 : "Machine Learning | Deep Learning | Cloud Computing | Distributed Computing"
 name                     : "Hyunseok Jung"
-description              : "적는 걸 좋아하는 개인 블로그입니다."
+description              : "도움이 되길 바랍니다."
 url                      : "https://ingu627.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : "ingu627/ingu627.github.io" # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
@@ -101,7 +101,7 @@ analytics:
 
 # Site Author
 author:
-  name             : "hyunseok"
+  name             : "hyunseok 🙋‍♂️"
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
   bio              : "도움이 되길 바랍니다."
   location         : "South Korea"
