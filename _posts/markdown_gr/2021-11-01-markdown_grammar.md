@@ -294,7 +294,8 @@ graph LR
   5-->3
 ```
 
-## Reference
+## References
+[[토크ON세미나] Git & GitHub Page 블로그 만들기 4강 - Github Page 활용하기 | T아카데미](https://www.youtube.com/watch?v=eCv_bh-Ax-Q)
 [마크다운 문법 소개](http://ccl.cckorea.org/syntax/)
 
 
