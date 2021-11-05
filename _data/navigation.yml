@@ -2,14 +2,17 @@
 main:
   - title: "About"
     url: /about/
-  - title: "Project"
+  - title: "Projects"
     url: /project/
-  - title: "Category"
-    url: /categories/
-  - title: "Tag"
-    url: /tags/
+  - title: "TO-DOs"
+    url: /todo/
   - title: "🔍"
     url: /search/
+  - title: "Categories"
+    url: /categories/
+  - title: "Tags"
+    url: /tags/
+  
 
 docs:
   - title: "Quick Click"
