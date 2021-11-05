@@ -1,10 +1,14 @@
 # main links
 main:
+  - title: "About"
+    url: /about/
+  - title: "Project"
+    url: /project/
   - title: "Category"
     url: /categories/
   - title: "Tag"
     url: /tags/
-  - title: "Search"
+  - title: "🔍"
     url: /search/
 
 docs:
