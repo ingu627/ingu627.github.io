@@ -102,7 +102,7 @@ analytics:
 # Site Author
 author:
   name             : "hyunseok"
-  avatar           : "https://user-images.githubusercontent.com/78655692/140540996-f4e760e8-66e2-42ac-aa5f-1bfe2bfe5709.jpg" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
+  avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
   bio              : "도움이 되길 바랍니다."
   location         : "South Korea"
   # email            : "rjsdudans@naver.com"
