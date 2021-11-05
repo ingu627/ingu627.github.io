@@ -4,9 +4,11 @@ title: '마크다운(markdown)문법 총정리'
 categories: markdown
 tag : [markdown, grammar, tip, md]
 toc: true
+toc_sticky: true
 author_profile: false
 sidebar:
     nav: "docs"
+
 date: 2021-11-01
 last_modified_at: 2021-11-02
 ---
@@ -61,6 +63,7 @@ _italic_
 <u>우리를 움직이게 하는 건 동기</u>
 `<u>우리를 움직이게 하는 건 동기</u>`
 
+
 ## 글자 색깔
 - style에 색깔만 바꿔주세요.
 
@@ -91,9 +94,28 @@ _italic_
 더 넣고 싶을 땐 추가로 `>`를 넣습니다.
 
 
-## 가운데 정렬
-`<center>가운데</center>`로 지정해주시면 됩니다~~
+## 문자 정렬
+
+### 왼쪽 정렬 (Default)
+- `{: .text-left}`
+
+안녕하세요
+{: .text-left}
+
+### 가운데 정렬
+- `{: .text-center}` : 글자 쓰고 엔터 누름
+
+안녕하세요
+{: .text-center}
+
+- `<center>가운데</center>`
 <center> 안녕하세요 </center> 
+
+### 오른쪽 정렬
+- `{: .text-right}`
+
+안녕하세요
+{: .text-right}
 
 ## 줄을 바꿀 때
 띄어쓰기(스페이스)를 2번 누릅니다.
@@ -205,16 +227,23 @@ print('Hello World!')
 
 [![star](../../images/2021-10-29-first/bukdu.jpg)](https://ko.wikipedia.org/wiki/%EB%B6%81%EB%91%90%EC%B9%A0%EC%84%B1)
 
-## 글 링크
-
-`[글](링크를 넣어주세요)`
+## 일반 링크
+- `['글'](링크를 넣어주세요)`
 
 [북두칠성에 더 알고 싶다면??](https://ko.wikipedia.org/wiki/%EB%B6%81%EB%91%90%EC%B9%A0%EC%84%B1)
 
 또는 html로 써도 됩니다
 `<a href="naver.com">링크이름</a>`
 
+## 새창으로 링크
+- `['글'](링크를 넣어주세요){: target="_blank"}`
 
+['네이버'](https://www.naver.com){: target="_blank"}
+
+## 새창으로 버튼 링크
+- `['글'](링크를 넣어주세요){: .btn.btn-default target="_blank"}`
+
+['네이버'](https://www.naver.com){: .btn.btn-default target="_blank"}
 ## 수식
 
 - \$로 감싸면 수식이 마치 문서처럼 써집니다.
@@ -266,7 +295,7 @@ graph LR
 ```
 
 ## Reference
-
+[마크다운 문법 소개](http://ccl.cckorea.org/syntax/)
 
 
 
