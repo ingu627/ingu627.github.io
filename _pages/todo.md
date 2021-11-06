@@ -13,6 +13,10 @@ sidebar_main: true
 - [위키독스](https://wikidocs.net/)
 - [Tensorflow 공식](https://www.tensorflow.org/guide?hl=ko)
 - [데이터 사이언스 스쿨](https://datascienceschool.net/intro.html)
+- [공돌이의 수학정리노트](https://angeloyeo.github.io/2020/01/09/Bayes_rule.html)
+- [Dive into Deep Learning](https://www.d2l.ai/index.html)
+- [TCP SCHOOL](http://tcpschool.com/python/intro)
+
 #### Web Service
 - [아마존 웹 서비스를 다루는 기술](http://pyrasis.com/private/2014/09/30/publish-the-art-of-amazon-web-services-book)  
   - 유의사항 : 저작권 (요약, 블로그 기재 금지, 링크 기재는 허용)
@@ -25,3 +29,13 @@ sidebar_main: true
 
 ### Linux
 - [생활코딩 - Linux](https://www.inflearn.com/course/%EC%83%9D%ED%99%9C%EC%BD%94%EB%94%A9-%EB%A6%AC%EB%88%85%EC%8A%A4-%EA%B0%95%EC%A2%8C#curriculum)
+
+
+
+## Data Set Sites
+- [UCI - Machine Learning Repository](https://archive.ics.uci.edu/ml/index.php)
+
+
+## Competitions
+- [dacon](https://dacon.io/)
+
