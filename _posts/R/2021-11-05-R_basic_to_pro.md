@@ -13,6 +13,11 @@ last_modified_at: 2021-11-05
 
 [데이터 자료 링크 (출처 : Must Learning with R. 저자 : DoublekPark)](https://www.dropbox.com/sh/vtqlvrgdts2yfez/AAD_cd49dBcvgBNdz-C-A6TFa?dl=0)
 
+## 기본 단축키 
+- `ctrl + shift + c` : 해당 줄 주석 처리
+- `ctrl + enter` : 해당 줄 실행
+
+
 ## R 기본문법
 ### =
 - ~를 ~에 저장하여라 (할당)
@@ -89,7 +94,86 @@ last_modified_at: 2021-11-05
 
 ![image](https://user-images.githubusercontent.com/78655692/140601268-b940387a-15b6-4b05-9271-0fa71d5bf3fc.png)
 
-(업데이트 중)
+### 변수 형태 이해하기
+
+|String Type|설명|
+|---|---|
+|chr | 문자열 형태|
+|int | 숫자|
+|num | 숫자|
+|Factor | 명목형 변수|
+|Posixct | 시간 변수|
+|Tseries | 시계열 변수|
+
+### 시간(날짜)형태
+#### as.Date()
+- ‘년-월-일’ 형태
+- as.Date(변수, format='날짜 형식')
+
+![image](https://user-images.githubusercontent.com/78655692/140601480-e095d17f-2afb-47b8-b79d-7256c22e7b62.png)
+
+- str() : 저장된 데이터 타입 확인
+#### as.POSIXct()
+- ‘년-월-일 시간:분:초' 형태
+- as.POSIXct(날짜, format = “날짜형식”)
+
+![image](https://user-images.githubusercontent.com/78655692/140601645-b2c8d183-2927-4ca2-86cf-bfcf3121c833.png)
+
+#### format()
+- 날짜정보를 추출해 새로운 변수로 만듦
+- format(날짜변수, "형식")
+
+![image](https://user-images.githubusercontent.com/78655692/140601665-b69c5fe1-3035-432c-a7d3-eab0bf704877.png)
+
+### as()
+- 변수 x를 ~로 취급하겠다.
+
+![image](https://user-images.githubusercontent.com/78655692/140601732-36aee5ab-b0f4-4655-974e-b07aae8c61f3.png)
+
+- summary() : 요약통계 한번에 보는 함수
+
+### is()
+- 논리문으로써 변수 x가 ~인지 판단하여라
+
+![image](https://user-images.githubusercontent.com/78655692/140601808-2956a66c-7cc7-4d08-9375-1f6a02d126c9.png)
+
+### sample()
+- sample(데이터 추출 범위, 데이터 추출 갯수 , replace = “FALSE OR”TRUE")
+  - `replace=TRUE` : 복원추출 
+  - `replace=FALSE` : 비복원추출
+    - 주의사항 : TRUE, FALSE는 모두 대문자로!! 
+
+![image](https://user-images.githubusercontent.com/78655692/140601885-356b4494-2c1c-476c-8008-cf2ff43335d6.png)
+
+### set.seed()
+- 무작위 값 결과값 고정할 때
+- 결과값이 똑같이 나온다.
+
+![image](https://user-images.githubusercontent.com/78655692/140601918-8e70869a-4d77-485f-b5bf-6be515f73b11.png)
+
+### if ~ else
+- 조건문
+- if ~라면 이거 선택. 아니라면(=else) 이거 선택
+- `%in%` : ~에 속해 있는지 확인
+
+![image](https://user-images.githubusercontent.com/78655692/140601984-bf276c40-c90e-4a84-a50c-a09d77904295.png)
+
+### function() 
+- 사용자 함수 (직접 함수 만들기)
+
+![image](https://user-images.githubusercontent.com/78655692/140602035-b6aa408b-8f42-4136-904c-85f0f5d765c9.png)
+
+### package(패키지) 설치하기
+- `install.packages("설치할 패키지명")`
+  - 설치할 땐 `""` O
+- `library(설치한 패키지)`
+  - 불러올 땐 `""` X
+
+![image](https://user-images.githubusercontent.com/78655692/140602188-2a541568-45e8-4bfe-af65-d1968a0a572c.png)
+
+
+
+
 
 
 ## References
