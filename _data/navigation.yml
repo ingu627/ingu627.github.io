@@ -4,7 +4,7 @@ main:
     url: /about/
   - title: "Projects"
     url: /project/
-  - title: "TO-DOs"
+  - title: "To-Do"
     url: /todo/
   - title: "🔍"
     url: /search/
