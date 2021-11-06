@@ -1,5 +1,5 @@
 ---
-title: "TO-DOs"
+title: "To-Do"
 layout: single
 permalink: /todo/
 author_profile: true
