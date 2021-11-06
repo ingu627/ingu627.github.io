@@ -109,7 +109,7 @@ author:
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
-      url: "mailto:poeun627@gmail.com"
+      url: "mailto:rjsdudans@naver.com"
     # - label: "Website"
       # icon: "fas fa-fw fa-link"
       # url: "https://ingu627.github.io"
@@ -132,6 +132,9 @@ author:
 # Site Footer
 footer:
   links:
+    - label: "Email"
+      icon: "fas fa-fw fa-envelope-square"
+      url: "mailto:rjsdudans@naver.com"
     # - label: "Twitter"
       # icon: "fab fa-fw fa-twitter-square"
       # url:
@@ -141,6 +144,9 @@ footer:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/ingu627"
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/in/ingu627"
     # - label: "GitLab"
       # icon: "fab fa-fw fa-gitlab"
       # url:
