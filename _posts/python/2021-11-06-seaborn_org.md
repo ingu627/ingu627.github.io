@@ -185,52 +185,7 @@ titanic_size = titanic.pivot_table(
 titanic_size
 ```
 
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th>sex</th>
-      <th>female</th>
-      <th>male</th>
-    </tr>
-    <tr>
-      <th>class</th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>First</th>
-      <td>94</td>
-      <td>122</td>
-    </tr>
-    <tr>
-      <th>Second</th>
-      <td>76</td>
-      <td>108</td>
-    </tr>
-    <tr>
-      <th>Third</th>
-      <td>144</td>
-      <td>347</td>
-    </tr>
-  </tbody>
-</table>
-</div>
+![image](https://user-images.githubusercontent.com/78655692/140618446-d05766c1-a14c-442b-9624-22db7fe4bd5d.png)
 
 ```python
 sns.heatmap(titanic_size, cmap=sns.light_palette(
@@ -241,14 +196,15 @@ plt.show()
 
 ![seaborn_org_30_0](https://user-images.githubusercontent.com/78655692/140617866-b1f18658-888b-4fca-9557-c4b572267d8a.png)
 
+
 ## 2차원 복합 데이터
 - 만약 데이터가 2차원이고 실수 값, 카테고리 값이 섞여 있다면 기존의 플롯 이외에도 다음과 같은 분포 플롯들을 이용할 수 있다.
-- barplot
-- boxplot
-- pointplot
-- violinplot
-- stripplot
-- swarmplot
+  - barplot
+  - boxplot
+  - pointplot
+  - violinplot
+  - stripplot
+  - swarmplot
 
 #### barplot()
 - 카테고리 값에 따른 실수 값의 평균과 편차를 표시하는 기본적인 바 차트를 생성한다.
@@ -423,6 +379,7 @@ plt.show()
 
 ## 기타
 - 시각화 효과를 높이기 위해 여러 종류의 차트를 겹쳐서 표시할 수도 있다.
+
 ```python
 plt.title("Boxplot과 Strip Plot로 표현한, 요일 별 팁")
 sns.boxplot(x="tip", y="day", data=tips, whis=np.inf)
@@ -472,7 +429,6 @@ sinplot()
   
 ![seaborn_org_57_0](https://user-images.githubusercontent.com/78655692/140618353-9f77bb9e-5b84-480b-b9bf-dfefac065221.png)
 
-    
 
 ## References
 - [seaborn 링크](http://seaborn.pydata.org/)
