@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "파이썬 matplotlib 총정리"
-excerpt: "figure, label, "
+excerpt: "figure, label, lim, marker, grid, vline, hline"
 categories: python
 tag : [python, matplotlib, visualization]
 toc: true
@@ -78,7 +78,7 @@ plt.show()
 
 ![matplotlib_org_9_0](https://user-images.githubusercontent.com/78655692/140635739-8b388ba5-c52e-4692-9327-126dfffb41fa.png)
 
-## Matplotlib 축 레이블 설정하기
+## 축 레이블 설정하기
 ```python
 plt.plot([1,2,3,4], [1,4,9, 16])
 plt.xlabel('X-Label') # 그래프의 축에 레이블을 표시하기
@@ -209,7 +209,7 @@ plt.show()
 
 ![matplotlib_org_30_0](https://user-images.githubusercontent.com/78655692/140636908-d170e322-6625-463f-a12e-ac7994aa92ec.png)
 
-## Matplotlib 그래프 영역 채우기
+## 그래프 영역 채우기
 
 ### fill_between()
 - 두 수평 방향의 곡선 사이를 채웁니다.
