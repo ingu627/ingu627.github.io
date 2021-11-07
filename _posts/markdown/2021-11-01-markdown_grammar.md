@@ -63,6 +63,9 @@ _italic_
 <u>우리를 움직이게 하는 건 동기</u>
 `<u>우리를 움직이게 하는 건 동기</u>`
 
+## 띄어쓰기
+- 텍스트 뒤에 `<br/>` 을 치시면 됩니다.
+
 
 ## 글자 색깔
 - style에 색깔만 바꿔주세요.
@@ -221,6 +224,19 @@ print('Hello World!')
 <img src="https://ingu627.github.io/images/2021-10-29-first/bukdu.jpg" width="500" height="100" alt="북두칠성"/>
 
 ![star](../../images/2021-10-29-first/bukdu.jpg)
+
+## 이미지를 md 파일에 복사하기
+
+- 제가 가장 많이 하는 방법은 github.com 의 issue나 gist.github.com 을 이용하는 것입니다.
+<br/>
+해당 이미지를 `ctrl + c`를 누르시고 아래에 `ctrl + v`를 하시면
+
+![image](https://user-images.githubusercontent.com/78655692/140633595-27e57467-301a-4007-84d1-1c5490da2a75.png)
+
+로 나옵니다. 이것을 그대로 md파일에 복사넣기 하면 이미지가 생성됩니다.
+
+![image](https://user-images.githubusercontent.com/78655692/140633604-b61433ae-8e8d-46d9-aa78-089da966060c.png)
+
 
 ## 이미지에 링크를 걸고 싶을땐
   `[![이미지설명](이미지 파일 저장 경로)](이미지 주소 링크)`
