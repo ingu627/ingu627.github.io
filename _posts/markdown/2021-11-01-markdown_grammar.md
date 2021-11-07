@@ -279,7 +279,7 @@ print('Hello World!')
 - $min_a$
 - $min_b$
 
-#### tip!
+### tip!
 만약 특수문자 그대로 사용하고 싶다면 앞에 \(역슬래시)를 추가해주면 됩니다.
 \$
 `\$`
@@ -301,7 +301,6 @@ graph LR
 ```
 
 ```markdown
-```mermaid
 graph LR
   1-->2
   1-->5
@@ -309,6 +308,7 @@ graph LR
   3-->2
   5-->3
 ```
+- (mermaid)
 
 ## References
 [[토크ON세미나] Git & GitHub Page 블로그 만들기 4강 - Github Page 활용하기 | T아카데미](https://www.youtube.com/watch?v=eCv_bh-Ax-Q)
