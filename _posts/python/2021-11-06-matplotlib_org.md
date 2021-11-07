@@ -29,6 +29,7 @@ pd.set_option('precision', 3)
 ## plot()
 - plot()함수는 임의 개수의 인자를 받을 수 있다.
 - plot() : 선(line)또는 마커(marker)그래프 그리기에 사용되는 함수
+
 ```python
 plt.plot(np.array([2,3,5,10]))
 plt.ylabel('y-label')
@@ -59,9 +60,9 @@ plt.show()
 - x, y값 인자에 대해 선의 색상과 행태를 지정하는 포맷 문자열을 세번째 인자에 입력할 수 있다.
 - **axis()** : x,y축이 표시되는 범위를 지정할 수 있다.
 - `[xmin, xmax, ymin, ymax ]` 4개의 값을 반드시 써야 한다.
+
 ```python
 # (1,1), (2,4), (3,9), (4,16)를 잇는 그래프가 나타남
-
 plt.plot([1,2,3,4], [1,4,9, 16], 'ro') # ro는 빨간색(r)의 원형(o) 마커를 의미
 plt.axis([0, 6, 0, 20])
 plt.show()
@@ -101,6 +102,7 @@ plt.show()
 ### 레이블 - 위치 지정하기(loc)
 - xlabel() 함수의 loc 파라미터는 X축 레이블의 위치를 지정합니다. ({‘left’, ‘center’, ‘right’})
 - ylabel() 함수의 loc 파라미터는 Y축 레이블의 위치를 지정합니다. ({‘bottom’, ‘center’, ‘top’})
+
 ```python
 plt.plot([1,2,3,4], [1,4,9, 16])
 plt.xlabel('X-Label', loc='right')
@@ -113,8 +115,10 @@ plt.show()
 ## 축 범위 지정하기  
 ### xlim()
 - x축이 표시되는 범위를 지정하거나 반환한다.
+
 ### ylim()
 - y축이 표시되는 범위를 지정하거나 반환한다.
+
 ### axis()
 - x,y축이 표시되는 범위를 지정하거나 반환한다.
 
@@ -168,19 +172,19 @@ plt.show()
 
 ## family
 - 텍스트의 글꼴
-- [FONTNAME | ‘serif’ | ‘sans-serif’ | ‘cursive’ | ‘fantasy’ | ‘monospace’ ]
+- FONTNAME | ‘serif’ | ‘sans-serif’ | ‘cursive’ | ‘fantasy’ | ‘monospace’
 
 ### rotation
 - 텍스트의 회전각
-- [angle in degrees | ‘vertical’ | ‘horizontal’ ]
+- angle in degrees | ‘vertical’ | ‘horizontal’ 
 
 ### size
 - 텍스트의 크기
-- [size in points | ‘xx-small’ | ‘x-small’ | ‘small’ | ‘medium’ | ‘large’ | ‘x-large’ | ‘xx-large’ ]
+- size in points | ‘xx-small’ | ‘x-small’ | ‘small’ | ‘medium’ | ‘large’ | ‘x-large’ | ‘xx-large’
 
 ### weight
 - 텍스트의 굵기
-- [a numeric value in range 0-1000 | ‘ultralight’ | ‘light’ | ‘normal’ | ‘regular’ | ‘book’ | ‘medium’ | ‘roman’ | ‘semibold’ | ‘demibold’ | ‘demi’ | ‘bold’ | ‘heavy’ | ‘extra bold’ | ‘black’ ]
+- a numeric value in range 0-1000 | ‘ultralight’ | ‘light’ | ‘normal’ | ‘regular’ | ‘book’ | ‘medium’ | ‘roman’ | ‘semibold’ | ‘demibold’ | ‘demi’ | ‘bold’ | ‘heavy’ | ‘extra bold’ | ‘black’
 
 - color 키워드 : 색상 지정  
 - marker 키워드 : 마커의 스타일 지정 (markersize 가능)  
@@ -213,11 +217,13 @@ plt.show()
 
 ### fill_between()
 - 두 수평 방향의 곡선 사이를 채웁니다.
+
 ### fill_betweenx()
 - 두 수직 방방의 곡선 사이를 채웁니다.
 ### fill()
 - 다각형 영역을 채웁니다.
 - fill() 함수에 x,y 값의 리스트를 입력해주면, 각 x,y점들로 정의되는 다각형 영역을 자유롭게 지정해서 채울 수 있다.
+
 ```python
 x= [1,2,3,4]
 y=[1, 4, 9, 16]
@@ -289,7 +295,8 @@ plt.show()
 
 ## 그리드(grid) 설정하기
 - grid(True)로 설정하면, 그래프의 x,y축에 대해 그리드가 표시됨
-- axis=y로 설정하면 가로 방향의 그리드만 표시된다. [both, x, y] 중 선택 가능. default는 both 
+- axis=y로 설정하면 가로 방향의 그리드만 표시된다. [both, x, y] 중 선택 가능. default는 both
+
 ```python
 t = np.arange(0., 5., 0.2)
 # 'r--' : 빨간 대쉬 , 'bs' : 파란 사각형, 'g^' : 녹색 삼각형
@@ -305,6 +312,7 @@ plt.show()
 - 틱(Tick)은 그래프의 축에 간격을 구분하기 위해 표시하는 눈금
 - xticks(), yticks(), tick_params() 함수들이 있다.
 - xticks(), yticks() 함수는 각각 x축, y축에 눈금을 표시한다.
+
 ```python
 a = np.arange(0, 2, 0.2)
 plt.plot(a, a, 'bo')
@@ -549,6 +557,7 @@ plt.show()
 
 ## Bar graph()
 - 막대 그래프 : 범주가 있는 데이터 값을 직사각형의 막대로 표현하는 그래프
+
 ```python
 x = np.arange(3)
 # np.arange는 주어진 범위와 간격에 따라 균일한 값을 갖는 array를 생성하는 함수
@@ -798,6 +807,7 @@ plt.show()
 - 부채꼴이 그려지는 시작 각도를 설정
 ### counterclock=False
 - 시계 방향 순서로 부채꼴 영역이 표시됨
+
 ```python
 ratio = [34, 32, 16, 18]
 labels = ['Apple', 'Banana', 'Melon', 'Grapes']
