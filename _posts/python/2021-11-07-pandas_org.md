@@ -4747,18 +4747,8 @@ train_data.corr()
 plt.matshow(train_data.corr()) #색깔이 밝을수록 관련이 깊다.
 ```
 
-
-
-
-    <matplotlib.image.AxesImage at 0x2a260220370>
-
-
-
-
+![pandas_org_120_1](https://user-images.githubusercontent.com/78655692/140646090-e0857119-5493-4285-93ef-1ff71eb985c9.png)
     
-![png](pandas_org_files/pandas_org_120_1.png)
-    
-
 
 
 ```python
