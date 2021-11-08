@@ -337,6 +337,7 @@ s
     dtype: int64
 
 ### drop()
+
 - drop은 s 자체에는 지워지지 않는다.
 - 기본 inplace 값은 false. true이면 그 자체에 반환
 - p.s. del은 원본에 바로 삭제
@@ -355,6 +356,7 @@ s
     dtype: int64
 
 ### update
+
 ```python
 s[['a', 'b']] = [300, 900] # 한꺼번에 update 가능
 
@@ -369,6 +371,7 @@ s
     dtype: int64
 
 ## Slicing
+
 - 리스트, ndarray와 동일하게 적용
 
 ```python
@@ -414,143 +417,104 @@ s2['c':'d'] # 문자열로 인덱싱 할때는 마지막 포함한다.
     d    103
     dtype: int32
 
+## concat
 
+    pd.concat(objs,  # Series, DataFrame, Panel object
 
-pd.concat(objs,  # Series, DataFrame, Panel object
+    axis=0,  # 0: 위+아래로 합치기, 1: 왼쪽+오른쪽으로 합치기
 
+    join='outer', # 'outer': 합집합(union), 'inner': 교집합(intersection)
 
+    join_axes=None, # axis=1 일 경우 특정 DataFrame의 index를 그대로 이용하려면 입력 (deprecated, 더이상 지원하지 않음)
 
-             axis=0,  # 0: 위+아래로 합치기, 1: 왼쪽+오른쪽으로 합치기
+    ignore_index=False,  # False: 기존 index 유지, True: 기존 index 무시
 
+    keys=None, # 계층적 index 사용하려면 keys 튜플 입력
+    levels=None,
 
+    names=None, # index의 이름 부여하려면 names 튜플 입력
 
-             join='outer', # 'outer': 합집합(union), 'inner': 교집합(intersection)
+    verify_integrity=False, # True: index 중복 확인
 
+    copy=True) # 복사
 
+### axis = 0
 
-             join_axes=None, # axis=1 일 경우 특정 DataFrame의 index를 그대로 이용하려면 입력 (deprecated, 더이상 지원하지 않음)
+- 위 + 아래로 DataFrame 합치기(rbind) 
 
+### axis = 1
 
+- 왼쪽 + 오른쪽으로 DataFrame 합치기(cbind)
+### join = 'outer'
 
-             ignore_index=False,  # False: 기존 index 유지, True: 기존 index 무시
+- 합집합(union)으로 DataFrame 합치기 
 
-             keys=None, # 계층적 index 사용하려면 keys 튜플 입력
+### join = 'inner'
 
+- 교집합(intersection)으로 DataFrame 합치기 
 
+### join_axes
 
-             levels=None,
+- axis=1일 경우 특정 DataFrame의 index를 그대로 이용하고자 할 경우
 
+### ignore_index
 
+- 기존 index를 무시하고 싶을 때 
 
-             names=None, # index의 이름 부여하려면 names 튜플 입력
+### keys
 
+- 계층적 index (hierarchical index) 만들기 
 
+### names
 
-             verify_integrity=False, # True: index 중복 확인
+- index에 이름 부여하기
 
-             copy=True) # 복사
+### verify_integrity
 
+- index 중복 여부 점검 
 
+## merge
 
- 
+    pd.merge(left, right, # merge할 DataFrame 객체 이름
 
+    how='inner', # left, rigth, inner (default), outer
 
+    on=None, # merge의 기준이 되는 Key 변수
 
+    left_on=None, # 왼쪽 DataFrame의 변수를 Key로 사용
 
-```python
-# 위 + 아래로 DataFrame 합치기(rbind) : axis = 0
+    right_on=None, # 오른쪽 DataFrame의 변수를 Key로 사용
 
-# 왼쪽 + 오른쪽으로 DataFrame 합치기(cbind) : axis = 1
+    left_index=False, # 만약 True 라면, 왼쪽 DataFrame의 index를 merge 
 
-# 합집합(union)으로 DataFrame 합치기 : join = 'outer'
+    Key로 사용
 
-# 교집합(intersection)으로 DataFrame 합치기 : join = 'inner'
+    right_index=False, # 만약 True 라면, 오른쪽 DataFrame의 index를 merge Key로 사용
 
-# axis=1일 경우 특정 DataFrame의 index를 그대로 이용하고자 할 경우 : join_axes
+    sort=True, # merge 된 후의 DataFrame을 join Key 기준으로 정렬
 
-# 기존 index를 무시하고 싶을 때 : ignore_index
+    suffixes=('_x', '_y'), # 중복되는 변수 이름에 대해 접두사 부여 (defaults to '_x', '_y'
 
-# 계층적 index (hierarchical index) 만들기 : keys 
+    copy=True, # merge할 DataFrame을 복사
 
-# index에 이름 부여하기 : names
+    indicator=False) # 병합된 이후의 DataFrame에 left_only, right_only, both 등의 출처를 알 수 있는 부가 정보 변수 추가
 
-# index 중복 여부 점검 : verify_integrity
+## DataFrame
 
+- Series가 1차원이라면 DataFrame은 2차원으로 확대된 버젼
+- Excel spreadsheet이라고 생각하면 이해하기 쉬움
+- 2차원이기 때문에 인덱스가 row, column로 구성됨
+ - row는 각 개별 데이터를, column은 개별 속성을 의미
+- Data Analysis, Machine Learning에서 data 변형을 위해 가장 많이 사용
+- 
+## DataFrame 생성하기
 
+- 일반적으로 분석을 위한 데이터는 다른 데이터 소스(database, 외부 파일)을 통해 dataframe을 생성
+- 여기서는 실습을 통해, dummy 데이터를 생성하는 방법을 다룰 예정
 
+### dictionary로 부터 생성하기
 
-```
-
-pd.merge(left, right, # merge할 DataFrame 객체 이름
-
-
-
-             how='inner', # left, rigth, inner (default), outer
-
-
-
-             on=None, # merge의 기준이 되는 Key 변수
-
-
-
-             left_on=None, # 왼쪽 DataFrame의 변수를 Key로 사용
-
-
-
-             right_on=None, # 오른쪽 DataFrame의 변수를 Key로 사용
-
-
-
-             left_index=False, # 만약 True 라면, 왼쪽 DataFrame의 index를 merge 
-
-             Key로 사용
-
-
-
-             right_index=False, # 만약 True 라면, 오른쪽 DataFrame의 index를 merge Key로 사용
-
-
-
-             sort=True, # merge 된 후의 DataFrame을 join Key 기준으로 정렬
-
-
-
-             suffixes=('_x', '_y'), # 중복되는 변수 이름에 대해 접두사 부여 (defaults to '_x', '_y'
-
-
-
-             copy=True, # merge할 DataFrame을 복사
-
-             
-
-             indicator=False) # 병합된 이후의 DataFrame에 left_only, right_only, both 등의 출처를 알 수 있는 부가 정보 변수 추가
-
-
-```python
-
-```
-
-#### DataFrame
-
-  - Series가 1차원이라면 DataFrame은 2차원으로 확대된 버젼
-
-  - Excel spreadsheet이라고 생각하면 이해하기 쉬움
-
-  - 2차원이기 때문에 인덱스가 row, column로 구성됨
-
-   - row는 각 개별 데이터를, column은 개별 속성을 의미
-
-  - Data Analysis, Machine Learning에서 data 변형을 위해 가장 많이 사용
-
-#### DataFrame 생성하기
-
- - 일반적으로 분석을 위한 데이터는 다른 데이터 소스(database, 외부 파일)을 통해 dataframe을 생성
-
- - 여기서는 실습을 통해, dummy 데이터를 생성하는 방법을 다룰 예정
-
-#### dictionary로 부터 생성하기
-
- - dict의 key -> column
+- dict의 key -> column
 
 
 ```python
@@ -666,9 +630,7 @@ pd.DataFrame(data, index=[0, 1, 2])
 </table>
 </div>
 
-
-
-#### Series로 부터 생성하기
+## Series로 부터 생성하기
 
  - 각 Series의 인덱스 -> column
 
@@ -748,12 +710,12 @@ pd.DataFrame([a, b, c], index=[100, 101, 102])
 ```python
 # data 출처: https://www.kaggle.com/hesh97/titanicdataset-traincsv/data
 
-train_data = pd.read_csv('E:\kaggle/titanic/train.csv') 
+train_data = pd.read_csv('F:/data/titanic/train.csv') 
 
 # ./ : 현재 폴더를 의미 # sep="," : 각각 데이터를 ,로 구분
 ```
 
-#### head, tail 함수
+## head, tail 함수
 
  - 데이터 전체가 아닌, 일부(처음부터, 혹은 마지막부터)를 간단히 보기 위한 함수
 
@@ -1045,7 +1007,6 @@ train_data.tail(n=10)
 </div>
 
 
-
 ### 변수 이름(column name, header)이 없는 파일 불러올 때 이름 부여하기 
 
 : names=['X1','X2', ..], header=None
@@ -1198,20 +1159,15 @@ skiprows=[1])
 </div>
 
 
+### nrows = n
 
-n 개의 행만 불러오기: nrows = n
-
+- n 개의 행만 불러오기
 - csv 파일의 위에서 부터 3개의 행(rows) 만 DataFrame으로 불러오기
 
 
-
-
 ```python
-csv_3 = pd.read_csv('e:/data/test_csv_file.csv', nrows=3); csv_3
+csv_3 = pd.read_csv('f:/data/test_csv_file.csv', nrows=3); csv_3
 ```
-
-
-
 
 <div>
 <style scoped>
@@ -1260,8 +1216,7 @@ csv_3 = pd.read_csv('e:/data/test_csv_file.csv', nrows=3); csv_3
 </div>
 
 
-
-사용자 정의 결측값 기호 (custom missing value symbols) 
+### 사용자 정의 결측값 기호 (custom missing value symbols) 
 
 
 ```python
@@ -1467,7 +1422,7 @@ df_1.T
 </div>
 
 
-
+### axes()
 
 ```python
 # axes : 행과 열 이름을 리스트로 변환 
@@ -1482,7 +1437,7 @@ df_1.axes
      Index(['c0', 'c1', 'c2', 'c3'], dtype='object')]
 
 
-
+### dtypes(), shape(), size(), values()
 
 ```python
 # dtypes : 데이터 형태 반환
@@ -1496,9 +1451,10 @@ df_1.axes
 
 ```
 
+### reindex() 
 
-```python
-# index 재설정하기 : reindex 
+```pytho
+# index 재설정하기 
 
 new_idx = ['r0', 'r1', 'r2', 'r5', 'r6']
 
@@ -1578,7 +1534,7 @@ df_1.reindex(new_idx, fill_value=0)
 
 
 
-### 시계열 데이터
+## 시계열 데이터
 
 - DataFrame의 index만들 때, pd.date_range(date,periods, freq)
 
@@ -1601,13 +1557,13 @@ date_idx
 
 
 
-#### dataframe 데이터 파악하기
+## dataframe 데이터 파악하기
 
- - shape 속성 (row, column)
+- **shape** 속성 (row, column)
 
- - describe 함수 - 숫자형 데이터의 통계치 계산
+- **describe** 함수 - 숫자형 데이터의 통계치 계산
 
- - info 함수 - 데이터 타입, 각 아이템의 개수 등 출력
+- **info** 함수 - 데이터 타입, 각 아이템의 개수 등 출력
 
 
 ```python
@@ -1743,7 +1699,7 @@ train_data.describe()
 
 
 
-#### info함수로 각 변수의 데이터 타입 확인
+### info함수로 각 변수의 데이터 타입 확인
 
  - 타입 변경은 astype함수를 사용
 
@@ -1773,7 +1729,7 @@ train_data.info()
     memory usage: 83.7+ KB
     
 
-#### 인덱스(index)
+### 인덱스(index)
 
  - index 속성
 
@@ -1793,7 +1749,7 @@ train_data.index
 
 
 
-#### 컬럼(column)
+### 컬럼(column)
 
  - columns 속성
 
@@ -1815,7 +1771,7 @@ train_data.columns
 
 
 
-#### read_csv 함수 파라미터
+### read_csv 함수 파라미터
 
  - sep - 각 데이터 값을 구별하기 위한 구분자(separator) 설정 
 
@@ -1942,7 +1898,7 @@ train_data1
 
 
 
-#### 하나의 컬럼 선택하기
+### 하나의 컬럼 선택하기
 
 
 ```python
@@ -1967,7 +1923,7 @@ train_data['Survived'] # 특정 컬럼만 series로 가져온다.
 
 
 
-#### 복수의 컬럼 선택하기
+### 복수의 컬럼 선택하기
 
 
 ```python
@@ -2167,7 +2123,7 @@ train_data[['Survived']] #이건 데이터 프레임으로 가져온다.
 
 
 
-#### dataframe slicing
+### dataframe slicing
 
   - dataframe의 경우 기본적으로 [] 연산자가 **column 선택**에 사용
 
@@ -2265,7 +2221,7 @@ train_data[7:10] # 슬라이싱은 row로 적용 # 슬라이싱만 예외
 
 
 
-#### row 선택하기
+### row 선택하기
 
   - Seires의 경우 []로 row 선택이 가능하나, **DataFrame의 경우는 기본적으로 column을 선택하도록 설계**
 
@@ -2522,7 +2478,7 @@ train_data.iloc[[0, 100, 200, 2]]
 
 
 
-#### row, column 동시에 선택하기
+### row, column 동시에 선택하기
 
  - loc, iloc 속성을 이용할 때, 콤마를 이용하여 둘 다 명시 가능
 
@@ -2662,11 +2618,11 @@ train_data.iloc[[101, 100, 200, 102], [1, 4, 5]] # columns 역시 0베이스부�
 train_data = pd.read_csv('E:\kaggle/titanic/train.csv')
 ```
 
-#### **boolean selection으로 row 선택하기**
+### boolean selection으로 row 선택하기
 
  - numpy에서와 동일한 방식으로 해당 조건에 맞는 row만 선택
 
-#### 30대이면서 1등석에 탄 사람 선택하기 
+### 30대이면서 1등석에 탄 사람 선택하기 
 
 
 ```python
@@ -3471,7 +3427,7 @@ train_data[class_ & age_]
 
 
 
-#### 새 column 추가하기
+### 새 column 추가하기
 
  - [] 사용하여 추가하기
 
@@ -3885,7 +3841,7 @@ train_data.head()
 
 
 
-#### column 삭제하기
+### column 삭제하기
 
  - drop 함수 사용하여 삭제
 
@@ -4492,15 +4448,15 @@ train_data
 
 
 
-변수의 상관관계 = 이 두변수간의 흐름이 얼마나 비슷한가를 나타내는 척도 (증가, 감소) 그 폭이 얼마나 비슷하냐   
+### 변수의 상관관계
 
-두 변수간의 패턴을 본다.   
-
-인과관계는 일수도 있고 아닐 수도 있다. 
+- 이 두변수간의 흐름이 얼마나 비슷한가를 나타내는 척도 (증가, 감소) 그 폭이 얼마나 비슷하냐   
+- 두 변수간의 패턴을 본다.   
+- 인과관계는 일수도 있고 아닐 수도 있다. 
 
 
 ```python
-train_data = pd.read_csv('E:\kaggle/titanic/train.csv')
+train_data = pd.read_csv('F:/data/titanic/train.csv')
 
 train_data.head()
 ```
@@ -4622,7 +4578,7 @@ train_data.head()
 
 
 
-#### 변수(column) 사이의 상관계수(correlation) 
+### 변수(column) 사이의 상관계수(correlation) 
 
  - corr함수를 통해 상관계수 연산 (-1, 1 사이의 결과)
 
@@ -4986,7 +4942,7 @@ train_data['Age'].isna()
 
 
 
-#### NaN 처리 방법
+### NaN 처리 방법
 
  - 데이터에서 삭제
 
@@ -5601,11 +5557,11 @@ train_data.dropna(axis=1) # 컬럼 중에 NaN이 있다면 지워버려라
 
 
 
-* NaN 값 대체하기
+### NaN 값 대체하기
 
- - 평균으로 대체하기
+- 평균으로 대체하기
 
- - 생존자/사망자 별 평균으로 대체하기
+- 생존자/사망자 별 평균으로 대체하기
 
 
 ```python
@@ -5696,7 +5652,7 @@ train_data = pd.read_csv('E:\kaggle/titanic/train.csv')
 # numpy와 pandas를 쓸때는 최대한 loop를 지양해야 한다.
 ```
 
-#### Pclass 변수 변환하기
+### Pclass 변수 변환하기
 
  - astype 사용하여 간단히 타입만 변환
 
@@ -5705,7 +5661,7 @@ train_data = pd.read_csv('E:\kaggle/titanic/train.csv')
 train_data['Pclass'] = train_data['Pclass'].astype(str)
 ```
 
-#### Age 변수 변환하기
+### Age 변수 변환하기
 
  - 변환 로직을 함수로 만든 후, apply 함수로 적용
 
@@ -5745,7 +5701,7 @@ train_data['Age'].apply(age_categorize)
 
 
 
-#### One-hot encoding
+## One-hot encoding
 
  - 범주형 데이터는 분석단계에서 계산이 어렵기 때문에 숫자형으로 변경이 필요함
 
@@ -6269,7 +6225,7 @@ pd.get_dummies(train_data, columns=['Pclass', 'Sex', 'Embarked'], drop_first=Tru
 
 
 
-#### group by
+## group by
 
   + 아래의 세 단계를 적용하여 데이터를 그룹화(groupping) (SQL의 group by 와 개념적으로는 동일, 사용법은 유사)
 
@@ -6283,7 +6239,7 @@ pd.get_dummies(train_data, columns=['Pclass', 'Sex', 'Embarked'], drop_first=Tru
 ```python
 # data 출처: https://www.kaggle.com/hesh97/titanicdataset-traincsv/data
 
-df = pd.read_csv('E:\kaggle/titanic/train.csv')
+df = pd.read_csv('F:/data/titanic/train.csv')
 
 df.head()
 ```
@@ -6405,7 +6361,7 @@ df.head()
 
 
 
-#### GroupBy groups 속성
+### GroupBy groups 속성
 
  - 각 그룹과 그룹에 속한 index를 dict 형태로 표현
 
@@ -6449,17 +6405,17 @@ gender_group.groups
 
 
 
-#### groupping 함수
+## groupping 함수
 
- - 그룹 데이터에 적용 가능한 통계 함수(NaN은 제외하여 연산)
+- 그룹 데이터에 적용 가능한 통계 함수(NaN은 제외하여 연산)
 
- - count - 데이터 개수 
+- **count** - 데이터 개수 
 
- - sum   - 데이터의 합
+- **sum**   - 데이터의 합
 
- - mean, std, var - 평균, 표준편차, 분산
+- **mean, std, var** - 평균, 표준편차, 분산
 
- - min, max - 최소, 최대값
+- **min, max** - 최소, 최대값
 
 
 ```python
@@ -6619,7 +6575,7 @@ df.groupby('Sex').mean()['Survived']
 
 
 
-#### 복수 columns로 groupping 하기
+## 복수 columns로 groupping 하기
 
  - groupby에 column 리스트를 전달
 
@@ -6682,7 +6638,7 @@ df.groupby(['Pclass', 'Sex']).mean().index
 
 
 
-#### index를 이용한 group by
+## index를 이용한 group by
 
  - index가 있는 경우, groupby 함수에 level 사용 가능
 
@@ -7181,7 +7137,7 @@ df.set_index('Age').groupby(level=0).mean() # level은 인덱스를 뜻함
 
 
 
-#### 나이대별로 생존율 구하기
+## 나이대별로 생존율 구하기
 
 
 ```python
@@ -7216,7 +7172,7 @@ df.set_index('Age').groupby(age_categorize).mean()['Survived']
 
 
 
-#### MultiIndex를 이용한 groupping
+## MultiIndex를 이용한 groupping
 
 
 ```python
@@ -7237,7 +7193,7 @@ df.set_index(['Pclass', 'Sex']).groupby(level=[0, 1]).mean()['Age'] # level은 �
 
 
 
-#### aggregate(집계) 함수 사용하기
+## aggregate(집계) 함수 사용하기
 
  - groupby 결과에 집계함수를 적용하여 그룹별 데이터 확인 가능
 
@@ -7460,7 +7416,7 @@ df.set_index(['Pclass', 'Sex']).groupby(level=[0, 1]).aggregate([np.mean, np.sum
 
 
 
-#### transform 함수
+## transform 함수
 
  - groupby 후 transform 함수를 사용하면 원래의 index를 유지한 상태로 통계함수를 적용
 
@@ -8413,7 +8369,7 @@ df
 
 
 
-#### pivot 
+### pivot 
 
  - dataframe의 형태를 변경
 
@@ -8635,7 +8591,7 @@ df.pivot('요일', '지역')
 
 
 
-#### pivot_table
+### pivot_table
 
  - 기능적으로 pivot과 동일
 
@@ -8747,7 +8703,7 @@ pd.pivot_table(df,index='요일', columns='지역', aggfunc=np.mean)
 
 
 
-####  stack & unstack
+###  stack & unstack
 
  - stack : 컬럼 레벨에서 인덱스 레벨로 dataframe 변경
 
@@ -9303,7 +9259,7 @@ new_df.unstack(0).stack(1) #-1은 마지막
 
 
 
-#### concat 함수 사용하여 dataframe 병합하기
+### concat 함수 사용하여 dataframe 병합하기
 
  - pandas.concat 함수
 
@@ -9692,7 +9648,7 @@ pd.concat([df1, df3], axis=1)
 
 
 
-#### dataframe merge
+### dataframe merge
 
  - SQL의 join처럼 특정한 column을 기준으로 병합
 
@@ -10759,7 +10715,7 @@ pd.merge(customer, orders, on='customer_id').groupby(['name', 'item']).sum().loc
 
 
 
-#### join 함수
+### join 함수
 
  - 내부적으로 pandas.merge 함수 사용
 
