@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 author_profile: false
 
-last_modified_at: 2021-11-07
+last_modified_at: 2021-11-08
 ---
 
 ## 2_1. 신경망과의 첫 만남
