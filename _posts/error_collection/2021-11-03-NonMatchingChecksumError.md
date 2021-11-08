@@ -1,6 +1,6 @@
 ---
 layout: single
-title: 'NonMatchingChecksumError: Artifact https://drive.google.com/uc?export=download&id=0B7EVK8r0v71pZjFTYXZWM3FlRnM 에러 해결 방법'
+title: '[에러 해결 방법] NonMatchingChecksumError: Artifact https://drive.google.com/uc?export=download&id=0B7EVK8r0v71pZjFTYXZWM3FlRnM'
 categories: error
 tag : [error, solution]
 toc: true
