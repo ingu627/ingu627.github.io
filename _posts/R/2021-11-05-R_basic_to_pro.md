@@ -1,24 +1,27 @@
 ---
 layout: single
 title: "R 기초 ~ 심화 문법 총정리"
-excerpt: + ADsP, 빅데이터분석기사 실기 작업형 대비
+excerpt: "+ ADsP, 빅데이터분석기사 실기 작업형 대비"
 categories: R
 tag : [R, grammar, basic, pro, adsp, certificate]
 toc: true
 toc_sticky: true
 author_profile: false
 
-last_modified_at: 2021-11-05
+last_modified_at: 2021-11-07
 ---
 
 [데이터 자료 링크 (출처 : Must Learning with R. 저자 : DoublekPark)](https://www.dropbox.com/sh/vtqlvrgdts2yfez/AAD_cd49dBcvgBNdz-C-A6TFa?dl=0)
 
 ## 기본 단축키 
 - `ctrl + shift + c` : 해당 줄 주석 처리
+- `#` : 해당 줄 주석 처리
 - `ctrl + enter` : 해당 줄 실행
+- `help(함수명, 데이터 세트)` : 함수명, 데이터 세트 등에 대한 설명을 해 주는 기능
 
 
 ## R 기본문법
+
 ### =
 - ~를 ~에 저장하여라 (할당)
 
@@ -81,7 +84,7 @@ last_modified_at: 2021-11-05
   - c() : 들어오는 값들을 묶어 하나의 벡터로 만드는 기능을 실행
 - \{\} : for, if문 등에서 조건식을 삽입할 때
 
-#### 1차원 데이터의 경우
+### 1차원 데이터의 경우
 ![image](https://user-images.githubusercontent.com/78655692/140601094-6002fc95-d9c0-485c-a0cd-f2e60bcd9436.png)
 
 ![image](https://user-images.githubusercontent.com/78655692/140601141-c2f15d1a-417f-4ec5-b27c-7842a410d038.png)
@@ -90,7 +93,7 @@ last_modified_at: 2021-11-05
 
 ![image](https://user-images.githubusercontent.com/78655692/140601192-d99cd9cd-7f82-4384-9c27-af24b386f672.png)
 
-#### 2차원 데이터의 경우
+### 2차원 데이터의 경우
 
 ![image](https://user-images.githubusercontent.com/78655692/140601268-b940387a-15b6-4b05-9271-0fa71d5bf3fc.png)
 
@@ -106,20 +109,20 @@ last_modified_at: 2021-11-05
 |Tseries | 시계열 변수|
 
 ### 시간(날짜)형태
-#### as.Date()
+### as.Date()
 - ‘년-월-일’ 형태
 - as.Date(변수, format='날짜 형식')
 
 ![image](https://user-images.githubusercontent.com/78655692/140601480-e095d17f-2afb-47b8-b79d-7256c22e7b62.png)
 
 - str() : 저장된 데이터 타입 확인
-#### as.POSIXct()
+### as.POSIXct()
 - ‘년-월-일 시간:분:초' 형태
 - as.POSIXct(날짜, format = “날짜형식”)
 
 ![image](https://user-images.githubusercontent.com/78655692/140601645-b2c8d183-2927-4ca2-86cf-bfcf3121c833.png)
 
-#### format()
+### format()
 - 날짜정보를 추출해 새로운 변수로 만듦
 - format(날짜변수, "형식")
 
