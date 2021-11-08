@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "파이썬 pandas 총정리"
-excerpt: ""
+excerpt: "+ 판다스 문법 + 타이타닉(titanic) 예제 실습"
 categories: python
 tag : [python, pandas]
 toc: true
