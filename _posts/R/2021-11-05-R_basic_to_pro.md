@@ -59,6 +59,21 @@ last_modified_at: 2021-11-09
 |<-, <<- |왼쪽 변수에 오른쪽 값을 대입 |
 |->, ->>|오른쪽 변수에 왼쪽 값을 대입 |
 
+## 변수 형태 이해하기
+
+- `mode(x)` : 객체 형식 반환 
+  - `numeric`, `character`, `logical` 중 하나의 값 출력
+- `typeof(x)` : 정수형은 `integer`, 실수형은 `double`로 반환하고, 나머지는 mode함수와 동일
+
+|String Type|설명|
+|---|---|
+|chr | 문자열 형태|
+|int | 숫자|
+|num | 숫자|
+|Factor | 명목형 변수|
+|Posixct | 시간 변수|
+|Tseries | 시계열 변수|
+
 ## 데이터의 값
 
 - `NA` : Not Available의 약자. 데이터의 값이 없음 
@@ -204,20 +219,21 @@ last_modified_at: 2021-11-09
 
 ![image](https://user-images.githubusercontent.com/78655692/140601268-b940387a-15b6-4b05-9271-0fa71d5bf3fc.png)
 
-## 변수 형태 이해하기
+## 팩터(factor)
 
-- `mode(x)` : 객체 형식 반환 
-  - `numeric`, `character`, `logical` 중 하나의 값 출력
-- `typeof(x)` : 정수형은 `integer`, 실수형은 `double`로 반환하고, 나머지는 mode함수와 동일
+- 범주형 자료를 표현하기 위한 데이터 타입
+- `factor(x, levels, labels, ordered)`
+  - `x` : 범주형 데이터
+  - `levels` : 구분하고자 하는 범주(레벨) 목록 지정
+  - `labels` : 범주별 표시 값 지정
+  - `ordered`
+    - TRUE : 순서형
+    - FALSE : 명목형 (default)
 
-|String Type|설명|
-|---|---|
-|chr | 문자열 형태|
-|int | 숫자|
-|num | 숫자|
-|Factor | 명목형 변수|
-|Posixct | 시간 변수|
-|Tseries | 시계열 변수|
+## 데이터 결합 (rbind(), cbind(), merge())
+
+![image](https://user-images.githubusercontent.com/78655692/140970588-0c2b2ef9-75e3-4b45-b8a4-744fa189a4b3.png)
+
 
 ## 시간(날짜)형태
 ### as.Date()
@@ -266,12 +282,55 @@ last_modified_at: 2021-11-09
 
 ![image](https://user-images.githubusercontent.com/78655692/140601918-8e70869a-4d77-485f-b5bf-6be515f73b11.png)
 
-## if ~ else
+## 조건문
+### if ~ else
 - 조건문
 - if ~라면 이거 선택. 아니라면(=else) 이거 선택
 - `%in%` : ~에 속해 있는지 확인
 
+### if ~ else if ~ else
+
+<script src="https://gist.github.com/ingu627/b7d5c72ccad88d81201edbe62cea76fe.js"></script>
+
+### ifelse 문법
+
+- `ifelse(조건식, 명령어1, 명령어2)` : 참이면 명령어1, 거짓이면 명령어2
+
 ![image](https://user-images.githubusercontent.com/78655692/140601984-bf276c40-c90e-4a84-a50c-a09d77904295.png)
+
+## switch 문 
+
+- 조건에 따라 여러 개의 경로 중 하나를 선택하여 명령어를 실행하는 명령어
+
+![image](https://user-images.githubusercontent.com/78655692/140971669-9bd918b6-8918-41aa-a313-d32dc0e8c771.png)
+
+## 반복문 
+
+### for 문
+- 범위에 들어있는 각각의 값을 변수에 할당하고 블록 안의 문장을 수행
+
+![image](https://user-images.githubusercontent.com/78655692/140971992-85405168-9d91-47a4-b82f-a904ced6456f.png)
+
+### while 문 
+- 조건문 참일 때 블록 안의 명령어들을 수행
+
+![image](https://user-images.githubusercontent.com/78655692/140972176-4db938d2-b6e8-41e1-8953-e6adbca74b2b.png)
+
+### repeat 문 
+
+![image](https://user-images.githubusercontent.com/78655692/140972514-8afc06e5-48ca-4d03-8ac7-334555e66f9d.png)
+
+### break 문 
+- 반복문을 중간에 탈추하기 위해 사용하는 명령어
+
+![image](https://user-images.githubusercontent.com/78655692/140972812-bdde4d92-24e2-424d-873f-e6eeaa39df23.png)
+
+### next 문 
+- 반복문에서 다음 반복으로 넘어갈 수 있도록 하는 명령어
+- 파이썬의 continue와 같은 개념
+
+![image](https://user-images.githubusercontent.com/78655692/140973004-c75a1f7b-998d-4d69-beaf-f5627fb1dc46.png)
+
 
 ## function() 
 - 사용자 함수 (직접 함수 만들기)
@@ -297,4 +356,4 @@ last_modified_at: 2021-11-09
 [2021 ADsP 데이터 분석 준전문가](https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=260287112)  
 [Do it! 쉽게 배우는 R 데이터 분석](https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=113509180)  
 [2022 수제비 빅데이터분석기사 실기 (필답형+작업형)](https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=281447264)  
-
+[R, Python 분석과 프로그래밍의 친구 (by R Friend) - R 데이터 프레임 결합 : rbind(), cbind(), merge()](https://rfriend.tistory.com/51)
