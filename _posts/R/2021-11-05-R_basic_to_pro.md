@@ -11,8 +11,6 @@ author_profile: false
 last_modified_at: 2021-11-09
 ---
 
-[데이터 자료 링크 (출처 : Must Learning with R. 저자 : DoublekPark)](https://www.dropbox.com/sh/vtqlvrgdts2yfez/AAD_cd49dBcvgBNdz-C-A6TFa?dl=0)
-
 ## 기본 단축키 
 - `ctrl + shift + c` : 해당 줄 주석 처리
 - `#` : 해당 줄 주석 처리
@@ -357,3 +355,4 @@ last_modified_at: 2021-11-09
 [Do it! 쉽게 배우는 R 데이터 분석](https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=113509180)  
 [2022 수제비 빅데이터분석기사 실기 (필답형+작업형)](https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=281447264)  
 [R, Python 분석과 프로그래밍의 친구 (by R Friend) - R 데이터 프레임 결합 : rbind(), cbind(), merge()](https://rfriend.tistory.com/51)
+[데이터 자료 링크 (출처 : Must Learning with R. 저자 : DoublekPark)](https://www.dropbox.com/sh/vtqlvrgdts2yfez/AAD_cd49dBcvgBNdz-C-A6TFa?dl=0)
