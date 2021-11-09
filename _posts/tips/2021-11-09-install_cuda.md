@@ -99,12 +99,11 @@ cuDNN link : https://developer.nvidia.com/cudnn
 
 ![image](https://user-images.githubusercontent.com/78655692/140862457-a782c74a-b5b1-4602-8a8d-6ebcd38d80bf.png)
 
-- 가상 환경 설치 : `conda create -n 가상환경이름 python=3.6`
-- 가상 환경 활성화 : `conda activate 가상환경 이름`
-- 기본적인 패키지 설치
-  - `pip install numpy`
-  - `pip install pandas`
-  - `pip install matplotlib`
+- **conda update** : `conda update -n base conda`
+- **가상 환경 설치** : `conda create -n 가상환경이름 python=3.6`
+- **가상 환경 활성화** : `conda activate 가상환경 이름`
+- **기본적인 패키지 설치**
+  - `pip install numpy pandas matplotlib seaborn scipy `
   - `pip install tensorflow==2.2.0`
   - `pip install tensorflow-gpu==2.2.0`
   - `pip install keras==2.2.4`
