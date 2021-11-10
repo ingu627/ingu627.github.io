@@ -4,6 +4,9 @@ title: "[WINDOWS10 환경] 딥러닝을 위한 텐서플로우(tensorflow) GPU �
 excerpt : "NVIDIA DRIVER, CUDA Toolkit, Cudnn"
 categories: tips
 tag : [tip, cuda, install, gpu]
+
+toc: true
+toc_sticky: true
 author_profile: false
 
 last_modified_at: 2021-11-10
