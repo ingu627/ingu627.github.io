@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "[WINDOWS 환경] 딥러닝을 위한 텐서플로우(tensorflow) GPU 설치 방법"
+title: "[WINDOWS10 환경] 딥러닝을 위한 텐서플로우(tensorflow) GPU 설치 방법"
 excerpt : "NVIDIA DRIVER, CUDA Toolkit, Cudnn"
 categories: tips
 tag : [tip, cuda, install, gpu]
@@ -8,6 +8,15 @@ author_profile: false
 
 last_modified_at: 2021-11-09
 ---
+## UPDATE (2021.11.10)
+
+- *재설치할 때는 가상환경과 프로그램 모두 지우고 다시 설치*
+- CUDA : 11.0, cuDNN : 8.0, tensorflow_gpu-2.4.0, python==3.7
+- 
+
+<br/>
+<br/>
+
 
 ## 순서
 
@@ -86,9 +95,34 @@ cuDNN link : [https://developer.nvidia.com/cudnn](https://developer.nvidia.com/c
 
 ![image](https://user-images.githubusercontent.com/78655692/140861922-003339e1-0fe1-4a3c-bc23-335bd0f840bd.png)
 
+![image](https://user-images.githubusercontent.com/78655692/141049275-5ae863a1-a9a7-438c-a63e-393d9dce79db.png)
+
+
 - 파일 덮어쓰기 : 다운로드 받은 파일의 압축을 풀고, 아래의 디렉토리에 파일을 덮어씌움
 
-`Program Files NVIDIA GPU Computing Toolkit CUDA v10.1`
+`C:\Program Files\NVIDIA GPU Computing Toolkit CUDA v10.1`
+
+![image](https://user-images.githubusercontent.com/78655692/141049509-e8cd1b3d-5821-4186-9d0f-0d0f9d3a6334.png)
+
+- `bin`, `include`, `lib` 폴더를 각각 들어가 안의 파일들을 복사.
+
+## 5_1. 설치 확인 
+
+![image](https://user-images.githubusercontent.com/78655692/141050089-8c671f02-9ca7-4ce3-8e94-019b7d48eb0b.png)
+
+- 클릭 후 검색창에 `cuda`라 쳤을 때 프로그램이 나오면 성공!!
+
+## 5_2. 환경변수 설정
+
+- 추가할 경로는 앞에서 복사해서 넣었던 bin, include, lib의 경로를 설정해준다.
+
+![image](https://user-images.githubusercontent.com/78655692/141051481-d8806d86-07f7-46f9-aa80-8c77fdd7a097.png)
+
+![image](https://user-images.githubusercontent.com/78655692/141051518-0487ed1b-f707-4875-ab09-3c3f0fa8f267.png)
+
+![image](https://user-images.githubusercontent.com/78655692/141051604-add55c2e-3f30-4a6c-a904-15ad77860ea4.png)
+
+![image](https://user-images.githubusercontent.com/78655692/141051769-1464f5ad-6b73-4c3d-9e42-6e0ba572e177.png)
 
 
 ## 6. 가상환경 
@@ -103,30 +137,37 @@ cuDNN link : [https://developer.nvidia.com/cudnn](https://developer.nvidia.com/c
 - **가상 환경 설치** : `conda create -n 가상환경이름 python=3.6`
 - **가상 환경 활성화** : `conda activate 가상환경 이름`
 - **기본적인 패키지 설치**
-  - `pip install numpy pandas matplotlib seaborn scipy `
   - `pip install tensorflow==2.2.0`
+  - `pip install tf-nightly`
+  - `pip install pandas matplotlib seaborn scipy`
   - `pip install tensorflow-gpu==2.2.0`
   - `pip install keras==2.2.4`
   - `pip install jupyter notebook`
   - `pip install ipykernel`
-  - `python -m ipykernel install --user --name 가상환경이름`
+  - `python -m ipykernel install --user --name 가상환경이름 --display-name 표시할 가상환경 이름`
 
 ## GPU 확인
+
+```python
+from tensorflow.python.client import device_lib
+print(device_lib.list_local_devices())
+```
 
 ![image](https://user-images.githubusercontent.com/78655692/140863298-572a26a8-41ae-4c89-9143-9bf3fcc87d9c.png)
 
 이렇게 뜨면 잘 설치가 된 것이다.
 
+## 기타
+
+- **가상환경 리스트 확인** : `conda env list`
+- **가상환경 비활성화** : `conda deactivate`
+- **가상환경 삭제** : `conda remove -n 가상환경이름 --all` 후 `y` 클릭
+- **경로 변경** : `cd 경로주소`
+
 <br/>
-<br/>
 
-## UPDATE (2021.11.10)
-
-- ~~재설치할 때는 가상환경과 프로그램 모두 지우고 다시 설치~~
-- ~~tensorflow_gpu-2.4.0, cuDNN : 8.0, CUDA : 11.0~~
-- 위의 그대로!!
-
-
+- **cuda 버전 확인** : `nvcc --version` (cmd 창)
+- **GPU util 확인** :`nvida-smi` (cmd 창)
 
 ## References
 
@@ -135,3 +176,4 @@ cuDNN link : [https://developer.nvidia.com/cudnn](https://developer.nvidia.com/c
 - [GPU 사용을 위한 CUDA 환경 구성하기](https://velog.io/@mactto3487/%EB%94%A5%EB%9F%AC%EB%8B%9D-GPU-%ED%99%98%EA%B2%BD-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0)
 - [Tensorflow와 호환되는 CUDA, cuDNN 설치하는 법](https://coding-groot.tistory.com/87)
 - [모두의 근삼이](https://ykarma1996.tistory.com/99)
+- [[Windows 10] Pytorch GPU 사용을 위한 CUDA 환경 만들기](https://data-panic.tistory.com/4)
