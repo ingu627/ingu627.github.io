@@ -6,13 +6,12 @@ categories: tips
 tag : [tip, cuda, install, gpu]
 author_profile: false
 
-last_modified_at: 2021-11-09
+last_modified_at: 2021-11-10
 ---
 ## UPDATE (2021.11.10)
 
 - *재설치할 때는 가상환경과 프로그램 모두 지우고 다시 설치*
 - CUDA : 11.0, cuDNN : 8.0, tensorflow_gpu-2.4.0, python==3.7
-- 
 
 <br/>
 <br/>
