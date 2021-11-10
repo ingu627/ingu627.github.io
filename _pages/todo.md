@@ -43,6 +43,6 @@ sidebar_main: true
 
 ## Books
 
-- [케라스 창시자에게 배우는 딥러닝](https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=1703)
+- [케라스 창시자에게 배우는 딥러닝](hhttps://www.aladin.co.kr/shop/wproduct.aspx?ItemId=170317445)
 - [Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow(핸즈온 머신러닝)](https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=237677114)
 
