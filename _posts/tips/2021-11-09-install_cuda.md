@@ -145,7 +145,7 @@ cuDNN link : [https://developer.nvidia.com/cudnn](https://developer.nvidia.com/c
   - ~~`pip install tf-nightly`~~
   - `pip install pandas matplotlib seaborn scipy`
   - `pip install tensorflow-gpu==2.2.0`
-  - ~~`pip install keras==2.2.4`~~
+  - `pip install keras==2.2.4`
   - `pip install jupyter notebook`
   - `pip install ipykernel`
   - `python -m ipykernel install --user --name 가상환경이름 --display-name 표시할 가상환경 이름`
