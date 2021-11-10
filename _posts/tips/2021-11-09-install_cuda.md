@@ -47,6 +47,8 @@ ANACONDA site link : [https://www.anaconda.com/products/individual](https://www.
 
 ![image](https://user-images.githubusercontent.com/78655692/140858868-6c17da63-8224-4123-bf46-28ffcb772f13.png)
 
++ 텐서플로는 파이썬 3.7 버전의 패키지를 제공하지 않기 때문에 아나콘다 5.3 버전을 설치하면 tensorflow를 설치할 수 없다고 한다. (파이썬 3.6 버전으로 다운그레이드 필요)
+
 
 ## 2. NVIDIA DRIVER 설치
 
@@ -140,10 +142,10 @@ cuDNN link : [https://developer.nvidia.com/cudnn](https://developer.nvidia.com/c
 - **가상 환경 활성화** : `conda activate 가상환경 이름`
 - **기본적인 패키지 설치**
   - `pip install tensorflow==2.2.0`
-  - `pip install tf-nightly`
+  - ~~`pip install tf-nightly`~~
   - `pip install pandas matplotlib seaborn scipy`
   - `pip install tensorflow-gpu==2.2.0`
-  - `pip install keras==2.2.4`
+  - ~~`pip install keras==2.2.4`~~
   - `pip install jupyter notebook`
   - `pip install ipykernel`
   - `python -m ipykernel install --user --name 가상환경이름 --display-name 표시할 가상환경 이름`
@@ -165,6 +167,9 @@ print(device_lib.list_local_devices())
 - **가상환경 비활성화** : `conda deactivate`
 - **가상환경 삭제** : `conda remove -n 가상환경이름 --all` 후 `y` 클릭
 - **경로 변경** : `cd 경로주소`
+- **파이썬 셸 실행** : `python`
+- **파이썬 셸 종료** : `exit()` or `ctrl+z`
+- **설치된 모든 라이브러리 확인** : `pip freeze`
 
 <br/>
 
@@ -179,3 +184,4 @@ print(device_lib.list_local_devices())
 - [Tensorflow와 호환되는 CUDA, cuDNN 설치하는 법](https://coding-groot.tistory.com/87)
 - [모두의 근삼이](https://ykarma1996.tistory.com/99)
 - [[Windows 10] Pytorch GPU 사용을 위한 CUDA 환경 만들기](https://data-panic.tistory.com/4)
+- [아나콘다에 Tensorflow,Keras 설치하는 방법 ( 오류해결 )](https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=badzoo&logNo=221450305996)
