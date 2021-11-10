@@ -17,6 +17,7 @@ sidebar_main: true
 - [공돌이의 수학정리노트](https://angeloyeo.github.io/2020/01/09/Bayes_rule.html)
 - [Dive into Deep Learning](https://www.d2l.ai/index.html)
 - [TCP SCHOOL](http://tcpschool.com/python/intro)
+- [앎의 공간 -Data Science/Machine Learning 구현](https://techblog-history-younghunjo1.tistory.com/261)
 
 ### Web Service
 - [아마존 웹 서비스를 다루는 기술](http://pyrasis.com/private/2014/09/30/publish-the-art-of-amazon-web-services-book)  
