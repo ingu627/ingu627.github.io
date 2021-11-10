@@ -21,6 +21,8 @@ last_modified_at: 2021-11-10
 
 ![image](https://user-images.githubusercontent.com/78655692/141055924-842a15ce-5c94-40e1-b7bd-ffdf6bd43c7f.png)
 
+`conda install pytorch==1.7.1 torchvision==0.8.2 torchaudio==0.7.2 cudatoolkit=11.0 -c pytorch`
+
 ## 4. 실행창에 코드 넣고 enter
 
 ![image](https://user-images.githubusercontent.com/78655692/141056063-5b2a8dd3-7630-486e-af56-85f8cc1e0e58.png)
