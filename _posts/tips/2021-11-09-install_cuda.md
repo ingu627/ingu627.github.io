@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "딥러닝을 위한 텐서플로우(tensorflow) GPU 설치 방법"
+title: "[WINDOWS 환경] 딥러닝을 위한 텐서플로우(tensorflow) GPU 설치 방법"
 excerpt : "NVIDIA DRIVER, CUDA Toolkit, Cudnn"
 categories: tips
 tag : [tip, cuda, install, gpu]
@@ -32,7 +32,7 @@ last_modified_at: 2021-11-09
 
 ## 1. 아나콘다 설치
 
-ANACONDA site link : https://www.anaconda.com/products/individual
+ANACONDA site link : [https://www.anaconda.com/products/individual](https://www.anaconda.com/products/individual)
 
 ![image](https://user-images.githubusercontent.com/78655692/140858868-6c17da63-8224-4123-bf46-28ffcb772f13.png)
 
@@ -41,13 +41,13 @@ ANACONDA site link : https://www.anaconda.com/products/individual
 
 - 본인의 GPU 모델 선택
 
-NVIDIA DRIVER link : https://www.nvidia.com/download/index.aspx?lang=en-us
+NVIDIA DRIVER link : [https://www.nvidia.com/download/index.aspx?lang=en-us](https://www.nvidia.com/download/index.aspx?lang=en-us)
 
 ![image](https://user-images.githubusercontent.com/78655692/140859318-d8d2c16f-8a77-46e8-b365-d44315ada069.png)
 
 ## 3. Visual Studio 설치
 
-Visual Studio link : https://visualstudio.microsoft.com/ko/downloads/
+Visual Studio link : [https://visualstudio.microsoft.com/ko/downloads/](https://visualstudio.microsoft.com/ko/downloads/)
 
 ![image](https://user-images.githubusercontent.com/78655692/140862114-33c3a7f2-387c-4d07-971a-669f849a14eb.png)
 
@@ -56,7 +56,7 @@ Visual Studio link : https://visualstudio.microsoft.com/ko/downloads/
 
 - **자기에게 맞는 버전을 확인한다. <span style="color:red">(매우 중요!!!)</span>**
 
-CUDA Toolkit window(윈도우) link : https://www.tensorflow.org/install/source_windows#tested_build_configurations
+CUDA Toolkit window(윈도우) link : [https://www.tensorflow.org/install/source_windows#tested_build_configurations](https://www.tensorflow.org/install/source_windows#tested_build_configurations)
 
 ![image](https://user-images.githubusercontent.com/78655692/140859991-fc7918bc-5fed-428c-8088-873891de0926.png)
 
@@ -66,7 +66,7 @@ CUDA Toolkit window(윈도우) link : https://www.tensorflow.org/install/source_
 
 ## 4. CUDA 설치
 
-CUDA Toolkit Archive : https://developer.nvidia.com/cuda-toolkit-archive
+CUDA Toolkit Archive : [https://developer.nvidia.com/cuda-toolkit-archive](https://developer.nvidia.com/cuda-toolkit-archive)
 
 ![image](https://user-images.githubusercontent.com/78655692/140860284-cba42646-b76c-4078-995f-b36db7644793.png)
 
@@ -78,7 +78,7 @@ CUDA Toolkit Archive : https://developer.nvidia.com/cuda-toolkit-archive
 - cuDNN은 엔비디아 회원가입 및 로그인이 필요하다.
 - **반드시 버전에 맞게 설치해준다.**
 
-cuDNN link : https://developer.nvidia.com/cudnn
+cuDNN link : [https://developer.nvidia.com/cudnn](https://developer.nvidia.com/cudnn)
 
 ![image](https://user-images.githubusercontent.com/78655692/140861718-70b2f48e-e9a6-49f1-a0c9-8471759e481b.png)
 
@@ -117,6 +117,15 @@ cuDNN link : https://developer.nvidia.com/cudnn
 
 이렇게 뜨면 잘 설치가 된 것이다.
 
+<br/>
+<br/>
+
+## UPDATE (2021.11.10)
+
+- ~~재설치할 때는 가상환경과 프로그램 모두 지우고 다시 설치~~
+- ~~tensorflow_gpu-2.4.0, cuDNN : 8.0, CUDA : 11.0~~
+- 위의 그대로!!
+
 
 
 ## References
@@ -125,3 +134,4 @@ cuDNN link : https://developer.nvidia.com/cudnn
 - [Tensorflow 공식 사이트](https://www.tensorflow.org/install/gpu)
 - [GPU 사용을 위한 CUDA 환경 구성하기](https://velog.io/@mactto3487/%EB%94%A5%EB%9F%AC%EB%8B%9D-GPU-%ED%99%98%EA%B2%BD-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0)
 - [Tensorflow와 호환되는 CUDA, cuDNN 설치하는 법](https://coding-groot.tistory.com/87)
+- [모두의 근삼이](https://ykarma1996.tistory.com/99)
