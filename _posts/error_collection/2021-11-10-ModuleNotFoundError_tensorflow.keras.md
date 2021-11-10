@@ -19,3 +19,6 @@ last_modified_at: 2021-11-10
 
 ![image](https://user-images.githubusercontent.com/78655692/141083287-742b8933-0450-45ca-965a-e5f1aad2112e.png)
 
+### + 또 다른 방법
+
+- `pip install keras==2.2.4` 로 설치하면 `keras.layers`, `keras.models`로 해결이 된다.
