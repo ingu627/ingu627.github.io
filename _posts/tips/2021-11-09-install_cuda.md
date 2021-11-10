@@ -13,8 +13,16 @@ last_modified_at: 2021-11-10
 ---
 ## UPDATE (2021.11.10)
 
+- 하루 동안 지웠다 설치했다를 반복한 나머지 CUDA 설치 전문가가 되었다. ㅎㅎ;
+- 제가 쓴 글대로 하면 다 됩니다.
+
+<br/>
+
 - *재설치할 때는 가상환경과 프로그램 모두 지우고 다시 설치*
-- CUDA : 11.0, cuDNN : 8.0, tensorflow_gpu-2.4.0, python==3.7
+- CUDA : 11.0, cuDNN : 8.0, tensorflow_gpu-2.4.0, ~~python==3.7~~ **무조건 python==3.6으로 깔아본다. 다 된다.**
+
+![image](https://user-images.githubusercontent.com/78655692/141088104-68bf5092-ea63-436f-9c94-a4d35b26488d.png)
+
 
 <br/>
 <br/>
@@ -47,7 +55,7 @@ ANACONDA site link : [https://www.anaconda.com/products/individual](https://www.
 
 ![image](https://user-images.githubusercontent.com/78655692/140858868-6c17da63-8224-4123-bf46-28ffcb772f13.png)
 
-+ 텐서플로는 파이썬 3.7 버전의 패키지를 제공하지 않기 때문에 아나콘다 5.3 버전을 설치하면 tensorflow를 설치할 수 없다고 한다. (파이썬 3.6 버전으로 다운그레이드 필요)
++ **<span style="color:red">텐서플로는 파이썬 3.7 버전의 패키지를 제공하지 않기 때문에 아나콘다 5.3 버전을 설치하면 tensorflow를 설치할 수 없다고 한다. (파이썬 3.6 버전으로 다운그레이드 필요)</span>**
 
 
 ## 2. NVIDIA DRIVER 설치
