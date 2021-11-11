@@ -17,7 +17,6 @@ sidebar_main: true
 - [공돌이의 수학정리노트](https://angeloyeo.github.io/2020/01/09/Bayes_rule.html)
 - [Dive into Deep Learning](https://www.d2l.ai/index.html)
 - [TCP SCHOOL](http://tcpschool.com/python/intro)
-- [앎의 공간 -Data Science/Machine Learning 구현](https://techblog-history-younghunjo1.tistory.com/261)
 
 ### Web Service
 - [아마존 웹 서비스를 다루는 기술](http://pyrasis.com/private/2014/09/30/publish-the-art-of-amazon-web-services-book)  
@@ -47,3 +46,7 @@ sidebar_main: true
 - [케라스 창시자에게 배우는 딥러닝](hhttps://www.aladin.co.kr/shop/wproduct.aspx?ItemId=170317445)
 - [Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow(핸즈온 머신러닝)](https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=237677114)
 
+## Blogs
+
+- [앎의 공간 -Data Science/Machine Learning 구현](https://techblog-history-younghunjo1.tistory.com/261)
+- [[Tensorflow 2.0] 합성곱 신경망: CNN](https://ericabae.medium.com/tensorflow-2-0-%ED%95%A9%EC%84%B1%EA%B3%B1-%EC%8B%A0%EA%B2%BD%EB%A7%9D-cnn-bfd925298c9b)
