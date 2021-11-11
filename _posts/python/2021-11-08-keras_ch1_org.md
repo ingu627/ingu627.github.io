@@ -8,8 +8,10 @@ toc: true
 toc_sticky: true
 author_profile: false
 
-last_modified_at: 2021-11-08
+last_modified_at: 2021-11-11
 ---
+
+> 본 글은 [케라스 창시자에게 배우는 딥러닝] 책을 개인공부하기 위해 요약, 정리한 내용입니다.
 
 ## 1_1. 인공 지능과 머신 러닝, 딥러닝
 - 인공지능 : 보통의 사람이 수행하는 지능적인 작업을 자동화하기 위한 연구 활동
