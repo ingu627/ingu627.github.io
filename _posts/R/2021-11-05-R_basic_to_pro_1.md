@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "R 기초 ~ 심화 문법 총정리"
+title: "R 기초 ~ 심화 문법 총정리 (1)"
 excerpt: "+ ADsP, 빅데이터분석기사 실기 작업형 대비"
 categories: R
 tag : [R, grammar, basic, pro, adsp, certificate]
