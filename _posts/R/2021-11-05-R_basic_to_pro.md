@@ -8,8 +8,10 @@ toc: true
 toc_sticky: true
 author_profile: false
 
-last_modified_at: 2021-11-09
+last_modified_at: 2021-11-12
 ---
+
+## + 빅데이터분석기사 실기 작업형 (R 기본 문법)
 
 ## 기본 단축키 
 - `ctrl + shift + c` : 해당 줄 주석 처리
@@ -344,7 +346,28 @@ last_modified_at: 2021-11-09
 ![image](https://user-images.githubusercontent.com/78655692/140602188-2a541568-45e8-4bfe-af65-d1968a0a572c.png)
 
 
+## ggplot 패키지
 
+- ggplot 패키지의 기본 문법은 구성요소인 data, aes, geom을 기반으로 사용한다.
+
+|주요 파라미터 | 설명 |
+|---|---|
+|data | 그래프를 그릴 객체명|
+|aes(x,y) | x는 x축에 해당하는 컬럼명, y는 y축에 해당하는 컬럼명|
+|geom_xx() | 그래프 지정 함수 |
+
+- `geom_bar` : 막대그래프를 그리는 함수
+- `geom_point` : 산점도를 그리는 함수
+- `geom_line` : 선을 그리는 함수
+- `geom_boxplot` : 박스 그래프를 그리는 함수
+
+### geom_boxplot 예시
+
+![image](https://user-images.githubusercontent.com/78655692/141499340-247c7634-48f5-483f-9acb-a529fe391103.png)
+
+![image](https://user-images.githubusercontent.com/78655692/141499868-15d3b342-b63e-4680-9aa5-0101d2a738ad.png)
+
+![image](https://user-images.githubusercontent.com/78655692/141499918-c0a24422-60c9-4a8d-a77e-6ab1603bc5af.png)
 
 
 
