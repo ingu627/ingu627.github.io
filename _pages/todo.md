@@ -50,3 +50,16 @@ sidebar_main: true
 
 - [앎의 공간 -Data Science/Machine Learning 구현](https://techblog-history-younghunjo1.tistory.com/261)
 - [[Tensorflow 2.0] 합성곱 신경망: CNN](https://ericabae.medium.com/tensorflow-2-0-%ED%95%A9%EC%84%B1%EA%B3%B1-%EC%8B%A0%EA%B2%BD%EB%A7%9D-cnn-bfd925298c9b)
+- [Setup Visual Studio Code to run R on VSCode 2021](https://www.r-bloggers.com/2021/01/setup-visual-studio-code-to-run-r-on-vscode-2021/)
+
+## Github blog 만들기
+
+- [Minimal Mistakes 공식 홈페이지](https://mmistakes.github.io/minimal-mistakes/)
+- [Google Fonts](https://fonts.google.com/)
+- [Font Awesome](https://fontawesome.com/)
+- [shields.io](https://shields.io/)
+- [Online Markdown Editor](https://dillinger.io/)
+- [shields.io를 사용하여 프로필에 대한 사용자 지정 언어 배지를 만드는 방법](https://ichi.pro/ko/shields-ioleul-sayonghayeo-peulopil-e-daehan-sayongja-jijeong-eon-eo-baejileul-mandeuneun-bangbeob-231647702248299)
+- [carbon](https://carbon.now.sh/)
+- [liquid](https://shopify.github.io/liquid/basics/introduction/)
+- [Simple Icons](https://simpleicons.org/)
