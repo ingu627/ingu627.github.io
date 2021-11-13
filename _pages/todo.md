@@ -24,6 +24,7 @@ sidebar_main: true
 
 ### OS 
 - [(KOCW) 운영체제, 이화여자대학교 반효경 교수](http://www.kocw.or.kr/home/cview.do?mty=p&kemId=1046323)
+- [운영체제 정리 블로그 - SungBum Park](https://velog.io/@codemcd?tag=OS)
 
 ### Distributed Systems
 - [Distributed Systems by Maarten van Steen, Andrew S. Tanenbaum](https://www.distributed-systems.net/index.php/books/ds3/ds3-ebook/)
@@ -32,10 +33,9 @@ sidebar_main: true
 - [생활코딩 - Linux](https://www.inflearn.com/course/%EC%83%9D%ED%99%9C%EC%BD%94%EB%94%A9-%EB%A6%AC%EB%88%85%EC%8A%A4-%EA%B0%95%EC%A2%8C#curriculum)
 
 
-
 ## Data Set Sites
 - [UCI - Machine Learning Repository](https://archive.ics.uci.edu/ml/index.php)
-
+- [Dataset Search - Google](https://datasetsearch.research.google.com/)
 
 ## Competitions
 - [dacon](https://dacon.io/)
