@@ -14,6 +14,7 @@ last_modified_at: 2021-11-12
 ## + 빅데이터분석기사 실기 작업형 (R 기본 문법)
 
 ## 기본 단축키 
+
 - `ctrl + shift + c` : 해당 줄 주석 처리
 - `#` : 해당 줄 주석 처리
 - `ctrl + enter` : 해당 줄 실행
@@ -33,6 +34,7 @@ last_modified_at: 2021-11-12
 |** | 지수 계산|
 
 ## 관계 연산자(Relation Operator)
+
 - `TRUE` or `FALSE`로 결과값이 나옴 
 
 |연산자|내용|
@@ -88,6 +90,7 @@ last_modified_at: 2021-11-12
 ![image](https://user-images.githubusercontent.com/78655692/140599832-4b217c79-78b1-4108-80d9-f6cb97d7b027.png)
 
 ### == 또는 !=
+
 - == : 맞는지 판단하여라
 - != : 틀린지 판단하여라
 
@@ -102,6 +105,7 @@ last_modified_at: 2021-11-12
 ![image](https://user-images.githubusercontent.com/78655692/140600214-e213c625-3a71-4b64-a2cd-dbac40eaa4cf.png)
 
 ### seq()
+
 - seq = sequence의 약자
 - seq(from = 시작 숫자 , to = 마지막 숫자, by = 증가범위)
 
@@ -109,8 +113,8 @@ last_modified_at: 2021-11-12
 
 ![image](https://user-images.githubusercontent.com/78655692/140600384-01848a0a-36b8-411e-98c7-24ccc68631c7.png)
 
-
 ### rep()
+
 - rep = repeat의 약자
 - rep(반복할 값, 반복할 횟수)
 

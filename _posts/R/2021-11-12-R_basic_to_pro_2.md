@@ -12,6 +12,7 @@ last_modified_at: 2021-11-13
 ---
 
 ## + 빅데이터분석기사 실기 작업형 대비
+
 - environment : visual studio code
 - extensions : R, R Tools, Tabnine, Dracula (color theme)
 
@@ -65,12 +66,11 @@ last_modified_at: 2021-11-13
 
 **4. EXCEL 파일**
 - `read_excel(path)` : 엑셀 파일로부터 데이터를 읽을 때 사용하는 함수
-- `install.packages("readxl") 설치해야함
+- `install.packages("readxl")` 설치해야함
 - `path` : 읽어 들일 파일명을 설정함
-- `write.xlsx(x, file,...) : 엑셀 파일로 저장할 때 사용하는 함수
+- `write.xlsx(x, file,...)` : 엑셀 파일로 저장할 때 사용하는 함수
 
 ## 1. 데이터 전처리 작업
-
 ## plyr 패키지
 
 - plyr 패키지는 원본 데이터를 분석하기 쉬운 형태로 나눠서 다시 새로운 형태로 만들어 주는 패키지이다.
