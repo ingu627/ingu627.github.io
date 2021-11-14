@@ -162,7 +162,8 @@ from tensorflow.python.client import device_lib
 print(device_lib.list_local_devices())
 ```
 
-![image](https://user-images.githubusercontent.com/78655692/140863298-572a26a8-41ae-4c89-9143-9bf3fcc87d9c.png)
+![image](https://user-images.githubusercontent.com/78655692/141671882-b12399ab-9387-42ef-9869-c11f2a2fa43d.png)
+
 
 이렇게 뜨면 잘 설치가 된 것이다.
 
