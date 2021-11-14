@@ -149,6 +149,8 @@ last_modified_at: 2021-11-14
 - `col-lg-7` : 뷰포트가 Large Size 보다 크면 컬럼을 7개 사용한다.
   - `<div class="col-lg-7 col-12">` : 뷰포트가 large size보다 크지 않을 때 12개를 쓴다.
 
+## 최종 완성본 : [https://github.com/ingu627/bootstrap5-github-landing](https://github.com/ingu627/bootstrap5-github-landing)
+
 ## Reference
 [fastcampus](https://fastcampus.co.kr/dev_online_pyweb)
 [bootstrap 공식링크](https://getbootstrap.com/)
