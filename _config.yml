@@ -20,7 +20,7 @@ title                    : "POEUN. Artificial Intelligence & Psychology"
 title_separator          : "|"
 subtitle                 : "Machine Learning | Deep Learning | Cloud Computing | Distributed Systems"
 name                     : "Hyunseok Jung"
-description              : "개인 저장공간입니다.<br/> Since 21.10.29"
+description              : "개인 저장공간입니다.<br/>도움이 되길 바랍니다.<br/> Since 21.10.29"
 url                      : "https://ingu627.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : "ingu627/ingu627.github.io" # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
@@ -103,7 +103,7 @@ analytics:
 author:
   name             : "hyunseok 🙋‍♂️"
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "개인 저장공간입니다.<br/> Since 21.10.29"
+  bio              : "개인 저장공간입니다.<br/>도움이 되길 바랍니다.<br/> Since 21.10.29"
   location         : "South Korea"
   # email            : "rjsdudans@naver.com"
   links:
