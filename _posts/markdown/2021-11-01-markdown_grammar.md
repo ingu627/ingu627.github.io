@@ -99,6 +99,37 @@ _italic_
 
 더 넣고 싶을 땐 추가로 `>`를 넣습니다.
 
+## 문자 박스(notice)
+
+|Notice Type|	Class|
+|---|---|
+|Default|	.notice|
+|Primary|	.notice--primary|
+|Info|	.notice--info|
+|Warning|	.notice--warning|
+|Success|	.notice--success|
+|Danger|	.notice--danger|
+
+- `{: .notice}`으로 적용 (문장 다음 엔터치고)
+
+**이것은 문자박스입니다.**<br>공지사항입니다. 공부를 해봅시다
+{: .notice}
+
+**이것은 문자박스입니다.**<br>공지사항입니다. 공부를 해봅시다
+{: .notice--primary}
+
+**이것은 문자박스입니다.**<br>공지사항입니다. 공부를 해봅시다
+{: .notice--info}
+
+**이것은 문자박스입니다.**<br>공지사항입니다. 공부를 해봅시다
+{: .notice--warning}
+
+**이것은 문자박스입니다.**<br>공지사항입니다. 공부를 해봅시다
+{: .notice--success}
+
+**이것은 문자박스입니다.**<br>공지사항입니다. 공부를 해봅시다
+{: .notice--danger}
+
 
 ## 문자 정렬
 
@@ -297,7 +328,6 @@ print('Hello World!')
 $y=3x$ #수직을 $로 감싸주기
 ```
 
-
 ## 그래프로 표시하기
 
 ```mermaid
@@ -320,8 +350,8 @@ graph LR
 - (mermaid)
 
 ## References
-[[토크ON세미나] Git & GitHub Page 블로그 만들기 4강 - Github Page 활용하기 | T아카데미](https://www.youtube.com/watch?v=eCv_bh-Ax-Q)
-[마크다운 문법 소개](http://ccl.cckorea.org/syntax/)
-
+- [[토크ON세미나] Git & GitHub Page 블로그 만들기 4강 - Github Page 활용하기 | T아카데미](https://www.youtube.com/watch?v=eCv_bh-Ax-Q)
+- [마크다운 문법 소개](http://ccl.cckorea.org/syntax/)
+- [[Github Blog] minimal mistakes - 포스팅 글 써보기](https://eona1301.github.io/github_blog/GithubBlog-Posting/)
 
 
