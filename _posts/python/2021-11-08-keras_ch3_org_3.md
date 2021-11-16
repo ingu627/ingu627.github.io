@@ -5,8 +5,9 @@ excerpt: "케라스 창시자에게 배우는 딥러닝 요약"
 categories: python
 tag : [python, keras, DL]
 toc: true
-toc_sticky: true
+# toc_sticky: true
 author_profile: false
+classes: wide
 
 last_modified_at: 2021-11-11
 ---
