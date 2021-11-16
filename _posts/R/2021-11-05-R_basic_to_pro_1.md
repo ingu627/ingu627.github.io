@@ -8,10 +8,13 @@ toc: true
 toc_sticky: true
 author_profile: false
 
-last_modified_at: 2021-11-12
+last_modified_at: 2021-11-16
 ---
 
 ## + 빅데이터분석기사 실기 작업형 (R 기본 문법)
+
+본 글은 빅데이터분석기사 실기 작업형에 대비하여 요약 및 실습한 것을 작성한 글입니다.
+{: .notice–-info}
 
 ## 기본 단축키 
 
@@ -19,6 +22,7 @@ last_modified_at: 2021-11-12
 - `#` : 해당 줄 주석 처리
 - `ctrl + enter` : 해당 줄 실행
 - `help(함수명, 데이터 세트)` : 함수명, 데이터 세트 등에 대한 설명을 해 주는 기능
+- `ctrl + shift + m` : `%>%` 생성 
 
 ## 산술 연산자(Arithmetic Operator)
 
