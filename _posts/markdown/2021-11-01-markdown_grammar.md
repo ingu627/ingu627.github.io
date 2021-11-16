@@ -10,7 +10,7 @@ sidebar:
     nav: "docs"
 
 date: 2021-11-01
-last_modified_at: 2021-11-02
+last_modified_at: 2021-11-16
 ---
 
 ## MarkDown (md) 
@@ -20,9 +20,9 @@ last_modified_at: 2021-11-02
 - 다양한 Markdown용 Editor (Typora...)
 
 
-## `[toc]` + enter (table of contents)
-
-[toc]
+## 목차 만들기 
+- (table of contents)
+- `[toc] + enter`
 
 
 ## 크기 지정
@@ -64,10 +64,11 @@ _italic_
 `<u>우리를 움직이게 하는 건 동기</u>`
 
 ## 줄바꿈
-텍스트 뒤에 `space bar`를 두번 치고 enter를 누른 뒤 다음 텍스트를 쓴다.
+텍스트 뒤에 `space bar`를 두번 치고 enter를 누른 뒤 다음 텍스트를 씁니다.
 
-## 띄어쓰기
-- 텍스트 뒤에 `<br/>` 을 치시면 됩니다.
+## 띄어쓰기(enter)
+- 텍스트 뒤에 `<br>` 을 치시면 됩니다. 
+- `<br/>` 로 치시면 한칸 더 띄어집니다.
 
 
 ## 글자 색깔
@@ -104,11 +105,11 @@ _italic_
 |Notice Type|	Class|
 |---|---|
 |Default|	.notice|
-|Primary|	.notice--primary|
-|Info|	.notice--info|
-|Warning|	.notice--warning|
-|Success|	.notice--success|
-|Danger|	.notice--danger|
+|Primary|	.notice-\-primary|
+|Info|	.notice-\-info|
+|Warning|	.notice-\-warning|
+|Success|	.notice-\-success|
+|Danger|	.notice-\-danger|
 
 - `{: .notice}`으로 적용 (문장 다음 엔터치고)
 

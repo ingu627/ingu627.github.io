@@ -8,14 +8,13 @@ toc: true
 toc_sticky: true
 author_profile: false
 
-last_modified_at: 2021-11-13
+last_modified_at: 2021-11-16
 ---
 
-## + 빅데이터분석기사 실기 작업형 대비
+## + 빅데이터분석기사 실기 작업형 대비 (데이터 수집, 전처리)
 
-- environment : visual studio code
-- extensions : R, R Tools, Tabnine, Dracula (color theme)
-
+본 글은 빅데이터분석기사 실기 작업형에 대비하여 요약 및 실습한 것을 작성한 글입니다. 해당 글의 코드를 보고 싶으신 분들은 [빅데이터 분석기사 R 코드](https://github.com/ingu627/BigDataAnalysis)를 참고하시길 바랍니다.
+{: .notice--info}
 
 ## 데이터 수집 작업
 
