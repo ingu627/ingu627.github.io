@@ -56,6 +56,7 @@ sidebar_main: true
 - [앎의 공간 -Data Science/Machine Learning 구현](https://techblog-history-younghunjo1.tistory.com/261)
 - [[Tensorflow 2.0] 합성곱 신경망: CNN](https://ericabae.medium.com/tensorflow-2-0-%ED%95%A9%EC%84%B1%EA%B3%B1-%EC%8B%A0%EA%B2%BD%EB%A7%9D-cnn-bfd925298c9b)
 - [Setup Visual Studio Code to run R on VSCode 2021](https://www.r-bloggers.com/2021/01/setup-visual-studio-code-to-run-r-on-vscode-2021/)
+- [공부하는 식빵맘 - [Github 블로그] 같은 카테고리 내에서의 이전글, 다음글 이동](https://ansohxxn.github.io/blog/prevnext/)
 
 ## Github blog 만들기
 
@@ -69,3 +70,4 @@ sidebar_main: true
 - [liquid](https://shopify.github.io/liquid/basics/introduction/)
 - [Simple Icons](https://simpleicons.org/)
 - [Favicon](https://realfavicongenerator.net/)
+- [jekyll 문서](http://jekyllrb-ko.github.io/)
