@@ -23,6 +23,10 @@ sidebar_main: true
 - [아마존 웹 서비스를 다루는 기술](http://pyrasis.com/private/2014/09/30/publish-the-art-of-amazon-web-services-book)  
   - 유의사항 : 저작권 (요약, 블로그 기재 금지, 링크 기재는 허용)
 
+### QUI
+
+- [Qt for Python - Pyside 설치하기](https://doc.qt.io/qtforpython/)
+
 ### OS 
 - [(KOCW) 운영체제, 이화여자대학교 반효경 교수](http://www.kocw.or.kr/home/cview.do?mty=p&kemId=1046323)
 - [운영체제 정리 블로그 - SungBum Park](https://velog.io/@codemcd?tag=OS)
@@ -64,3 +68,4 @@ sidebar_main: true
 - [carbon](https://carbon.now.sh/)
 - [liquid](https://shopify.github.io/liquid/basics/introduction/)
 - [Simple Icons](https://simpleicons.org/)
+- [Favicon](https://realfavicongenerator.net/)
