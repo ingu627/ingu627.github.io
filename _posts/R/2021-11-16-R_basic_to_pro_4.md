@@ -174,7 +174,7 @@ last_modified_at: 2021-11-17
 
 *9. 분석 모형 평가 - 혼동 행렬*
 
-**-> 에러가 남**
+![image](https://user-images.githubusercontent.com/78655692/142240117-cf1abb73-41ea-4773-b4a5-a87bc5d79234.png)
 
 *10. 분석 모형 평가 - AUC*
 
