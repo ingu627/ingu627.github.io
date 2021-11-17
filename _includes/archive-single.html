@@ -24,6 +24,11 @@
         <a href="{{ post.url | relative_url }}" rel="permalink">{{ title }}</a>
       {% endif %}
     </h2>
+    <!-- 기존에서 카테고리 보이게 -->
+    {% if post.categories[0] != null %}
+		  <p class="archive__item-excerpt"><i class="far fa-folder-open"></i> {{ post.categories }}</p>
+	  {% endif %}
+
     {% include page__meta.html type=include.type %}
     {% if post.excerpt %}<p class="archive__item-excerpt" itemprop="description">{{ post.excerpt | markdownify | strip_html | truncate: 160 }}</p>{% endif %}
   </article>

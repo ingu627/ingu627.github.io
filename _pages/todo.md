@@ -1,6 +1,6 @@
 ---
 title: "To-Do"
-layout: single
+layout: splash
 permalink: /todo/
 author_profile: true
 sidebar_main: true
