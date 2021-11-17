@@ -1,7 +1,7 @@
 ---
 title: "HyunSeok Jung"
 permalink: /about/
-layout: single
+layout: splash
 ---
 
 ## Profile
