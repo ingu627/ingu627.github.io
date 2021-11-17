@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 author_profile: false
 
-last_modified_at: 2021-11-16
+last_modified_at: 2021-11-17
 ---
 
 ## + 빅데이터분석기사 실기 작업형 (R 기본 문법)
@@ -277,7 +277,9 @@ last_modified_at: 2021-11-16
 ![image](https://user-images.githubusercontent.com/78655692/140601808-2956a66c-7cc7-4d08-9375-1f6a02d126c9.png)
 
 ### sample()
-- sample(데이터 추출 범위, 데이터 추출 갯수 , replace = “FALSE OR”TRUE")
+
+- sample(데이터 추출 범위, 데이터 추출 갯수 , replace = “FALSE OR ”TRUE")
+- `sample(x, size, replace=FALSE, prob=NULL)`
   - `replace=TRUE` : 복원추출 
   - `replace=FALSE` : 비복원추출
     - 주의사항 : TRUE, FALSE는 모두 대문자로!! 
@@ -285,6 +287,7 @@ last_modified_at: 2021-11-16
 ![image](https://user-images.githubusercontent.com/78655692/140601885-356b4494-2c1c-476c-8008-cf2ff43335d6.png)
 
 ### set.seed()
+
 - 무작위 값 결과값 고정할 때
 - 결과값이 똑같이 나온다.
 
@@ -292,6 +295,7 @@ last_modified_at: 2021-11-16
 
 ## 조건문
 ### if ~ else
+
 - 조건문
 - if ~라면 이거 선택. 아니라면(=else) 이거 선택
 - `%in%` : ~에 속해 있는지 확인
