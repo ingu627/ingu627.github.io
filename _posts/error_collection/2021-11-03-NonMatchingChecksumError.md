@@ -38,5 +38,5 @@ auth.authenticate_user()
 
 [구글 클라우드 인증](https://cloud.google.com/docs/authentication/getting-started#windows)
 
-#### + 만약 KeyError: <ExtractMethod.NO_EXTRACT: 1>가 나왔다면?
+### + 만약 KeyError: <ExtractMethod.NO_EXTRACT: 1>가 나왔다면?
 (해결 찾는 중) 
