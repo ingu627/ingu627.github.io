@@ -210,6 +210,8 @@ last_modified_at: 2021-11-16
 
 ![image](https://user-images.githubusercontent.com/78655692/141943481-7428bce8-7298-4f96-8e14-384c4c58e9f9.png)
 
+- `lm(hp~., data=mtcars)` 에서 `.`의 의미는 모든 독립변수를 넣겠다를 의미.
+
 ## 더미 변수(Dummy Variable) 생성 
 
 - 회귀 분석에서 범주형 변수의 각 범주를 0과 1의 값만으로 표현하여 생성한 변수 
