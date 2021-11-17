@@ -67,26 +67,35 @@ last_modified_at: 2021-11-17
 
 <br/>
 
-- **데이터 탐색** : str 함수, head 함수, summary 함수를 이용하여 데이터를 탐색한다.
+### 데이터 탐색
+
+- str 함수, head 함수, summary 함수를 이용하여 데이터를 탐색한다.
 
 ![image](https://user-images.githubusercontent.com/78655692/142039521-cf477d05-bef8-46ee-94e8-e79e54ec9f00.png)
 
-- **전처리 - 결측값 처리**
+### 전처리 - 결측값 처리
 
 ![image](https://user-images.githubusercontent.com/78655692/142039617-63e5cede-541e-4576-acee-11afa33372e6.png)
 
 ![image](https://user-images.githubusercontent.com/78655692/142039684-455319a6-1741-434d-b1ba-fe7570a2e6fb.png)
 
-- **분석 모형 구축** - 유의하지 않은 변수 제거
+### 분석 모형 구축
+
+- 유의하지 않은 변수 제거
+- p-value를 확인하여 유의미한 변수를 선택한다.
 
 ![image](https://user-images.githubusercontent.com/78655692/142194496-e448ea25-fdce-4813-80eb-13728022bbe5.png)
 
-- p-value를 확인하여 유의미한 변수를 선택한다.
-- **분석 모형 구축** - 자동화된 변수 선택
+
+### 분석 모형 구축
+
+- 자동화된 변수 선택
 
 ![image](https://user-images.githubusercontent.com/78655692/142195433-78ff4279-322f-47fb-8e54-30d34488ff18.png)
 
-- **분석 모형 구축** - 다중공선성 확인 및 문제 해결
+### 분석 모형 구축
+
+- 다중공선성 확인 및 문제 해결
 - `car` 패키지의 vif 함수를 이용하여 *다중공선성* 문제가 있는지를 확인한다.
 
 ![image](https://user-images.githubusercontent.com/78655692/142196080-92195c64-10ab-4f84-99e0-0f60e1c013b2.png)
@@ -98,7 +107,7 @@ last_modified_at: 2021-11-17
 
 - AtBat 변수를 제거한 후 다중공선성 문제가 해결되었다.
 
-- **분석 모형 평가**
+### 분석 모형 평가
 
 ![image](https://user-images.githubusercontent.com/78655692/142196616-d5546d79-d779-4778-859d-ea44175afe55.png)
 
@@ -114,7 +123,7 @@ last_modified_at: 2021-11-17
 |family|모델에서 사용할 분포<br>이항 로지스틱 회귀 분석의 경우 "binomial" 사용
 |data|분석 대상 데이터|
 
-### 혼동 행렬
+## 혼동 행렬
 
 - 분류 모형의 결과를 평가하기 위해서 혼동 행렬(Confusion Matrix)을 이용한 평가지표와 ROC 곡선의 AUC를 주로 이용한다.
 - `confusionMatrix(data, reference)`
@@ -125,7 +134,7 @@ last_modified_at: 2021-11-17
 |reference|실제 분류 데이터|
 
 
-### AUC(AUROC; Area Under ROC)
+## AUC(AUROC; Area Under ROC)
 
 - ROC 곡선의 x축은 FPR(False Positive Ratio), y축은 TPR(True Positive Ratio)로 두고 아랫부분의 면적인 AUC를 기준으로 모형을 평가한다.
 - AUC는 항상 1보다 작거나 같으며, 1에 가까울수록 좋은 모형으로 평가한다.
@@ -136,47 +145,47 @@ last_modified_at: 2021-11-17
 |actual|정답인 label의 벡터(numeric, character 또는 factor)|
 |predicted|예측된 값의 벡터|
 
-### default 데이터셋 
+## default 데이터셋 
 
 ![image](https://user-images.githubusercontent.com/78655692/142223206-8afe2717-ad95-46ea-9c6e-dd235c904f46.png)
 
 
-*1. 데이터 탐색*
+### 1. 데이터 탐색
 
 ![image](https://user-images.githubusercontent.com/78655692/142215996-d3e75713-1537-4ad6-a67f-a20c6d5a371d.png)
 
 *2. 전처리*
 *3. 변수선택*
 
-*4. 분석 모형 구축 - 유의성 검정*
+### 4. 분석 모형 구축 - 유의성 검정
 
 ![image](https://user-images.githubusercontent.com/78655692/142217931-efcfd7f5-fbc3-4c6d-a3f5-79a0c5d6635f.png)
 
-*5. 분석 모형 구축 - step 함수 이용*
+### 5. 분석 모형 구축 - step 함수 이용
 
 ![image](https://user-images.githubusercontent.com/78655692/142218247-d1b6635a-be41-4b6e-b42b-f1829a98db25.png)
 
-*6. 분석 모형 구축 - 변수의 유의성 검정*
+### 6. 분석 모형 구축 - 변수의 유의성 검정
 
 ![image](https://user-images.githubusercontent.com/78655692/142218589-445f8c3e-9cf8-4245-ba9e-66a33b6297b8.png)
 
-*7. 분석 모형 구축 - 다중공선성 확인*
+### 7. 분석 모형 구축 - 다중공선성 확인
 
 ![image](https://user-images.githubusercontent.com/78655692/142219254-55537049-73e0-4567-a0c3-6addce34f79b.png)
 
 - VIF가 4를 초과하면 다중공선성이 존재한다고 판단한다.
 
-*8. 분석 모형 평가 - 평가용 데이터를 이용한 분류*
+### 8. 분석 모형 평가 - 평가용 데이터를 이용한 분류
 
 ![image](https://user-images.githubusercontent.com/78655692/142220035-3f8fa943-d747-490f-a362-ad0633c81ddb.png)
 
 - ifelse로 파산 여부를 확인
 
-*9. 분석 모형 평가 - 혼동 행렬*
+### 9. 분석 모형 평가 - 혼동 행렬
 
 ![image](https://user-images.githubusercontent.com/78655692/142240117-cf1abb73-41ea-4773-b4a5-a87bc5d79234.png)
 
-*10. 분석 모형 평가 - AUC*
+### 10. 분석 모형 평가 - AUC
 
 ![image](https://user-images.githubusercontent.com/78655692/142222847-1653b524-85ca-4861-b7a3-16affb69c95f.png)
 
