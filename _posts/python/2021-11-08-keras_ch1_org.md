@@ -12,7 +12,8 @@ classes: wide
 last_modified_at: 2021-11-11
 ---
 
-> 본 글은 [케라스 창시자에게 배우는 딥러닝] 책을 개인공부하기 위해 요약, 정리한 내용입니다.
+본 글은 [케라스 창시자에게 배우는 딥러닝] - (박해선 옮김) 책을 개인공부하기 위해 요약, 정리한 내용입니다. 전체 코드는 [https://github.com/ingu627/deep-learning-with-python-notebooks](https://github.com/ingu627/deep-learning-with-python-notebooks)에 기재했습니다.(원본 코드 fork) <br>저와 같이 공부하면 좋을 것 같습니다.
+{: .notice--info}
 
 ## 1_1. 인공 지능과 머신 러닝, 딥러닝
 - 인공지능 : 보통의 사람이 수행하는 지능적인 작업을 자동화하기 위한 연구 활동
@@ -62,7 +63,18 @@ last_modified_at: 2021-11-11
 - 그래디언트 부스팅 머신은 약한 예측 모델인 결정 트리를 앙상블하는 것을 기반으로 하는 머신 러닝 기법
 - 알고리즘은 이전 모델에서 놓친 데이터 포인트를 보완하는 새로운 모델을 반복적으로 훈련함으로써 머신 러닝 모델을 향상하는 방법인 그래디언트 부스팅(gradient boosting)을 사용한다.
 
+### Training, Validation and Test
+
+![image](https://user-images.githubusercontent.com/78655692/142379924-138ab694-c7e1-4291-9ac8-016ad2132700.png)
+
+![image](https://user-images.githubusercontent.com/78655692/142379989-22f13744-4120-4775-967a-9390c0dc06fd.png)
+
+- Training set(훈련 데이터)은 모델을 학습하는데 사용된다.
+- Validation set(검정 데이터)은 training set으로 만들어진 모델의 성능을 측정하기 위해 사용된다. 
+- Test set(테스트 데이터)은 validation set으로 사용할 모델이 결정 된 후, 마지막으로 딱 한번 해당 모델의 예상되는 성능을 측정하기 위해 사용된다.
+
 ## 딥러닝의 특징
+
 1. 층을 거치면서 점진적으로 더 복잡한 표현이 만들어 진다
 2. 이런 점진적인 중간 표현이 공동으로 학습된다.
 
@@ -72,4 +84,6 @@ last_modified_at: 2021-11-11
 
 
 ## References
-[케라스 창시자에게 배우는 딥러닝](https://tensorflow.blog/)
+
+- [케라스 창시자에게 배우는 딥러닝](https://tensorflow.blog/)
+- [Training, Validation and Test sets 차이 및 정확한 용도 (훈련, 검정, 테스트 데이터 차이)](https://modern-manual.tistory.com/19)
