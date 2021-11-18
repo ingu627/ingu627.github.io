@@ -71,3 +71,4 @@ sidebar_main: true
 - [Simple Icons](https://simpleicons.org/){: target="_blank"}
 - [Favicon](https://realfavicongenerator.net/){: target="_blank"}
 - [jekyll 문서](http://jekyllrb-ko.github.io/){: target="_blank"}
+- [공부하는 식빵맘](https://ansohxxn.github.io/){: target="_blank"}
