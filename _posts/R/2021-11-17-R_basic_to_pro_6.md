@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "R 기초 ~ 심화 문법 총정리 (6) - 분석 모형 구축"
-excerpt: "+ ADsP, 빅데이터분석기사 실기 작업형 대비"
+excerpt: "+ ADsP, 빅데이터분석기사 실기 작업형 대비 - 앙상블 기법까지"
 categories: R
 tag : [R, adsp, certificate]
 toc: true
