@@ -1,7 +1,7 @@
 ---
-title: "Projects"
+title: "Portfolio"
 layout: collection
-permalink: /project/
+permalink: /portfolio/
 collection: portfolio
 entries_layout: grid
 ---
