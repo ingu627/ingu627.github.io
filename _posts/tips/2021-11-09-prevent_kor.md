@@ -3,7 +3,7 @@ layout: single
 title: "파이썬 한글 방지 깨짐 코드"
 categories: tips
 tag : [tip, python, korea]
-author_profile: false
+sidebar_main: true
 
 last_modified_at: 2021-11-09
 ---

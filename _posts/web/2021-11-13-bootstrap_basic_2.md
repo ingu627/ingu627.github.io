@@ -5,9 +5,7 @@ excerpt: "문법 및 github 예제로 실습"
 categories: web
 tag : [web, frontend, concept, bootstrap]
 toc: true
-author_profile: false
-sidebar:
-    nav: "docs"
+sidebar_main: true
 
 last_modified_at: 2021-11-14
 ---

@@ -5,9 +5,7 @@ categories: markdown
 tag : [markdown, grammar, tip, md]
 toc: true
 toc_sticky: true
-author_profile: false
-sidebar:
-    nav: "docs"
+sidebar_main: true
 
 date: 2021-11-01
 last_modified_at: 2021-11-16

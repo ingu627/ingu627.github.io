@@ -3,7 +3,7 @@ layout: single
 title: "주피터(.ipynb) 마크다운(.md)로 전환하는 방법"
 categories: tips
 tag : [tip, md]
-author_profile: false
+sidebar_main: true
 
 last_modified_at: 2021-11-06
 ---

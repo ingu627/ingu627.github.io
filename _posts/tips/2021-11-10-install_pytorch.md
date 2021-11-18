@@ -4,7 +4,7 @@ title: "[WINDOWS10 환경] 딥러닝을 위한 파이토치(pytorch) 설치 방�
 excerpt : "windows10 환경 pytorch cuda11.0"
 categories: tips
 tag : [tip, pytorch, install]
-author_profile: false
+sidebar_main: true
 
 last_modified_at: 2021-11-10
 ---

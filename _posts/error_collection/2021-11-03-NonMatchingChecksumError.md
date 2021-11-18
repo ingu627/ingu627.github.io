@@ -4,7 +4,7 @@ title: '[에러 해결 방법] NonMatchingChecksumError: Artifact https://drive.
 categories: error
 tag : [error, solution]
 toc: true
-author_profile: false
+sidebar_main: true
 
 date: 2021-11-03
 last_modified_at: 2021-11-04

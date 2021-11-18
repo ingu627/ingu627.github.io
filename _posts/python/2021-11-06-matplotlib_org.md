@@ -6,7 +6,7 @@ categories: python
 tag : [python, matplotlib, visualization]
 toc: true
 toc_sticky: true
-author_profile: false
+sidebar_main: true
 
 last_modified_at: 2021-11-07
 ---
