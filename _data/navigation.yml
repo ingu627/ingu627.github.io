@@ -19,16 +19,43 @@ docs:
     children:
       - title: "Home"
         url: /
-      - title: "Category"
-        url: /categories/
-      - title: "Search"
-        url: /search/
 
-  # - title: "대목차2"
-  #   children:
-  #     - title: "Category"
-  #       url: /categories/
-  #     - title: "Tag"
-  #       url: /tags/
-  #     - title: "Search"
-  #       url: /search/
+  - title: "AI"
+    children:
+      - title: "PYTHON"
+        url: /python/
+      - title: "케라스 창시자에게 배우는 딥러닝"
+        url: /keras/
+      - title: "R"
+        url: /R/
+      - title: "에러 해결 방법"
+        url: /error/
+      - tips: "기타 팁들(설치, 방법,...)"
+        url: /tips/
+
+  - title: "SQL"
+    children:
+      - title: "SQL 문법"
+        url: /sql/
+  
+  - title: "WEB"
+    children:
+      - title: "웹 개발"
+        url: /web/
+
+  - title: "GIT BLOG"
+    children:
+      - title: "Markdown"
+        url: /markdown/
+
+  - title: "ENGLISH"
+    children:
+      - title: "신상현 영단어"
+        url: /englishWord/
+      - title: "영어 문법"
+        url: /english_grammar/
+  
+  - title: "BOOKS"
+    children:
+      - title: "책들 정리(요약)"
+        url: /book/
