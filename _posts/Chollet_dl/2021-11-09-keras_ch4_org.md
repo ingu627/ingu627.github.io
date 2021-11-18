@@ -2,7 +2,7 @@
 layout: single
 title: "[케라스(keras) 이해] 4장. 머신 러닝의 기본 요소"
 excerpt: "케라스 창시자에게 배우는 딥러닝 요약"
-categories: python
+categories: keras
 tag : [python, keras, DL]
 toc: true
 # toc_sticky: true
