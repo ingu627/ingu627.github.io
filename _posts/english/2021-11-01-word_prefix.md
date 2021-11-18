@@ -4,9 +4,7 @@ title: '영단어 접두사 총정리'
 categories: englishWord
 tag : [english, word, prefix]
 toc: true
-author_profile: false
-sidebar:
-    nav: "docs"
+sidebar_main: true
 ---
 
 
