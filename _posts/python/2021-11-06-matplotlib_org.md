@@ -469,6 +469,15 @@ plt.show()
 
 ![image](https://user-images.githubusercontent.com/78655692/142635521-da4d51d7-a03d-49e5-8f7f-419fd77e8e81.png)
 
+```python
+fig = plt.figure()
+ax1 = fig.add_subplot(2, 1, 1)
+ax2 = fig.add_subplot(2, 1, 2)
+plt.show()
+```
+
+![image](https://user-images.githubusercontent.com/78655692/142636675-3b62b7c1-692d-461a-ae7d-cff0be7bf60f.png)
+
 
 ## 수직선/수평선 표시하기
 - 그래프의 특정 값에 해당하는 위치에 수직선/수평선을 표시하기 위해서
@@ -860,5 +869,8 @@ plt.show()
 
 
 ## References
+
 - [Matplotlib 공식 사이트](https://matplotlib.org/)
 - [Matplotlib Tutorial - 파이썬으로 데이터 시각화하기](https://wikidocs.net/book/5011)
+- [파이썬으로 배우는 알고리즘 트레이딩 - Figure와 subplots](https://wikidocs.net/4761)
+- [Matplotlib 여러 개의 그래프 그리기](https://codetorial.net/matplotlib/subplot.html)
