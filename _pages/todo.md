@@ -18,6 +18,8 @@ sidebar_main: true
 - [Dive into Deep Learning](https://www.d2l.ai/index.html){: target="_blank"}
 - [TCP SCHOOL](http://tcpschool.com/python/intro){: target="_blank"}
 - [TensorFlow - 구글 머신러닝 플랫폼](https://codetorial.net/tensorflow/index.html){: target="_blank"}
+- [딥 러닝을 이용한 자연어 처리 입문](https://wikidocs.net/22886)
+- [ratsgo's blog for textmining](https://ratsgo.github.io/)
 
 ### Web Service
 - [아마존 웹 서비스를 다루는 기술](http://pyrasis.com/private/2014/09/30/publish-the-art-of-amazon-web-services-book){: target="_blank"}
