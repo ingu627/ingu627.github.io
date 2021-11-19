@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2021-11-07
+last_modified_at: 2021-11-19
 ---
 
 ## figure의 구성요소 
@@ -459,6 +459,16 @@ plt.show()
 ```
 
 ![matplotlib_org_50_0](https://user-images.githubusercontent.com/78655692/140638733-adea8293-f85a-4629-b284-842a5c3bbf62.png)
+
+## 여러 개의 그래프 그리기
+
+### subplot()
+
+- 여러 개의 그래프를 하나의 그림에 나타내도록 한다.
+- `subplot(nrows, ncols, index)`
+
+![image](https://user-images.githubusercontent.com/78655692/142635521-da4d51d7-a03d-49e5-8f7f-419fd77e8e81.png)
+
 
 ## 수직선/수평선 표시하기
 - 그래프의 특정 값에 해당하는 위치에 수직선/수평선을 표시하기 위해서
