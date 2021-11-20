@@ -1,11 +1,11 @@
 ---
 layout: single
 title: "주피터(.ipynb) 마크다운(.md)로 전환하는 방법"
-categories: tips
-tag : [tip, md]
+categories: markdown
+tag : [jupyter, md]
 sidebar_main: true
 
-last_modified_at: 2021-11-06
+last_modified_at: 2021-11-20
 ---
 
 1. ipynb 파일이 존재하는 폴더로 갑니다.  

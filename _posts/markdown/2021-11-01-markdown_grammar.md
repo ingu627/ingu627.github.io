@@ -2,13 +2,13 @@
 layout: single
 title: '마크다운(markdown)문법 총정리'
 categories: markdown
-tag : [markdown, grammar, tip, md]
+tag : [grammar, tip, md]
 toc: true
 toc_sticky: true
 sidebar_main: true
 
 date: 2021-11-01
-last_modified_at: 2021-11-16
+last_modified_at: 2021-11-20
 ---
 
 ## MarkDown (md) 
