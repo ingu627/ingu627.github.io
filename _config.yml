@@ -102,7 +102,7 @@ analytics:
 # Site Author
 author:
   name             : "poeun 🙋‍♂️"
-  avatar           : "/assets/images/cherry_blossom.jpg" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
+  avatar           : "/assets/images/Henri_Matisse_horse.jpg" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
   bio              : "개인 저장공간입니다.<br/>도움이 되길 바랍니다."
   location         : "South Korea"
   # email            : "rjsdudans@naver.com"
