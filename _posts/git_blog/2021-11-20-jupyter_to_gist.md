@@ -2,8 +2,8 @@
 layout: single
 title: "Jupyter Notebook 파일 Git 블로그에 업로드하는 방법"
 excerpt : "주피터 노트북 파일을 한번에 업로드하여 블로그 글에 보여주기"
-categories: tips
-tag : [tip, jupyter_notebook]
+categories: git_blog
+tag : [git, blog, jupyter_notebook]
 toc : True
 sidebar_main: true
 
