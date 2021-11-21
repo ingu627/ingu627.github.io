@@ -78,7 +78,14 @@
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "git_blog" %}
-                        <li><a href="/categories/git_blog" class="">Git (블로그)Blog ({{category[1].size}})</a></li>
+                        <li><a href="/categories/git_blog" class="">Git Blog(블로그) ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "git" %}
+                        <li><a href="/categories/git" class="">GIT 사용법 ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
