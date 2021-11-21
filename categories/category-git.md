@@ -1,5 +1,5 @@
 ---
-title: "Git 사용법"
+title: "깃(Git) 사용법"
 layout: archive
 permalink: categories/git
 author_profile: true
