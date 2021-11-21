@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "깃(GIT) (6)- branch scenario, merge"
+title: "깃(GIT) (7)- branch scenario, merge"
 categories: git
 tag : [git]
 toc: true
