@@ -1,5 +1,5 @@
 ---
-title: "R"
+title: "R (빅데이터 분석기사)"
 layout: archive
 permalink: categories/R
 author_profile: true

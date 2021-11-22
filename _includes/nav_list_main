@@ -33,7 +33,7 @@
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "R" %}
-                        <li><a href="/categories/R" class="">R 프로그래밍({{category[1].size}})</a></li>
+                        <li><a href="/categories/R" class="">R (빅데이터 분석기사)({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
