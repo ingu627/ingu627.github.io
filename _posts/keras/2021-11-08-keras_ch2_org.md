@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "[케라스(keras) 이해] 2장. 신경망의 수학적 구성 요소"
-excerpt: "케라스 창시자에게 배우는 딥러닝 요약"
+excerpt: "케라스 창시자에게 배우는 딥러닝 - 신경망과의 첫 만남"
 categories: keras
 tag : [python, keras, DL]
 toc: true
@@ -27,8 +27,14 @@ last_modified_at: 2021-11-19
 
 ## 2_2. 신경망을 위한 데이터 표현 
 
+![image](https://user-images.githubusercontent.com/78655692/142875666-e2e24749-6fba-4650-acbb-674bca1da7bc.png)
+
 - **텐서(tensor)** : (거의 항상)수치형 데이터를 위한 컨테이너(container)
   - 임의의 차원 개수를 가지는 행렬의 일반화된 모습
+  - 텐서는 벡터 (Vector)와 행렬 (Matrix)을 일반화한 것이며, 3차원 이상으로 확장할 수 있다.
+  - 텐서는 TensorFlow의 가장 주요한 객체이며, TensorFlow의 작업은 주로 텐서의 연산으로 이루어진다.
+- 텐서 scalar, vector, matrix, tensor는 각각 랭크 0, 1, 2, 3를 가진다.
+- 텐서 (Tensor)는 NumPy 어레이와 비슷하지만, GPU, TPU와 같은 가속기에서 사용할 수 있고, 값을 변경할 수 없다.
 
 <br/>
 
@@ -51,7 +57,7 @@ last_modified_at: 2021-11-19
 
 ## 핵심 속성
 
-- **축의 개수(랭크)**
+- **축의 개수(랭크)** : `tf.rank()`
 - **크기(shape)** : 텐서의 각 축을 따라 얼마나 많은 차원이 있는지를 나타낸 파이썬의 튜플(tuple) 
 - **데이터 타입** : 텐서에 포함된 데이터의 타입
 
@@ -93,7 +99,7 @@ last_modified_at: 2021-11-19
 - 역전파는 최종 손실 값에서부터 시작한다.
 - 손실 값에 각 파라미터가 기여한 정도를 계산하기 위해 연쇄 법칙을 적용하여 최상위 층에서 하위 층까지 거꾸로 진행된다. 
 
-![image](https://user-images.githubusercontent.com/78655692/140705045-69b7e24f-f246-42ae-917c-9620ef973190.png)
+<img src="https://user-images.githubusercontent.com/78655692/140705045-69b7e24f-f246-42ae-917c-9620ef973190.png" weight="600" height="400" alt="image"/>
 
 ## 요약
 - **학습**은 훈련 데이터 샘플과 그에 상응하는 타깃이 주어졌을 때 손실 함수를 최소화하는 모델 파라미터의 조합을 찾는 것을 의미
@@ -102,5 +108,7 @@ last_modified_at: 2021-11-19
 
 
 ## References
-[케라스 창시자에게 배우는 딥러닝](https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=173992478)  
-[딥러닝의 핵심 개념 - 역전파 이해하기1](https://m.blog.naver.com/samsjang/221033626685)
+
+- [케라스 창시자에게 배우는 딥러닝](https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=173992478)  
+- [딥러닝의 핵심 개념 - 역전파 이해하기1](https://m.blog.naver.com/samsjang/221033626685)
+- [1. 텐서 기초 살펴보기](https://codetorial.net/tensorflow/basics_of_tensor.html)

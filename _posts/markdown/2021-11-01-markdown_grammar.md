@@ -257,10 +257,11 @@ print('Hello World!')
 예시 : `![북두칠성](https://ingu627.github.io/images/2021-10-29-first/bukdu.jpg)`
 
 - 또는 html 언어를 써도 됩니다.
-`<img src="그림 주소" width="가로 길이" height="세로 길이" alt="그림 설명" />`
+- `<img src="그림 주소" width="가로 길이" height="세로 길이" alt="그림 설명" />`
+- `<img src="" width="" height="" alt="" />`
 
 
-<img src="https://ingu627.github.io/images/2021-10-29-first/bukdu.jpg" width="500" height="100" alt="북두칠성"/>
+<img src="https://ingu627.github.io/images/2021-10-29-first/bukdu.jpg" width="500" height="200" alt="북두칠성"/>
 
 ![star](../../images/2021-10-29-first/bukdu.jpg)
 
@@ -270,12 +271,9 @@ print('Hello World!')
 <br/>
 해당 이미지를 `ctrl + c`를 누르시고 아래에 `ctrl + v`를 하시면
 
-![image](https://user-images.githubusercontent.com/78655692/140633595-27e57467-301a-4007-84d1-1c5490da2a75.png)
+`![image](https://user-images.githubusercontent.com/78655692/140633595-27e57467-301a-4007-84d1-1c5490da2a75.png)`
 
 로 나옵니다. 이것을 그대로 md파일에 복사넣기 하면 이미지가 생성됩니다.
-
-![image](https://user-images.githubusercontent.com/78655692/140633604-b61433ae-8e8d-46d9-aa78-089da966060c.png)
-
 
 ## 이미지에 링크를 걸고 싶을땐
   `[![이미지설명](이미지 파일 저장 경로)](이미지 주소 링크)`

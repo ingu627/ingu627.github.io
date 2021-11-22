@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "[케라스(keras) 이해] 1장. 딥러닝이란 무엇인가"
-excerpt: "케라스 창시자에게 배우는 딥러닝 요약"
+excerpt: "케라스 창시자에게 배우는 딥러닝 - 역사, 분류, 특징"
 categories: keras
 tag : [python, keras, DL]
 toc: true
@@ -27,7 +27,7 @@ last_modified_at: 2021-11-19
 - 딥러닝은 그냥 데이터로부터 표현을 학습하는 수학 모델일 뿐이다.
 - 딥러닝은 기술적으로는 데이터 표현을 학습하기 위한 다단계 처리 방식을 말한다.
 
-![image](https://user-images.githubusercontent.com/78655692/140679658-02c1c802-0557-4242-b5c1-501f6d104098.png)
+<img src="https://user-images.githubusercontent.com/78655692/140679658-02c1c802-0557-4242-b5c1-501f6d104098.png" width="500" height="400" alt="image"/>
 
 
 ## 딥러닝의 작동 원리 이해하기
@@ -35,7 +35,7 @@ last_modified_at: 2021-11-19
   - 어떤 층에서 일어나는 변환은 그 층의 가중치를 파라미터(parameter)로 가지는 함수로 표현된다.
 - **학습**은 주어진 입력을 정확한 타깃에 매핑하기 위해 신경망의 모든 층에 있는 가중치 값을 찾는 것을 의미.
 
-![image](https://user-images.githubusercontent.com/78655692/140670247-185274df-d89f-4bd4-baa8-becc452980a0.png)
+<img src="https://user-images.githubusercontent.com/78655692/140670247-185274df-d89f-4bd4-baa8-becc452980a0.png" width="500" height="400" alt="image"/>
 
 - 목표 : 가중치의 정확한 값을 찾는 것
 - 신경망이 한 샘플에 대해 얼마나 잘 예측했는지 측정하기 위해 손실 함수가 신경망의 예측과 진짜 타킷의 차이를 점수로 계산 (**loss function**)

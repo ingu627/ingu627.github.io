@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "[케라스(keras) 이해] 4장. 머신 러닝의 기본 요소"
-excerpt: "케라스 창시자에게 배우는 딥러닝 요약"
+excerpt: "케라스 창시자에게 배우는 딥러닝 - 머신 러닝의 네 가지 분류"
 categories: keras
 tag : [python, keras, DL]
 toc: true
@@ -11,7 +11,7 @@ classes: wide
 last_modified_at: 2021-11-19
 ---
 
-본 글은 [케라스 창시자에게 배우는 딥러닝] - (박해선 옮김) 책을 개인공부하기 위해 요약, 정리한 내용입니다. 전체 코드는 [https://github.com/ingu627/deep-learning-with-python-notebooks](https://github.com/ingu627/deep-learning-with-python-notebooks)에 기재했습니다.(원본 코드 fork) <br>저와 같이 공부하면 좋을 것 같습니다.
+본 글은 [케라스 창시자에게 배우는 딥러닝] - (박해선 옮김) 책을 개인공부하기 위해 요약, 정리한 내용입니다. <br>전체 코드는 [https://github.com/ingu627/deep-learning-with-python-notebooks](https://github.com/ingu627/deep-learning-with-python-notebooks)에 기재했습니다.(원본 코드 fork) <br>저와 같이 공부하면 좋을 것 같습니다.
 {: .notice--info}
 
 ## 4_1. 머신 러닝의 네 가지 분류
