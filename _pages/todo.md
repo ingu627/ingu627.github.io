@@ -24,6 +24,7 @@ sidebar_main: true
 ### Web Service
 - [아마존 웹 서비스를 다루는 기술](http://pyrasis.com/private/2014/09/30/publish-the-art-of-amazon-web-services-book){: target="_blank"}
   - 유의사항 : 저작권 (요약, 블로그 기재 금지, 링크 기재는 허용)
+- [생활코딩](https://opentutorials.org/course/1)
 
 ### QUI
 
@@ -74,3 +75,5 @@ sidebar_main: true
 - [Favicon](https://realfavicongenerator.net/){: target="_blank"}
 - [jekyll 문서](http://jekyllrb-ko.github.io/){: target="_blank"}
 - [공부하는 식빵맘](https://ansohxxn.github.io/){: target="_blank"}
+
+$x=a+b$
