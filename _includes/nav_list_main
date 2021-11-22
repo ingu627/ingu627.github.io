@@ -59,6 +59,21 @@
                     {% endif %}
                 {% endfor %}
             </ul>
+        <span class="nav__sub-title">OS</span>
+        <ul>
+            {% for category in site.categories %}
+                {% if category[0] == "OS" %}
+                    <li><a href="/categories/OS" class="">운영 체제(OS) ({{category[1].size}})</a></li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        <ul>
+            {% for category in site.categories %}
+                {% if category[0] == "linux" %}
+                    <li><a href="/categories/linux" class="">리눅스(Linux) ({{category[1].size}})</a></li>
+                {% endif %}
+            {% endfor %}
+        </ul>
         <span class="nav__sub-title">WEB</span>
             <ul>
                 {% for category in site.categories %}
