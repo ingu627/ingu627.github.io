@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "Linux 기초 정리"
+title: "Linux 기초 정리 (1)"
 excerpt: "생활 코딩 강의 내용을 요약 및 정리한 글입니다."
 categories: linux
 date: 2021-11-23
@@ -168,4 +168,5 @@ sidebar_main: true
 
 ## References 
 
+- [생활코딩 - Linux](https://www.inflearn.com/course/%EC%83%9D%ED%99%9C%EC%BD%94%EB%94%A9-%EB%A6%AC%EB%88%85%EC%8A%A4-%EA%B0%95%EC%A2%8C#curriculum)
 - [nano에디터 소개 및 사용법](https://junistory.blogspot.com/2017/08/nano.html)
