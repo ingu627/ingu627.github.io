@@ -97,6 +97,7 @@ sidebar_main: true
 
 ### nano 
 
+- `파일` : 정보를 저장하는 가장 기본적인 어떤 수단, 저장소이다.
 - `nano` : 파일 편집기
 
 ![image](https://user-images.githubusercontent.com/78655692/142979879-ec660bd2-061a-402c-9c6f-9d0f6eae08d7.png)
@@ -134,6 +135,7 @@ sidebar_main: true
 
 ### Package manager
 
+- `패키지` : 우리가 흔히 알고 있는 프로그램 또는 애플리케이션 또는 앱을 의미
 - `apt` or `yum`이 있다.
 - `sudo apt-get update;` 을 하면 apt 패키지에 접속해서 최신 목록을 다운 받는다
 
