@@ -3,7 +3,7 @@ layout: single
 title: "R 기초 ~ 심화 문법 총정리 (2) - 데이터 수집, 전처리"
 excerpt: "+ ADsP, 빅데이터분석기사 실기 작업형 대비"
 categories: R
-tag : [R, visualization, adsp, certificate]
+tag : [R, visualization, adsp, certificate, 빅데이터 분석기사, 실기]
 toc: true
 toc_sticky: true
 sidebar_main: true

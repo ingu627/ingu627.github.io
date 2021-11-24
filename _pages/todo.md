@@ -8,6 +8,12 @@ sidebar_main: true
 
 ## Reference List
 
+### 논문 
+
+- [arxiv.org](https://arxiv.org/){: target="_blank"}
+- [scholar.google.com](https://scholar.google.com/){: target="_blank"}
+- [dbpia](https://www.dbpia.co.kr/){: target="_blank"}
+
 ### DL, ML
 - [텐서 플로우 블로그 (Tensor ≈ Blog)](https://tensorflow.blog/){: target="_blank"}
 - [이수안컴퓨터연구소 유튜브](https://www.youtube.com/c/%EC%9D%B4%EC%88%98%EC%95%88%EC%BB%B4%ED%93%A8%ED%84%B0%EC%97%B0%EA%B5%AC%EC%86%8C/playlists){: target="_blank"}

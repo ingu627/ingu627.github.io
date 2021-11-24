@@ -3,7 +3,7 @@ layout: single
 title: "R 기초 ~ 심화 문법 총정리 (5) - 분석 모형 구축"
 excerpt: "+ ADsP, 빅데이터분석기사 실기 작업형 대비 - 나이브베이즈 정리까지"
 categories: R
-tag : [R, adsp, certificate]
+tag : [R, adsp, certificate, 빅데이터 분석기사, 실기]
 toc: true
 toc_sticky: true
 sidebar_main: true
