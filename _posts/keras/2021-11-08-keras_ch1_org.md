@@ -3,15 +3,15 @@ layout: single
 title: "[케라스(keras) 이해] 1장. 딥러닝이란 무엇인가"
 excerpt: "케라스 창시자에게 배우는 딥러닝 - 역사, 분류, 특징"
 categories: keras
-tag : [python, keras, DL]
+tag : [python, keras, DL, ML, AI, 인고지능, 딥러닝, 케라스]
 toc: true
 sidebar_main: true
 classes: wide
 
-last_modified_at: 2021-11-19
+last_modified_at: 2021-11-24
 ---
 
-본 글은 [케라스 창시자에게 배우는 딥러닝] - (박해선 옮김) 책을 개인공부하기 위해 요약, 정리한 내용입니다. <br>전체 코드는 [https://github.com/ingu627/deep-learning-with-python-notebooks](https://github.com/ingu627/deep-learning-with-python-notebooks)에 기재했습니다.(원본 코드 fork) <br>저와 같이 공부하면 좋을 것 같습니다.
+본 글은 [케라스 창시자에게 배우는 딥러닝] - (박해선 옮김) 책을 개인공부하기 위해 요약, 정리한 내용입니다. <br>전체 코드는 [https://github.com/ingu627/deep-learning-with-python-notebooks](https://github.com/ingu627/deep-learning-with-python-notebooks)에 기재했습니다.(원본 코드 fork) <br> 뿐만 아니라 책에서 설명이 부족하거나 이해가 안 되는 것들은 외부 자료들을 토대로 메꿔 놓았습니다. 즉, 딥러닝은 이걸로 끝을 내보는 겁니다. <br> 오타나 오류는 알려주시길 바라며, 도움이 되길 바랍니다.
 {: .notice--info}
 
 ## 1_1. 인공 지능과 머신 러닝, 딥러닝
