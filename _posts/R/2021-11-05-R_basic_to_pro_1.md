@@ -91,14 +91,23 @@ last_modified_at: 2021-11-17
 
 - `=` : ~를 ~에 저장하여라 (할당)
 
-![image](https://user-images.githubusercontent.com/78655692/140599832-4b217c79-78b1-4108-80d9-f6cb97d7b027.png)
-
+```R
+a=2
+print(a)
+# [1] 2
+```
 ### == 또는 !=
 
 - == : 맞는지 판단하여라
 - != : 틀린지 판단하여라
 
-![image](https://user-images.githubusercontent.com/78655692/140600290-53ddd9cd-edfa-4007-90d6-1f581a43ef0e.png)
+```R
+a = 2
+a ==2
+# [1] TRUE
+a != 2
+# [1] FALSE
+```
 
 ## 벡터(Vector)
 
@@ -106,23 +115,43 @@ last_modified_at: 2021-11-17
 - 벡터의 생성 
 - c(값1, 값2...)
 
-![image](https://user-images.githubusercontent.com/78655692/140600214-e213c625-3a71-4b64-a2cd-dbac40eaa4cf.png)
+```R
+x1 = c(1,2,3,4)
+x1
+# [1] 1 2 3 4
+```
 
 ### seq()
 
 - seq = sequence의 약자
 - seq(from = 시작 숫자 , to = 마지막 숫자, by = 증가범위)
 
-![image](https://user-images.githubusercontent.com/78655692/140600249-5edf8ff0-ff59-47cf-af6a-cf6f451d87e4.png)
+```R
+x1 = c(1:10)
+x1
+# [1]  1  2  3  4  5  6  7  8  9 10
 
-![image](https://user-images.githubusercontent.com/78655692/140600384-01848a0a-36b8-411e-98c7-24ccc68631c7.png)
+x2 = seq(1,10,2)
+x2
+# [1] 1 3 5 7 9
+```
 
 ### rep()
 
 - rep = repeat의 약자
 - rep(반복할 값, 반복할 횟수)
 
-![image](https://user-images.githubusercontent.com/78655692/140600401-cd0a31a5-1f42-4c1b-a62e-2e001078823c.png)
+```R
+y = rep(1,10)
+y
+# [1] 1 1 1 1 1 1 1 1 1 1
+y2 = rep(c(1,10),2)
+y2
+# [1]  1 10  1 10
+y3 = rep(c(1,100), c(2,2))
+y3
+# [1]   1   1 100 100
+```
 
 ### 벡터의 인덱싱
 
@@ -161,14 +190,45 @@ last_modified_at: 2021-11-17
 - 리스트는 (키, 값) 형태로 데이터를 저장하는 R의 모든 객체를 담을 수 있는 데이터 구조
 - `list(key=value, key=value...)`
 
-![image](https://user-images.githubusercontent.com/78655692/140793219-4ba4b1c8-66ca-4f83-88ef-1d2ff595e364.png)
-
+```R
+a=list(
+  x=c('poeun', 'pouen1'),
+  y=c(1,2))
+a$x  
+# [1] "poeun"  "pouen1"
+a$y
+# [1] 1 2
+```
 
 ## 행렬 
 - **matrix()**: matrix(data = 데이터 , nrow = 행의 수, ncol = 열의 수, byrow = 행/열 기준, dimnames = 행과 열의 이름 리스트)
   - byrow는 TRUE이면 행을 기준으로 입력, FALSE이면 열을 기준으로 입력한다. (default = FALSE)
 
-![image](https://user-images.githubusercontent.com/78655692/140600476-324b8339-8ba7-4674-ac43-fb79f29bf61a.png)
+```R
+x1=c(1:8)
+x1
+# [1] 1 2 3 4 5 6 7 8
+
+MATRIX_R = matrix(
+  data =x1,
+  nrow =4
+)
+MATRIX_R
+#      [,1] [,2]
+# [1,]    1    5
+# [2,]    2    6
+# [3,]    3    7
+# [4,]    4    8
+
+MATRIX_C = matrix(
+  data = x1,
+  ncol = 4
+)
+MATRIX_C
+#      [,1] [,2] [,3] [,4]
+# [1,]    1    3    5    7
+# [2,]    2    4    6    8
+```
 
 |함수|설명|
 |---|---|
@@ -186,7 +246,19 @@ last_modified_at: 2021-11-17
 - dataframe의 생성
 - `data.frame(변수명1=벡터1)`
 
-![image](https://user-images.githubusercontent.com/78655692/140600808-77521ee7-6ff2-42f7-b804-93253a8c1672.png)
+```R
+DATA_SET = data.frame(
+  x1 = c(1:10),
+  x1_2 = seq(1,10,1),
+  x2 = seq(1,10,2),
+  y = rep(1,10)
+)
+head(DATA_SET, 3)
+#   x1 x1_2 x2 y
+# 1  1    1  1 1
+# 2  2    2  3 1
+# 3  3    3  5 1
+```
 
 + head() : 데이터의 상단 부분을 지정해주는 행만큼 출력해주는 함수
 
@@ -194,13 +266,22 @@ last_modified_at: 2021-11-17
 - 1차원 벡터일 경우
 - 벡터에 속한 원소의 갯수
 
-![image](https://user-images.githubusercontent.com/78655692/140600917-ad66c993-49b3-44f9-bb6a-f267d592458b.png)
+```R
+length(c(1:10))
+# [1] 10
+```
 
 ### dim() 
 - 2차원 행렬, 데이터프레임인 경우
 - 첫번째 : 행의 개수, 두번째 : 열의 개수
 
-![image](https://user-images.githubusercontent.com/78655692/140600952-da5ff223-6640-4d06-8ee5-e3feb699b7f5.png)
+```R
+dim(MATRIX_R)
+# [1] 4 2
+
+dim(DATA_SET)
+# [1] 10  4
+```
 
 ## 배열 문법
 - 3차원 이상
@@ -210,22 +291,84 @@ last_modified_at: 2021-11-17
   - **dimnames** : 배열의 차원 이름 지정
 
 ## 괄호의 활용
-- () : 실행 함수와 같이 쓰임. ()안에는 분석하고자 하는 원소값들이 입력되어야 한다.
-  - c() : 들어오는 값들을 묶어 하나의 벡터로 만드는 기능을 실행
-- \{\} : for, if문 등에서 조건식을 삽입할 때
+- `()` : 실행 함수와 같이 쓰임. ()안에는 분석하고자 하는 원소값들이 입력되어야 한다.
+  - `c()` : 들어오는 값들을 묶어 하나의 벡터로 만드는 기능을 실행
+- `{}` : for, if문 등에서 조건식을 삽입할 때
+
+```R
+a=c(1,2,3,4,5)
+a
+# [1] 1 2 3 4 5
+```
 
 ### 1차원 데이터의 경우
-![image](https://user-images.githubusercontent.com/78655692/140601094-6002fc95-d9c0-485c-a0cd-f2e60bcd9436.png)
 
-![image](https://user-images.githubusercontent.com/78655692/140601141-c2f15d1a-417f-4ec5-b27c-7842a410d038.png)
+```R
+for(i in c(1:5)){
+  print(i)
+}
+# [1] 1
+# [1] 2
+# [1] 3
+# [1] 4
+# [1] 5
+```
 
-- \[\] : Index를 입력해야 될 때
+```R
+B = c() # 빈 공간의 벡터 생성
 
-![image](https://user-images.githubusercontent.com/78655692/140601192-d99cd9cd-7f82-4384-9c27-af24b386f672.png)
+for(k in seq(1,10,2)){
+  B=c(B,k)
+}
+B
+# [1] 1 3 5 7 9
+```
+
+- `[]` : Index를 입력해야 될 때
+
+```R
+# 1, 2번째 값
+a[1:2]
+# [1] 1 2
+# 3번째 값 빼고
+a[-3]
+# [1] 1 2 4 5
+a[c(1,2,4,5)]
+# [1] 1 2 4 5
+```
 
 ### 2차원 데이터의 경우
 
-![image](https://user-images.githubusercontent.com/78655692/140601268-b940387a-15b6-4b05-9271-0fa71d5bf3fc.png)
+```R
+DATA_SET
+#    x1 x1_2 x2 y
+# 1   1    1  1 1
+# 2   2    2  3 1
+# 3   3    3  5 1
+# 4   4    4  7 1
+# 5   5    5  9 1
+# 6   6    6  1 1
+# 7   7    7  3 1
+# 8   8    8  5 1
+# 9   9    9  7 1
+# 10 10   10  9 1
+
+# 1행 전부
+DATA_SET[1,]
+#   x1 x1_2 x2 y
+# 1  1    1  1 1
+
+# 1열 전부
+DATA_SET[,1]
+#  [1]  1  2  3  4  5  6  7  8  9 10
+
+# 1,2,3행 & 2열 빼고 나머지
+DATA_SET[c(1,2,3),-2]
+#   x1 x2 y
+# 1  1  1 1
+# 2  2  3 1
+# 3  3  5 1
+```
 
 ## 팩터(factor)
 
@@ -245,28 +388,62 @@ last_modified_at: 2021-11-17
 
 ## 시간(날짜)형태
 ### as.Date()
+
 - ‘년-월-일’ 형태
 - as.Date(변수, format='날짜 형식')
 
-![image](https://user-images.githubusercontent.com/78655692/140601480-e095d17f-2afb-47b8-b79d-7256c22e7b62.png)
+```R
+DATE_O = '2021-11-05'
+str(DATE_O)
+# chr "2021-11-05"
+DATE_C = as.Date(DATE_O, format = '%Y-%m-%d')
+str(DATE_C)
+# Date[1:1], format: "2021-11-05"
+```
 
-- str() : 저장된 데이터 타입 확인
+- `str()` : 저장된 데이터 타입 확인
 ### as.POSIXct()
+
 - ‘년-월-일 시간:분:초' 형태
 - as.POSIXct(날짜, format = “날짜형식”)
 
-![image](https://user-images.githubusercontent.com/78655692/140601645-b2c8d183-2927-4ca2-86cf-bfcf3121c833.png)
+```R
+DATE_02 = '2021-11-05 23:13:23'
+DATE_P = as.POSIXct(DATE_02, format = '%Y-%m-%d %H:%M:%S')
+DATE_P
+# [1] "2021-11-05 23:13:23 KST"
+```
 
 ### format()
 - 날짜정보를 추출해 새로운 변수로 만듦
 - format(날짜변수, "형식")
 
-![image](https://user-images.githubusercontent.com/78655692/140601665-b69c5fe1-3035-432c-a7d3-eab0bf704877.png)
+```R
+format(DATE_P, '%A')
+# [1] "금요일"
+format(DATE_P, '%M')
+# [1] "13"
+format(DATE_P, '%Y')
+# [1] "2021"
+```
 
 ### as()
 - 변수 x를 ~로 취급하겠다.
 
-![image](https://user-images.githubusercontent.com/78655692/140601732-36aee5ab-b0f4-4655-974e-b07aae8c61f3.png)
+```R
+x=c(1,2,3,4,5,6,7,8,9,10)
+x1 = as.integer(x) ; str(x1)
+# int [1:10] 1 2 3 4 5 6 7 8 9 10
+x2 = as.numeric(x) ; str(x2)
+# num [1:10] 1 2 3 4 5 6 7 8 9 10
+x3 = as.factor(x) ; str(x3)
+# Factor w/ 10 levels "1","2","3","4",..: 1 2 3 4 5 6 7 8 9 10
+x4 = as.character(x) ; str(x4)
+# chr [1:10] "1" "2" "3" "4" "5" "6" "7" "8" "9" "10"
+summary(x1)
+#  Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+#  1.00    3.25    5.50    5.50    7.75   10.00
+```
 
 - summary() : 요약통계 한번에 보는 함수
 
@@ -274,7 +451,18 @@ last_modified_at: 2021-11-17
 - **is()** : 논리문으로써 변수 x가 ~인지 판단하여라
 - 결괏값은 TRUE 또는 FALSE가 된다.
 
-![image](https://user-images.githubusercontent.com/78655692/140601808-2956a66c-7cc7-4d08-9375-1f6a02d126c9.png)
+```R
+x=c(1:5)
+y=c("str1", "str2")
+is.integer(x)
+# [1] TRUE
+is.numeric(x)
+# [1] TRUE
+is.factor(y)
+# [1] FALSE
+is.character(y)
+# [1] TRUE
+```
 
 ### sample()
 
@@ -284,14 +472,22 @@ last_modified_at: 2021-11-17
   - `replace=FALSE` : 비복원추출
     - 주의사항 : TRUE, FALSE는 모두 대문자로!! 
 
-![image](https://user-images.githubusercontent.com/78655692/140601885-356b4494-2c1c-476c-8008-cf2ff43335d6.png)
+```R
+S1 =sample(1:45, 6, replace= FALSE)
+S1
+# [1] 39 11 35 20 37 27
+```
 
 ### set.seed()
 
 - 무작위 값 결과값 고정할 때
 - 결과값이 똑같이 나온다.
 
-![image](https://user-images.githubusercontent.com/78655692/140601918-8e70869a-4d77-485f-b5bf-6be515f73b11.png)
+```R
+S2 = sample(1:45, 6, replace=FALSE)
+S2
+# [1]  8 31 15  9 42 45
+```
 
 ## 조건문
 ### if ~ else
@@ -308,46 +504,119 @@ last_modified_at: 2021-11-17
 
 - `ifelse(조건식, 명령어1, 명령어2)` : 참이면 명령어1, 거짓이면 명령어2
 
-![image](https://user-images.githubusercontent.com/78655692/140601984-bf276c40-c90e-4a84-a50c-a09d77904295.png)
+```R
+A = c(1,2,3,4,5)
+if(7 %in% A){
+  print('TRUE')
+} else{
+  print('FALSE')
+}
+# [1] "FALSE"
+```
 
 ## switch 문 
 
 - 조건에 따라 여러 개의 경로 중 하나를 선택하여 명령어를 실행하는 명령어
 
-![image](https://user-images.githubusercontent.com/78655692/140971669-9bd918b6-8918-41aa-a313-d32dc0e8c771.png)
+```R
+course = "C"
+switch(course,
+       "A" = "brunch",
+       "B" = "lunch",
+       "dinner")
+# [1] "dinner"
+```
 
 ## 반복문 
 
 ### for 문
+
 - 범위에 들어있는 각각의 값을 변수에 할당하고 블록 안의 문장을 수행
 
-![image](https://user-images.githubusercontent.com/78655692/140971992-85405168-9d91-47a4-b82f-a904ced6456f.png)
+```R
+for (i in 1:4){
+  print(i)
+}
+# [1] 1
+# [1] 2
+# [1] 3
+# [1] 4
+```
 
 ### while 문 
 - 조건문 참일 때 블록 안의 명령어들을 수행
 
-![image](https://user-images.githubusercontent.com/78655692/140972176-4db938d2-b6e8-41e1-8953-e6adbca74b2b.png)
-
+```R
+i=1
+while (i<=4){
+  print(i)
+  i=i+1
+}
+# [1] 1
+# [1] 2
+# [1] 3
+# [1] 4
+```
 ### repeat 문 
 
-![image](https://user-images.githubusercontent.com/78655692/140972514-8afc06e5-48ca-4d03-8ac7-334555e66f9d.png)
+```R
+i=1
+repeat {
+  print(i)
+  if (i>=2){
+    break
+  }
+  i=i+1
+}
+# [1] 1
+# [1] 2
+```
 
 ### break 문 
 - 반복문을 중간에 탈추하기 위해 사용하는 명령어
 
-![image](https://user-images.githubusercontent.com/78655692/140972812-bdde4d92-24e2-424d-873f-e6eeaa39df23.png)
+```R
+for (i in 1:5){
+  print(i)
+  if (i>=3){
+    break
+  }
+}
+# [1] 1
+# [1] 2
+# [1] 3
+```
 
 ### next 문 
+
 - 반복문에서 다음 반복으로 넘어갈 수 있도록 하는 명령어
 - 파이썬의 continue와 같은 개념
 
-![image](https://user-images.githubusercontent.com/78655692/140973004-c75a1f7b-998d-4d69-beaf-f5627fb1dc46.png)
+```R
+for (i in 1:5){
+  if (i == 3){
+    next
+  }
+  print(i)
+}
+# [1] 1
+# [1] 2
+# [1] 4
+# [1] 5
+```
 
 
 ## function() 
 - 사용자 함수 (직접 함수 만들기)
 
-![image](https://user-images.githubusercontent.com/78655692/140602035-b6aa408b-8f42-4136-904c-85f0f5d765c9.png)
+```R
+Plus_One = function(x){
+  y=x+1
+  return (y)
+}
+Plus_One(3)
+# [1] 4
+```
 
 ### package(패키지) 설치하기
 - `install.packages("설치할 패키지명")`
@@ -355,7 +624,21 @@ last_modified_at: 2021-11-17
 - `library(설치한 패키지)`
   - 불러올 땐 `""` X
 
-![image](https://user-images.githubusercontent.com/78655692/140602188-2a541568-45e8-4bfe-af65-d1968a0a572c.png)
+```R
+install.packages('ggplot2')
+# 'C:/Rlib'의 위치에 패키지(들)을 설치합니다.
+# (왜냐하면 'lib'가 지정되지 않았기 때문입니다)
+# --- 현재 세션에서 사용할 CRAN 미러를 선택해 주세요 ---
+# URL 'https://cran.seoul.go.kr/bin/windows/contrib/4.1/ggplot2_3.3.5.zip'을 시도합니다
+# Content type 'application/zip' length 4129789 bytes (3.9 MB)
+# downloaded 3.9 MB
+
+# package 'ggplot2' successfully unpacked and MD5 sums checked
+
+# The downloaded binary packages are in
+#         C:\Users\poeun\AppData\Local\Temp\RtmpCULWCS\downloaded_packages
+library(ggplot2)
+```
 
 
 ## ggplot 패키지
@@ -375,9 +658,25 @@ last_modified_at: 2021-11-17
 
 ### geom_boxplot 예시
 
-![image](https://user-images.githubusercontent.com/78655692/141499340-247c7634-48f5-483f-9acb-a529fe391103.png)
+```R
+head(airquality)
+#   Ozone Solar.R Wind Temp Month Day
+# 1    41     190  7.4   67     5   1
+# 2    36     118  8.0   72     5   2
+# 3    12     149 12.6   74     5   3
+# 4    18     313 11.5   62     5   4
+# 5    NA      NA 14.3   56     5   5
+# 6    28      NA 14.9   66     5   6
+```
 
-![image](https://user-images.githubusercontent.com/78655692/141499868-15d3b342-b63e-4680-9aa5-0101d2a738ad.png)
+```R
+library(ggplot2)
+ggplot(data=airquality, # 그래프에 필요한 객체인 airquality 대입
+       aes(x=Month, # x축에 들어갈 칼럼명으로 Month 대입
+           y=Temp, # y축에 들어갈 컬럼명으로 Temp 대입
+           group=Month) # Month 기준으로 집계
+       ) + geom_boxplot() #Boxplot으로 출력
+```
 
 ![image](https://user-images.githubusercontent.com/78655692/141499918-c0a24422-60c9-4a8d-a77e-6ab1603bc5af.png)
 
