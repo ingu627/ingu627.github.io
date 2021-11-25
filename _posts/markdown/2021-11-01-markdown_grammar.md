@@ -1,7 +1,7 @@
 ---
 layout: single
 title: '마크다운(markdown)문법 총정리'
-categories: markdown
+categories: md
 tag : [grammar, tip, md]
 toc: true
 toc_sticky: true
@@ -232,16 +232,6 @@ print('Hello World!')
 `|---|` 을 입력해서 표(table) 입력임을 표시합니다. (- 수는 상관없습니다.)
 (`|-|` 기호로도 입력할 수 있습니다.)
 
-| 순번 | 이름   | 나이 |
-| :--: | ------ | ---- |
-|  1   | 홍길동 | 100  |
-|  2   | 김길동 | 120  |
-|  3   | 박길동 | 140  |
-|      |        |      |
-|      |        |      |
-|      |        |      |
-|      |        |      |
-
 ```markdown
 표 정렬
 
@@ -250,6 +240,20 @@ print('Hello World!')
 ---: 오른쪽으로 정렬
 :---: 가운데 정렬
 ```
+
+```markdown
+| 순번 | 이름   | 나이 |
+| :--: | :--- | ---: |
+|  1   | 홍길동 | 100  |
+|  2   | 김길동 | 120  |
+|  3   | 박길동 | 140  |
+```
+
+| 순번 | 이름   | 나이 |
+| :--: | :--- | ---: |
+|  1   | 홍길동 | 100  |
+|  2   | 김길동 | 120  |
+|  3   | 박길동 | 140  |
 
 ## 이미지
 
@@ -300,6 +304,7 @@ print('Hello World!')
 ## 수식
 
 - \$로 감싸면 수식이 마치 문서처럼 써집니다.
+- **이 블로그에서는 적용이 안되네요.**
   - $a+b=c$
   - $y = 3x$
   - $a^2+b^2=c^2$
@@ -347,7 +352,7 @@ graph LR
 - (mermaid)
 
 ## References
-- [[토크ON세미나] Git & GitHub Page 블로그 만들기 4강 - Github Page 활용하기 | T아카데미](https://www.youtube.com/watch?v=eCv_bh-Ax-Q)
+- [[토크ON세미나] Git & GitHub Page 블로그 만들기 4강 - Github Page 활용하기 T아카데미](https://www.youtube.com/watch?v=eCv_bh-Ax-Q)
 - [마크다운 문법 소개](http://ccl.cckorea.org/syntax/)
 - [[Github Blog] minimal mistakes - 포스팅 글 써보기](https://eona1301.github.io/github_blog/GithubBlog-Posting/)
 

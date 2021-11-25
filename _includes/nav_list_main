@@ -85,8 +85,8 @@
         <span class="nav__sub-title">GIT BLOG</span>
             <ul>
                 {% for category in site.categories %}
-                    {% if category[0] == "markdown" %}
-                        <li><a href="/categories/markdown" class="">마크다운(Markdown) ({{category[1].size}})</a></li>
+                    {% if category[0] == "md" %}
+                        <li><a href="/categories/md" class="">마크다운(Markdown) ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>

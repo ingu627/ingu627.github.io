@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "주피터(.ipynb) 마크다운(.md)로 전환하는 방법"
-categories: markdown
+categories: md
 tag : [jupyter, md]
 sidebar_main: true
 
