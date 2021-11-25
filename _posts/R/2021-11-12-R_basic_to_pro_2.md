@@ -26,7 +26,7 @@ last_modified_at: 2021-11-16
 |주요 파라미터 | 설명|
 |---|---|
 | file | 읽어 들일 파일명을 설정함 |
-|hearder | 첫 번째 행을 열 이름으로 인식할지 여부를 설정 |
+|header | 첫 번째 행을 열 이름으로 인식할지 여부를 설정 |
 |sep |구분자 지정 |
 |fill | 비어있는 부분을 NA로 채울지 여부를 결정|
 |what | 실수와 문자를 읽는 경우 사용|
@@ -42,12 +42,13 @@ last_modified_at: 2021-11-16
 |sep| 구분자 지정|
 
 **2. CSV 파일**
-- `read.csv(file, header) : CSV 파일로부터 데이터를 수집하는 함수
+
+- `read.csv(file, header)` : CSV 파일로부터 데이터를 수집하는 함수
 
 |주요 파라미터 | 설명|
 |---|---|
 | file | 읽어 들일 파일명을 설정함 |
-|hearder | 첫 번째 행을 열 이름으로 인식할지 여부를 설정 |
+|header | 첫 번째 행을 열 이름으로 인식할지 여부를 설정 |
 
 - `write.csv(x, file, append, quote, sep, ...)` : csv파일로 저장할 때 사용하는 함수
 
@@ -61,9 +62,11 @@ last_modified_at: 2021-11-16
 
 
 **3. TSV 파일**
+
 - 생략
 
 **4. EXCEL 파일**
+
 - `read_excel(path)` : 엑셀 파일로부터 데이터를 읽을 때 사용하는 함수
 - `install.packages("readxl")` 설치해야함
 - `path` : 읽어 들일 파일명을 설정함
@@ -105,33 +108,93 @@ last_modified_at: 2021-11-16
   - `ctrl + shift + m` 단축키 : `%>%`
   - `%>%` : 파이프 연산자라고 읽고, 함수들을 연결하는 기능을 한다. 이 기호를 사용하면 그 앞에 나온 데이터를 계속해서 사용하겠다는 의미.
 
-![image](https://user-images.githubusercontent.com/78655692/141607225-4541d17d-96ad-40b3-88fc-343442a6094d.png)
+```R
+library(dplyr)
+
+iris %>% 
+    select(Sepal.Length) %>% head()
+
+# 1          5.1
+# 2          4.9
+# 3          4.7
+# 4          4.6
+# 5          5.0
+# 6          5.4
+```
 
 ### filter()
 
 - `데이터 프레임 이름 %>% filter(조건)` : 조건에 맞는 데이터 추출
 
-![image](https://user-images.githubusercontent.com/78655692/141607862-ac57abf6-8052-442a-aa63-2080d7e26267.png)
+```R
+iris %>% 
+    filter(Species == 'setosa') %>% 
+    select(Sepal.Length, Sepal.Width) %>% 
+    head()
+# 1          5.1         3.5
+# 2          4.9         3.0
+# 3          4.7         3.2
+# 4          4.6         3.1
+# 5          5.0         3.6
+# 6          5.4         3.9
+```
 
 ### mutate()
 
 - `데이터 프레임 이름 %>% mutate(새로운 변수명=값)` : 데이터에 새로운 파생변수를 추가
 
-![image](https://user-images.githubusercontent.com/78655692/141608222-be24c7e8-79ae-4e33-95ab-df05faae6de2.png)
+```R
+iris %>% 
+    filter(Species == 'virginica') %>% 
+    mutate(Len = ifelse(Sepal.Length>6, 'L', 'S')) %>% 
+    select(Species, Len) %>% 
+    head()
+#     Species Len
+# 1 virginica   L
+# 2 virginica   S
+# 3 virginica   L
+# 4 virginica   L
+# 5 virginica   L
+# 6 virginica   L
+```
 
 ### group_by와 summarise
 
 - `데이터 프레임 이름 %>% group_by(그룹화할 기준 변수1, ...) %>% summarise(새로운 변수명=계산식)` : 지정한 변수들을 기준으로 데이터를 그룹화하고, 요약 통계치 산출
 - **요약 통계치 함수** : mean(), sd(), sum(), median(), min(), max(), n
 
-![image](https://user-images.githubusercontent.com/78655692/141608729-3e9389ae-c787-44c3-94fd-58d8e0cd0825.png)
+```R
+iris %>% 
+    group_by(Species) %>% 
+    summarise(Petal.Width = mean(Petal.Width))
+# # A tibble: 3 x 2
+#   Species    Petal.Width
+#   <fct>            <dbl>
+# 1 setosa           0.246
+# 2 versicolor       1.33
+# 3 virginica        2.03
+```
 
 ### arrange()
 
 - `데이터 프레임 이름 %>% arrange(정렬 기준변수)` : 오름차순 정렬
 - `데이터 프레임 이름 %>% arrange(desc(정렬 기준변수))` : 내림차순 정렬
 
-![image](https://user-images.githubusercontent.com/78655692/141615130-26fdae63-1cf2-460e-b5b5-d83aca80b202.png)
+```R
+iris %>% 
+    filter(Species == 'setosa') %>% 
+    mutate(Len = ifelse(Sepal.Length>5, 'L', 'S')) %>% 
+    select(Species, Len, Sepal.Length) %>% 
+    arrange(desc(Sepal.Length)) %>% 
+    head()
+#   Species Len Sepal.Length
+# 1  setosa   L          5.8
+# 2  setosa   L          5.7
+# 3  setosa   L          5.7
+# 4  setosa   L          5.5
+# 5  setosa   L          5.5
+# 6  setosa   L          5.4
+```
 
 
 ### join()
@@ -150,16 +213,59 @@ last_modified_at: 2021-11-16
 
 - `bind_rows(데이터명1, ...)` : 데이터 행들을 연결하여 결합 
 
-![image](https://user-images.githubusercontent.com/78655692/141615350-55582f5c-d702-4ef7-9cca-08d89e8625a2.png)
+```R
+x = data.frame(x=1:3, y=1:3)
+x
+#   x y
+# 1 1 1
+# 2 2 2
+# 3 3 3
+y = data.frame(x=4:6, z=4:6)
+y
+#   x z
+# 1 4 4
+# 2 5 5
+# 3 6 6
+bind_rows(x, y)
+#   x  y  z
+# 1 1  1 NA
+# 2 2  2 NA
+# 3 3  3 NA
+# 4 4 NA  4
+# 5 5 NA  5
+# 6 6 NA  6
+```
 
 ### bind_cols()
 
 - `bind_cols(데이터명1, ...)` : 데이터 열들을 연결하여 결합
 
-![image](https://user-images.githubusercontent.com/78655692/141615430-3dcf96f9-a28f-485c-bc7c-d7387ec521af.png)
-
-
-
+```R
+x = data.frame(title=c(1:5),
+                a=c(30,70,45,90,65))
+x
+#   title  a
+# 1     1 30
+# 2     2 70
+# 3     3 45
+# 4     4 90
+# 5     5 65
+y = data.frame(b=c(70,65,80,80,90))
+y
+#    b
+# 1 70
+# 2 65
+# 3 80
+# 4 80
+# 5 90
+bind_cols(x, y)   
+#   title  a  b
+# 1     1 30 70
+# 2     2 70 65
+# 3     3 45 80
+# 4     4 90 80
+# 5     5 65 90  
+```
 
 
 
