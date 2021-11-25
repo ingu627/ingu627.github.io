@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2021-11-17
+last_modified_at: 2021-11-25
 ---
 
 ## + 빅데이터분석기사 실기 작업형 대비 (분석 모형 구축)
@@ -34,22 +34,91 @@ last_modified_at: 2021-11-17
 
 *1. 데이터 탐색*
 
-![image](https://user-images.githubusercontent.com/78655692/142234405-ba37714f-bcfc-494b-b919-15eb34b02d0f.png)
+```R
+str(iris)
+
+# 'data.frame':   150 obs. of  5 variables:
+#  $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...
+#  $ Sepal.Width : num  3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...
+#  $ Petal.Length: num  1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...
+#  $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...
+#  $ Species     : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...  
+
+head(iris)
+#   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+# 1          5.1         3.5          1.4         0.2  setosa
+# 2          4.9         3.0          1.4         0.2  setosa
+# 3          4.7         3.2          1.3         0.2  setosa
+# 4          4.6         3.1          1.5         0.2  setosa
+# 5          5.0         3.6          1.4         0.2  setosa
+# 6          5.4         3.9          1.7         0.4  setosa
+
+summary(iris)
+#  Sepal.Length    Sepal.Width     Petal.Length    Petal.Width
+#  Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100
+#  1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600   1st Qu.:0.300  
+#  Median :5.800   Median :3.000   Median :4.350   Median :1.300
+#  Mean   :5.843   Mean   :3.057   Mean   :3.758   Mean   :1.199
+#  3rd Qu.:6.400   3rd Qu.:3.300   3rd Qu.:5.100   3rd Qu.:1.800  
+#  Max.   :7.900   Max.   :4.400   Max.   :6.900   Max.   :2.500
+#        Species
+#  setosa    :50
+#  versicolor:50
+#  virginica :50
+```
 
 *2. 전처리*
 *3. 변수선택*
 
 *4. 분석 모형 구축*
 
-![image](https://user-images.githubusercontent.com/78655692/142234950-4dce54e3-a993-4ca8-ba36-05319b1d4aa1.png)
+```R
+library(rpart)
+md = rpart(Species ~. , data=iris)
+md
+# n= 150
 
-![image](https://user-images.githubusercontent.com/78655692/142235715-8c5fdf97-6263-4af9-82c3-178860fd1785.png)
+# node), split, n, loss, yval, (yprob)
+#       * denotes terminal node
+
+# 1) root 150 100 setosa (0.33333333 0.33333333 0.33333333)
+#   2) Petal.Length< 2.45 50   0 setosa (1.00000000 0.00000000 0.00000000) *
+#   3) Petal.Length>=2.45 100  50 versicolor (0.00000000 0.50000000 0.50000000)  
+#     6) Petal.Width< 1.75 54   5 versicolor (0.00000000 0.90740741 0.09259259) *
+#     7) Petal.Width>=1.75 46   1 virginica (0.00000000 0.02173913 0.97826087) *
+```
+
+```R
+plot(md, compress=TRUE, margin=0.5)
+text(md, cex=1)
+```
+
+![image](https://user-images.githubusercontent.com/78655692/143397783-49ec836f-fb6a-4f29-b8b1-1d006d71be38.png)
+
+```R
+library(rpart.plot)
+prp(md, type=2, extra=2)
+```
+
+![image](https://user-images.githubusercontent.com/78655692/143397700-37aa3443-8b7d-4c6c-a8a4-f1be158459dc.png)
 
 *5. 분석 모형 평가*
 
-![image](https://user-images.githubusercontent.com/78655692/142238866-4bb1d582-48d9-4d4c-9536-a4d4fe86f2f5.png)
+```R
+ls(md)
+#  [1] "call"                "control"             "cptable"
+#  [4] "frame"               "functions"           "method"
+#  [7] "numresp"             "ordered"             "parms"
+# [10] "splits"              "terms"               "variable.importance"
+# [13] "where"               "y"
 
-![image](https://user-images.githubusercontent.com/78655692/142239225-992e8f50-8ca0-4934-bb77-ac32ce297cfc.png)
+
+md$cptable
+#     CP nsplit rel error xerror       xstd
+# 1 0.50      0      1.00   1.16 0.05127703
+# 2 0.44      1      0.50   0.61 0.06016090
+# 3 0.01      2      0.06   0.07 0.02583280
+```
 
 |내부 변수|설명|
 |---|---|
@@ -61,16 +130,63 @@ last_modified_at: 2021-11-17
 
 *6. 혼동 행렬 확인*
 
-![image](https://user-images.githubusercontent.com/78655692/142240832-71261ded-5873-4398-b207-ab253278a327.png)
+```R
+# install.packages('caret')
+library(caret)
+tree_pred = predict(
+    md, newdata = iris, type = "class"
+)
+confusionMatrix(tree_pred, iris$Species)
 
-- `confusionMatrix(actual, predicted)`
+# Confusion Matrix and Statistics
+
+#             Reference
+# Prediction   setosa versicolor virginica
+#   setosa         50          0         0
+#   versicolor      0         49         5
+#   virginica       0          1        45
+
+# Overall Statistics
+                                         
+#                Accuracy : 0.96           
+#                  95% CI : (0.915, 0.9852)
+#     No Information Rate : 0.3333         
+#     P-Value [Acc > NIR] : < 2.2e-16      
+                                         
+#                   Kappa : 0.94           
+                                         
+#  Mcnemar's Test P-Value : NA             
+
+# Statistics by Class:
+
+#                      Class: setosa Class: versicolor
+# Sensitivity                 1.0000            0.9800
+# Specificity                 1.0000            0.9500
+# Pos Pred Value              1.0000            0.9074
+# Neg Pred Value              1.0000            0.9896
+# Prevalence                  0.3333            0.3333
+# Detection Rate              0.3333            0.3267
+# Detection Prevalence        0.3333            0.3600
+# Balanced Accuracy           1.0000            0.9650
+#                      Class: virginica
+# Sensitivity                    0.9000
+# Specificity                    0.9900
+# Pos Pred Value                 0.9783
+# Neg Pred Value                 0.9519
+# Prevalence                     0.3333
+# Detection Rate                 0.3000
+# Detection Prevalence           0.3067
+# Balanced Accuracy              0.9450
+```
+
+- `confusionMatrix(predicted, actual)`
 
 ## 서포트 벡터 머신(SVM)
 
 - **서포트 벡터 머신(SVM; Support Vecotr Machine)**은 데이터를 분리하는 초평면(Hyperplane)중에서 데이터들과 거리가 가장 먼 초평면을 선택하여 분리하는 지도 학습 기반의 이진 선형 분류 모델이다.
 - 최대 마진(Margin : 여유공간)을 가지는 비확률적 선형 판별에 기초한 이진 분류기이다.
 - `svm(formula, data = NULL)`
-- `predict(object, data, type)`
+- `predict(object(모델), data, type)`
 
 |파라미터|설명|
 |---|---|
@@ -80,11 +196,72 @@ last_modified_at: 2021-11-17
 
 *분석 모형 구축*
 
-![image](https://user-images.githubusercontent.com/78655692/142241954-55e7f3e5-9c68-43a0-b315-a102ae68dea0.png)
+```R
+# install.packages('e1071')
+library(e1071)
+
+model = svm(Species ~., data=iris)
+model
+
+# Call:
+# svm(formula = Species ~ ., data = iris)
+
+
+# Parameters:
+#    SVM-Type:  C-classification
+#  SVM-Kernel:  radial 
+#        cost:  1
+
+# Number of Support Vectors:  51
+```
 
 *분석 모형 평가*
 
-![image](https://user-images.githubusercontent.com/78655692/142242395-89a64ed9-dae5-45f7-93c3-e35a5b129032.png)
+```R
+pred = predict(model, iris)
+library(caret)
+confusionMatrix(pred, iris$Species)
+
+# Confusion Matrix and Statistics
+
+#             Reference
+# Prediction   setosa versicolor virginica
+#   setosa         50          0         0
+#   versicolor      0         48         2
+#   virginica       0          2        48
+
+# Overall Statistics
+                                          
+#                Accuracy : 0.9733          
+#                  95% CI : (0.9331, 0.9927)
+#     No Information Rate : 0.3333          
+#     P-Value [Acc > NIR] : < 2.2e-16       
+                                          
+#                   Kappa : 0.96            
+                                          
+#  Mcnemar's Test P-Value : NA              
+
+# Statistics by Class:
+
+#                      Class: setosa Class: versicolor
+# Sensitivity                 1.0000            0.9600
+# Specificity                 1.0000            0.9800
+# Pos Pred Value              1.0000            0.9600
+# Neg Pred Value              1.0000            0.9800
+# Prevalence                  0.3333            0.3333
+# Detection Rate              0.3333            0.3200
+# Detection Prevalence        0.3333            0.3333
+# Balanced Accuracy           1.0000            0.9700
+#                      Class: virginica
+# Sensitivity                    0.9600
+# Specificity                    0.9800
+# Pos Pred Value                 0.9600
+# Neg Pred Value                 0.9800
+# Prevalence                     0.3333
+# Detection Rate                 0.3200
+# Detection Prevalence           0.3333
+# Balanced Accuracy              0.9700
+```
 
 ## K-NN
 
@@ -101,25 +278,127 @@ last_modified_at: 2021-11-17
 
 ### 1. 데이터 세트
 
-![image](https://user-images.githubusercontent.com/78655692/142243645-431a94f9-32b3-4c03-b380-c04128242256.png)
+```R
+data = iris[, c('Sepal.Length', 'Sepal.Width', 'Species')]
+set.seed(1234)
+```
 
 ### 2. 변수 할당
 
-![image](https://user-images.githubusercontent.com/78655692/142244539-65f9619e-c80e-4bdf-8949-983e71d69232.png)
+```R
+idx = sample(
+    x=c('train', 'valid', 'test'),
+    size=nrow(data),
+    replace=TRUE, prob=c(3,1,1))
+train = data[idx == 'train',]
+valid = data[idx == 'valid',]
+test = data[idx == 'test',]
+
+train_x = train[, -3]
+valid_x = valid[, -3]
+test_x = test[, -3]
+
+train_y = train[, 3]
+valid_y = valid[, 3]
+test_y = test[, 3]
+```
 
 ### 3. 변수 선택
 
-![image](https://user-images.githubusercontent.com/78655692/142248085-825782c5-9b1d-49b6-af67-a98291a66ed5.png)
+```R
+accuracy_k = NULL
+for(i in c(1:nrow(train_x))){
+
+    set.seed(1234)
+    knn_k = knn(
+        train = train_x,
+        test = valid_x,
+        cl = train_y, k = i
+    )
+    accuracy_k = c(
+        accuracy_k, 
+        sum(knn_k==valid_y) / length(valid_y))
+}
+valid_k = data.frame(
+    k = c(1:nrow(train_x)),
+    accuracy = accuracy_k)
+```
+
+```R
+plot(
+    formula = accuracy ~ k,
+    data = valid_k,
+    type = 'o',
+    pch = 20,
+    main = 'validation - optimal k'
+)
+```
 
 ![image](https://user-images.githubusercontent.com/78655692/142248144-f137abaa-4b5c-4b74-a579-5d590ec8608a.png)
 
 ### 4. 분류 정확도 최적화
 
-![image](https://user-images.githubusercontent.com/78655692/142249334-d37c1574-330b-4683-a8e0-3dbb721223f1.png)
+```R
+min(valid_k[
+    valid_k$accuracy %in% 
+    max(accuracy_k), 'k'])
+# [1] 13
+max(accuracy_k)
+# [1] 0.8888889
+```
 
 ### 5. 모형 평가
 
-![image](https://user-images.githubusercontent.com/78655692/142250178-0898bbcb-f08b-4c8d-9aa2-e5a4ebadeeb7.png)
+```R
+library(caret)
+library(e1071)
+knn_13 = knn(
+    train = train_x,
+    test= test_x,
+    cl = train_y, k = 13 
+)
+confusionMatrix(knn_13, test_y)
+
+# Confusion Matrix and Statistics
+
+#             Reference
+# Prediction   setosa versicolor virginica
+#   setosa         11          0         0
+#   versicolor      0          4         2
+#   virginica       0          2         5
+
+# Overall Statistics
+                                          
+#                Accuracy : 0.8333          
+#                  95% CI : (0.6262, 0.9526)
+#     No Information Rate : 0.4583          
+#     P-Value [Acc > NIR] : 0.0001808       
+                                          
+#                   Kappa : 0.7405          
+                                          
+#  Mcnemar's Test P-Value : NA              
+
+# Statistics by Class:
+
+#                      Class: setosa Class: versicolor
+# Sensitivity                 1.0000            0.6667
+# Specificity                 1.0000            0.8889
+# Pos Pred Value              1.0000            0.6667
+# Neg Pred Value              1.0000            0.8889
+# Prevalence                  0.4583            0.2500
+# Detection Rate              0.4583            0.1667
+# Detection Prevalence        0.4583            0.2500
+# Balanced Accuracy           1.0000            0.7778
+#                      Class: virginica
+# Sensitivity                    0.7143
+# Specificity                    0.8824
+# Pos Pred Value                 0.7143
+# Neg Pred Value                 0.8824
+# Prevalence                     0.2917
+# Detection Rate                 0.2083
+# Detection Prevalence           0.2917
+# Balanced Accuracy              0.7983
+```
 
 ## 인공신경망(ANN) 
 
@@ -137,11 +416,61 @@ last_modified_at: 2021-11-17
 
 ### 1. 전처리
 
-![image](https://user-images.githubusercontent.com/78655692/142252196-32df99cb-aa12-4eef-92bf-ce6d0f8bd1a3.png)
+```R
+# install.packages('nnet')
+library(nnet)
+
+data(iris)
+iris.scaled = cbind(
+    scale(iris[-5]),
+    iris[5])
+
+set.seed(1234)
+
+index = c(
+    sample(1:50, size=35),
+    sample(51:100, size=35),
+    sample(101:150, size=35)
+)
+train = iris.scaled[index,]
+test = iris.scaled[-index,]
+```
 
 ### 2. 분석 모형 구축
 
-![image](https://user-images.githubusercontent.com/78655692/142252485-68d183bd-8744-4fc6-be28-d407375f30c7.png)
+```R
+set.seed(1234)
+model.nnet = nnet(
+    Species~.,
+    data=train,
+    size=2,
+    maxit=200,
+    decay=5e-04
+)
+# # weights:  19
+# initial  value 132.666396 
+# iter  10 value 8.209251
+# iter  20 value 1.364185
+# iter  30 value 0.942394
+# iter  40 value 0.730223
+# iter  50 value 0.606575
+# iter  60 value 0.519214
+# iter  70 value 0.426922
+# iter  80 value 0.405672
+# iter  90 value 0.400552
+# iter 100 value 0.394381
+# iter 110 value 0.392941
+# iter 120 value 0.392316
+# iter 130 value 0.392108
+# iter 140 value 0.392070
+# iter 150 value 0.392048
+# iter 160 value 0.392045
+# iter 170 value 0.392043
+# iter 180 value 0.392042
+# iter 190 value 0.392041
+# final  value 0.392041
+# converged
+```
 
 > **해석**  
 > seed 값은 1234로 설정  
@@ -150,7 +479,22 @@ last_modified_at: 2021-11-17
 
 ### 3. 요약 정보 추출
 
-![image](https://user-images.githubusercontent.com/78655692/142253094-c1062827-ca63-4e24-8d77-48aa7856a815.png)
+```R
+summary(model.nnet)
+
+# a 4-2-3 network with 19 weights
+# options were - softmax modelling  decay=5e-04
+#  b->h1 i1->h1 i2->h1 i3->h1 i4->h1
+#  -8.61  -1.91  -0.78   7.81   7.06
+#  b->h2 i1->h2 i2->h2 i3->h2 i4->h2
+#   2.29   0.74  -1.51   2.55   2.39 
+#  b->o1 h1->o1 h2->o1
+#   5.83  -1.57  -8.56
+#  b->o2 h1->o2 h2->o2
+#  -2.30  -9.83   8.86
+#  b->o3 h1->o3 h2->o3
+#  -3.53  11.40  -0.30
+```
 
 ## 나이브 베이즈 기법
 
@@ -169,13 +513,100 @@ last_modified_at: 2021-11-17
 
 ### 분석 모형 구축
 
-![image](https://user-images.githubusercontent.com/78655692/142254478-c8df09d0-53c1-499b-9079-0fde827cfee2.png)
+```R
+library(e1071)
+train_data = sample(1:150, size=100)
 
-![image](https://user-images.githubusercontent.com/78655692/142254543-aaff6ef9-0958-4246-b564-cd481a43cee7.png)
+naive_model = naiveBayes(
+    Species ~., data = iris,
+    subset=train_data
+)
+naive_model
+
+# Naive Bayes Classifier for Discrete Predictors
+
+# Call:
+# naiveBayes.default(x = X, y = Y, laplace = laplace)
+
+# A-priori probabilities:
+# Y
+#     setosa versicolor  virginica
+#       0.31       0.34       0.35 
+
+# Conditional probabilities:
+#             Sepal.Length
+# Y                [,1]      [,2]
+#   setosa     4.993548 0.3641753
+#   versicolor 5.964706 0.5376054
+#   virginica  6.594286 0.7012354
+
+#             Sepal.Width
+# Y                [,1]      [,2]
+#   setosa     3.377419 0.3896235
+#   versicolor 2.811765 0.3328160
+#   virginica  2.985714 0.3431196
+
+#             Petal.Length
+# Y                [,1]      [,2]
+#   setosa     1.470968 0.1616448
+#   versicolor 4.247059 0.4301059
+#   virginica  5.600000 0.5341293
+
+#             Petal.Width
+# Y                 [,1]       [,2]
+#   setosa     0.2419355 0.09228288
+#   versicolor 1.3411765 0.20466920
+#   virginica  2.0285714 0.28239671
+```
 
 ### 분석 모형 평가
 
-![image](https://user-images.githubusercontent.com/78655692/142255014-321e1ebb-f659-4417-835e-df41527d585b.png)
+```R
+library(caret)
+pred= predict(naive_model, newdata=iris)
+confusionMatrix(
+    pred, iris$Species
+)
+# Confusion Matrix and Statistics
+
+#             Reference
+# Prediction   setosa versicolor virginica
+#   setosa         50          0         0
+#   versicolor      0         46         3
+#   virginica       0          4        47
+
+# Overall Statistics
+                                         
+#                Accuracy : 0.9533         
+#                  95% CI : (0.9062, 0.981)
+#     No Information Rate : 0.3333         
+#     P-Value [Acc > NIR] : < 2.2e-16      
+                                         
+#                   Kappa : 0.93           
+                                         
+#  Mcnemar's Test P-Value : NA             
+
+# Statistics by Class:
+
+#                      Class: setosa Class: versicolor
+# Sensitivity                 1.0000            0.9200
+# Specificity                 1.0000            0.9700
+# Pos Pred Value              1.0000            0.9388
+# Neg Pred Value              1.0000            0.9604
+# Prevalence                  0.3333            0.3333
+# Detection Rate              0.3333            0.3067
+# Detection Prevalence        0.3333            0.3267
+# Balanced Accuracy           1.0000            0.9450
+#                      Class: virginica
+# Sensitivity                    0.9400
+# Specificity                    0.9600
+# Pos Pred Value                 0.9216
+# Neg Pred Value                 0.9697
+# Prevalence                     0.3333
+# Detection Rate                 0.3133
+# Detection Prevalence           0.3400
+# Balanced Accuracy              0.9500
+```
 
 
 ## References
