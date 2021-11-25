@@ -8,12 +8,12 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2021-11-18
+last_modified_at: 2021-11-25
 ---
 
 ## + 빅데이터분석기사 실기 작업형 대비 (분석 모형 구축)
 
-본 글은 빅데이터분석기사 실기 작업형에 대비하여 요약 및 실습한 것을 작성한 글입니다. 해당 글의 코드를 보고 싶으신 분들은 [빅데이터 분석기사 R 코드](https://github.com/ingu627/BigDataAnalysis)를 참고하시길 바랍니다.
+본 글은 빅데이터분석기사 실기 작업형에 대비하여 요약 및 실습한 것을 작성한 글입니다. <br>해당 글의 코드를 보고 싶으신 분들은 [빅데이터 분석기사 R 코드](https://github.com/ingu627/BigDataAnalysis)를 참고하시길 바랍니다.
 {: .notice--info}
 
 ## 앙상블
@@ -48,23 +48,114 @@ last_modified_at: 2021-11-18
 
 ### 1. 데이터 탐색
 
-![image](https://user-images.githubusercontent.com/78655692/142262817-0562c53d-9470-44eb-bc2a-1a1dd7c74013.png)
+```R
+library(mlbench)
+data(PimaIndiansDiabetes2)
+str(PimaIndiansDiabetes2)
+head(PimaIndiansDiabetes2)
+summary(PimaIndiansDiabetes2)
 
-![image](https://user-images.githubusercontent.com/78655692/142262868-bc414f75-1e8c-4829-8b72-a43e2387a6c7.png)
-
-![image](https://user-images.githubusercontent.com/78655692/142262918-c460eb23-93f8-44be-b6a5-f01ee47e28ef.png)
+#     pregnant         glucose         pressure         triceps     
+#  Min.   : 0.000   Min.   : 44.0   Min.   : 24.00   Min.   : 7.00
+#  1st Qu.: 1.000   1st Qu.: 99.0   1st Qu.: 64.00   1st Qu.:22.00  
+#  Median : 3.000   Median :117.0   Median : 72.00   Median :29.00
+#  Mean   : 3.845   Mean   :121.7   Mean   : 72.41   Mean   :29.15  
+#  3rd Qu.: 6.000   3rd Qu.:141.0   3rd Qu.: 80.00   3rd Qu.:36.00
+#  Max.   :17.000   Max.   :199.0   Max.   :122.00   Max.   :99.00  
+#                   NA's   :5       NA's   :35       NA's   :227    
+#     insulin            mass          pedigree           age        diabetes
+#  Min.   : 14.00   Min.   :18.20   Min.   :0.0780   Min.   :21.00   neg:500  
+#  1st Qu.: 76.25   1st Qu.:27.50   1st Qu.:0.2437   1st Qu.:24.00   pos:268
+#  Median :125.00   Median :32.30   Median :0.3725   Median :29.00
+#  Mean   :155.55   Mean   :32.46   Mean   :0.4719   Mean   :33.24
+#  3rd Qu.:190.00   3rd Qu.:36.60   3rd Qu.:0.6262   3rd Qu.:41.00
+#  Max.   :846.00   Max.   :67.10   Max.   :2.4200   Max.   :81.00
+#  NA's   :374      NA's   :11
+```
 
 ### 2. 데이터 전처리
 
-![image](https://user-images.githubusercontent.com/78655692/142263058-34f54a34-4bef-4284-9fb4-a5e8230474a9.png)
+```R
+PimaIndiansDiabetes2 = na.omit(PimaIndiansDiabetes2)
+summary(PimaIndiansDiabetes2)
+
+#     pregnant         glucose         pressure         triceps     
+#  Min.   : 0.000   Min.   : 56.0   Min.   : 24.00   Min.   : 7.00
+#  1st Qu.: 1.000   1st Qu.: 99.0   1st Qu.: 62.00   1st Qu.:21.00
+#  Median : 2.000   Median :119.0   Median : 70.00   Median :29.00
+#  Mean   : 3.301   Mean   :122.6   Mean   : 70.66   Mean   :29.15  
+#  3rd Qu.: 5.000   3rd Qu.:143.0   3rd Qu.: 78.00   3rd Qu.:37.00  
+#  Max.   :17.000   Max.   :198.0   Max.   :110.00   Max.   :63.00
+#     insulin            mass          pedigree           age        diabetes
+#  Min.   : 14.00   Min.   :18.20   Min.   :0.0850   Min.   :21.00   neg:262  
+#  1st Qu.: 76.75   1st Qu.:28.40   1st Qu.:0.2697   1st Qu.:23.00   pos:130
+#  Median :125.50   Median :33.20   Median :0.4495   Median :27.00
+#  Mean   :156.06   Mean   :33.09   Mean   :0.5230   Mean   :30.86
+#  3rd Qu.:190.00   3rd Qu.:37.10   3rd Qu.:0.6870   3rd Qu.:36.00
+#  Max.   :846.00   Max.   :67.10   Max.   :2.4200   Max.   :81.00
+```
 
 ### 3. 분석 모형 구축 
 
-![image](https://user-images.githubusercontent.com/78655692/142347904-dfffbf14-67c1-44bc-ba3f-ba615da23abd.png)
+```R
+train.idx = sample(
+    1:nrow(PimaIndiansDiabetes2),
+    size=nrow(PimaIndiansDiabetes2)*2/3
+)
+train = PimaIndiansDiabetes2[train.idx,]
+test = PimaIndiansDiabetes2[-train.idx, ]
+```
+
+```R
+library(ipred)
+md.bagging = bagging(
+    diabetes~.,
+    data=train, nbagg = 25
+)
+# md.bagging
+# Bagging classification trees with 25 bootstrap replications
+
+# Call: bagging.data.frame(formula = diabetes ~ ., data = train, nbagg = 25)
+```
 
 ### 4. 분석 모형 평가 
 
-![image](https://user-images.githubusercontent.com/78655692/142347966-63b16fa6-64f9-462b-a9b9-99d3b24717b5.png)
+```R
+pred = predict(md.bagging, test)
+library(caret)
+confusionMatrix(
+    as.factor(pred),
+    test$diabetes,
+    positive='pos'
+)
+
+# Confusion Matrix and Statistics
+
+#           Reference
+# Prediction neg pos
+#        neg  80  21
+#        pos   6  24
+
+#                Accuracy : 0.7939
+#                  95% CI : (0.7145, 0.8596)
+#     No Information Rate : 0.6565
+#     P-Value [Acc > NIR] : 0.0004151
+
+#                   Kappa : 0.5036
+
+#  Mcnemar's Test P-Value : 0.0070536
+
+#             Sensitivity : 0.5333
+#             Specificity : 0.9302
+#          Pos Pred Value : 0.8000
+#          Neg Pred Value : 0.7921
+#              Prevalence : 0.3435
+#          Detection Rate : 0.1832
+#    Detection Prevalence : 0.2290
+#       Balanced Accuracy : 0.7318
+
+#        'Positive' Class : pos
+```
 
 ## 부스팅
 
@@ -75,6 +166,8 @@ last_modified_at: 2021-11-18
 ## XGBoost
 
 - **XGBoost**(eXtreme Gradient Boosting)는 병렬 처리가 지원되도록 지원되도록 구현하여 훈련과 분류 속도가 빠른 알고리즘이다. 
+- 부스팅 기법을 사용하는 알고리즘에는 AdaBoost, GBM, LightGBM, XGBoost(xXtreme Gradient Boosting), CatBoost 등이 있다. 
+- `XGBoost` : 병렬 처리가 지원되도록 구현하여 훈련과 분류 속도가 빠른 알고리즘이다.
 - `xgb.train(params, data, nrounds, early_stopping_rounds, watchlist)` : xgboost 모델의 훈련을 위한 함수
 
 |파라미터|설명|
@@ -85,7 +178,7 @@ last_modified_at: 2021-11-18
 |early_stopping_rounds|early stopping 횟수 지정<br>지정된 회수 이상 성능 향상이 없을 경우 중지|
 |watchlist|모형의 성능을 평가하기 위하여 사용하는 xgb.DMatrix 이름|
 
-- xgb.train 함수는 독립변수가 수치형 데이터만 사용이 가능하며, 명목형인 경우에는 One Hot Encoding을 수행하여 수치형으로 변환한 후 사용한다.
+- xgb.train 함수는 독립변수가 **수치형 데이터**만 사용이 가능하며, 명목형인 경우에는 **One Hot Encoding**을 수행하여 수치형으로 변환한 후 사용한다.
 - 종속변수가 팩터형인 경우에는 숫자로 변환한 후 0부터 시작하기 위해 1을 뺀다.
 
 |주요 파라미터 | 설명 |
@@ -108,17 +201,127 @@ last_modified_at: 2021-11-18
 
 ### 분석 모형 구축
 
-![image](https://user-images.githubusercontent.com/78655692/142352800-5f37c0fc-2af7-4ba3-959a-0ca8a01ad74b.png)
+```R
+# install.packages('xgboost')
+library(xgboost)
+train.label=as.integer(train$diabetes)-1
+mat_train.data=as.matrix(train[, -9])
+mat_test.data=as.matrix(test[, -9])
+```
 
-![image](https://user-images.githubusercontent.com/78655692/142355302-5180c68d-292f-4a05-8d8d-690b617222e2.png)
+```R
+# install.packages('xgboost')
+library(xgboost)
+train.label=as.integer(train$diabetes)-1
+mat_train.data=as.matrix(train[, -9])
+mat_test.data=as.matrix(test[, -9])
 
-![image](https://user-images.githubusercontent.com/78655692/142355341-2fc9b630-950a-4991-9de6-beae29e3823e.png)
+xgb.train = xgb.DMatrix(
+    data = mat_train.data,
+    label = train.label
+)
+xgb.test = xgb.DMatrix(
+    data = mat_test.data
+)
+param_list = list(
+    booster = 'gbtree',
+    eta = 0.001,
+    max_depth = 10,
+    gamma = 5,
+    subsample = 0.8,
+    colsample_bytree = 0.8,
+    objective = 'binary:logistic',
+    eval_metric = 'auc'
+)
+md.xgb = xgb.train(
+    params = param_list,
+    data = xgb.train,
+    nrounds = 200,
+    early_stopping_rounds = 10,
+    watchlist = list(val1 = xgb.train),
+    verbose=1
+)
+
+# [1]     val1-auc:0.792313 
+# Will train until val1_auc hasn't improved in 10 rounds.
+
+# [2]     val1-auc:0.859459 
+# [3]     val1-auc:0.859459
+# [4]     val1-auc:0.878610 
+# [5]     val1-auc:0.882152 
+# [6]     val1-auc:0.881150 
+# [7]     val1-auc:0.890742
+# [8]     val1-auc:0.891009 
+# [9]     val1-auc:0.890909 
+# [10]    val1-auc:0.892914
+# [11]    val1-auc:0.894318 
+# [12]    val1-auc:0.893082 
+# [13]    val1-auc:0.892413 
+# [14]    val1-auc:0.893783
+# [15]    val1-auc:0.893048 
+# [16]    val1-auc:0.891377 
+# [17]    val1-auc:0.892112
+# [18]    val1-auc:0.892513 
+# [19]    val1-auc:0.889472
+# [20]    val1-auc:0.889873 
+# [21]    val1-auc:0.890241 
+# Stopping. Best iteration:
+# [11]    val1-auc:0.894318
+```
 
 ### 분석 모형 평가
 
-**-> 에러**
+```R
+library(dplyr)
+xgb.pred = predict(
+    md.xgb,
+    newdata = xgb.test
+)
+xgb.pred2 = ifelse(
+    xgb.pred >= 0.5,
+    xgb.pred <- 'pos',
+    xgb.pred <- 'neg'
+)
+# ifelse 안에서는 = 로 하면 에러가 난다. 반드시 <-로 해줘야 함.
+xgb.pred2 = as.factor(xgb.pred2)
+library(caret)
+confusionMatrix(
+    xgb.pred2,
+    test$diabetes,
+    positive= 'pos'
+)
+
+# Confusion Matrix and Statistics
+
+#           Reference
+# Prediction neg pos
+#        neg  78  23
+#        pos   8  22
+
+#                Accuracy : 0.7634
+#                  95% CI : (0.6812, 0.8332)
+#     No Information Rate : 0.6565
+#     P-Value [Acc > NIR] : 0.005436
+
+#                   Kappa : 0.43
+
+#  Mcnemar's Test P-Value : 0.011921
+
+#             Sensitivity : 0.4889
+#             Specificity : 0.9070
+#          Pos Pred Value : 0.7333
+#          Neg Pred Value : 0.7723
+#              Prevalence : 0.3435
+#          Detection Rate : 0.1679
+#    Detection Prevalence : 0.2290
+#       Balanced Accuracy : 0.6979
+
+#        'Positive' Class : pos
+```
 
 ## 랜덤 포레스트
+
+<img src="https://user-images.githubusercontent.com/78655692/143412154-aa6f9e63-2bc6-4f08-868b-711c5a2c520f.png" width="500" alt="image">
 
 - **랜덤 포레스트**(Random Forest)는 의사결정나무의 특징인 분산이 크다는 점을 고렿여 배깅과 부스팅보다 더 많은 무작위성을 주어 약한 학습기들을 생성한 후 이를 선형 결합하여 최종 학습기를 만드는 방법이다.
 - 랜덤 포레스트 패키지는 랜덤 입력에 따른 여러 트리의 집합인 포레스트를 이용한 분류방법이다.
@@ -131,18 +334,85 @@ last_modified_at: 2021-11-18
 |ntree|사용할 트리의 수|
 |mtry|각 분할에서 랜덤으로 뽑인 변수의 수|
 
-### 분석 모형 구축
+### 1. 분석 모형 구축
 
-![image](https://user-images.githubusercontent.com/78655692/142358544-fdc0a42d-a90d-475a-ae90-77b5d4722280.png)
+```R
+# install.packages('randomForest')
+library(randomForest)
+md.rf = randomForest(
+    diabetes ~.,
+    data = train,
+    ntree=100,
+    proximity=TRUE
+)
+print(md.rf)
 
-### 중요도 확인
+# Call:
+#  randomForest(formula = diabetes ~ ., data = train, ntree = 100,      proximity = TRUE) 
+#                Type of random forest: classification
+#                      Number of trees: 100
+# No. of variables tried at each split: 2
 
-![image](https://user-images.githubusercontent.com/78655692/142358748-236ddf6e-e450-4b75-9d0a-5bfb4ad6b975.png)
+#         OOB estimate of  error rate: 24.52%
+# Confusion matrix:
+#     neg pos class.error
+# neg 154  22   0.1250000
+# pos  42  43   0.4941176
+```
 
-### 혼동 행렬 및 예측 
+### 2. 중요도 확인
 
-![image](https://user-images.githubusercontent.com/78655692/142358997-c55667ee-e686-49fc-af0d-984a7d8b4ab9.png)
+```R
+importance(md.rf)
+#          MeanDecreaseGini
+# pregnant        10.760140
+# glucose         25.962516
+# pressure         8.373628
+# triceps         10.613116
+# insulin         18.244292
+# mass            13.511800
+# pedigree        10.673620
+# age             15.948628
+```
 
+### 3. 혼동 행렬 및 예측 
+
+```R
+library(caret)
+pred = predict(md.rf, test)
+confusionMatrix(
+    as.factor(pred),
+    test$diabetes,
+    positive= 'pos'
+)
+
+# Confusion Matrix and Statistics
+
+#           Reference
+# Prediction neg pos
+#        neg  81  24
+#        pos   5  21
+
+#                Accuracy : 0.7786
+#                  95% CI : (0.6978, 0.8465)
+#     No Information Rate : 0.6565
+#     P-Value [Acc > NIR] : 0.0016311
+
+#                   Kappa : 0.4542
+
+#  Mcnemar's Test P-Value : 0.0008302
+
+#             Sensitivity : 0.4667
+#             Specificity : 0.9419
+#          Pos Pred Value : 0.8077
+#          Neg Pred Value : 0.7714
+#              Prevalence : 0.3435
+#          Detection Rate : 0.1603
+#    Detection Prevalence : 0.1985
+#       Balanced Accuracy : 0.7043
+
+#        'Positive' Class : pos
+```
 
 ## References
 

@@ -8,12 +8,12 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2021-11-17
+last_modified_at: 2021-11-25
 ---
 
 ## + 빅데이터분석기사 실기 작업형 (R 기본 문법)
 
-본 글은 빅데이터분석기사 실기 작업형에 대비하여 요약 및 실습한 것을 작성한 글입니다. 해당 글의 코드를 보고 싶으신 분들은 [빅데이터 분석기사 R 코드](https://github.com/ingu627/BigDataAnalysis)를 참고하시길 바랍니다.
+본 글은 빅데이터분석기사 실기 작업형에 대비하여 요약 및 실습한 것을 작성한 글입니다. <br>해당 글의 코드를 보고 싶으신 분들은 [빅데이터 분석기사 R 코드](https://github.com/ingu627/BigDataAnalysis)를 참고하시길 바랍니다.
 {: .notice--info}
 
 ## 기본 단축키 
