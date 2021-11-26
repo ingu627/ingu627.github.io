@@ -47,27 +47,27 @@ sidebar_main: true
 - [생활코딩 - Linux](https://www.inflearn.com/course/%EC%83%9D%ED%99%9C%EC%BD%94%EB%94%A9-%EB%A6%AC%EB%88%85%EC%8A%A4-%EA%B0%95%EC%A2%8C#curriculum){: target="_blank"}
 
 
-## Data Set Sites
+### Data Set Sites
 - [UCI - Machine Learning Repository](https://archive.ics.uci.edu/ml/index.php){: target="_blank"}
 - [Dataset Search - Google](https://datasetsearch.research.google.com/){: target="_blank"}
 
-## Competitions
+### Competitions
 - [dacon](https://dacon.io/){: target="_blank"}
 - [kaggle](https://www.kaggle.com/){: target="_blank"}
 
-## Books
+### Books
 
 - [케라스 창시자에게 배우는 딥러닝](hhttps://www.aladin.co.kr/shop/wproduct.aspx?ItemId=170317445){: target="_blank"}
 - [Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow(핸즈온 머신러닝)](https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=237677114){: target="_blank"}
 
-## Blogs
+### Blogs
 
 - [앎의 공간 -Data Science/Machine Learning 구현](https://techblog-history-younghunjo1.tistory.com/261){: target="_blank"}
 - [[Tensorflow 2.0] 합성곱 신경망: CNN](https://ericabae.medium.com/tensorflow-2-0-%ED%95%A9%EC%84%B1%EA%B3%B1-%EC%8B%A0%EA%B2%BD%EB%A7%9D-cnn-bfd925298c9b){: target="_blank"}
 - [Setup Visual Studio Code to run R on VSCode 2021](https://www.r-bloggers.com/2021/01/setup-visual-studio-code-to-run-r-on-vscode-2021/){: target="_blank"}
 - [공부하는 식빵맘 - [Github 블로그] 같은 카테고리 내에서의 이전글, 다음글 이동](https://ansohxxn.github.io/blog/prevnext/){: target="_blank"}
 
-## Github blog 만들기
+### Github blog 만들기
 
 - [Minimal Mistakes 공식 홈페이지](https://mmistakes.github.io/minimal-mistakes/){: target="_blank"}
 - [Google Fonts](https://fonts.google.com/){: target="_blank"}
