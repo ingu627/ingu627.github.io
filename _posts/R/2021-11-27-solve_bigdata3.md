@@ -11,7 +11,7 @@ classes: wide
 last_modified_at: 2021-11-27
 ---
 
-빅데이터 분석기사 실기 대비 차원에서 쓴 글입니다. <br> 기출문제의 데이터는 출처는 남겼으나 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis)에 데이터 셋을 남겨놨습니다.<br> 또한 해당 전체 코드는 `sujebi_1.R` 파일에 담겨져 있습니다.
+빅데이터 분석기사 실기 대비 차원에서 쓴 글입니다. <br> 기출문제의 데이터는 출처는 남겼으나 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis)에 데이터 셋을 남겨놨습니다.<br> 또한 해당 전체 코드는 `sujebi_2.R` 파일에 담겨져 있습니다.
 {: .notice--info}
 
 
@@ -222,10 +222,67 @@ print(result) # 9.120367
 
 > 데이터 참고 : [https://www.kaggle.com/tadhgfitzgerald/fifa-international-soccer-mens-ranking-1993now](https://www.kaggle.com/tadhgfitzgerald/fifa-international-soccer-mens-ranking-1993now)
 
+```R
+fifa=read.csv("sujebi_data/fifa_ranking.csv")
+str(fifa)
+summary(fifa)
+# country_abrv total_points
+library(dplyr)
 
+fifa_point = fifa %>% select(total_points) %>% 
+    arrange(desc(total_points))
+top3_point = fifa_point[3,]
 
+fifa_country = fifa %>% 
+    filter(fifa_point >= top3_point) %>% 
+    select(country_abrv)
+fifa_country = as.vector(fifa_country$country_abrv)  # GER ITA SUI
 
+f_mean = fifa %>% 
+    filter(country_abrv %in% fifa_country) %>% 
+    summarise(mean = mean(total_points, na.rm = TRUE))
+print(f_mean$mean) # 348.098
+```
 
+<br>
+<br>
+
+## 21. sales_train
+
+- 가장 많이 판매된 상품(item_id) 3가지와 전체 상품에 대하여 상품 판매가(item_price) 표준편차 차이를 구하시오.
+
+```R
+sales=read.csv('sujebi_data/sales_train_v2.csv')
+
+head(sales)
+str(sales)
+summary(sales)
+dim(sales)
+
+library(dplyr)
+top3_item = sales %>% group_by(item_id) %>% 
+    summarise(n = n()) %>% 
+    arrange(desc(n)) %>% 
+    head(3)
+top3_item
+
+top3_id = as.vector(top3_item$item_id)
+top3_id
+
+sum(is.na(sales$item_price))
+
+total_sd = sd(sales$item_price)
+
+top3_sd = sales %>% 
+    filter(item_id %in% top3_id) %>% 
+    summarise(sd = sd(item_price))
+top3_sd = top3_sd$sd
+
+print(abs(total_sd - top3_sd)) # 1101.796
+```
+
+<br>
+<br>
 
 
 ## References
