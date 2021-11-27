@@ -50,6 +50,8 @@ last_modified_at: 2021-11-27
 | file | 읽어 들일 파일명을 설정함 |
 |header | 첫 번째 행을 열 이름으로 인식할지 여부를 설정 |
 
+  - `stringsAsFactors=TRUE` : 불러올 때 문자열을 factor로 변환해줌
+
 - `write.csv(x, file, append, quote, sep, ...)` : csv파일로 저장할 때 사용하는 함수
 
 |주요 파라미터 | 설명|
