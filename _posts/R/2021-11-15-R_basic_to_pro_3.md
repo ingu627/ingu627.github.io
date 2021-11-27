@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "R 기초 ~ 심화 문법 총정리 (3) - 데이터 정제, 분석 모형 선택"
-excerpt: "+ ADsP, 빅데이터분석기사 실기 작업형 대비"
+excerpt: "+ ADsP, 빅데이터분석기사 실기 작업형 대비 - 이상값, 기초 통계"
 categories: R
 tag : [R, visualization, adsp, certificate, 빅데이터 분석기사, 실기]
 toc: true
@@ -141,6 +141,8 @@ table(is.na(pima2$pressure))
 |제 1사분위(Q1)|자료들의 하위 25%의 위치<br>$stats[2]|제 2사분위(Q2) (중위수)| 자료들의 50%의 위치로 중위수(Median)를 의미<br> $stats[2] 이용하여 확인|
 |제 3사분위(Q3) | 자료들의 하위 75%를 의미<br> $stats[4] 이용하여 확인|
 |최댓값|최댓값<br>$stats[5] 이용하여 확인|
+
+- `quantile()` : 0%       25%       50%       75%      100% 로 보여준다.
 
 ### IQR 함수를 이용한 이상값 검출
 
