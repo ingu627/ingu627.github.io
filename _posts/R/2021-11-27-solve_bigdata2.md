@@ -38,6 +38,9 @@ after_sd # 29.3704
 print(abs(before_sd - after_sd)) # 3.90557
 ```
 
+<br>
+<br>
+
 ## 2. Hitters
 
 - Salary의 이상값의 합을 구하시오. (단, 이상값은 중위수에서 IQR의 2배를 초과하는 값으로 한다.)
@@ -59,6 +62,9 @@ ds2 = Hitters %>% select(Salary) %>%
 result = sum(ds2)
 print(result) # 21671.86
 ```
+
+<br>
+<br>
 
 ## 3. diamonds
 
@@ -83,6 +89,9 @@ ds_train = ds %>% arrange(desc(price)) %>%
 mean(ds_train$price) # 18663.33
 ```
 
+<br>
+<br>
+
 ## 4. airquality
 
 - 데이터의 순서대로 90% 데이터를 훈련 데이터로 추출하고 Ozone 항목의 결측값을 평균으로 변경한 후 변경 전, 후의 중앙값의 차이를 구하시오.
@@ -102,6 +111,9 @@ after_sd = median(ds$Ozone, na.rm = TRUE)
 result = abs(before_sd - after_sd)
 print(result) # 10.36634
 ```
+
+<br>
+<br>
 
 ## 5. music
 
@@ -132,6 +144,9 @@ result = mean(ds) + sd(ds)
 print(result) # 124.3836
 ```
 
+<br>
+<br>
+
 ## 6. telco-customer-churn
 
 > 데이터 참고 : [https://www.kaggle.com/blastchar/telco-customer-churn](https://www.kaggle.com/blastchar/telco-customer-churn)
@@ -156,6 +171,9 @@ ds <- churn %>% select(TotalCharges) %>%
 result = mean(ds$TotalCharges, na.rm = TRUE)
 print(result) # 1663.995
 ```
+
+<br>
+<br>
 
 ## 7. cats
 
@@ -182,6 +200,9 @@ result = mean(ds$Hwt)
 print(result) # 13.94375
 ```
 
+<br>
+<br>
+
 ## 8. orings
 
 - damage가 1 이상일 경우의 temp와 damage의 피어슨 상관계수를 구하시오. (faraway 패키지의 orings 데이터 세트)
@@ -197,6 +218,9 @@ ds = orings %>%
 result = cor(ds$temp, ds$damage, method="pearson")
 print(result) # -0.5790513
 ```
+
+<br>
+<br>
 
 ## 9. mtcars
 
@@ -220,6 +244,9 @@ am2_mean = mean(head(ds2$mpg, 10))
 result = abs(am1_mean - am2_mean)
 print(result) # 7.07
 ```
+
+<br>
+<br>
 
 ## 10. diamonds
 
