@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2021-11-25
+last_modified_at: 2021-11-27
 ---
 
 ## + 빅데이터분석기사 실기 작업형 (R 기본 문법)

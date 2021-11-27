@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2021-11-25
+last_modified_at: 2021-11-27
 ---
 
 ## + 빅데이터분석기사 실기 작업형 대비 (데이터 수집, 전처리)
@@ -267,7 +267,17 @@ bind_cols(x, y)
 # 5     5 65 90  
 ```
 
+## 결측치 
 
+### is.na()
+
+- 결측치 여부 확인
+- 결측치가 있으면 TRUE, 결측치가 없으면 FALSE를 반환한다.
+
+### na.omit()
+
+- 결측치 제거
+- **행** 단위로 어떤 결측치라도 있으면 이 행을 제거하고 남은 데이터를 반환
 
 
 ## References
