@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "빅데이터분석기사(R) - 제1유형 10문제 풀이 (1)"
-excerpt: "2021년 제 3회 빅데이터분석기사 실기를 위한 문제풀이 내용입니다."
+excerpt: "2021년 제 3회 빅데이터분석기사 실기를 위한 문제풀이 내용입니다. - 1~10번"
 categories: R
 tag : [R, certificate, 빅데이터 분석기사, 실기, 작업형]
 toc: true
@@ -271,3 +271,9 @@ result = max(ds1$price)
 print(result) # 2745
 ```
 
+<br>
+<br>
+
+## References
+
+- [2022 수제비 빅데이터분석기사 실기 (필답형+작업형)](https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=281447264)
