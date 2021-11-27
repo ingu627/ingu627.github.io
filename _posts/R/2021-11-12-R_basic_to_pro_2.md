@@ -175,6 +175,15 @@ iris %>%
 # 3 virginica        2.03
 ```
 
+### n()
+
+- 이 함수는 단독으로 사용되지 않고 반드시 group_by()함수와 연결된 summarise()함수의 내부에 포함되어 쓰인다.
+- 예시 : `mpg %>% group_by(class) %>% summarise(n = n())`
+
+### count()
+
+- `count(데이터프레임명, 변수명)`
+
 ### arrange()
 
 - `데이터 프레임 이름 %>% arrange(정렬 기준변수)` : 오름차순 정렬
