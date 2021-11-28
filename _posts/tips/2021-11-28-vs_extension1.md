@@ -14,9 +14,7 @@ last_modified_at: 2021-11-28
 많은 글들이 extension을 추천했지만 이글은 딥러닝 코드를 vscode에서 할 때 생산적으로 활용할 수 있는 extension들을 추천하고자 썼습니다.
 {: .notice--danger}
 
-## PYTHON
-
-### 1. Tabnine
+## 1. Tabnine
 
 ![image](https://user-images.githubusercontent.com/78655692/143766991-a6441e63-3725-4cbc-9aeb-37ceaa92efaf.png)
 
@@ -29,7 +27,7 @@ last_modified_at: 2021-11-28
 <br>
 <br>
 
-### 2. Pylance
+## 2. Pylance
 
 ![image](https://user-images.githubusercontent.com/78655692/143767482-c095f3fb-6920-4c1a-9e86-2922e5c174d2.png)
 
@@ -42,7 +40,7 @@ last_modified_at: 2021-11-28
 <br>
 <br>
 
-### 3. python snippets
+## 3. python snippets
 
 ![image](https://user-images.githubusercontent.com/78655692/143767786-eda7dd16-dcea-43a0-9a5b-a89c1513cd30.png)
 
@@ -54,7 +52,7 @@ last_modified_at: 2021-11-28
 <br>
 <br>
 
-### 4. Python Extension Pack
+## 4. Python Extension Pack
 
 ![image](https://user-images.githubusercontent.com/78655692/143767877-b6bb793c-8a04-4755-8c33-861eb7fea162.png)
 
@@ -72,7 +70,7 @@ last_modified_at: 2021-11-28
 <br>
 <br>
 
-### 5. Visual Studio IntelliCode
+## 5. Visual Studio IntelliCode
 
 ![image](https://user-images.githubusercontent.com/78655692/143767934-6c0f0fb9-5721-447e-b4dc-97d7a91f3972.png)
 
@@ -87,7 +85,7 @@ last_modified_at: 2021-11-28
 <br>
 <br>
 
-### 6. Visual Studio IntelliCode API Usage Examples
+## 6. Visual Studio IntelliCode API Usage Examples
 
 ![image](https://user-images.githubusercontent.com/78655692/143768051-27ab622a-c777-45ca-a964-044c68db786e.png)
 
@@ -99,7 +97,7 @@ last_modified_at: 2021-11-28
 <br>
 <br>
 
-### 7. MagicPython
+## 7. MagicPython
 
 ![image](https://user-images.githubusercontent.com/78655692/143768171-4eaf53f3-ff3d-4dff-a3e4-a88fc7fe9688.png)
 
@@ -111,7 +109,7 @@ last_modified_at: 2021-11-28
 <br>
 <br>
 
-### 8. Jupyter
+## 8. Jupyter
 
 ![image](https://user-images.githubusercontent.com/78655692/143768813-0d93b404-1f8e-419e-a7bc-c935d79bb481.png)
 
@@ -121,7 +119,7 @@ last_modified_at: 2021-11-28
 <br>
 <br>
 
-### 9. Settings Sync
+## 9. Settings Sync
 
 ![image](https://user-images.githubusercontent.com/78655692/143767355-8495d260-f750-400d-952c-5a857d03bd3d.png)
 
@@ -133,7 +131,7 @@ last_modified_at: 2021-11-28
 <br>
 <br>
 
-### 10. GitLens
+## 10. GitLens
 
 ![image](https://user-images.githubusercontent.com/78655692/143768425-6367afed-f8d4-44af-bf82-c166f2ca45b2.png)
 
@@ -146,7 +144,7 @@ last_modified_at: 2021-11-28
 <br>
 <br>
 
-### 11. Git Graph
+## 11. Git Graph
 
 ![image](https://user-images.githubusercontent.com/78655692/143768669-c4afcbc2-e957-479e-9d63-46a786003096.png)
 
@@ -158,7 +156,7 @@ last_modified_at: 2021-11-28
 <br>
 <br>
 
-### 12. Git Extension Pack
+## 12. Git Extension Pack
 
 ![image](https://user-images.githubusercontent.com/78655692/143768754-386f0497-4c18-400a-b313-7bf7be5a33f3.png)
 
@@ -174,7 +172,7 @@ last_modified_at: 2021-11-28
 <br>
 <br>
 
-### 13. Better Comments
+## 13. Better Comments
 
 ![image](https://user-images.githubusercontent.com/78655692/143768903-7653cb41-ccd8-44cb-847d-112aa37fa355.png)
 
