@@ -15,6 +15,7 @@ sidebar_main: true
 - [dbpia](https://www.dbpia.co.kr/){: target="_blank"}
 
 ### DL, ML
+
 - [텐서 플로우 블로그 (Tensor ≈ Blog)](https://tensorflow.blog/){: target="_blank"}
 - [이수안컴퓨터연구소 유튜브](https://www.youtube.com/c/%EC%9D%B4%EC%88%98%EC%95%88%EC%BB%B4%ED%93%A8%ED%84%B0%EC%97%B0%EA%B5%AC%EC%86%8C/playlists){: target="_blank"}
 - [위키독스](https://wikidocs.net/){: target="_blank"}
@@ -26,6 +27,7 @@ sidebar_main: true
 - [TensorFlow - 구글 머신러닝 플랫폼](https://codetorial.net/tensorflow/index.html){: target="_blank"}
 - [딥 러닝을 이용한 자연어 처리 입문](https://wikidocs.net/22886)
 - [ratsgo's blog for textmining](https://ratsgo.github.io/)
+- [귀퉁이 서재 - Baek Kyun Shin](https://bkshin.tistory.com/)
 
 ### Web Service
 - [아마존 웹 서비스를 다루는 기술](http://pyrasis.com/private/2014/09/30/publish-the-art-of-amazon-web-services-book){: target="_blank"}
@@ -36,24 +38,37 @@ sidebar_main: true
 
 - [Qt for Python - Pyside 설치하기](https://doc.qt.io/qtforpython/){: target="_blank"}
 
+### Algorithm
+
+- [백준](https://www.acmicpc.net/){: target="_blank"}
+- [프로그래머스](https://programmers.co.kr/){: target="_blank"}
+
 ### OS 
+
 - [(KOCW) 운영체제, 이화여자대학교 반효경 교수](http://www.kocw.or.kr/home/cview.do?mty=p&kemId=1046323){: target="_blank"}
 - [운영체제 정리 블로그 - SungBum Park](https://velog.io/@codemcd?tag=OS){: target="_blank"}
 
 ### Distributed Systems
+
 - [Distributed Systems by Maarten van Steen, Andrew S. Tanenbaum](https://www.distributed-systems.net/index.php/books/ds3/ds3-ebook/){: target="_blank"}
 
 ### Linux
+
 - [생활코딩 - Linux](https://www.inflearn.com/course/%EC%83%9D%ED%99%9C%EC%BD%94%EB%94%A9-%EB%A6%AC%EB%88%85%EC%8A%A4-%EA%B0%95%EC%A2%8C#curriculum){: target="_blank"}
 
 
 ### Data Set Sites
+
 - [UCI - Machine Learning Repository](https://archive.ics.uci.edu/ml/index.php){: target="_blank"}
 - [Dataset Search - Google](https://datasetsearch.research.google.com/){: target="_blank"}
+- [SELECTSTAR](https://selectstar.ai/?home){: target="_blank"}
+- [서울 특별시 빅데이터 캠퍼스](https://bigdata.seoul.go.kr/main.do){: target="_blank"}
 
 ### Competitions
+
 - [dacon](https://dacon.io/){: target="_blank"}
 - [kaggle](https://www.kaggle.com/){: target="_blank"}
+- [aifactory](http://aifactory.space/page/main){: target="_blank"}
 
 ### Books
 
@@ -81,3 +96,5 @@ sidebar_main: true
 - [Favicon](https://realfavicongenerator.net/){: target="_blank"}
 - [jekyll 문서](http://jekyllrb-ko.github.io/){: target="_blank"}
 - [공부하는 식빵맘](https://ansohxxn.github.io/){: target="_blank"}
+- [ScreenToGif](https://www.screentogif.com/){: target="_blank"}
+- [ezgif](https://ezgif.com/){: target="_blank"}
