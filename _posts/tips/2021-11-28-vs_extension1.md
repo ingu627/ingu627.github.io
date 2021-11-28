@@ -4,7 +4,8 @@ title: "빅데이터 분석가를 위한 VSCode extensions 13개 추천"
 excerpt : "파이썬, 주피터를 vscode에서 더 전문적이고 생산적으로 활용하는 방법"
 categories: tips
 tag : [tip, vscode, extension, 파이썬, 주피터, Tabnine, Pylance, IntelliCode, MagicPython, Jupyter, Settings Sync, GitLens, GitGraph ]
-toc : True
+toc: True
+toc_sticky: True
 sidebar_main: true
 
 last_modified_at: 2021-11-28
