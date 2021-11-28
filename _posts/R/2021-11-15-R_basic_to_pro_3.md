@@ -170,7 +170,9 @@ table(is.na(pima2$pressure))
 
 ## 데이터의 범위 변환
 
-- `sacle(x, center = TRUE, scale =TRUE)`
+### scale()
+
+- `scale(x, center = TRUE, scale =TRUE)`
   - `x` : 수치형 행렬 
   - `center` : 수치형 데이터 입력 시 center에 지정된 값으로 뺄셈 실행 (default : TRUE)
     - x의 평균으로 값을 빼서 정규화 수행
@@ -222,6 +224,53 @@ data_minmax
 # attr(,"scaled:scale")
 # [1] 3.162278
 ```
+
+### preProcess()
+
+- caret 패키지에서는 preProcess 함수를 통해서 표준화 등의 전처리를 수행할 수 있다.
+
+1. preProcess 함수를 사용해서 변수변환에 필요한 parameter를 설정한다.
+2. predict 함수를 통해서 실제로 값을 변화시킨다.
+
+- 정규화(Normalization)는 preProcess의 `method="range"`인자로 구현할 수 있다.
+- 표준화(Standardization)는 preProcess의 `method = c("center", "scale")` 인자로 구현할 수 있다.
+- factor형은 계산 시 자동으로 제외가 된다.
+- preProcess 객체를 `predict`함수를 사용해 데이터셋에 적용할 수 있다.
+
+```R
+library(caret)
+data(iris)
+idx = createDataPartition(iris$Species, p=0.6)
+df_train = iris[idx$Resample1,]
+df_test = iris[-idx$Resample1,]
+
+norm = preProcess(df_train, method="range")
+norm
+# Created from 90 samples and 5 variables
+
+# Pre-processing:
+#   - ignored (1)
+#   - re-scaling to [0, 1] (4)
+norm$ranges
+#      Sepal.Length Sepal.Width Petal.Length Petal.Width
+# [1,]          4.4         2.2          1.2         0.1
+# [2,]          7.9         4.1          6.9         2.5
+scaled_df_train = predict(norm, df_train)
+scaled_df_test = predict(norm, df_test)
+summary(scaled_df_train)
+#   Sepal.Length     Sepal.Width      Petal.Length      Petal.Width     
+#  Min.   :0.0000   Min.   :0.0000   Min.   :0.00000   Min.   :0.00000
+#  1st Qu.:0.2071   1st Qu.:0.3158   1st Qu.:0.05263   1st Qu.:0.08333
+#  Median :0.4286   Median :0.4211   Median :0.57018   Median :0.54167  
+#  Mean   :0.4216   Mean   :0.4561   Mean   :0.45068   Mean   :0.45694
+#  3rd Qu.:0.5714   3rd Qu.:0.5789   3rd Qu.:0.68421   3rd Qu.:0.70833
+#  Max.   :1.0000   Max.   :1.0000   Max.   :1.00000   Max.   :1.00000  
+#        Species
+#  setosa    :30
+#  versicolor:30
+#  virginica :30
+```
+
 
 ## 표본 추출 및 집약처리 
 
@@ -605,3 +654,4 @@ transform(
 ## References
 
 - [2022 수제비 빅데이터분석기사 실기 (필답형+작업형)](https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=281447264) 
+- [R-caretpreProcess-수치형-데이터-정규화-표준화](https://yogyui.tistory.com/entry/R-caretpreProcess-%EC%88%98%EC%B9%98%ED%98%95-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%A0%95%EA%B7%9C%ED%99%94-%ED%91%9C%EC%A4%80%ED%99%94)
