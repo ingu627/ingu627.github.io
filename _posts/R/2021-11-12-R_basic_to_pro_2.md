@@ -62,6 +62,7 @@ last_modified_at: 2021-11-27
 |quote| TRUE면 모든 값과 열 이름에 "로 수식 (default). FALSE면 큰따옴표 생략|
 |sep| 구분자 지정|
 
+- `row.names=FALSE` : 인덱스를 반환 X
 
 **3. TSV 파일**
 

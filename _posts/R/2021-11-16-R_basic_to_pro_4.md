@@ -438,6 +438,8 @@ summary(second_model)
 |family|모델에서 사용할 분포<br>이항 로지스틱 회귀 분석의 경우 "binomial" 사용
 |data|분석 대상 데이터|
 
+- `predict` 함수에 `type="response"` 인자로 수행하면 테스트 데이터에 대한 로지스틱 함수 출력값(0 ~ 1)로 반환해준다.
+
 ## 혼동 행렬
 
 - 분류 모형의 결과를 평가하기 위해서 혼동 행렬(Confusion Matrix)을 이용한 평가지표와 ROC 곡선의 AUC를 주로 이용한다.
