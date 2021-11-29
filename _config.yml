@@ -297,6 +297,7 @@ defaults:
       share: false
       related: true
       mathjax: true
+      use_math: true
       show_date: true
       sidebar_main: true
 

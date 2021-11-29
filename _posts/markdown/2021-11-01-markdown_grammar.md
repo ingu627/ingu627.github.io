@@ -7,7 +7,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2021-11-29
+last_modified_at: 2021-11-30
 ---
 
 ## MarkDown (md) 
@@ -327,8 +327,10 @@ print('Hello World!')
 
 - \$로 감싸면 수식이 마치 문서처럼 써집니다.
 - **이 블로그에서는 적용이 안되네요.**
-  - `+2021.11.30` : jekyll은 `mathjax: true`로 해야 수식이 잘 나오는 것 확인. (`$`는 범용 마크다운에서 가능)
+  - `+2021.11.29` : jekyll은 `mathjax: true`로 해야 수식이 잘 나오는 것 확인. (`$`는 범용 마크다운에서 가능)
+  - `+2021.11.30` : `front-matter` 에 `use_math: true`로 설정하면 원래 문법인 `$`를 감싸는 것이 가능
 
+$a+b+c+d=e$ <br>
 \\(a+b=c\\)  <br>
 \\(y = 3x\\) <br>
 \\(a^2+b^2=c^2\\) => `$a^2 + b^2 = c^2$` <br>
