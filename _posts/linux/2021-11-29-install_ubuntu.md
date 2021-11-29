@@ -15,6 +15,8 @@ sidebar_main: true
 
 - AWS에서 가상의 환경을 작업하던 중, 내 PC에서 구동해 보았으면 싶어서 설치를 진행해 보았다.
 
+![image](https://user-images.githubusercontent.com/78655692/143879564-f6e63337-035a-48a0-aba0-b0c658b3b4de.png)
+
 ## 1. Linux용 Windows 하위 시스템
 
 - 제어판 -> Windows 기능 켜기/끄기 -> Linux용 Windows 하위 시스템 선택 -> 확인
