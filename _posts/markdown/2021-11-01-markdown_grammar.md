@@ -305,7 +305,7 @@ print('Hello World!')
 
 - \$로 감싸면 수식이 마치 문서처럼 써집니다.
 - **이 블로그에서는 적용이 안되네요.**
-  - `+2021.11.30` : jekyll은 `mathjax: true`로 해야 수식이 잘 나오는 것 확인.
+  - `+2021.11.30` : jekyll은 `mathjax: true`로 해야 수식이 잘 나오는 것 확인. (`$`는 범용 마크다운에서 가능)
 
 $a+b=c$ <br>
 $y = 3x$ <br>
@@ -351,9 +351,11 @@ graph LR
 ```
 - (mermaid)
 
+\\(\alpha\\)
+
 ## References
 - [[토크ON세미나] Git & GitHub Page 블로그 만들기 4강 - Github Page 활용하기 T아카데미](https://www.youtube.com/watch?v=eCv_bh-Ax-Q)
 - [마크다운 문법 소개](http://ccl.cckorea.org/syntax/)
 - [[Github Blog] minimal mistakes - 포스팅 글 써보기](https://eona1301.github.io/github_blog/GithubBlog-Posting/)
-
+- [[Github 블로그] Mathjax로 수식(Math Expression) 쓰기](https://ansohxxn.github.io/blog/math-equation/)
 
