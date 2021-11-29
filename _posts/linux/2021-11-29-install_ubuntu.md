@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "윈도우10에서 Linux 설치하기 (Ubuntu)"
+title: "윈도우10에서 리눅스(Linux) 설치하기 (Ubuntu)"
 categories: linux
 date: 2021-11-29
 tag: [linux, ubuntu, windows 10, WSL2]
