@@ -262,11 +262,16 @@ print('Hello World!')
 
 ![image](https://user-images.githubusercontent.com/78655692/143901417-87ed57ea-56db-4dab-a3fc-19820f282d5c.png)
 
+<br>
+
 <iframe width="896" height="504" src="https://www.youtube.com/embed/1xWmteIE3Y8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ### 2. minimal-mistake 테마 사용시
 
-- 코드 : `{% include video id="v=다음의 id 값" provider="youtube" %}` 
+- 코드 : 
+
+
+`{ % include video id="v=다음의 id 값" provider="youtube" % }`
 
 ![image](https://user-images.githubusercontent.com/78655692/143901643-c64f72d8-c6e7-426a-a723-8319dc927bde.png)
 
@@ -324,10 +329,12 @@ print('Hello World!')
 - **이 블로그에서는 적용이 안되네요.**
   - `+2021.11.30` : jekyll은 `mathjax: true`로 해야 수식이 잘 나오는 것 확인. (`$`는 범용 마크다운에서 가능)
 
-$a+b=c$ <br>
-$y = 3x$ <br>
-$a^2+b^2=c^2$ => `$a^2 + b^2 = c^2$` <br>
-$3x^2_1 + 3x_2 = 10$ => `$3x^2_1 + 3x_2 = 10$` <br>
+\\(a+b=c\\)  <br>
+\\(y = 3x\\) <br>
+\\(a^2+b^2=c^2\\) => `$a^2 + b^2 = c^2$` <br>
+\\(3x^2_1 + 3x_2 = 10\\) => `$3x^2_1 + 3x_2 = 10$` 
+
+<br>
 
 - \$\$ 달러 2개는 항상 중앙에 쓰도록 해줍니다.
   - $$a+b=c$$
@@ -335,8 +342,8 @@ $3x^2_1 + 3x_2 = 10$ => `$3x^2_1 + 3x_2 = 10$` <br>
    - $$(\alpha + \beta)^2 = \alpha^2 + 2\alpha\beta+\beta^2 $$
    - `$$(\alpha + \beta)^2 = \alpha^2 + 2\alpha\beta+\beta^2 $$`
 
-$min_a$ <br>
-$min_b$ <br>
+\\(min_a\\) <br>
+\\(min_b\\) <br>
 
 ### tip!
 만약 특수문자 그대로 사용하고 싶다면 앞에 \(역슬래시)를 추가해주면 됩니다.
