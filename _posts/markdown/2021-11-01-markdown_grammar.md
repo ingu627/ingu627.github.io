@@ -2,13 +2,12 @@
 layout: single
 title: '마크다운(markdown)문법 총정리'
 categories: md
-tag : [grammar, tip, md]
+tag : [grammar, tip, md, 마크다운, 문법]
 toc: true
 toc_sticky: true
 sidebar_main: true
 
-date: 2021-11-01
-last_modified_at: 2021-11-20
+last_modified_at: 2021-11-29
 ---
 
 ## MarkDown (md) 
@@ -255,6 +254,24 @@ print('Hello World!')
 |  2   | 김길동 | 120  |
 |  3   | 박길동 | 140  |
 
+## 유튜브 동영상 넣기
+
+### 1. iframe 이용하기
+
+- 유튜브 동영상을 오른쪽 버튼을 누른 후, 소스 코드 복사를 누르면 끝
+
+![image](https://user-images.githubusercontent.com/78655692/143901417-87ed57ea-56db-4dab-a3fc-19820f282d5c.png)
+
+<iframe width="896" height="504" src="https://www.youtube.com/embed/1xWmteIE3Y8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+### 2. minimal-mistake 테마 사용시
+
+- 코드 : `{% include video id="v=다음의 id 값" provider="youtube" %}` 
+
+![image](https://user-images.githubusercontent.com/78655692/143901643-c64f72d8-c6e7-426a-a723-8319dc927bde.png)
+
+{% include video id="1xWmteIE3Y8&t=2300s" provider="youtube" %}
+
 ## 이미지
 
 - 문법 : `![이미지가 안 불러졌을때 나타나는 설명문](이미지 주소)`
@@ -351,11 +368,10 @@ graph LR
 ```
 - (mermaid)
 
-\\(\alpha\\)
-
 ## References
+
 - [[토크ON세미나] Git & GitHub Page 블로그 만들기 4강 - Github Page 활용하기 T아카데미](https://www.youtube.com/watch?v=eCv_bh-Ax-Q)
 - [마크다운 문법 소개](http://ccl.cckorea.org/syntax/)
 - [[Github Blog] minimal mistakes - 포스팅 글 써보기](https://eona1301.github.io/github_blog/GithubBlog-Posting/)
 - [[Github 블로그] Mathjax로 수식(Math Expression) 쓰기](https://ansohxxn.github.io/blog/math-equation/)
-
+- [[Github 블로그] 유튜브 동영상 삽입하기](https://ansohxxn.github.io/blog/youtube/)
