@@ -291,6 +291,11 @@ bind_cols(x, y)
 - 결측치 제거
 - **행** 단위로 어떤 결측치라도 있으면 이 행을 제거하고 남은 데이터를 반환
 
+### 결측값을 다른 값으로 대체
+
+- `dataset$var[is.na(dataset$var)] <- new_value`
+
+
 
 ## References
 
@@ -298,4 +303,4 @@ bind_cols(x, y)
 - [Must Learning with R (개정판)](https://wikidocs.net/book/4315)  
 - [Do it! 쉽게 배우는 R 데이터 분석](https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=113509180)  
 - [[R 데이터분석] 조인(join) 을 이용하여 데이터 병합하기](https://jobmanager1.tistory.com/54)
-
+- [R, Python 분석과 프로그래밍의 친구 (by R Friend)](https://rfriend.tistory.com/34 )
