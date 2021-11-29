@@ -29,10 +29,18 @@ sidebar_main: true
 - [ratsgo's blog for textmining](https://ratsgo.github.io/)
 - [귀퉁이 서재 - Baek Kyun Shin](https://bkshin.tistory.com/)
 
-### Web Service
+### Web
 - [아마존 웹 서비스를 다루는 기술](http://pyrasis.com/private/2014/09/30/publish-the-art-of-amazon-web-services-book){: target="_blank"}
   - 유의사항 : 저작권 (요약, 블로그 기재 금지, 링크 기재는 허용)
 - [생활코딩](https://opentutorials.org/course/1){: target="_blank"}
+- [FastAPI](https://fastapi.tiangolo.com/ko/){: target="_blank"}
+- [pydantic](https://pydantic-docs.helpmanual.io/){: target="_blank"}
+- [httpie](https://httpie.io/){: target="_blank"}
+- [docker](https://www.docker.com/){: target="_blank"}
+- [sqlalchemy](https://docs.sqlalchemy.org/en/14/tutorial/index.html){: target="_blank"}
+- [JSON Web Tokens](https://jwt.io/){: target="_blank"}
+- [Python web framework from scracth](https://oz123.github.io/advanced-python/book/middlewares.html)
+
 
 ### QUI
 
