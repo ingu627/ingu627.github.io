@@ -41,7 +41,10 @@ $$x^2+3*x+5=0 는 이차함수이다.$$
 - `\\(` 와 `\\)` 로 수식을 감싸 줘도 똑같다.
 - \\(a+b=c\\) => `\\(a+b=c\\)`
 
-## 그 외 수식은 주석에 있으니 참고하면 된다. ($\alpha$나 $\beta$ 같은 것들)
+## 그 외 수식은 pdf 파일에 있으니 참고하면 된다. ($\alpha$나 $\beta$ 같은 것들)
+
+- 아래를 클릭하면 파일이 다운로드 될 것이다.
+- [TeXRefCard.v1.5.pdf](https://github.com/ingu627/Temporary_Storage/files/7619974/TeXRefCard.v1.5.pdf)
 
 <br>
 <br>
@@ -52,4 +55,4 @@ $$x^2+3*x+5=0 는 이차함수이다.$$
 - [위키백과 - 매스잭스](https://ko.wikipedia.org/wiki/%EB%A7%A4%EC%8A%A4%EC%9E%AD%EC%8A%A4)
 - [[Github 블로그] Mathjax로 수식(Math Expression) 쓰기](https://ansohxxn.github.io/blog/math-equation/)
 - [mathjax 깃헙블로그 적용 및 문법](https://ghdic.github.io/math/default/mathjax-%EB%AC%B8%EB%B2%95/)
-- [TeXRefCard.v1.5.pdf](https://github.com/ingu627/Temporary_Storage/files/7619974/TeXRefCard.v1.5.pdf)
+
