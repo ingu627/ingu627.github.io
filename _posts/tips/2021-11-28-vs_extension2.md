@@ -1,7 +1,6 @@
 ---
 layout: single
 title: "생산성 향상을 위한 VSCode extensions 12개 추천"
-excerpt : ""
 categories: tips
 tag : [tip, vscode, extension, Dracula, Debugger, Bracket, Live, Markdown]
 toc: True
@@ -10,9 +9,6 @@ sidebar_main: true
 
 last_modified_at: 2021-11-28
 ---
-
-많은 글들이 extension을 추천했지만 이글은 딥러닝 코드를 vscode에서 할 때 생산적으로 활용할 수 있는 extension들을 추천하고자 썼습니다.
-{: .notice--danger}
 
 ## 1. Ponicode
 
