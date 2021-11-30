@@ -9,7 +9,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2021-11-10
+last_modified_at: 2021-11-30
 ---
 ## UPDATE (2021.11.10)
 
@@ -36,6 +36,9 @@ last_modified_at: 2021-11-10
 5. Cudnn
 6. 가상환경
 
+<br>
+<br>
+
 ## 나의 환경
 
 - CPU : I7-6700HQ
@@ -45,6 +48,8 @@ last_modified_at: 2021-11-10
 
 ![image](https://user-images.githubusercontent.com/78655692/140860532-9fbbd1ac-e6ac-4f9a-8ea2-8447b1482dbe.png)
 
+<br>
+<br>
 
 ## 1. 아나콘다 설치
 
@@ -54,6 +59,8 @@ ANACONDA site link : [https://www.anaconda.com/products/individual](https://www.
 
 + **<span style="color:red">텐서플로는 파이썬 3.7 버전의 패키지를 제공하지 않기 때문에 아나콘다 5.3 버전을 설치하면 tensorflow를 설치할 수 없다고 한다. (파이썬 3.6 버전으로 다운그레이드 필요)</span>**
 
+<br>
+<br>
 
 ## 2. NVIDIA DRIVER 설치
 
@@ -63,12 +70,17 @@ NVIDIA DRIVER link : [https://www.nvidia.com/download/index.aspx?lang=en-us](htt
 
 ![image](https://user-images.githubusercontent.com/78655692/140859318-d8d2c16f-8a77-46e8-b365-d44315ada069.png)
 
+<br>
+<br>
+
 ## 3. Visual Studio 설치
 
 Visual Studio link : [https://visualstudio.microsoft.com/ko/downloads/](https://visualstudio.microsoft.com/ko/downloads/)
 
 ![image](https://user-images.githubusercontent.com/78655692/140862114-33c3a7f2-387c-4d07-971a-669f849a14eb.png)
 
+<br>
+<br>
 
 ## 3. CUDA Toolkit
 
@@ -81,6 +93,8 @@ CUDA Toolkit window(윈도우) link : [https://www.tensorflow.org/install/source
 
 ![image](https://user-images.githubusercontent.com/78655692/140859931-3bf2d8d0-3335-4fae-91bd-9aa22d5ed956.png)
 
+<br>
+<br>
 
 ## 4. CUDA 설치
 
@@ -90,6 +104,8 @@ CUDA Toolkit Archive : [https://developer.nvidia.com/cuda-toolkit-archive](https
 
 ![image](https://user-images.githubusercontent.com/78655692/140861225-eb032b2e-a497-4b21-b0bf-47695a7532ef.png)
 
+<br>
+<br>
 
 ## 5. cuDNN 설치
 
@@ -115,11 +131,17 @@ cuDNN link : [https://developer.nvidia.com/cudnn](https://developer.nvidia.com/c
 
 - `bin`, `include`, `lib` 폴더를 각각 들어가 안의 파일들을 복사.
 
+<br>
+<br>
+
 ## 5_1. 설치 확인 
 
 ![image](https://user-images.githubusercontent.com/78655692/141050089-8c671f02-9ca7-4ce3-8e94-019b7d48eb0b.png)
 
 - 클릭 후 검색창에 `cuda`라 쳤을 때 프로그램이 나오면 성공!!
+
+<br>
+<br>
 
 ## 5_2. 환경변수 설정
 
@@ -133,6 +155,8 @@ cuDNN link : [https://developer.nvidia.com/cudnn](https://developer.nvidia.com/c
 
 ![image](https://user-images.githubusercontent.com/78655692/141051769-1464f5ad-6b73-4c3d-9e42-6e0ba572e177.png)
 
+<br>
+<br>
 
 ## 6. 가상환경 
 
@@ -155,6 +179,9 @@ cuDNN link : [https://developer.nvidia.com/cudnn](https://developer.nvidia.com/c
   - `pip install ipykernel`
   - `python -m ipykernel install --user --name 가상환경이름 --display-name 표시할 가상환경 이름`
 
+<br>
+<br>
+
 ## GPU 확인
 
 ```python
@@ -166,6 +193,9 @@ print(device_lib.list_local_devices())
 
 
 이렇게 뜨면 잘 설치가 된 것이다.
+
+<br>
+<br>
 
 ## 기타
 
@@ -181,6 +211,9 @@ print(device_lib.list_local_devices())
 
 - **cuda 버전 확인** : `nvcc --version` (cmd 창)
 - **GPU util 확인** :`nvida-smi` (cmd 창)
+
+<br>
+<br>
 
 ## References
 

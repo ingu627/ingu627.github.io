@@ -17,6 +17,9 @@ last_modified_at: 2021-11-29
 - MathML, LaTeX 및 ASCIIMathML 마크 업을 사용하여 웹 브라우저에 수학 표기법을 표시하는 크로스 브라우저 JavaScript 라이브러리이다.
 - 웹 사이트에서 수학식 표시가 가능하다.
 
+<br>
+<br>
+
 ## 웹에서 Mathjax 설치하기 
 
 - 사실 minimal mistakes 테마를 쓰고 있다면 별도의 추가를 할 필요가 없다.
@@ -25,6 +28,9 @@ last_modified_at: 2021-11-29
 ![image](https://user-images.githubusercontent.com/78655692/143912853-d285ab04-e93d-49e3-98a5-6ece634980b6.png)
 
 ![image](https://user-images.githubusercontent.com/78655692/143913025-dfb7c5f4-dce6-458f-a1ae-0d7a51b942d1.png)
+
+<br>
+<br>
 
 ## 쓰는 방법
 
@@ -37,10 +43,16 @@ last_modified_at: 2021-11-29
 
 $$x^2+3*x+5=0 는 이차함수이다.$$
 
+<br>
+<br>
+
 ### `\\(   \\)` 사용하기
 
 - `\\(` 와 `\\)` 로 수식을 감싸 줘도 똑같다.
 - \\(a+b=c\\) => `\\(a+b=c\\)`
+
+<br>
+<br>
 
 ## 그 외 수식은 pdf 파일에 있으니 참고하면 된다. ($\alpha$나 $\beta$ 같은 것들)
 
