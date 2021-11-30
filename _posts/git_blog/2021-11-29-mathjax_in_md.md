@@ -1,6 +1,7 @@
 ---
 layout: single
 title: "Git Blog에서 글 작성 시 수식 사용하기 (Mathjax)"
+excerpt: "Mathjax란 MathML, LaTeX 및 ASCIIMathML 마크 업을 사용하여 웹 브라우저에 수학 표기법을 표시하는 크로스 브라우저 JavaScript 라이브러리이다. 웹 사이트에서 수학식 표시가 가능하다."
 categories: git_blog
 tag : [git, blog, markdown, 마크다운, Mathjax, 문법]
 toc : True
