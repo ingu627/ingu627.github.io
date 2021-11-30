@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "Linux 기초 정리 (2)"
-excerpt: "생활 코딩 강의 내용을 요약 및 정리한 글입니다."
+excerpt: "생활 코딩 강의 내용을 요약 및 정리한 글입니다. - IO Redirection, 쉘과 쉘스크립트"
 categories: linux
 date: 2021-11-23
 tag: [linux, basic, cloud9]
