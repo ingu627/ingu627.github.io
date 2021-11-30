@@ -11,7 +11,7 @@
 <html lang="{{ site.locale | slice: 0,2 | default: "en" }}" class="no-js">
   <head>
 
-    <!--main.scss 조금이라도 빨리 로드 되길.. preload-->
+    <!--main.scss preload-->
     <link rel="preload" as="style" href="{{ '/assets/css/main.css' | relative_url }}">
 
     {% include head.html %}
@@ -42,7 +42,6 @@
         }
     </style>
     <!-- google ads -->
-    {% if page.layout == 'single' %}
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <script>
       (adsbygoogle = window.adsbygoogle || []).push({
@@ -50,7 +49,6 @@
         enable_page_level_ads: true
       });
     </script>
-    {% endif %}
 
   </head>
 
@@ -63,6 +61,18 @@
       {{ content }}
     </div>
 
+    <!--google ads-->
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <div align="center" style="margin: 1em 0;">
+    <ins class="adsbygoogle"
+         style="display:block; border-bottom: initial;"
+         data-ad-client="ca-pub-6253756472465876"
+         data-ad-format="auto"></ins>
+    </div>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    
     {% if site.search == true %}
       <div class="search-content">
         {% include_cached search/search_form.html %}

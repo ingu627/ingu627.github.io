@@ -106,3 +106,4 @@ sidebar_main: true
 - [공부하는 식빵맘](https://ansohxxn.github.io/){: target="_blank"}
 - [ScreenToGif](https://www.screentogif.com/){: target="_blank"}
 - [ezgif](https://ezgif.com/){: target="_blank"}
+- [Jekyll 블로그에 구글 애드센스 설치하기](https://shryu8902.github.io/jekyll/adsense/){: target="_blank"}
