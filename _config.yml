@@ -16,7 +16,7 @@ minimal_mistakes_skin    : "air" # "air", "aqua", "contrast", "dark", "dirt", "n
 
 # Site Settings
 locale                   : "ko-KR"
-title                    : "POEUN. Artificial Intelligence & Psychology"
+title                    : "POEUN. AI & PSYC"
 title_separator          : "|"
 subtitle                 : "Machine Learning | Deep Learning | Cloud Computing | Distributed Systems"
 name                     : "POUEN"
