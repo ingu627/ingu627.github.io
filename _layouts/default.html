@@ -11,6 +11,15 @@
 <html lang="{{ site.locale | slice: 0,2 | default: "en" }}" class="no-js">
   <head>
     <meta name="google-site-verification" content="Lkh6IHg3Jk6DRFEXBZP0zPlDuY6NpN2pXqFM-1Ow6Ok" />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-211585020-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-211585020-1');
+    </script>
     <!--main.scss preload-->
     <link rel="preload" as="style" href="{{ '/assets/css/main.css' | relative_url }}">
 
@@ -90,20 +99,9 @@
 
   </body>
 
-<!-- Google Tag Manager (noscript) -->
+<!-- End Google Tag Manager (noscript) -->
 <noscript>
   <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NTX9VR9" height="0" width="0" style="display:none;visibility:hidden"></iframe>
 </noscript>
-<!-- End Google Tag Manager (noscript) -->
 
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-R03EGK2CKN">
-</script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-R03EGK2CKN');
-</script>  
 </html>
