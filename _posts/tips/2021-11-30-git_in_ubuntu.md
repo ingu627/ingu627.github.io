@@ -2,7 +2,7 @@
 layout: single
 title: "Ubuntu, Windows10에서 Git 설치하기"
 excerpt: "깃은 컴퓨터 파일의 변경사항을 추적하고 여러 명의 사용자들 간에 해당 파일들의 작업을 조율하기 위한 분산 버전 관리 시스템이다."
-categories: linux
+categories: tips
 tag: [git, linux, ubuntu, windows 10, WSL2, 리눅스, 우분투]
 
 toc: true

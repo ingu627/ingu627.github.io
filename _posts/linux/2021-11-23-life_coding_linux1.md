@@ -2,7 +2,7 @@
 layout: single
 title: "Linux 기초 정리 (1)"
 excerpt: "생활 코딩 강의 내용을 요약 및 정리한 글입니다."
-categories: linux
+categories: linux 
 date: 2021-11-23
 tag: [linux, basic, cloud9]
 

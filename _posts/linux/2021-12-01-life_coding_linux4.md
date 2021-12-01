@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "Linux 기초 정리 (4)"
+title: "Linux 기초 정리 (4) - process, daemon"
 excerpt: "생활 코딩 강의 내용을 요약 및 정리한 글입니다. - 프로세스와 실행"
 categories: linux
 tag: [linux, basic, ubuntu, 모니터링, 백그라운드, 데몬, cron]

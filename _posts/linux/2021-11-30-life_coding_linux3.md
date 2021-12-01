@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "Linux 기초 정리 (3)"
+title: "Linux 기초 정리 (3) - directory, 파일찾는 법"
 excerpt: "생활 코딩 강의 내용을 요약 및 정리한 글입니다. - 디렉토리 구조"
 categories: linux
 tag: [linux, basic, ubuntu]

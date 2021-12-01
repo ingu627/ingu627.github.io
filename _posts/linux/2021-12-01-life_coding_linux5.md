@@ -16,9 +16,6 @@ sidebar_main: true
 본 글은 "생활 코딩 - Linux" 강의 내용을 요약 및 정리한 글입니다. <br> 개인공부 목적이므로 자세한 사항은 [생활코딩 - Linux](https://www.inflearn.com/course/%EC%83%9D%ED%99%9C%EC%BD%94%EB%94%A9-%EB%A6%AC%EB%88%85%EC%8A%A4-%EA%B0%95%EC%A2%8C#curriculum)로 참고하시길 바랍니다.
 {: .notice--info}
 
-<br>
-<br>
-
 ## 사용자
 
 ### 다중사용자
@@ -55,7 +52,7 @@ sidebar_main: true
 
 - `~` : 현재 사용자의 홈 디렉토리
 
-## 사용자의 추가
+### 사용자의 추가
 
 - `sudo useradd -m [사용자]` : 사용자 생성
 
@@ -68,6 +65,19 @@ sidebar_main: true
 - 이제 이 duru 사용자도 sudo 권한을 주려고 한다.
 - `exit` : 빠져나오기
 - `sudo usermod -a -G sudo duru` : duru에게 sudo 권한 주기
+
+<br>
+<br>
+
+## 권한 (permission)
+
+- `권한을 지정하다` : 사용자가 파일과 디렉토리에 대해서 어떤 일을 할 수 있게 하거나 할 수 없게 하는 것
+  - Read & Write & Excute 에 대해 
+- `echo` : 뒤에 오는 문자를 표준 출력해줌. 화면에 print 한다.
+
+![image](https://user-images.githubusercontent.com/78655692/144243244-991be862-b7e2-4836-b89d-763d5a2add2d.png)
+
+- `echo 'hi' > perm.txt` : hi라는 명령어를 redirection해서 perm.txt에 추가하여 저장한다.
 
 
 

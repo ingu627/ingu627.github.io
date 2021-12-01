@@ -65,6 +65,7 @@ sidebar_main: true
 - [생활코딩 - Linux](https://www.inflearn.com/course/%EC%83%9D%ED%99%9C%EC%BD%94%EB%94%A9-%EB%A6%AC%EB%88%85%EC%8A%A4-%EA%B0%95%EC%A2%8C#curriculum){: target="_blank"}
 - [The Linux Directory Structure, Explained](https://www.howtogeek.com/117435/htg-explains-the-linux-directory-structure-explained/){: target="_blank"}
 - [리눅스에서 터미널 생활 즐기기.](https://black7375.tistory.com/15){: target="_blank"}
+- [리눅스 쿡북](https://zetawiki.com/wiki/%EB%A6%AC%EB%88%85%EC%8A%A4)
 
 
 ### Data Set Sites
