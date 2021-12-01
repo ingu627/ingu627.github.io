@@ -16,9 +16,9 @@ minimal_mistakes_skin    : "air" # "air", "aqua", "contrast", "dark", "dirt", "n
 
 # Site Settings
 locale                   : "ko-KR"
-title                    : "POEUN. AI & PSYC"
+title                    : "AI & PSYC"
 title_separator          : "|"
-subtitle                 : "Machine Learning | Deep Learning | Cloud Computing | Distributed Systems"
+subtitle                 : "Deep Learning | Distributed Computing | Psychology"
 name                     : "POUEN"
 description              : "개인 저장공간입니다.<br/>도움이 되길 바랍니다."
 url                      : "https://ingu627.github.io"
