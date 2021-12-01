@@ -76,7 +76,7 @@ sidebar_main: true
 <br>
 <br>
 
-## 7.  Linux 커널 업데이트 패키지 다운로드
+## 7. Linux 커널 업데이트 패키지 다운로드
 
 - [x64 머신용 최신 WSL2 Linux 커널 업데이트 패키지](https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi)
 
@@ -85,7 +85,7 @@ sidebar_main: true
 <br>
 <br>
 
-## 8. 
+## 8. WSL 2 기본 버전 세팅
 
 - `wsl --set-default-version 2`
 

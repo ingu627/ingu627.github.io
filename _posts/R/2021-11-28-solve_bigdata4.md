@@ -11,7 +11,7 @@ classes: wide
 last_modified_at: 2021-11-28
 ---
 
-빅데이터 분석기사 실기 대비 차원에서 쓴 글입니다. <br> 기출문제의 데이터는 출처는 남겼으나 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis)에 데이터 셋을 남겨놨습니다.<br> 또한 해당 전체 코드는 `sujebi_3.R` 파일에 담겨져 있습니다.
+빅데이터 분석기사 실기 대비 차원에서 쓴 글입니다. <br> 기출문제의 데이터는 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis)에 데이터 셋을 남겨놨습니다.<br> 또한 해당 전체 코드는 `sujebi_3.R` 파일에 담겨져 있습니다.
 {: .notice--info}
 
 ## 1. 백화점 고객의 1년 데이터 (dataq.or.kr 예시 문제)
