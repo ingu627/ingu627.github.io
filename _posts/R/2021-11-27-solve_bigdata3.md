@@ -2,13 +2,13 @@
 layout: single
 title: "빅데이터분석기사(R) - 제1유형 11문제 풀이 (2)"
 excerpt: "2021년 제 3회 빅데이터분석기사 실기를 위한 문제풀이 내용입니다. - 11~21번"
-categories: R
+categories: R_ML
 tag : [R, certificate, 빅데이터 분석기사, 실기, 작업형]
 toc: true
 sidebar_main: true
 classes: wide
 
-last_modified_at: 2021-11-27
+last_modified_at: 2021-12-01
 ---
 
 빅데이터 분석기사 실기 대비 차원에서 쓴 글입니다. <br> 기출문제의 데이터는 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis)에 데이터 셋을 남겨놨습니다.<br> 또한 해당 전체 코드는 `sujebi_2.R` 파일에 담겨져 있습니다.

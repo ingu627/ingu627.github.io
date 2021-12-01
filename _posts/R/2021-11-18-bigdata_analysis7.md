@@ -1,17 +1,15 @@
 ---
 layout: single
-title: "R 기초 ~ 심화 문법 총정리 (7) - 분석 모형 구축"
-excerpt: "+ ADsP, 빅데이터분석기사 실기 작업형 대비 - 연관성 분석까지"
-categories: R
+title: "빅데이터분석기사 실기 작업형(7) - 군집분석부터 연관성 분석까지"
+excerpt: "본 글은 빅데이터분석기사 실기 작업형에 대비하여 요약 및 실습한 것을 작성한 글입니다. 기출문제의 데이터는 https://github.com/ingu627/BigDataAnalysis에 데이터 셋을 남겨놨습니다."
+categories: R_ML
 tag : [R, adsp, certificate, 빅데이터 분석기사, 실기]
 toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2021-11-25
+last_modified_at: 2021-12-01
 ---
-
-## + 빅데이터분석기사 실기 작업형 대비 (분석 모형 구축)
 
 본 글은 빅데이터분석기사 실기 작업형에 대비하여 요약 및 실습한 것을 작성한 글입니다. <br>기출문제의 데이터는 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis)에 데이터 셋을 남겨놨습니다.<br> 또한 해당 전체 코드는 `/concept/R_basic_to_pro_7.R` 파일에 담겨져 있습니다.
 {: .notice--info}
