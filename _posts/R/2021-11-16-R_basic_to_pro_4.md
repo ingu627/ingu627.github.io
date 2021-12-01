@@ -13,7 +13,7 @@ last_modified_at: 2021-11-25
 
 ## + 빅데이터분석기사 실기 작업형 대비 (분석 모형 구축)
 
-본 글은 빅데이터분석기사 실기 작업형에 대비하여 요약 및 실습한 것을 작성한 글입니다. <br>기출문제의 데이터는 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis)에 데이터 셋을 남겨놨습니다.<br> 또한 해당 전체 코드는 `/concept/R_basic_to_pro_4.R` 파일에 담겨져 있습니다.
+본 글은 빅데이터분석기사 실기 작업형에 대비하여 요약 및 실습한 것을 작성한 글입니다. <br>기출문제의 데이터는 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis){: target="_blank"}에 데이터 셋을 남겨놨습니다.<br> 또한 해당 전체 코드는 `/concept/R_basic_to_pro_4.R` 파일에 담겨져 있습니다.
 {: .notice--info}
 
 ## 분석 모형 구축 
