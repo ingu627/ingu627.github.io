@@ -1,14 +1,14 @@
 ---
 layout: single
-title: "Linux 기초 정리 (5)"
-excerpt: "생활 코딩 강의 내용을 요약 및 정리한 글입니다. - 사용자"
+title: "Linux 기초 정리 (5) - 사용자, 권한, 그룹"
+excerpt: "생활 코딩 강의 내용을 요약 및 정리한 글입니다. - 사용자, 권한, 그룹"
 categories: linux
 tag: [linux, basic, ubuntu, 다중 사용자,]
 
 toc: true
 toc_sticky: true
 
-last_modified_at: 2021-12-01
+last_modified_at: 2021-12-02
 
 sidebar_main: true
 ---
@@ -79,10 +79,109 @@ sidebar_main: true
 
 - `echo 'hi' > perm.txt` : hi라는 명령어를 redirection해서 perm.txt에 추가하여 저장한다.
 
+![image](https://user-images.githubusercontent.com/78655692/144245148-de4c32ba-87ca-45b9-8e8e-ac19f0c226a9.png)
+
+![KakaoTalk_20211202_113101541](https://user-images.githubusercontent.com/78655692/144346828-4f4fd9d2-8ee6-4481-8b89-8014bc8819cf.jpg)
+
+- 파일 유형 종류
+  - `d` : 디렉토리
+  - `-` : 파일
+  - `l` : 링크 파일
+  - `b` : 블록파일
+- 권한
+  - `r` : 읽기
+  - `w` : 쓰기
+  - `x` : 실행
+
+<br>
+
+### chmod
+
+- change mode의 줄임말
+- `chmod [options] [mode] [file_name]`
 
 
+|레퍼런스|	클래스|	설명|
+|---|---|---|
+|u|	사용자|	파일의 소유자|
+|g|	그룹|	그 파일의 그룹 멤버인 사용자|
+|o|	다른 사람들|	그 파일의 소유자나 혹은 그 그룹의 멤버가 아닌 사용자|
+|a|	모든 사람|	위의 셋 모두, "ugo"와 같다|
+
+
+|연산자|	설명|
+|---|---|
+|+|	지정된 모드들은 지정된 클래스들에 더한다|
+|-|	지정된 클래스들로부터 지정된 모드들은 지운다|
+|=|	지정된 클래스들을 위해서 지정된 모드들이 정확한 모드들로 만들어지게 된다|
+
+
+|모드|	이름|	설명|
+|---|---|---|
+|r|	읽기 (read)|	파일을 읽거나 디렉터리 안 내용물의 리스트를 보여준다|
+|w|	쓰기 (write)|	파일이나 디렉터리에 쓴다|
+|x|	실행하기 (excute)|	파일을 실행하거나 디렉터리 트리로 되돌아간다|
+
+
+|#|	Sum	|rwx|	Permission|
+|---|---|---|---|
+|7|	4(r) + 2(w) + 1(x)|	rwx|	read, write and execute|
+|6|	4(r) + 2(w)|	rw-	|read and write|
+|5|	4(r)        + 1(x)|	r-x|	read and execute|
+|4|	4(r)	|r--|	read only|
+|3|	       2(w) + 1(x)|	-wx|	write and execute|
+|2|	       2(w)	|-w-|	write only|
+|1|	              1(x)|	--x|	execute only|
+|0|	0|	---|	none|
+
+<br>
+<br>
+
+![image](https://user-images.githubusercontent.com/78655692/144347253-e2a259e3-c27c-479d-8122-c54dfc016f3e.png)
+
+- `chmod o-r perm.txt` : others의 read 권한을 빼주겠다.(-)
+
+![image](https://user-images.githubusercontent.com/78655692/144347493-5ddfd2b4-9d49-4a99-9a18-ecb173a38929.png)
+
+- `chmod o+w perm.txt` : others의 write 권한을 주겠다.(+)
+
+![image](https://user-images.githubusercontent.com/78655692/144347641-188c211f-9280-4d11-b240-7a406220c299.png)
+
+- `chmod u-r perm.txt` : user의 read 권한을 빼겠다.(-)
+
+![image](https://user-images.githubusercontent.com/78655692/144356063-9c6f113a-99b5-416b-989c-6eceff76478a.png)
+
+- `chmod a=rwx perm.txt`를 하면 모든 권한자에게 rwx를 부여한다.
+
+<br>
+
+### excute
+
+![image](https://user-images.githubusercontent.com/78655692/144353232-8f62493d-bf60-40cb-96b7-11e19b45ef30.png)
+
+![image](https://user-images.githubusercontent.com/78655692/144353574-f0eb952c-8cce-4cd5-9129-95e9dd3ccad2.png)
+
+![image](https://user-images.githubusercontent.com/78655692/144353679-d3fa8c9b-509f-423d-bfd9-b51383a9de40.png)
+
+- `chmod u+x hi-machine.sh` : user에게 실행 권한(x)를 준다.
+- `#!/bin/bash` 이 코드가 있다면 운영체제는 `./hi-machine.sh`를 실행시켰을 때 제일 먼저 `hi.achine.sh`이 현재 사용자에게 실행가능한지 본다.
+- others에게도 실행 권한을 주기 위해선 `chmod o+x hi-machine.sh`를 한다.
+
+<br>
+
+## 그룹 (group)
+
+- group : 파일과 디렉토리를 여러 사용자들이 공동으로 관리할 수 있는 방법
+
+![KakaoTalk_20211202_132405230](https://user-images.githubusercontent.com/78655692/144357487-30227af2-13af-42f2-988b-30704af3cb57.jpg)
+
+
+<br>
+<br>
 
 ## References
 
 - [[리숙스] 초기 root 비미번호 설정하기, 사용자 계정 전환하기! - 양햄찌가 만드는 세상](https://jhnyang.tistory.com/136)
 - [UNIX Create User Account](https://www.cyberciti.biz/faq/unix-create-user-account/)
+- [리눅스 권한과 소유권. 숫자모드와 문자모드 - 무한대로](https://sidepower.tistory.com/12)
+- [Chmod -위키백과](https://ko.wikipedia.org/wiki/Chmod)
