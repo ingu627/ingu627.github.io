@@ -52,7 +52,7 @@ print(result)
 
 <br/>
 
-*12.* 1) 주어진 데이터의 첫 번째 행부터 순서대로 80%까지의 데이터를 훈련 데이터로 추출 후 2) 'total_bedrooms' 변수의 결측값을 'total_bedrooms'변수의 중앙값으로 대체하고 3) 대체 전의 'total_bedrooms' 변수 표준편차 값과 대체 후의 'total_bedrooms' 변수 표준편차 값의 차이의 절댓값을 구해봐라. (housing 데이터 셋)
+*12.* 1) 주어진 데이터의 첫 번째 행부터 순서대로 80%까지의 데이터를 훈련 데이터로 추출 후 2) 'total_bedrooms' 변수의 결측값을 'total_bedrooms'변수의 중앙값으로 대체하고 3) 대체 전의 'total_bedrooms' 변수 표준편차 값과 대체 후의 'total_bedrooms' 변수 표준편차 값의 차이의 절댓값을 구하시오. (housing 데이터 셋)
 
 > 데이터 참고 : [https://www.kaggle.com/camnugent/introduction-to-machine-learning-in-r-tutorial](https://www.kaggle.com/camnugent/introduction-to-machine-learning-in-r-tutorial)
 
@@ -102,65 +102,50 @@ insurance %>%
 
 *14.* 전자상거래 배송 데이터
 제품 배송 시간에 맞춰 배송되었는지 예측모델 만들기
-학습용 데이터 (X_train, y_train)을 이용하여 배송 예측 모형을 만든 후, 이를 평가용 데이터(X_test)에 적용하여 얻은 예측값을 다음과 같은 형식의 CSV파일로 생성해봐라(제출한 모델의 성능은 ROC-AUC 평가지표에 따라 채점)
+학습용 데이터 (X_train, y_train)을 이용하여 배송 예측 모형을 만든 후, 이를 평가용 데이터(X_test)에 적용하여 얻은 예측값을 다음과 같은 형식의 CSV파일로 생성하시오(제출한 모델의 성능은 ROC-AUC 평가지표에 따라 채점)
 
 > 데이터 참고 : [https://www.kaggle.com/prachi13/customer-analytics](https://www.kaggle.com/prachi13/customer-analytics)
 
 
 ```R
-Train=read.csv('./data/Train.csv', encoding='utf-8')
+Train=read.csv('2021_2nd_data/Train.csv', stringsAsFactors=TRUE)
 head(Train)
 str(Train)
 summary(Train)
-nrow(Train)
+dim(Train)
 length(Train)
-
-idx=sample(1:nrow(Train), 0.7*nrow(Train))
-
-x_train = Train[idx, c(-1,-12)]
-y_train = Train[idx, 12] 
-x_test = Train[-idx, c(-1,-12)]
-y_test = Train[-idx, 12]
 
 sum(is.na(Train))
 
-y_train = data.frame(Reached.on.Time_Y.N=as.factor(y_train))
-y_test = data.frame(Reached.on.Time_Y.N=as.factor(y_test))
+names(Train)[1] <- c("ID")
 
-for (i in c(1,2,7,8)){
-    x_train[,i] = as.factor(x_train[,i])
-    x_test[,i] = as.factor(x_test[,i])
-}
-str(x_train)
-str(y_train)
-
-model=glm(y_train$Reached.on.Time_Y.N ~ ., data=x_train, family=binomial)
-summary(model)
+Train$Reached.on.Time_Y.N = as.factor(Train$Reached.on.Time_Y.N)
+str(Train$Reached.on.Time_Y.N)
 
 library(caret)
-step_model = step(model, direction='both')
-summary(step_model)
+idx=createDataPartition(Train$Reached.on.Time_Y.N, 0.7)
+str(idx)
+x_train = Train[idx$Resample1,]
+x_test = Train[-idx$Resample1,]
 
-library(car)
-vif(step_model)
+prePro_xtrain = preProcess(x_train, method='range')
+prePro_xtest = preProcess(x_test, method='range')
 
-pred = predict(
-    step_model,
-    newdata = x_test
-)
-df_pred = data.frame(pred)
+scaled_x_train = predict(prePro_xtrain, x_train)
+scaled_x_test = predict(prePro_xtest, x_test)
 
-head(df_pred)
-df_pred$pred = ifelse(
-    df_pred$pred >= 0.5,
-    df_pred$pred <- 0,
-    df_pred$pred <- 1)
+model_glm = glm(Reached.on.Time_Y.N ~ .-ID, data=scaled_x_train, family='binomial')
+summary(model_glm)
 
-df_pred$pred = as.factor(df_pred$pred)
+model_step = step(model_glm, direction='both')
+summary(model_step)
 
-library(caret)
-confusionMatrix(df_pred,y_test)
+pred = predict(model_step, newdata=scaled_x_test[, -12], type='response')
+
+pred = ifelse(pred >= 0.5, 1, 0)
+
+confusionMatrix(pred, x_test$Reached.on.Time_Y.N)
 
 library(ModelMetrics)
-auc(y_test$Reached.on.Time_Y.N, df_pred$pred)
+auc(x_test$Reached.on.Time_Y.N, pred) # 0.6187506
 ```

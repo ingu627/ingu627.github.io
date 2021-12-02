@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2021-12-01
+last_modified_at: 2021-12-02
 ---
 
 본 글은 빅데이터분석기사 실기 작업형에 대비하여 요약 및 실습한 것을 작성한 글입니다. <br>기출문제의 데이터는 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis){: target="_blank"}에 데이터 셋을 남겨놨습니다.<br> 또한 해당 전체 코드는 `/concept/R_basic_to_pro_1.R` 파일에 담겨져 있습니다.
@@ -259,6 +259,8 @@ head(DATA_SET, 3)
 ```
 
 - `names(데이터프레임) <- c(열이름1, 열이름2, ...)` : 데이터 프레임의 열 이름 지정
+- ex. 특정열 이름을 바꾸고 싶을 때 (2번째 열 이름을 바꾸고자 한다면)
+  - `names(데이터프레임)[2] <- c('바꿀 열이름')`
 
 - `colnames(데이터프레임명)` : 데이터프레임의 열 이름 추출
 
