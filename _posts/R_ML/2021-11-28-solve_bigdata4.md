@@ -5,14 +5,22 @@ excerpt: "2021년 제 3회 빅데이터분석기사 실기를 위한 문제풀�
 categories: R_ML
 tag : [R, certificate, 빅데이터 분석기사, 실기, 작업형, 제2유형]
 toc: true
+
 sidebar_main: true
 classes: wide
 
-last_modified_at: 2021-12-01
+last_modified_at: 2021-12-02
 ---
 
 빅데이터 분석기사 실기 대비 차원에서 쓴 글입니다. <br> 기출문제의 데이터는 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis)에 데이터 셋을 남겨놨습니다.<br> 또한 해당 전체 코드는 `sujebi_3.R` 파일에 담겨져 있습니다.
 {: .notice--info}
+
+**1. help() 쓰기 <br> 2. library : caret, ModelMetrics, car, randomForest, e1071 <br> 3. 데이터 구조 파악 -> 결측값 처리 -> 전처리 -> 모델 평가 -> 모델 예측 -> 파일 저장**
+{: .notice--danger}
+
+<br>
+<br>
+<br>
 
 ## 1. 백화점 고객의 1년 데이터 (dataq.or.kr 예시 문제)
 
@@ -40,8 +48,8 @@ dim(X_test)
 
 library(caret)
 
-X_train[is.na(X_train$환불금액),]$환불금액 <- 0
-X_test[is.na(X_test$환불금액),]$환불금액 <- 0
+X_train$환불금액[is.na(X_train$환불금액)] <- 0
+X_test$환불금액[is.na(X_test$환불금액)] <- 0
 
 pre_X_train = preProcess(X_train, method="range")
 pre_X_test = preProcess(X_test, method="range")
