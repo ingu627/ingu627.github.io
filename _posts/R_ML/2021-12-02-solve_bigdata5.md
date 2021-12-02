@@ -20,15 +20,7 @@ last_modified_at: 2021-12-02
 
 <details>
     <summary>학습 알고리즘에서 잘못된 가정을 했을 때 발생하는 오차</summary>
-    정답: 편향
-</details>
-<br>
-
-### 1_1.
-
-<details>
-    <summary>훈련 데이터(Training Set)에 내재된 작은 변동으로 발생하는 오차</summary>
-    정답: 분산
+    정답: 편향 <br><br> 분산: 훈련 데이터(Training Set)에 내재된 작은 변동으로 발생하는 오차
 </details>
 <br>
 
