@@ -4,7 +4,6 @@ title: "빅데이터분석기사(R) - 2021년 2회 기출문제풀이"
 excerpt: "2021년 제 3회 빅데이터분석기사 실기를 위한 문제풀이 내용입니다."
 categories: R_ML
 tag : [R, certificate, 빅데이터 분석기사, 실기, 작업형, 필답형]
-toc: true
 sidebar_main: true
 classes: wide
 
@@ -13,6 +12,13 @@ last_modified_at: 2021-12-02
 
 빅데이터 분석기사 실기 대비 차원에서 쓴 글입니다. <br> 기출문제의 데이터는 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis)에 데이터 셋을 남겨놨습니다.<br> 또한 해당 전체 코드는 `2021_2nd.R` 파일에 담겨져 있습니다.
 {: .notice--info}
+
+**1. help() 쓰기 <br> 2. library : caret, ModelMetrics, car, randomForest, e1071 <br> 3. 데이터 구조 파악 -> 결측값 처리 -> 전처리 -> 모델 평가 -> 모델 예측 -> 파일 저장**
+{: .notice--danger}
+
+<br>
+<br>
+<br>
 
 ## 2021.02회 기출 반영
 
@@ -29,6 +35,8 @@ last_modified_at: 2021-12-02
 *9.* 마지막 은닉층2개의 값 [0.2, -03] ,  가중치 [0.3, 0.1] , bias -0.05, 출력층 1개이다. f(x) = x , if x >= 0 , 그외 -1 일때  <br> 답 : (0.2\*-0.3)+(-0.3\*0.1)-0.05= -0.14. 결과가 마이너스이므로 `-1` <br/>
 
 *10.* **ROC 곡선** : 혼동 행렬의 가로와 세로축을 FPR, TPR로 생성한 곡선 <br/>
+
+### 제 1유형
 
 *11.* crim 항목의 상위에서 10번째 값(즉, 상위 10번째 값 중에서 가장 적은 값)으로 상위 10개의 값을 변환하고, age 80 이상인 값에 대하여 crim 평균을 구하시오. (BostonHousing 데이터 셋) <br/>
 
@@ -99,6 +107,8 @@ insurance %>%
 ```
 
 <br/>
+
+### 제 2유형
 
 *14.* 전자상거래 배송 데이터
 제품 배송 시간에 맞춰 배송되었는지 예측모델 만들기
