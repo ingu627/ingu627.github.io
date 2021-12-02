@@ -1,13 +1,13 @@
 ---
 layout: single
-title: '마크다운(markdown)문법 총정리'
+title: '마크다운(markdown)문법 정리'
 categories: md
 tag : [grammar, tip, md, 마크다운, 문법]
 toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2021-11-30
+last_modified_at: 2021-12-02
 ---
 
 ## MarkDown (md) 
@@ -157,8 +157,12 @@ _italic_
 
 
 ## 구분선
--(하이픈)를 3개 작성하고 엔터를 누르면 구분선이 만들어집니다.
-`---`
+
+-(하이픈)를 3개 작성하고 엔터를 누르면 구분선이 만들어집니다. (또는 *)
+`---`, `***`
+
+***
+---
 
 ## check box
 - [ ] 체크가 안 되었다. `[ ]`
@@ -254,6 +258,39 @@ print('Hello World!')
 |  2   | 김길동 | 120  |
 |  3   | 박길동 | 140  |
 
+## 접기/펼치기 (토글바)
+
+- 태그에 `open`에 대한 매개변수를 추가하여 `details`의 토글/드롭다운의 기본 동작을 열린 상태로 설정할 수 있다.
+- 처음 보여주는 텍스트는 `summary` 태그 내부에 쓴다.
+
+<details open>
+  <summary>이 블로그의 닉네임은?</summary>
+  poeun. 열린상태로 보여준다.
+</details>
+<br>
+<details>
+  <summary>블로그를 더욱 알고 싶다면?</summary>
+  github.com/ingu627 로 이동한다.
+</details>
+
+### 전체 코드 
+
+```html
+<details open>
+  <summary>이 블로그의 닉네임은?</summary>
+  poeun. 열린상태로 보여준다.
+</details>
+
+
+<details>
+  <summary>블로그를 더욱 알고 싶다면?</summary>
+  github.com/ingu627 로 이동한다.
+</details>
+```
+
+<br>
+<br>
+
 ## 유튜브 동영상 넣기
 
 ### 1. iframe 이용하기
@@ -261,6 +298,8 @@ print('Hello World!')
 - 유튜브 동영상을 오른쪽 버튼을 누른 후, 소스 코드 복사를 누르면 끝
 
 ![image](https://user-images.githubusercontent.com/78655692/143901417-87ed57ea-56db-4dab-a3fc-19820f282d5c.png)
+
+`<iframe width="896" height="504" src="https://www.youtube.com/embed/1xWmteIE3Y8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
 
 <br>
 
@@ -287,9 +326,9 @@ print('Hello World!')
 - `<img src="" width="" height="" alt="" />`
 
 
-<img src="https://ingu627.github.io/images/2021-10-29-first/bukdu.jpg" width="500" height="200" alt="북두칠성"/>
+<img src="https://user-images.githubusercontent.com/78655692/144441367-4855a172-e479-411d-9ec9-8a258ed26a51.png" width="500" height="200" alt="matrix4"/>
 
-![star](../../images/2021-10-29-first/bukdu.jpg)
+![image](https://user-images.githubusercontent.com/78655692/144441367-4855a172-e479-411d-9ec9-8a258ed26a51.png)
 
 ## 이미지를 md 파일에 복사하기
 
@@ -297,16 +336,33 @@ print('Hello World!')
 <br/>
 해당 이미지를 `ctrl + c`를 누르시고 아래에 `ctrl + v`를 하시면
 
-`![image](https://user-images.githubusercontent.com/78655692/140633595-27e57467-301a-4007-84d1-1c5490da2a75.png)`
+`![image](https://user-images.githubusercontent.com/78655692/144441367-4855a172-e479-411d-9ec9-8a258ed26a51.png)`
 
 로 나옵니다. 이것을 그대로 md파일에 복사넣기 하면 이미지가 생성됩니다.
 
 ## 이미지에 링크를 걸고 싶을땐
   `[![이미지설명](이미지 파일 저장 경로)](이미지 주소 링크)`
 
-[![star](../../images/2021-10-29-first/bukdu.jpg)](https://ko.wikipedia.org/wiki/%EB%B6%81%EB%91%90%EC%B9%A0%EC%84%B1)
+[![image](https://user-images.githubusercontent.com/78655692/144441367-4855a172-e479-411d-9ec9-8a258ed26a51.png)](https://namu.wiki/w/%EB%A7%A4%ED%8A%B8%EB%A6%AD%EC%8A%A4:%20%EB%A6%AC%EC%A0%80%EB%A0%89%EC%85%98?from=%EB%A7%A4%ED%8A%B8%EB%A6%AD%EC%8A%A4%3A%20%EB%A0%88%EC%A0%80%EB%A0%89%EC%85%98)
+
+## 텍스트와 이미지 어울림
+
+- 기존 img 태그를 이용에서 `align`의 `left` 또는 `right`을 넣어, 이미지를 텍스트와 어울리게 할 수 있다.
+
+<img align='right' width='150' height='100' src='https://user-images.githubusercontent.com/78655692/144441367-4855a172-e479-411d-9ec9-8a258ed26a51.png'>
+
+매트릭스 시리즈의 네 번째 작품. 매트릭스 트릴로지의 최종편이었던 3편 레볼루션이 2003년 개봉된 이후 무려 18년 만에 돌아오는 키아누 리브스 주연의 매트릭스 신작이다.2019년 8월 20일, 워너 브라더스가 CNN을 통해 공개한 제작 계획에 따르면, 이전까지 시리즈의 감독을 맡았던 워쇼스키 자매중 언니 라나 워쇼스키가 각본과 연출 그리고 제작을 맡았으며, 이 시리즈의 주인공을 맡은 키아누 리브스와 캐리앤 모스의 출연이 확정되었다. 2019년 12월 12일, 워너 브라더스가 개봉일을 2021년 5월 21일로 정식 발표했다. 제작발표 이후 워낙 매트릭스 시리즈의 인기와 명성이 높다보니, 2021년 최고의 기대작 중 하나로 손꼽히고 있다.
+
+<br>
+
+```html
+<img align='right' width='150' height='100' src='https://user-images.githubusercontent.com/78655692/144441367-4855a172-e479-411d-9ec9-8a258ed26a51.png'>
+
+매트릭스 시리즈의 네 번째 작품. 매트릭스 트릴로지의 최종편이었던 3편 레볼루션이 2003년 개봉된 이후 무려 18년 만에 돌아오는 키아누 리브스 주연의 매트릭스 신작이다.2019년 8월 20일, 워너 브라더스가 CNN을 통해 공개한 제작 계획에 따르면, 이전까지 시리즈의 감독을 맡았던 워쇼스키 자매중 언니 라나 워쇼스키가 각본과 연출 그리고 제작을 맡았으며, 이 시리즈의 주인공을 맡은 키아누 리브스와 캐리앤 모스의 출연이 확정되었다. 2019년 12월 12일, 워너 브라더스가 개봉일을 2021년 5월 21일로 정식 발표했다. 제작발표 이후 워낙 매트릭스 시리즈의 인기와 명성이 높다보니, 2021년 최고의 기대작 중 하나로 손꼽히고 있다.
+```
 
 ## 일반 링크
+
 - `['글'](링크를 넣어주세요)`
 
 [북두칠성에 더 알고 싶다면??](https://ko.wikipedia.org/wiki/%EB%B6%81%EB%91%90%EC%B9%A0%EC%84%B1)
@@ -384,3 +440,4 @@ graph LR
 - [[Github Blog] minimal mistakes - 포스팅 글 써보기](https://eona1301.github.io/github_blog/GithubBlog-Posting/)
 - [[Github 블로그] Mathjax로 수식(Math Expression) 쓰기](https://ansohxxn.github.io/blog/math-equation/)
 - [[Github 블로그] 유튜브 동영상 삽입하기](https://ansohxxn.github.io/blog/youtube/)
+- [7가지 고급 마크다운 팁!](https://ichi.pro/ko/7gaji-gogeub-makeudaun-tib-98969302646610)
