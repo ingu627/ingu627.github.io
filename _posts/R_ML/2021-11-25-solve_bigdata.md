@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "빅데이터분석기사(R) - 2021년 2회 문제풀이"
+title: "빅데이터분석기사(R) - 2021년 2회 기출문제풀이"
 excerpt: "2021년 제 3회 빅데이터분석기사 실기를 위한 문제풀이 내용입니다."
 categories: R_ML
 tag : [R, certificate, 빅데이터 분석기사, 실기, 작업형, 필답형]
@@ -8,7 +8,7 @@ toc: true
 sidebar_main: true
 classes: wide
 
-last_modified_at: 2021-12-01
+last_modified_at: 2021-12-02
 ---
 
 빅데이터 분석기사 실기 대비 차원에서 쓴 글입니다. <br> 기출문제의 데이터는 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis)에 데이터 셋을 남겨놨습니다.<br> 또한 해당 전체 코드는 `2021_2nd.R` 파일에 담겨져 있습니다.
@@ -30,7 +30,7 @@ last_modified_at: 2021-12-01
 
 *10.* **ROC 곡선** : 혼동 행렬의 가로와 세로축을 FPR, TPR로 생성한 곡선 <br/>
 
-*11.* crim 항목의 상위에서 10번째 값(즉, 상위 10번째 값 중에서 가장 적은 값)으로 상위 10개의 값을 변환하고, age 80 이상인 값에 대하여 crim 평균을 구해봐라. (BostonHousing 데이터 셋) <br/>
+*11.* crim 항목의 상위에서 10번째 값(즉, 상위 10번째 값 중에서 가장 적은 값)으로 상위 10개의 값을 변환하고, age 80 이상인 값에 대하여 crim 평균을 구하시오. (BostonHousing 데이터 셋) <br/>
 
 ```R
 library(mlbench)
@@ -74,7 +74,7 @@ print(abs(before_sd - after_sd))
 
 <br/>
 
-*13.* Charges 항목에서 이상값의 합을 구해봐라. (이상값은 평균에서 1.5 표준편차 이상인 값) (insurance 데이터 셋)
+*13.* Charges 항목에서 이상값의 합을 구하시오. (이상값은 평균에서 1.5 표준편차 이상인 값) (insurance 데이터 셋)
 
 > 데이터 참고 : [https://www.kaggle.com/mirichoi0218/insurance/version/1](https://www.kaggle.com/mirichoi0218/insurance/version/1)
 
@@ -102,7 +102,7 @@ insurance %>%
 
 *14.* 전자상거래 배송 데이터
 제품 배송 시간에 맞춰 배송되었는지 예측모델 만들기
-학습용 데이터 (X_train, y_train)을 이용하여 배송 예측 모형을 만든 후, 이를 평가용 데이터(X_test)에 적용하여 얻은 예측값을 다음과 같은 형식의 CSV파일로 생성하시오(제출한 모델의 성능은 ROC-AUC 평가지표에 따라 채점)
+학습용 데이터 (X_train, y_train)을 이용하여 배송 예측 모형을 만든 후, 이를 평가용 데이터(X_test)에 적용하여 얻은 예측값을 다음과 같은 형식의 CSV파일로 생성하시오. (제출한 모델의 성능은 ROC-AUC 평가지표에 따라 채점)
 
 > 데이터 참고 : [https://www.kaggle.com/prachi13/customer-analytics](https://www.kaggle.com/prachi13/customer-analytics)
 
@@ -134,18 +134,39 @@ prePro_xtest = preProcess(x_test, method='range')
 scaled_x_train = predict(prePro_xtrain, x_train)
 scaled_x_test = predict(prePro_xtest, x_test)
 
+# 로지스틱 회귀분석
 model_glm = glm(Reached.on.Time_Y.N ~ .-ID, data=scaled_x_train, family='binomial')
 summary(model_glm)
 
 model_step = step(model_glm, direction='both')
 summary(model_step)
 
-pred = predict(model_step, newdata=scaled_x_test[, -12], type='response')
+pred_glm = predict(model_step, newdata=scaled_x_test[, -12], type='response')
 
-pred = ifelse(pred >= 0.5, 1, 0)
+pred_glm = ifelse(pred_glm >= 0.5, 1, 0)
 
-confusionMatrix(pred, x_test$Reached.on.Time_Y.N)
+confusionMatrix(pred_glm, x_test$Reached.on.Time_Y.N)
 
 library(ModelMetrics)
-auc(x_test$Reached.on.Time_Y.N, pred) # 0.6187506
+auc(x_test$Reached.on.Time_Y.N, pred_glm) # 0.6187506
+
+# 랜덤포레스트
+library(randomForest)
+model_rf=randomForest(Reached.on.Time_Y.N ~ .-ID, data=scaled_x_train, ntree=300)
+summary(model_rf)
+
+library(caret)
+pred_rf = predict(model_rf, newdata=scaled_x_test[, -12], type='response')
+
+confusionMatrix(pred_rf, x_test$Reached.on.Time_Y.N) # Accuracy : 0.6599
+
+library(ModelMetrics)
+auc(x_test$Reached.on.Time_Y.N, pred_rf) # 0.662148
+
+
+total=as.data.frame(cbind(x_test$ID, pred_rf))
+names(total) <- c('ID', 'Reached.on.Time_Y.N')
+head(total)
+summary(total)
+write.csv(total, 'Train_result.csv', row.names=FALSE)
 ```
