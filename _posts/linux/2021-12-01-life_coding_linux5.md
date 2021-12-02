@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "Linux 기초 정리 (5) - 사용자, 권한, 그룹"
+title: "Linux 기초 정리 (5) - user, permission, group"
 excerpt: "생활 코딩 강의 내용을 요약 및 정리한 글입니다. - 사용자, 권한, 그룹"
 categories: linux
 tag: [linux, basic, ubuntu, 다중 사용자,]
