@@ -80,9 +80,6 @@ head(result)
 write.csv(result, '0000.csv', row.names=FALSE)
 ```
 
-
-
-
 <br>
 <br>
 
@@ -148,6 +145,49 @@ auc(y_test$Churn, pred1) # 0.6890504
 
 write.csv(pred, 'y_test.csv', row.names=FALSE)
 ```
+
+<br>
+<br>
+
+## 3. mtcars
+
+- 다음은 mtcars 데이터 세트로 32개 자동차들의 디자인과 성능 비교한 데이터이다. 훈련 데이터와 평가 데이터를 7:3으로 분할한 후 연비(mpg)를 예측하는 최적 모델을 만들고 RMSE로 평가 결과를 구하시오.
+
+```R
+data(mtcars)
+head(mtcars)
+str(mtcars)
+summary(mtcars)
+dim(mtcars)
+
+library(caret)
+idx=createDataPartition(mtcars$mpg, p=0.7)
+str(idx)
+x_train = mtcars[idx$Resample1, ]
+x_test = mtcars[-idx$Resample1, ]
+
+prePro_x_train = preProcess(x_train, method='range')
+prePro_x_test = preProcess(x_test, method='range')
+
+scaled_x_train = predict(prePro_x_train, x_train)
+scaled_x_test = predict(prePro_x_test, x_test)
+
+full_model = lm(mpg ~ ., data=scaled_x_train)
+summary(full_model)
+
+step_model = step(full_model, direction='both')
+summary(step_model)
+
+md_model = lm(mpg ~ disp+am+carb, data=scaled_x_train)
+summary(md_model)
+
+pred_lm=predict(md_model, newdata=scaled_x_test[, -1])
+
+library(ModelMetrics)
+rmse_lm = rmse(scaled_x_test$mpg, pred_lm)
+print(rmse_lm) # 0.189796
+```
+
 <br>
 <br>
 
