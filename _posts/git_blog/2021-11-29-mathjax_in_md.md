@@ -56,8 +56,7 @@ $$x^2+3*x+5=0 는 이차함수이다.$$
 
 ## 그 외 수식은 pdf 파일에 있으니 참고하면 된다. ($\alpha$나 $\beta$ 같은 것들)
 
-- 아래를 클릭하면 파일이 다운로드 될 것이다.
-- [TeXRefCard.v1.5.pdf](https://github.com/ingu627/Temporary_Storage/files/7619974/TeXRefCard.v1.5.pdf)
+- [TeXRefCard.v1.5.pdf](https://drive.google.com/file/d/1GWa-Syt3nvB_fGDiUHXpNWFSABmDscdx/view?usp=sharing)
 
 <br>
 <br>
