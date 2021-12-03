@@ -403,3 +403,7 @@ last_modified_at: 2021-12-03
     정답: 투자 회수 기간(PP)
 </details>
 <br>
+
+## References
+
+- [2022 수제비 빅데이터분석기사 실기 (필답형+작업형)](https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=281447264)
