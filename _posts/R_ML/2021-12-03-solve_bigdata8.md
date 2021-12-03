@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "빅데이터분석기사(R) - 필답형 48문제 풀이"
+title: "빅데이터분석기사(R) - 필답형 48문제 풀이 (4)"
 excerpt: "2021년 제 3회 빅데이터분석기사 실기를 위한 문제풀이 내용입니다. - 4단원. 빅데이터 결과해석"
 categories: R_ML
 tag : [R, certificate, 빅데이터 분석기사, 실기, 필답형]
