@@ -119,7 +119,7 @@
                     {% endif %}
                 {% endfor %}
             </ul>
-        <span class="nav__sub-title">BOOKS</span>
+        <span class="nav__sub-title">HUMANITIES</span>
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "book" %}
