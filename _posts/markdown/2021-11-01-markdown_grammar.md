@@ -1,17 +1,22 @@
 ---
 layout: single
 title: '마크다운(markdown)문법 정리'
+excerpt: 'MarkDown (md), 목차 만들기, 크기 지정, 글꼴, 줄바꿈, 띄어쓰기(enter), 글자 색깔, 인용문, 문자 박스(notice), 문자 정렬, 구분선, check box,목록, 코드 블럭, 표 (table), 접기/펼치기 (토글바), 각주, 미주, 유튜브 동영상 넣기, 이미지, 링크, 수식, 그래프로 표시하기'
 categories: md
 tag : [grammar, tip, md, 마크다운, 문법]
 toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2021-12-02
+last_modified_at: 2021-12-06
 ---
 
 ## MarkDown (md) 
-: 텍스트에 양식을 입히는 마크업 언어의 일종, HTML과 연동이 가능하다. (정의)
+
+- 텍스트에 양식을 입히는 마크업 언어의 일종, HTML과 연동이 가능하다. (정의)
+- 마크다운은 빨리 작성할 수 있고, 또 인터넷에 글을 쓰는 사람을 위해 만들어졌다.
+
+<img align='right' width='230' height='200' src='https://user-images.githubusercontent.com/78655692/144753588-5f69dac1-8c11-493a-894d-08de24c42493.png'>
 
 - 다양한 협업 툴에서 활용 (Notion, Slack...)
 - 다양한 Markdown용 Editor (Typora...)
@@ -25,6 +30,9 @@ last_modified_at: 2021-12-02
 ## 크기 지정
 - \# 을 활용하여 크기를 설정하면 됩니다.
 
+![크기](https://user-images.githubusercontent.com/78655692/144753982-1ab3ae97-558f-4a8e-b525-2a288c37a306.gif)
+
+```md
 # 이건 h1(header 1)입니다.
 
 ## 이건 h2입니다.
@@ -37,9 +45,10 @@ last_modified_at: 2021-12-02
 
 ###### h6입니다.
 
+
 #### tip! 
 \#를 5개 이상 쓴다는 것? -> 잘못된 분류!!
-
+```
 
 ## 글꼴
 
@@ -53,6 +62,8 @@ _italic_
 ~~hello~~
 - \*\*와 \_를 동시에 감싸줘도 됩니다.
 **_italic+bold_**
+
+![글꼴](https://user-images.githubusercontent.com/78655692/144753836-1a474192-06c1-421d-baca-c49e3f5f7193.gif)
 
 *그래서* **한번에 쓰고 싶으면**  `ctrl + i`(i는 italic의 약자) / `ctrl + b`(b는 bold의 약자)
 
@@ -289,7 +300,25 @@ print('Hello World!')
 ```
 
 <br>
-<br>
+
+## 각주, 미주
+
+- 문장 끝에 `[^1]`을 넣으면 위쪽에 작은 숫자가 뜰 것입니다.[^1]
+- `[^1]: ` : 참고 문헌은 `[^1]`을 한다음 `:`을 붙이면 자동으로 생성이 됩니다. (주석과 참조 번호가 서로 연결됩니다.)
+
+![주석](https://user-images.githubusercontent.com/78655692/144754771-046a60d6-ff96-427e-ab58-7b3770369c41.gif)
+
+
+[^1]: 참고 문헌은 이것입니다. <https://sergeswin.com/1013/> (각주, 미주에서)
+
+### html 사용할 때
+
+- 각주 : `<sup>[1](#footnote_1)</sup>`
+- 미주 : `<a name='footnote_1'>1에 대한 내용</a>`
+  - 미주는 글 뒷 부분에 삽입합니다.
+- ex.
+
+각주와 미주는 다음의 글을 참고했습니다.<sup>[1](#footnote_1)</sup>
 
 ## 유튜브 동영상 넣기
 
@@ -361,21 +390,30 @@ print('Hello World!')
 매트릭스 시리즈의 네 번째 작품. 매트릭스 트릴로지의 최종편이었던 3편 레볼루션이 2003년 개봉된 이후 무려 18년 만에 돌아오는 키아누 리브스 주연의 매트릭스 신작이다.2019년 8월 20일, 워너 브라더스가 CNN을 통해 공개한 제작 계획에 따르면, 이전까지 시리즈의 감독을 맡았던 워쇼스키 자매중 언니 라나 워쇼스키가 각본과 연출 그리고 제작을 맡았으며, 이 시리즈의 주인공을 맡은 키아누 리브스와 캐리앤 모스의 출연이 확정되었다. 2019년 12월 12일, 워너 브라더스가 개봉일을 2021년 5월 21일로 정식 발표했다. 제작발표 이후 워낙 매트릭스 시리즈의 인기와 명성이 높다보니, 2021년 최고의 기대작 중 하나로 손꼽히고 있다.
 ```
 
-## 일반 링크
+## 링크
+
+### 주소 링크
+
+- `<https://ingu627.github.io>`
+- 주소가 그대로 보이는 링크입니다. (http 형식)
+
+<https://ingu627.github.io>
+
+### 일반 링크
 
 - `['글'](링크를 넣어주세요)`
 
 [북두칠성에 더 알고 싶다면??](https://ko.wikipedia.org/wiki/%EB%B6%81%EB%91%90%EC%B9%A0%EC%84%B1)
 
-또는 html로 써도 됩니다
+또는 html로 써도 됩니다<br>
 `<a href="naver.com">링크이름</a>`
 
-## 새창으로 링크
+### 새창으로 링크
 - `['글'](링크를 넣어주세요){: target="_blank"}`
 
 ['네이버'](https://www.naver.com){: target="_blank"}
 
-## 새창으로 버튼 링크
+### 새창으로 버튼 링크
 - `['글'](링크를 넣어주세요){: .btn.btn-default target="_blank"}`
 
 ['네이버'](https://www.naver.com){: .btn.btn-default target="_blank"}
@@ -441,3 +479,5 @@ graph LR
 - [[Github 블로그] Mathjax로 수식(Math Expression) 쓰기](https://ansohxxn.github.io/blog/math-equation/)
 - [[Github 블로그] 유튜브 동영상 삽입하기](https://ansohxxn.github.io/blog/youtube/)
 - [7가지 고급 마크다운 팁!](https://ichi.pro/ko/7gaji-gogeub-makeudaun-tib-98969302646610)
+- [마크다운(Markdown) 문법, 사용법, 에디터 - 궁금하신 분! 여기서 한 번에 보세요. - 서지스윈](https://sergeswin.com/1013/)
+- <a name="footnote_1">[Markdown 각주 미주 사용하기](https://lynmp.com/ko/article/nu86c16d8f09c9fbd8)</a>
