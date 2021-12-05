@@ -115,10 +115,11 @@ PLATFORMS
 
 DEPENDENCIES
   bundler
+  jekyll-sitemap
   minimal-mistakes-jekyll!
   rake (>= 12.3.3)
   tzinfo-data
   webrick (~> 1.7)
 
 BUNDLED WITH
-   2.2.30
+   2.2.32
