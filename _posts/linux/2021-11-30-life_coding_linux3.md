@@ -133,9 +133,12 @@ sidebar_main: true
     - 리눅스에서 사용하는 명령어들도 결국 일종의 실행파일인데 명령어 입력 시 환경변수에 잡혀있는 PATH를 따라가서 해당 파일이 실행되는 원리로 명령어가 작동된다는 것
     - 결국 mkdir, ls 등의 명령어도 결국 저 path 경로에 저장되어 있다는 얘기이다.
 
+<br>
+<br>
 
 ## References
 
+- [생활코딩 - Linux](https://www.inflearn.com/course/%EC%83%9D%ED%99%9C%EC%BD%94%EB%94%A9-%EB%A6%AC%EB%88%85%EC%8A%A4-%EA%B0%95%EC%A2%8C#curriculum)
 - [The Linux Directory Structure, Explained](https://www.howtogeek.com/117435/htg-explains-the-linux-directory-structure-explained/){: target="_blank"}
 - [35 Practical Examples of Linux Find Command](https://www.tecmint.com/35-practical-examples-of-linux-find-command/){: target="_blank"}
 - [5. 리눅스 환경변수(path) 설정](https://m.blog.naver.com/occidere/220821140420){: target="_blank"}

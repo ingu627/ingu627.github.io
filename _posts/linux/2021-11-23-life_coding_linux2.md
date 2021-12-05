@@ -97,3 +97,10 @@ sidebar_main: true
 
 - `./backup` 하면 Permision  denined가 뜨는데 컴퓨터에게 backup이 실행가능하다고 알려줘야 함 
 - `chmod +x backup` : backup 파일에 x, 실행 가능한 모드를 추가하여 바꾼다.
+
+<br>
+<br>
+
+## Refercnes
+
+- [생활코딩 - Linux](https://www.inflearn.com/course/%EC%83%9D%ED%99%9C%EC%BD%94%EB%94%A9-%EB%A6%AC%EB%88%85%EC%8A%A4-%EA%B0%95%EC%A2%8C#curriculum)

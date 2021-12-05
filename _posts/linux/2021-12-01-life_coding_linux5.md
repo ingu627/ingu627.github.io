@@ -181,6 +181,7 @@ sidebar_main: true
 
 ## References
 
+- [생활코딩 - Linux](https://www.inflearn.com/course/%EC%83%9D%ED%99%9C%EC%BD%94%EB%94%A9-%EB%A6%AC%EB%88%85%EC%8A%A4-%EA%B0%95%EC%A2%8C#curriculum)
 - [[리숙스] 초기 root 비미번호 설정하기, 사용자 계정 전환하기! - 양햄찌가 만드는 세상](https://jhnyang.tistory.com/136)
 - [UNIX Create User Account](https://www.cyberciti.biz/faq/unix-create-user-account/)
 - [리눅스 권한과 소유권. 숫자모드와 문자모드 - 무한대로](https://sidepower.tistory.com/12)

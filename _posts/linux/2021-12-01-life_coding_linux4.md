@@ -194,9 +194,12 @@ sidebar_main: true
 
 ![image](https://user-images.githubusercontent.com/78655692/144171389-10e13ef1-b2ef-49df-b233-7029a7971088.png)
 
+<br>
+<br>
 
 ## References
 
+- [생활코딩 - Linux](https://www.inflearn.com/course/%EC%83%9D%ED%99%9C%EC%BD%94%EB%94%A9-%EB%A6%AC%EB%88%85%EC%8A%A4-%EA%B0%95%EC%A2%8C#curriculum)
 - [[컴퓨터구조] 컴퓨터의 기본 구조 - @ 낭람_ ](https://security-nanglam.tistory.com/201)
 - [Difference Between Memory and Storage](https://backupeverything.co.uk/difference-between-memory-and-storage/)
 - [Linux Daemon ( 1 / x )](https://weicomes.tistory.com/40)
