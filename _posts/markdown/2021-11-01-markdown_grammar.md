@@ -1,6 +1,6 @@
 ---
 layout: single
-title: '마크다운(markdown)문법 정리'
+title: '마크다운(markdown)문법 정리, 사용법'
 excerpt: 'MarkDown (md), 목차 만들기, 크기 지정, 글꼴, 줄바꿈, 띄어쓰기(enter), 글자 색깔, 인용문, 문자 박스(notice), 문자 정렬, 구분선, check box,목록, 코드 블럭, 표 (table), 접기/펼치기 (토글바), 각주, 미주, 유튜브 동영상 넣기, 이미지, 링크, 수식, 그래프로 표시하기'
 categories: md
 tag : [grammar, tip, md, 마크다운, 문법]
