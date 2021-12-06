@@ -452,14 +452,7 @@ $y=3x$ #수직을 $로 감싸주기
 
 ## 그래프로 표시하기
 
-```mermaid
-graph LR
-  1-->2
-  1-->5
-  2-->3
-  3-->2
-  5-->3
-```
+![mermaid](https://user-images.githubusercontent.com/78655692/144781090-6da2bfae-7655-454e-8135-530b94615a9c.gif)
 
 ```markdown
 graph LR
@@ -469,6 +462,7 @@ graph LR
   3-->2
   5-->3
 ```
+
 - (mermaid)
 
 ## References
