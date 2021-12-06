@@ -43,7 +43,13 @@ google.com에 request를 보낸다. 이때 웹 서버는 요청이 들어오면 
 - `elinks`는 쉘에서 웹브라우징을 할 수 있게 도와주는 프로그램
   - elinks 설치 : `sudo apt-get install elinks`
 - unix 계열에서의 설정에 대한 것은 /etc에 저장되어 있다.
+  - `cd /etc/apache2` 로 경로 변경 (여기에 아파치에 대한 설정 파일이 있다.)
+- 그 중 apache2.conf를 확인하면 `IncludeOptional sites-enabled/\*.conf`가 있는데 `sites-enabled`라는 디렉토리 안의 모든 .conf 파일을 읽고 사용한다는 것이다.
+- `/var/www/html` 을 사용하는 이유는 `/etc/apache2/sites-enabled/000-default.conf` 에 설정이 `/var/www/html`로 되어있기 때문이다.
+  - 어떤 서버를 설치하건 /etc 밑에 설정 파일이 있고 그 곳의 설정 파일을 바꾸면 동작하는 방식이 달라진다.
 
+<br>
+<br>
 
 ## References
 
