@@ -96,7 +96,7 @@ analytics:
   provider               : "google-gtag" # false (default), "google", "google-universal", "google-gtag", "custom"
   google:
     tracking_id          : "G-R03EGK2CKN"
-    anonymize_ip         : false # true, false (default)
+    anonymize_ip         :  # true, false (default)
 
 
 # Site Author
