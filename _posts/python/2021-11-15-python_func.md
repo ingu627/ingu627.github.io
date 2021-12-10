@@ -76,23 +76,9 @@ last_modified_at: 2021-11-19
 - `capitalize()` : 주어진 문자열에서 맨 첫 글자를 대문자로 변환해줌.
 
 
-## 알고리즘
 
-
-
-## Keras
-
-- `Tokenizer` : 문장으로부터 단어를 토큰화하고 숫자에 대응시키는 딕셔너리를 사용할 수 있도록 한다.
--`fit_on_texts` : 문자 데이터를 입력받아서 리스트의 형태로 변환한다.
-- `word_index ` : tokenizer의 word_index 속성은 단어와 숫자의 키-값 쌍을 포함하는 딕셔너리를 반환한다.
-- `texts_to_sequences() ` : 텍스트 안의 단어들을 숫자의 시퀀스의 형태로 변환
-- `texts_to_matrix()` : 텍스트를 시퀀스 리스트로 바꾸어 주는 texts_to_sequences() 메서드와 시퀀스 리스트를 넘파이 배열로 바꾸어 주는 sequences_to_matrix() 메서드를 차례대로 호출한다.
-- `pad_sequences` : 서로 다른 개수의 단어로 이루어진 문장을 같은 길이로 만들어주기 위해 패딩을 사용한다. 이 함수에 이 시퀀스를 입력하면 숫자 0을 이용해서 같은 길이의 시퀀스로 변환한다.
-- `os.listdir()`을 이용해서 경로에 포함된 파일 이름을 리스트 형태로 불러온다.
-- `flow_from_directory` : ImageDataGenerator 클래스의 flow_from_directory 메서드는 이미지 데이터셋의 경로를 받아서, 데이터의 배치를 만들어낸다.
-- `RMSprop` : 훈련 과정 중에 학습률을 적절하게 변화시킨다.
-
-
+<br>
+<br>
 
 ## References 
 
