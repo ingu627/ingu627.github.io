@@ -58,6 +58,14 @@
                     {% endif %}
                 {% endfor %}
             </ul>
+        <span class="nav__sub-title">Distributed Computing</span>
+        <ul>
+            {% for category in site.categories %}
+                {% if category[0] == "java" %}
+                    <li><a href="/categories/java" class="">자바(java) ({{category[1].size}})</a></li>
+                {% endif %}
+            {% endfor %}
+        </ul>
         <span class="nav__sub-title">SQL</span>
             <ul>
                 {% for category in site.categories %}
@@ -66,7 +74,7 @@
                     {% endif %}
                 {% endfor %}
             </ul>
-        <span class="nav__sub-title">OS</span>
+        <span class="nav__sub-title">CS</span>
         <ul>
             {% for category in site.categories %}
                 {% if category[0] == "OS" %}
