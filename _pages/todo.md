@@ -30,6 +30,7 @@ sidebar_main: true
 - [귀퉁이 서재 - Baek Kyun Shin](https://bkshin.tistory.com/)
 
 ### Web
+
 - [아마존 웹 서비스를 다루는 기술](http://pyrasis.com/private/2014/09/30/publish-the-art-of-amazon-web-services-book){: target="_blank"}
   - 유의사항 : 저작권 (요약, 블로그 기재 금지, 링크 기재는 허용)
 - [생활코딩](https://opentutorials.org/course/1){: target="_blank"}
@@ -39,8 +40,11 @@ sidebar_main: true
 - [docker](https://www.docker.com/){: target="_blank"}
 - [sqlalchemy](https://docs.sqlalchemy.org/en/14/tutorial/index.html){: target="_blank"}
 - [JSON Web Tokens](https://jwt.io/){: target="_blank"}
-- [Python web framework from scracth](https://oz123.github.io/advanced-python/book/middlewares.html)
+- [Python web framework from scracth](https://oz123.github.io/advanced-python/book/middlewares.html){: target="_blank"}
 
+### Java
+
+- [vscode에서 자바 환경 세팅하기](https://code.visualstudio.com/docs/java/java-tutorial){: target="_blank"}
 
 ### QUI
 
@@ -110,4 +114,4 @@ sidebar_main: true
 - [ScreenToGif](https://www.screentogif.com/){: target="_blank"}
 - [ezgif](https://ezgif.com/){: target="_blank"}
 - [Jekyll 블로그에 구글 애드센스 설치하기](https://shryu8902.github.io/jekyll/adsense/){: target="_blank"}
-- [jekyllthemes](http://jekyllthemes.org/)
+- [jekyllthemes](http://jekyllthemes.org/){: target="_blank"}
