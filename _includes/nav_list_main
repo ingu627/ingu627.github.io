@@ -19,7 +19,7 @@
                 <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
                 {% for category in site.categories %}
                     {% if category[0] == "python" %}
-                        <li><a href="/categories/python" class="">파이썬(PYTHON)({{category[1].size}})</a></li>
+                        <li><a href="/categories/python" class="">파이썬(PYTHON) ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
@@ -33,7 +33,7 @@
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "R_ML" %}
-                        <li><a href="/categories/R_ML" class="">R (빅데이터 분석기사)({{category[1].size}})</a></li>
+                        <li><a href="/categories/R_ML" class="">R (빅데이터 분석기사) ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
@@ -120,6 +120,9 @@
                 {% endfor %}
             </ul>
         <span class="nav__sub-title">HUMANITIES</span>
+            <ul>
+                <li><a href="https://zinc-viscount-1a1.notion.site/8c2a16a37b3141fc806432c01cb0fd21" class="">기초 체력 기르기 (daily) </a></li>
+            </ul>
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "book" %}
