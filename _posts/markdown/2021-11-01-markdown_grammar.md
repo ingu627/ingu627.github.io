@@ -438,8 +438,8 @@ $a+b+c+d=e$ <br>
    - $$(\alpha + \beta)^2 = \alpha^2 + 2\alpha\beta+\beta^2 $$
    - `$$(\alpha + \beta)^2 = \alpha^2 + 2\alpha\beta+\beta^2 $$`
 
-\\(min_a\\) <br>
-\\(min_b\\) <br>
+- \\(min_a\\) => `\\(min_a\\)` 
+- \\(min_b\\) => `\\(min_b\\)`
 
 ### tip!
 만약 특수문자 그대로 사용하고 싶다면 앞에 \(역슬래시)를 추가해주면 됩니다.
