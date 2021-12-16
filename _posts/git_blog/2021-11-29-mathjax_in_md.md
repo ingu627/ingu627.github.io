@@ -7,7 +7,7 @@ tag : [git, blog, markdown, 마크다운, Mathjax, 문법]
 toc : True
 sidebar_main: true
 
-last_modified_at: 2021-11-29
+last_modified_at: 2021-12-16
 ---
 
 ![image](https://user-images.githubusercontent.com/78655692/143910921-4b7d1a55-d2b0-49ee-b721-20ce1376df0b.png)
@@ -57,6 +57,12 @@ $$x^2+3*x+5=0 는 이차함수이다.$$
 ## 그 외 수식은 pdf 파일에 있으니 참고하면 된다. ($\alpha$나 $\beta$ 같은 것들)
 
 - [TeXRefCard.v1.5.pdf](https://drive.google.com/file/d/1GWa-Syt3nvB_fGDiUHXpNWFSABmDscdx/view?usp=sharing)
+
+<br>
+
+![TeXRefCard v1 5 (4)_page-0001](https://user-images.githubusercontent.com/78655692/146336736-786fae45-599d-404d-bdd8-24c468e8df32.jpg)
+
+![TeXRefCard v1 5 (4)_page-0002](https://user-images.githubusercontent.com/78655692/146336860-40a2336c-d31a-4af6-852e-2eea55ec84b5.jpg)
 
 <br>
 <br>
