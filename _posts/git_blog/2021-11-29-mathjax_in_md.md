@@ -10,7 +10,7 @@ classes: wide
 last_modified_at: 2021-12-16
 ---
 
-![image](https://user-images.githubusercontent.com/78655692/143910921-4b7d1a55-d2b0-49ee-b721-20ce1376df0b.png)
+<img src="https://user-images.githubusercontent.com/78655692/143910921-4b7d1a55-d2b0-49ee-b721-20ce1376df0b.png" width=650 alt="mathjax">
 
 ## Mathjax란
 
@@ -57,12 +57,22 @@ $$x^2+3*x+5=0 는 이차함수이다.$$
 ## 그 외 수식은 pdf 파일에 있으니 참고하면 된다. ($\alpha$나 $\beta$ 같은 것들)
 
 - [TeXRefCard.v1.5.pdf](https://drive.google.com/file/d/1GWa-Syt3nvB_fGDiUHXpNWFSABmDscdx/view?usp=sharing)
+- <https://www.onemathematicalcat.org/MathJaxDocumentation/MathJaxKorean/TeXSyntax_ko.html>
+- <https://ko.wikipedia.org/wiki/%EC%9C%84%ED%82%A4%EB%B0%B1%EA%B3%BC:TeX_%EB%AC%B8%EB%B2%95>
 
 <br>
 
 ![TeXRefCard v1 5 (4)_page-0001](https://user-images.githubusercontent.com/78655692/146336736-786fae45-599d-404d-bdd8-24c468e8df32.jpg)
 
 ![TeXRefCard v1 5 (4)_page-0002](https://user-images.githubusercontent.com/78655692/146336860-40a2336c-d31a-4af6-852e-2eea55ec84b5.jpg)
+
+<br>
+
+1. 여러 개 쓸 때 : $x_{\rm i,j}^{\rm next}$
+   - `$x_{\rm i,j}^{\rm next}$`
+2. hat : $\hat y$
+   - `$\hat y$`
+3. 띄어쓰기 : `$\ $`
 
 <br>
 <br>
@@ -73,4 +83,3 @@ $$x^2+3*x+5=0 는 이차함수이다.$$
 - [위키백과 - 매스잭스](https://ko.wikipedia.org/wiki/%EB%A7%A4%EC%8A%A4%EC%9E%AD%EC%8A%A4)
 - [[Github 블로그] Mathjax로 수식(Math Expression) 쓰기](https://ansohxxn.github.io/blog/math-equation/)
 - [mathjax 깃헙블로그 적용 및 문법](https://ghdic.github.io/math/default/mathjax-%EB%AC%B8%EB%B2%95/)
-
