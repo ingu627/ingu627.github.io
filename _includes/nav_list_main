@@ -57,12 +57,12 @@
                         <li><a href="/categories/tips" class="">기타 팁들(설치, 방법,...) ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
-            </ul>
+            </ul>   
         <span class="nav__sub-title">Distributed Computing</span>
         <ul>
             {% for category in site.categories %}
                 {% if category[0] == "java" %}
-                    <li><a href="/categories/java" class="">자바(java) ({{category[1].size}})</a></li>
+                    <li><a href="/categories/java" class="">자바(JAVA) ({{category[1].size}})</a></li>
                 {% endif %}
             {% endfor %}
         </ul>
