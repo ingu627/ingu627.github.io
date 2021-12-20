@@ -48,13 +48,24 @@ last_modified_at: 2021-11-28
 <br>
 <br>
 
-## 4. Bracket Pair Colorizer 2
+## ~~4. Bracket Pair Colorizer 2~~
 
 ![image](https://user-images.githubusercontent.com/78655692/143773517-1fdca65d-996f-441d-b393-6284c7f9e84b.png)
 
 ![image](https://user-images.githubusercontent.com/78655692/143773557-a0879754-5aa1-4d38-81e4-5701da372b94.png)
 
-- 이걸 사용하면 일치하는 브래킷을 색상으로 식별할 수 있다. 괄호가 많아지면 복잡해지는 걸 방지해준다.
+- ~~이걸 사용하면 일치하는 브래킷을 색상으로 식별할 수 있다. 괄호가 많아지면 복잡해지는 걸 방지해준다.~~
+- 확장 프로그램이던 컬러 브라켓을 vscode에서 직접 지원하기 시작하였다.  
+<https://github.com/CoenraadS/Bracket-Pair-Colorizer-2#readme>
+
+- `ctrl + shift + p`를 누른 후 `settings`를 친 후 들어가서 (`settings.json`) 다음과 같이 입력해 준다.
+
+```json
+{
+    "editor.bracketPairColorization.enabled": true,
+    "editor.guides.bracketPairs":"active"
+}
+```
 
 <br>
 <br>
