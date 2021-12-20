@@ -8,7 +8,7 @@ toc: True
 toc_sticky: True
 sidebar_main: true
 
-last_modified_at: 2021-11-28
+last_modified_at: 2021-12-20
 ---
 
 많은 글들이 extension을 추천했지만 이글은 딥러닝 코드를 vscode에서 할 때 생산적으로 활용할 수 있는 extension들을 추천하고자 썼습니다.
@@ -119,21 +119,22 @@ last_modified_at: 2021-11-28
 <br>
 <br>
 
-## 9. Settings Sync
+## ~~9. Settings Sync~~
 
 ![image](https://user-images.githubusercontent.com/78655692/143767355-8495d260-f750-400d-952c-5a857d03bd3d.png)
 
 ![image](https://user-images.githubusercontent.com/78655692/143767408-2eeeba7e-3988-4375-983c-030a85fa1fa5.png)
 
-- Settings Sync은 여러 기기에서 작업할 때 사용 가능한 작업 공간을 설정해 준다.
-- `sync` : 어떤 특정 컴퓨터에 있는 내용을 다른 컴퓨터에 올려서 한 쪽의 변경사항이 다른 쪽에 변경사항이 반영되도록 하는 것.
-- 원격으로 독립되어있는 컴퓨터끼리 인터넷을 통해 sync할 수 있게 해 주는 것이다.
+- ~~Settings Sync은 여러 기기에서 작업할 때 사용 가능한 작업 공간을 설정해 준다.~~
+- ~~`sync` : 어떤 특정 컴퓨터에 있는 내용을 다른 컴퓨터에 올려서 한 쪽의 변경사항이 다른 쪽에 변경사항이 반영되도록 하는 것.~~
+- ~~원격으로 독립되어있는 컴퓨터끼리 인터넷을 통해 sync할 수 있게 해 주는 것이다.~~
+- vscode에서 자체적으로 동기화를 지원하기 시작했다. 설치 안해도 될 것 같다. (2021.12.20)
 
 <br>
 <br>
 <br>
 
-## 10. GitLens
+## 9. GitLens
 
 ![image](https://user-images.githubusercontent.com/78655692/143768425-6367afed-f8d4-44af-bf82-c166f2ca45b2.png)
 
@@ -146,7 +147,7 @@ last_modified_at: 2021-11-28
 <br>
 <br>
 
-## 11. Git Graph
+## 10. Git Graph
 
 ![image](https://user-images.githubusercontent.com/78655692/143768669-c4afcbc2-e957-479e-9d63-46a786003096.png)
 
@@ -158,7 +159,7 @@ last_modified_at: 2021-11-28
 <br>
 <br>
 
-## 12. Git Extension Pack
+## 11. Git Extension Pack
 
 ![image](https://user-images.githubusercontent.com/78655692/143768754-386f0497-4c18-400a-b313-7bf7be5a33f3.png)
 
@@ -174,7 +175,7 @@ last_modified_at: 2021-11-28
 <br>
 <br>
 
-## 13. Better Comments
+## 12. Better Comments
 
 ![image](https://user-images.githubusercontent.com/78655692/143768903-7653cb41-ccd8-44cb-847d-112aa37fa355.png)
 
@@ -185,6 +186,15 @@ last_modified_at: 2021-11-28
 <br>
 <br>
 <br>
+
+## 13. Rainbow CSV
+
+![image](https://user-images.githubusercontent.com/78655692/146767188-205fa52c-cdfc-4a9d-9cee-da19e85821cf.png)
+
+![image](https://user-images.githubusercontent.com/78655692/146767240-87082a97-e1c4-4088-bf9d-68957b8c92a3.png)
+
+![image](https://user-images.githubusercontent.com/78655692/146767366-aeee43ac-ab34-4bbc-9f56-476064025640.png)
+
 
 - 그 외 다른 프로그램들도 많지만, 따로 글을 올려서 정리를 해보겠다. 
 
