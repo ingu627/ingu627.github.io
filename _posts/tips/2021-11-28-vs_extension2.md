@@ -8,8 +8,18 @@ toc: True
 toc_sticky: True
 sidebar_main: true
 
-last_modified_at: 2021-11-28
+last_modified_at: 2021-12-20
 ---
+
+<br>
+
+## 0. Font 설정
+
+- `File - Preferences - Settings - Font Size 설정` 
+  - 17이 가장 보기 좋은 것 같다. (개인 의견)
+
+![image](https://user-images.githubusercontent.com/78655692/146759647-4fdf0582-2a93-41d0-a87f-5faf608ffa02.png)
+
 
 ## 1. Ponicode
 
