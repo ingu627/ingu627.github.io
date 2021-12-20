@@ -81,6 +81,16 @@ last_modified_at: 2021-12-20
 <br>
 <br>
 
+## 4. Prettier
+
+![image](https://user-images.githubusercontent.com/78655692/146768480-15591390-596c-4e8b-8ea0-3275526533da.png)
+
+- 코드를 자체 규칙으로 이쁘게 만들어 준다. 
+
+<br>
+<br>
+<br>
+
 ## 5. Code Spell Checker
 
 ![image](https://user-images.githubusercontent.com/78655692/143773697-94e6c2b8-a07d-4f69-b390-827c4dbbd78d.png)
