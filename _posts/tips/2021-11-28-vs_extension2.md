@@ -72,8 +72,15 @@ last_modified_at: 2021-12-20
 
 ```json
 {
+  
     "editor.bracketPairColorization.enabled": true,
-    "editor.guides.bracketPairs":"active"
+    "editor.guides.bracketPairs":"active",
+    "bracket-pair-colorizer-2.colors": [
+    "Gold",
+    "Orchid",
+    "LightSkyBlue"
+]
+
 }
 ```
 
