@@ -96,6 +96,7 @@ sidebar_main: true
 - [[Tensorflow 2.0] 합성곱 신경망: CNN](https://ericabae.medium.com/tensorflow-2-0-%ED%95%A9%EC%84%B1%EA%B3%B1-%EC%8B%A0%EA%B2%BD%EB%A7%9D-cnn-bfd925298c9b){: target="_blank"}
 - [Setup Visual Studio Code to run R on VSCode 2021](https://www.r-bloggers.com/2021/01/setup-visual-studio-code-to-run-r-on-vscode-2021/){: target="_blank"}
 - [공부하는 식빵맘 - [Github 블로그] 같은 카테고리 내에서의 이전글, 다음글 이동](https://ansohxxn.github.io/blog/prevnext/){: target="_blank"}
+- [왕초보도 따라하는 도커 기초 1 도커와 컨테이너 소개](https://blog.naver.com/isc0304/221840483579)
 
 ### Github blog 만들기
 
