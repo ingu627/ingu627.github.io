@@ -57,8 +57,18 @@ $$x^2+3*x+5=0 는 이차함수이다.$$
 ## 그 외 수식은 pdf 파일에 있으니 참고하면 된다. ($\alpha$나 $\beta$ 같은 것들)
 
 - [TeXRefCard.v1.5.pdf](https://drive.google.com/file/d/1GWa-Syt3nvB_fGDiUHXpNWFSABmDscdx/view?usp=sharing)
-- <https://www.onemathematicalcat.org/MathJaxDocumentation/MathJaxKorean/TeXSyntax_ko.html>
-- <https://ko.wikipedia.org/wiki/%EC%9C%84%ED%82%A4%EB%B0%B1%EA%B3%BC:TeX_%EB%AC%B8%EB%B2%95>
+
+<br>
+
+- `MathJax에서 유용한 TEX 명령어` :<https://www.onemathematicalcat.org/MathJaxDocumentation/MathJaxKorean/TeXSyntax_ko.html>
+
+<br>
+
+- `위키백과:TeX 문법` : <https://ko.wikipedia.org/wiki/%EC%9C%84%ED%82%A4%EB%B0%B1%EA%B3%BC:TeX_%EB%AC%B8%EB%B2%95>
+
+<br>
+
+- `Symbols and Functions in KaTeX` : <https://utensil-site.github.io/available-in-katex/>
 
 <br>
 
@@ -73,6 +83,15 @@ $$x^2+3*x+5=0 는 이차함수이다.$$
 2. hat : $\hat y$
    - `$\hat y$`
 3. 띄어쓰기 : `$\ $`
+4. 경우 나누기 : mbox error
+5. dcases 이용하여 경우 나누기
+
+```md
+\begin{dcases}
+   a &\text{if } b  \\
+   c &\text{if } d
+\end{dcases}
+```
 
 <br>
 <br>
