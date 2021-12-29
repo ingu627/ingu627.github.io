@@ -119,15 +119,21 @@ last_modified_at: 2021-12-20
 <br>
 <br>
 
-## ~~9. Settings Sync~~
+## 9. Settings Sync
 
 ![image](https://user-images.githubusercontent.com/78655692/143767355-8495d260-f750-400d-952c-5a857d03bd3d.png)
 
 ![image](https://user-images.githubusercontent.com/78655692/143767408-2eeeba7e-3988-4375-983c-030a85fa1fa5.png)
 
-- ~~Settings Sync은 여러 기기에서 작업할 때 사용 가능한 작업 공간을 설정해 준다.~~
-- ~~`sync` : 어떤 특정 컴퓨터에 있는 내용을 다른 컴퓨터에 올려서 한 쪽의 변경사항이 다른 쪽에 변경사항이 반영되도록 하는 것.~~
-- ~~원격으로 독립되어있는 컴퓨터끼리 인터넷을 통해 sync할 수 있게 해 주는 것이다.~~
+- Settings Sync은 여러 기기에서 작업할 때 사용 가능한 작업 공간을 설정해 준다.
+- `sync` : 어떤 특정 컴퓨터에 있는 내용을 다른 컴퓨터에 올려서 한 쪽의 변경사항이 다른 쪽에 변경사항이 반영되도록 하는 것.
+- 원격으로 독립되어있는 컴퓨터끼리 인터넷을 통해 sync할 수 있게 해 주는 것이다.
+- `Shift + Alt + U`를 누르면 현재 설정이 업로드 된다.
+- `Shift + Alt + D`를 누르면 업로드 된 설정을 다운로드한다.
+- 자세한 사용법은 <https://developer-carmel.tistory.com/4> 참고
+
+<br>
+
 - vscode에서 자체적으로 동기화를 지원하기 시작했다. 설치 안해도 될 것 같다. (2021.12.20)
 
 <br>
