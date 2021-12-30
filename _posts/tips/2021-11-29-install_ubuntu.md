@@ -22,7 +22,7 @@ sidebar_main: true
 
 ## 1. Linux용 Windows 하위 시스템
 
-- 제어판 -> Windows 기능 켜기/끄기 -> Linux용 Windows 하위 시스템 선택 -> 확인
+- 제어판 -> 프로그램 및 기능 -> Windows 기능 켜기/끄기 -> Linux용 Windows 하위 시스템 선택 -> 확인
 
 ![image](https://user-images.githubusercontent.com/78655692/143834886-4aa01b2c-ee7b-459a-98ee-e854b613f165.png)
 
