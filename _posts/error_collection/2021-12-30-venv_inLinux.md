@@ -28,6 +28,13 @@ sudo apt-get install python3-venv
 
 ![image](https://user-images.githubusercontent.com/78655692/147743640-f2ef0b0a-c77b-4fec-b7a1-a0bb6e6cd460.png)
 
+<br>
+
+> 파일 위치 확인
+> `C:\Users\{username}\AppData\Local\Packages\CanonicalGroupLimited.UbuntuonWindows_79rhkp1fndgsc\LocalState`
+
+> 또는 탐색기에서 `\\wsl$`로 네트워크 환경으로 접속하기
+
 
 <br>
 <br>
