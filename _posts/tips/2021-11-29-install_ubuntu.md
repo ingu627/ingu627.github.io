@@ -93,6 +93,14 @@ sidebar_main: true
 
 - 이 코드는 WSL 2를 기본 버전으로 세팅하는 단계이다.
 
+![image](https://user-images.githubusercontent.com/78655692/147727659-42d6b5a5-2fc3-44dc-b456-3af71d4f9161.png)
+
+> 만약 위와 같이 에러가 난다면 `bcdedit /set hypervisorlaunchtype auto` 를 친 후 재부팅을 한다.
+
+![image](https://user-images.githubusercontent.com/78655692/147727746-76747974-c31b-4dba-a51d-c9b7c72c016a.png)
+
+![image](https://user-images.githubusercontent.com/78655692/147727905-7ade9059-f871-4c55-b28a-91e936c905ae.png)
+
 <br>
 <br>
 
@@ -108,6 +116,15 @@ sidebar_main: true
 ![ubuntu1](https://user-images.githubusercontent.com/78655692/143837290-e5babcfa-6340-491c-88bb-1f46ffeb4fe1.png)
 
 - 새 Linux 배포를 위한 사용자 계정 및 암호를 만들어야 하는데 계정 이름은 소문자로 생성한다.
+
+<br>
+
+> WslRegisterDistribution failed with error: 0x800701bc
+> Error: 0x800701bc WSL 2? ?? ?? ?? ????? ?????. ??? ??? https://aka.ms/wsl2kernel? ??????.  에러가 난다면
+
+- <https://docs.microsoft.com/ko-kr/windows/wsl/install-manual>로 가서 `ARM64 패키지`를 다운받는다.
+
+![image](https://user-images.githubusercontent.com/78655692/147728452-718f41fe-0254-4b88-b86a-ccc4b411f4eb.png)
 
 <br>
 <br>
@@ -128,6 +145,7 @@ sidebar_main: true
 - [microsoft docs](https://docs.microsoft.com/ko-kr/windows/wsl/install-manual)
 - [Windows 10 에서 Linux 환경 구축하기](https://knackin.tistory.com/1)
 - [[WSL2] 윈도우에서 리눅스 사용하기](https://blog.naver.com/PostView.naver?blogId=skyshin0304&logNo=222079393598&redirect=Dlog&widgetTypeCall=true&directAccess=false)
+- [Wsl 사용시 WslRegisterDistribution Failed With Error: 0x800701bc 해결하기.](https://blog.dalso.org/article/wslregisterdistribution-failed-with-error)
 
 
 
