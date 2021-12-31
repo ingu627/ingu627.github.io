@@ -42,3 +42,7 @@ sudo apt-get install python3-venv
 ## References
 
 - <https://community.home-assistant.io/t/package-it-missed-in-installation-in-python-virtual-environment/48788>
+
+
+
+

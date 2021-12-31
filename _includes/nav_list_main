@@ -68,19 +68,18 @@
         </ul>
         <ul>
             {% for category in site.categories %}
+                {% if category[0] == "SQL" %}
+                    <li><a href="/categories/SQL" class="">SQL 문법 ({{category[1].size}})</a></li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        <ul>
+            {% for category in site.categories %}
                 {% if category[0] == "DS" %}
                     <li><a href="/categories/DS" class="">분산 시스템(Distributed System) ({{category[1].size}})</a></li>
                 {% endif %}
             {% endfor %}
         </ul>
-        <span class="nav__sub-title">SQL</span>
-            <ul>
-                {% for category in site.categories %}
-                    {% if category[0] == "SQL" %}
-                        <li><a href="/categories/SQL" class="">SQL 문법 ({{category[1].size}})</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
         <span class="nav__sub-title">CS</span>
         <ul>
             {% for category in site.categories %}
