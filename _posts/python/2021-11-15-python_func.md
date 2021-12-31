@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2021-11-19
+last_modified_at: 2021-12-31
 ---
 
 ## 알고리즘 문제에서 주어지는 것들을 구별한다. 나는 뼈대만 잡아준다.
@@ -74,6 +74,46 @@ last_modified_at: 2021-11-19
 - `upper()` : 문자열 대문자로 변경하는 함수
 - `lower()` : 문자열 소문자로 변경하는 함수
 - `capitalize()` : 주어진 문자열에서 맨 첫 글자를 대문자로 변환해줌.
+
+<br>
+
+- `*args` : 여러 개의 인자를 함수로 받고자 할 때
+  - arguments의 줄임말 (꼭 이 단어를 쓸 필요는 없다.)
+  - 여러 개의 인자로 함수를 호출할 경우, 내부에서는 튜플로 받은 것처럼 인식
+
+```python
+def plus(*nums):
+    sum=0
+    for num in nums:
+        sum+=num
+    return sum
+
+print(plus(1+2+3)) # 6
+print(plus(1+2+3+2+1+4)) # 13
+```
+
+- `**kwargs` : (키워드 = 특정 값) 형태로 함수를 호출
+  - keyword argument의 줄임말
+  - 딕셔너리 형태로 `{'키워드':'특정 값'}` 함수 내부로 전달
+
+```python
+def call_member(**infos):
+    for key, val in infos.items():
+        print(f'이름: {key}\n나이: {val}\n')
+
+call_member(홍길동=23, 미나=27, 나나=22)
+
+# 결과
+
+# 이름: 홍길동
+# 나이: 23
+
+# 이름: 미나
+# 나이: 27
+
+# 이름: 나나
+# 나이: 22
+```
 
 
 
