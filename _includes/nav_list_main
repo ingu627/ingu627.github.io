@@ -140,6 +140,9 @@
                     {% endif %}
                 {% endfor %}
             </ul>
+            <ul>
+                <li><a href="https://zinc-viscount-1a1.notion.site/725557eecb5541f2b77f330afff90dd9" class="">매일 영어작문 (daily) </a></li>
+            </ul>
         <span class="nav__sub-title">HUMANITIES</span>
             <ul>
                 <li><a href="https://zinc-viscount-1a1.notion.site/8c2a16a37b3141fc806432c01cb0fd21" class="">기초 체력 기르기 (daily) </a></li>
