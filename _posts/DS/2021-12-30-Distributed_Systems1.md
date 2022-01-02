@@ -9,7 +9,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2021-12-31
+last_modified_at: 2022-01-02
 ---
 
 <img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/147719090-5f0942f1-1647-44ad-8d72-f11e3fe400d7.png
@@ -30,4 +30,7 @@ last_modified_at: 2021-12-31
   - single coherent system : (단일 시스템) users or applications perceive a single system -> nodes need to collaborate
 
 - 특징
-- 
+- `nodes` = autonomous computing elements
+
+- `autonomous nodes` : 독립적 행동 (각 노드들은 자유로우며 각자 고유의 시간의 알림을 가지고 있다.). 따라서 표준 시간이 없다.
+  - 이 특징은 기능적 동기화와 협력 문제를 유발하기도 한다.
