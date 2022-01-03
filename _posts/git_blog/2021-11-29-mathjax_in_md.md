@@ -7,7 +7,7 @@ tag : [git, blog, markdown, 마크다운, Mathjax, 문법]
 sidebar_main: true
 classes: wide
 
-last_modified_at: 2021-12-16
+last_modified_at: 2022-01-03
 ---
 
 <img src="https://user-images.githubusercontent.com/78655692/143910921-4b7d1a55-d2b0-49ee-b721-20ce1376df0b.png" width=650 alt="mathjax">
@@ -72,19 +72,21 @@ $$x^2+3*x+5=0 는 이차함수이다.$$
 
 <br>
 
+> `ctrl + 마우스휠`을 이용해 175%까지 확대해서 본다.
+
 ![TeXRefCard v1 5 (4)_page-0001](https://user-images.githubusercontent.com/78655692/146336736-786fae45-599d-404d-bdd8-24c468e8df32.jpg)
 
 ![TeXRefCard v1 5 (4)_page-0002](https://user-images.githubusercontent.com/78655692/146336860-40a2336c-d31a-4af6-852e-2eea55ec84b5.jpg)
 
 <br>
 
-1. 여러 개 쓸 때 : $x_{\rm i,j}^{\rm next}$
-   - `$x_{\rm i,j}^{\rm next}$`
-2. hat : $\hat y$
+*1.* 여러 개 쓸 때 : $x_{i,j}^{next}$
+   - `$x_{i,j}^{next}$`
+*2.* hat : $\hat y$
    - `$\hat y$`
-3. 띄어쓰기 : `$\ $`
-4. 경우 나누기 : mbox error
-5. dcases 이용하여 경우 나누기
+*3.* 띄어쓰기 : `$\ $`
+*4.* 경우 나누기 : mbox error (`$$` 로 묶지 않고 `\\( \\)`로 묶으면 가능한 것 같다.)
+*5.* dcases 이용하여 경우 나누기
 
 ```md
 \begin{dcases}
@@ -92,6 +94,21 @@ $$x^2+3*x+5=0 는 이차함수이다.$$
    c &\text{if } d
 \end{dcases}
 ```
+
+*6.* 빈칸 조정
+
+|기능|	문법|	나타나는 모양|
+|---|---|---|
+|double quad space|	`a \qquad b`	|$a \qquad b$
+|quad space|	`a \quad b`	|$a \quad b$
+|text space|	`a\ b`	|$a\ b$
+|large space|	`a\;b`	|$a\;b$
+|medium space|	`a\>b`	|[not supported]
+|small space|	`a\,b`	|$a\,b$
+|no space|	`ab`	|$ab$
+|negative space|	`a\!b`	|$a\!b$
+
+
 
 <br>
 <br>
