@@ -28,6 +28,8 @@ sidebar_main: true
 - [딥 러닝을 이용한 자연어 처리 입문](https://wikidocs.net/22886)
 - [ratsgo's blog for textmining](https://ratsgo.github.io/)
 - [귀퉁이 서재 - Baek Kyun Shin](https://bkshin.tistory.com/)
+- [핸즈온 머신러닝(2판)](https://formal.hknu.ac.kr/handson-ml2/)
+- [udemy(온라인 강의)](https://www.udemy.com/)
 
 ### Web
 
