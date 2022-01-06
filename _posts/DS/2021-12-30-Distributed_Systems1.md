@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "분산 시스템(Distributed Systems) - Introduction"
+title: "분산 시스템(Distributed Systems) - Introduction (1)"
 excerpt: "Distributed Systems Third edition by Maarten van Steen,
 Andrew S. Tanenbaum - Introduction"
 categories: DS
@@ -9,7 +9,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-01-05
+last_modified_at: 2022-01-06
 ---
 
 <img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/147719090-5f0942f1-1647-44ad-8d72-f11e3fe400d7.png
@@ -42,20 +42,22 @@ last_modified_at: 2022-01-05
 
 <br>
 
-- 정의 : **A distributed system is a collection of autonomous computing elements that appears to its users as a single coherent system.**
+### 정의
+
+- **A distributed system is a collection of autonomous computing elements that appears to its users as a single coherent system.**
   - autonomous: 혼자서 이 일을 할 수 있는
   - single coherent system : (단일 시스템) users or applications perceive a single system -> nodes need to collaborate
 
 - **특징**
-  1. distributed system is a collection of computing elements
+  - *1.* distributed system is a collection of computing elements
 each being able to behave **independently** of each other
-- `nodes` = autonomous computing elements (하드웨어 장비나 소프트웨어 프로세스가 될 수 있다.)
-  2. users (be they people or applications) believe they are dealing with **a single system**
+    - `nodes` = autonomous computing elements (하드웨어 장비나 소프트웨어 프로세스가 될 수 있다.)
+  - *2.* users (be they people or applications) believe they are dealing with **a single system**
      - single system안에서 sensor networks로 높은 성능의 메인프레임 컴퓨터들부터 작은 장치들까지 다룰 수 있다.
 
 <br>
 
-## 특징1. Collection of autonomous computing elements
+### 특징1. Collection of autonomous computing elements
 
 - 현대 분산 시스템들은 많은 종류의 노드들로 구성되어 있다. 높은 성능의 컴퓨터들부터 작은 plug computer까지
 - **노드들은 서로 독립적으로 활동한다.** 그들이 서로를 무시한다 하더라도. 따라서 노드들을 같은 분산 시스템에 넣어 사용하지 않는다.
@@ -91,7 +93,7 @@ each being able to behave **independently** of each other
 <br> 
 <br> 
 
-## 특징2. Single coherent system
+### 특징2. Single coherent system
 
 - 분산시스템은 single coherent system으로 보여야 한다.
 - single coherent system에서 노드들의 집합은 전체가 똑같이 작동한다. user와 system 사이에서 장소, 시간, 어떻게 작동하든지 간에
@@ -180,9 +182,28 @@ files, services, and networks
 |Concurrency| object가 몇몇 사용자에게 공유되는 것을 숨긴다.
 |Failure| object의 failure와 recovery를 숨긴다.
 
-- <span style='color:red'>보충 필요</span>
+<br>
 
+- **access transparency** 
+  - 기초 레벨에서, 우리는 기계 구조가 다름을 숨기고 싶지만, 그보다 더 중요한 것은 데이터가 다른 기계 (또는 시스템)에서 잘 나타나지는 가를 보아야 한다.
+- **location transparency**
+  - `name`이 중요한 역할을 한다.
+  - `location transparency`는 logical name을 자원에 할당함으로써 얻을 수 있으므로, name은 기밀하게 인코드되지 않는다.
+  - 이러한 name의 예시로 URL(; uniform resource locator)이 있다.
+  - Web은이러한 사이트는 데이터 센터에서 다른 곳에 이동되어 user는 알아차리지 못한다. (**relocation transparency**의 예시)
+- **migration transparency**
+  - user로부터 시작된 processes와 resources의 mobility를 제공한다. (진행되는 전달과 운영에 영향을 미치지 않고)
+    - 모바일 폰 사이의 전달이 예시가 될 수 있다.
+- **replication transparency**
+  - 자원들은 복제한다. 1) 가용성을 늘리기 위해 또는 2) copy를 접근 가능하도록 가까이 둠으로써 성능을 향상시키기 위해 
+- **concurrency transparency**
+  - shared resource에 동시 접근은 해당 리소스를 일관된(consistent) 상태로 유지한다는 것이다.
+  - `consistency`는 잠금을 통해 얻을 수 있는데 user는 차례로 원하는 resource에 대해 배타적인 접근을 갖게 된다.
+- **failure transparency**
+  - user나 application이 시스템 fail을 알아차리 못해서 일을 적절하게 수행하고 시스템은 자동적으로 failure로부터 회복한다.
+  - failure를 가리는 것은 분산 시스템에서 가장 힘든 이슈 중 하나이고 때때로는 불가능도 하다.
 
+<br>
 <br>
 
 ### Degree of distribution transparency
@@ -202,7 +223,7 @@ files, services, and networks
 <br>
 <br>
 
-### Being open
+## Being open
 
 - `open distributed system`은 다른 시스템으로 통합된 것을 쉽게 사용할 수 있게 요소들을 제공한다.
 - **Interoperability, composability, extensibility**
@@ -211,8 +232,129 @@ files, services, and networks
   - 그들은 기능들의 이름을 정확히 명시한다.
 - 명시가 잘 되었다면, 인터페이스 정의는 임의의 프로세스를 허용한다. 그 프로세스는 특정한 인터페이스를 필요로 하는데 그것은 인터페이스를 제공하는 다른 프로세스에게 전달할 수 있는
 - 적절한 specification는 complete하고 neutral이다.
+  - complete의 의미는 실행하는데 필요한 모든 것이 명시되어야 한다는 것.
+- completeness and neutrality are important for interoperability and portability.
+- open distributed system이 되기 위해 다른 목표는 서로 다른 구성 요소로 시스템을 쉽게 구성할 수 있어야 한다.
+  - 다시 말해 `extensible` 해야 한다.
+
+<br>
+<br>
+
+### Separating policy from mechanism
+
+- flexibility되기 위해서, 시스템이 작은 것(쉽게 대체되고 요소들이 적용가능한)들의 집합으로 구성되는 것은 중요하다.
+- 웹 브라우저를 캐싱한다면 몇 가지 요소들이 고려되어야 한다.
+  1. **Storage**
+  2. **Exemption**
+  3. **Sharing**
+  4. **Refreshing**
 
 
+<br>
+<br>
+
+## Being scalable
+
+- **Scalability dimensions** (문제점)
+  1. **Size scalability** : 크기에 따른 확장성
+  2. **Geographical scalability** : 거리에 따른 확장성
+  3. **Administrative scalability** : 관리에 따른 확장성
+
+<br>
+
+### Size scalability
+
+- 시스템이 크기를 확장하고 싶을 때 풀어야할 많은 문제점들이 있다.
+- user나 resource가 더 필요로 한다면 centralized services의 한계에 직면하게 된다.
+  - 예를 들어, 많은 서비스들은 sense에 centralized되 있어서 그들은 분산시스템에 단일 서버로 실행된다.
+  - 하지만 요청의 수가 증가하면 서버는 병목현상이 일어날 수 있다.
+  - 병목현상이 될 수 있는 **3가지** 원인
+    - CPU 제한으로 컴퓨터 용량
+    - 저장 용량 (I/O 전송 비율도 포함)
+    - user와 centralized service의 네트워크
+
+<br>
+
+### Geographical scalability
+
+- 대부분의 local-area network들이 `synchronous communication`에 기반하기 때문에 기존 분산 시스템을 확장하는 것은 어렵다.
+
+<br>
+
+### Administrative scalability
+
+- resource 사용, 관리, 보안과 관련된 정책들이 충돌하는 것을 해결하려는 것이 주요 문제이다.
+
+<br>
+<br>
+
+### Scaling techniques
+
+- 분산 시스템에서 확장성 문제는 한정된 서버와 네트워크의 용량이 원인이다.
+  - 용량을 향상시키는 것을 `scaling up`이라 한다.
+- `scaling out`에 의하면, 분산 시스템을 더 많은 기계들을 배치함으로써 확장하는 것은 3가지 기술이 있다. (해결책)
+  - hiding communication latencies
+  - distribution of work
+  - replication
+
+<br>
+
+**1. Hiding communication latencies**
+   - `geographical scalability`에 적용가능
+   - remote-service 요청의 응답 시간을 기다리는 것을 가능한 피함
+   - 어플리케이션을 요청할 때 `asynchronous communication`만을 사용
+     - reply가 오면, 어플리케이션은 중단되고 이전의 발행된 요청을 끝마치기 위해 특별한 handler가 call된다.
+     - `asynchronous communication`은 batch-processing system과 parallel application에 사용된다. (독립적인 task가 다른 task가 전달이 끝마치는 것을 기다리는 동안 실행이 schedule되는)
+     - 새로운 thread of control이 요청을 수행하기 위해 시작된다.
+
+![image](https://user-images.githubusercontent.com/78655692/148324936-9caec306-e236-4a63-af59-346c74cbd769.png)
+
+- The difference between letting (a) a server or (b) a client check
+forms as they are being filled.
+- form을 채우는 것은 각 필드에 분리된 메시지를 보낼 수 있고, 서버로부터 승인을 기다릴 수 있다. (A)
+  - 서버는 entry를 허락하기 전에 에러를 check한다.
+- 더 나은 해결책은 코드를 form에 채우기 위해 옮긴 후 entry를 확인하고 client가 완성된 form을 돌려받는다. (B)
+  - shipping code는 Java applets와 Javascript에 사용되고 있다.
+
+<br>
+
+**2. Partitioning and distribution**
+   - component를 사용하는 것을 포함, 이것을 작은 부분으로 나누고 시스템에 뿌린다.
+   - 예시로는 **DNS** (Internet Domain Name System)가 있다.
+   - DNS name 공간은 위계쩍으로 구성되어 `domains`의 tree (겹치지 않는 zone으로 나뉘어져서)로 들어간다.
+   - 각 zone의 names는 단일 name server에 의해 관리된다. 
+- resolving a name means returning the network address of the
+associated host.
+
+![image](https://user-images.githubusercontent.com/78655692/148327254-5ffaa947-7436-418b-96ce-9bdcc6923834.png)
+
+<br>
+
+- 또 다른 예시로는 `World Wide Web`이 있다.
+- Web은 거대한 document에 기반한 정보 시스템이다. (각 document는 URL 형태로 고유 name을 가지고 있다.)
+- 마치 단일 서버에 있는 것처럼 보인다.
+- 하지만 Web은 몇 백만의 서버를 거쳐 (각각의 서버는 많은 웹 document를 관리한다.)물리적으로 `partitioned and distributed`하다.
+- document를 관리하는 서버의 name은 document의 URL로 인코드 된다.
+
+<br>
+
+**3. Replication**
+  - 확장성의 문제로 성능 저하가 보이면 분산 시스템에서 component를 `replicate`(복제)한다.
+  - `cashing`은 복제의 특별한 form이다. cashing은 자원을 복제하고  client가 자원에 접근할 수 있도록 해준다.
+    - 하지만 복제와 다르게, cashing은 client의 자원에 대해 결정을 한다. (owner의 자원이 아니라)
+- 하지만, cashing과 replication은 `consistency`(일관성) 문제점이 있다.
+- 어느 정도까지 불일치가 허용될 수 있는지는 자원의 사용에 따라 크게 달라진다.
+  - 강한 consistency의 문제점은 업데이트가 즉각적으로 다른 모든 copy들에게 전달되어야 한다는 점이다.
+  - 두개의 업데이트가 동시에 진행된다면, 업데이트는 어느곳이든 똑같은 순서로 진행되어야 하는데 전역 순서에서 문제가 생긴다.
+- 그래서 replication은 전역 동기화 메커니즘이 필요하다. 하지만 이런 메커니즘은 상당히 구현하기 힘들다.
+
+<br>
+<br>
+
+### Pitfalls
+
+- 분산 시스템을 발전시키는 것은 만만치 않은 작업임이 분명하다. 그럼에도 원칙들을 따라가다 보면 분산 시스템은 목표를 향해 분명히 발전시킬 수 있을 것이다.
+- 분산 시스템은 components가 네트워크를 가로질러 분산되어 있다는 점이 기존 소프트웨어가 다르다.
 
 
 
@@ -276,3 +418,35 @@ files, services, and networks
 - `syntax` : (컴퓨터 언어의) 문법
 - `semantics` : 의미
 - `arbitrary` : 임의의
+- `interoperability` : 정보 처리 상호 운용
+- `portability` : 휴대성, (프로그램의) 이식 가능성
+- `extensible` : 확장 가능한
+- `configure` : (컴퓨터의) 환경을 설정하다
+- `flexibility` : 융통성, 탄력성
+- `monolithic` : 단일체의, 한 덩어리로 뭉친
+- `Exemption` : 면하기
+- `scalable` : 확장 가능한
+- `with respect to` : 에 관하여
+- `Administrative` : 관리
+- `span` : 걸치다, 기간
+- `scaling out` : 확장
+- `latencies` : 대기 시간
+- `applicable` : 적용 가능한
+- `asynchronous` : 비동기적
+- `reply` : 대답, 대응
+- `interrupted` : 중단된
+- `acknowledgment` : 승인, 접수, 인정
+- `involve` : 포함한다
+- `hierarchically` : 위계적으로
+- `nonoverlapping` : 겹치지 않는
+- `resolve` : 해결하다
+- `degradation` : 저하
+- `performance` : 성능
+- `inconsistencies ` : 불일치
+- `tolearte` : 용인하다, 견디다
+- `concurrently` : 동시에
+- `pitfall` : 함정
+- `formidable` : 가공할, 만만치 않은
+- `latter` : 후자의
+- `take over` : 인계받다, 더 중요해지다, ~을 대체하다
+- `computational` : 컴퓨터의
