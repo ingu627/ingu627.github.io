@@ -292,7 +292,7 @@ files, services, and networks
 
 - 분산 시스템에서 확장성 문제는 한정된 서버와 네트워크의 용량이 원인이다.
   - 용량을 향상시키는 것을 `scaling up`이라 한다.
-- `scaling out`에 의하면, 분산 시스템을 더 많은 기계들을 배치함으로써 확장하는 것은 3가지 기술이 있다. (해결책)
+- `scaling out`에 의하면, 분산 시스템을 더 많은 기계들을 배치함으로써 확장하는 것은 3가지 기술이 있다. (**해결책**)
   - hiding communication latencies
   - distribution of work
   - replication
