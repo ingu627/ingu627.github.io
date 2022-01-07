@@ -95,10 +95,10 @@ last_modified_at: 2022-01-07
 
 ### Training, Validation and Test
 
-![image](https://user-images.githubusercontent.com/78655692/142379924-138ab694-c7e1-4291-9ac8-016ad2132700.png)
+![image](https://user-images.githubusercontent.com/78655692/142379924-138ab694-c7e1-4291-9ac8-016ad2132700.png) 이미지출처 : [^1]
 
-![image](https://user-images.githubusercontent.com/78655692/142379989-22f13744-4120-4775-967a-9390c0dc06fd.png)
-
+![image](https://user-images.githubusercontent.com/78655692/142379989-22f13744-4120-4775-967a-9390c0dc06fd.png) 이미지출처 : [^2]
+  
 - **Training set(훈련 데이터)**은 모델을 학습하는데 사용된다.
 - **Validation set(검정 데이터)**은 training set으로 만들어진 모델의 성능을 측정하기 위해 사용된다. 
 - **Test set(테스트 데이터)**은 validation set으로 사용할 모델이 결정 된 후, 마지막으로 딱 한번 해당 모델의 예상되는 성능을 측정하기 위해 사용된다.
@@ -121,4 +121,6 @@ last_modified_at: 2022-01-07
 ## References
 
 - [케라스 창시자에게 배우는 딥러닝](https://tensorflow.blog/)
-- [Training, Validation and Test sets 차이 및 정확한 용도 (훈련, 검정, 테스트 데이터 차이)](https://modern-manual.tistory.com/19)
+
+[^1]: <https://modern-manual.tistory.com/19>
+[^2]: <https://modern-manual.tistory.com/19>

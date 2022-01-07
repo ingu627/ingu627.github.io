@@ -8,7 +8,7 @@ toc: true
 sidebar_main: true
 classes: wide
 
-last_modified_at: 2021-12-29
+last_modified_at: 2022-01-07
 ---
 
 <img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/147629300-4d7acc5e-225a-454a-92cd-4da82f6828f6.png
@@ -26,15 +26,24 @@ last_modified_at: 2021-12-29
 - 신경망의 핵심 구성 요소는 일종의 데이터 처리 필터라고 생각할 수 있는 **층(layer)**이다.
 - 층은 주어진 문제에 더 의미 있는 **표현(representation)**을 입력된 데이터로부터 추출한다.
 
-## 컴파일 단계
+<br>
+<br>
+
+### 컴파일 단계
 
 - **손실 함수(loss function)** : 훈련 데이터에서 신경망의 성능을 측정하는 방법으로 네트워크가 옳은 방향으로 학습될 수 있도록 도와준다. 
 - **옵티마이저(optimizer)** : 입력된 데이터와 손실 함수를 기반으로 네트워크를 업데이트하는 메커니즘
 - **훈련과 테스트 과정을 모니터링할 지표** : 대표적으로 정확도를 본다.
 
+<br>
+<br>
+
 ## 2_2. 신경망을 위한 데이터 표현 
 
-![image](https://user-images.githubusercontent.com/78655692/142875666-e2e24749-6fba-4650-acbb-674bca1da7bc.png)
+![image](https://user-images.githubusercontent.com/78655692/142875666-e2e24749-6fba-4650-acbb-674bca1da7bc.png) 이미지출처: [^1]
+
+<br>
+<br>
 
 ### 텐서
 
@@ -60,6 +69,9 @@ print(x.ndim)
 # 1
 ```
 
+<br>
+<br>
+
 ### 2D 텐서
 
 - 이 벡터는 5개의 원소를 가지고 있으므로 5차원 벡터라고 부름 
@@ -69,7 +81,7 @@ print(x.ndim)
 - **2D 텐서** : (batch_size, dim)
   - 행의 크기가 batch_size, 열의 크기가 dim이다.
 
-![image](https://user-images.githubusercontent.com/78655692/143195653-9297e916-7683-4207-9332-6837c4ecc275.png)
+![image](https://user-images.githubusercontent.com/78655692/143195653-9297e916-7683-4207-9332-6837c4ecc275.png) 이미지출처: [^2]
 
 ```python
 x = tf.constant([[
@@ -89,8 +101,13 @@ print(x.ndim)
 # 3
 ```
 
+<br>
+
 > 옮긴이 주 : 훈련 데이터 하나의 크기를 256이라고 해봅시다. [3, 1, 2, 5, ...] 이런 숫자들의 나열이 256의 길이로 있다고 상상하면됩니다. 다시 말해 훈련 데이터 하나 = 벡터의 차원은 256입니다. 만약 이런 훈련 데이터의 개수가 3000개라고 한다면, 현재 전체 훈련 데이터의 크기는 3,000 × 256입니다. 행렬이니까 2D 텐서네요. 3,000개를 1개씩 꺼내서 처리하는 것도 가능하지만 컴퓨터는 훈련 데이터를 하나씩 처리하는 것보다 보통 덩어리로 처리합니다. 3,000개에서 64개씩 꺼내서 처리한다고 한다면 이 때 batch size를 64라고 합니다. 그렇다면 컴퓨터가 한 번에 처리하는 2D 텐서의 크기는 (batch size × dim) = 64 × 256입니다.
 >> "PyTorch로 시작하는 딥 러닝 입문 - 02. 텐서 조작하기(Tensor Manipulation) 1 에서 인용"
+
+<br>
+<br>
 
 ### 3D 텐서
 
@@ -98,13 +115,13 @@ print(x.ndim)
 - (batch_size, width, height) - 비전 분야에서의 3차원 텐서
 - 자연어 처리보다 비전 분야(이미지, 영상 처리)를 하시게 된다면 좀 더 복잡한 텐서를 다루게 된다.
 
-![image](https://user-images.githubusercontent.com/78655692/143198512-4bfa9b7f-0a77-460d-bfcb-ac04c5d11129.png)
+![image](https://user-images.githubusercontent.com/78655692/143198512-4bfa9b7f-0a77-460d-bfcb-ac04c5d11129.png) 이미지출처: [^2]
 
 - (batch_size, length, dim) - NLP 분야에서의 3차원 텐서
   - length : 문장 길이
   - dim : 단어 벡터의 차원
 
-![image](https://user-images.githubusercontent.com/78655692/143198696-4106e5a1-92f5-4fc6-bdb5-76b83a8522ee.png)
+![image](https://user-images.githubusercontent.com/78655692/143198696-4106e5a1-92f5-4fc6-bdb5-76b83a8522ee.png) 이미지출처: [^3]
 
 ```python
 x = tf.constant([[
@@ -134,40 +151,57 @@ print(x.shape)
 # (2, 3, 5)
 ```
 
+<br>
+<br>
 
-## 핵심 속성
+### 핵심 속성
 
 - **축의 개수(랭크)** : `tf.rank()`
 - **크기(shape)** : 텐서의 각 축을 따라 얼마나 많은 차원이 있는지를 나타낸 파이썬의 튜플(tuple) 
 - **데이터 타입** : 텐서에 포함된 데이터의 타입
 
-## 텐서의 실제 사례
+<br>
+<br>
+
+### 텐서의 실제 사례
 
 - **벡터 데이터** : (samples, features) 크기의 2D 텐서
 - **시계열 데이터** (또는 시퀀스(sequence) 데이터) : (samples, timesteps, features) 크기의 3D 텐서
 - **이미지** : (samples, height, width, channels) 또는 (samples, channels, height, width) 크기의 4D 텐서
 - **동영상** : (samples, frames, height, width, channels) 또는 (samples, frames, channels, height, width) 크기의 5D 텐서
 
-## 브로드캐스팅 (broadcasting)
+<br>
+<br>
 
-단계 
-1. 큰 텐서의 ndim에 맞도록 작은 텐서에 축이 추가된다.
-2. 작은 텐서가 새 축을 따라서 큰 텐서의 크기에 맞도록 반복된다.
+### 브로드캐스팅 (broadcasting)
 
-## 텐서 크기 변환 
+- 단계 
+  1. 큰 텐서의 ndim에 맞도록 작은 텐서에 축이 추가된다.
+  2. 작은 텐서가 새 축을 따라서 큰 텐서의 크기에 맞도록 반복된다.
+
+<br>
+<br>
+
+### 텐서 크기 변환 
 - `reshape()` : 텐서의 크기(shape)를 변경해준다.
 - `transpose()`
 - **`shape=(5,)` 는 (1 x 5)를 의미한다.**
 
 <span style="color:red">딥러닝 : 기초적인 연산을 길게 연결하여 복잡한 기하하적 변환을 조금씩 분해하는 방식</span>
 
-## 훈련 반복 루프 (training loop) 
+<br>
+<br>
+
+### 훈련 반복 루프 (training loop) 
 1. 훈련 샘플 x와 이에 상응하는 타깃 y의 배치를 추출한다.
 2. x를 사용하여 네트워크를 실행하고(정방향 패스 단계), 예측 y_pred를 구한다.
 3. y_pred와 y의 차이를 측정하여 이 배치에 대한 네트워크의 손실을 계산한다.
 4. 배치에 대한 손실이 조금 감소되도록 네트워크의 모든 가중치를 업데이트한다.
 
-## 확률적 경사 하강법
+<br>
+<br>
+
+### 확률적 경사 하강법
 - 미분 가능한 함수가 주어지면 이론적으로 이 함수의 최솟값을 해석적으로 구할 수 있다.
 
 1. 훈련 샘플 배치 x와 이에 상응하는 타깃 y를 추출한다.
@@ -176,21 +210,31 @@ print(x.shape)
 4. 네트워크의 파라미터에 대한 손실 함수의 그래디언트를 계산한다.(역방향 패스 (backward pass))
 5. 그래디언트의 반대 방향으로 파라미터를 조금 이동시킨다.
 
-## 변화율 연결: 역전파 알고리즘 
+<br>
+<br>
+
+### 변화율 연결: 역전파 알고리즘 
 - 역전파는 최종 손실 값에서부터 시작한다.
 - 손실 값에 각 파라미터가 기여한 정도를 계산하기 위해 연쇄 법칙을 적용하여 최상위 층에서 하위 층까지 거꾸로 진행된다. 
 
-<img src="https://user-images.githubusercontent.com/78655692/140705045-69b7e24f-f246-42ae-917c-9620ef973190.png" weight="500" alt="image"/>
+<img src="https://user-images.githubusercontent.com/78655692/140705045-69b7e24f-f246-42ae-917c-9620ef973190.png" width="700" alt="image"/> 이미지출처: [^4]
+
+<br>
+<br>
 
 ## 요약
 - **학습**은 훈련 데이터 샘플과 그에 상응하는 타깃이 주어졌을 때 손실 함수를 최소화하는 모델 파라미터의 조합을 찾는 것을 의미
 - 데이터 샘플과 타깃의 배치를 랜덤하게 뽑고 이 배치에서 손실에 대한 파라미터의 그래디언트를 계산함으로써 학습이 진행된다. 네트워크의 파라미터는 그래디언트의 반대 방향으로 조금씩(학습률에 의해 정의된 크기만큼) 움직인다.
 - 전체 학습 과정은 신경망이 미분 가능한 텐서 연산으로 연결되어 있기 때문에 가능하다. 현재 파라미터와 배치 데이터를 그래디언트 값에 매핑해 주는 그래디언트 함수를 구성하기 위해 미분의 연쇄 법칙을 사용한다.
 
+<br>
+<br>
 
 ## References
 
-- [케라스 창시자에게 배우는 딥러닝](https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=173992478)  
-- [딥러닝의 핵심 개념 - 역전파 이해하기1](https://m.blog.naver.com/samsjang/221033626685)
-- [1. 텐서 기초 살펴보기](https://codetorial.net/tensorflow/basics_of_tensor.html)
-- [PyTorch로 시작하는 딥 러닝 입문 - 02. 텐서 조작하기(Tensor Manipulation)](https://wikidocs.net/52460)
+- [케라스 창시자에게 배우는 딥러닝](https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=173992478) 
+
+[^1]: [1. 텐서 기초 살펴보기](https://codetorial.net/tensorflow/basics_of_tensor.html)
+[^2]: [PyTorch로 시작하는 딥 러닝 입문 - 02. 텐서 조작하기(Tensor Manipulation)](https://wikidocs.net/52460)
+[^3]: [PyTorch로 시작하는 딥 러닝 입문 - 02. 텐서 조작하기(Tensor Manipulation)](https://wikidocs.net/52460)
+[^4]: [딥러닝의 핵심 개념 - 역전파 이해하기1](https://m.blog.naver.com/samsjang/221033626685)
