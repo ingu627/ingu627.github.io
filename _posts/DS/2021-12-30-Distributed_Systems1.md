@@ -9,7 +9,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-01-06
+last_modified_at: 2022-01-07
 ---
 
 <img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/147719090-5f0942f1-1647-44ad-8d72-f11e3fe400d7.png
@@ -31,8 +31,8 @@ last_modified_at: 2022-01-06
      - 병령 프로그램의 적응과 발전으로 다시 직면하고 있다.
      - 가격이 1/1000으로 싸졌다.
   2. the invention of `high-speed computer networks`
-  - LAN(; Local-area networks)은 수천 대의 기계들에게 정보들을 마이크로초 단위로 전송이 가능해졌다.
-  - WAN(; Wide-area network)은 몇백만대의 기계들에게 아주 빠른 속도로 전송이 가능해지도록 만들었다.
+  - `LAN`(; Local-area networks)은 수천 대의 기계들에게 정보들을 마이크로초 단위로 전송이 가능해졌다.
+  - `WAN`(; Wide-area network)은 몇백만대의 기계들에게 아주 빠른 속도로 전송이 가능해지도록 만들었다.
 - 이러한 발전으로 우리는 소형 컴퓨터 시스템을 가질수 있게 되었다. 스마트폰 또한 하나의 결과물로 볼 수 있을 것이다.
 - 센서, 메모리, 강력한 CPU로 채워진 이 장치들은 본격적으로 하기에 준비가 다 된 컴퓨터 못지 않다. (네트워크 능력도 가지고 있다.)
 - 그래서 `plug computer`가 등장했다.
