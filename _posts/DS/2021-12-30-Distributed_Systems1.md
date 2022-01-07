@@ -2,7 +2,7 @@
 layout: single
 title: "분산 시스템(Distributed Systems) - Introduction (1)"
 excerpt: "Distributed Systems Third edition by Maarten van Steen,
-Andrew S. Tanenbaum - Introduction"
+Andrew S. Tanenbaum - Introduction 1.1 ~ 1.2"
 categories: DS
 tag : [DS]
 toc: true
@@ -36,6 +36,7 @@ last_modified_at: 2022-01-07
 - 이러한 발전으로 우리는 소형 컴퓨터 시스템을 가질수 있게 되었다. 스마트폰 또한 하나의 결과물로 볼 수 있을 것이다.
 - 센서, 메모리, 강력한 CPU로 채워진 이 장치들은 본격적으로 하기에 준비가 다 된 컴퓨터 못지 않다. (네트워크 능력도 가지고 있다.)
 - 그래서 `plug computer`가 등장했다.
+  >A plug computer is an external device, often configured for use in the home or office as a compact computer. The name is derived from the small configuration of such devices. [^1]
 - 이런 기술들의 결과로 수많은 네트워크 컴퓨터들로 구성된 컴퓨팅 시스템을 구현할 수 있게 되었다.
 - 이러한 컴퓨터들은 분산되어졌는데 `distributed system`을 형성했다고 말할 수 있다.
 - 이런 분산 시스템의 크기는 한 줌의 장치로부터 다양해졌다.
@@ -52,16 +53,18 @@ last_modified_at: 2022-01-07
   - *1.* distributed system is a collection of computing elements
 each being able to behave **independently** of each other
     - `nodes` = autonomous computing elements (하드웨어 장비나 소프트웨어 프로세스가 될 수 있다.)
+    - 노드 = 컴퓨터 네트워크를 구성하는 기기 1대 [^2]
   - *2.* users (be they people or applications) believe they are dealing with **a single system**
      - single system안에서 sensor networks로 높은 성능의 메인프레임 컴퓨터들부터 작은 장치들까지 다룰 수 있다.
 
 <br>
+<br>
 
 ### 특징1. Collection of autonomous computing elements
 
-- 현대 분산 시스템들은 많은 종류의 노드들로 구성되어 있다. 높은 성능의 컴퓨터들부터 작은 plug computer까지
-- **노드들은 서로 독립적으로 활동한다.** 그들이 서로를 무시한다 하더라도. 따라서 노드들을 같은 분산 시스템에 넣어 사용하지 않는다.
-- 노드들은 공통의 목표를 달성하기 위해 프로그램화 되어있다. 공통의 목표란 서로 메시지들을 교환하는 것을 알아차리는 것
+- 현대 분산 시스템들은 높은 성능의 컴퓨터들부터 작은 plug computer까지 많은 종류의 노드들로 구성되어 있다. 
+- **노드들은 서로 독립적으로 활동한다.** (그들이 서로를 무시한다 하더라도) 따라서 노드들을 같은 분산 시스템에 넣어 사용하지 않는다.
+- 노드들은 공통의 목표(서로 메시지를 교환하는 것)를 달성하기 위해 프로그램화 되어있다.
   - 노드는 들어오는 메시지들(차례로 진행되는데, 메시지를 더 먼 곳까지 도달)에 반응한다.
 - 독립적인 노드들을 처리하기 때문에 각 노드는 각자 고유의 시간의 알림을 가지고 있다.
   - 따라서 표준 시간(global clock)이 없다.
@@ -450,3 +453,11 @@ associated host.
 - `latter` : 후자의
 - `take over` : 인계받다, 더 중요해지다, ~을 대체하다
 - `computational` : 컴퓨터의
+
+<br>
+<br>
+
+## References
+
+[^1]: <https://en.wikipedia.org/wiki/Plug_computer>
+[^2]: [[네트워크] 노드(node)란? - 두더지 개발자](https://engineer-mole.tistory.com/141)
