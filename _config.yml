@@ -294,7 +294,7 @@ defaults:
       author_profile: true
       read_time: true
       comments: true
-      share: false
+      share: true
       related: true
       mathjax: true
       use_math: true
