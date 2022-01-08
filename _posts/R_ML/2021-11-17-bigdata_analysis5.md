@@ -8,17 +8,26 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2021-12-01
+last_modified_at: 2022-01-08
 ---
 
+<img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/148633895-2be87d4e-7edb-4391-b583-eb2888b19bbb.png
+'>
 본 글은 빅데이터분석기사 실기 작업형에 대비하여 요약 및 실습한 것을 작성한 글입니다. <br>기출문제의 데이터는 출처는 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis){: target="_blank"}에 데이터 셋을 남겨놨습니다.<br> 또한 해당 전체 코드는 `/concept/R_basic_to_pro_5.R` 파일에 담겨져 있습니다.
 {: .notice--info}
 
+<br>
+<br>
+<br>
+<br>
 
 ## 의사결정나무
 
 - **의사결정나무**는 데이터들이 가진 속성들로부터 분할 기준 속성을 판별하고, 분할 기준 속성에 따라 트리 형태로 모델링하는 분류 예측 모델이다.
 - **의사결정나무 기법**은 분석의 대상을 분류 함수를 활용하여 의사결정 규칙으로 이루어진 나무 모양으로 그리는 기법이다.
+
+<br>
+<br>
 
 ### 의사결정나무 분석 함수 종류
 
@@ -27,6 +36,9 @@ last_modified_at: 2021-12-01
 |rpart()|CART 기법 방법을 사용<br>전체 데이터 세트를 가지고 시작하여 모든 예측변수를 사용하여 데이터 세트의 부분집합을 분할해 생성|library(rpart)<br>rpart(formula, data)|
 |tree()|불순도의 측도로 엔트로피 지수를 사용|library(tree)<br>tree(formula, data)|
 |ctree()|분석 결과에서 별도로 가지치기 할 필요가 없음|library(party)<br>ctree(formula, data)|
+
+<br>
+<br>
 
 ### 의사결정나무 예시
 
@@ -179,6 +191,9 @@ confusionMatrix(tree_pred, iris$Species)
 
 - `confusionMatrix(predicted, actual)`
 
+<br>
+<br>
+
 ## 서포트 벡터 머신(SVM)
 
 - **서포트 벡터 머신(SVM; Support Vecotr Machine)**은 데이터를 분리하는 초평면(Hyperplane)중에서 데이터들과 거리가 가장 먼 초평면을 선택하여 분리하는 지도 학습 기반의 이진 선형 분류 모델이다.
@@ -261,6 +276,9 @@ confusionMatrix(pred, iris$Species)
 # Balanced Accuracy              0.9700
 ```
 
+<br>
+<br>
+
 ## K-NN
 
 - **K-NN 알고리즘**은 새로운 데이터 클래스를 해당 데이터와 가장 가까운 k개 데이터들의 클래스로 분류하는 알고리즘이다. 
@@ -274,12 +292,18 @@ confusionMatrix(pred, iris$Species)
 |cl|훈련 데이터의 종속변수|
 |k|근접 이웃의 수(default=1)|
 
+<br>
+<br>
+
 ### 1. 데이터 세트
 
 ```R
 data = iris[, c('Sepal.Length', 'Sepal.Width', 'Species')]
 set.seed(1234)
 ```
+
+<br>
+<br>
 
 ### 2. 변수 할당
 
@@ -300,6 +324,9 @@ train_y = train[, 3]
 valid_y = valid[, 3]
 test_y = test[, 3]
 ```
+
+<br>
+<br>
 
 ### 3. 변수 선택
 
@@ -334,6 +361,9 @@ plot(
 
 ![image](https://user-images.githubusercontent.com/78655692/142248144-f137abaa-4b5c-4b74-a579-5d590ec8608a.png)
 
+<br>
+<br>
+
 ### 4. 분류 정확도 최적화
 
 ```R
@@ -344,6 +374,9 @@ min(valid_k[
 max(accuracy_k)
 # [1] 0.8888889
 ```
+
+<br>
+<br>
 
 ### 5. 모형 평가
 
@@ -398,6 +431,9 @@ confusionMatrix(knn_13, test_y)
 # Balanced Accuracy              0.7983
 ```
 
+<br>
+<br>
+
 ## 인공신경망(ANN) 
 
 - **인공 신경망**(ANN; Artificial Neural Network)은 인간의 뉴런 구조를 모방하여 만든 기계학습 모델이다.
@@ -411,6 +447,9 @@ confusionMatrix(knn_13, test_y)
 |size|은닉층의 개수|
 |maxit|반복할 학습 횟수|
 |decay|가중치 감소의 모수 |
+
+<br>
+<br>
 
 ### 1. 전처리
 
@@ -433,6 +472,9 @@ index = c(
 train = iris.scaled[index,]
 test = iris.scaled[-index,]
 ```
+
+<br>
+<br>
 
 ### 2. 분석 모형 구축
 
@@ -475,6 +517,9 @@ model.nnet = nnet(
 > nnet 함수 생성. 종속변수는 Species이고 독립변수는 Species를 제외하여 수식 설정  
 > 데이터는 train, 은닉층(size)은 2로 설정. 반복할 최대 횟수(maxit)는 200으로 설정. 가중치 감소의 모수를 5e-04로 설정  
 
+<br>
+<br>
+
 ### 3. 요약 정보 추출
 
 ```R
@@ -494,6 +539,9 @@ summary(model.nnet)
 #  -3.53  11.40  -0.30
 ```
 
+<br>
+<br>
+
 ## 나이브 베이즈 기법
 
 - **나이브 베이즈 분류**는 특성들 사이의 독립을 가정하는 베이즈 정리를 적용한 확률 분류기이다.
@@ -508,6 +556,9 @@ summary(model.nnet)
 |data|분석할 데이터 세트|
 |subset|훈련 데이터에서 사용할 데이터를 지정하는 인덱스 벡터|
 |laplace|라플라스 추정기 사용 여부(default 0)|
+
+<br>
+<br>
 
 ### 분석 모형 구축
 
@@ -556,6 +607,9 @@ naive_model
 #   versicolor 1.3411765 0.20466920
 #   virginica  2.0285714 0.28239671
 ```
+
+<br>
+<br>
 
 ### 분석 모형 평가
 
@@ -606,6 +660,8 @@ confusionMatrix(
 # Balanced Accuracy              0.9500
 ```
 
+<br>
+<br>
 
 ## References
 

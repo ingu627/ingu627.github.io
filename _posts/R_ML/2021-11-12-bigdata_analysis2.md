@@ -8,11 +8,18 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2021-12-01
+last_modified_at: 2022-01-08
 ---
 
+<img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/148633895-2be87d4e-7edb-4391-b583-eb2888b19bbb.png
+'>
 본 글은 빅데이터분석기사 실기 작업형에 대비하여 요약 및 실습한 것을 작성한 글입니다. <br>기출문제의 데이터는 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis){: target="_blank"}에 데이터 셋을 남겨놨습니다.<br> 또한 해당 전체 코드는 `/concept/R_basic_to_pro_2.R` 파일에 담겨져 있습니다.
 {: .notice--info}
+
+<br>
+<br>
+<br>
+<br>
 
 ## 데이터 수집 작업
 
@@ -73,6 +80,9 @@ last_modified_at: 2021-12-01
 - `path` : 읽어 들일 파일명을 설정함
 - `write.xlsx(x, file,...)` : 엑셀 파일로 저장할 때 사용하는 함수
 
+<br>
+<br>
+
 ## 1. 데이터 전처리 작업
 ## plyr 패키지
 
@@ -80,6 +90,9 @@ last_modified_at: 2021-12-01
 - plyr 패키지의 함수들은 데이터 분할(split), 원하는 방향으로 특정 함수 적용(apply), 그 결과를 재조합(combine)하여 반환한다.
 - plyr 패키지 함수는 ##ply 형태이고, 첫 번째 글자는 입력 데이터의 형태, 두 번째 글자는 출력 데이터의 형태를 의미한다.
 - **(data frame == d), (list == l), (array == a)**
+
+<br>
+<br>
 
 ## dplyr 패키지 
 
@@ -103,6 +116,9 @@ last_modified_at: 2021-12-01
 |bind_rows | 행 방향으로 데이터 결합 |
 |bind_cols| 열 방향으로 데이터 결합 |
 
+<br>
+<br>
+
 ### select()
 
 - `데이터 프레임 이름 %>% select(선택할 변수명, -제외할 변수명)`
@@ -123,6 +139,9 @@ iris %>%
 # 6          5.4
 ```
 
+<br>
+<br>
+
 ### filter()
 
 - `데이터 프레임 이름 %>% filter(조건)` : 조건에 맞는 데이터 추출
@@ -139,6 +158,9 @@ iris %>%
 # 5          5.0         3.6
 # 6          5.4         3.9
 ```
+
+<br>
+<br>
 
 ### mutate()
 
@@ -159,6 +181,9 @@ iris %>%
 # 6 virginica   L
 ```
 
+<br>
+<br>
+
 ### group_by와 summarise
 
 - `데이터 프레임 이름 %>% group_by(그룹화할 기준 변수1, ...) %>% summarise(새로운 변수명=계산식)` : 지정한 변수들을 기준으로 데이터를 그룹화하고, 요약 통계치 산출
@@ -176,14 +201,23 @@ iris %>%
 # 3 virginica        2.03
 ```
 
+<br>
+<br>
+
 ### n()
 
 - 이 함수는 단독으로 사용되지 않고 반드시 group_by()함수와 연결된 summarise()함수의 내부에 포함되어 쓰인다.
 - 예시 : `mpg %>% group_by(class) %>% summarise(n = n())`
 
+<br>
+<br>
+
 ### count()
 
 - `count(데이터프레임명, 변수명)`
+
+<br>
+<br>
 
 ### arrange()
 
@@ -206,6 +240,8 @@ iris %>%
 # 6  setosa   L          5.4
 ```
 
+<br>
+<br>
 
 ### join()
 
@@ -218,6 +254,9 @@ iris %>%
 - `left_join(x, y, by, ...)` : 왼쪽 데이터 프레임을 기준으로 모든 열을 병합하는 함수
 - `right_join(x, y, by, ...)` : 오른쪽 데이터 프레임을 기준으로 모든 열을 병합하는 함수
 - `full_join(x, y, by, ...)` : 두 데이터 프레임에 존재하는 모든 열을 병합하는 함수
+
+<br>
+<br>
 
 ### bind_rows()
 
@@ -245,6 +284,9 @@ bind_rows(x, y)
 # 5 5 NA  5
 # 6 6 NA  6
 ```
+
+<br>
+<br>
 
 ### bind_cols()
 
@@ -277,6 +319,9 @@ bind_cols(x, y)
 # 5     5 65 90  
 ```
 
+<br>
+<br>
+
 ## 결측치 
 
 ### is.na()
@@ -284,16 +329,23 @@ bind_cols(x, y)
 - 결측치 여부 확인
 - 결측치가 있으면 TRUE, 결측치가 없으면 FALSE를 반환한다.
 
+<br>
+<br>
+
 ### na.omit()
 
 - 결측치 제거
 - **행** 단위로 어떤 결측치라도 있으면 이 행을 제거하고 남은 데이터를 반환
 
+<br>
+<br>
+
 ### 결측값을 다른 값으로 대체
 
 - `dataset$var[is.na(dataset$var)] <- new_value`
 
-
+<br>
+<br>
 
 ## References
 

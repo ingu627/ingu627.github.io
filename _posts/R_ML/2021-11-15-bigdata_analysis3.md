@@ -8,11 +8,18 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2021-12-01
+last_modified_at: 2022-01-08
 ---
 
+<img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/148633895-2be87d4e-7edb-4391-b583-eb2888b19bbb.png
+'>
 본 글은 빅데이터분석기사 실기 작업형에 대비하여 요약 및 실습한 것을 작성한 글입니다. <br>기출문제의 데이터는 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis){: target="_blank"}에 데이터 셋을 남겨놨습니다.<br> 또한 해당 전체 코드는 `/concept/R_basic_to_pro_3.R` 파일에 담겨져 있습니다.
 {: .notice--info}
+
+<br>
+<br>
+<br>
+<br>
 
 ## 데이터 정제
 
@@ -55,9 +62,15 @@ colSums(is.na(pima2))
 #        0
 ```
 
+<br>
+<br>
+
 ## 단순 대치법
 
 - 결측값을 그럴듯한 값으로 대체하는 통계적 기법
+
+<br>
+<br>
 
 ### 완전 분석법
 
@@ -96,6 +109,8 @@ dim(pima4)
 - `is.na` 함수를 이용하여 결측값이 있는 특정 행을 삭제할 수 있으며 `na.omit`함수를 이용하여 결측값이 있는 전체 행을 삭제할 수도 있다.
   - `na.omit(데이터명)`
 
+<br>
+<br>
 
 ### 평균 대치법
 
@@ -118,14 +133,23 @@ table(is.na(pima2$pressure))
 #   768
 ```
 
+<br>
+<br>
+
 ## 이상값 
 
 - 관측된 데이터의 범위에서 많이 벗어난 아주 작은 값이나 아주 큰 값
 - 이상값은 통계적 기법의 ESD, 기하평균, 사분위수 등을 활용해 확인한다.
 
+<br>
+<br>
+
 ### ESD
 
 - `u-3a < X < u+3a`
+
+<br>
+<br>
 
 ### 사분위수 활용 
 
@@ -142,9 +166,15 @@ table(is.na(pima2$pressure))
 
 - `quantile()` : 0%       25%       50%       75%      100% 로 보여준다.
 
+<br>
+<br>
+
 ### IQR 함수를 이용한 이상값 검출
 
 - `IQR(x, na.rm, ...)` 
+
+<br>
+<br>
 
 ## 데이터 변환 
 
@@ -156,6 +186,9 @@ table(is.na(pima2$pressure))
 |as.logical()|논리형으로 변환|
 |as.integer()|정수형으로 변환|
 
+<br>
+<br>
+
 ## 자료구조 변환 
 
 |함수| 설명|
@@ -165,6 +198,9 @@ table(is.na(pima2$pressure))
 |as.matrix()|데이터를 행렬로 변환|
 |as.vector()|데이터를 벡터로 변환|
 |as.factor()|데이터를 요인으로 변환|
+
+<br>
+<br>
 
 ## 데이터의 범위 변환
 
@@ -177,6 +213,9 @@ table(is.na(pima2$pressure))
   - `scale` : 수치형 데이터 입력 시 scale에 지정된 값으로 나눗셈 실행 (default : TRUE)
     - x의 표준편차로 나누어서 정규화 수행
   - **X의 scale 적용 값** : `(X-center)/scale` 
+
+<br>
+<br>
 
 ### 최소-최대 정규화
 
@@ -202,6 +241,9 @@ data_minmax
 # [1] 8
 ```
 
+<br>
+<br>
+
 ### 표준화
 
 - **표준화**(Standardization) : 어떤 특성의 값들이 정규분포를 따른다고 가정하고 값들을 0의 평균, 1의 표준편차를 갖도록 변환해주는 기법이다.
@@ -222,6 +264,9 @@ data_minmax
 # attr(,"scaled:scale")
 # [1] 3.162278
 ```
+
+<br>
+<br>
 
 ### preProcess()
 
@@ -269,6 +314,8 @@ summary(scaled_df_train)
 #  virginica :30
 ```
 
+<br>
+<br>
 
 ## 표본 추출 및 집약처리 
 
@@ -348,6 +395,9 @@ $Fold1
 # [39] 119 120 121 126 129 130 133 137 139 142 147
 ```
 
+<br>
+<br>
+
 ## 기초 통계량 추출
 
 - `mean(x, trim=0 na.rm = FALSE)` : 데이터의 평균을 출력하는 함수
@@ -363,9 +413,15 @@ $Fold1
 - `sd()` : 표준편차
 - `row_number(x)` : 데이터값의 순위 index를 출력하는 함수
 
-# 분석 모형 선택
+<br>
+<br>
+
+## 분석 모형 선택
 
 - **데이터 탐색**은 수집한 데이터를 분석하기 전에 그래프나 통계적인 방법을 이용하여 다양한 각도에서 데이터의 특징을 파악하고 자료를 직관적으로 바라보는 분석방법
+
+<br>
+<br>
 
 ## 범주형 데이터
 
@@ -392,6 +448,9 @@ pie(
 ```
 
 ![image](https://user-images.githubusercontent.com/78655692/141939286-47584e54-3bd5-4d4b-a744-fdcc271ce004.png)
+
+<br>
+<br>
 
 ## 수치형 데이터
 
@@ -430,6 +489,9 @@ str(mtcars)
 - `hist()` : 데이터에 대한 분포 시각화(수치)
 - `boxplot()` : 데이터에 대한 분포 시각화(수치)
 
+<br>
+<br>
+
 ## 다차원 데이터 탐색 
 
 ### 1. 범주형 - 범주형 데이터
@@ -439,7 +501,8 @@ str(mtcars)
 - `addmargins(x, margin)` : 빈도수와 비율 탐색
 - `barplot()` 으로 시각화
 
-
+<br>
+<br>
 
 ### 2. 수치형 - 수치형 데이터
 
@@ -451,6 +514,9 @@ str(mtcars)
   - `method=spearman` : 스피어만 순위 상관 계수 
     - 두 변수가 순서적 데이터일 때 
 - `plot()` : 산점도를 통해 시각화
+
+<br>
+<br>
 
 ### 3. 범주형 - 수치형 데이터
 
@@ -464,12 +530,18 @@ str(mtcars)
 
 - `boxplot()` : 그룹 간의 시각화
 
+<br>
+<br>
+
 ## 상관 분석 
 
 - **상관 분석**은 두 변수 사이에 존재하는 상호 연관성의 존재 여부와 연관성의 강도를 측정하여 분석하는 방법
 - **공분산** : 2개의 변수 사이의 상관 정도를 나타내는 값
 - `corrplot()` : 상관 계수 시각화 함수
 - `cor.test(x, y, method)` : 상관 계수 검정 
+
+<br>
+<br>
 
 ### 변수 선택 
 
@@ -624,6 +696,9 @@ formula(m2)
 
 - `lm(hp~., data=mtcars)` 에서 `.`의 의미는 모든 독립변수를 넣겠다를 의미.
 
+<br>
+<br>
+
 ### 더미 변수(Dummy Variable) 생성 
 
 - 회귀 분석에서 범주형 변수의 각 범주를 0과 1의 값만으로 표현하여 생성한 변수 
@@ -646,8 +721,8 @@ transform(
 # 3     하     0     1
 ```
 
-
-
+<br>
+<br>
 
 ## References
 

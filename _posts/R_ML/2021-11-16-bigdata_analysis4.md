@@ -8,11 +8,18 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2021-12-01
+last_modified_at: 2022-01-08
 ---
 
+<img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/148633895-2be87d4e-7edb-4391-b583-eb2888b19bbb.png
+'>
 본 글은 빅데이터분석기사 실기 작업형에 대비하여 요약 및 실습한 것을 작성한 글입니다. <br>기출문제의 데이터는 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis){: target="_blank"}에 데이터 셋을 남겨놨습니다.<br> 또한 해당 전체 코드는 `/concept/R_basic_to_pro_4.R` 파일에 담겨져 있습니다.
 {: .notice--info}
+
+<br>
+<br>
+<br>
+<br>
 
 ## 분석 모형 구축 
 
@@ -48,6 +55,10 @@ summary(iris_pca)
 
 # => 제 1성분만을 이용하여 전체 데이터의 92.5%를 설명할 수 있다.
 ```
+
+<br>
+<br>
+
 ### 스크리 산점도 이용
 
 ```R
@@ -96,10 +107,16 @@ biplot(iris_pca, scale=0, main='iris biplot')
 
 ![image](https://user-images.githubusercontent.com/78655692/142038073-e09a6d15-39aa-4c35-8b49-d5ad0c646976.png)
 
+<br>
+<br>
+
 ## 요인 분석
 
 - **요인 분석**은 변수 간의 상관관계를 고려하여 서로 유사한 변수들을 묶어 새로운 잠재요인들을 추출하는 분석 방법
 - 요인 분석은 변수를 축소하거나, 불피요한 변수 제거, 변수 특성 파악, 측정항목 타당성 평가, 요인 점수를 이용한 변수 생성 등의 목적을 가지고 있다.
+
+<br>
+<br>
 
 ## 2. 정형 데이터 분석
 
@@ -111,6 +128,9 @@ biplot(iris_pca, scale=0, main='iris biplot')
 - `str()` : 데이터 세트 속성 탐색
 - `head()` : 데이터의 앞 6행 출력
 - `summary()` : 요약 통계량 출력
+
+<br>
+<br>
 
 ### 단순 선형 회귀 
 
@@ -139,6 +159,9 @@ summary(lm(Salary~PutOuts, data=Hitters))
 # Multiple R-squared:  0.09029,   Adjusted R-squared:  0.0868
 # F-statistic:  25.9 on 1 and 261 DF,  p-value: 6.871e-07
 ```
+
+<br>
+<br>
 
 ### 다중 선형 회귀 분석 
 
@@ -241,6 +264,9 @@ summary(Hitters)
 #                  NA's   :59
 ```
 
+<br>
+<br>
+
 ### 2. 전처리 - 결측값 처리
 
 ```R
@@ -283,6 +309,9 @@ summary(hitters)
 #  3rd Qu.:13.000   3rd Qu.: 750.0
 #  Max.   :32.000   Max.   :2460.0
 ```
+
+<br>
+<br>
 
 ### 3. 분석 모형 구축 - 유의하지 않은 변수 제거
 
@@ -329,6 +358,8 @@ summary(full_model)
 # F-statistic: 15.39 on 19 and 243 DF,  p-value: < 2.2e-16
 ```
 
+<br>
+<br>
 
 ### 4. 분석 모형 구축 - 자동화된 변수 선택
 
@@ -362,6 +393,9 @@ fit_model = step(first_model, direction='backward')
 # - Hits      1   2374559 31706911 3087.1
 # - CWalks    1  10140003 39472354 3144.7
 ```
+
+<br>
+<br>
 
 ### 5. 분석 모형 구축 - 다중공선성 확인 및 문제 해결
 
@@ -397,6 +431,9 @@ vif(second_model)
 
 - AtBat 변수를 제거한 후 다중공선성 문제가 해결되었다.
 
+<br>
+<br>
+
 ### 6. 분석 모형 평가
 
 ```R
@@ -424,6 +461,9 @@ summary(second_model)
 # F-statistic: 49.18 on 4 and 258 DF,  p-value: < 2.2e-16
 ```
 
+<br>
+<br>
+
 ## 로지스틱 회귀 분석
 
 - **로지스틱 회귀 분석**은 반응변수가 범주형인 경우 적용되는 회귀 분석 모형이다.
@@ -438,6 +478,9 @@ summary(second_model)
 
 - `predict` 함수에 `type="response"` 인자로 수행하면 테스트 데이터에 대한 로지스틱 함수 출력값(0 ~ 1)로 반환해준다.
 
+<br>
+<br>
+
 ## 혼동 행렬
 
 - 분류 모형의 결과를 평가하기 위해서 혼동 행렬(Confusion Matrix)을 이용한 평가지표와 ROC 곡선의 AUC를 주로 이용한다.
@@ -448,6 +491,8 @@ summary(second_model)
 |data|예측된 분류 데이터 또는 분할표(table 형식)|
 |reference|실제 분류 데이터|
 
+<br>
+<br>
 
 ## AUC(AUROC; Area Under ROC)
 
@@ -463,10 +508,15 @@ install.packages('ModelMetrics')<br>library(ModelMetrics)
 |actual|정답인 label의 벡터(numeric, character 또는 factor)|
 |predicted|예측된 값의 벡터|
 
+<br>
+<br>
+
 ## default 데이터셋 
 
 ![image](https://user-images.githubusercontent.com/78655692/142223206-8afe2717-ad95-46ea-9c6e-dd235c904f46.png)
 
+<br>
+<br>
 
 ### 1. 데이터 탐색
 
@@ -505,6 +555,9 @@ summary(Default)
 *2. 전처리*
 *3. 변수선택*
 
+<br>
+<br>
+
 ### 4. 분석 모형 구축 - 유의성 검정
 
 ```R
@@ -524,6 +577,9 @@ full_model = glm(
     family = binomial,
     data = bankruptcy)
 ```
+
+<br>
+<br>
 
 ### 5. 분석 모형 구축 - step 함수 이용
 
@@ -548,6 +604,9 @@ step_model = step(full_model, direction = 'both')
 # - student  1   1596.5 1600.5
 # - balance  1   2908.7 2912.7
 ```
+
+<br>
+<br>
 
 ### 6. 분석 모형 구축 - 변수의 유의성 검정
 
@@ -579,6 +638,9 @@ summary(step_model)
 # Number of Fisher Scoring iterations: 8
 ```
 
+<br>
+<br>
+
 ### 7. 분석 모형 구축 - 다중공선성 확인
 
 ```R
@@ -589,6 +651,9 @@ vif(step_model)
 ```
 
 - VIF가 4를 초과하면 다중공선성이 존재한다고 판단한다.
+
+<br>
+<br>
 
 ### 8. 분석 모형 평가 - 평가용 데이터를 이용한 분류
 
@@ -610,6 +675,9 @@ df_pred$default = as.factor(df_pred$default)
 
 - ifelse로 파산 여부를 확인
 
+<br>
+<br>
+
 ### 9. 분석 모형 평가 - 혼동 행렬
 
 ```R
@@ -619,12 +687,18 @@ confusionMatrix(
     bankruptcy_test[,1])
 ```
 
+<br>
+<br>
+
 ### 10. 분석 모형 평가 - AUC
 
 ```R
 library(ModelMetrics)
 auc(actual=bankruptcy_test[,1], predicted=df_pred$default)
 ```
+
+<br>
+<br>
 
 ## References
 
