@@ -1,20 +1,25 @@
 ---
 layout: single
-title: '닥치고 정치'
+title: '[책 리뷰] 닥치고 정치'
 categories: book
 tag : [book, self_development, thought]
 toc: true
 sidebar_main: true
+
+last_modified: 2022-01-08
 ---
 
-
+<img align='right' width='200' height='200' src='https://image.aladin.co.kr/product/1321/46/cover500/8971848685_1.jpg
+'>
 
 ## "닥치고 정치" 책 리뷰 - 김어준
-![](https://image.aladin.co.kr/product/1321/46/cover500/8971848685_1.jpg)
+
 
 
 (첫번째 글 작성 : 2018-05-10)
 
+<br>
+<br>
 
 ### 책 글귀 중 일부
 인간 일반을 전면 해석하려는 시도

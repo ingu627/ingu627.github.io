@@ -1,20 +1,25 @@
 ---
 layout: single
-title: '단단해지는 연습'
+title: '[책 리뷰] 단단해지는 연습'
 categories: book
 tag : [book, self_development, thought]
 toc: true
 sidebar_main: true
+
+last_modified: 2022-01-08
 ---
 
-
+<img align='right' width='200' height='200' src='https://image.aladin.co.kr/product/9663/74/cover500/s102635070_1.jpg
+'>
 
 ## "단단해지는 연습" 책 리뷰 - 조너선 페이더
-![](https://image.aladin.co.kr/product/9663/74/cover500/s102635070_1.jpg)
+
 
 
 (첫번째 글 작성 : 2018-10-03)
 
+<br>
+<br>
 
 ### 책 글귀 중 일부
 

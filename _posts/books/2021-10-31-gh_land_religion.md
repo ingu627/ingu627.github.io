@@ -1,19 +1,25 @@
 ---
 layout: single
-title: '신의 나라 인간 나라 -세계의 종교'
+title: '[책 리뷰] 신의 나라 인간 나라 -세계의 종교'
 categories: book
 tag : [book, self_development, thought]
 toc: true
 sidebar_main: true
+
+last_modified: 2022-01-08
 ---
 
+<img align='right' width='200' height='200' src='https://image.aladin.co.kr/product/235/98/cover500/8934930411_1.jpg
+'>
 
 
-## "신의 나라 인간 나라 -세계의 종교" 책 리뷰 - 이원복
-![](https://image.aladin.co.kr/product/235/98/cover500/8934930411_1.jpg)
 
 
 (첫번째 글 작성 : 2018-03-01)
+
+<br>
+<br>
+
 ### 책 글귀 중 일부
 
 

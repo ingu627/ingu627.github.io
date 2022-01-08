@@ -1,19 +1,26 @@
 ---
 layout: single
-title: '유러피언 드림'
+title: '[책 리뷰] 유러피언 드림'
 categories: book
 tag : [book, self_development, thought]
 toc: true
 sidebar_main: true
+
+last_modified: 2022-01-08
 ---
 
-
+<img align='right' width='200' height='200' src='https://image.aladin.co.kr/product/53/84/cover500/8937425351_2.jpg
+'>
 
 ## "유러피언 드림" 책 리뷰 - 제러미 리프킨
-![](https://image.aladin.co.kr/product/53/84/cover500/8937425351_2.jpg)
+
 
 
 (첫번째 글 작성 : 2019-05-21)
+
+<br>
+<br>
+
 ### 책 글귀 중 일부
 
 

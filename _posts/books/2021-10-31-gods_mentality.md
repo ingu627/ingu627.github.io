@@ -1,20 +1,27 @@
 ---
 layout: single
-title: '신의 멘탈'
+title: '[책 리뷰] 신의 멘탈'
 categories: book
 tag : [book, self_development, thought]
 toc: true
 sidebar_main: true
+
+last_modified: 2022-01-08
 ---
 
-
+<img align='right' width='200' height='200' src='https://image.aladin.co.kr/product/18367/18/cover500/8950979373_2.jpg
+'>
 
 ## "신의 멘탈" 책 리뷰 - 호시 와타루
-![](https://image.aladin.co.kr/product/18367/18/cover500/8950979373_2.jpg)
+
 
 
 
 (첫번째 글 작성 : 2019-09-02)
+
+<br>
+<br>
+
 ### 책 글귀 중 일부
 
 어떤 바람이든, 실현하기 위해 필요한 것은 이미 정해져 있다.

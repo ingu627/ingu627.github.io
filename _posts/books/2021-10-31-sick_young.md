@@ -1,19 +1,26 @@
 ---
 layout: single
-title: '아프니까 청춘이다'
+title: '[책 리뷰] 아프니까 청춘이다'
 categories: book
 tag : [book, self_development, thought]
 toc: true
 sidebar_main: true
+
+last_modified: 2022-01-08
 ---
 
-
+<img align='right' width='200' height='200' src='https://image.aladin.co.kr/product/832/50/cover500/s972635621_1.jpg
+'>
 
 ## "아프니까 청춘이다" 책 리뷰 - 김난도
-![](https://image.aladin.co.kr/product/832/50/cover500/s972635621_1.jpg)
+
 
 
 (첫번째 글 작성 : 2017-11-19)
+
+<br>
+<br>
+
 ### 책 글귀 중 일부
 
 

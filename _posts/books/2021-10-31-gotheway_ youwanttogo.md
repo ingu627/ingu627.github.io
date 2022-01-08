@@ -1,20 +1,24 @@
 ---
 layout: single
-title: '가고 싶은 길을 가라'
+title: '[책 리뷰] 가고 싶은 길을 가라'
 categories: book
 tag : [book, self_development, thought]
 toc: true
 sidebar_main: true
+
+last_modified: 2022-01-08
 ---
 
-
+<img align='right' width='200' height='200' src='https://image.aladin.co.kr/product/436/96/cover500/8992378211_1.jpg
+'>
 
 ## "가고 싶은 길을 가라" 책 리뷰 - 로랑 구넬
-![](https://image.aladin.co.kr/product/436/96/cover500/8992378211_1.jpg)
 
 
 (첫번째 글 작성 : 2018-11-26)
 
+<br>
+<br>
 
 ### 책 글귀 중 일부
 

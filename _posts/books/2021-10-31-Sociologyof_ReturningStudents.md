@@ -1,20 +1,25 @@
 ---
 layout: single
-title: '복학왕의 사회학'
+title: '[책 리뷰] 복학왕의 사회학'
 categories: book
 tag : [book, self_development, thought]
 toc: true
 sidebar_main: true
+
+last_modified: 2022-01-08
 ---
 
-
+<img align='right' width='200' height='200' src='https://image.aladin.co.kr/product/15464/41/cover500/k162533526_1.jpg
+'>
 
 ## "복학왕의 사회학" 책 리뷰 - 최종렬
-![](https://image.aladin.co.kr/product/15464/41/cover500/k162533526_1.jpg)
+
 
 
 (첫번째 글 작성 : 2018-10-31)
 
+<br>
+<br>
 
 ### 책 글귀 중 일부
 

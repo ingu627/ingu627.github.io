@@ -1,20 +1,25 @@
 ---
 layout: single
-title: '한달 공부 데이터 분석'
+title: '[책 리뷰] 한달 공부 데이터 분석'
 categories: book
 tag : [book, self_development, thought]
 toc: true
 sidebar_main: true
+
+last_modified: 2022-01-08
 ---
 
-
+<img align='right' width='200' height='200' src='https://image.aladin.co.kr/product/24847/20/cover500/k862631351_1.jpg
+'>
 
 ## "한달 공부 데이터 분석" 책 리뷰 - 전익진
-![](https://image.aladin.co.kr/product/24847/20/cover500/k862631351_1.jpg)
+
 
 
 (첫번째 글 작성 : 2021-09-22)
 
+<br>
+<br>
 
 ### 책 글귀 중 일부
 

@@ -1,19 +1,26 @@
 ---
 layout: single
-title: '삶을 위한 수업'
+title: '[책 리뷰] 삶을 위한 수업'
 categories: book
 tag : [book, self_development, thought]
 toc: true
 sidebar_main: true
+
+last_modified: 2022-01-08
 ---
 
-
+<img align='right' width='200' height='200' src='https://image.aladin.co.kr/product/24075/49/cover500/8997780379_1.jpg
+'>
 
 ## "삶을 위한 수업" 책 리뷰 - 오연호
-![](https://image.aladin.co.kr/product/24075/49/cover500/8997780379_1.jpg)
+
 
 
 (첫번째 글 작성 : 2020-06-19)
+
+<br>
+<br>
+
 ### 책 글귀 중 일부
 
 

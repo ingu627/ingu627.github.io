@@ -1,19 +1,26 @@
 ---
 layout: single
-title: '나를 사는 순간'
+title: '[책 리뷰] 나를 사는 순간'
 categories: book
 tag : [book, self_development, thought]
 toc: true
 sidebar_main: true
+
+last_modified: 2022-01-08
 ---
 
-
+<img align='right' width='200' height='200' src='https://image.aladin.co.kr/product/15270/51/cover500/k802533020_1.jpg
+'>
 
 ## "나를 사는 순간" 책 리뷰 - 안드레아스 알트만
-![](https://image.aladin.co.kr/product/15270/51/cover500/k802533020_1.jpg)
+
 
 
 (첫번째 글 작성 : 2018-09-26)
+
+<br>
+<br>
+
 ### 책 글귀 중 일부
 
 내가 가치있게 여기는 삶

@@ -1,20 +1,25 @@
 ---
 layout: single
-title: '생각이 만든 감옥'
+title: '[책 리뷰] 생각이 만든 감옥'
 categories: book
 tag : [book, self_development, thought]
 toc: true
 sidebar_main: true
+
+last_modified: 2022-01-08
 ---
 
-
+<img align='right' width='200' height='200' src='https://image.aladin.co.kr/product/16339/5/cover500/k152533444_1.jpg
+'>
 
 ## "생각이 만든 감옥" 책 리뷰 - 맨리 P. 홀
-![](https://image.aladin.co.kr/product/16339/5/cover500/k152533444_1.jpg)
+
 
 
 (첫번째 글 작성 : 2018-11-26)
 
+<br>
+<br>
 
 ### 책 글귀 중 일부
 

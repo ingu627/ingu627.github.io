@@ -1,20 +1,24 @@
 ---
 layout: single
-title: '어떻게 살 것인가'
+title: '[책 리뷰] 어떻게 살 것인가'
 categories: book
 tag : [book, self_development, thought]
 toc: true
 sidebar_main: true
+
+last_modified: 2022-01-08
 ---
 
+<img align='right' width='200' height='200' src='https://image.aladin.co.kr/product/2398/18/cover500/8965132282_2.jpg
+'>
 
 
-## "어떻게 살 것인가" 책 리뷰 - 유시민
-![](https://image.aladin.co.kr/product/2398/18/cover500/8965132282_2.jpg)
 
 
 (첫번째 글 작성 : 2018-10-05)
 
+<br>
+<br>
 
 ### 책 글귀 중 일부
 
