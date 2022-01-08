@@ -9,7 +9,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-01-07
+last_modified_at: 2022-01-08
 ---
 
 <img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/147719090-5f0942f1-1647-44ad-8d72-f11e3fe400d7.png
@@ -71,11 +71,11 @@ each being able to behave **independently** of each other
   - 이 시간 참조의 결점은 분산 시스템에서 기능적 동기화(synchronization)와 협력 문제(coordination)를 유발하기도 한다.
 - 노드들을 집합으로 처리하는 것은 그런 집합을 관리할 필요가 있음을 암시한다.
   - 즉, 노드들이 시스템에 속하는지 아닌지 등록해야 하며, 각각의 member에게 노드들의 list(directly communicate할 수 있는)를 제공해야 한다.
-- `group membership`을 관리하는 것은 대단히 어려울 수 있다. 관리 제어(admission control)라는 측면에서
-  - open and closed groups 를 구별해야 한다.
+- `group membership`을 관리하는 것은 admission control의 이유 때문에 매우 어려울 수 있다. 
+  - 먼저 open group과 closed group를 구별해야 한다.
   - open group에서는 어떤 노드도 분산 시스템에 join하는 것을 허락해야 한다. (효율적으로 시스템에서 다른 노드에게 메시지를 전할 수 있게)
-  - close group에서는 오직 member들에서 그룹이 서로 간에 교류를 하며 분리된 기계는 노드가 그룹을 join or leave하게 시킨다.
-- `admission control`
+  - closed group에서는 오직 member들에서 그룹이 서로 간에 교류를 하며 분리된 기계는 노드가 그룹을 join or leave하게 시킨다.
+- `admission control`의 어려움
   1. 기계는 노드를 인증해야 한다. (인증을 관리하는 것은 확장성 병목 현상을 쉽게 만들어낸다.)
   2. 각각 노드는 진짜로 다른 group member와 communicate하는데 확인해야 한다.
   3. member가 nonmember들과 쉽게 communicate하는지 고려해봐야 한다. (기밀성이 문제라면 trust issues에 직면할 수 있다.)
