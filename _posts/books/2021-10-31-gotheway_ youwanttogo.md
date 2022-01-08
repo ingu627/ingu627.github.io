@@ -6,7 +6,7 @@ tag : [book, self_development, thought]
 toc: true
 sidebar_main: true
 
-last_modified: 2022-01-08
+last_modified_at: 2022-01-08
 ---
 
 <img align='right' width='200' height='200' src='https://image.aladin.co.kr/product/436/96/cover500/8992378211_1.jpg
