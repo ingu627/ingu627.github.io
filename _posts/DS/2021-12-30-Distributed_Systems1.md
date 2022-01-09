@@ -1,15 +1,15 @@
 ---
 layout: single
-title: "분산 시스템(Distributed Systems) - Introduction (1)"
+title: "분산 시스템(Distributed Systems) - Introduction"
 excerpt: "Distributed Systems Third edition by Maarten van Steen,
-Andrew S. Tanenbaum - Introduction 1.1 ~ 1.2"
+Andrew S. Tanenbaum - Introduction 1.1, 1.2, 1.3"
 categories: DS
 tag : [DS]
 toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-01-08
+last_modified_at: 2022-01-09
 ---
 
 <img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/147719090-5f0942f1-1647-44ad-8d72-f11e3fe400d7.png
@@ -338,6 +338,7 @@ associated host.
 **3. Replication**
   - 확장성의 문제로 성능 저하가 보이면 분산 시스템에서 component를 `replicate`(복제)한다.
   - `cashing`은 복제의 특별한 형태이다. cashing은 자원을 복제하고  클라이언트가 자원에 접근할 수 있도록 해준다.
+    - `캐시` : 데이터를 임시로 저장해두는 장소 
     - 하지만 복제와 다르게, 캐싱은 클라이언트의 리소스를 결정한다.(소유자의 리소스가 아니라)
 - 하지만, 캐싱과 복제는 `consistency`(일관성) 문제점이 있다.
 - 어느 정도까지 불일치가 허용될 수 있는지는 리소스의 사용에 따라 크게 달라진다.
@@ -353,8 +354,48 @@ associated host.
 - 분산 시스템을 발전시키는 것은 만만치 않은 작업임이 분명하다. 그럼에도 원칙들을 따라가다 보면 분산 시스템은 목표를 향해 분명히 발전시킬 수 있을 것이다.
 - 분산 시스템은 components가 네트워크를 가로질러 분산되어 있다는 점이 기존 소프트웨어가 다르다.
 
+<br>
+<br>
+
+## 1.3 Types of distributed systems
+
+### High performance distributed computing
+
+- `cluster computing`에서 하드웨어는 비슷한 워크스테이션(빠른 스피드의 지역기반 네트워크들로 이루어진)의 집합으로 이루어져 있다. (각 노드는 같은 운영 시스템에서 실행한다.)
+  - 컴퓨터 클러스터(computer cluster) : 여러 대의 컴퓨터들이 연결되어 하나의 시스템처럼 동작하는 컴퓨터들의 집합
+- `grid computing`과는 다른 케이스인데, 이 서브 그룹은 분산 시스템(컴퓨터 시스템(각 시스템은 다른 관리 도메인아래 존재하며 하드웨어, 소프트웨어, 네트워크 기술이 아주 다른)의 연합으로 구성된)으로 이루어져 있다.
+- 그리드 컴퓨팅의 관점에서 다음 논리적 단계는 단순히 컴퓨팅 집약적인 애플리케이션에 필요한 전체 인프라를 아웃소싱(업무의 일부분을 전문기관에 위탁)한다.
+  - 시설들을 제공(infrastructure를 건설하기 위해), 가능한 시설로 무엇이 필요한지 구성
+- 클라우드 컴퓨팅은 많은 리소스들을 제공하는 것 이상이다. 
+- `DSM` (distributed shared-memory multicomputers) 시스템은 프로세스가 메모리 위치(다른 컴퓨터의)를 지정(마치 로컬 메모리인 것 처럼)할 수 있다.
+
+<br>
+
+### Cluster computing
+
+- 클러스터 컴퓨팅 시스템은 (개인 컴퓨터와 워크스테이션의 가격과 성능을 향상시켜) 인기있어 졌다.
+- 클러스터 컴퓨팅은 병령 프로그래밍(단일 프로그램이 다중 머신에 병렬로 실행된다.)에 사용된다.
+
+![image](https://user-images.githubusercontent.com/78655692/148669804-9f69d5ae-66a7-4328-babe-839f013c2781.png)
+
+- 클러스터 컴퓨터의 예시로 그림처럼 리눅스 기반의 `Beowulf clusters`가 있다.
+  - 각 클러스터는 컴퓨터 노드(마스터 노드에 의해 통제되고 접속되는)들의 집합으로 구성된다.
+  - 마스터는 노드들의 할당을 특정 병령 프로그램으로 갈 수 있는 것을 다루고, 시스템의 유저들에게 인터페이스를 제공한다.
+  - compute node는 미들웨어 기능이 확장된 표준 운영 시스템을 갖추고 있다.
+- 클러스터 컴퓨팅의 특징으로는 `homogeneity`(동질성)이 있다.
+
+<br>
+
+### Grid computing
+
+- 그리드 컴퓨팅은 하드웨어, 운영 체제, 네트워크의 유사성에 관한 가정을 하지 않는다.
+- 그리드 컴퓨팅은 다른 조직들의 리소스를 (다른 조직들의 사람들의 공동 작업을 허용하기 위해) 같이 가져온다.
+  - 이러한 협력은 `virtual organization`의 형태로 구현된다.
+  - 같은 가상 조직의 속한 프로세스는 리소스의 접근 권한을 가진다.
 
 
+<br>
+<br>
 <br>
 <br>
 
@@ -440,13 +481,18 @@ associated host.
 - `degradation` : 저하
 - `performance` : 성능
 - `inconsistencies ` : 불일치
-- `tolearte` : 용인하다, 견디다
+- `tolerate` : 용인하다, 견디다
 - `concurrently` : 동시에
 - `pitfall` : 함정
 - `formidable` : 가공할, 만만치 않은
 - `latter` : 후자의
 - `take over` : 인계받다, 더 중요해지다, ~을 대체하다
 - `computational` : 컴퓨터의
+- `fetch` : 가지고 오다
+- `handle` : 다루다, 처리하다
+- `allocation` : 할당
+- `homogeneity` : 동질성
+- `prevalent` : 널리 퍼져있는, 만연한
 
 <br>
 <br>
