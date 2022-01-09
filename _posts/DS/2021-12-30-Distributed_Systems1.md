@@ -1,15 +1,15 @@
 ---
 layout: single
-title: "분산 시스템(Distributed Systems) - Introduction (1)"
+title: "분산 시스템(Distributed Systems) - Introduction"
 excerpt: "Distributed Systems Third edition by Maarten van Steen,
-Andrew S. Tanenbaum - Introduction 1.1 ~ 1.2"
+Andrew S. Tanenbaum - Introduction 1.1, 1.2, 1.3"
 categories: DS
 tag : [DS]
 toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-01-08
+last_modified_at: 2022-01-09
 ---
 
 <img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/147719090-5f0942f1-1647-44ad-8d72-f11e3fe400d7.png
@@ -134,12 +134,12 @@ extends over multiple machines, offering each application the same interface.
 <br>
 
 1. **Communication** 
-  - `Remote Procedure Call (RPC)`라고 불린다. RPC 서비스는 어플리케이션에게 function을 호출한다. function이란 remote computer에서 실행되는
+  - `Remote Procedure Call (RPC)`라고 불린다. RPC 서비스는 어플리케이션에게 원격 컴퓨터에서 실행되는 기능을 호출한다. 
 2. **Transactions**
    - 미들웨어로 **atomic** transaction을 참조한다.
-   - 어플리케이션 개발자는 remote 서비스를 불러오는 것만 명시하면, 표준 프로토콜을 가져오게 할 수 있고 미들웨어는 모든 서비스를 불러오거나 모두 안 불러올 수 있다.
+   - 어플리케이션 개발자는 원격 서비스를 불러오는 것만 명시하면, 표준 프로토콜을 가져오게 할 수 있고 미들웨어는 모든 서비스를 불러오거나 모두 안 불러올 수 있다.
 3. **Service composition**
-   - Web-based middleware는 웹 서비스 접근 방식을 표준화하고 특정 순서로 함수를 생성하는 수단을 제공한다.
+   - 웹기반 middleware는 웹 서비스 접근 방식을 표준화하고 특정 순서로 함수를 생성하는 수단을 제공한다.
 4. **Reliability**
    - 한 프로세스가 모든 프로세스에 의해 수신되거나 다른 프로세스가 수신되지 않도록 보장한다.
    - 이런 보장은 분산 개발을 단순화시킬 수 있다.
@@ -157,7 +157,7 @@ extends over multiple machines, offering each application the same interface.
 
 ### Supporting resource sharing
 
-- 분산시스템의 중요한 목표는 유저들이 remote 자원을 쉽게 접근하고 공유할 수 있도록 만들어야 한다.
+- 분산시스템의 중요한 목표는 유저들이 원격 리소스를 쉽게 접근하고 공유할 수 있도록 만들어야 한다.
   - `resources` = peripherals, storage facilities, data,
 files, services, and networks
 - 공유하는 것은 economics(경제성) 이유가 있다.
@@ -189,23 +189,23 @@ files, services, and networks
 <br>
 
 - **access transparency** 
-  - 기초 레벨에서, 우리는 기계 구조가 다름을 숨기고 싶지만, 그보다 더 중요한 것은 데이터가 다른 기계 (또는 시스템)에서 잘 나타나지는 가를 보아야 한다.
+  - 기초 레벨에서, 우리는 기계 구조가 다름을 숨기고 싶지만, 그보다 더 중요한 것은 데이터가 다른 기계 (또는 시스템)에서 잘 나타나는 가를 보아야 한다.
 - **location transparency**
   - `name`이 중요한 역할을 한다.
-  - `location transparency`는 logical name을 자원에 할당함으로써 얻을 수 있으므로, name은 기밀하게 인코드되지 않는다.
-  - 이러한 name의 예시로 URL(; uniform resource locator)이 있다.
+  - `location transparency`는 logical name (name은 비밀리에 인코드되지 않는다.)이 리소스에 할당함으로써 얻을 수 있다. 
+  - 이러한 이름의 예시로 URL(; uniform resource locator)이 있다.
   - Web은이러한 사이트는 데이터 센터에서 다른 곳에 이동되어 user는 알아차리지 못한다. (**relocation transparency**의 예시)
 - **migration transparency**
-  - user로부터 시작된 processes와 resources의 mobility를 제공한다. (진행되는 전달과 운영에 영향을 미치지 않고)
+  - 프로세스와 리소스의 이동성을 제공한다. (진행되는 전달과 운영에 영향을 미치지 않고)
     - 모바일 폰 사이의 전달이 예시가 될 수 있다.
 - **replication transparency**
   - 자원들은 복제한다. 1) 가용성을 늘리기 위해 또는 2) copy를 접근 가능하도록 가까이 둠으로써 성능을 향상시키기 위해 
 - **concurrency transparency**
   - shared resource에 동시 접근은 해당 리소스를 일관된(consistent) 상태로 유지한다는 것이다.
-  - `consistency`는 잠금을 통해 얻을 수 있는데 user는 차례로 원하는 resource에 대해 배타적인 접근을 갖게 된다.
+  - `consistency`는 잠금을 통해 얻을 수 있는데 유저는 차례로 원하는 리소스에 대해 배타적인 접근을 갖게 된다.
 - **failure transparency**
-  - user나 application이 시스템 fail을 알아차리 못해서 일을 적절하게 수행하고 시스템은 자동적으로 failure로부터 회복한다.
-  - failure를 가리는 것은 분산 시스템에서 가장 힘든 이슈 중 하나이고 때때로는 불가능도 하다.
+  - 유저나 어플리케이션이 시스템 fail을 알아차리 못해서 일을 적절하게 수행하고 시스템은 자동적으로 failure로부터 회복한다.
+  - failure를 가리는 것은 분산 시스템에서 가장 힘든 이슈 중 하나이다.
 
 <br>
 <br>
@@ -213,16 +213,11 @@ files, services, and networks
 ### Degree of distribution transparency
 
 - 분산 시스템에서 분산 투명성은 보통 선호되지만 모든 분산 측면에서 숨기는 것은 유저에게 좋지는 않다.
-- 높은 transparency와 system 사이에 trade-off가 있다.
+- 높은 투명성과 시스템 사이에 trade-off가 있다.
   - 다른 것을 시도하기 전에 일시적인 서버 실패를 가리는 것은 전체 시스템을 늦추게 한다.
-  - 일찍 포기하는 게 더 나을 수 있다.
 - 다른 예로, 몇몇을 다른 대륙에 위치한 복제들을 동시에 consistent하는 것이다.
   - 즉, 한 copy가 바뀌면, 다른 operation이 허용하기 전에 모든 copies에게 전파된다.
 - `hide`보다 `expose`하는게 더 좋을 수도 있는데, 지역 기반 서비스를 사용할 때가 그 예이다.
-
-<br>
-
-- 결론은, distribution transparency를 분산 시스템을 설계하고 구현할 때는 좋은 목표지만, perfermance와 comprehensibility같은 다른 issue들도 고려되어야 한다. full transparency의 가격은 매우 높다.
 
 <br>
 <br>
@@ -231,12 +226,11 @@ files, services, and networks
 
 - `open distributed system`은 다른 시스템으로 통합된 것을 쉽게 사용할 수 있게 요소들을 제공한다.
 - **Interoperability, composability, extensibility**
-- open이 되기 위해서, components는 어떤 것을 제공해야될지 그것들의 문법, 의미를 설명하는 표준 규칙을 고수해야 한다.
-- 일반적인 접근은 `Interface Definition Language (IDL)`를 사용하는 interface를 통해 서비스를 정의하는 것이다.
+- open이 되기 위해서, 요소들은 어떤 것을 제공해야될지 그것들의 문법, 의미를 설명하는 표준 규칙을 고수해야 한다.
+- 일반적인 접근은 `Interface Definition Language (IDL)`를 사용하는 인터페이스를 통해 서비스를 정의하는 것이다.
   - 그들은 기능들의 이름을 정확히 명시한다.
-- 명시가 잘 되었다면, 인터페이스 정의는 임의의 프로세스를 허용한다. 그 프로세스는 특정한 인터페이스를 필요로 하는데 그것은 인터페이스를 제공하는 다른 프로세스에게 전달할 수 있는
-- 적절한 specification는 complete하고 neutral이다.
-  - complete의 의미는 실행하는데 필요한 모든 것이 명시되어야 한다는 것.
+- 명시가 잘 되었다면, 인터페이스 정의는 임의의 프로세스((다른 프로세스에게 전달할 수 있는 특정한 인터페이스를 필요로 하는))를 허용한다.
+- 적절한 사양은 완전(실행하는데 필요한 모든 것이 명시되어야 한다는 것)하고 중립적이다.
 - completeness and neutrality are important for interoperability and portability.
 - open distributed system이 되기 위해 다른 목표는 서로 다른 구성 요소로 시스템을 쉽게 구성할 수 있어야 한다.
   - 다시 말해 `extensible` 해야 한다.
@@ -246,7 +240,7 @@ files, services, and networks
 
 ### Separating policy from mechanism
 
-- flexibility되기 위해서, 시스템이 작은 것(쉽게 대체되고 요소들이 적용가능한)들의 집합으로 구성되는 것은 중요하다.
+- 유연하기 위해서, 시스템이 작은 것(쉽게 대체되고 요소들이 적용가능한)들의 집합으로 구성되는 것은 중요하다.
 - 웹 브라우저를 캐싱한다면 몇 가지 요소들이 고려되어야 한다.
   1. **Storage**
   2. **Exemption**
@@ -269,8 +263,8 @@ files, services, and networks
 ### Size scalability
 
 - 시스템이 크기를 확장하고 싶을 때 풀어야할 많은 문제점들이 있다.
-- user나 resource가 더 필요로 한다면 centralized services의 한계에 직면하게 된다.
-  - 예를 들어, 많은 서비스들은 sense에 centralized되 있어서 그들은 분산시스템에 단일 서버로 실행된다.
+- 유저나 리소스를 더 필요로 한다면 중앙 서비스의 한계에 직면한다.
+  - 예를 들어, 많은 서비스들은 sense에 중앙화되 있어서 그들은 분산시스템에 단일 서버로 실행된다.
   - 하지만 요청의 수가 증가하면 서버는 병목현상이 일어날 수 있다.
   - 병목현상이 될 수 있는 **3가지** 원인
     - CPU 제한으로 컴퓨터 용량
@@ -281,7 +275,7 @@ files, services, and networks
 
 ### Geographical scalability
 
-- 대부분의 local-area network들이 `synchronous communication`에 기반하기 때문에 기존 분산 시스템을 확장하는 것은 어렵다.
+- 대부분의 지역 기반 네트워크들이 `synchronous communication`에 기반하기 때문에 기존 분산 시스템을 확장하는 것은 어렵다.
 
 <br>
 
@@ -305,9 +299,9 @@ files, services, and networks
 
 **1. Hiding communication latencies**
    - `geographical scalability`에 적용가능
-   - remote-service 요청의 응답 시간을 기다리는 것을 가능한 피함
+   - 원격 서비스 요청의 응답 시간을 기다리는 것을 가능한 피함
    - 어플리케이션을 요청할 때 `asynchronous communication`만을 사용
-     - reply가 오면, 어플리케이션은 중단되고 이전의 발행된 요청을 끝마치기 위해 특별한 handler가 call된다.
+     - 응답이 오면, 어플리케이션은 중단되고 이전의 발행된 요청을 끝마치기 위해 특별한 핸들러가 요청된다.
      - `asynchronous communication`은 batch-processing system과 parallel application에 사용된다. (독립적인 task가 다른 task가 전달이 끝마치는 것을 기다리는 동안 실행이 schedule되는)
      - 새로운 thread of control이 요청을 수행하기 위해 시작된다.
 
@@ -323,7 +317,7 @@ forms as they are being filled.
 <br>
 
 **2. Partitioning and distribution**
-   - component를 사용하는 것을 포함, 이것을 작은 부분으로 나누고 시스템에 뿌린다.
+   - 요소를 사용하는 것을 포함, 이것을 작은 부분으로 나누고 시스템에 뿌린다.
    - 예시로는 **DNS** (Internet Domain Name System)가 있다.
    - DNS name 공간은 위계쩍으로 구성되어 `domains`의 tree (겹치지 않는 zone으로 나뉘어져서)로 들어간다.
    - 각 zone의 names는 단일 name server에 의해 관리된다. 
@@ -344,13 +338,14 @@ associated host.
 
 **3. Replication**
   - 확장성의 문제로 성능 저하가 보이면 분산 시스템에서 component를 `replicate`(복제)한다.
-  - `cashing`은 복제의 특별한 form이다. cashing은 자원을 복제하고  client가 자원에 접근할 수 있도록 해준다.
-    - 하지만 복제와 다르게, cashing은 client의 자원에 대해 결정을 한다. (owner의 자원이 아니라)
-- 하지만, cashing과 replication은 `consistency`(일관성) 문제점이 있다.
-- 어느 정도까지 불일치가 허용될 수 있는지는 자원의 사용에 따라 크게 달라진다.
+  - `cashing`은 복제의 특별한 형태이다. cashing은 자원을 복제하고  클라이언트가 자원에 접근할 수 있도록 해준다.
+    - `캐시` : 데이터를 임시로 저장해두는 장소 
+    - 하지만 복제와 다르게, 캐싱은 클라이언트의 리소스를 결정한다.(소유자의 리소스가 아니라)
+- 하지만, 캐싱과 복제는 `consistency`(일관성) 문제점이 있다.
+- 어느 정도까지 불일치가 허용될 수 있는지는 리소스의 사용에 따라 크게 달라진다.
   - 강한 consistency의 문제점은 업데이트가 즉각적으로 다른 모든 copy들에게 전달되어야 한다는 점이다.
   - 두개의 업데이트가 동시에 진행된다면, 업데이트는 어느곳이든 똑같은 순서로 진행되어야 하는데 전역 순서에서 문제가 생긴다.
-- 그래서 replication은 전역 동기화 메커니즘이 필요하다. 하지만 이런 메커니즘은 상당히 구현하기 힘들다.
+- 그래서 복제는 전역 동기화 메커니즘이 필요하다. 하지만 이런 메커니즘은 상당히 구현하기 힘들다.
 
 <br>
 <br>
@@ -360,10 +355,50 @@ associated host.
 - 분산 시스템을 발전시키는 것은 만만치 않은 작업임이 분명하다. 그럼에도 원칙들을 따라가다 보면 분산 시스템은 목표를 향해 분명히 발전시킬 수 있을 것이다.
 - 분산 시스템은 components가 네트워크를 가로질러 분산되어 있다는 점이 기존 소프트웨어가 다르다.
 
+<br>
+<br>
+
+## 1.3 Types of distributed systems
+
+### High performance distributed computing
+
+- `cluster computing`에서 하드웨어는 비슷한 워크스테이션(빠른 스피드의 지역기반 네트워크들로 이루어진)의 집합으로 이루어져 있다. (각 노드는 같은 운영 시스템에서 실행한다.)
+  - 컴퓨터 클러스터(computer cluster) : 여러 대의 컴퓨터들이 연결되어 하나의 시스템처럼 동작하는 컴퓨터들의 집합
+- `grid computing`과는 다른 케이스인데, 이 서브 그룹은 분산 시스템(컴퓨터 시스템(각 시스템은 다른 관리 도메인아래 존재하며 하드웨어, 소프트웨어, 네트워크 기술이 아주 다른)의 연합으로 구성된)으로 이루어져 있다.
+- 그리드 컴퓨팅의 관점에서 다음 논리적 단계는 단순히 컴퓨팅 집약적인 애플리케이션에 필요한 전체 인프라를 아웃소싱(업무의 일부분을 전문기관에 위탁)한다.
+  - 시설들을 제공(infrastructure를 건설하기 위해), 가능한 시설로 무엇이 필요한지 구성
+- 클라우드 컴퓨팅은 많은 리소스들을 제공하는 것 이상이다. 
+- `DSM` (distributed shared-memory multicomputers) 시스템은 프로세스가 메모리 위치(다른 컴퓨터의)를 지정(마치 로컬 메모리인 것 처럼)할 수 있다.
+
+<br>
+
+### Cluster computing
+
+- 클러스터 컴퓨팅 시스템은 (개인 컴퓨터와 워크스테이션의 가격과 성능을 향상시켜) 인기있어 졌다.
+- 클러스터 컴퓨팅은 병령 프로그래밍(단일 프로그램이 다중 머신에 병렬로 실행된다.)에 사용된다.
+
+![image](https://user-images.githubusercontent.com/78655692/148669804-9f69d5ae-66a7-4328-babe-839f013c2781.png)
+
+- 클러스터 컴퓨터의 예시로 그림처럼 리눅스 기반의 `Beowulf clusters`가 있다.
+  - 각 클러스터는 컴퓨터 노드(마스터 노드에 의해 통제되고 접속되는)들의 집합으로 구성된다.
+  - 마스터는 노드들의 할당을 특정 병령 프로그램으로 갈 수 있는 것을 다루고, 시스템의 유저들에게 인터페이스를 제공한다.
+  - compute node는 미들웨어 기능이 확장된 표준 운영 시스템을 갖추고 있다.
+- 클러스터 컴퓨팅의 특징으로는 `homogeneity`(동질성)이 있다.
+
+<br>
+
+### Grid computing
+
+- 그리드 컴퓨팅은 하드웨어, 운영 체제, 네트워크의 유사성에 관한 가정을 하지 않는다.
+- 그리드 컴퓨팅은 다른 조직들의 리소스를 (다른 조직들의 사람들의 공동 작업을 허용하기 위해) 같이 가져온다.
+  - 이러한 협력은 `virtual organization`의 형태로 구현된다.
+  - 같은 가상 조직의 속한 프로세스는 리소스의 접근 권한을 가진다.
 
 
 
 
+<br>
+<br>
 <br>
 <br>
 
@@ -449,13 +484,18 @@ associated host.
 - `degradation` : 저하
 - `performance` : 성능
 - `inconsistencies ` : 불일치
-- `tolearte` : 용인하다, 견디다
+- `tolerate` : 용인하다, 견디다
 - `concurrently` : 동시에
 - `pitfall` : 함정
 - `formidable` : 가공할, 만만치 않은
 - `latter` : 후자의
 - `take over` : 인계받다, 더 중요해지다, ~을 대체하다
 - `computational` : 컴퓨터의
+- `fetch` : 가지고 오다
+- `handle` : 다루다, 처리하다
+- `allocation` : 할당
+- `homogeneity` : 동질성
+- `prevalent` : 널리 퍼져있는, 만연한
 
 <br>
 <br>
