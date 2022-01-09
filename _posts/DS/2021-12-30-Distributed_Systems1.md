@@ -55,7 +55,7 @@ each being able to behave **independently** of each other
     - `nodes` = autonomous computing elements (하드웨어 장비나 소프트웨어 프로세스가 될 수 있다.)
     - 노드 = 컴퓨터 네트워크를 구성하는 기기 1대 [^2]
   - *2.* users (be they people or applications) believe they are dealing with **a single system**
-     - single system안에서 sensor networks로 높은 성능의 메인프레임 컴퓨터들부터 작은 장치들까지 다룰 수 있다.
+    - single system안에서 sensor networks로 높은 성능의 메인프레임 컴퓨터들부터 작은 장치들까지 다룰 수 있다.
 
 <br>
 <br>
@@ -66,30 +66,30 @@ each being able to behave **independently** of each other
 - **노드들은 서로 독립적으로 활동한다.** (그들이 서로를 무시한다 하더라도) 따라서 노드들을 같은 분산 시스템에 넣어 사용하지 않는다.
 - 노드들은 공통의 목표(서로 메시지를 교환하는 것)를 달성하기 위해 프로그램화 되어있다.
   - 노드는 들어오는 메시지들(차례로 진행되는데, 메시지를 더 먼 곳까지 도달)에 반응한다.
-- 독립적인 노드들을 처리하기 때문에 각 노드는 각자 고유의 시간의 알림을 가지고 있다.
+- 각 노드는 각자 고유의 시간의 알림을 가지고 있다.
   - 따라서 표준 시간(global clock)이 없다.
   - 이 시간 참조의 결점은 분산 시스템에서 기능적 동기화(synchronization)와 협력 문제(coordination)를 유발하기도 한다.
 - 노드들을 집합으로 처리하는 것은 그런 집합을 관리할 필요가 있음을 암시한다.
   - 즉, 노드들이 시스템에 속하는지 아닌지 등록해야 하며, 각각의 member에게 노드들의 list(directly communicate할 수 있는)를 제공해야 한다.
-- `group membership`을 관리하는 것은 admission control의 이유 때문에 매우 어려울 수 있다. 
+- `group membership`을 관리하는 것은 admission control의 이유 때문에 매우 어려울 수 있다.
   - 먼저 open group과 closed group를 구별해야 한다.
   - open group에서는 어떤 노드도 분산 시스템에 join하는 것을 허락해야 한다. (효율적으로 시스템에서 다른 노드에게 메시지를 전할 수 있게)
   - closed group에서는 오직 member들에서 그룹이 서로 간에 교류를 하며 분리된 기계는 노드가 그룹을 join or leave하게 시킨다.
 - `admission control`의 어려움
   1. 기계는 노드를 인증해야 한다. (인증을 관리하는 것은 확장성 병목 현상을 쉽게 만들어낸다.)
-  2. 각각 노드는 진짜로 다른 group member와 communicate하는데 확인해야 한다.
-  3. member가 nonmember들과 쉽게 communicate하는지 고려해봐야 한다. (기밀성이 문제라면 trust issues에 직면할 수 있다.)
+  2. 각각 노드는 진짜로 다른 group member에 전달하는데 확인해야 한다.
+  3. member가 nonmember에게 쉽게 전달하는지 고려해봐야 한다. (기밀성이 문제라면 trust issues에 직면할 수 있다.)
 
 <br>
 
 ### overlay network
 
 - `overlay network`
-  - 이런 경우, 노드는 직접 메시지들을 보낼 수 있는 프로세스들을 갖춘 소프트웨어 프로세스이다.
+  - 이런 경우, 노드는 직접 메시지를 보낼 수 있는 소프트웨어 프로세스이다.
   - 메시지 전달은 TCP/IP or UDP 채널을 통해 이뤄진다.
 - 두 가지 type이 있다.
-  - *1.* `Structured overlay` : 각 노드는 neighbor들에게 전달할 수 있게 잘 정의되어 있다. (노드들은 tree이거나 ring형으로 이뤄져 있다.)
-  - *2.* `Unstructured overlay` : 각 노드는 다른 노드들을 **랜덤하게** 선택되는 많은 참조들을 가지고 있다.
+  - *1.* `Structured overlay` : 각 노드는 이웃들에게 전달할 수 있게 잘 정의되어 있다. (노드들은 tree이거나 ring형으로 이뤄져 있다.)
+  - *2.* `Unstructured overlay` : 각 노드는 다른 노드들을 **랜덤하게** 선택되는 많은 참조를 가지고 있다.
 - 어떤 경우든 `overlay network`는 언제나 `connected`해야 한다. (두개의 노드는 반드시 전달 통로가 있다.)
 - 잘 알려진 overlay로는 `peer-to-peer` (P2P) 네트워크가 있다.
 
@@ -99,14 +99,15 @@ each being able to behave **independently** of each other
 ### 특징2. Single coherent system
 
 - 분산시스템은 single coherent system으로 보여야 한다.
-- single coherent system에서 노드들의 집합은 전체가 똑같이 작동한다. user와 system 사이에서 장소, 시간, 어떻게 작동하든지 간에
-- `single coherent view`를 제공하는 것은 어려울 수 있다.
-  - 마지막 user는 어떤 프로세스가 현재 실행되는지 모를 수 있다.
-  - 데이터가 저장되는 위치는 중요하지 않다. 시스템은 performance를 높이기 위해 데이터를 복제하는 것도 중요하지 않다.
-  - `distribution transparency`라 부른다.
-- 하지만 `single coherent system`로 보이는 것은 중요한 `trade-off`이다.
+- single coherent system에서 노드들의 집합은 user와 system 사이에서 장소, 시간, 어떻게 작동하든지 간에 전체가 똑같이 작동한다.
+- `single coherent`로 보이는 것은 어려울 수 있다.
+  - 마지막 user는 어떤 프로세스가 현재 실행되는지 몰라야 한다.
+  - 데이터가 저장되는 위치는 문제가 되지 않아야 한다. 시스템은 성능을 높이기 위해 데이터를 복제할 수 도 있다는 것도 문제가 되지 않아야 한다.
+    - 이것을 `distribution transparency`(투명성) 라 부른다.
+    - 이것은 리소스는 통합 파일 시스템 인터페이스(파일이나, 저장 장치, 메모리, 네트워크 사이의 차이를 효과적으로 숨겨주는)를 통해 접근한다는 유닉스의 운영시스템과 비슷한 접근이다.
+- 하지만 `single coherent system`로 되게 하는 건 `trade-off`이다.
   - 분산시스템은 많은 networked node로 이루어져있기 때문에 system fail이 되는 시간을 피할 수는 없다. (어떤 애플리케이션이 성공적으로 실행되면 다른 것은 정지가 되는)
-  - `partial failure`들은 복잡한 시스템에 항상 발생하기 때문에 분산 시스템에서는 숨기기 어렵다.
+  - `partial failure`은 복잡한 시스템에서 항상 발생하기 때문에 분산 시스템에서는 숨기기 어렵다.
   - "one in which the failure of a computer you didn’t even know existed can render your own computer unusable"
 
 <br>
@@ -120,8 +121,8 @@ each being able to behave **independently** of each other
 - A distributed system organized in a middleware layer, which
 extends over multiple machines, offering each application the same interface.
 - 각각의 어플리케이션은 같은 인터페이스를 제공한다.
-- 분산 시스템은 단일 분산 어플리케이션의 요소들이 서로 잘 전달할 수 있도록 뿐만 아니라 다른 어플리케이션들에게도 전달할 수 있게 수단을 제공한다. 
-- `middleware`은 분산시스템과 같은데, 어플리케이션들에게 효과적으로 공유하고 이런 자원들을 네트워크를 가로질러 배치하는 것들을 제공하는 자원의 관리자(resource management)
+- 분산 시스템은 단일 분산 어플리케이션의 요소들이 서로 잘 전달할 수 있는 수단을 제공한다.
+- `middleware`은 분산시스템과 동일하다고 볼 수 있다. 어플리케이션들에게 효과적으로 공유하고 (이런 자원을 네트워크를 통해) 배치하는 것들을 제공하는 리소스의 관리자(resource management)
   - Facilities for interapplication communication
   - Security services
   - Accounting services
@@ -358,6 +359,8 @@ associated host.
 
 - 분산 시스템을 발전시키는 것은 만만치 않은 작업임이 분명하다. 그럼에도 원칙들을 따라가다 보면 분산 시스템은 목표를 향해 분명히 발전시킬 수 있을 것이다.
 - 분산 시스템은 components가 네트워크를 가로질러 분산되어 있다는 점이 기존 소프트웨어가 다르다.
+
+
 
 
 
