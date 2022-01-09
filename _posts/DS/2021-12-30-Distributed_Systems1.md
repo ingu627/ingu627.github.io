@@ -2,14 +2,14 @@
 layout: single
 title: "분산 시스템(Distributed Systems) - Introduction"
 excerpt: "Distributed Systems Third edition by Maarten van Steen,
-Andrew S. Tanenbaum - Introduction 1.1, 1.2, 1.3"
+Andrew S. Tanenbaum - Introduction 1.1, 1.2, 1.3, 1.4"
 categories: DS
 tag : [DS]
 toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-01-09
+last_modified_at: 2022-01-10
 ---
 
 <img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/147719090-5f0942f1-1647-44ad-8d72-f11e3fe400d7.png
@@ -122,7 +122,9 @@ each being able to behave **independently** of each other
 extends over multiple machines, offering each application the same interface.
 - 각각의 어플리케이션은 같은 인터페이스를 제공한다.
 - 분산 시스템은 단일 분산 어플리케이션의 요소들이 서로 잘 전달할 수 있는 수단을 제공한다.
-- `middleware`은 분산시스템과 동일하다고 볼 수 있다. 어플리케이션들에게 효과적으로 공유하고 (이런 자원을 네트워크를 통해) 배치하는 것들을 제공하는 리소스의 관리자(resource management)
+- `middleware`은 분산시스템과 동일하다고 볼 수 있다.
+  - 미들웨어 : 서로 다른 여러 프로그램을 함께 운용할 수 있는 소프트웨어
+  - 어플리케이션들에게 효과적으로 공유하고 (이런 자원을 네트워크를 통해) 배치하는 것들을 제공하는 리소스의 관리자(resource management)
   - Facilities for interapplication communication
   - Security services
   - Accounting services
@@ -447,8 +449,144 @@ layer.
 
 ### Distributed information systems
 
-- 
+- 네트워크 어플리케이션은 서버(어플리케이션을 실행하고, 원격 프로그램(**client**라 부름)을 이용할 수 있게)로 구성된다.
+  - 클라이언트는 서버에 요청(특정 작동을 실행을 목표로 하는)을 보낸다.
 
+<br>
+<br>
+
+### Distributed transaction processing
+
+- 데이터베이스에서 어플리케이션 작동은 `transaction`의 형태로 수행된다.
+  - 트랜잭션을 사용한 프로그래밍은 특별한 기본 요소들(근본적인 분산 시스템이거나 언어 런타임 시스템에 의해 공급되는)을 요구한다.
+- RPC(; remote procedure calls) (프로시저는 원격 서버에 요청하는)는 트랜잭션으로 캡슐화된다.
+
+![image](https://user-images.githubusercontent.com/78655692/148694039-8ca6171f-2744-4587-a7cf-5a8a6389a3f8.png)
+
+<br>
+
+- `트랜잭션`은 ACID 특성들을 따른다.
+  - **Atomic** : 외부 세계에서 트랜잭션은 불가분하게 일어난다.
+  - **Consistent** : 트랜잭션은 시스템 불변성을 위반하지 않는다.
+  - **Isolated** : 동시 트랜잭션은 서로 방해하지 않는다.
+  - **Durable** : 트랜잭션이 commit하면, 그 변화는 영구적이다.
+
+- 트랜잭션은 많은 하위 트랜잭션(공동으로 `nested transaction`을 형성하는)으로 구성된다.
+  - 상위 레벨의 트랜잭션을 자식(다른 곳에서 병행하며 실행되는(성능이나 프로그래밍을 얻기위해))을 둘로 나눈다.
+- 하위 트랜잭션은 미묘한 문제를 일으킨다.
+  - 부모가 중단하면, 전체 시스템을 스테이트로 복구(탑레벨의 트랜잭션이 시작하기 전에)해야 한다.
+  - 커밋된 하위 트랜잭션의 결과는 실행이 취소되어야 한다.
+  - 따라서 영속성은 최상위 수준의 트랜잭션에만 적용된다.
+
+
+<br>
+<br>
+
+### Enterprise application integration 
+
+- 어플리케이션이 데이터베이스로부터 분리될수록, 설비(어플리케이션을 데이터베이스와 독립적으로 통합하기 위한)가 필요하다는 것은 더욱 분명해졌다.
+
+<br>
+
+![image](https://user-images.githubusercontent.com/78655692/148694784-263815b6-3b47-4bf2-b228-7431527cc9d1.png)
+
+<br>
+
+- 몇가지 타입의 통신 미들웨어가 존재한다.
+- **RPC**(; remote procedure calls)을 사용하면, 어플리케이션 구성 요소가 효과적으로 요청이 다른 어플리케이션 요소에게(로컬 프로시져 요청을 수행함으로써) 효과적으로 보내지며, 이는 요청이 메시지로 패키지되어 착신자에게 보내지게 된다.
+- **RMI**(; remote method invocations)는 RPC(기능 대신 객체에서 작동하는 것을 제외하면)와 본질적으로 동일하다.
+- RPC와 RMI는 단점(호출자와 발신자 모두 (통신시에) 가동되어 실행되어야 하는)이다. 게다가 그들은 서로 어떻게 참조되어야 하는지 정확히 알고 있어야 한다.
+- 이런 결함은 **MOM**(; message-oriented middleware)를 불러 왔다.
+  - 어플리케이션은 메시지를 logical contact points에 보낸다.
+  - 어플리케이션은 특정 타입의 메시지의 관심을 나타낼 수 있으며, 통신 미들웨어는 관리(이러한 메시지가 해당 어플리케이션에 전달되도록)한다.
+  - 이런 것을 `publish-subscribe` 시스템 형태라 부른다.
+
+<br>
+<br>
+
+### Pervasive systems
+
+- 안정성은 다양한 기술들(분산 투명성을 얻고자)을 통해 실현한다. 
+- 하지만 모바일이나 임베디드 컴퓨팅 장치들이 바뀜에 따라 `pervasive systems`로 불리는 것들이 나왔다.
+- pervasive systems은 우리 주변에 자연스럽게 섞이기 위한 것이다.
+  - pervasive system은 많은 센서들(사용자의 행동에 대한 다양한 측면을 파악하는)을 갖추고 있다.
+  - 마찬가지로, 이것은 무수한 액츄에이더(정보와 피드백을 제공하기 위함과 행동을 조종하기 위한)를 가지고 있다.
+- pervasive system 속의 많은 장치들은 작아지고, 배터리화, 모바일, 무선 연결 등이 특징이다. (Internet of Things라 불리는 그들의 역할)
+
+<br>
+<br>
+
+### Ubiquitous computing systems
+
+- 이 시스템은 pervasive하며 연속적으로 존재(사용자가 연속적으로 시스템과 상호작용(일어나고 있다는 것을 자각하지 못할 정도로)한다는 의미)한다.
+- 특징
+  1. **Distribution** : Devices are networked, distributed, and accessible in a transparent manner.
+     - 장치와 다른 컴퓨터는 네트워크되고 같이 작동(단일 시스템같게 형성)한다.
+  2. **Interaction** : Interaction between users and devices is highly unobtrusive.
+     - 유비쿼터스 컴퓨팅은 보기에 인터페이스를 숨긴 것이라 말할 수 있다.
+     - 예를 들어, 차의 좌석이 있으면, 밥이 앉았다는 것을 시스템은 알아차리고 그에 적절한 반응을 할 것이다. 여기에 엘리스도 이용한다는 것을 생각해 본다. 
+  3. **Context awareness** : The system is aware of a user’s context in order to optimize interaction.
+     - 유비쿼터스 컴퓨팅 시스템이 해야 할일은 상호작용이 일어나는 맥락을 고려하는 것이다.
+  4. **Autonomy** : Devices operate autonomously without human intervention, and are thus highly self-managed.
+     - 유비쿼터스 컴퓨팅 시스템의 중요한 측면으로 명시적 시스템 관리가 최소한으로 줄어들었다는 점이다.
+     - 시스템은 자율적으로 행동하고, 자동으로 변환에 반응한다.
+  5. **Intelligence** : The system as a whole can handle a wide range of dynamic actions and interactions.
+     - 유비쿼터스 컴퓨팅 시스템은 방법과 기술(인공지능 분야로부터)을 사용한다.
+
+<br>
+<br>
+
+### Mobile computing systems
+
+- `mobility`는 퍼베이시브 시스템의 중요한 구성요소인데 `mobile computing`에 적용 해 볼것이다.
+- 몇가지 이슈들이 있다.
+  - 모바일 시스템의 부분을 형성한 장치는 매우 광범위하다.
+    - 전혀 다른 타입의 장치들은 통신하는데 IP를 쓰고 있다. 
+    - 이러한 장치들은 원격 제어, 페이저, 배지, 차 구성, 다양한 GPS 장치를 포함하고 있다.
+  - 모바일 컴퓨팅에서 장치의 위치는 시간이 지남에 따라 변한다는 것이다.
+    - 위치가 변하는 것은 통신에 지대한 영향을 끼친다.
+
+
+<br>
+<br>
+
+### Sensor networks
+
+- 센서 노드는 감지된 데이터(어플리케이션 방식으로)를 효율적으로 처리하기 위해 협력한다.
+- 센서 네트워크는 수백만의 작은 노드들(하나 이상의 센싱 장치를 갖춘)로 구성된다.
+  - 또한 노드는 액츄에이터로 활동한다.
+
+<br>
+
+![image](https://user-images.githubusercontent.com/78655692/148698298-a9682274-5bc8-4bf6-b050-1280fc121df4.png)
+
+<br>
+
+- 위 그림의 첫번째는 센서들은 협력하진 않지만 그들의 데이터를 중앙 데이터베이스(오퍼레이터의 위치에 자리한)에 보낸다.
+- 두번째 극단적인 그림은 쿼리를 관련 센서에 전달하고 각각이 응답을 계산하고, 운영자가 응답을 집계하도록 한다.
+- 위 방법들 모두 좋지는 않다.
+  - 첫번째는 센서들이 모든 측정된 데이터를 네트워크를 통해 보내야 하는데, 이것은 네트워크 리소스와 에너지를 낭비한다.
+  - 두번째도 센서들(조금의 데이터를 운영자에게 반환한다)의 집계 능력을 버리므로 낭비이다.
+
+<br>
+<br>
+
+## 1.4 Summary
+
+- `분산 시스템`은 컴퓨터들(단일 일관성 시스템처럼 보이기 위해 함께 작동하는)로 이뤄져있다.
+- 일관성된 집단 행동은 어플리케이션의 독립 프로토콜(미들웨어로 알려진)을 수집함으로써 달성된다. 
+  - `미들웨어`는 소포트웨어 계층인데 작동 시스템과 분산 어플리케이션 사이에 위치해 있다.
+  - `프로토콜`은 통신, 트랜잭션, 서비스 구성, 신뢰성을 포함한다.
+- 분산 시스템의 목표는 리소스 공유와 개방성을 보증하는 것이다.
+  - 추가로, 디자이너는 많은 복잡성(프로세스, 데이터, 제어와 연관된)을 숨기는 것을 목표로 한다.
+  - 하지만, 이런 분산 투명성은 성능 가격이 따를 뿐 아니라 실제로는 충분히 달성하지 못한다.
+  - 확장성의 문제도 있다.
+- 분산 컴퓨팅 시스템은 높은 성능의 어플리케이션(병렬 컴퓨팅의 한 분야로부터 구성된)을 효율적으로 사용한다.
+- 병렬 프로세싱으로부터 나타난 분야는 그리드 컴퓨팅(전세계적으로 리소스 공유하는 데 초점을 맞춘)이다. 이것은 클라우드 컴퓨팅으로 이어졌다.
+- 클라우드 컴퓨팅은 높은 성능의 컴퓨팅을 넘어섰고 분산 시스템을 서포트한다.
+  - 시스템을 실행하는 트랜잭션은 이런 환경에 배치된다.
+- 분산 시스템의 출현은 구성 요소들이 작아지고 시스템은 Ad hoc fashion으로 구성되며, 대부분 시스템 제어자를 통해 관리되지 않는다.
+- 이것은 후에 퍼베이시브 컴퓨팅 환경이 나타나게 되었다.
 
 
 
@@ -462,7 +600,7 @@ layer.
 
 - `microprocessors` : 마이크로프로세서
 - `parallelism` : 병행
-- `deployed` : 배치
+- `deploy` : 배치하다, 효율적으로 사용하다
 - `miniaturization` : 소형화
 - `packed with` : ~로 가득 채워진
 - `full-fledged` : 본격적으로 하기에 준비가 다 된
@@ -556,6 +694,17 @@ layer.
 - `implement` : 시행하다
 - `contain` : 들어있다
 - `backbone` : 근간, 척추
+- `carry out` : 수행하다
+- `encapsulate` : 압축하다, 캡슐화하다
+- `invariants` : 불변성
+- `jointly` : 공동으로
+- `fork off` : 갈림길을 접어들다
+- `subtle` : 미묘한
+- `abort` : 중단하다
+- `operate` : 동작하다
+- `myriad` : 무수한
+- `unobtrusive` : 눈에 띄지 않는
+
 
 <br>
 <br>
