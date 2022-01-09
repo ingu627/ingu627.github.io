@@ -394,6 +394,62 @@ associated host.
   - 이러한 협력은 `virtual organization`의 형태로 구현된다.
   - 같은 가상 조직의 속한 프로세스는 리소스의 접근 권한을 가진다.
 
+<br>
+
+![image](https://user-images.githubusercontent.com/78655692/148682490-74f30183-8a22-498d-8e9c-cebd27fa2655.png)
+
+- `fabric layer`는 인터페이스(특정한 장소에 지역 리소스에 대한)를 제공한다.
+- `connectivity layer`는 그리드 트랜잭션(다중 리소스의 사용을 포괄하는)을 지원하기 위한 통신 프로토콜로 이루어져 있다.
+  - 프로토콜은 리소스 사이에 데이터를 전달하거나 원격 위치로부터 리소스에 접근하는데 필요하다.
+  - `connectivity layer`는 보안 프로토콜(유저와 리소스를 인증하는)을 가지고 있다.
+  - 권한(유저로부터 프로그램에)을 위임하는 것은 `connectivity layer`에 중요한 기능이다.
+- `resource layer`는 단일 리소스를 관리한다.
+  - 이것은 `connectivity layer`가 제공하는 기능을 사용하고 직접적으로 인터페이스(`fabric layer`로부터 가능한)를 요청한다.
+  - 액세스 제어 역할을 한다.
+- `collective layer`는 다중 리소스 접근을 관리하고, 리소스 발견, 할당, 다중 리소스에 관한 태스크의 스케줄링, 데이터 복제 같은 서비스들로 구성된다.
+- `application layer`는 (가상 조직안에 실행되고 그리드 컴퓨팅 환경에서 사용하는) 어플리케이션들로 구성된다.
+
+<br>
+
+### Cloud computing
+
+- `cloud computing`은 쉽게 사용할 수 있고 가상화 리소스 풀에 액세스할 수 있다.
+- 클라우드 컴퓨팅은 pay-per-use 모델(보증은 SLAs(; service-level agreements) 수단으로 제공되는)에 기반한다.
+
+<br>
+
+![image](https://user-images.githubusercontent.com/78655692/148691345-a83ac37a-9c27-4f4a-94b7-bb15b4b9edd8.png)
+
+<br>
+
+- **Hardware** : 가장 낮은 계층은 필요한 하드웨어(프로세서, 라우터, 파워, 쿨링 시스템)를 관리하는 수단으로 형성된다.
+  - 데이터 센터에서 실행되며, 리소스(customer들이 절대로 직접 볼 수 없는)가 들어있다.
+- **Infrastructure** : 이 층은 클라우드 컴퓨팅 플랫폼에서 가장 중요한 근본이다.
+  - 이것은 가상 기술(손님들에게 infrastructure(가상 스토리지와 컴퓨팅 리소스로 구성된)를 제공하기 위해)을 배치한다.
+  - 클라우드 컴퓨팅은 할당하고 관리하며(가상 스토리지 장치와 가상 서버들을) 발전했다.
+- **Platform** : 플랫폼 계층은 클라우드 컴퓨팅을 손님에게 제공한다. (운영 시스템을 어플리케이션 개발자에게 제공(즉, 쉽게 개발하고 클라우드에서 실행을 필요로 하는 어플리케이션을 쉽게 배치할 수 있는 수단을))
+  - 어플리케이션 개발자는 vendor-specific API(업로드하고 프로그램 실행하는 요청들을 포함하는)를 제공받는다.
+  - 이것은 유닉스의 `exec`(실행가능한 파일을 (운영 시스템에게 실행될 수 있게 가져다 주는 것과 같다)와 같다.
+  - 플랫폼 계층은 높은 수준의 abstraction(스토리지를 위한)를 제공한다.
+  - Amazon S3 스토리지 시스템이 그 예
+- **Application** : 실제 어플리케이션들이 이 계층에서 실행된다.
+  - office 365 제품들이 그 예이다. 이 어플리케이션들은 다시 한번 `vendor's cloud`에서 실행된다.
+
+<br>
+
+- **Infrastructure-as-a-Service (IaaS)** : covering the hardware and infrastructure
+layer.
+- **Platform-as-a-Service (PaaS)** : covering the platform layer.
+- **Software-as-a-Service (SaaS)** : in which their applications are covered.
+
+<br>
+<br>
+
+### Distributed information systems
+
+- 
+
+
 
 
 
@@ -469,7 +525,7 @@ associated host.
 - `scalable` : 확장 가능한
 - `with respect to` : 에 관하여
 - `Administrative` : 관리
-- `span` : 걸치다, 기간
+- `span` : 걸치다, 기간, 포괄하다
 - `scaling out` : 확장
 - `latencies` : 대기 시간
 - `applicable` : 적용 가능한
@@ -496,6 +552,10 @@ associated host.
 - `allocation` : 할당
 - `homogeneity` : 동질성
 - `prevalent` : 널리 퍼져있는, 만연한
+- `ponder` : 숙고하다
+- `implement` : 시행하다
+- `contain` : 들어있다
+- `backbone` : 근간, 척추
 
 <br>
 <br>
