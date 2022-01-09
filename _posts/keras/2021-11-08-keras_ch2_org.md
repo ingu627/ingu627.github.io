@@ -8,7 +8,7 @@ toc: true
 sidebar_main: true
 classes: wide
 
-last_modified_at: 2022-01-07
+last_modified_at: 2022-01-09
 ---
 
 <img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/147629300-4d7acc5e-225a-454a-92cd-4da82f6828f6.png
@@ -244,16 +244,29 @@ print(x.shape)
 <br>
 <br>
 
-### 핵심 속성
+### 2_2_5. 핵심 속성
 
 - **축의 개수(랭크)** : `tf.rank()`
 - **크기(shape)** : 텐서의 각 축을 따라 얼마나 많은 차원이 있는지를 나타낸 파이썬의 튜플(tuple) 
-- **데이터 타입** : 텐서에 포함된 데이터의 타입
+- **데이터 타입 (dtype)** : 텐서에 포함된 데이터의 타입
 
 <br>
+
+### 2_2_6. 넘파이로 텐서 조작하기
+
+- **슬라이싱** (slicing) : 배열에 있는 특정 원소들을 선택하는 것
+  - `:`(콜론) : 전체 인덱스 선택
+
 <br>
 
-### 텐서의 실제 사례
+### 2_2_7. 배치 데이터
+
+- **샘플 축**(sample axis) : 모든 데이터 텐서의 첫 번째 축
+- 배치 데이터를 다룰 때는 첫 번째 축(0축)을 **배치 축**(batch axis)이라 한다.
+
+<br>
+
+### 2_2_8. 텐서의 실제 사례
 
 - **벡터 데이터** : (samples, features) 크기의 2D 텐서
 - **시계열 데이터** (또는 시퀀스(sequence) 데이터) : (samples, timesteps, features) 크기의 3D 텐서
@@ -261,9 +274,51 @@ print(x.shape)
 - **동영상** : (samples, frames, height, width, channels) 또는 (samples, frames, channels, height, width) 크기의 5D 텐서
 
 <br>
+
+### 2_2_9. 벡터 데이터
+
+- 2D 텐서에서 첫 번째 축은 **샘플 축**이고, 두 번째 축은 **특성 축**(feature axis)이다. 
+
+
 <br>
 
-### 브로드캐스팅 (broadcasting)
+### 2_2_10. 시계열 데이터 또는 시퀀스 데이터
+
+- 데이터에서 시간이 중요할 때는 시간 축을 포함하여 3D 텐서로 저장된다. 
+
+<br>
+
+<img src='https://user-images.githubusercontent.com/78655692/148701777-89bd49ea-f091-4d61-bb25-42eb7194828d.png' width=400> 이미지출처: [^4]
+
+<br>
+
+### 2_2_11. 이미지 데이터
+
+- 이미지는 전형적으로 높이, 너비, 컬러 채널의 3차원으로 이루어진다.
+  - 256 x 256 크기의 흑백 이미지에 대한 128개의 배치는 (128, 256, 256, 1) 크기의 텐서에 저장 가능
+  - 256 x 256 크기의 컬러 이미지에 대한 128개의 배치는 (128, 256, 256, 3
+  - ) 크기의 텐서에 저장 가능
+
+<img src='https://user-images.githubusercontent.com/78655692/148704125-e8a670a0-c0bc-4179-92f0-7ca8adc7ae63.png' width=400> 이미지출처: [^5]
+
+<br>
+
+### 2_2_12. 비디오 데이터
+
+- 하나의 비디오는 프레임의 연속이고 각 프레임은 하나의 컬러 이미지이다.
+- 프레임의 연속은 (frames, height, width, color_depth)의 4D 텐서로 저장된다.
+- 여러 비디오의 배치는 (samples, frames, height, width, color_depth)의 5D 텐서로 저장된다.
+  - ex. 60초짜리 144x256 유튭 비디오 클립을 초당 4프레임으로 샘플링하면 240프레임이 된다. 4개 배치는 (4, 240, 144, 256, 3) 크기에 텐서에 저장된다.
+
+
+<br>
+<br>
+
+## 신경망의 톱니바퀴: 텐서 연산
+
+<br>
+
+### 2_3_2. 브로드캐스팅 (broadcasting)
 
 - 단계 
   1. 큰 텐서의 ndim에 맞도록 작은 텐서에 축이 추가된다.
@@ -272,7 +327,7 @@ print(x.shape)
 <br>
 <br>
 
-### 텐서 크기 변환 
+### 2_3_4. 텐서 크기 변환 
 - `reshape()` : 텐서의 크기(shape)를 변경해준다.
 - `transpose()`
 - **`shape=(5,)` 는 (1 x 5)를 의미한다.**
@@ -282,7 +337,19 @@ print(x.shape)
 <br>
 <br>
 
-### 훈련 반복 루프 (training loop) 
+## 2_4. 신경망의 엔진: 그래디언트 기반 최적화
+
+- 각 층은 입력 데이터를 다음과 같이 변환한다.
+
+```python
+output = relu(dot(W, input) + b)
+```
+
+- W와 b를 가중치(훈련 데이터를 신경망에 노출시켜서 학습된 정보가 담겨 있다.)라 부른다. 
+
+<br>
+
+- **훈련 반복 루프** (training loop) 
 1. 훈련 샘플 x와 이에 상응하는 타깃 y의 배치를 추출한다.
 2. x를 사용하여 네트워크를 실행하고(정방향 패스 단계), 예측 y_pred를 구한다.
 3. y_pred와 y의 차이를 측정하여 이 배치에 대한 네트워크의 손실을 계산한다.
@@ -291,8 +358,10 @@ print(x.shape)
 <br>
 <br>
 
-### 확률적 경사 하강법
+### 2_4_3. 확률적 경사 하강법
+
 - 미분 가능한 함수가 주어지면 이론적으로 이 함수의 최솟값을 해석적으로 구할 수 있다.
+  - 함수의 최솟값은 변화율이 0인 지점이다.
 
 1. 훈련 샘플 배치 x와 이에 상응하는 타깃 y를 추출한다.
 2. x로 네트워크를 실행하고 예측 y_pred를 구한다.
@@ -301,13 +370,27 @@ print(x.shape)
 5. 그래디언트의 반대 방향으로 파라미터를 조금 이동시킨다.
 
 <br>
+
+<img src='https://user-images.githubusercontent.com/78655692/148704685-15c39fd6-e6cb-4737-8389-e1d42eaca16d.png' width=400> 이미지출처: [^6]
+
+- 위의 그림은 SGD가 1D 손실 함수의 값을 낮추는 과정
+
 <br>
 
-### 변화율 연결: 역전파 알고리즘 
+<img src='https://user-images.githubusercontent.com/78655692/148704770-fd9c31e5-c860-438a-8938-d728e4687526.png' width=400> 이미지출처: [^7]
+
+- 위의 그림은 SGD가 2D 손실 함수의 값을 낮추는 과정
+
+<br>
+<br>
+
+### 2_4_4. 변화율 연결: 역전파 알고리즘 
 - 역전파는 최종 손실 값에서부터 시작한다.
 - 손실 값에 각 파라미터가 기여한 정도를 계산하기 위해 연쇄 법칙을 적용하여 최상위 층에서 하위 층까지 거꾸로 진행된다. 
 
-<img src="https://user-images.githubusercontent.com/78655692/140705045-69b7e24f-f246-42ae-917c-9620ef973190.png" width="700" alt="image"/> 이미지출처: [^4]
+<br>
+
+<img src="https://user-images.githubusercontent.com/78655692/140705045-69b7e24f-f246-42ae-917c-9620ef973190.png" width="600" alt="image"/> 이미지출처: [^8]
 
 <br>
 <br>
@@ -327,4 +410,8 @@ print(x.shape)
 [^1]: [1. 텐서 기초 살펴보기](https://codetorial.net/tensorflow/basics_of_tensor.html)
 [^2]: [PyTorch로 시작하는 딥 러닝 입문 - 02. 텐서 조작하기(Tensor Manipulation)](https://wikidocs.net/52460)
 [^3]: [PyTorch로 시작하는 딥 러닝 입문 - 02. 텐서 조작하기(Tensor Manipulation)](https://wikidocs.net/52460)
-[^4]: [딥러닝의 핵심 개념 - 역전파 이해하기1](https://m.blog.naver.com/samsjang/221033626685)
+[^4]: <https://thebook.io/006975/part01/ch02/02/10/>
+[^5]: <https://thebook.io/006975/part01/ch02/02/11/>
+[^6]: <https://thebook.io/006975/part01/ch02/04/03-01/>
+[^7]: <https://thebook.io/006975/part01/ch02/04/03-02/>
+[^8]: [딥러닝의 핵심 개념 - 역전파 이해하기1](https://m.blog.naver.com/samsjang/221033626685)
