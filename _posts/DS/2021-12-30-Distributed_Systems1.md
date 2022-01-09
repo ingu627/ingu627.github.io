@@ -4,7 +4,7 @@ title: "분산 시스템(Distributed Systems) - Introduction"
 excerpt: "Distributed Systems Third edition by Maarten van Steen,
 Andrew S. Tanenbaum - Introduction 1.1, 1.2, 1.3, 1.4"
 categories: DS
-tag : [DS]
+tag : [DS, 분산 시스템, 확장성, 투명성, 미들웨어, 컴퓨팅, 그리드, 클러스터, 클라우드, 인터페이스, 센서]
 toc: true
 toc_sticky: true
 sidebar_main: true
