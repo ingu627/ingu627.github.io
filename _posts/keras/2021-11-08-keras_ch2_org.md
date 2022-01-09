@@ -23,17 +23,107 @@ last_modified_at: 2022-01-07
 
 ## 2_1. 신경망과의 첫 만남
 
+- **MNIST 샘플로 예제보기**
+
+```python
+from tensorflow.keras.datasets import mnist
+
+(train_images, train_labels), (test_images, test_labels) = mnist.load_data()
+```
+
+- 훈련 세트(training set) = train_images, train_labels
+- 테스트 세트(test set) = test_images, train_labels
+- 레이블은 0부터 9까지의 숫자 배열이다.
+
+<br>
+
+```python
+train_images.shape # (60000, 28, 28)
+len(train_labels) # 60000
+train_labels # array([5, 0, 4, ..., 5, 6, 8], dtype=uint8)
+
+test_images.shape # (10000, 28, 28)
+len(test_labels) # 10000
+test_labels # array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)
+```
+- 클래스(class) = 분류 문제의 범주(category)
+- 샘플(sample) = 데이터 포인트
+- 레이블(label) = 특정 샘플의 클래스
+
+<br>
+
+```python
+from tensorflow.keras.layers import Dense
+from tensorflow.keras.models import Sequential
+
+network = Sequential()
+network.add(Dense(512, activation='relu', input_shape=(28 * 28,)))
+network.add(Dense(10, activation='softmax'))
+```
+
 - 신경망의 핵심 구성 요소는 일종의 데이터 처리 필터라고 생각할 수 있는 **층(layer)**이다.
 - 층은 주어진 문제에 더 의미 있는 **표현(representation)**을 입력된 데이터로부터 추출한다.
+- 여기서는 완전 연결된 신경망 층인 Dense 층 2개가 연속되어 있다. 
+- 두 번째 층은 10개의 확률 점수가 들어 있는 배열을 반환하는 소프트맥스이다.
 
 <br>
-<br>
 
-### 컴파일 단계
+```python
+network.compile(optimizer='rmsprop',
+                loss='categorical_crossentropy',
+                metrics=['accuracy'])
+```
 
 - **손실 함수(loss function)** : 훈련 데이터에서 신경망의 성능을 측정하는 방법으로 네트워크가 옳은 방향으로 학습될 수 있도록 도와준다. 
 - **옵티마이저(optimizer)** : 입력된 데이터와 손실 함수를 기반으로 네트워크를 업데이트하는 메커니즘
 - **훈련과 테스트 과정을 모니터링할 지표** : 대표적으로 정확도를 본다.
+
+<br>
+
+```python
+train_images = train_images.reshape((60000, 28 * 28))
+train_images = train_images.astype('float32') / 255
+
+test_images = test_images.reshape((10000, 28 * 28))
+test_images = test_images.astype('float32') / 255
+
+# 레이블을 범주형으로 인코딩하기
+from tensorflow.keras.utils import to_categorical
+
+train_labels = to_categorical(train_labels)
+test_labels = to_categorical(test_labels)
+```
+
+- 데이터를 0과 1 사이로 스케일 조정
+
+<br>
+
+```python
+# 훈련 데이터에 모델 학습
+network.fit(train_images, train_labels, epochs=5, batch_size=128)
+
+# Epoch 1/5
+# 469/469 [==============================] - 5s 8ms/step - loss: 0.4455 - accuracy: 0.8705
+# Epoch 2/5
+# 469/469 [==============================] - 3s 7ms/step - loss: 0.1127 - accuracy: 0.9673
+# Epoch 3/5
+# 469/469 [==============================] - 3s 7ms/step - loss: 0.0721 - accuracy: 0.9789
+# Epoch 4/5
+# 469/469 [==============================] - 5s 11ms/step - loss: 0.0486 - accuracy: 0.9847
+# Epoch 5/5
+# 469/469 [==============================] - 3s 7ms/step - loss: 0.0368 - accuracy: 0.9888
+# <tensorflow.python.keras.callbacks.History at 0x227cb78a198>
+```
+
+<br>
+
+```python
+test_loss, test_acc = network.evaluate(test_images, test_labels)
+
+# 313/313 [==============================] - 2s 5ms/step - loss: 0.0664 - accuracy: 0.9799
+
+print(test_acc) # 0.9799000024795532
+```
 
 <br>
 <br>
