@@ -62,7 +62,7 @@ each being able to behave **independently** of each other
 
 ### 특징1. Collection of autonomous computing elements
 
-- 현대 분산 시스템들은 높은 성능의 컴퓨터들부터 작은 plug computer까지 많은 종류의 노드들로 구성되어 있다. 
+- 현대 분산 시스템은 높은 성능의 컴퓨터들부터 작은 plug computer까지 많은 종류의 노드들로 구성되어 있다. 
 - **노드들은 서로 독립적으로 활동한다.** (그들이 서로를 무시한다 하더라도) 따라서 노드들을 같은 분산 시스템에 넣어 사용하지 않는다.
 - 노드들은 공통의 목표(서로 메시지를 교환하는 것)를 달성하기 위해 프로그램화 되어있다.
   - 노드는 들어오는 메시지들(차례로 진행되는데, 메시지를 더 먼 곳까지 도달)에 반응한다.
@@ -70,15 +70,15 @@ each being able to behave **independently** of each other
   - 따라서 표준 시간(global clock)이 없다.
   - 이 시간 참조의 결점은 분산 시스템에서 기능적 동기화(synchronization)와 협력 문제(coordination)를 유발하기도 한다.
 - 노드들을 집합으로 처리하는 것은 그런 집합을 관리할 필요가 있음을 암시한다.
-  - 즉, 노드들이 시스템에 속하는지 아닌지 등록해야 하며, 각각의 member에게 노드들의 list(directly communicate할 수 있는)를 제공해야 한다.
+  - 즉, 노드들이 시스템에 속하는지 아닌지 등록해야 하며, 각각의 멤버에게 노드들의 리스트(직접 전달할 수 있는)를 제공해야 한다.
 - `group membership`을 관리하는 것은 admission control의 이유 때문에 매우 어려울 수 있다.
   - 먼저 open group과 closed group를 구별해야 한다.
   - open group에서는 어떤 노드도 분산 시스템에 join하는 것을 허락해야 한다. (효율적으로 시스템에서 다른 노드에게 메시지를 전할 수 있게)
-  - closed group에서는 오직 member들에서 그룹이 서로 간에 교류를 하며 분리된 기계는 노드가 그룹을 join or leave하게 시킨다.
+  - closed group에서는 오직 멤버들에서 그룹이 서로 간에 교류를 하며 분리된 기계는 노드가 그룹을 join or leave하게 시킨다.
 - `admission control`의 어려움
   1. 기계는 노드를 인증해야 한다. (인증을 관리하는 것은 확장성 병목 현상을 쉽게 만들어낸다.)
-  2. 각각 노드는 진짜로 다른 group member에 전달하는데 확인해야 한다.
-  3. member가 nonmember에게 쉽게 전달하는지 고려해봐야 한다. (기밀성이 문제라면 trust issues에 직면할 수 있다.)
+  2. 각각 노드는 진짜로 다른 그룹 멤버에 전달하는데 확인해야 한다.
+  3. 멤버가 nonmember에게 쉽게 전달하는지 고려해봐야 한다. (기밀성이 문제라면 trust issues에 직면할 수 있다.)
 
 <br>
 
@@ -121,7 +121,8 @@ each being able to behave **independently** of each other
 - A distributed system organized in a middleware layer, which
 extends over multiple machines, offering each application the same interface.
 - 각각의 어플리케이션은 같은 인터페이스를 제공한다.
-- 분산 시스템은 단일 분산 어플리케이션의 요소들이 서로 잘 전달할 수 있는 수단을 제공한다.
+- 분산 시스템은 단일 분산 어플리케이션의 컴포넌트들이 서로 잘 전달할 수 있는 수단을 제공한다.
+  - `component` (컴포넌트) : 하나의 기능을 하는 단위
 - `middleware`은 분산시스템과 동일하다고 볼 수 있다.
   - 미들웨어 : 서로 다른 여러 프로그램을 함께 운용할 수 있는 소프트웨어
   - 어플리케이션들에게 효과적으로 공유하고 (이런 자원을 네트워크를 통해) 배치하는 것들을 제공하는 리소스의 관리자(resource management)
@@ -131,7 +132,7 @@ extends over multiple machines, offering each application the same interface.
   - Masking of and recovery from failures
 
 - middleware 서비스는 네트워크 환경을 제공한다.
-- 미들웨어는 요소와 기능들로 사용되는 컨테이너로 볼 수 있다. 어플리케이션들이 각각 실행되지 않게 도와주는
+- 미들웨어는 컴포넌트와 기능들로 사용되는 컨테이너로 볼 수 있다. 어플리케이션들이 각각 실행되지 않게 도와주는
 
 <br>
 
@@ -226,15 +227,15 @@ files, services, and networks
 
 ## Being open
 
-- `open distributed system`은 다른 시스템으로 통합된 것을 쉽게 사용할 수 있게 요소들을 제공한다.
+- `open distributed system`은 다른 시스템으로 통합된 것을 쉽게 사용할 수 있게 컴포넌트들을 제공한다.
 - **Interoperability, composability, extensibility**
-- open이 되기 위해서, 요소들은 어떤 것을 제공해야될지 그것들의 문법, 의미를 설명하는 표준 규칙을 고수해야 한다.
+- open이 되기 위해서, 컴포넌트들은 어떤 것을 제공해야될지 그것들의 문법, 의미를 설명하는 표준 규칙을 고수해야 한다.
 - 일반적인 접근은 `Interface Definition Language (IDL)`를 사용하는 인터페이스를 통해 서비스를 정의하는 것이다.
   - 그들은 기능들의 이름을 정확히 명시한다.
 - 명시가 잘 되었다면, 인터페이스 정의는 임의의 프로세스((다른 프로세스에게 전달할 수 있는 특정한 인터페이스를 필요로 하는))를 허용한다.
 - 적절한 사양은 완전(실행하는데 필요한 모든 것이 명시되어야 한다는 것)하고 중립적이다.
 - completeness and neutrality are important for interoperability and portability.
-- open distributed system이 되기 위해 다른 목표는 서로 다른 구성 요소로 시스템을 쉽게 구성할 수 있어야 한다.
+- open distributed system이 되기 위해 다른 목표는 서로 다른 구성 컴포넌트로 시스템을 쉽게 구성할 수 있어야 한다.
   - 다시 말해 `extensible` 해야 한다.
 
 <br>
@@ -242,8 +243,8 @@ files, services, and networks
 
 ### Separating policy from mechanism
 
-- 유연하기 위해서, 시스템이 작은 것(쉽게 대체되고 요소들이 적용가능한)들의 집합으로 구성되는 것은 중요하다.
-- 웹 브라우저를 캐싱한다면 몇 가지 요소들이 고려되어야 한다.
+- 유연하기 위해서, 시스템이 작은 것(쉽게 대체되고 컴포넌트들이 적용가능한)들의 집합으로 구성되는 것은 중요하다.
+- 웹 브라우저를 캐싱한다면 몇 가지 컴포넌트들이 고려되어야 한다.
   1. **Storage**
   2. **Exemption**
   3. **Sharing**
@@ -319,7 +320,7 @@ forms as they are being filled.
 <br>
 
 **2. Partitioning and distribution**
-   - 요소를 사용하는 것을 포함, 이것을 작은 부분으로 나누고 시스템에 뿌린다.
+   - 컴포넌트를 사용하는 것을 포함, 이것을 작은 부분으로 나누고 시스템에 뿌린다.
    - 예시로는 **DNS** (Internet Domain Name System)가 있다.
    - DNS name 공간은 위계쩍으로 구성되어 `domains`의 tree (겹치지 않는 zone으로 나뉘어져서)로 들어간다.
    - 각 zone의 names는 단일 name server에 의해 관리된다. 
@@ -364,7 +365,7 @@ associated host.
 
 ### High performance distributed computing
 
-- `cluster computing`에서 하드웨어는 비슷한 워크스테이션(빠른 스피드의 지역기반 네트워크들로 이루어진)의 집합으로 이루어져 있다. (각 노드는 같은 운영 시스템에서 실행한다.)
+- `cluster computing`에서 하드웨어는 비슷한 워크스테이션(빠른 스피드의 지역기반 네트워크들로 이루어진)의 집합으로 이루어져 있다. (각 노드는 같은 운영 체제에서 실행한다.)
   - 컴퓨터 클러스터(computer cluster) : 여러 대의 컴퓨터들이 연결되어 하나의 시스템처럼 동작하는 컴퓨터들의 집합
 - `grid computing`과는 다른 케이스인데, 이 서브 그룹은 분산 시스템(컴퓨터 시스템(각 시스템은 다른 관리 도메인아래 존재하며 하드웨어, 소프트웨어, 네트워크 기술이 아주 다른)의 연합으로 구성된)으로 이루어져 있다.
 - 그리드 컴퓨팅의 관점에서 다음 논리적 단계는 단순히 컴퓨팅 집약적인 애플리케이션에 필요한 전체 인프라를 아웃소싱(업무의 일부분을 전문기관에 위탁)한다.
@@ -384,7 +385,7 @@ associated host.
 - 클러스터 컴퓨터의 예시로 그림처럼 리눅스 기반의 `Beowulf clusters`가 있다.
   - 각 클러스터는 컴퓨터 노드(마스터 노드에 의해 통제되고 접속되는)들의 집합으로 구성된다.
   - 마스터는 노드들의 할당을 특정 병령 프로그램으로 갈 수 있는 것을 다루고, 시스템의 유저들에게 인터페이스를 제공한다.
-  - compute node는 미들웨어 기능이 확장된 표준 운영 시스템을 갖추고 있다.
+  - compute node는 미들웨어 기능이 확장된 표준 운영 체제을 갖추고 있다.
 - 클러스터 컴퓨팅의 특징으로는 `homogeneity`(동질성)이 있다.
 
 <br>
@@ -429,9 +430,9 @@ associated host.
 - **Infrastructure** : 이 층은 클라우드 컴퓨팅 플랫폼에서 가장 중요한 근본이다.
   - 이것은 가상 기술(손님들에게 infrastructure(가상 스토리지와 컴퓨팅 리소스로 구성된)를 제공하기 위해)을 배치한다.
   - 클라우드 컴퓨팅은 할당하고 관리하며(가상 스토리지 장치와 가상 서버들을) 발전했다.
-- **Platform** : 플랫폼 계층은 클라우드 컴퓨팅을 손님에게 제공한다. (운영 시스템을 어플리케이션 개발자에게 제공(즉, 쉽게 개발하고 클라우드에서 실행을 필요로 하는 어플리케이션을 쉽게 배치할 수 있는 수단을))
+- **Platform** : 플랫폼 계층은 클라우드 컴퓨팅을 손님에게 제공한다. (운영 체제를 어플리케이션 개발자에게 제공(즉, 쉽게 개발하고 클라우드에서 실행을 필요로 하는 어플리케이션을 쉽게 배치할 수 있는 수단을))
   - 어플리케이션 개발자는 vendor-specific API(업로드하고 프로그램 실행하는 요청들을 포함하는)를 제공받는다.
-  - 이것은 유닉스의 `exec`(실행가능한 파일을 (운영 시스템에게 실행될 수 있게 가져다 주는 것과 같다)와 같다.
+  - 이것은 유닉스의 `exec`(실행가능한 파일을 (운영 체제에게 실행될 수 있게 가져다 주는 것과 같다)와 같다.
   - 플랫폼 계층은 높은 수준의 abstraction(스토리지를 위한)를 제공한다.
   - Amazon S3 스토리지 시스템이 그 예
 - **Application** : 실제 어플리케이션들이 이 계층에서 실행된다.
@@ -458,7 +459,7 @@ layer.
 ### Distributed transaction processing
 
 - 데이터베이스에서 어플리케이션 작동은 `transaction`의 형태로 수행된다.
-  - 트랜잭션을 사용한 프로그래밍은 특별한 기본 요소들(근본적인 분산 시스템이거나 언어 런타임 시스템에 의해 공급되는)을 요구한다.
+  - 트랜잭션을 사용한 프로그래밍은 특별한 기본 컴포넌트들(근본적인 분산 시스템이거나 언어 런타임 시스템에 의해 공급되는)을 요구한다.
 - RPC(; remote procedure calls) (프로시저는 원격 서버에 요청하는)는 트랜잭션으로 캡슐화된다.
 
 ![image](https://user-images.githubusercontent.com/78655692/148694039-8ca6171f-2744-4587-a7cf-5a8a6389a3f8.png)
@@ -493,7 +494,7 @@ layer.
 <br>
 
 - 몇가지 타입의 통신 미들웨어가 존재한다.
-- **RPC**(; remote procedure calls)을 사용하면, 어플리케이션 구성 요소가 효과적으로 요청이 다른 어플리케이션 요소에게(로컬 프로시져 요청을 수행함으로써) 효과적으로 보내지며, 이는 요청이 메시지로 패키지되어 착신자에게 보내지게 된다.
+- **RPC**(; remote procedure calls)을 사용하면, 어플리케이션 컴포넌트가 효과적으로 요청이 다른 어플리케이션 컴포넌트에게(로컬 프로시져 요청을 수행함으로써) 효과적으로 보내지며, 이는 요청이 메시지로 패키지되어 착신자에게 보내지게 된다.
 - **RMI**(; remote method invocations)는 RPC(기능 대신 객체에서 작동하는 것을 제외하면)와 본질적으로 동일하다.
 - RPC와 RMI는 단점(호출자와 발신자 모두 (통신시에) 가동되어 실행되어야 하는)이다. 게다가 그들은 서로 어떻게 참조되어야 하는지 정확히 알고 있어야 한다.
 - 이런 결함은 **MOM**(; message-oriented middleware)를 불러 왔다.
@@ -538,7 +539,7 @@ layer.
 
 ### Mobile computing systems
 
-- `mobility`는 퍼베이시브 시스템의 중요한 구성요소인데 `mobile computing`에 적용 해 볼것이다.
+- `mobility`는 퍼베이시브 시스템의 중요한 컴포넌트인데 `mobile computing`에 적용 해 볼것이다.
 - 몇가지 이슈들이 있다.
   - 모바일 시스템의 부분을 형성한 장치는 매우 광범위하다.
     - 전혀 다른 타입의 장치들은 통신하는데 IP를 쓰고 있다. 
@@ -585,7 +586,7 @@ layer.
 - 병렬 프로세싱으로부터 나타난 분야는 그리드 컴퓨팅(전세계적으로 리소스 공유하는 데 초점을 맞춘)이다. 이것은 클라우드 컴퓨팅으로 이어졌다.
 - 클라우드 컴퓨팅은 높은 성능의 컴퓨팅을 넘어섰고 분산 시스템을 서포트한다.
   - 시스템을 실행하는 트랜잭션은 이런 환경에 배치된다.
-- 분산 시스템의 출현은 구성 요소들이 작아지고 시스템은 Ad hoc fashion으로 구성되며, 대부분 시스템 제어자를 통해 관리되지 않는다.
+- 분산 시스템의 출현은 컴포넌트들이 작아지고 시스템은 Ad hoc fashion으로 구성되며, 대부분 시스템 제어자를 통해 관리되지 않는다.
 - 이것은 후에 퍼베이시브 컴퓨팅 환경이 나타나게 되었다.
 
 
@@ -649,7 +650,7 @@ layer.
 - `explicit` : 명시적, 명백한, 분명한
 - `comprehensibility` : 이해력
 - `adhere to` : 고수하다
-- `component` : 요소, 부품
+- `component` : 컴포넌트, 부품
 - `syntax` : (컴퓨터 언어의) 문법
 - `semantics` : 의미
 - `arbitrary` : 임의의
@@ -704,6 +705,7 @@ layer.
 - `operate` : 동작하다
 - `myriad` : 무수한
 - `unobtrusive` : 눈에 띄지 않는
+- `operating system` : 운영 체제
 
 
 <br>
