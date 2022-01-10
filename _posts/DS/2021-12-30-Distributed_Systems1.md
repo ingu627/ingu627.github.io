@@ -452,6 +452,7 @@ layer.
 
 - 네트워크 어플리케이션은 서버(어플리케이션을 실행하고, 원격 프로그램(**client**라 부름)을 이용할 수 있게)로 구성된다.
   - 클라이언트는 서버에 요청(특정 작동을 실행을 목표로 하는)을 보낸다.
+  - 클라이언트(`client`) : 네트워크를 통하여 서버라는 다른 컴퓨터 시스템 상의 원격 서비스에 접속할 수 있는 응용 프로그램이나 서비스 [^3]
 
 <br>
 <br>
@@ -715,3 +716,4 @@ layer.
 
 [^1]: <https://en.wikipedia.org/wiki/Plug_computer>
 [^2]: [[네트워크] 노드(node)란? - 두더지 개발자](https://engineer-mole.tistory.com/141)
+[^3]: <https://ko.wikipedia.org/wiki/%ED%81%B4%EB%9D%BC%EC%9D%B4%EC%96%B8%ED%8A%B8_(%EC%BB%B4%ED%93%A8%ED%8C%85)>
