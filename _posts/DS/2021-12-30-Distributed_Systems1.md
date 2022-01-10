@@ -31,7 +31,7 @@ last_modified_at: 2022-01-10
      - 병령 프로그램의 적응과 발전으로 다시 직면하고 있다.
      - 가격이 1/1000으로 싸졌다.
   2. the invention of `high-speed computer networks`
-  - `LAN`(; Local-area networks)은 빌딩 안의 수천대의 장비들에게 정보를 마이크로초 단위로 전송이 가능해졌다. (공유기가 그 예)
+  - `LAN`(; Local-area networks)으로 빌딩 안의 수천대의 장비들에게 정보를 마이크로초 단위로 전송이 가능해졌다. (공유기가 그 예)
   - `WAN`(; Wide-area network)은 몇백만대의 기계들에게 아주 빠른 속도로 전송이 가능해지도록 만들었다.
 - 이러한 발전으로 우리는 소형 컴퓨터 시스템을 가질수 있게 되었다. 스마트폰 또한 하나의 결과물로 볼 수 있을 것이다.
 - 센서, 메모리, 강력한 CPU로 채워진 이 장치들은 본격적으로 하기에 준비가 다 된 컴퓨터 못지 않다. (네트워크 능력도 가지고 있다.)
@@ -64,7 +64,7 @@ each being able to behave **independently** of each other
 
 ### 특징1. Collection of autonomous computing elements
 
-- 현대 분산 시스템은 높은 성능의 컴퓨터들부터 작은 plug computer까지 많은 종류의 노드들로 구성되어 있다. 
+- 현대 분산 시스템은 높은 성능의 컴퓨터들부터 작은 플러그 컴퓨팅까지 많은 종류의 노드들로 구성되어 있다. 
 - **노드들은 서로 독립적으로 활동한다.** (그들이 서로를 무시한다 하더라도) 따라서 노드들을 같은 분산 시스템에 넣어 사용하지 않는다.
 - 노드들은 공통의 목표(서로 메시지를 교환하는 것)를 달성하기 위해 프로그램화 되어있다.
   - 노드는 들어오는 메시지들(차례로 진행되는데, 메시지를 더 먼 곳까지 도달)에 반응한다.
@@ -73,12 +73,12 @@ each being able to behave **independently** of each other
   - 이 시간 참조의 결점은 분산 시스템에서 기능적 동기화(synchronization)와 협력 문제(coordination)를 유발하기도 한다.
 - 노드들을 집합으로 처리하는 것은 그런 집합을 관리할 필요가 있음을 암시한다.
   - 즉, 노드들이 시스템에 속하는지 아닌지 등록해야 하며, 각각의 멤버에게 노드들의 리스트(직접 전달할 수 있는)를 제공해야 한다.
-- `group membership`을 관리하는 것은 승인 제어(admission control)의 이유 때문에 매우 어려울 수 있다.
+- `group membership`을 관리하는 것은 승인 제어(`admission control`)의 이유 때문에 매우 어려울 수 있다.
   - 먼저 open group과 closed group를 구별해야 한다.
   - open group에서는 어떤 노드도 분산 시스템에 join하는 것을 허락해야 한다. (효율적으로 시스템에서 다른 노드에게 메시지를 전할 수 있게)
   - closed group에서는 이미 원래 멤버 서로 통신할 수 있고, 그 그룹에 합류와 떠나는 것에는 별도의 메커니즘이 필요하다.
 - 승인 제어(`admission control`)의 어려움
-  1. 기계는 노드를 인증해야 한다. (인증을 관리하는 것은 확장성 병목 현상을 쉽게 만들어낸다.)
+  1. 노드를 인증하기 위한 메커니즘이 필요하다. (인증을 관리하는 것은 확장성 병목 현상을 쉽게 만들어낸다.)
   2. 각각 노드는 다른 그룹 멤버와 실제로 통신하는지 확인해야 한다.
   3. 멤버가 nonmember에게 쉽게 전달하는지 고려(분산 시스템에서 통신 이슈에 대해 신뢰성을)해봐야 한다. 
 
@@ -104,12 +104,15 @@ each being able to behave **independently** of each other
 - single coherent system에서 노드들의 집합은 사용자와 시스템 사이에서 장소, 시간, 어떻게 작동하든지 간에 전체가 똑같이 작동한다.
 - `single coherent`로 보이는 것은 어려울 수 있다.
   - 마지막 user는 어떤 프로세스가 현재 실행되는지 몰라야 한다.
-  - 데이터가 저장되는 위치는 문제가 되지 않아야 한다. 시스템은 성능을 높이기 위해 데이터를 복제할 수 도 있다는 것도 문제가 되지 않아야 한다.
+  - 데이터가 저장되는 위치는 문제가 되지 않아야 한다. 시스템은 성능을 높이기 위해 데이터를 복제할 수도 있다는 것도 문제가 되지 않아야 한다.
     - 이것을 `distribution transparency`(투명성) 라 부른다.
     - 이것은 리소스는 통합 파일 시스템 인터페이스(파일이나, 저장 장치, 메모리, 네트워크 사이의 차이를 효과적으로 숨겨주는)를 통해 접근한다는 유닉스의 운영시스템과 비슷한 접근이다.
       - **인터페이스**(interface) : 연결을 의미 (a와 b를 연결)
+      - **인터페이스** : 서로 다른 두 개의 시스템, 장치 사이에서 정보나 신호를 주고받는 경우의 접점이나 경계면
+        - 사용자가 기기를 쉽게 동작시키는데 도움을 주는 시스템
+        - 컴퓨팅에서 컴퓨터 시스템끼리 정보를 교환하는 공유 경계
 - 하지만 `single coherent system`로 되게 하는 건 `trade-off`이다.
-  - 분산시스템은 많은 networked node로 이루어져있기 때문에 system fail이 되는 시간을 피할 수는 없다. (어떤 애플리케이션이 성공적으로 실행되면 다른 것은 정지가 되는)
+  - 분산시스템은 많은 네트워크 노드로 이루어져있기 때문에 시스템 고장을 피할 수는 없다. (어떤 애플리케이션이 성공적으로 실행되면 다른 것은 정지가 되는)
   - `partial failure`은 복잡한 시스템에서 항상 발생하기 때문에 분산 시스템에서는 숨기기 어렵다.
   - "one in which the failure of a computer you didn’t even know existed can render your own computer unusable"
 
@@ -127,17 +130,20 @@ extends over multiple machines, offering each application the same interface.
 - 분산 시스템은 단일 분산 어플리케이션의 컴포넌트들이 서로 잘 전달할 수 있는 수단을 제공한다.
   - **component** (컴포넌트) : 하나의 기능을 하는 단위 (내부를 이루는 모든 요소)
 - `middleware`은 분산시스템과 동일하다고 볼 수 있다.
-  - 미들웨어 : 서로 다른 여러 프로그램을 함께 운용할 수 있는 소프트웨어
+  - **미들웨어** : 서로 다른 여러 프로그램을 함께 운용할 수 있는 소프트웨어
   - 어플리케이션들에게 효과적으로 공유하고 (이런 자원을 네트워크를 통해) 배치하는 것들을 제공하는 리소스의 관리자(resource management)
+  - 운영체제에서 서비스를 제공하는 항목들
   - Facilities for interapplication communication
   - Security services
   - Accounting services
   - Masking of and recovery from failures
 
-- middleware 서비스는 네트워크 환경을 제공한다.
-- 미들웨어는 컴포넌트와 기능들로 사용되는 컨테이너로 볼 수 있다. 어플리케이션들이 각각 실행되지 않게 도와주는
+- 미들웨어 서비스는 네트워크 환경을 제공한다. (운영체제와 다른점)
+- 미들웨어는 컴포넌트와 기능들로 사용되는 컨테이너(어플리케이션들이 각각 실행되지 않게 도와주는)로 볼 수 있다. 
 
 <br>
+
+- 미들웨어 서비스의 예시들
 
 1. **Communication** 
   - `Remote Procedure Call (RPC)`라고 불린다. RPC 서비스는 어플리케이션에게 원격 컴퓨터에서 실행되는 기능을 호출한다. 
@@ -306,9 +312,9 @@ files, services, and networks
 **1. Hiding communication latencies**
    - `geographical scalability`에 적용가능
    - 원격 서비스 요청의 응답 시간을 기다리는 것을 가능한 피함
-   - 어플리케이션을 요청할 때 `asynchronous communication`(동시 통신)만을 사용
+   - 어플리케이션을 요청할 때 `asynchronous communication`(비동기 통신)만을 사용
      - 응답이 오면, 어플리케이션은 중단되고 이전의 발행된 요청을 끝마치기 위해 특별한 핸들러가 요청된다.
-     - `asynchronous communication`(동시 통신)은 batch-processing system과 parallel application에 사용된다. (독립적인 task가 다른 task가 전달이 끝마치는 것을 기다리는 동안 실행이 schedule되는)
+     - `asynchronous communication`(비동기 통신)은 batch-processing system과 parallel application에 사용된다. (독립적인 task가 다른 task가 전달이 끝마치는 것을 기다리는 동안 실행이 스케줄되는)
      - 새로운 thread of control이 요청을 수행하기 위해 시작된다.
 
 ![image](https://user-images.githubusercontent.com/78655692/148324936-9caec306-e236-4a63-af59-346c74cbd769.png)
@@ -456,6 +462,7 @@ layer.
 - 네트워크 어플리케이션은 서버(어플리케이션을 실행하고, 원격 프로그램(**client**라 부름)을 이용할 수 있게)로 구성된다.
   - 클라이언트는 서버에 요청(특정 작동을 실행을 목표로 하는)을 보낸다.
     - **클라이언트**(`client`) : 네트워크를 통하여 서버라는 다른 컴퓨터 시스템 상의 원격 서비스에 접속할 수 있는 응용 프로그램이나 서비스 [^3]
+    - 클라이언트(client)는 서비스 요구자, 서버(server)는 서비스 제공자
 
 <br>
 <br>
@@ -710,6 +717,7 @@ layer.
 - `myriad` : 무수한
 - `unobtrusive` : 눈에 띄지 않는
 - `operating system` : 운영 체제
+- `bandwith` : 대역폭
 
 
 <br>
