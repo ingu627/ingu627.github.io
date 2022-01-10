@@ -73,14 +73,14 @@ each being able to behave **independently** of each other
   - 이 시간 참조의 결점은 분산 시스템에서 기능적 동기화(synchronization)와 협력 문제(coordination)를 유발하기도 한다.
 - 노드들을 집합으로 처리하는 것은 그런 집합을 관리할 필요가 있음을 암시한다.
   - 즉, 노드들이 시스템에 속하는지 아닌지 등록해야 하며, 각각의 멤버에게 노드들의 리스트(직접 전달할 수 있는)를 제공해야 한다.
-- `group membership`을 관리하는 것은 admission control의 이유 때문에 매우 어려울 수 있다.
+- `group membership`을 관리하는 것은 승인 제어(admission control)의 이유 때문에 매우 어려울 수 있다.
   - 먼저 open group과 closed group를 구별해야 한다.
   - open group에서는 어떤 노드도 분산 시스템에 join하는 것을 허락해야 한다. (효율적으로 시스템에서 다른 노드에게 메시지를 전할 수 있게)
-  - closed group에서는 오직 멤버들에서 그룹이 서로 간에 교류를 하며 분리된 기계는 노드가 그룹을 join or leave하게 시킨다.
-- `admission control`의 어려움
+  - closed group에서는 이미 원래 멤버 서로 통신할 수 있고, 그 그룹에 합류와 떠나는 것에는 별도의 메커니즘이 필요하다.
+- 승인 제어(`admission control`)의 어려움
   1. 기계는 노드를 인증해야 한다. (인증을 관리하는 것은 확장성 병목 현상을 쉽게 만들어낸다.)
-  2. 각각 노드는 진짜로 다른 그룹 멤버에 전달하는데 확인해야 한다.
-  3. 멤버가 nonmember에게 쉽게 전달하는지 고려해봐야 한다. (기밀성이 문제라면 trust issues에 직면할 수 있다.)
+  2. 각각 노드는 다른 그룹 멤버와 실제로 통신하는지 확인해야 한다.
+  3. 멤버가 nonmember에게 쉽게 전달하는지 고려(분산 시스템에서 통신 이슈에 대해 신뢰성을)해봐야 한다. 
 
 <br>
 
@@ -92,7 +92,7 @@ each being able to behave **independently** of each other
 - 두 가지 type이 있다.
   - *1.* `Structured overlay` : 각 노드는 이웃들에게 전달할 수 있게 잘 정의되어 있다. (노드들은 tree이거나 ring형으로 이뤄져 있다.)
   - *2.* `Unstructured overlay` : 각 노드는 다른 노드들을 **랜덤하게** 선택되는 많은 참조를 가지고 있다.
-- 어떤 경우든 `overlay network`는 언제나 `connected`해야 한다. (두개의 노드는 반드시 전달 통로가 있다.)
+- 어떤 경우든 `overlay network`는 언제나 연결돼야 한다. (두개의 노드는 반드시 전달 통로가 있다.)
 - 잘 알려진 overlay로는 `peer-to-peer` (P2P) 네트워크가 있다.
 
 <br> 
@@ -101,7 +101,7 @@ each being able to behave **independently** of each other
 ### 특징2. Single coherent system
 
 - 분산시스템은 single coherent system으로 보여야 한다.
-- single coherent system에서 노드들의 집합은 user와 system 사이에서 장소, 시간, 어떻게 작동하든지 간에 전체가 똑같이 작동한다.
+- single coherent system에서 노드들의 집합은 사용자와 시스템 사이에서 장소, 시간, 어떻게 작동하든지 간에 전체가 똑같이 작동한다.
 - `single coherent`로 보이는 것은 어려울 수 있다.
   - 마지막 user는 어떤 프로세스가 현재 실행되는지 몰라야 한다.
   - 데이터가 저장되는 위치는 문제가 되지 않아야 한다. 시스템은 성능을 높이기 위해 데이터를 복제할 수 도 있다는 것도 문제가 되지 않아야 한다.
@@ -200,7 +200,7 @@ files, services, and networks
   - 네임이 중요한 역할을 한다.
   - `location transparency`는 논리적 네임 (name은 비밀리에 인코드되지 않는다.)이 리소스에 할당함으로써 얻을 수 있다. 
   - 이러한 이름의 예시로 URL(; uniform resource locator)이 있다.
-  - Web은이러한 사이트는 데이터 센터에서 다른 곳에 이동되어 user는 알아차리지 못한다. (**relocation transparency**의 예시)
+  - Web은이러한 사이트는 데이터 센터에서 다른 곳에 이동되어 사용자는 알아차리지 못한다. (**relocation transparency**의 예시)
 - **migration transparency**
   - 프로세스와 리소스의 이동성을 제공한다. (진행되는 전달과 운영에 영향을 미치지 않고)
     - 모바일 폰 사이의 전달이 예시가 될 수 있다.
@@ -275,7 +275,7 @@ files, services, and networks
   - 병목현상이 될 수 있는 **3가지** 원인
     - CPU 제한으로 컴퓨터 용량
     - 저장 용량 (I/O 전송 비율도 포함)
-    - user와 centralized service의 네트워크
+    - 사용자와 centralized service의 네트워크
 
 <br>
 
@@ -628,7 +628,7 @@ layer.
 - `confidentiality` : 기밀성
 - `equipped with` : 갖춘
 - `look up` : 찾다
-- `communicate.` : 전달하다
+- `communicate.` : 통신하다, 메시지를 전달한다 
 - `intricate` : 뒤얽힌
 - `opt for` : 선택하다
 - `roughly` : 대충

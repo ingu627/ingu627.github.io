@@ -77,6 +77,45 @@ last_modified_at: 2022-01-10
   - 프로토콜은 계층이 통신을 수립하기 위해 실행한다.
 - TCP(; Transmission Control Protocol)는 메시지가 연결 설정 도는 해제를 위해 교환되는 것을 명시하며, 이는 전송된 데이터의 순서를 보존하기 위해서 필요로 하며, 데이터(전송하는 동안 잃어버렸던)를 감지하고 바로잡기 위해서도 그 이유이다. 
 
+<br>
+
+- `Two communicating parties`
+
+```python
+from socket import *
+
+# A simple server
+s = socket(AF_INET, SOCK_STREAM) # 소켓 = 연결을 위한 출입구
+(conn, addr) = s.accept() 
+while True:
+    data = conn.recv(1024)
+    if not data: 
+        break
+    conn.send(str(data)+'*')
+conn.close()
+
+# A client
+s = socket(AF_INET, SOCK_STREAM)
+s.connect((HOST, PORT))
+s.send('Hello, world')
+data = s.recv(1024)
+print data
+s.close()
+```
+
+- `socket()` : to create an object representing the connection
+- `accept()` : a blocking call to wait for incoming connection requests; if successful, the call returns a new socket for a separate connection
+- `connect()` : to set up a connection to a specified party
+- `close()` : to tear down a connection
+- `send(), recv()` : to send and receive data over a connection, respectively
+
+
+<br>
+<br>
+
+### Application layering
+
+- 
 
 
 
@@ -99,3 +138,4 @@ last_modified_at: 2022-01-10
 - `organization` : 구조
 - `party` : 당, 집단
 - `correct` : 바로잡다
+- `advocate` : 지지하다
