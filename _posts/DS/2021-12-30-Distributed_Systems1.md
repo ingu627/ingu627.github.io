@@ -31,12 +31,12 @@ last_modified_at: 2022-01-10
      - 병령 프로그램의 적응과 발전으로 다시 직면하고 있다.
      - 가격이 1/1000으로 싸졌다.
   2. the invention of `high-speed computer networks`
-  - `LAN`(; Local-area networks)은 수천 대의 기계들에게 정보들을 마이크로초 단위로 전송이 가능해졌다.
+  - `LAN`(; Local-area networks)은 빌딩 안의 수천대의 장비들에게 정보를 마이크로초 단위로 전송이 가능해졌다. (공유기가 그 예)
   - `WAN`(; Wide-area network)은 몇백만대의 기계들에게 아주 빠른 속도로 전송이 가능해지도록 만들었다.
 - 이러한 발전으로 우리는 소형 컴퓨터 시스템을 가질수 있게 되었다. 스마트폰 또한 하나의 결과물로 볼 수 있을 것이다.
 - 센서, 메모리, 강력한 CPU로 채워진 이 장치들은 본격적으로 하기에 준비가 다 된 컴퓨터 못지 않다. (네트워크 능력도 가지고 있다.)
 - 그래서 `plug computer`가 등장했다.
-  >A plug computer is an external device, often configured for use in the home or office as a compact computer. The name is derived from the small configuration of such devices. [^1]
+  > A plug computer is an external device, often configured for use in the home or office as a compact computer. The name is derived from the small configuration of such devices. [^1]
 - 이런 기술들의 결과로 수많은 네트워크 컴퓨터들로 구성된 컴퓨팅 시스템을 구현할 수 있게 되었다.
 - 이러한 컴퓨터들은 분산되어졌는데 `distributed system`을 형성했다고 말할 수 있다.
 - 이런 분산 시스템의 크기는 한 줌의 장치로부터 다양해졌다.
@@ -53,7 +53,9 @@ last_modified_at: 2022-01-10
   - *1.* distributed system is a collection of computing elements
 each being able to behave **independently** of each other
     - `nodes` = autonomous computing elements (하드웨어 장비나 소프트웨어 프로세스가 될 수 있다.)
-    - 노드 = 컴퓨터 네트워크를 구성하는 기기 1대 [^2]
+    - **노드** = 컴퓨터 네트워크를 구성하는 기기 1대 [^2]
+    - **네트워크**(network) : 한 컴퓨터에서 다른 컴퓨터로 시그널(메시지)을 보내는 것
+    - **라우팅**(routing) : 어떻게 보낼지 담당하는 역할
   - *2.* users (be they people or applications) believe they are dealing with **a single system**
     - single system안에서 sensor networks로 높은 성능의 메인프레임 컴퓨터들부터 작은 장치들까지 다룰 수 있다.
 
@@ -105,6 +107,7 @@ each being able to behave **independently** of each other
   - 데이터가 저장되는 위치는 문제가 되지 않아야 한다. 시스템은 성능을 높이기 위해 데이터를 복제할 수 도 있다는 것도 문제가 되지 않아야 한다.
     - 이것을 `distribution transparency`(투명성) 라 부른다.
     - 이것은 리소스는 통합 파일 시스템 인터페이스(파일이나, 저장 장치, 메모리, 네트워크 사이의 차이를 효과적으로 숨겨주는)를 통해 접근한다는 유닉스의 운영시스템과 비슷한 접근이다.
+      - **인터페이스**(interface) : 연결을 의미 (a와 b를 연결)
 - 하지만 `single coherent system`로 되게 하는 건 `trade-off`이다.
   - 분산시스템은 많은 networked node로 이루어져있기 때문에 system fail이 되는 시간을 피할 수는 없다. (어떤 애플리케이션이 성공적으로 실행되면 다른 것은 정지가 되는)
   - `partial failure`은 복잡한 시스템에서 항상 발생하기 때문에 분산 시스템에서는 숨기기 어렵다.
@@ -122,7 +125,7 @@ each being able to behave **independently** of each other
 extends over multiple machines, offering each application the same interface.
 - 각각의 어플리케이션은 같은 인터페이스를 제공한다.
 - 분산 시스템은 단일 분산 어플리케이션의 컴포넌트들이 서로 잘 전달할 수 있는 수단을 제공한다.
-  - `component` (컴포넌트) : 하나의 기능을 하는 단위
+  - **component** (컴포넌트) : 하나의 기능을 하는 단위 (내부를 이루는 모든 요소)
 - `middleware`은 분산시스템과 동일하다고 볼 수 있다.
   - 미들웨어 : 서로 다른 여러 프로그램을 함께 운용할 수 있는 소프트웨어
   - 어플리케이션들에게 효과적으로 공유하고 (이런 자원을 네트워크를 통해) 배치하는 것들을 제공하는 리소스의 관리자(resource management)
@@ -161,7 +164,7 @@ extends over multiple machines, offering each application the same interface.
 ### Supporting resource sharing
 
 - 분산시스템의 중요한 목표는 유저들이 원격 리소스를 쉽게 접근하고 공유할 수 있도록 만들어야 한다.
-  - `resources` = peripherals, storage facilities, data,
+  - **리소스(resources)** = peripherals, storage facilities, data,
 files, services, and networks
 - 공유하는 것은 economics(경제성) 이유가 있다.
 - 인터넷 연결은 넓게 분산된 사람들이 같이 일할 수 있도록 허용해준다. 
@@ -177,7 +180,7 @@ files, services, and networks
 
 ### Types of distribution transparency
 
-- object : process or a resource
+- **객체**(object) : process or a resource
 
 |Transparency| Description|
 |---|---|
@@ -194,8 +197,8 @@ files, services, and networks
 - **access transparency** 
   - 기초 레벨에서, 우리는 기계 구조가 다름을 숨기고 싶지만, 그보다 더 중요한 것은 데이터가 다른 기계 (또는 시스템)에서 잘 나타나는 가를 보아야 한다.
 - **location transparency**
-  - `name`이 중요한 역할을 한다.
-  - `location transparency`는 logical name (name은 비밀리에 인코드되지 않는다.)이 리소스에 할당함으로써 얻을 수 있다. 
+  - 네임이 중요한 역할을 한다.
+  - `location transparency`는 논리적 네임 (name은 비밀리에 인코드되지 않는다.)이 리소스에 할당함으로써 얻을 수 있다. 
   - 이러한 이름의 예시로 URL(; uniform resource locator)이 있다.
   - Web은이러한 사이트는 데이터 센터에서 다른 곳에 이동되어 user는 알아차리지 못한다. (**relocation transparency**의 예시)
 - **migration transparency**
@@ -204,7 +207,7 @@ files, services, and networks
 - **replication transparency**
   - 자원들은 복제한다. 1) 가용성을 늘리기 위해 또는 2) copy를 접근 가능하도록 가까이 둠으로써 성능을 향상시키기 위해 
 - **concurrency transparency**
-  - shared resource에 동시 접근은 해당 리소스를 일관된(consistent) 상태로 유지한다는 것이다.
+  - 공유된 리소스에 동시 접근은 해당 리소스를 일관된(consistent) 상태로 유지한다는 것이다.
   - `consistency`는 잠금을 통해 얻을 수 있는데 유저는 차례로 원하는 리소스에 대해 배타적인 접근을 갖게 된다.
 - **failure transparency**
   - 유저나 어플리케이션이 시스템 fail을 알아차리 못해서 일을 적절하게 수행하고 시스템은 자동적으로 failure로부터 회복한다.
@@ -236,7 +239,7 @@ files, services, and networks
 - 적절한 사양은 완전(실행하는데 필요한 모든 것이 명시되어야 한다는 것)하고 중립적이다.
 - completeness and neutrality are important for interoperability and portability.
 - open distributed system이 되기 위해 다른 목표는 서로 다른 구성 컴포넌트로 시스템을 쉽게 구성할 수 있어야 한다.
-  - 다시 말해 `extensible` 해야 한다.
+  - 다시 말해 `extensible`(확장성) 해야 한다.
 
 <br>
 <br>
@@ -278,7 +281,7 @@ files, services, and networks
 
 ### Geographical scalability
 
-- 대부분의 지역 기반 네트워크들이 `synchronous communication`에 기반하기 때문에 기존 분산 시스템을 확장하는 것은 어렵다.
+- 대부분의 지역 기반 네트워크들이 `synchronous communication`(동시 통신)에 기반하기 때문에 기존 분산 시스템을 확장하는 것은 어렵다.
 
 <br>
 
@@ -303,9 +306,9 @@ files, services, and networks
 **1. Hiding communication latencies**
    - `geographical scalability`에 적용가능
    - 원격 서비스 요청의 응답 시간을 기다리는 것을 가능한 피함
-   - 어플리케이션을 요청할 때 `asynchronous communication`만을 사용
+   - 어플리케이션을 요청할 때 `asynchronous communication`(동시 통신)만을 사용
      - 응답이 오면, 어플리케이션은 중단되고 이전의 발행된 요청을 끝마치기 위해 특별한 핸들러가 요청된다.
-     - `asynchronous communication`은 batch-processing system과 parallel application에 사용된다. (독립적인 task가 다른 task가 전달이 끝마치는 것을 기다리는 동안 실행이 schedule되는)
+     - `asynchronous communication`(동시 통신)은 batch-processing system과 parallel application에 사용된다. (독립적인 task가 다른 task가 전달이 끝마치는 것을 기다리는 동안 실행이 schedule되는)
      - 새로운 thread of control이 요청을 수행하기 위해 시작된다.
 
 ![image](https://user-images.githubusercontent.com/78655692/148324936-9caec306-e236-4a63-af59-346c74cbd769.png)
@@ -332,10 +335,10 @@ associated host.
 <br>
 
 - 또 다른 예시로는 `World Wide Web`이 있다.
-- Web은 거대한 document에 기반한 정보 시스템이다. (각 document는 URL 형태로 고유 name을 가지고 있다.)
+- Web은 거대한 문서에 기반한 정보 시스템이다. (각 문서는 URL 형태로 고유 name을 가지고 있다.)
 - 마치 단일 서버에 있는 것처럼 보인다.
-- 하지만 Web은 몇 백만의 서버를 거쳐 (각각의 서버는 많은 웹 document를 관리한다.)물리적으로 `partitioned and distributed`하다.
-- document를 관리하는 서버의 name은 document의 URL로 인코드 된다.
+- 하지만 Web은 몇 백만의 서버를 거쳐 (각각의 서버는 많은 웹 문서를 관리한다.)물리적으로 `partitioned and distributed`하다.
+- 문서를 관리하는 서버의 네임은 문서의 URL로 인코드 된다.
 
 <br>
 
@@ -346,7 +349,7 @@ associated host.
     - 하지만 복제와 다르게, 캐싱은 클라이언트의 리소스를 결정한다.(소유자의 리소스가 아니라)
 - 하지만, 캐싱과 복제는 `consistency`(일관성) 문제점이 있다.
 - 어느 정도까지 불일치가 허용될 수 있는지는 리소스의 사용에 따라 크게 달라진다.
-  - 강한 consistency의 문제점은 업데이트가 즉각적으로 다른 모든 copy들에게 전달되어야 한다는 점이다.
+  - 강한 일관성의 문제점은 업데이트가 즉각적으로 다른 모든 copy들에게 전달되어야 한다는 점이다.
   - 두개의 업데이트가 동시에 진행된다면, 업데이트는 어느곳이든 똑같은 순서로 진행되어야 하는데 전역 순서에서 문제가 생긴다.
 - 그래서 복제는 전역 동기화 메커니즘이 필요하다. 하지만 이런 메커니즘은 상당히 구현하기 힘들다.
 
@@ -428,9 +431,9 @@ associated host.
 - **Hardware** : 가장 낮은 계층은 필요한 하드웨어(프로세서, 라우터, 파워, 쿨링 시스템)를 관리하는 수단으로 형성된다.
   - 데이터 센터에서 실행되며, 리소스(customer들이 절대로 직접 볼 수 없는)가 들어있다.
 - **Infrastructure** : 이 층은 클라우드 컴퓨팅 플랫폼에서 가장 중요한 근본이다.
-  - 이것은 가상 기술(손님들에게 infrastructure(가상 스토리지와 컴퓨팅 리소스로 구성된)를 제공하기 위해)을 배치한다.
+  - 이것은 가상 기술(고객들에게 infrastructure(가상 스토리지와 컴퓨팅 리소스로 구성된)를 제공하기 위해)을 배치한다.
   - 클라우드 컴퓨팅은 할당하고 관리하며(가상 스토리지 장치와 가상 서버들을) 발전했다.
-- **Platform** : 플랫폼 계층은 클라우드 컴퓨팅을 손님에게 제공한다. (운영 체제를 어플리케이션 개발자에게 제공(즉, 쉽게 개발하고 클라우드에서 실행을 필요로 하는 어플리케이션을 쉽게 배치할 수 있는 수단을))
+- **Platform** : 플랫폼 계층은 클라우드 컴퓨팅을 고객에게 제공한다. (운영 체제를 어플리케이션 개발자에게 제공(즉, 쉽게 개발하고 클라우드에서 실행을 필요로 하는 어플리케이션을 쉽게 배치할 수 있는 수단을))
   - 어플리케이션 개발자는 vendor-specific API(업로드하고 프로그램 실행하는 요청들을 포함하는)를 제공받는다.
   - 이것은 유닉스의 `exec`(실행가능한 파일을 (운영 체제에게 실행될 수 있게 가져다 주는 것과 같다)와 같다.
   - 플랫폼 계층은 높은 수준의 abstraction(스토리지를 위한)를 제공한다.
@@ -452,7 +455,7 @@ layer.
 
 - 네트워크 어플리케이션은 서버(어플리케이션을 실행하고, 원격 프로그램(**client**라 부름)을 이용할 수 있게)로 구성된다.
   - 클라이언트는 서버에 요청(특정 작동을 실행을 목표로 하는)을 보낸다.
-  - 클라이언트(`client`) : 네트워크를 통하여 서버라는 다른 컴퓨터 시스템 상의 원격 서비스에 접속할 수 있는 응용 프로그램이나 서비스 [^3]
+    - **클라이언트**(`client`) : 네트워크를 통하여 서버라는 다른 컴퓨터 시스템 상의 원격 서비스에 접속할 수 있는 응용 프로그램이나 서비스 [^3]
 
 <br>
 <br>
@@ -512,7 +515,7 @@ layer.
 - 하지만 모바일이나 임베디드 컴퓨팅 장치들이 바뀜에 따라 `pervasive systems`로 불리는 것들이 나왔다.
 - pervasive systems은 우리 주변에 자연스럽게 섞이기 위한 것이다.
   - pervasive system은 많은 센서들(사용자의 행동에 대한 다양한 측면을 파악하는)을 갖추고 있다.
-  - 마찬가지로, 이것은 무수한 액츄에이더(정보와 피드백을 제공하기 위함과 행동을 조종하기 위한)를 가지고 있다.
+  - 마찬가지로, 이것은 무수한 **액츄에이더**(정보와 피드백을 제공하기 위함과 행동을 조종하기 위한)를 가지고 있다.
 - pervasive system 속의 많은 장치들은 작아지고, 배터리화, 모바일, 무선 연결 등이 특징이다. (Internet of Things라 불리는 그들의 역할)
 
 <br>
