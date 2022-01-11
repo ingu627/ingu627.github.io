@@ -6,10 +6,10 @@ tag : [book, self_development, thought]
 toc: true
 sidebar_main: true
 
-last_modified_at: 2022-01-08
+last_modified_at: 2022-01-12
 ---
 
-<img align='right' width='200' height='200' src='https://image.aladin.co.kr/product/10946/74/cover500/8997780239_1.jpg
+<img align='right' width='200' height='200' src='https://image.aladin.co.kr/product/10946/74/cover500/8997780239_1.jpg'>
 
 ## "노무현, 마지막 인터뷰" 책 리뷰 - 오연호
 
