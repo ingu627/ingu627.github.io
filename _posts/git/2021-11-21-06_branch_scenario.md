@@ -1,15 +1,17 @@
 ---
 layout: single
-title: "깃(GIT) (7)- branch scenario, merge"
+title: "깃(GIT) (5)- branch scenario, merge"
 categories: git
 tag : [git]
 toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2021-11-21
+last_modified_at: 2022-01-11
 ---
 
+<br>
+<br>
 
 ## branch scenario 
 
@@ -17,6 +19,8 @@ last_modified_at: 2021-11-21
 
 > 브랜치를 조작할 때는 반드시 `master` 브랜치의 최소 1개의 커밋은 있어야한다!!!
 
+<br>
+<br>
 
 ### 실습 준비
 
@@ -46,6 +50,8 @@ b9aaaf5 (HEAD -> master) test3
 acf00f0 Initial commit
 ```
 
+<br>
+<br>
 
 ### HEAD
 
@@ -54,6 +60,8 @@ acf00f0 Initial commit
 - 현재 위치한 브랜치의 최신 커밋
 - HEAD는 현재 브랜치를 가리키는 포인터 
 
+<br>
+<br>
 
 ### ex. 이제 우리는 로그인 기능을 개발해본다고 가정
 
@@ -63,6 +71,9 @@ $ git branch
   feature/login
 * master
 ```
+
+<br>
+<br>
 
 ### master 브랜치에서 마지막 줄 추가
 
@@ -88,6 +99,9 @@ b9aaaf5 (feature/login) test3
 67f01f6 text2
 acf00f0 Initial commit
 ```
+
+<br>
+<br>
 
 ### 브랜치 이동을 하고 `a.txt`를 확인해보자
 
@@ -162,6 +176,9 @@ $ git log --all --graph --oneline
 * acf00f0 Initial commit
 ```
 
+<br>
+<br>
+
 ## 2. branch merge scenario 
 
 - 드라이브에 git-merge 폴더 생성 후 해당 폴더에서 vs code를 열자!
@@ -211,6 +228,9 @@ Date:   Sun Nov 21 19:41:06 2021 +0900
 
     master test 1
 ```
+
+<br>
+<br>
 
 ## 3가지 병합 상황
 
@@ -309,6 +329,9 @@ $ git log --oneline
 6302c25 (HEAD -> master) login test 1
 9fe5f83 master test 1
 ```
+
+<br>
+<br>
 
 ## 2. Merge commit -> conflict x
 
@@ -445,6 +468,9 @@ $ git log --all --graph --oneline
 * 6302c25 login test 1
 * 9fe5f83 master test 1
 ```
+
+<br>
+<br>
 
 ## 3. Merge commit -> conflict o
 
@@ -626,6 +652,9 @@ $ git log --all --oneline --graph
 * 6302c25 login test 1
 * 9fe5f83 master test 1
 ```
+
+<br>
+<br>
 
 ## References 
 

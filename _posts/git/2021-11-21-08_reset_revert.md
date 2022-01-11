@@ -1,15 +1,17 @@
 ---
 layout: single
-title: "깃(GIT) (9)- reset, revert"
+title: "깃(GIT) (7)- reset, revert"
 categories: git
 tag : [git]
 toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2021-11-21
+last_modified_at: 2022-01-11
 ---
 
+<br>
+<br>
 
 ## reset vs revert
 
@@ -18,6 +20,9 @@ last_modified_at: 2021-11-21
 - [https://git-scm.com/docs/git-reset](https://git-scm.com/docs/git-reset)
 - **"시계를 마치 과거로 돌리는 듯한 행위"**
 - 특정 커밋으로 되돌아가며 되돌아간 특정 커밋 이후의 커밋들은 모두 사라지며, 파일 상태는 옵션을 통해 결정
+
+<br>
+<br>
 
 ## 3가지 옵션
 
@@ -70,12 +75,17 @@ On branch master
 nothing to commit, working tree clean
 ```
 
+<br>
+<br>
+
 ### reset 특징들 
 
 - `reset`은 과거로 돌아가게 되면 돌아간 커밋 이후의 커밋은 모두 히스토리에서 사라짐
 - **커밋 히스토리가 바뀌기 때문에** 다른 사람과  공유하는 브랜치에서 사용 시 충돌이 발생
 - 공유하는 브랜치에서 이전 커밋을 수정하고 싶을 때는 `git revert` 사용
 
+<br>
+<br>
 
 ## revert
 
@@ -87,6 +97,8 @@ nothing to commit, working tree clean
 
 <img width="705" alt="08-1" src="https://user-images.githubusercontent.com/78655692/142773019-1272bbcc-1c63-4d51-bf10-a475acbca930.png">
 
+<br>
+<br>
 
 ### 추가 commit 2개만 더 남기자
 
@@ -115,6 +127,9 @@ d984105 text file
 a46391e first commit
 ```
 
+<br>
+<br>
+
 ### revert commit 편집기 실행
 
 - 다른 사람과 공유하는 브랜치에서 이전 커밋을 수정하고 싶을 때 사용
@@ -135,11 +150,17 @@ d984105 text file
 a46391e first commit
 ```
 
+<br>
+<br>
+
 ## 정리
 
 <img width="716" alt="08-3" src="https://user-images.githubusercontent.com/78655692/142773150-2bdc36ec-38a5-4b84-ad08-1dfb31951746.png">
 
 ![image](https://user-images.githubusercontent.com/78655692/142773166-d77fe378-ade5-42ab-a055-7b0f293d80f1.png)
+
+<br>
+<br>
 
 ## 그외 방법
 
@@ -165,6 +186,9 @@ a46391e HEAD@{10}: commit (initial): first commit
 ```bash
 $ git reset --hard HEAD@{7}
 ```
+
+<br>
+<br>
 
 ## References 
 
