@@ -169,7 +169,7 @@ s.close()
   - 분산 개체에서 스테이트 본래 물리적으로 다중 시스템으로 분산되어 있지만, 이런 분산은 또한 개체의 인터페이스 뒤에 있는 클라이언트로부터 숨겨져 있다.
 - 개체기반 아키텍처는 캡슐화 서비스가 독립적인 유닛에 들어가는 토대를 형성한다.
   - 캡슐화(encapsulation)는 전체 서비스는 자급자족하는 개체로 실현된다. (이것이 사용될지라도 다른 서비스) 
-- 독립적으로 작동하는 다양한 서비스들을 분리함으로써, 우리는 서비스기반 아키텍처(SOAs; service-oriented ar chitectures)로 갈 수 있게 되었다.
+- 독립적으로 작동하는 다양한 서비스들을 분리함으로써, 우리는 서비스기반 아키텍처(SOAs; service-oriented architectures)로 갈 수 있게 되었다.
 
 <br>
 <br>
@@ -177,7 +177,22 @@ s.close()
 ### Resource-based architectures
 
 - 웹 너머로 서비스의 수가 증가와 서비스 구성을 통한 분산시스템의 발달이 더 중요해짐에 따라, 연구자들은 웹기반 분산 시스템의 아키텍처를 다시 생각해보기로 했다.
-- 
+  - 서비스 구성의 문제점 중 하나는 다양한 컴포넌트를 연결하는 것이 통합 악몽(nightmare?)이 될 수 있다는 점이다.
+  - 대안으로 분산 시스템을 거대한 리소스(각각이 컴포턴트로서 관리되는)의 집합으로 보는 것이다.
+  - 리소스들은 (원격) 애플리케이션에 의해 추가되거나 제거되고, 검색 또는 수정된다.
+  - 이런 접근이 지금은 웹에 널리 채택되었고, REST(; Representational State Transfer)로 알려졌다.
+  - RESTful 아키텍처의 4가지 특징이 있다.
+    1. 리소스들은 단일 이름 스키마를 통해 확인한다.
+       - **스키마**(scheme) = 규칙, 원칙, 철학
+       - **이름 스키마**(naming scheme) : 이름을 붙일 때 어떤 규칙을 가지고 붙임
+    2. 모든 서비스는 같은 인터페이스(많아 봐야 4가지 작동으로 구성된)를 제공한다.
+
+        ![image](https://user-images.githubusercontent.com/78655692/149076180-53df2347-ce54-4d72-8c17-0be0a22e7e5d.png)
+    3. 서비스로부터 보낸 메시지들은 self-described이다.
+    4. 서비스에서 동작을 실행한 후에, 컴포넌트는 요청자에 대해 모든 걸 잃어버린다.(=`stateless execution`)
+  - RESTful은 **Amazon S3**(Amazon's Simple Storage Service)같은 클라우드 스토리지 서비스를 생각해본다.
+    - Amazon S3는 오직 두가지 리소스를 지원한다.
+      - `object` : 
 
 
 
@@ -215,3 +230,10 @@ s.close()
 - `side` : 측
 - `reside` : 상주하다
 - `self-contained` : 자급자족하는
+- `turn into` : 로 변화다
+- `retrieve` : 검색하다
+- `at most` : 많아 봐야
+- `in practice` : 실제로
+- `equivalent` : 동등한
+
+
