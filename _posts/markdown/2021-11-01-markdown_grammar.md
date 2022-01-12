@@ -11,12 +11,15 @@ sidebar_main: true
 last_modified_at: 2022-01-12
 ---
 
+저도 다 외우지 못합니다. <br>적용할 때마다 그때그때 보기 위해서 모두 정리해보았습니다. <br>보고 적용합시다! 🔥🔥
+{: .notice--info}
+
 <br>
 <br>
 
 ## MarkDown (md) 
 
-- 텍스트에 양식을 입히는 마크업 언어의 일종, HTML과 연동이 가능하다. (정의)
+- 텍스트에 양식을 입히는 마크업 언어의 일종, **HTML**과 연동이 가능하다. (정의)
 - 마크다운은 빨리 작성할 수 있고, 또 인터넷에 글을 쓰는 사람을 위해 만들어졌다.
 
 <img align='right' width='230' height='200' src='https://user-images.githubusercontent.com/78655692/144753588-5f69dac1-8c11-493a-894d-08de24c42493.png'>
