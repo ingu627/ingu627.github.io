@@ -46,7 +46,7 @@ last_modified_at: 2022-01-12
 ### 정의
 
 - **A distributed system is a collection of autonomous computing elements that appears to its users as a single coherent system.**
-  - autonomous: 혼자서 이 일을 할 수 있는
+  - autonomous: 독립적으로 작동할 수 있는
   - single coherent system : (단일 시스템) users or applications perceive a single system -> nodes need to collaborate
 
 - **특징**
@@ -54,6 +54,7 @@ last_modified_at: 2022-01-12
 each being able to behave **independently** of each other
     - `nodes` = autonomous computing elements (하드웨어 장비나 소프트웨어 프로세스가 될 수 있다.)
     - **노드** = 컴퓨터 네트워크를 구성하는 기기 1대 [^2]
+      - 독립적으로 작동하는 기기
     - **네트워크**(network) : 한 컴퓨터에서 다른 컴퓨터로 시그널(메시지)을 보내는 것
     - **라우팅**(routing) : 어떻게 보낼지 담당하는 역할
   - *2.* users (be they people or applications) believe they are dealing with **a single system**
@@ -80,7 +81,7 @@ each being able to behave **independently** of each other
 - 승인 제어(`admission control`)의 어려움
   1. 노드를 인증하기 위한 메커니즘이 필요하다. (인증을 관리하는 것은 확장성 병목 현상을 쉽게 만들어낸다.)
   2. 각각 노드는 다른 그룹 멤버와 실제로 통신하는지 확인해야 한다.
-  3. 멤버가 nonmember에게 쉽게 전달하는지 고려(분산 시스템에서 통신 이슈에 대해 신뢰성을)해봐야 한다. 
+  3. 멤버가 nonmember에게 쉽게 전달하는지 고려(분산 시스템에서 통신 이슈에 대해 신뢰성을)해봐야 한다. (메시지 유출 가능성을 따져본다.)
 
 <br>
 
@@ -103,7 +104,7 @@ each being able to behave **independently** of each other
 - 분산시스템은 single coherent system으로 보여야 한다.
 - single coherent system에서 노드들의 집합은 사용자와 시스템 사이에서 장소, 시간, 어떻게 작동하든지 간에 전체가 똑같이 작동한다.
 - `single coherent`로 보이는 것은 어려울 수 있다.
-  - 마지막 user는 어떤 프로세스가 현재 실행되는지 몰라야 한다.
+  - end user(=최종 사용자)는 어떤 프로세스가 현재 실행되는지 몰라야 한다.
   - 데이터가 저장되는 위치는 문제가 되지 않아야 한다. 시스템은 성능을 높이기 위해 데이터를 복제할 수도 있다는 것도 문제가 되지 않아야 한다.
     - 이것을 `distribution transparency`(투명성) 라 부른다.
     - 이것은 리소스는 통합 파일 시스템 인터페이스(파일이나, 저장 장치, 메모리, 네트워크 사이의 차이를 효과적으로 숨겨주는)를 통해 접근한다는 유닉스의 운영시스템과 비슷한 접근이다.
@@ -129,6 +130,7 @@ extends over multiple machines, offering each application the same interface.
 - 각각의 어플리케이션은 같은 인터페이스를 제공한다.
 - 분산 시스템은 단일 분산 어플리케이션의 컴포넌트들이 서로 잘 전달할 수 있는 수단을 제공한다.
   - **component** (컴포넌트) : 하나의 기능을 하는 단위 (내부를 이루는 모든 요소)
+    - 특정 일을 수행하는 코드
 - `middleware`은 분산시스템과 동일하다고 볼 수 있다.
   - **미들웨어** : 서로 다른 여러 프로그램을 함께 운용할 수 있는 소프트웨어
   - 어플리케이션들에게 효과적으로 공유하고 (이런 자원을 네트워크를 통해) 배치하는 것들을 제공하는 리소스의 관리자(resource management)
@@ -718,6 +720,7 @@ layer.
 - `unobtrusive` : 눈에 띄지 않는
 - `operating system` : 운영 체제
 - `bandwith` : 대역폭
+- `peripheral` : 주변기기
 
 
 <br>
