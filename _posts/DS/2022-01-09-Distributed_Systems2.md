@@ -9,7 +9,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-01-12
+last_modified_at: 2022-01-13
 ---
 
 <img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/147719090-5f0942f1-1647-44ad-8d72-f11e3fe400d7.png
@@ -47,7 +47,7 @@ last_modified_at: 2022-01-12
 
 <br>
 
-### Layered architectures
+## Layered architectures
 
 - 컴포넌트들이 레이어드 방식($L_j$에 있는 컴포넌트가 낮은 레벨에 있는 컴포넌트 $L_i$에게 다운콜하고 응답을 기대하는)으로 구성되어 있다.
   - 특출난 케이스가 하이레벨 컨포넌트로 업콜 할 때 이다.
@@ -155,7 +155,7 @@ s.close()
 <br>
 <br>
 
-### Object-based and service-oriented architectures
+## Object-based and service-oriented architectures
 
 ![image](https://user-images.githubusercontent.com/78655692/148978947-7f2613a9-0f09-4787-bb22-f39e4aee889a.png)
 
@@ -191,7 +191,7 @@ s.close()
 <br>
 <br>
 
-### Resource-based architectures
+## Resource-based architectures
 
 - 웹 너머로 서비스의 수가 증가와 서비스 구성을 통한 분산시스템의 발달이 더 중요해짐에 따라, 연구자들은 웹기반 분산 시스템의 아키텍처를 다시 생각해보기로 했다.
   - 서비스 구성의 문제점 중 하나는 다양한 컴포넌트를 연결하는 것이 통합 악몽(nightmare?)이 될 수 있다는 점이다.
@@ -209,7 +209,82 @@ s.close()
     4. 서비스에서 동작을 실행한 후에, 컴포넌트는 요청자에 대해 모든 걸 잃어버린다.(=`stateless execution`)
   - RESTful은 **Amazon S3**(Amazon's Simple Storage Service)같은 클라우드 스토리지 서비스를 생각해본다.
     - Amazon S3는 오직 두가지 리소스를 지원한다.
-      - `object` : 
+      1. `object` : 파일(file)
+      2. `bucket` : 디렉토리(directory)
+    - BucketName에 포함된 ObjectName 개체는 URL을 통해 참조된다.
+      - ex. `http://s3.amazonaws.com/BucketName/ObjectName`
+    - bucket이나 object을 생성하기 위해서는 애플리케이션이 bucket/object의 URL과 함께 PUT 요청을 보내야 한다.
+    - 이것은 HTTP 요청이 S3에 의해 해석될 것이다.
+      - 버킷이나 개체가 이미 존재한다면, HTTP 에러 메시지가 반환된다.
+    - RESTful 아키텍처는 **단순함**때문에 인기있어졌다.
+      - 이런 단순함은 쉬운 해결이 복잡한 통신 스키마로 가는 것을 막는다.
+      - 하지만 무수히 많은 서비스 인터페이스는 문제를 야기한다.
+
+<br>
+<br>
+
+## event-based coordination
+
+### Publish-subscribe architectures
+
+- 시스템이 꾸준히 성장하고 프로세스들이 쉽게 합류하거나 떠나는 게 가능해지면서, 프로세스 간의 의존성이 느슨해지는 아키텍처를 가지는 것은 중요해졌다.
+- 큰 분산 시스템 클래스는 아키텍처(프로세싱과 조정(coordination) 간의 강한 분리)를 채택했다.
+  - 시스템을 독립적으로 작동하는 프로세스들의 집합으로 보는 것이다.
+  - **조정(coordination)**은 프로세스 간의 통신과 협력을 말한다.
+    - `coordination` : 여러 노드 사이에서 벌어지는 일에 대해서 뭔가를 조정
+    - 이것은 프로세스에 의해 수행되는 활동들이 전체로 묶여지는 결합(glue?)을 형성한다.
+
+    ![image](https://user-images.githubusercontent.com/78655692/149267509-f7397466-5d39-48f5-8a6a-b2db9697fefb.png)
+
+  - **direct coordination**
+    - 프로세스가 시간 결합되고 참조 결합(referentially coupled)되어 있다면, coordination은 직접 일어난다.
+    - 참조 결합은 통신에서 명시적인 참조의 형태로 나타난다.
+    - 시간 결합은 통신하는 과정이 모두 가동되고 실행되어야 한다는 것을 의미한다.
+  - **mailbox coordination**
+    - 프로세스가 시간적으로 분리되지만 참조 결합일 때
+    - 통신 프로세스가 동시에 실행될 필요가 없다. 대신에 통신은 메시지를 메일 박스에 넣음으로써 발생한다.
+  - **event-based coordination**
+    - 참조 결합이 분리되고 시간 결합일 때
+    - 참조 분리 시스템에서는 프로세스들은 명시적으로 서로 알지 못한다.
+      - 프로세스가 유일하게 할 수 있는 건 이벤트의 현상을 나타내는 알림을 publish받는 것이다.
+      - 모든 종류의 알림이 온다면, 프로세스는 특정 종류의 알림을 subscribe해야 한다.
+  - **shared data space**
+    - 프로세스들은 전부 튜플(tuple)을 통해 통신한다.
+    - 튜플을 검색하기 위해, 프로세스는 튜플에 맞는 검색 패턴을 제공한다.
+  - 공유 데이터 공간은 가끔 이벤트 기반 조정과 결합된다.
+    - 프로세스는 검색 패턴을 제공함하여 특정 튜플을 구독한다.
+
+    <br>
+
+    ![image](https://user-images.githubusercontent.com/78655692/149273849-7f1317f2-c6be-40ee-8066-519d4a3a99fb.png)
+
+- description이 `(attribute, value)`로 구성된다면 **topic-based publish-subscribe systems**이라 부른다.
+
+<br>
+
+![image](https://user-images.githubusercontent.com/78655692/149275075-781adbb1-dbf6-4633-9ee2-a093324b0c0b.png)
+
+  - 구독은 알림에 대해 매치되어야 한다.
+  - 이벤트는 실제로 이용가능한 데이터에 해당한다.
+  - 매칭이 성공하면, 두가지 시나리오가 있다.
+    1. 미들웨어는 발행된 알림(관련 데이터와 함께)을 보내는 것을 결정한다.
+    2. 미들웨어는 구독자가 읽기 동작을 실행해 관련 데이터를 검색할 수 있는 알림지점을 보낸다.
+
+  - 저장은 별도 서비스에 의해 관리되거나 구독자의 몫이다.
+    - 다시 말해, 참조 분리이지만 시간 결합 시스템을 가지고 있다.
+
+<br>
+
+- 이벤트는 구독 처리를 쉽게 복잡하게 만든다.
+- 중요한 이슈는 효율적이고 확장 가능한 실행(구독을 알림으로 매칭하는)이다.
+- 발행-구독 아키텍처는 아주 큰 규모의 분산 시스템을 쌓는데에(강한 프로세스 분리때문에) 많은 가능성을 제공한다.
+
+<br>
+<br>
+
+## 2.2 Middleware organization
+
+
 
 
 
@@ -252,5 +327,19 @@ s.close()
 - `at most` : 많아 봐야
 - `in practice` : 실제로
 - `equivalent` : 동등한
-
-
+- `intricate` : 복잡한
+- `coordination` : 조화, 조정
+- `cooperation` : 협력
+- `encompass` : 포함하다, 에워싸다
+- `taxonomy` : 분류 체계
+- `terminology` : 전문 용어
+- `coupled` : 결합된
+- `referentially` : 참고로
+- `be up` : 가동되다
+- `coordination` : 조정
+- `temporal` : 시간의
+- `decoupled` : 분리된
+- `address` : (~ 앞으로 우편물을) 보내다
+- `correspond` : 일치하다, 해당하다
+- `forward` : 보내다, 전달하다
+- `lease` : 임대하다
