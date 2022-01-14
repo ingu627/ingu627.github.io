@@ -10,7 +10,7 @@ toc: true
 toc_sticky: true
 toc_label: 짧지만 써보는 목차
 
-last_modified_at: 2021-11-19
+last_modified_at: 2022-01-14
 
 sidebar_main: true
 # canonical_url:
@@ -21,6 +21,9 @@ sidebar_main: true
 
 <script src="https://gist.github.com/ingu627/93a69be54393c57f58eedc9b33024876.js"></script>
 
+<br>
+<br>
+
 ## Front-matter
 
 - **Front-matter**는 파일 시작 시 작성하는 YAML 또는 JSON 구역이다.
@@ -28,6 +31,9 @@ sidebar_main: true
 - Front-matter가 끝나는 부분은 YAML의 경우 세 개의 대시(-) 로, JSON의 경우 세 개의 세미콜론(;)을 넣어서 구분한다.
 - **YAML**(YAML Front Matter)은 오픈 소스 프로젝트에서 많이 사용하는 구조화된 데이터 형식이다.
 - YFM은 이 YAML을 사용해서 글의 제목, 날짜, 카테고리, 태그, 레이아웃 등을 정의할 수 있다.
+
+<br>
+<br>
 
 ### 환경설정 및 기본 값
 
@@ -51,7 +57,8 @@ sidebar_main: true
 
 <script src="https://gist.github.com/ingu627/e71fe791e12a56fea39b197431b6704c.js"></script>
 
-
+<br>
+<br>
 
 ## References
 
