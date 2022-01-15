@@ -8,11 +8,15 @@ sidebar_main: true
 
 ## Reference List
 
+<br>
+
 ### 논문 
 
 - [arxiv.org](https://arxiv.org/){: target="_blank"}
 - [scholar.google.com](https://scholar.google.com/){: target="_blank"}
 - [dbpia](https://www.dbpia.co.kr/){: target="_blank"}
+
+<br>
 
 ### DL, ML
 
@@ -31,6 +35,8 @@ sidebar_main: true
 - [핸즈온 머신러닝(2판)](https://formal.hknu.ac.kr/handson-ml2/)
 - [udemy(온라인 강의)](https://www.udemy.com/)
 
+<br>
+
 ### Web
 
 - [아마존 웹 서비스를 다루는 기술](http://pyrasis.com/private/2014/09/30/publish-the-art-of-amazon-web-services-book){: target="_blank"}
@@ -44,27 +50,39 @@ sidebar_main: true
 - [JSON Web Tokens](https://jwt.io/){: target="_blank"}
 - [Python web framework from scracth](https://oz123.github.io/advanced-python/book/middlewares.html){: target="_blank"}
 
+<br>
+
 ### Java
 
 - [vscode에서 자바 환경 세팅하기](https://code.visualstudio.com/docs/java/java-tutorial){: target="_blank"}
 
+<br>
+
 ### QUI
 
 - [Qt for Python - Pyside 설치하기](https://doc.qt.io/qtforpython/){: target="_blank"}
+
+<br>
 
 ### Algorithm
 
 - [백준](https://www.acmicpc.net/){: target="_blank"}
 - [프로그래머스](https://programmers.co.kr/){: target="_blank"}
 
+<br>
+
 ### OS 
 
 - [(KOCW) 운영체제, 이화여자대학교 반효경 교수](http://www.kocw.or.kr/home/cview.do?mty=p&kemId=1046323){: target="_blank"}
 - [운영체제 정리 블로그 - SungBum Park](https://velog.io/@codemcd?tag=OS){: target="_blank"}
 
+<br>
+
 ### Distributed Systems
 
 - [Distributed Systems by Maarten van Steen, Andrew S. Tanenbaum](https://www.distributed-systems.net/index.php/books/ds3/ds3-ebook/){: target="_blank"}
+
+<br>
 
 ### Linux
 
@@ -72,6 +90,8 @@ sidebar_main: true
 - [The Linux Directory Structure, Explained](https://www.howtogeek.com/117435/htg-explains-the-linux-directory-structure-explained/){: target="_blank"}
 - [리눅스에서 터미널 생활 즐기기.](https://black7375.tistory.com/15){: target="_blank"}
 - [리눅스 쿡북](https://zetawiki.com/wiki/%EB%A6%AC%EB%88%85%EC%8A%A4)
+
+<br>
 
 
 ### Data Set Sites
@@ -81,16 +101,35 @@ sidebar_main: true
 - [SELECTSTAR](https://selectstar.ai/?home){: target="_blank"}
 - [서울 특별시 빅데이터 캠퍼스](https://bigdata.seoul.go.kr/main.do){: target="_blank"}
 
+<br>
+
 ### Competitions
 
 - [dacon](https://dacon.io/){: target="_blank"}
 - [kaggle](https://www.kaggle.com/){: target="_blank"}
 - [aifactory](http://aifactory.space/page/main){: target="_blank"}
 
+<br>
+
 ### Books
 
 - [케라스 창시자에게 배우는 딥러닝](hhttps://www.aladin.co.kr/shop/wproduct.aspx?ItemId=170317445){: target="_blank"}
 - [Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow(핸즈온 머신러닝)](https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=237677114){: target="_blank"}
+
+<br>
+
+### Azure certificate
+
+- [AZ 900 - Azure Fundamentals Exam](https://quizlet.com/421206797/az-900-azure-fundamentals-exam-flash-cards/){: target="_blank"}
+- [Microsoft AZ-900 Exam](https://www.examtopics.com/exams/microsoft/az-900/){: target="_blank"}
+- [Microsoft Azure Fundamentals v1.0 (AZ-900)](https://www.itexams.com/exam/AZ-900){: target="_blank"}
+- [Microsoft Azure AI Fundamentals 온라인 연습](https://www.siheom.kr/ai-900-siheom.html){: target="_blank"}
+- [Microsoft AI-900 Exam](https://www.examtopics.com/exams/microsoft/ai-900/){: target="_blank"}
+- [Exam AI-900: Microsoft Azure AI Fundamentals](https://www.whizlabs.com/microsoft-azure-certification-ai-900/){: target="_blank"}
+- [200 Practice Questions For Azure AI-900 Fundamentals Exam](https://medium.com/bb-tutorials-and-thoughts/200-practice-questions-for-azure-ai-900-fundamentals-exam-e981d28ce91d)
+
+
+<br>
 
 ### Blogs
 
@@ -99,6 +138,8 @@ sidebar_main: true
 - [Setup Visual Studio Code to run R on VSCode 2021](https://www.r-bloggers.com/2021/01/setup-visual-studio-code-to-run-r-on-vscode-2021/){: target="_blank"}
 - [공부하는 식빵맘 - [Github 블로그] 같은 카테고리 내에서의 이전글, 다음글 이동](https://ansohxxn.github.io/blog/prevnext/){: target="_blank"}
 - [왕초보도 따라하는 도커 기초 1 도커와 컨테이너 소개](https://blog.naver.com/isc0304/221840483579)
+
+<br>
 
 ### Github blog 만들기
 
