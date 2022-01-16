@@ -418,6 +418,7 @@ s.close()
 
 ### Decentralized organizations: peer-to-peer systems
 
+- 다른 층들은 직접적으로 애플리케이션의 논리적 조직으로 관계를 맺는다.
 - 
 
 
@@ -527,4 +528,7 @@ s.close()
 - `processing` : 처리
 - `separate` : 별개의, 분리된
 - `pass` : 전달하다
+- `tiers` : 층수
+- `correspond` : 보태다
+- `correspond with` : 관계를 맺다
 
