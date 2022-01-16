@@ -386,7 +386,73 @@ s.close()
 
 ### Multitiered Architectures
 
-- s
+- 가장 단순한 조직은 오직 두 가지의 기계를 가지고 있는 것이다.
+  1. 유저 인터페이스 수준을 실행하는 프로그램만을 포함한 클라이언트 기계
+  2. 프로세싱과 데이터 수준을 실행하는 프로그램을 포함한 서버 기계
+- 조직에서 모든 것은 서버에서 다루는 반면, 클라이언트는 본질적으로 오직 편리한 그래픽 인터페이스만 가진 멍청한 터미널일 뿐이다.
+  - 하지만 많은 다른 가능성들이 있다.
+  - 많은 분산 애플리케이션들은 3 계층으로 나뉘어 진다. : user interface layer, processing layer, data layer
+
+![image](https://user-images.githubusercontent.com/78655692/149660183-240e48df-3911-4436-86c8-e5a1d152173c.png)
+
+<br>
+
+- c의 예시로 워드 프로세서가 있다. 기본 편집기를 클라이언트(로컬에서 작동하거나 인메모리에서)쪽에서 실행하고, 서버쪽에서는 스펠링과 문법을 체크하는 고급 지원 기능들.
+- 많은 클라이언트-서버 환경에서 d나 e는 특히 인기있다.
+- 이런 조직들은 클라이언트 기계가 PC이거나 워크스테이션에서 사용된다. (네트워크를 통해 연결되어 분산 파일 시스템이나 데이터베이스로 가는) 
+- 본질적으로 대부분의 애플리케이션은 클라이언트 기계에서 실행되지만, 파일이나 데이터베이스 entries의 모든 작동은 서버로 간다.
+
+<br>
+
+![image](https://user-images.githubusercontent.com/78655692/149660862-f7e3fc75-4f76-432a-88a3-5975869d1300.png)
+
+- 위의 그림은 `three-tiered architecture`이다.
+- 이 아키텍처에서 전통적으로 프로그램(처리 계층의 일부를 구성하는)들은 별개의 서버에 의해 실행되지만, 클라이언트와 서버 기계를 통해 부분적으로 추가로 배포될 수 있다.
+- 분리된 프로세스(transaction processing monitor라 불리는) 다른 데이터 서버들을 통해 모든 트랜잭션들을 조정한다.
+- 아주 다른 예시로, three-tiered architecture를 웹 사이트(Web site) 조직에서 볼 수 있다.
+  - 웹 서버는 사이트의 엔트리 포인트로써 수행하며, 요청을 애플리케이션 서버(실제 처리가 발생하는)로 전달한다.
+  - 이 애플리케이션 서버는 차례로 데이터베이스와 상호작용한다.
+
+<br>
+<br>
+
+### Decentralized organizations: peer-to-peer systems
+
+- 
+
+
+<br>
+<br>
+
+### Structured peer-to-peer systems
+
+
+<br>
+<br>
+
+### Unstructured peer-to-peer systems
+
+
+
+<br>
+<br>
+
+### Hierarchically organized peer-to-peer networks
+
+
+
+<br>
+<br>
+
+
+## Hybrid Architectures
+
+
+
+<br>
+<br>
+
+## 2.4 Example architectures
 
 
 
@@ -457,5 +523,8 @@ s.close()
 - `generic` : 포괄적인
 - `adaptive` : 조정의
 - `underway` : 진행중인, 움직이고 있는
-
+- `additionally` : 또한
+- `processing` : 처리
+- `separate` : 별개의, 분리된
+- `pass` : 전달하다
 
