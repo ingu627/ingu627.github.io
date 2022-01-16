@@ -546,7 +546,7 @@ layer.
      - 유비쿼터스 컴퓨팅은 보기에 인터페이스를 숨긴 것이라 말할 수 있다.
      - 예를 들어, 차의 좌석이 있으면, 밥이 앉았다는 것을 시스템은 알아차리고 그에 적절한 반응을 할 것이다. 여기에 엘리스도 이용한다는 것을 생각해 본다. 
   3. **Context awareness** : The system is aware of a user’s context in order to optimize interaction.
-     - 유비쿼터스 컴퓨팅 시스템이 해야 할일은 상호작용이 일어나는 맥락을 고려하는 것이다.
+     - 유비쿼터스 컴퓨팅 시스템이 해야 할일은 상호작용이 일어나는 문맥을 고려하는 것이다.
   4. **Autonomy** : Devices operate autonomously without human intervention, and are thus highly self-managed.
      - 유비쿼터스 컴퓨팅 시스템의 중요한 측면으로 명시적 시스템 관리가 최소한으로 줄어들었다는 점이다.
      - 시스템은 자율적으로 행동하고, 자동으로 변환에 반응한다.
@@ -631,7 +631,7 @@ layer.
 - `handful` : 한 줌
 - `interconnection` : 상호 연결
 - `topology` : 토폴로지
-- `underlying` : 밑에 있는 
+- `underlying` : 밑에 있는, 근본적인 
 - `in turn` : 차례로 
 - `dealing with` : 처리하다
 - `imply` : 암시하다
@@ -727,6 +727,7 @@ layer.
 - `operating system` : 운영 체제
 - `bandwith` : 대역폭
 - `peripheral` : 주변기기
+- `context` : 문맥
 
 
 <br>
