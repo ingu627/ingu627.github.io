@@ -419,7 +419,13 @@ s.close()
 ### Decentralized organizations: peer-to-peer systems
 
 - 다른 층들은 직접적으로 애플리케이션의 논리적 조직으로 관계를 맺는다.
-- 
+- 많은 비즈니스 환경에서, 분산 처리는 클라이언트-서버 애플리케이션을 다중 계층 구조(multitiered architecture)로 구성하는 것과 동등하다.
+  - 이런 유형의 분포를 수직 분포(vertical distribution)이라 부른다.
+  - 수직 분포의 특징은 다른 기계들에 논리적으로 다른 컴포넌트를 배치함으로써 얻는다.
+- 시스템 관리 관점에서 수직 분포를 갖는 것은 도움이 된다.
+  - 기능들이 다수의 기계들(각 기계는 특정 그룹의 기능들로 맞춰져 있다.)로부터 논리적이고 물리적으로 나뉘어져 있다.
+- 현대 아키텍처에선, 가끔 클라이언트와 서버의 분포를 중요시하며, 이를 수평 분포(horizontal distribution)이라 한다.
+  - 이런 유형의 분포에서, 클라이언트나 서버는 논리적으로 동등한 부븐으로 물리적으로 분리될 수 있다.
 
 
 <br>
@@ -474,6 +480,7 @@ s.close()
 - `fashion` : 방식
 - `be organized in` : 구성되어 있다.
 - `organization` : 구조
+- `organize` : 체계를 세우다, 준비하다, 정리하다, 구성하다
 - `party` : 당, 집단
 - `correct` : 바로잡다
 - `advocate` : 지지하다
@@ -531,4 +538,5 @@ s.close()
 - `tiers` : 층수
 - `correspond` : 보태다
 - `correspond with` : 관계를 맺다
-
+- `distribution` : 분배 (방식), 분포
+- `tailored` : 맞춤의
