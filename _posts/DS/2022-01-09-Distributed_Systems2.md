@@ -9,7 +9,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-01-16
+last_modified_at: 2022-01-18
 ---
 
 <img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/147719090-5f0942f1-1647-44ad-8d72-f11e3fe400d7.png
@@ -425,13 +425,37 @@ s.close()
 - 시스템 관리 관점에서 수직 분포를 갖는 것은 도움이 된다.
   - 기능들이 다수의 기계들(각 기계는 특정 그룹의 기능들로 맞춰져 있다.)로부터 논리적이고 물리적으로 나뉘어져 있다.
 - 현대 아키텍처에선, 가끔 클라이언트와 서버의 분포를 중요시하며, 이를 수평 분포(horizontal distribution)이라 한다.
-  - 이런 유형의 분포에서, 클라이언트나 서버는 논리적으로 동등한 부븐으로 물리적으로 분리될 수 있다.
+  - 이런 유형의 분포에서, 클라이언트나 서버는 논리적으로 동등한 부분으로 물리적으로 분리될 수 있지만, 각 부분은 자체적인 공유 데이터 셋에서 작동한 다음
+- 이 장에서는 수직 분산을 지원하는 현대 시스템 아키텍처의 한 분야인 `peer-to-peer systems`를 살펴볼 것이다.
 
+<br>
+
+- 높은 계층 관점에서, 프로세스들(peer-to-peer 시스템을 구성하는)은 모두 동일하다.
+  - 수행이 필요한 기능들은 모든 프로세스(분산 시스템을 구성하는)에 의해 수행된다.
+  - 결과적으로, 프로세스 간 상호작용은 대칭적이다.
+  - 각 프로세스는 클라이언트와 서버로 동시에 수행할 것이다.(servant의 역할이기도 하다.) 
+- peer-to-peer architecture $\rightarrow$ overlay network
+  - 노드들은 프로세스에 의해 형성되고 링크들은 가능한 통신 채널을 표현하는 네트워크
+  - 노드는 직접 통신하지 않고, 가능한 통신 채널을 통해 메시지를 보낸다.
 
 <br>
 <br>
 
 ### Structured peer-to-peer systems
+
+- 구조화된 peer-to-peer system에서 노드(=process)들은 오버레이(특정한 토폴로지를 고수하는: 링형, 트리형, 그리드형 등)를 구성한다.
+  - 토폴로지는 데이터를 효과적으로 찾을 때 쓰인다.
+- 이 시스템은 semantic-free index를 이용하는 것에 기반을 둔다.
+  - 각 데이터 아이템(시스템에 의해 유지되는)은 특별하게 키와 연관되어 있고, 이 키는 결과적으로 인덱스로 쓰인다. 마지막에 가서, 해쉬 기능을 사용하는 것이 일반적이다.
+  - 그래서 우리는 `key(data item) = hash(data item's value)`를 얻는다.
+- peer-to-peer 시스템은 전반적으로 `(key, value)` 쌍을 담당한다.
+  - 이 시스템은 분산 해쉬 테이블을 구현하고, DHT로 축약되었다.
+
+<br>
+
+- 시스템은 `lookup` 기능(키를 기존 노드에 map하는)의 효과적인 구현을 제공한다.
+  - `existing node = lookup(key)`
+- 
 
 
 <br>
@@ -540,3 +564,14 @@ s.close()
 - `correspond with` : 관계를 맺다
 - `distribution` : 분배 (방식), 분포
 - `tailored` : 맞춤의
+- `constitute` : ~을 구성하다
+- `carry out` : 수행하다
+- `symmetric` : 대칭적인
+- `look up` : 찾다
+- `is common to` : 일반적이다.
+- `is responsible for` : 담당한다
+- `abbreviated` : 짧게 한
+- `implementation` : 구현
+
+
+
