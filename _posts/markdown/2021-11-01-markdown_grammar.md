@@ -1,6 +1,6 @@
 ---
 layout: single
-title: '마크다운(markdown)문법 정리, 사용법'
+title: '마크다운(markdown)문법, 사용법에 대한 거의 모든 것'
 excerpt: 'MarkDown (md), 목차 만들기, 크기 지정, 글꼴, 줄바꿈, 띄어쓰기(enter), 글자 색깔, 인용문, 문자 박스(notice), 문자 정렬, 구분선, check box,목록, 코드 블럭, 표 (table), 접기/펼치기 (토글바), 각주, 미주, 유튜브 동영상 넣기, 이미지, 링크, 수식, 그래프로 표시하기'
 categories: md
 tag : [grammar, tip, md, 마크다운, 문법]
@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-01-12
+last_modified_at: 2022-01-18
 ---
 
 저도 다 외우지 못합니다. <br>적용할 때마다 그때그때 보기 위해서 모두 정리해보았습니다. <br>보고 적용합시다! 🔥🔥
