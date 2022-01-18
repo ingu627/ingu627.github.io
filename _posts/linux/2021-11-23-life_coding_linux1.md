@@ -13,9 +13,13 @@ last_modified_at: 2022-01-18
 sidebar_main: true
 ---
 
-본 글은 "생활 코딩 - Linux" 강의 내용을 요약 및 정리한 글입니다. <br> 개인공부 목적이므로 자세한 사항은 [생활코딩 - Linux](https://www.inflearn.com/course/%EC%83%9D%ED%99%9C%EC%BD%94%EB%94%A9-%EB%A6%AC%EB%88%85%EC%8A%A4-%EA%B0%95%EC%A2%8C#curriculum)로 참고하시길 바랍니다.
+<img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/149885926-86d336ea-fe65-4bb1-96f8-c556918fbb5a.png
+'>
+본 글은 "생활 코딩 - Linux" 강의 내용을 요약 및 정리한 글입니다. <br> 리눅스의 기초를 잡기 위해 개인공부 목적으로 정리했으며, 자세한 사항은 [생활코딩 - Linux](https://www.inflearn.com/course/%EC%83%9D%ED%99%9C%EC%BD%94%EB%94%A9-%EB%A6%AC%EB%88%85%EC%8A%A4-%EA%B0%95%EC%A2%8C#curriculum)로 참고하시길 바랍니다.
 {: .notice--info}
 
+<br>
+<br>
 <br>
 <br>
 
