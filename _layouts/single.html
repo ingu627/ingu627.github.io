@@ -30,6 +30,9 @@ layout: default
             <a href="{{ page.url | absolute_url }}" class="u-url" itemprop="url">{{ page.title | markdownify | remove: "<p>" | remove: "</p>" }}</a>
           </h1>{% endif %}
           {% include page__meta.html %}
+          <!--ads search engine-->
+          <script async src="https://cse.google.com/cse.js?cx=3348b90f1efac26be"></script>
+          <div class="gcse-search"></div>
         </header>
       {% endunless %}
 
@@ -56,9 +59,6 @@ layout: default
         <script>
             (adsbygoogle = window.adsbygoogle || []).push({});
         </script>
-        <!--ads search engine-->
-        <script async src="https://cse.google.com/cse.js?cx=3348b90f1efac26be"></script>
-        <div class="gcse-search"></div>
       </section>
 
       <footer class="page__meta">
