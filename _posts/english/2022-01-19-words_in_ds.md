@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "분산 시스템(Distributed Systems) - 영어 단어 정리"
+title: "분산 시스템(Distributed Systems) - 책에 나온 영단어 정리"
 excerpt: "Distributed Systems Third edition by Maarten van Steen,
 Andrew S. Tanenbaum - organize English Words"
 categories: englishWord
