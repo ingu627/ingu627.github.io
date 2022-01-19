@@ -81,6 +81,7 @@ sidebar_main: true
 ### Distributed Systems
 
 - [Distributed Systems by Maarten van Steen, Andrew S. Tanenbaum](https://www.distributed-systems.net/index.php/books/ds3/ds3-ebook/){: target="_blank"}
+- [해시넷 위키](http://wiki.hash.kr/index.php/%EB%8C%80%EB%AC%B8){: target="_blank"}
 
 <br>
 
