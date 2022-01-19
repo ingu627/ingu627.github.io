@@ -9,7 +9,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-01-18
+last_modified_at: 2022-01-19
 ---
 
 <img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/147719090-5f0942f1-1647-44ad-8d72-f11e3fe400d7.png
@@ -427,10 +427,12 @@ s.close()
 - 현대 아키텍처에선, 가끔 클라이언트와 서버의 분포를 중요시하며, 이를 수평 분포(horizontal distribution)이라 한다.
   - 이런 유형의 분포에서, 클라이언트나 서버는 논리적으로 동등한 부분으로 물리적으로 분리될 수 있지만, 각 부분은 자체적인 공유 데이터 셋에서 작동한 다음
 - 이 장에서는 수직 분산을 지원하는 현대 시스템 아키텍처의 한 분야인 `peer-to-peer systems`를 살펴볼 것이다.
+  - **피어 (peer)** : 계층적 구조의 프로토콜을 사용하는 통신망의 동일 프로토콜 계층에서 대등한 지위로 동작하는 기능 단위 또는 장치 [^1]
+  - cf) **노드 (node)** : 데이터를 전송하는 통로에 접속되는 하나 이상의 기능 또는 단위
 
 <br>
 
-- 높은 계층 관점에서, 프로세스들(peer-to-peer 시스템을 구성하는)은 모두 동일하다.
+- 높은 계층 관점에서, 프로세스들(p2p 시스템을 구성하는)은 모두 동일하다.
   - 수행이 필요한 기능들은 모든 프로세스(분산 시스템을 구성하는)에 의해 수행된다.
   - 결과적으로, 프로세스 간 상호작용은 대칭적이다.
   - 각 프로세스는 클라이언트와 서버로 동시에 수행할 것이다.(servant의 역할이기도 하다.) 
@@ -443,50 +445,198 @@ s.close()
 
 ### Structured peer-to-peer systems
 
-- 구조화된 peer-to-peer system에서 노드(=process)들은 오버레이(특정한 토폴로지를 고수하는: 링형, 트리형, 그리드형 등)를 구성한다.
+- 정형 p2p 시스템에서 노드(=process)들은 오버레이(특정한 토폴로지를 고수하는: 링형, 트리형, 그리드형 등)를 구성한다.
   - 토폴로지는 데이터를 효과적으로 찾을 때 쓰인다.
 - 이 시스템은 semantic-free index를 이용하는 것에 기반을 둔다.
   - 각 데이터 아이템(시스템에 의해 유지되는)은 특별하게 키와 연관되어 있고, 이 키는 결과적으로 인덱스로 쓰인다. 마지막에 가서, 해쉬 기능을 사용하는 것이 일반적이다.
   - 그래서 우리는 `key(data item) = hash(data item's value)`를 얻는다.
-- peer-to-peer 시스템은 전반적으로 `(key, value)` 쌍을 담당한다.
+- p2p 시스템은 전반적으로 `(key, value)` 쌍을 담당한다.
   - 이 시스템은 분산 해쉬 테이블을 구현하고, DHT로 축약되었다.
 
 <br>
 
 - 시스템은 `lookup` 기능(키를 기존 노드에 map하는)의 효과적인 구현을 제공한다.
   - `existing node = lookup(key)`
-- 
 
+<br>
+
+![image](https://user-images.githubusercontent.com/78655692/150042920-f98d89fa-725e-4e77-83f8-4c7175eb7cd5.png)
 
 <br>
 <br>
 
 ### Unstructured peer-to-peer systems
 
+- 비정형 p2p 시스템에서 각 노드는 이웃들의 애드혹 목록을 유지한다.
+  - 결과 오버레이는 랜덤 그래프와 유사하다.
+- 노드가 조인할때 종종 잘 알려진 노드와 접촉하여 시스템에 있는 다른 피어들의 시작 목록을 얻으려 한다.
+  - 이 목록은 피어들을 찾는데 쓰이며, 다른 것들은 무시한다.
+  - 실제로, 노드의 지역 목록은 수시로 변한다. 
+- 비정형 P2P 시스템에서는 데이터 검색에 의존해야 한다.
 
+<br>
+
+1. **Flooding**
+
+   - 발행 노드 u는 자료 아이템을 모든 이웃들에게 요청을 전달한다.
+   - 수신 노드 v가 이전에 본적 있다면, 수신은 무시된다. 그렇지 않으면, v는 지역적으로 요청된 자료 아이템을 찾는다.
+   - v가 필요한 자료를 가지고 있다면, 발행 노드에게 직접적으로 반응하거나 원래 전달자에게 반송한다.
+   - 만약 v가 요청 자료를 가지고 있지 않다면, 요청을 이웃들 모두에게 전달한다.
+
+2. **Random walks**
+
+   - 발행 노드 u는 랜덤하게 선택된 이웃(ex. v)에게 요청하여 자료 아이템을 찾으려 할 것이다.
+   - v가 만약 데이터를 갖고 있지 않다면, 이것은 요청을 랜덤하게 선택된 이웃에게 전달한다. 그 결과를 `random walk`라 한다.
+   - 랜덤 워크는 네트워크 트래픽을 덜 부과하지만, 요청 데이터가 있는 노드에 도달하는 데 시간이 더 걸릴 수 있다.
+   - 대기 시간을 줄이기 위해, 발행자는 n 랜덤 워크를 동시에 시작한다.
+
+<br>
+
+- `flooding`과 `random walks` 사이에는 policy-based search methods가 있다.
 
 <br>
 <br>
 
 ### Hierarchically organized peer-to-peer networks
 
+- 비정형 P2P 시스템에서, 관련 자료 항목들을 찾는 것은 문제가 될 수 있다. (네트워크가 커짐에 따라; 확장성)
+  - 검색 요청을 특정 자료 항목으로 보내는 결정론적 방법이 없다, 특히 노드가 의존하는 기술은 flooding이나 randomly walk 수단에 의한 요청을 위한 검색뿐이다.
+- P2P 시스템의 대칭성을 버리는 게 실용적인 상황이 있다.
+  - 노드들이 자원을 서로 제공하는 협력을 생각해본다.
+  - CDN(; content delivery network)에서는, 노드들은 웹 클라이언트가 근처의 페이지를 접근하기 위해 웹 문서 복사본을 호스팅하기 위한 스토리지를 제공하기 때문에, 그들을 빨리 접근할 수 있다.
+  - 필요한 것은 문서들이 어디에 저장되어야하는지를 찾는 수단이다.
+  - 브로커(자료 사용량과 가용량에서 자료를 모으는(서로 가까이 있는 많은 수의 노드들에 대한))를 사용하는 것은 신속하게 노드(충분한 자원을 가진)를 선택할 수 있다. 
+  - 인덱스를 유지하거나 브로커 역할을 하는 노드를 슈퍼 피어(super peer)라 한다.
+    - 슈퍼 피어는 p2p 네트워크로 구성되어 계층적 구조로 이어진다.
 
+<br>
+
+![image](https://user-images.githubusercontent.com/78655692/150063109-a653a4bb-2e92-4b03-99e6-883b341b4194.png)
+
+<br>
+
+  - 약한 피어가 네트워크를 조인할 때마다, 슈퍼 피어에 붙게 되고 네트워크를 해제할 때까지 붙어 있는다.
+  - 슈퍼 피어는 높은 가용성을 가진 수명이 긴 프로세스이다.
+
+<br>
+
+- 보았듯이, p2p 네트워크는 노드가 네트워크를 조인하고 해제하는 데 유연한 수단을 제공한다.
+- 하지만, 슈퍼피어 네트워크(super-peer network)의 문제는 슈퍼피어에 적합한 노드를 어떻게 선택하느냐 이다.
+  - `leader-election problem`이다.
 
 <br>
 <br>
-
 
 ## Hybrid Architectures
 
+### Edge-server systems
 
+- 엣지-서버 시스템은 서버가 네트워크의 엣지부분에 위치한 인터넷이 배치된다.
+  - 엣지(edge)는 경계($\nearrow$기업 네트워크가 실제 인터넷 사이의)에 의해 형성된다.($\nearrow$ ISP; Internet Service Provider가 제공하는 것과 같이)
+- 마찬가지로, 집에 있는 최종 사용자가 ISP를 통해 인터넷에 연결하면, ISP는 인터넷의 엣지에 거주할 것을 고려된다.
+
+![image](https://user-images.githubusercontent.com/78655692/150065317-1c243864-e7aa-4c7f-a6a3-585566a396fb.png)
+
+<br>
+
+- 엣지 서버의 주요 목적은 내용을 제공(필터리를 적용하고 기능을 변환한 후에)하는 것이다.
+
+<br>
+<br>
+
+### Collaborative distributed systems
+
+- 비트토렌트(BitTorrent)는 p2p 파일 다운로드 시스템이다.
+- 토렌트파일은(torrent file)은 특정 파일을 다운로드하는데 필요한 정보이다.
+  - 특히, 이것은 링크($\nearrow$tracker로 알려진)($\nearrow$이것은 정확한 활동노드 계정($\nearrow$요청된 파일의 덩어리를 가지고 있는)을 지키는 서버이다.)를 포함한다.
+    - 활동노드는 현재 파일을 다운로드하고 있는 것이다.
+
+![image](https://user-images.githubusercontent.com/78655692/150066013-54e448a7-ac9d-43e4-b5b5-0819f9b7c1f3.png)
 
 <br>
 <br>
 
 ## 2.4 Example architectures
 
+### The Netwrok File System
 
+- 많은 분산 파일 시스템은 클라이언트-서버 구조로 구성된다.$\nearrow$ (클라이언트-서버 구조는) Network File System(NFS)를 가진 $\nearrow$ (NFS는) 유닉스 시스템에서 널리 배포된
+- NFS의 주요 개념으로 각 파일 서버는 지역 파일 시스템의 표준 뷰를 제공하는 것이다.
+  - 즉, 중요하지 않다. $\nearrow$ (어떤?) 로컬 파일 시스템이 어떻게 구현되는지는 
+- NFS는 통신 프로토콜과 함께 제공된다. $\nearrow$ (통신 프로토콜은) 클라이언트를 서버에 있는 파일에 접속할 수 있게 해줌 (따라서 프로세스의 이종 집합을 허용함) $\nearrow$ (서버는) 다른 운영체제와 기계에서 실행되어 공통의 파일 시스템을 공유함
+- NFS 모델과 비슷한 것으로 remote file service가 있다.
+  - 이 모델에서 클라이언츠는 파일 시스템으로 가는 데 투명 접근을 제공받는다. $\nearrow$ (파일 시스템은) 원격 서버에 의해 관리됨
+  - 클라이언츠는 파일의 실제 위치를 모른다. 대신에, 파일 시스템으로 가는 인터페이스를 제공받는다. $\nearrow$ (파일 시스템은) 기존 지역 파일 시스템에 의해 제공받는 인터페이스와 비슷함
+  - 특히, 클라이언트는 오직 인터페이스를 제공받는다. $\nearrow$ (인터페이스는) 다양한 파일 작동을 포함한, 하지만 서버는 그러한 작동을 구현하는 것을 담당한다.
+  - 이러한 모델을 `remote access model`이라 부른다. 
 
+<br>
+
+![image](https://user-images.githubusercontent.com/78655692/150070079-d20ccc45-973d-41d6-8400-177da852c6e4.png)
+
+<br>
+
+- 이와는 반대로, upload/download 모델에서는 클라이언트는 파일을 지역으로 접근한다. $\nearrow$ (언제?) 이것을 서버로부터 다운로드받은 후에
+- 클라이언트가 파일받는 걸 끝낼때, 이것은 서버에 다시 업로드된다. $\nearrow$ (왜 다시?) 다른 클라이언트가 쓸 수 있도록
+
+<br>
+
+![image](https://user-images.githubusercontent.com/78655692/150070715-672de127-99c1-46c1-97c2-295c93e5b8ea.png)
+
+<br>
+
+- 사실상 모든 현대 유닉스 시스템에서, NFS는 위의 그림처럼 구현된다.
+- 클라언트는 시스템 호출을 사용하여 파일 시스템에 접근한다.$\nearrow$ (시스템 호출은) 로컬 운영 체제에 의해 제공되는
+- 하지만, 지역 유닉스 파일 시스템 인터페이스는 인터페이스가 Virtual File System(VFS)로 가면서 대체된다. $\nearrow$ (VFS란) 지금 사실상 다른 분산 파일 시스템으로 접속하는 데 표준이 됨
+- 사실상, 모든 현재 운영 체제는 VFS를 제공하여 개발자에게 덜 강요하게 되었다. $\nearrow$ (어떤?) 운영 체제의 큰 부분을 재구현하는 데 $\nearrow$ (언제?) 새로운 파일시스템 구조를 적용할 때
+- NFS와 함께, VFS 인터페이스에서의 작동은 지역 파일 시스템으로 전달되거나 분리된 컴포넌트(NFS 클라이언트로 알려진)로 전달된다. $\nearrow$ (NFS client란) 접근을 원격 서버에 저장된 파일로 가는 부분을 처리하는 걸 책임을 짐
+- NFS에서, 모든 클라이언트-서버 통신은 remote procedure calls(RPCs)를 통해 행해진다.
+  - RPC는 표준 방식이다. $\nearrow$ (어떤 방식?) 시스템 A에 있는 클라이언트가 정상적인 호출할 수 있도록 하는 $\nearrow$ (무엇을 정상적으로 호출?) 다른 시스템 B에서 구현되는 프로세스를
+- NFS 클라이언트는 NFS 파일 시스템 작동을 구현한다. $\nearrow$ (무엇을 구현?) 서버로가는 원격 프로시저 호출로써
+- NFS server는 들어오는 클라이언트 요청을 처리하는 걸 담당한다
+  - 서버에 있는 RPC 컴포넌트는 들어오는 요청을 표준 VFS 파일 작동으로 전환한다. $\nearrow$ (표준 VFS 파일 작동이란) 나중에 VFS 계층을 통과하는
+  - 다시 말해, VFS는 지역 파일 시스템을 구현하는 것을 담당한다 $\nearrow$ (지역 파일 시스템은 어떤 곳?) 실제 파일이 저장되어 있는
+- 이 스키마의 중요한 이점은 NFS는 로컬 파일 시스템과 독립적이라는 것이다.
+
+<br>
+<br>
+
+### The Web
+
+### Simple Web-based systems
+
+- 많은 웹기반 시스템은 여전히 구성되어 있다. $\nearrow$ (어떻게?) 상대적으로 단순한 클라이언트-서버 구조로 
+- 웹사이트의 핵심은 프로세스에 의해 형성된다. $\nearrow$ (프로세스는) 문서들을 저장한 로컬 파일 시스템에 접근할 수 있는
+  - 문서를 참조하는 가장 간단한 방식은 URL(uniform resource locator)이라 불리는 참조의 방식을 쓰는 것이다.
+  - 이것은 문서를 어디에 위치할지를 지정한다. $\nearrow$ (어떻게 위치?) 파일 이름과 함께 관련된 서버의 DNS 이름을 임베딩함으로써 $\nearrow$ (파일 이름으로) 서버가 문서를 로컬 파일 시스템에서 찾을 수 있음
+  - 게다가, URL은 애플리케이션 계층 프로토콜을 지정한다. $\nearrow$ (무엇을 위해) 네트워크를 통해 문서를 전달하는 걸
+- 클라이언트는 브라우저를 통해 웹서버와 상호작용한다. $\nearrow$ (브라우저(brower)는) 문서를 적절하게 보여주는 걸 담당하는
+- 브라우저와 웹서버 사이의 통신은 표준화되어 있다.: 그들은 모두 HyperText Transfer Protocol(HTTP)을 지킨다. 
+
+<br>
+
+![image](https://user-images.githubusercontent.com/78655692/150080128-9eb26f3e-43b1-48bc-87ce-0743c58f4d09.png)
+
+<br>
+<br>
+
+### Multitiered architectures
+
+![image](https://user-images.githubusercontent.com/78655692/150081163-7ae790a3-ea1d-4150-ba59-6313f0eb72d5.png)
+
+- Figure 2.27과 같은 기본 아키텍처에서 첫번째 강화된 것 중 하나는 단순한 유저 인터랙션을 지원하는 것이다. $\nearrow$ (어떻게?) Common Gateway Interface(CGI) 수단에 의해
+  - CGI는 웹 서버가 프로그램을 실행할 수 있는 표준방식이다. $\nearrow$ (프로그램은) 유저 데이터를 입력으로 가져오는
+  - 보통 유저 데이터는 HTML 형식으로 가져온다.
+  - 형식이 완료되면, 프로그램의 이름과 모은 파라미터 값들은 서버로 전송된다.
+  - 데이터 처리 후, 프로그램은 HTML 문서를 생성하고 그 문서를 서버로 반환한다.
+  - 서버는 그후 문서를 클라이언트에게 전달한다.
+
+<br>
+
+- 하지만 요즘 서버는 단순히 문서를 가져오는 것 이상으로 일한다.
+  - 서버 또한 문서가 클라이언트에게 전달되기 전에 그것을 처리할 수 있다.
+  - 특히, 문서가 server-side script를 포함한다면 $\nearrow$ (server-side script는) 서버에 의해 실행된다. $\nearrow$ (언제?) 문서가 지역적으로 가져올때
+  - 다시 말해, server-side script를 사용하는 것은 문서를 변하게 한다. $\nearrow$ (어떻게) 스크립트를 실행결과로 바꿈으로써
 
 
 <br>
@@ -572,6 +722,50 @@ s.close()
 - `is responsible for` : 담당한다
 - `abbreviated` : 짧게 한
 - `implementation` : 구현
+- `boil down to` : ~으로 요약하다
+- `predetermine` : 미리 결정하다
+- `resort` : 재분류하다
+- `resort to something` : 기대다(의지하다)
+- `data` : 자료
+- `forwarder` : 발송자
+- `forward` : 전달하다
+- `ask` : 요청하다
+- `item` : 항목
+- `locate` : 찾다
+- `route` : 보내다, 전송하다
+- `sensible` : 실용적인
+- `symmetric nature` : 대칭성
+- `piece` : 조각
+- `usage` : 사용량
+- `lead to` : 로 이어지다
+- `serve` : 제공하다
+- `account` : 계정
+- `chunk` : 덩어리
+- `retain` : 유지하다
+- `deploy` : 배치하다, 배포하다
+- `come with` : 함께 제공되다.
+- `heterogeneous` : 여러 다른 종류들로 이뤄진
+- `conventional` : 기존의
+- `predominant` : 뚜렷한
+- `virtual` : 사실상의, 가상의
+- `de facto` : 사실상의
+- `interface` : 접속하다
+- `reimplement` : 재구현하다
+- `take care of` : 책임을 지다
+- `let` : (~을 하도록) 허락하다, ~하게 하다
+  - `let a R b` : a가 b를 R하게 하다
+- `machine` : 시스템
+- `ordinary` : 정상적인
+- `compliant` : 따르는
+- `generate` : 생성하다
+- `specify` : 특정하다, 지정하다
+- `along with` : 와 함께
+- `accross` : 을 통해
+- `sophisticated` : 복잡한, 정교한
 
+<br>
+<br>
 
+## References
 
+- [^1]: <http://wiki.hash.kr/index.php/%ED%94%BC%EC%96%B4>
