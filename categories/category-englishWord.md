@@ -1,5 +1,5 @@
 ---
-title: "신상현 영단어"
+title: "영어단어 모음"
 layout: archive
 permalink: categories/englishWord
 author_profile: true

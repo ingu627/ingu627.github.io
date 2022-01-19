@@ -136,7 +136,7 @@
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "englishWord" %}
-                        <li><a href="/categories/englishWord" class="">신상현 영단어 ({{category[1].size}})</a></li>
+                        <li><a href="/categories/englishWord" class="">영어단어 모음 ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
