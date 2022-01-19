@@ -3,11 +3,11 @@ layout: single
 title: "Git Blog에서 글 작성 시 수식 사용하기 (Mathjax)"
 excerpt: "Mathjax란 MathML, LaTeX 및 ASCIIMathML 마크 업을 사용하여 웹 브라우저에 수학 표기법을 표시하는 크로스 브라우저 JavaScript 라이브러리이다. 웹 사이트에서 수학식 표시가 가능하다."
 categories: git_blog
-tag : [git, blog, markdown, 마크다운, Mathjax, 문법]
+tag : [git, blog, markdown, 마크다운, mathjax, 문법, 깃블로그]
 sidebar_main: true
 classes: wide
 
-last_modified_at: 2022-01-03
+last_modified_at: 2022-01-19
 ---
 
 <img src="https://user-images.githubusercontent.com/78655692/143910921-4b7d1a55-d2b0-49ee-b721-20ce1376df0b.png" width=650 alt="mathjax">
@@ -60,24 +60,34 @@ $$x^2+3*x+5=0 는 이차함수이다.$$
 
 <br>
 
-- `MathJax에서 유용한 TEX 명령어` :<https://www.onemathematicalcat.org/MathJaxDocumentation/MathJaxKorean/TeXSyntax_ko.html>
+- `위키백과:TeX 문법` : <https://ko.wikipedia.org/wiki/%EC%9C%84%ED%82%A4%EB%B0%B1%EA%B3%BC:TeX_%EB%AC%B8%EB%B2%95>
 
 <br>
 
-- `위키백과:TeX 문법` : <https://ko.wikipedia.org/wiki/%EC%9C%84%ED%82%A4%EB%B0%B1%EA%B3%BC:TeX_%EB%AC%B8%EB%B2%95>
+- `MathJax에서 유용한 TEX 명령어` :<https://www.onemathematicalcat.org/MathJaxDocumentation/MathJaxKorean/TeXSyntax_ko.html>
 
 <br>
 
 - `Symbols and Functions in KaTeX` : <https://utensil-site.github.io/available-in-katex/>
 
 <br>
+<br>
 
-> `ctrl + 마우스휠`을 이용해 175%까지 확대해서 본다.
+![mathjax1](https://user-images.githubusercontent.com/78655692/150060659-3d9b1865-ef1c-413e-a38a-50a9ae2a26d3.jpg)
 
-![TeXRefCard v1 5 (4)_page-0001](https://user-images.githubusercontent.com/78655692/146336736-786fae45-599d-404d-bdd8-24c468e8df32.jpg)
+![mathjax2](https://user-images.githubusercontent.com/78655692/150060868-0392f798-0bc7-4309-b981-bbbe0d226f66.jpg)
 
-![TeXRefCard v1 5 (4)_page-0002](https://user-images.githubusercontent.com/78655692/146336860-40a2336c-d31a-4af6-852e-2eea55ec84b5.jpg)
+![mathjax3](https://user-images.githubusercontent.com/78655692/150061097-9c7e3545-8c25-48d7-af0e-4120732df439.jpg)
 
+![mathjax4](https://user-images.githubusercontent.com/78655692/150061124-05feb7ab-cfc5-466c-93ec-d9709e5026ff.jpg)
+
+![mathjax5](https://user-images.githubusercontent.com/78655692/150061139-b5cd92fd-1c4c-4580-bc0d-035f23c7a08e.jpg)
+
+![mathjax6](https://user-images.githubusercontent.com/78655692/150061160-8563f173-0540-49ed-9f8e-68fdc6e3f092.jpg)
+
+![mathjax7](https://user-images.githubusercontent.com/78655692/150061365-399a608c-09f1-41b4-b2f2-1c9f88f2aca7.jpg)
+
+<br>
 <br>
 
 - *1.* 여러 개 쓸 때 : $x_{i,j}^{next}$
@@ -116,7 +126,8 @@ $$x^2+3*x+5=0 는 이차함수이다.$$
 
 
 
-
+<br>
+<br>
 <br>
 <br>
 
