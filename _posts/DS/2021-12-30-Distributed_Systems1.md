@@ -9,12 +9,12 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-01-12
+last_modified_at: 2022-01-19
 ---
 
 <img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/147719090-5f0942f1-1647-44ad-8d72-f11e3fe400d7.png
 '>
-본 글은 Distributed Systems 책의 내용을 개인 공부 목적을 위한 요약 및 정리한 내용입니다. <br> 번역보다는 직역을 통해 영문책을 이해하려다 보니 단어나 문장이 다소 어색할 수 있습니다. <br> 오타나 오류는 알려주시길 바라며, 도움이 되길 바랍니다.
+본 글은 Distributed Systems 책의 내용을 개인 공부 목적을 위한 요약 및 정리한 내용입니다. <br> 번역보다는 직역을 통해 영문책을 이해하려다 보니 단어나 문장이 다소 어색할 수 있습니다. <br>  영어문장에 맞게 최대한 이해하려 했습니다. 가지치기($\nearrow$)로 꾸며주는 말을 따로 빼서 육하원칙, 지칭 등을 넣어 해석했습니다. <br>오타나 오류는 알려주시길 바라며, 도움이 되길 바랍니다.
 {: .notice--info}
 
 <br>
@@ -32,18 +32,17 @@ last_modified_at: 2022-01-12
      - 가격이 1/1000으로 싸졌다.
   2. the invention of `high-speed computer networks`
   - `LAN`(; Local-area networks)으로 빌딩 안의 수천대의 장비들에게 정보를 마이크로초 단위로 전송이 가능해졌다. (공유기가 그 예)
-  - `WAN`(; Wide-area network)은 몇백만대의 기계들에게 아주 빠른 속도로 전송이 가능해지도록 만들었다.
+  - `WAN`(; Wide-area network)로 몇백만대의 시스템들이 연결되어 bps 속도로 전송이 가능해졌다.
 - 이러한 발전으로 우리는 소형 컴퓨터 시스템을 가질수 있게 되었다. 스마트폰 또한 하나의 결과물로 볼 수 있을 것이다.
 - 센서, 메모리, 강력한 CPU로 채워진 이 장치들은 본격적으로 하기에 준비가 다 된 컴퓨터 못지 않다. (네트워크 능력도 가지고 있다.)
 - 그래서 `plug computer`가 등장했다.
   > A plug computer is an external device, often configured for use in the home or office as a compact computer. The name is derived from the small configuration of such devices. [^1]
-- 이런 기술들의 결과로 수많은 네트워크 컴퓨터들로 구성된 컴퓨팅 시스템을 구현할 수 있게 되었다.
-- 이러한 컴퓨터들은 분산되어졌는데 `distributed system`을 형성했다고 말할 수 있다.
+- 이런 기술들의 결과로 수많은 네트워크 컴퓨터들로 구성된 컴퓨팅 시스템을 구현할 수 있게 되었다. 이런 컴퓨터들은 지리적으로 분산되어졌는데 `distributed system`을 형성했다고 말할 수 있다.
 - 이런 분산 시스템의 크기는 한 줌의 장치로부터 다양해졌다.
 
 <br>
 
-### 정의
+### What is a distributed system?
 
 - **A distributed system is a collection of autonomous computing elements that appears to its users as a single coherent system.**
   - autonomous: 독립적으로 작동할 수 있는
@@ -52,13 +51,15 @@ last_modified_at: 2022-01-12
 - **특징**
   - *1.* distributed system is a collection of computing elements
 each being able to behave **independently** of each other
-    - `nodes` = autonomous computing elements (하드웨어 장비나 소프트웨어 프로세스가 될 수 있다.)
+    - `nodes` = 독립적으로 움직이는 컴퓨팅 요소들 (하드웨어 장비나 소프트웨어 프로세스가 될 수 있다.)
     - **노드** = 컴퓨터 네트워크를 구성하는 기기 1대 [^2]
       - 독립적으로 작동하는 기기
+      - 네트워크 또는 데이터 구조를 구성하는 각각의 개체
     - **네트워크**(network) : 한 컴퓨터에서 다른 컴퓨터로 시그널(메시지)을 보내는 것
     - **라우팅**(routing) : 어떻게 보낼지 담당하는 역할
   - *2.* users (be they people or applications) believe they are dealing with **a single system**
-    - single system안에서 sensor networks로 높은 성능의 메인프레임 컴퓨터들부터 작은 장치들까지 다룰 수 있다.
+    - 하나 또는 다른 독립적인 노드들이 협업을 필요함을 의미.
+    - 단일 시스템에서 노드들은 고성능 메인프레임 컴퓨터부터 센서 네트워크의 작은 장치들까지 다양하다.
 
 <br>
 <br>
@@ -66,12 +67,12 @@ each being able to behave **independently** of each other
 ### 특징1. Collection of autonomous computing elements
 
 - 현대 분산 시스템은 높은 성능의 컴퓨터들부터 작은 플러그 컴퓨팅까지 많은 종류의 노드들로 구성되어 있다. 
-- **노드들은 서로 독립적으로 활동한다.** (그들이 서로를 무시한다 하더라도) 따라서 노드들을 같은 분산 시스템에 넣어 사용하지 않는다.
-- 노드들은 공통의 목표(서로 메시지를 교환하는 것)를 달성하기 위해 프로그램화 되어있다.
-  - 노드는 들어오는 메시지들(차례로 진행되는데, 메시지를 더 먼 곳까지 도달)에 반응한다.
+- **노드들은 서로 독립적으로 작동한다.** (서로를 무시한다 하더라도) 따라서 노드들을 같은 분산 시스템에 넣어 사용하지 않는다.
+- 노드들은 공동의 목표를 달성하기 위해 프로그램화 되어있다. $\nearrow$ (공동의 목표는) 메시지를 서로 교환하는 것을 구현하는 것 
+  - 노드는 들어온 메시지에 반응하고, 처리하고, 메시지 전달을 통해 더 많은 통신으로 유도한다.
 - 각 노드는 각자 고유의 시간의 알림을 가지고 있다.
-  - 따라서 표준 시간(global clock)이 없다.
-  - 이 시간 참조의 결점은 분산 시스템에서 기능적 동기화(synchronization)와 협력 문제(coordination)를 유발하기도 한다.
+  - 따라서 **표준 시간**(global clock)이 없다.
+  - 이 시간 참조의 결점은 분산 시스템에서 기능적 동기화(`synchronization`)와 조정 문제(`coordination`)를 유발하기도 한다.
 - 노드들을 집합으로 처리하는 것은 그런 집합을 관리할 필요가 있음을 암시한다.
   - 즉, 노드들이 시스템에 속하는지 아닌지 등록해야 하며, 각각의 멤버에게 노드들의 리스트(직접 전달할 수 있는)를 제공해야 한다.
 - `group membership`을 관리하는 것은 승인 제어(`admission control`)의 이유 때문에 매우 어려울 수 있다.
@@ -87,16 +88,18 @@ each being able to behave **independently** of each other
 
 ### overlay network
 
-- `overlay network`
-  - 이런 경우, 노드는 직접 메시지를 보낼 수 있는 소프트웨어 프로세스이다.
-  - 메시지 전달은 TCP/IP or UDP 채널을 통해 이뤄진다.
-    - **TCP**(Transmission Control Protocol) : 신뢰성이 요구되는 애플리케이션에서 사용
-    - **UDP**(User Dtagram Protocol) : 간단한 데이터를 빠른 속도로 전송하는 애플리케이션에서 사용
-- 두 가지 type이 있다.
-  - *1.* `Structured overlay` : 각 노드는 이웃들에게 전달할 수 있게 잘 정의되어 있다. (노드들은 tree이거나 ring형으로 이뤄져 있다.)
+- 분산시스템은 종종 오버레이 네트워크(`overlay network`)로 구성된다.
+  - **오버레이 네트워크** : 물리 네트워크 위에 성립되는 가상의 컴퓨터 네트워크
+    - P2P 네트워크와 같은 분산 시스템은 노드가 인터넷 상에서 실행되기 때문에 오버레이 네트워크에 해당한다. [^3]
+- 이런 경우, 노드는 직접 메시지를 보낼 수 있는 소프트웨어 프로세스이다.
+- 메시지 전달은 TCP/IP or UDP 채널을 통해 이뤄진다.
+  - **TCP**(Transmission Control Protocol) : 신뢰성이 요구되는 애플리케이션에서 사용
+  - **UDP**(User Dtagram Protocol) : 간단한 데이터를 빠른 속도로 전송하는 애플리케이션에서 사용
+- 두 가지 유형이 있다.
+  - *1.* `Structured overlay` : 각 노드는 통신할 수 있는 잘 정의된 인접 노드 집합이 있다. (노드들은 tree이거나 ring형으로 이뤄져 있다.)
   - *2.* `Unstructured overlay` : 각 노드는 다른 노드들을 **랜덤하게** 선택되는 많은 참조를 가지고 있다.
-- 어떤 경우든 `overlay network`는 언제나 연결돼야 한다. (두개의 노드는 반드시 전달 통로가 있다.)
-- 잘 알려진 overlay로는 `peer-to-peer` (P2P) 네트워크가 있다.
+- 어떤 경우든 `overlay network`는 언제나 연결돼야 한다. $\nearrow$ (구체적으로) 두개의 노드 간에는 반드시 통신 통로가 있다. $\nearrow$ (통신 통로에 대해) 이런 노드들이 서로 메시지를 전송하게 허용하는 
+- 잘 알려진 오버레이로는 `peer-to-peer` (P2P) 네트워크가 있다.
 
 <br> 
 <br> 
@@ -109,7 +112,7 @@ each being able to behave **independently** of each other
   - end user(=최종 사용자)는 어떤 프로세스가 현재 실행되는지 몰라야 한다.
     - **프로세스**(process) : 현재 실행 중인 프로그램
   - 데이터가 저장되는 위치는 문제가 되지 않아야 한다. 시스템은 성능을 높이기 위해 데이터를 복제할 수도 있다는 것도 문제가 되지 않아야 한다.
-    - 이것을 `distribution transparency`(투명성) 라 부른다.
+    - 이것을 `distribution transparency`(분산 투명성) 라 부른다.
     - 이것은 리소스는 통합 파일 시스템 인터페이스(파일이나, 저장 장치, 메모리, 네트워크 사이의 차이를 효과적으로 숨겨주는)를 통해 접근한다는 유닉스의 운영시스템과 비슷한 접근이다.
       - **인터페이스**(interface) : 연결을 의미 (a와 b를 연결)
       - **인터페이스** : 서로 다른 두 개의 시스템, 장치 사이에서 정보나 신호를 주고받는 경우의 접점이나 경계면
@@ -121,45 +124,51 @@ each being able to behave **independently** of each other
   - "one in which the failure of a computer you didn’t even know existed can render your own computer unusable"
 
 <br>
+<br>
 
 ### Middleware and distributed systems
 
-- 분산된 애플리케이션의 발전을 돕기 위해, 분산 시스템은 분리된 층을 가지고 운영된다.
-
-![image](https://user-images.githubusercontent.com/78655692/148311317-8f9e4d8d-17b1-404c-8f2e-829e0cdbfa04.png)
-
-- A distributed system organized in a middleware layer, which
-extends over multiple machines, offering each application the same interface.
-- 각각의 애플리케이션은 같은 인터페이스를 제공한다.
-- 분산 시스템은 단일 분산 애플리케이션의 컴포넌트들이 서로 잘 전달할 수 있는 수단을 제공한다.
-  - **component** (컴포넌트) : 하나의 기능을 하는 단위 (내부를 이루는 모든 요소)
-    - 특정 일을 수행하는 코드
-- `middleware`은 분산시스템과 동일하다고 볼 수 있다.
-  - **미들웨어** : 서로 다른 여러 프로그램을 함께 운용할 수 있는 소프트웨어
-  - 애플리케이션들에게 효과적으로 공유하고 (이런 자원을 네트워크를 통해) 배치하는 것들을 제공하는 리소스의 관리자(resource management)
-  - 운영체제에서 서비스를 제공하는 항목들
-  - Facilities for interapplication communication
-  - Security services
-  - Accounting services
-  - Masking of and recovery from failures
-
-- 미들웨어 서비스는 네트워크 환경을 제공한다. (운영체제와 다른점)
-- 미들웨어는 컴포넌트와 기능들로 사용되는 컨테이너(애플리케이션들이 각각 실행되지 않게 도와주는)로 볼 수 있다. 
+- 분산된 애플리케이션의 발전을 돕기 위해, 분산 시스템은 분리된 계층을 가지며 구성된다. $\nearrow$ (분리된 계층이란) 논리적으로 각각의 컴퓨터의 운영체제 위에 위치한
+  - **애플리케이션**(application) : 운영체제 위에서 사용자가 직접 사용하게 되는 소프트웨어 [^4]
 
 <br>
 
-- 미들웨어 서비스의 예시들
+![image](https://user-images.githubusercontent.com/78655692/150115611-ca99401f-fcc2-43d0-8d53-ac9baa31aeb6.png)
 
-1. **Communication** 
-  - `Remote Procedure Call (RPC)`라고 불린다. RPC 서비스는 애플리케이션에게 원격 컴퓨터에서 실행되는 기능을 호출한다. 
-2. **Transactions**
-   - 미들웨어로 **atomic** transaction을 참조한다.
-   - 애플리케이션 개발자는 원격 서비스를 불러오는 것만 명시하면, 표준 프로토콜을 가져오게 할 수 있고 미들웨어는 모든 서비스를 불러오거나 모두 안 불러올 수 있다.
-3. **Service composition**
-   - 웹기반 middleware는 웹 서비스 접근 방식을 표준화하고 특정 순서로 함수를 생성하는 수단을 제공한다.
-4. **Reliability**
-   - 한 프로세스가 모든 프로세스에 의해 수신되거나 다른 프로세스가 수신되지 않도록 보장한다.
-   - 이런 보장은 분산 개발을 단순화시킬 수 있다.
+<br>
+
+- 각각의 애플리케이션은 같은 인터페이스를 제공한다.
+- 분산 시스템은 수단을 제공한다. $\nearrow$ (어떤 수단?) 단일 분산 애플리케이션의 컴포넌트들이 서로 통신할 뿐만 아니라, 서로 다른 애플리케이션 간의 통신을 허용하는
+  - **컴포넌트 (component)** : 하나의 기능을 하는 단위 (내부를 이루는 모든 요소)
+  - **컴포넌트 (component)** : 여러 개의 프로그램 함수들을 모아 하나의 특정한 기능을 수행할 수 있도록 구성한 작은 기능적 단위 [^5]
+- 동시에, 이것은 각각 애플리케이션으로부터 하드웨어와 운영체제의 차이를 가능한 숨긴다.
+- 어떤 맥락에선 미들웨어는 분산시스템과 같다. $\nearrow$ (그리고 같은 것은) 운영체제가 컴퓨터에 미치는 영향 또한 : 리소스의 관리자 $\nearrow$ (어떤?) 애플리케이션들에게 효과적으로 공유하고 이런 리소스들을 네트워크를 배포하는 것을 제공하는
+  - **미들웨어 (middleware)** : 서로 다른 여러 프로그램을 함께 운용할 수 있는 소프트웨어
+- 리소스 관리자 뿐만 아니라 대부분 운영체제에서 볼 수 있는 서비스도 제공한다. 다음은 항목들
+  1. Facilities for interapplication communication
+  2. Security services
+  3. Accounting services
+  4. Masking of and recovery from failures
+
+- 운영체제와 다른점으로, 미들웨어 서비스는 네트워크 환경을 제공한다. 
+- 어떤 의미에선, 미들웨어를 컴포넌트와 함수들을 공통적으로 사용하는 컨테이너로 볼 수 있다. $\nearrow$ (함수들은) 더이상 애플리케이션 각각에 의해 구현되지 않음 
+- 미들웨어는 컴포넌트와 기능들로 사용되는 컨테이너(애플리케이션들이 각각 실행되지 않게 도와주는)로 볼 수 있다. 
+- 이같은 미들웨어 서비스의 예시들
+
+  1. **Communication** 
+     - `Remote Procedure Call (RPC)`라고 불린다. **RPC 서비스**를 사용하면 애플리케이션(=응용 프로그램)에서 함수를 호출할 수 있다. $\nearrow$ (함수는) 원격 컴퓨터에서 구현되고 실행되는 $\nearrow$ (어떻게 구현?) 마치 지역적으로 가능한 것처럼
+       - **원격 프로시저 호출 (RPC)** : 별도의 원격제어를 위한 코딩 없이 다른 주소 공간에서 함수나 프로시저를 실행할 수 있게 하는 프로세스간 통신 기술
+         - 원격 프로시저 호출을 이용하면 프로그래머는 함수가 실행 프로그램에 로컬 위치에 있든 원격 위치에 있든 동일한 코드를 이용할 수 있다. [^6]
+  2. **Transactions**
+     - 미들웨어로 **원자성 (atomic) 트랜잭션 (transaction)**을 참조한다.
+       - **트랜잭션 (transaction)** : 쪼갤 수 없는 업무 처리의 최소 단위
+     - 애플리케이션 개발자는 원격 서비스를 불러오는 것만 명시하면, 표준 프로토콜을 가져오게 할 수 있고 미들웨어는 모든 서비스를 불러오거나 모두 안 불러올 수 있다.
+  3. **Service composition**
+     - 웹기반 미들웨어는 방식을 표준화함으로써 도와준다. $\nearrow$ (어떤 방식?) 웹 서버가 접근되고 수단을 제공하는 $\nearrow$ (어떤 수단?) 특정 순서에 있는 그들의 함수들을 생성하기 위한
+  4. **Reliability**
+     - 
+     - 한 프로세스가 모든 프로세스에 의해 수신되거나 다른 프로세스가 수신되지 않도록 보장한다.
+     - 이런 보장은 분산 애플리케션 개발을 단순화시며, 미들웨어의 한 부분으로 구현된다.
 
 <br>
 <br>
@@ -170,6 +179,7 @@ extends over multiple machines, offering each application the same interface.
   - 자원은 네트워크로 분산되어 있다는 사실을 숨겨야 한다.
   - `open`되어야 하고, `scalable`되어야 한다.
 
+<br>
 <br>
 
 ### Supporting resource sharing
@@ -182,11 +192,13 @@ files, services, and networks
 - 분산 시스템에서 자원 공유는 파일을 공유하는 P2P네트워크인 `BitTorrent`가 대표적인 예시이다.
 
 <br>
+<br>
 
 ### Making distribution transparent
 
 - 분산 시스템의 중요한 목표는 프로세스와 자원이 물리적으로 분산되어 있다는 사실을 숨겨야 하는 것이다.
 
+<br>
 <br>
 
 ### Types of distribution transparency
@@ -206,7 +218,7 @@ files, services, and networks
 <br>
 
 - **access transparency** 
-  - 기초 레벨에서, 우리는 기계 구조가 다름을 숨기고 싶지만, 그보다 더 중요한 것은 데이터가 다른 기계 (또는 시스템)에서 잘 나타나는 가를 보아야 한다.
+  - 기초 레벨에서, 우리는 시스템 구조가 다름을 숨기고 싶지만, 그보다 더 중요한 것은 데이터가 다른 기계 (또는 시스템)에서 잘 나타나는 가를 보아야 한다.
 - **location transparency**
   - 네임이 중요한 역할을 한다.
   - `location transparency`는 논리적 네임 (name은 비밀리에 인코드되지 않는다.)이 리소스에 할당함으로써 얻을 수 있다. 
@@ -469,7 +481,7 @@ layer.
 
 - 네트워크 애플리케이션은 서버(애플리케이션을 실행하고, 원격 프로그램(**client**라 부름)을 이용할 수 있게)로 구성된다.
   - 클라이언트는 서버에 요청(특정 작동을 실행을 목표로 하는)을 보낸다.
-    - **클라이언트**(`client`) : 네트워크를 통하여 서버라는 다른 컴퓨터 시스템 상의 원격 서비스에 접속할 수 있는 응용 프로그램이나 서비스 [^3]
+    - **클라이언트**(`client`) : 네트워크를 통하여 서버라는 다른 컴퓨터 시스템 상의 원격 서비스에 접속할 수 있는 응용 프로그램이나 서비스 [^7]
     - 클라이언트(client)는 서비스 요구자, 서버(server)는 서비스 제공자
 
 <br>
@@ -618,9 +630,10 @@ layer.
 
 ## CS 단어 정리
 
+- `act` : 작동하다
 - `microprocessors` : 마이크로프로세서
 - `parallelism` : 병행
-- `deploy` : 배치하다, 효율적으로 사용하다
+- `deploy` : 배치하다, 효율적으로 사용하다, 배포하다
 - `miniaturization` : 소형화
 - `packed with` : ~로 가득 채워진
 - `full-fledged` : 본격적으로 하기에 준비가 다 된
@@ -728,6 +741,11 @@ layer.
 - `bandwith` : 대역폭
 - `peripheral` : 주변기기
 - `context` : 문맥
+- `structured` : 정형
+- `unstructured` : 비정형
+- `let` : 허용하다
+- `function` : 함수
+- `further` : 더 많은
 
 
 <br>
@@ -735,6 +753,12 @@ layer.
 
 ## References
 
+- <http://wiki.hash.kr/index.php/%EB%8C%80%EB%AC%B8>
+
 [^1]: <https://en.wikipedia.org/wiki/Plug_computer>
 [^2]: [[네트워크] 노드(node)란? - 두더지 개발자](https://engineer-mole.tistory.com/141)
-[^3]: <https://ko.wikipedia.org/wiki/%ED%81%B4%EB%9D%BC%EC%9D%B4%EC%96%B8%ED%8A%B8_(%EC%BB%B4%ED%93%A8%ED%8C%85)>
+[^3]: <http://wiki.hash.kr/index.php/%EC%98%A4%EB%B2%84%EB%A0%88%EC%9D%B4_%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC>
+[^4]: <http://wiki.hash.kr/index.php/%EC%9D%91%EC%9A%A9_%EC%86%8C%ED%94%84%ED%8A%B8%EC%9B%A8%EC%96%B4>
+[^5]: <http://wiki.hash.kr/index.php/%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8>
+[^6]: <http://wiki.hash.kr/index.php/%EC%9B%90%EA%B2%A9_%ED%94%84%EB%A1%9C%EC%8B%9C%EC%A0%80_%ED%98%B8%EC%B6%9C>
+[^7]: <https://ko.wikipedia.org/wiki/%ED%81%B4%EB%9D%BC%EC%9D%B4%EC%96%B8%ED%8A%B8_(%EC%BB%B4%ED%93%A8%ED%8C%85)>
