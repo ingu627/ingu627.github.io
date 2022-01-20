@@ -663,8 +663,6 @@ associated host.
 
 ## References
 
-- <http://wiki.hash.kr/index.php/%EB%8C%80%EB%AC%B8>
-
 [^1]: [wikipedia - Plug computer](https://en.wikipedia.org/wiki/Plug_computer)
 [^2]: [[네트워크] 노드(node)란? - 두더지 개발자](https://engineer-mole.tistory.com/141)
 [^3]: [해시넷 - 오버레이 네트워크](http://wiki.hash.kr/index.php/%EC%98%A4%EB%B2%84%EB%A0%88%EC%9D%B4_%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC)

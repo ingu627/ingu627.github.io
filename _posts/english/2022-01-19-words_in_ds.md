@@ -140,7 +140,7 @@ last_modified_at: 2022-01-19
 - `structured` : 정형
 - `unstructured` : 비정형
 - `let` : 허용하다
-- `function` : 함수
+- `function` : 기능
 - `further` : 더 많은
 - `mechanism` : 방법, 구조
 - `layer` : 층
@@ -269,5 +269,6 @@ last_modified_at: 2022-01-19
 - `generate` : 생성하다
 - `specify` : 특정하다, 지정하다
 - `along with` : 와 함께
-- `accross` : 을 통해
+- `across` : 을 통해
 - `sophisticated` : 복잡한, 정교한
+- `to the end` : 이를 위해
