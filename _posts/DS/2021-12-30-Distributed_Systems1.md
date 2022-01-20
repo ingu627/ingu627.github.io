@@ -9,7 +9,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-01-19
+last_modified_at: 2022-01-20
 ---
 
 <img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/147719090-5f0942f1-1647-44ad-8d72-f11e3fe400d7.png
@@ -54,7 +54,7 @@ each being able to behave **independently** of each other
     - `nodes` = 독립적으로 움직이는 컴퓨팅 요소들 (하드웨어 장비나 소프트웨어 프로세스가 될 수 있다.)
     - **노드** = 컴퓨터 네트워크를 구성하는 기기 1대 [^2]
       - 독립적으로 작동하는 기기
-      - 네트워크 또는 데이터 구조를 구성하는 각각의 개체
+      - 네트워크 또는 데이터 구조를 구성하는 각각의 객체
     - **네트워크**(network) : 한 컴퓨터에서 다른 컴퓨터로 시그널(메시지)을 보내는 것
     - **라우팅**(routing) : 어떻게 보낼지 담당하는 역할
   - *2.* users (be they people or applications) believe they are dealing with **a single system**
@@ -166,7 +166,6 @@ each being able to behave **independently** of each other
   3. **Service composition**
      - 웹기반 미들웨어는 방식을 표준화함으로써 도와준다. $\nearrow$ (어떤 방식?) 웹 서버가 접근되고 수단을 제공하는 $\nearrow$ (어떤 수단?) 특정 순서에 있는 그들의 함수들을 생성하기 위한
   4. **Reliability**
-     - 
      - 한 프로세스가 모든 프로세스에 의해 수신되거나 다른 프로세스가 수신되지 않도록 보장한다.
      - 이런 보장은 분산 애플리케션 개발을 단순화시며, 미들웨어의 한 부분으로 구현된다.
 
@@ -176,8 +175,7 @@ each being able to behave **independently** of each other
 ## 1.2 Design goals
 
 - 분산 시스템은 자원에 쉽게 접근할 수 있도록 해야 한다.
-  - 자원은 네트워크로 분산되어 있다는 사실을 숨겨야 한다.
-  - `open`되어야 하고, `scalable`되어야 한다.
+  - 자원은 네트워크를 통해 분산되어 있다는 사실을 숨겨야 한다.: `open`되어야 하고, `scalable`되어야 한다.
 
 <br>
 <br>
@@ -186,8 +184,8 @@ each being able to behave **independently** of each other
 
 - 분산시스템의 중요한 목표는 유저들이 원격 리소스를 쉽게 접근하고 공유할 수 있도록 만들어야 한다.
   - **리소스(resources)** = peripherals, storage facilities, data,
-files, services, and networks
-- 공유하는 것은 economics(경제성) 이유가 있다.
+files, services, and networks (사용될 수 있는 어떤 항목)
+- 자원을 공유하는 것은 economics(경제성) 이유에 있다.
 - 인터넷 연결은 넓게 분산된 사람들이 같이 일할 수 있도록 허용해준다. 
 - 분산 시스템에서 자원 공유는 파일을 공유하는 P2P네트워크인 `BitTorrent`가 대표적인 예시이다.
 
@@ -196,14 +194,14 @@ files, services, and networks
 
 ### Making distribution transparent
 
-- 분산 시스템의 중요한 목표는 프로세스와 자원이 물리적으로 분산되어 있다는 사실을 숨겨야 하는 것이다.
+- 분산 시스템의 중요한 목표는 프로세스와 자원이 다중 컴퓨터를 통해 물리적으로 분산되어 있다는 사실을 숨겨야 하는 것이다.
 
 <br>
 <br>
 
 ### Types of distribution transparency
 
-- **객체**(object) : process or a resource
+- **객체 (object)** : process or a resource
 
 |Transparency| Description|
 |---|---|
@@ -218,23 +216,24 @@ files, services, and networks
 <br>
 
 - **access transparency** 
-  - 기초 레벨에서, 우리는 시스템 구조가 다름을 숨기고 싶지만, 그보다 더 중요한 것은 데이터가 다른 기계 (또는 시스템)에서 잘 나타나는 가를 보아야 한다.
+  - 자료 표현과 객체가 접근하는 방식를 숨긴다.
 - **location transparency**
-  - 네임이 중요한 역할을 한다.
-  - `location transparency`는 논리적 네임 (name은 비밀리에 인코드되지 않는다.)이 리소스에 할당함으로써 얻을 수 있다. 
-  - 이러한 이름의 예시로 URL(; uniform resource locator)이 있다.
+  - 이름은 위치 투명성을 얻는데 중요한 역할을 한다.
+  - `location transparency`는 논리적 이름을 리소스에 할당함으로써 얻을 수 있다. 
+    - 이러한 이름의 예시로 URL(; uniform resource locator)이 있다.
   - Web은이러한 사이트는 데이터 센터에서 다른 곳에 이동되어 사용자는 알아차리지 못한다. (**relocation transparency**의 예시)
 - **migration transparency**
-  - 프로세스와 리소스의 이동성을 제공한다. (진행되는 전달과 운영에 영향을 미치지 않고)
+  - 프로세스와 리소스의 이동성을 제공한다. $\nearrow$ (어떻게 제공?) 진행되는 전달과 운영에 영향을 미치지 않고
     - 모바일 폰 사이의 전달이 예시가 될 수 있다.
 - **replication transparency**
-  - 자원들은 복제한다. 1) 가용성을 늘리기 위해 또는 2) copy를 접근 가능하도록 가까이 둠으로써 성능을 향상시키기 위해 
+  - 자원들이나 프로세스들의 복제품을 복제하여 숨긴다. $\nearrow$ (왜?) 다른 고장을 대체하기 위해
+  - 1) 가용성을 늘리기 위해 또는 2) copy를 접근 가능하도록 가까이 둠으로써 성능을 향상시키기 위해 
 - **concurrency transparency**
-  - 공유된 리소스에 동시 접근은 해당 리소스를 일관된(consistent) 상태로 유지한다는 것이다.
-  - `consistency`는 잠금을 통해 얻을 수 있는데 유저는 차례로 원하는 리소스에 대해 배타적인 접근을 갖게 된다.
+  - 각 유저는 알아차리지 못한다. $\nearrow$ (어떻게?) 다른 사람이 같은 자원을 쓰고 있는지에 대해
+  - 공유 자원의 동시 접근은 해당 자원을 일관된(consistent) 상태로 유지한다는 것이다.
 - **failure transparency**
-  - 유저나 애플리케이션이 시스템 fail을 알아차리 못해서 일을 적절하게 수행하고 시스템은 자동적으로 failure로부터 회복한다.
-  - failure를 가리는 것은 분산 시스템에서 가장 힘든 이슈 중 하나이다.
+  - 유저나 애플리케이션이 시스템 고장을 알아차리 못해서 일을 적절하게 수행하고 시스템은 자동적으로 고장으로부터 회복한다.
+  - 고장을 가리는 것(mask)은 분산 시스템에서 가장 힘든 이슈 중 하나이다.
 
 <br>
 <br>
@@ -242,7 +241,7 @@ files, services, and networks
 ### Degree of distribution transparency
 
 - 분산 시스템에서 분산 투명성은 보통 선호되지만 모든 분산 측면에서 숨기는 것은 유저에게 좋지는 않다.
-- 높은 투명성과 시스템 사이에 trade-off가 있다.
+- 높은 투명성과 시스템 사이에 `trade-off`가 있다.
   - 다른 것을 시도하기 전에 일시적인 서버 실패를 가리는 것은 전체 시스템을 늦추게 한다.
 - 다른 예로, 몇몇을 다른 대륙에 위치한 복제들을 동시에 consistent하는 것이다.
   - 즉, 한 copy가 바뀌면, 다른 operation이 허용하기 전에 모든 copies에게 전파된다.
@@ -254,11 +253,11 @@ files, services, and networks
 ## Being open
 
 - `open distributed system`은 다른 시스템으로 통합된 것을 쉽게 사용할 수 있게 컴포넌트들을 제공한다.
-- **Interoperability, composability, extensibility**
+- **Interoperability(상호 운용성), composability(결합성), extensibility(확장성)**
 - open이 되기 위해서, 컴포넌트들은 어떤 것을 제공해야될지 그것들의 문법, 의미를 설명하는 표준 규칙을 고수해야 한다.
 - 일반적인 접근은 `Interface Definition Language (IDL)`를 사용하는 인터페이스를 통해 서비스를 정의하는 것이다.
   - 그들은 기능들의 이름을 정확히 명시한다.
-- 명시가 잘 되었다면, 인터페이스 정의는 임의의 프로세스((다른 프로세스에게 전달할 수 있는 특정한 인터페이스를 필요로 하는))를 허용한다.
+- 명시가 잘 되었다면, 인터페이스 정의는 임의의 프로세스(다른 프로세스에게 전달할 수 있는 특정한 인터페이스를 필요로 하는)를 허용한다.
 - 적절한 사양은 완전(실행하는데 필요한 모든 것이 명시되어야 한다는 것)하고 중립적이다.
 - completeness and neutrality are important for interoperability and portability.
 - open distributed system이 되기 위해 다른 목표는 서로 다른 구성 컴포넌트로 시스템을 쉽게 구성할 수 있어야 한다.
@@ -269,7 +268,7 @@ files, services, and networks
 
 ### Separating policy from mechanism
 
-- 유연하기 위해서, 시스템이 작은 것(쉽게 대체되고 컴포넌트들이 적용가능한)들의 집합으로 구성되는 것은 중요하다.
+- 오픈 분산 시스템에서 유연성을 얻기 위해서, 시스템이 작거나 쉽게 대체되고  적용가능한 컴포넌트들의 집합으로 구성되는 것은 중요하다.
 - 웹 브라우저를 캐싱한다면 몇 가지 컴포넌트들이 고려되어야 한다.
   1. **Storage**
   2. **Exemption**
@@ -282,35 +281,47 @@ files, services, and networks
 
 ## Being scalable
 
-- **Scalability dimensions** (문제점)
+- **Scalability dimensions**
   1. **Size scalability** : 크기에 따른 확장성
+     - 유저나 자원들을 쉽게 추가해야 된다. $\nearrow$ (어디에?) 시스템에 $\nearrow$ (조건은?) 어떤 성능의 손실 없이 
   2. **Geographical scalability** : 거리에 따른 확장성
+     - 유저와 자원은 멀리 떨어져있지만 통신 지연은 거의 알아차리지 못함
   3. **Administrative scalability** : 관리에 따른 확장성
+     - 쉽게 관리된다. $\nearrow$ (조건은?) 많은 독립적인 관리 조직을 거친다 하더라도
 
+<br>
 <br>
 
 ### Size scalability
 
 - 시스템이 크기를 확장하고 싶을 때 풀어야할 많은 문제점들이 있다.
 - 유저나 리소스를 더 필요로 한다면 중앙 서비스의 한계에 직면한다.
-  - 예를 들어, 많은 서비스들은 sense에 중앙화되 있어서 그들은 분산시스템에 단일 서버로 실행된다.
+  - 예를 들어, 많은 서비스들은 센서에 중앙화되 있어서 그들은 분산시스템에 단일 서버로 실행된다.
   - 하지만 요청의 수가 증가하면 서버는 병목현상이 일어날 수 있다.
   - 병목현상이 될 수 있는 **3가지** 원인
-    - CPU 제한으로 컴퓨터 용량
-    - 저장 용량 (I/O 전송 비율도 포함)
-    - 사용자와 centralized service의 네트워크
+    1. CPU 제한으로 인한 계산 용량
+    2. 저장 용량 (I/O 전송 비율도 포함)
+    3. 유저와 중앙서비스간의 네트워크
 
+<br>
 <br>
 
 ### Geographical scalability
 
-- 대부분의 지역 기반 네트워크들이 `synchronous communication`(동시 통신)에 기반하기 때문에 기존 분산 시스템을 확장하는 것은 어렵다.
+- 대부분의 로컬 기반 네트워크들이 `synchronous communication`(동시 통신)에 기반하기 때문에 기존 분산 시스템을 확장하는 것은 어렵다.
+- 또 다른 문제로 WAN의 통신은 본질적으로 LAN보다 불안정하다.
+- 또한, 제한된 대역폭을 처리한다.
 
+<br>
 <br>
 
 ### Administrative scalability
 
 - resource 사용, 관리, 보안과 관련된 정책들이 충돌하는 것을 해결하려는 것이 주요 문제이다.
+- 분산 시스템이 다른 도메인(domain)으로 확장한다면, 2가지 안전 유형이 고려되어야 한다.
+  - **도메인 (domain)** : 문자로 표시한 인터넷 주소
+1. 분산 시스템은 새로운 도메인으로부터 악성 공격에 대해 방어한다.
+2. 새로운 도메인은 분산시스템으로부터 악성 공격에 대해 방어한다.
 
 <br>
 <br>
@@ -327,12 +338,13 @@ files, services, and networks
 <br>
 
 **1. Hiding communication latencies**
-   - `geographical scalability`에 적용가능
-   - 원격 서비스 요청의 응답 시간을 기다리는 것을 가능한 피함
-   - 애플리케이션을 요청할 때 `asynchronous communication`(비동기 통신)만을 사용
-     - 응답이 오면, 애플리케이션은 중단되고 이전의 발행된 요청을 끝마치기 위해 특별한 핸들러가 요청된다.
-     - `asynchronous communication`(비동기 통신)은 batch-processing system과 parallel application에 사용된다. (독립적인 task가 다른 task가 전달이 끝마치는 것을 기다리는 동안 실행이 스케줄되는)
-     - 새로운 thread of control이 요청을 수행하기 위해 시작된다.
+
+- `geographical scalability`에 적용가능
+- 원격 서비스 요청의 응답 시간을 기다리는 것을 가능한 피함
+- 애플리케이션을 요청할 때 `asynchronous communication`(비동기 통신)만을 사용
+  - 응답이 오면, 애플리케이션은 중단되고 이전의 발행된 요청을 끝마치기 위해 특별한 핸들러가 요청된다.
+  - `asynchronous communication`(비동기 통신)은 batch-processing system과 parallel application에 사용된다. (독립적인 task가 다른 task가 전달이 끝마치는 것을 기다리는 동안 실행이 스케줄되는)
+  - 새로운 thread of control이 요청을 수행하기 위해 시작된다.
 
 ![image](https://user-images.githubusercontent.com/78655692/148324936-9caec306-e236-4a63-af59-346c74cbd769.png)
 
@@ -346,12 +358,13 @@ forms as they are being filled.
 <br>
 
 **2. Partitioning and distribution**
-   - 컴포넌트를 사용하는 것을 포함, 이것을 작은 부분으로 나누고 시스템에 뿌린다.
-   - 예시로는 **DNS** (Internet Domain Name System)가 있다.
-     - **DNS** : 도인 이름에 대한 IP 주소를 등록하고 있으면서 도메인 이름에 대한 IP 주소를 알려주거나 IP 주소에 대한 도메인 이름을 알려주는 일을 담당
-     - **IP 주소** : 인터넷에 연결된 기기를 식별하는 유일한 번호
-   - DNS name 공간은 위계적으로 구성되어 `domains`의 tree (겹치지 않는 zone으로 나뉘어져서)로 들어간다.
-   - 각 zone의 names는 단일 name server에 의해 관리된다. 
+
+- 컴포넌트를 사용하는 것을 포함, 이것을 작은 부분으로 나누고 시스템에 뿌린다.
+- 예시로는 **DNS** (Internet Domain Name System)가 있다.
+ - **DNS** : 도인 이름에 대한 IP 주소를 등록하고 있으면서 도메인 이름에 대한 IP 주소를 알려주거나 IP 주소에 대한 도메인 이름을 알려주는 일을 담당
+ - **IP 주소** : 인터넷에 연결된 기기를 식별하는 유일한 번호
+- DNS name 공간은 위계적으로 구성되어 `domains`의 tree (겹치지 않는 zone으로 나뉘어져서)로 들어간다.
+- 각 zone의 names는 단일 name server에 의해 관리된다. 
 - resolving a name means returning the network address of the
 associated host.
 
@@ -368,10 +381,11 @@ associated host.
 <br>
 
 **3. Replication**
-  - 확장성의 문제로 성능 저하가 보이면 분산 시스템에서 component를 `replicate`(복제)한다.
-  - `cashing`은 복제의 특별한 형태이다. cashing은 자원을 복제하고  클라이언트가 자원에 접근할 수 있도록 해준다.
-    - `캐시` : 데이터를 임시로 저장해두는 장소 
-    - 하지만 복제와 다르게, 캐싱은 클라이언트의 리소스를 결정한다.(소유자의 리소스가 아니라)
+
+- 확장성의 문제로 성능 저하가 보이면 분산 시스템에서 component를 `replicate`(복제)한다.
+- `cashing`은 복제의 특별한 형태이다. cashing은 자원을 복제하고  클라이언트가 자원에 접근할 수 있도록 해준다.
+  - `캐시` : 데이터를 임시로 저장해두는 장소 
+  - 하지만 복제와 다르게, 캐싱은 클라이언트의 리소스를 결정한다.(소유자의 리소스가 아니라)
 - 하지만, 캐싱과 복제는 `consistency`(일관성) 문제점이 있다.
 - 어느 정도까지 불일치가 허용될 수 있는지는 리소스의 사용에 따라 크게 달라진다.
   - 강한 일관성의 문제점은 업데이트가 즉각적으로 다른 모든 copy들에게 전달되어야 한다는 점이다.
@@ -393,20 +407,24 @@ associated host.
 
 ### High performance distributed computing
 
-- `cluster computing`에서 하드웨어는 비슷한 워크스테이션(빠른 스피드의 지역기반 네트워크들로 이루어진)의 집합으로 이루어져 있다. (각 노드는 같은 운영 체제에서 실행한다.)
-  - 컴퓨터 클러스터(computer cluster) : 여러 대의 컴퓨터들이 연결되어 하나의 시스템처럼 동작하는 컴퓨터들의 집합
-- `grid computing`과는 다른 케이스인데, 이 서브 그룹은 분산 시스템(컴퓨터 시스템(각 시스템은 다른 관리 도메인아래 존재하며 하드웨어, 소프트웨어, 네트워크 기술이 아주 다른)의 연합으로 구성된)으로 이루어져 있다.
-- 그리드 컴퓨팅의 관점에서 다음 논리적 단계는 단순히 컴퓨팅 집약적인 애플리케이션에 필요한 전체 인프라를 아웃소싱(업무의 일부분을 전문기관에 위탁)한다.
-  - 시설들을 제공(infrastructure를 건설하기 위해), 가능한 시설로 무엇이 필요한지 구성
-- 클라우드 컴퓨팅은 많은 리소스들을 제공하는 것 이상이다. 
-- `DSM` (distributed shared-memory multicomputers) 시스템은 프로세스가 메모리 위치(다른 컴퓨터의)를 지정(마치 로컬 메모리인 것 처럼)할 수 있다.
+- `cluster computing`에서 하드웨어는 비슷한 워크스테이션의 집합으로 이루어져 있다. $\nearrow$ (구체적으로) 빠른 스피드의 지역기반 네트워크들로 이루어진. 추가로 각 노드는 같은 운영 체제에서 실행한다.
+  - **컴퓨터 클러스터(computer cluster)** : 여러 대의 컴퓨터들이 연결되어 하나의 시스템처럼 동작하는 컴퓨터들의 집합
+  - **워크스테이션 (workstation)** : 많은 양의 데이터를 처리하는 작업에 최적화된 전문가용 PC
+- `grid computing`과는 다른 케이스인데, 이 서브 그룹은 분산 시스템으로 이루어져 있다. $\nearrow$ (분산 시스템은) 컴퓨터 시스템의 연합으로 구성된 $\nearrow$ (연합은) 각 시스템은 다른 관리 도메인아래 존재하며 하드웨어, 소프트웨어, 네트워크 기술이 아주 다른
+- **그리드 컴퓨팅**의 관점에서 다음 논리적 단계는 단순히 컴퓨팅 집약적인 애플리케이션에 필요한 전체 인프라를 아웃소싱(업무의 일부분을 전문기관에 위탁)한다.
+- **클라우드 컴퓨팅**의 핵심은 인프라를 동적으로 구축하고 사용 가능한 서비스에서 필요한 것을 구성할 수 있는 기능을 제공 
 
+<br>
+
+- `DSM` (distributed shared-memory multicomputers) 시스템은 프로세스가 다른 컴퓨터의 메모리 위치를 지정할 수 있다. $\nearrow$ (어떻게 지정?) 마치 로컬 메모리인 것 처럼
+
+<br>
 <br>
 
 ### Cluster computing
 
-- 클러스터 컴퓨팅 시스템은 (개인 컴퓨터와 워크스테이션의 가격과 성능을 향상시켜) 인기있어 졌다.
-- 클러스터 컴퓨팅은 병령 프로그래밍(단일 프로그램이 다중 머신에 병렬로 실행된다.)에 사용된다.
+- 클러스터 컴퓨팅 시스템은 대중화됐다. $\nearrow$ (어떻게?) 개인 컴퓨터와 워크스테이션의 가격과 성능을 향상시켜
+- 클러스터 컴퓨팅은 병령 프로그래밍에 사용된다. $\nearrow$ (병렬 프로그램은) 단일 프로그램이 다중 머신에 병렬로 실행된다.
 
 ![image](https://user-images.githubusercontent.com/78655692/148669804-9f69d5ae-66a7-4328-babe-839f013c2781.png)
 
@@ -414,33 +432,38 @@ associated host.
   - 각 클러스터는 컴퓨터 노드(마스터 노드에 의해 통제되고 접속되는)들의 집합으로 구성된다.
   - 마스터는 노드들의 할당을 특정 병령 프로그램으로 갈 수 있는 것을 다루고, 시스템의 유저들에게 인터페이스를 제공한다.
   - compute node는 미들웨어 기능이 확장된 표준 운영 체제을 갖추고 있다.
-- 클러스터 컴퓨팅의 특징으로는 `homogeneity`(동질성)이 있다.
+- 클러스터 컴퓨팅의 특징으로는 **homogeneity (동질성)**이 있다.
 
+<br>
 <br>
 
 ### Grid computing
 
-- 그리드 컴퓨팅은 하드웨어, 운영 체제, 네트워크의 유사성에 관한 가정을 하지 않는다.
-- 그리드 컴퓨팅은 다른 조직들의 리소스를 (다른 조직들의 사람들의 공동 작업을 허용하기 위해) 같이 가져온다.
-  - 이러한 협력은 `virtual organization`의 형태로 구현된다.
+- 클러스터에서 컴퓨터들은 크게 같고, 같은 웅영체제, 그리고 모두 같은 네트워크를 통해 연결되어 있다.
+- 그리드 컴퓨팅에서 노드들은 어떤 특정한 작업을 위해 특별히 구성된다.
+  - 그리드 컴퓨팅은 하드웨어, 운영 체제, 네트워크의 유사성에 관한 가정을 하지 않는다.
+- 그리드 컴퓨팅은 다른 조직들의 자원을 하나로 모아 다른 조직의 사람들의 협력을 허용한다. $\nearrow$ (조직은) 시스템의 연합을 형성한
+  - 이러한 협력은 가상 조직(`virtual organization`)의 형태로 구현된다.
   - 같은 가상 조직의 속한 프로세스는 리소스의 접근 권한을 가진다.
 
 <br>
 
 ![image](https://user-images.githubusercontent.com/78655692/148682490-74f30183-8a22-498d-8e9c-cebd27fa2655.png)
 
-- `fabric layer`는 인터페이스(특정한 장소에 지역 리소스에 대한)를 제공한다.
+- `fabric layer`는 인터페이스를 제공한다. $\nearrow$ (인터페이스는)특정 장소의 로컬 자원에 대한
+  - **레이어 (layer)** : 하나의 대상을 여러 개로 나눈 층
 - `connectivity layer`는 그리드 트랜잭션(다중 리소스의 사용을 포괄하는)을 지원하기 위한 통신 프로토콜로 이루어져 있다.
   - **프로토콜**(protocol)은 리소스 사이에 데이터를 전달하거나 원격 위치로부터 리소스에 접근하는데 필요하다.
     - **프로토콜** : 서로 다른 컴퓨터끼리 데이터를 원활하게 보내고 받기 위한 규칙
-  - `connectivity layer`는 보안 프로토콜(유저와 리소스를 인증하는)을 가지고 있다.
+  - 연결 계층은 보안 프로토콜을 가지고 있다. $\nearrow$ (보안 프로토콜은) 유저와 리소스를 인증함
   - 권한(유저로부터 프로그램에)을 위임하는 것은 `connectivity layer`에 중요한 기능이다.
-- `resource layer`는 단일 리소스를 관리한다.
-  - 이것은 `connectivity layer`가 제공하는 기능을 사용하고 직접적으로 인터페이스(`fabric layer`로부터 가능한)를 요청한다.
-  - 액세스 제어 역할을 한다.
-- `collective layer`는 다중 리소스 접근을 관리하고, 리소스 발견, 할당, 다중 리소스에 관한 태스크의 스케줄링, 데이터 복제 같은 서비스들로 구성된다.
-- `application layer`는 (가상 조직안에 실행되고 그리드 컴퓨팅 환경에서 사용하는) 애플리케이션들로 구성된다.
+- `resource layer`는 단일 리소스를 관리하는 것을 담당한다.
+  - 이것은 연결 계층이 제공한 함수를 사용하고, 인터페이스를 직접 호출한다. $\nearrow$ (인터페이스는) 패브릭 계층에서 사용할 수 있는
+  - 자원 계층은 접근 제어를 담당하며, 인증에 의존한다. $\nearrow$ (인증은) 연결 계층의 부분으로 수행됨
+- `collective layer`는 **다중 리소스**의 접근을 처리하고, 리소스 발견, 할당, 다중 리소스에 관한 태스크의 스케줄링, 데이터 복제 같은 서비스들로 구성된다.
+- `application layer`는 애플리케이션들로 구성된다. $\nearrow$ (애플리케이션은) 가상 조직에서 작동하고 그리드 컴퓨팅 환경에서 사용하는
 
+<br>
 <br>
 
 ### Cloud computing
@@ -455,11 +478,11 @@ associated host.
 <br>
 
 - **Hardware** : 가장 낮은 계층은 필요한 하드웨어(프로세서, 라우터, 파워, 쿨링 시스템)를 관리하는 수단으로 형성된다.
-  - 데이터 센터에서 실행되며, 리소스(customer들이 절대로 직접 볼 수 없는)가 들어있다.
+  - 데이터 센터에서 실행되며, 고객들이 절대로 직접 볼 수 없는 리소스가 들어있다.
 - **Infrastructure** : 이 층은 클라우드 컴퓨팅 플랫폼에서 가장 중요한 근본이다.
-  - 이것은 가상 기술(고객들에게 infrastructure(가상 스토리지와 컴퓨팅 리소스로 구성된)를 제공하기 위해)을 배치한다.
-  - 클라우드 컴퓨팅은 할당하고 관리하며(가상 스토리지 장치와 가상 서버들을) 발전했다.
-- **Platform** : 플랫폼 계층은 클라우드 컴퓨팅을 고객에게 제공한다. (운영 체제를 애플리케이션 개발자에게 제공(즉, 쉽게 개발하고 클라우드에서 실행을 필요로 하는 애플리케이션을 쉽게 배치할 수 있는 수단을))
+  - 이것은 가상 기술을 배포한다. $\nearrow$ (왜?) 고객들에게 infrastructure를 제공하기 위해 $\nearrow$ (인프라구조는) 가상 스토리지와 컴퓨팅 리소스로 구성됨
+  - 클라우드 컴퓨팅은 가상 스토리지 장치와 가상 서버들을 할당하고 관리하며 발전했다.
+- **Platform** : 플랫폼 계층은 클라우드 컴퓨팅을 고객에게 제공한다. $\nearrow$ 운영 체제를 애플리케이션 개발자에게 제공(즉, 쉽게 개발하고 클라우드에서 실행을 필요로 하는 애플리케이션을 쉽게 배치할 수 있는 수단을))
   - 애플리케이션 개발자는 vendor-specific API(업로드하고 프로그램 실행하는 요청들을 포함하는)를 제공받는다.
   - 이것은 유닉스의 `exec`(실행가능한 파일을 (운영 체제에게 실행될 수 있게 가져다 주는 것과 같다)와 같다.
   - 플랫폼 계층은 높은 수준의 abstraction(스토리지를 위한)를 제공한다.

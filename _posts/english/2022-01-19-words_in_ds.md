@@ -29,7 +29,7 @@ last_modified_at: 2022-01-19
 - `act` : 작동하다
 - `microprocessors` : 마이크로프로세서
 - `parallelism` : 병행
-- `deploy` : 배치하다, 효율적으로 사용하다, 배포하다
+- `deploy` : 배포하다
 - `miniaturization` : 소형화
 - `packed with` : ~로 가득 채워진
 - `full-fledged` : 본격적으로 하기에 준비가 다 된
@@ -142,6 +142,11 @@ last_modified_at: 2022-01-19
 - `let` : 허용하다
 - `function` : 함수
 - `further` : 더 많은
+- `mechanism` : 방법, 구조
+- `layer` : 층
+- `dynamically` : 동적으로
+- `construct` : 구성하다
+- `bring together` : 하나로 모으다
 
 
 <br>
