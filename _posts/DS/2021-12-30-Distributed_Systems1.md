@@ -534,6 +534,10 @@ associated host.
 
 <br>
 
+![image](https://user-images.githubusercontent.com/78655692/150288171-a950bb88-be93-46e2-a34b-a6ae52f96586.png)
+
+<br>
+
 - 중첩 트랜잭션은 분산시스템에서 중요한데, 트랜잭션을 분산하는 방식을 제공하기 때문이다, $\nearrow$ (무엇을 통해?) 다중 시스템
   - 그들은 논리적 분할을 따른다. $\nearrow$ (뭐에?) 원본 트랜잭션의 작업의 
 
