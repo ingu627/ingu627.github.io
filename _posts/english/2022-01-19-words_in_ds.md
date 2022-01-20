@@ -272,3 +272,4 @@ last_modified_at: 2022-01-19
 - `across` : 을 통해
 - `sophisticated` : 복잡한, 정교한
 - `to the end` : 이를 위해
+- `identified` : 식별되는
