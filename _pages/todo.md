@@ -82,6 +82,7 @@ sidebar_main: true
 
 - [Distributed Systems by Maarten van Steen, Andrew S. Tanenbaum](https://www.distributed-systems.net/index.php/books/ds3/ds3-ebook/){: target="_blank"}
 - [해시넷 위키](http://wiki.hash.kr/index.php/%EB%8C%80%EB%AC%B8){: target="_blank"}
+- [정보통신기술용어해설: 정보통신 및 과학기술 지식을 간결하게 정리,체계화시키고 있는 개인연구실 입니다.](http://www.ktword.co.kr/word/index.php){: target="_blank"}
 
 <br>
 

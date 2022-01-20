@@ -54,7 +54,7 @@ each being able to behave **independently** of each other
     - `nodes` = 독립적으로 움직이는 컴퓨팅 요소들 (하드웨어 장비나 소프트웨어 프로세스가 될 수 있다.)
     - **노드** = 컴퓨터 네트워크를 구성하는 기기 1대 [^2]
       - 독립적으로 작동하는 기기
-      - 네트워크 또는 데이터 구조를 구성하는 각각의 객체
+      - 네트워크 또는 데이터 구조를 구성하는 각각의 개체
     - **네트워크**(network) : 한 컴퓨터에서 다른 컴퓨터로 시그널(메시지)을 보내는 것
     - **라우팅**(routing) : 어떻게 보낼지 담당하는 역할
   - *2.* users (be they people or applications) believe they are dealing with **a single system**
@@ -201,7 +201,7 @@ files, services, and networks (사용될 수 있는 어떤 항목)
 
 ### Types of distribution transparency
 
-- **객체 (object)** : process or a resource
+- **개체 (object)** : process or a resource
 
 |Transparency| Description|
 |---|---|
@@ -216,7 +216,7 @@ files, services, and networks (사용될 수 있는 어떤 항목)
 <br>
 
 - **access transparency** 
-  - 자료 표현과 객체가 접근하는 방식를 숨긴다.
+  - 자료 표현과 개체가 접근하는 방식를 숨긴다.
 - **location transparency**
   - 이름은 위치 투명성을 얻는데 중요한 역할을 한다.
   - `location transparency`는 논리적 이름을 리소스에 할당함으로써 얻을 수 있다. 
@@ -560,7 +560,7 @@ associated host.
 
 - 몇가지 타입의 통신 미들웨어가 존재한다.
 - **RPC**(; remote procedure calls)을 사용하면, 애플리케이션 컴포넌트가 효과적으로 요청을 다른 애플리케이션 컴포넌트에게 효과적으로 보내지며 $\nearrow$ (힘의 원천은) 로컬 프로시져 호출을 수행함으로써, 이는 요청이 메시지로 패키지되어 착신자에게 보내지게 된다.
-- **RMI**(; remote method invocations)는 RPC와 본질적으로 동일하다. $\nearrow$ 함수 대신 객체에서 작동하는 것을 제외하면
+- **RMI**(; remote method invocations)는 RPC와 본질적으로 동일하다. $\nearrow$ 함수 대신 개체에서 작동하는 것을 제외하면
 - RPC와 RMI는 단점으로 호출자와 발신자 모두 (통신시에) 가동되어 실행되어야 한다는점이다. 게다가 그들은 서로 어떻게 참조되어야 하는지 정확히 알고 있어야 한다.
 - 이런 결함은 **MOM**(; message-oriented middleware)를 불러 왔다.
   - 애플리케이션은 메시지를 logical contact points에 보낸다.
