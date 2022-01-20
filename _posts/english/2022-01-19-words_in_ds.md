@@ -147,6 +147,8 @@ last_modified_at: 2022-01-19
 - `dynamically` : 동적으로
 - `construct` : 구성하다
 - `bring together` : 하나로 모으다
+- `vendor` : 공급업체
+- `nested` : 중첩
 
 
 <br>
