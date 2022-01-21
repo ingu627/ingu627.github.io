@@ -216,7 +216,7 @@ files, services, and networks (사용될 수 있는 어떤 항목)
 <br>
 
 - **access transparency** 
-  - 자료 표현과 개체가 접근하는 방식를 숨긴다.
+  - 데이터 표현과 개체가 접근하는 방식를 숨긴다.
 - **location transparency**
   - 이름은 위치 투명성을 얻는데 중요한 역할을 한다.
   - `location transparency`는 논리적 이름을 리소스에 할당함으로써 얻을 수 있다. 
