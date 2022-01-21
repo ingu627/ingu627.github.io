@@ -58,7 +58,7 @@
                     {% endif %}
                 {% endfor %}
             </ul>   
-        <span class="nav__sub-title">Distributed Computing</span>
+        <span class="nav__sub-title">Computing</span>
         <ul>
             {% for category in site.categories %}
                 {% if category[0] == "java" %}
@@ -77,6 +77,13 @@
             {% for category in site.categories %}
                 {% if category[0] == "DS" %}
                     <li><a href="/categories/DS" class="">분산 시스템(Distributed System) ({{category[1].size}})</a></li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        <ul>
+            {% for category in site.categories %}
+                {% if category[0] == "diapp" %}
+                    <li><a href="/categories/diapp" class="">데이터 중심 애플리케이션 설계 ({{category[1].size}})</a></li>
                 {% endif %}
             {% endfor %}
         </ul>
