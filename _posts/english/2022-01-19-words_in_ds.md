@@ -86,7 +86,8 @@ last_modified_at: 2022-01-19
 - `portability` : 휴대성, (프로그램의) 이식 가능성
 - `extensible` : 확장 가능한
 - `configure` : (컴퓨터의) 환경을 설정하다
-- `flexibility` : 융통성, 탄력성
+- `flexibility` : 유연성
+- `elasticity` : 탄력성
 - `monolithic` : 단일체의, 한 덩어리로 뭉친
 - `Exemption` : 면하기
 - `scalable` : 확장 가능한
@@ -94,7 +95,7 @@ last_modified_at: 2022-01-19
 - `Administrative` : 관리
 - `span` : 걸치다, 기간, 포괄하다
 - `scaling out` : 확장
-- `latencies` : 대기 시간
+- `latency` : 지연 시간
 - `applicable` : 적용 가능한
 - `asynchronous` : 비동기적
 - `reply` : 대답, 대응
@@ -149,8 +150,11 @@ last_modified_at: 2022-01-19
 - `bring together` : 하나로 모으다
 - `vendor` : 공급업체
 - `nested` : 중첩
-
-
+- `work` : 작업
+- `task` : 태스크
+- `component` : 구성 요소
+- `human error` : 인적 오류
+ 
 <br>
 <br>
 
@@ -273,3 +277,39 @@ last_modified_at: 2022-01-19
 - `sophisticated` : 복잡한, 정교한
 - `to the end` : 이를 위해
 - `identified` : 식별되는
+
+
+
+<br>
+<br>
+
+## 그 외 소프트웨어 용어들
+
+### 데이터 중심 애플리케이션 설계
+
+- `failure` : 장애
+- `redundancy` : 중복
+- `downtime` : 중단시간
+- `telemetry` : 원격 측정
+- `throughput` : 처리량
+- `hybrid` : 혼합형
+- `skew` : 쏠림
+- `level` : 수준
+- `scaling up` : 용량 확장
+- `vertical scaling` : 수직 확장
+- `scaling out` : 규모 확장
+- `horizontal scaling` : 수평 확장
+- `shared-nothing` : 비공유
+- `elastic` : 탄력적
+- `stateless` : 상태 비저장
+- `stateful` : 상태 유지
+- `operability` : 운용성
+- `evolvability` : 발전성
+- `extensibility` : 유연성
+- `modifiability` : 수정 가능성
+- `plasticity` : 적응성
+- `naming` : 명명
+- `load` : 부하
+- `cope with` : 에 대처하다 (=대응)
+- `approach` : 접근 방식
+- `maintainability` : 유지보수성
