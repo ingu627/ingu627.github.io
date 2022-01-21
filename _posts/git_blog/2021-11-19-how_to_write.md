@@ -3,18 +3,23 @@ layout: single
 title: "Git Blog - POST 글 작성하는 방법"
 excerpt: YAML을 이용하여 글의 제목, 날짜, 카테고리, 태그, 레이아웃 등을 정의해봅니다.
 categories: git_blog
-date: 2021-11-19
 tag: [git, blog, post]
 
 toc: true
 toc_sticky: true
 toc_label: 짧지만 써보는 목차
 
-last_modified_at: 2022-01-14
+last_modified_at: 2022-01-21
 
 sidebar_main: true
-# canonical_url:
-# classes: wide
+
+header:
+    overlay_image: /assets/images/Almond_Blossom_1280.jpg
+    over_filter: 0.4
+    caption: "꽃피는 아몬드 나무"
+    actions:
+        - label: "More info"
+        - url: "https://www.vangoghmuseum.nl/en/collection/s0176V1962"
 ---
 
 ## 예시
@@ -55,8 +60,64 @@ sidebar_main: true
 **sidebar_main: true**는 기본문법에서 수정된 버전입니다.
 {: .notice--danger}
 
-<script src="https://gist.github.com/ingu627/e71fe791e12a56fea39b197431b6704c.js"></script>
+<br>
 
+```markdown
+---
+layout: single
+title: "Git Blog - POST 글 작성하는 방법"
+excerpt: YAML을 이용하여 글의 제목, 날짜, 카테고리, 태그, 레이아웃 등을 정의해봅니다.
+categories: git_blog
+date: 2021-11-19
+tag: [git, blog, post]
+
+toc: true
+toc_sticky: true
+toc_label: 짧지만 써보는 목차
+
+last_modified_at: 2021-11-19
+
+sidebar_main: true
+# canonical_url:
+# classes: wide
+---
+```
+
+<br>
+<br>
+
+### header
+
+- 헤더는 `single page`의 제목을 이미지와 함께 제시하여 보여줄 때 사용한다.
+
+|설정|설명|
+|---|---|
+|overlay_image|이미지의 주소나 위치를 설정
+|overlay_filter|필터 부분에 흐릿한 정도나 색깔을 입힘
+|caption|그림에 대한 설명을 넣음
+|actions|실행부분 삽입
+
+<br>
+
+- 위 글에 설정한 예시이다.
+
+```markdown
+---
+header:
+    overlay_image: /assets/images/Almond_Blossom_1280.jpg
+    over_filter: 0.4
+    caption: "꽃피는 아몬드 나무"
+    actions:
+        - label: "More info"
+        - url: "https://www.vangoghmuseum.nl/en/collection/s0176V1962"
+---
+```
+
+
+
+
+<br>
+<br>
 <br>
 <br>
 
