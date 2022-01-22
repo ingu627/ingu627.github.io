@@ -54,7 +54,7 @@ each being able to behave **independently** of each other
     - `nodes` = 독립적으로 움직이는 컴퓨팅 요소들 (하드웨어 장비나 소프트웨어 프로세스가 될 수 있다.)
     - **노드** = 컴퓨터 네트워크를 구성하는 기기 1대 [^2]
       - 독립적으로 작동하는 기기
-      - 네트워크 또는 데이터 구조를 구성하는 각각의 개체
+      - 네트워크 또는 데이터 구조를 구성하는 각각의 객체
     - **네트워크**(network) : 한 컴퓨터에서 다른 컴퓨터로 시그널(메시지)을 보내는 것
     - **라우팅**(routing) : 어떻게 보낼지 담당하는 역할
   - *2.* users (be they people or applications) believe they are dealing with **a single system**
@@ -95,6 +95,7 @@ each being able to behave **independently** of each other
 - 메시지 전달은 TCP/IP or UDP 채널을 통해 이뤄진다.
   - **TCP**(Transmission Control Protocol) : 신뢰성이 요구되는 애플리케이션에서 사용
   - **UDP**(User Dtagram Protocol) : 간단한 데이터를 빠른 속도로 전송하는 애플리케이션에서 사용
+  - **애플리케이션 (application)** : 다양한 범주의 정보처리 기능(컴퓨팅 작업) [^4]
 - 두 가지 유형이 있다.
   - *1.* `Structured overlay` : 각 노드는 통신할 수 있는 잘 정의된 인접 노드 집합이 있다. (노드들은 tree이거나 ring형으로 이뤄져 있다.)
   - *2.* `Unstructured overlay` : 각 노드는 다른 노드들을 **랜덤하게** 선택되는 많은 참조를 가지고 있다.
@@ -129,7 +130,7 @@ each being able to behave **independently** of each other
 ### Middleware and distributed systems
 
 - 분산된 애플리케이션의 발전을 돕기 위해, 분산 시스템은 분리된 계층을 가지며 구성된다. $\nearrow$ (분리된 계층이란) 논리적으로 각각의 컴퓨터의 운영체제 위에 위치한
-  - **애플리케이션**(application) : 운영체제 위에서 사용자가 직접 사용하게 되는 소프트웨어 [^4]
+  - **애플리케이션**(application) : 운영체제 위에서 사용자가 직접 사용하게 되는 소프트웨어 [^5]
 
 <br>
 
@@ -140,7 +141,7 @@ each being able to behave **independently** of each other
 - 각각의 애플리케이션은 같은 인터페이스를 제공한다.
 - 분산 시스템은 수단을 제공한다. $\nearrow$ (어떤 수단?) 단일 분산 애플리케이션의 컴포넌트들이 서로 통신할 뿐만 아니라, 서로 다른 애플리케이션 간의 통신을 허용하는
   - **컴포넌트 (component)** : 하나의 기능을 하는 단위 (내부를 이루는 모든 요소)
-  - **컴포넌트 (component)** : 여러 개의 프로그램 함수들을 모아 하나의 특정한 기능을 수행할 수 있도록 구성한 작은 기능적 단위 [^5]
+  - **컴포넌트 (component)** : 여러 개의 프로그램 함수들을 모아 하나의 특정한 기능을 수행할 수 있도록 구성한 작은 기능적 단위 [^6]
 - 동시에, 이것은 각각 애플리케이션으로부터 하드웨어와 운영체제의 차이를 가능한 숨긴다.
 - 어떤 맥락에선 미들웨어는 분산시스템과 같다. $\nearrow$ (그리고 같은 것은) 운영체제가 컴퓨터에 미치는 영향 또한 : 리소스의 관리자 $\nearrow$ (어떤?) 애플리케이션들에게 효과적으로 공유하고 이런 리소스들을 네트워크를 배포하는 것을 제공하는
   - **미들웨어 (middleware)** : 서로 다른 여러 프로그램을 함께 운용할 수 있는 소프트웨어
@@ -158,7 +159,7 @@ each being able to behave **independently** of each other
   1. **Communication** 
      - `Remote Procedure Call (RPC)`라고 불린다. **RPC 서비스**를 사용하면 애플리케이션(=응용 프로그램)에서 함수를 호출할 수 있다. $\nearrow$ (함수는) 원격 컴퓨터에서 구현되고 실행되는 $\nearrow$ (어떻게 구현?) 마치 지역적으로 가능한 것처럼
        - **원격 프로시저 호출 (RPC)** : 별도의 원격제어를 위한 코딩 없이 다른 주소 공간에서 함수나 프로시저를 실행할 수 있게 하는 프로세스간 통신 기술
-         - 원격 프로시저 호출을 이용하면 프로그래머는 함수가 실행 프로그램에 로컬 위치에 있든 원격 위치에 있든 동일한 코드를 이용할 수 있다. [^6]
+         - 원격 프로시저 호출을 이용하면 프로그래머는 함수가 실행 프로그램에 로컬 위치에 있든 원격 위치에 있든 동일한 코드를 이용할 수 있다. [^7]
   2. **Transactions**
      - 미들웨어로 **원자성 (atomic) 트랜잭션 (transaction)**을 참조한다.
        - **트랜잭션 (transaction)** : 쪼갤 수 없는 업무 처리의 최소 단위
@@ -201,7 +202,7 @@ files, services, and networks (사용될 수 있는 어떤 항목)
 
 ### Types of distribution transparency
 
-- **개체 (object)** : process or a resource
+- **객체 (object)** : process or a resource
 
 |Transparency| Description|
 |---|---|
@@ -216,7 +217,7 @@ files, services, and networks (사용될 수 있는 어떤 항목)
 <br>
 
 - **access transparency** 
-  - 데이터 표현과 개체가 접근하는 방식를 숨긴다.
+  - 데이터 표현과 객체가 접근하는 방식를 숨긴다.
 - **location transparency**
   - 이름은 위치 투명성을 얻는데 중요한 역할을 한다.
   - `location transparency`는 논리적 이름을 리소스에 할당함으로써 얻을 수 있다. 
@@ -504,7 +505,7 @@ associated host.
 
 - 네트워크 애플리케이션은 서버(애플리케이션을 실행하고, 원격 프로그램(**client**라 부름)을 이용할 수 있게)로 구성된다.
   - 클라이언트는 서버에 요청(특정 작동을 실행을 목표로 하는)을 보낸다.
-    - **클라이언트**(`client`) : 네트워크를 통하여 서버라는 다른 컴퓨터 시스템 상의 원격 서비스에 접속할 수 있는 응용 프로그램이나 서비스 [^7]
+    - **클라이언트**(`client`) : 네트워크를 통하여 서버라는 다른 컴퓨터 시스템 상의 원격 서비스에 접속할 수 있는 응용 프로그램이나 서비스 [^8]
     - 클라이언트(client)는 서비스 요구자, 서버(server)는 서비스 제공자
 
 <br>
@@ -560,7 +561,7 @@ associated host.
 
 - 몇가지 타입의 통신 미들웨어가 존재한다.
 - **RPC**(; remote procedure calls)을 사용하면, 애플리케이션 컴포넌트가 효과적으로 요청을 다른 애플리케이션 컴포넌트에게 효과적으로 보내지며 $\nearrow$ (힘의 원천은) 로컬 프로시져 호출을 수행함으로써, 이는 요청이 메시지로 패키지되어 착신자에게 보내지게 된다.
-- **RMI**(; remote method invocations)는 RPC와 본질적으로 동일하다. $\nearrow$ 함수 대신 개체에서 작동하는 것을 제외하면
+- **RMI**(; remote method invocations)는 RPC와 본질적으로 동일하다. $\nearrow$ 함수 대신 객체에서 작동하는 것을 제외하면
 - RPC와 RMI는 단점으로 호출자와 발신자 모두 (통신시에) 가동되어 실행되어야 한다는점이다. 게다가 그들은 서로 어떻게 참조되어야 하는지 정확히 알고 있어야 한다.
 - 이런 결함은 **MOM**(; message-oriented middleware)를 불러 왔다.
   - 애플리케이션은 메시지를 logical contact points에 보낸다.
@@ -666,7 +667,8 @@ associated host.
 [^1]: [wikipedia - Plug computer](https://en.wikipedia.org/wiki/Plug_computer)
 [^2]: [[네트워크] 노드(node)란? - 두더지 개발자](https://engineer-mole.tistory.com/141)
 [^3]: [해시넷 - 오버레이 네트워크](http://wiki.hash.kr/index.php/%EC%98%A4%EB%B2%84%EB%A0%88%EC%9D%B4_%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC)
-[^4]: [해시넷 - 응용 소프트웨어](http://wiki.hash.kr/index.php/%EC%9D%91%EC%9A%A9_%EC%86%8C%ED%94%84%ED%8A%B8%EC%9B%A8%EC%96%B4)
-[^5]: [해시넷 - 컴포넌트](http://wiki.hash.kr/index.php/%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8)
-[^6]: [해시넷 - 원격 프로시저 호출](http://wiki.hash.kr/index.php/%EC%9B%90%EA%B2%A9_%ED%94%84%EB%A1%9C%EC%8B%9C%EC%A0%80_%ED%98%B8%EC%B6%9C)
-[^7]: [해시넷 - 클라이언트 (컴퓨팅)](https://ko.wikipedia.org/wiki/%ED%81%B4%EB%9D%BC%EC%9D%B4%EC%96%B8%ED%8A%B8_(%EC%BB%B4%ED%93%A8%ED%8C%85))
+[^4]: [정보통신기술용어해설 - Application Layer   응용 계층, 어플리케이션 계층](http://www.ktword.co.kr/test/view/view.php?nav=2&no=468&sh=%EC%95%A0%ED%94%8C%EB%A6%AC%EC%BC%80%EC%9D%B4%EC%85%98)
+[^5]: [해시넷 - 응용 소프트웨어](http://wiki.hash.kr/index.php/%EC%9D%91%EC%9A%A9_%EC%86%8C%ED%94%84%ED%8A%B8%EC%9B%A8%EC%96%B4)
+[^6]: [해시넷 - 컴포넌트](http://wiki.hash.kr/index.php/%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8)
+[^7]: [해시넷 - 원격 프로시저 호출](http://wiki.hash.kr/index.php/%EC%9B%90%EA%B2%A9_%ED%94%84%EB%A1%9C%EC%8B%9C%EC%A0%80_%ED%98%B8%EC%B6%9C)
+[^8]: [해시넷 - 클라이언트 (컴퓨팅)](https://ko.wikipedia.org/wiki/%ED%81%B4%EB%9D%BC%EC%9D%B4%EC%96%B8%ED%8A%B8_(%EC%BB%B4%ED%93%A8%ED%8C%85))
