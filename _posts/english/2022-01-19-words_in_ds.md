@@ -144,14 +144,14 @@ last_modified_at: 2022-01-19
 - `function` : 기능
 - `further` : 더 많은
 - `mechanism` : 방법, 구조
-- `layer` : 층
+- `layer` : 계층
 - `dynamically` : 동적으로
 - `construct` : 구성하다
 - `bring together` : 하나로 모으다
 - `vendor` : 공급업체
 - `nested` : 중첩
 - `work` : 작업
-- `task` : 태스크
+- `task` : 태스크, 작업
 - `component` : 구성 요소
 - `human error` : 인적 오류
  
@@ -301,6 +301,7 @@ last_modified_at: 2022-01-19
 - `horizontal scaling` : 수평 확장
 - `shared-nothing` : 비공유
 - `elastic` : 탄력적
+- `state` : 상태
 - `stateless` : 상태 비저장
 - `stateful` : 상태 유지
 - `operability` : 운용성
@@ -313,3 +314,11 @@ last_modified_at: 2022-01-19
 - `cope with` : 에 대처하다 (=대응)
 - `approach` : 접근 방식
 - `maintainability` : 유지보수성
+- `relational model` : 관계형 모델
+- `document model` : 문서 모델
+- `locality` : 지역성
+- `organization` : 조직
+- `document reference` : 문서 참조 (외래키와 같음)
+- `shredding` : 찢는
+- `execution` : 수행ㄴ
+
