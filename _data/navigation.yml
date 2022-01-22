@@ -2,16 +2,15 @@
 main:
   - title: "CV"
     url: https://drive.google.com/file/d/11xBGqniqir-h45aqs_iOQhmTQCOInbpe/view?usp=sharing
-  - title: "Portfolio"
-    url: /portfolio/
+  - title: "Paper"
+    url: /paper/
   - title: "To-Do"
     url: /todo/
   - title: "🔍"
     url: /search/
-  - title: "Categories"
-    url: /categories/
-  # - title: "Tags"
-  #   url: /tags/
+  # - title: "Categories"
+  #   url: /categories/
+
   
 
 docs:
