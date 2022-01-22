@@ -4,10 +4,10 @@ main:
     url: https://drive.google.com/file/d/11xBGqniqir-h45aqs_iOQhmTQCOInbpe/view?usp=sharing
   - title: "Paper"
     url: /paper/
-  - title: "To-Do"
-    url: /todo/
   - title: "🔍"
     url: /search/
+  - title: "References"
+    url: /reference/
   # - title: "Categories"
   #   url: /categories/
 

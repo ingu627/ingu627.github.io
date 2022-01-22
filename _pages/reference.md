@@ -1,7 +1,7 @@
 ---
-title: "To-Do"
+title: "References"
 layout: splash
-permalink: /todo/
+permalink: /reference/
 author_profile: true
 sidebar_main: true
 ---
@@ -165,3 +165,11 @@ sidebar_main: true
 - [Jekyll 블로그에 구글 애드센스 설치하기](https://shryu8902.github.io/jekyll/adsense/){: target="_blank"}
 - [jekyllthemes](http://jekyllthemes.org/){: target="_blank"}
 - [Docs Markdown 참조 - Microsoft](https://docs.microsoft.com/ko-kr/contribute/markdown-reference){: target="_blank"}
+- [emojipedia](https://emojipedia.org/){: target="_blank"}
+
+
+<br>
+
+### 영어 관련
+
+- [영어학습사전](http://dic.impact.pe.kr/){: target="_blank"}
