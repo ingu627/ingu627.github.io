@@ -121,7 +121,7 @@ last_modified_at: 2022-01-19
 - `homogeneity` : 동질성
 - `prevalent` : 널리 퍼져있는, 만연한
 - `ponder` : 숙고하다
-- `implement` : 시행하다
+- `implement` : 구현하다
 - `contain` : 들어있다
 - `backbone` : 근간, 척추
 - `carry out` : 수행하다
