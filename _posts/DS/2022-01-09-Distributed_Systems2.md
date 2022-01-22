@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "분산 시스템(Distributed Systems) - 2. Architectures 정리"
+title: "분산 시스템(Distributed Systems) - 2. Architectures"
 excerpt: "Distributed Systems Third edition by Maarten van Steen,
 Andrew S. Tanenbaum - cha2. Architectures 2.1, 2.2, 2.3, 2.4"
 categories: DS
@@ -9,7 +9,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-01-21
+last_modified_at: 2022-01-22
 ---
 
 <img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/147719090-5f0942f1-1647-44ad-8d72-f11e3fe400d7.png
