@@ -1,15 +1,15 @@
 ---
 layout: single
-title: "분산 시스템(Distributed Systems) - 책에 나온 영단어 정리"
+title: "Distributed Systems, designing data-intensive applications - 책에 나온 영단어 정리"
 excerpt: "Distributed Systems Third edition by Maarten van Steen,
-Andrew S. Tanenbaum - organize English Words"
+Andrew S. Tanenbaum - organize English Words | Designing Data-Intensive Applications by Martin Kleppmann"
 categories: englishWord
 tag : [DS, 영단어, 분산 시스템, distributed systems]
 toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-01-22
+last_modified_at: 2022-01-24
 ---
 
 <img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/147719090-5f0942f1-1647-44ad-8d72-f11e3fe400d7.png
@@ -29,7 +29,7 @@ last_modified_at: 2022-01-22
 - `act` : 작동하다
 - `microprocessors` : 마이크로프로세서
 - `parallelism` : 병행
-- `deploy` : 배포하다
+- `deploy` : 배치하다, 배포하다
 - `miniaturization` : 소형화
 - `packed with` : ~로 가득 채워진
 - `full-fledged` : 본격적으로 하기에 준비가 다 된
@@ -40,7 +40,7 @@ last_modified_at: 2022-01-22
 - `handful` : 한 줌
 - `interconnection` : 상호 연결
 - `topology` : 토폴로지
-- `underlying` : 밑에 있는, 근본적인 
+- `underlying` : 기본 (ex) underlying hardware : 기본 하드웨어)
 - `in turn` : 차례로 
 - `dealing with` : 처리하다
 - `imply` : 암시하다
@@ -154,6 +154,9 @@ last_modified_at: 2022-01-22
 - `task` : 태스크, 작업
 - `component` : 구성 요소
 - `human error` : 인적 오류
+- `binding` : 바인딩 (이름을 어떤 속성과 연결짓는 과정을 말함)
+- `prefetch` : 미리 불러오다
+- `string` : 문자열
  
 <br>
 <br>
@@ -260,14 +263,14 @@ last_modified_at: 2022-01-22
 - `heterogeneous` : 여러 다른 종류들로 이뤄진
 - `conventional` : 기존의
 - `predominant` : 뚜렷한
-- `virtual` : 사실상의, 가상의
+- `virtual` : 사실상의, (컴퓨터를 이용한) 가상의
 - `de facto` : 사실상의
 - `interface` : 접속하다
 - `reimplement` : 재구현하다
 - `take care of` : 책임을 지다
 - `let` : (~을 하도록) 허락하다, ~하게 하다
   - `let a R b` : a가 b를 R하게 하다
-- `machine` : 시스템
+- `machine` : 시스템, 기계
 - `ordinary` : 정상적인
 - `compliant` : 따르는
 - `generate` : 생성하다
@@ -277,8 +280,35 @@ last_modified_at: 2022-01-22
 - `sophisticated` : 복잡한, 정교한
 - `to the end` : 이를 위해
 - `identified` : 식별되는
+- `extensive` : 광범위한
+- `intervention` : 개입, 조정, 중재
 
+<br>
+<br>
 
+## Chapter 3. Processes
+
+- `virtualization` : 가상화
+- `run` : 실행하다.
+- `complete` : 전체
+- `degree` : 수준
+- `isolate` : 격리하다
+- `migration` : 이동
+- `granularity` : 세분화
+- `practice` : 관행
+- `track` : 추적하다
+- `entries` : 항목
+- `return to` : 돌아가다
+- `correctness` : 정확성
+- `inadvertently` : 부주의하게
+- `segment` : 부분
+- `management` : 관리
+- `unit` : 장치
+- `invalidate` : 무효화하다
+- `implication` : 영향, 결과
+- `development` : 개발
+- `exploit` : 이용하다
+- `parallelism` : 병렬 처리
 
 <br>
 <br>
@@ -288,7 +318,8 @@ last_modified_at: 2022-01-22
 ### 데이터 중심 애플리케이션 설계
 
 - `failure` : 장애
-- `redundancy` : 중복
+- `redundancy` : 복제, 여분
+- `redundant` : 복제된
 - `downtime` : 중단시간
 - `telemetry` : 원격 측정
 - `throughput` : 처리량
@@ -320,5 +351,10 @@ last_modified_at: 2022-01-22
 - `organization` : 조직
 - `document reference` : 문서 참조 (외래키와 같음)
 - `shredding` : 찢는
-- `execution` : 수행ㄴ
+- `execution` : 수행
+- `partitioning` : 분할
+- `on-demand` : 주문형
+- `dedicated` : 전용
+- `on-premise` : 고객 댁내장치
+
 
