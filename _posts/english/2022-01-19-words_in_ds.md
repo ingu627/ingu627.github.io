@@ -9,7 +9,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-01-24
+last_modified_at: 2022-01-26
 ---
 
 <img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/147719090-5f0942f1-1647-44ad-8d72-f11e3fe400d7.png
@@ -101,7 +101,7 @@ last_modified_at: 2022-01-24
 - `reply` : 대답, 대응
 - `interrupted` : 중단된
 - `acknowledgment` : 승인, 접수, 인정
-- `involve` : 포함한다
+- `involve` : 포함하다
 - `hierarchically` : 위계적으로
 - `nonoverlapping` : 겹치지 않는
 - `resolve` : 해결하다
@@ -131,7 +131,7 @@ last_modified_at: 2022-01-24
 - `fork off` : 갈림길을 접어들다
 - `subtle` : 미묘한
 - `abort` : 중단하다
-- `operate` : 동작하다
+- `operate` : 동작하다, 작동하다
 - `myriad` : 무수한
 - `unobtrusive` : 눈에 띄지 않는
 - `operating system` : 운영 체제
@@ -149,7 +149,7 @@ last_modified_at: 2022-01-24
 - `construct` : 구성하다
 - `bring together` : 하나로 모으다
 - `vendor` : 공급업체
-- `nested` : 중첩
+- `nested` : 중첩된
 - `work` : 작업
 - `task` : 태스크, 작업
 - `component` : 구성 요소
@@ -157,6 +157,7 @@ last_modified_at: 2022-01-24
 - `binding` : 바인딩 (이름을 어떤 속성과 연결짓는 과정을 말함)
 - `prefetch` : 미리 불러오다
 - `string` : 문자열
+- `centralized` : 중앙 
  
 <br>
 <br>
@@ -309,6 +310,20 @@ last_modified_at: 2022-01-24
 - `development` : 개발
 - `exploit` : 이용하다
 - `parallelism` : 병렬 처리
+- `synchronization` : 동기화
+- `administration` : 관리
+- `set up` : 설정하다
+- `instruction` : 명령
+- `switch` : 전환하다, 바꾸다
+- `perturbate` : 동요시키다
+- `circumvent` : 피하다
+- `dictate` : 명령하다
+- `handful` : 약간의
+- `shared memory` : 공유 메모리
+- `evolve` : 진화하다
+- `express` : 전달하다
+- `static` : 정적의
+- `access` : 접근
 
 <br>
 <br>
@@ -341,7 +356,7 @@ last_modified_at: 2022-01-24
 - `modifiability` : 수정 가능성
 - `plasticity` : 적응성
 - `naming` : 명명
-- `load` : 부하
+- `load` : 적재
 - `cope with` : 에 대처하다 (=대응)
 - `approach` : 접근 방식
 - `maintainability` : 유지보수성
@@ -356,5 +371,9 @@ last_modified_at: 2022-01-24
 - `on-demand` : 주문형
 - `dedicated` : 전용
 - `on-premise` : 고객 댁내장치
+- `resiliency` : 탄력
+- `prerequisite` : 전제조건
+- `augmentation` : 증강
+- `active` : 능동
 
 

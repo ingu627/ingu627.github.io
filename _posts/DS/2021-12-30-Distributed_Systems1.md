@@ -42,6 +42,7 @@ last_modified_at: 2022-01-24
   > A plug computer is an external device, often configured for use in the home or office as a compact computer. The name is derived from the small configuration of such devices. [^1]
 - 이런 기술들의 결과로 수많은 네트워크 컴퓨터들로 구성된 컴퓨팅 시스템을 구현할 수 있게 되었다. 이런 컴퓨터들은 지리적으로 분산되어졌는데 `distributed system`을 형성했다고 말할 수 있다.
 - 이런 분산 시스템의 크기는 한 줌의 장치로부터 다양해졌다.
+  - **시스템 (system)** : 하나의 공통적인 목적 수행을 위해 조직화된 요소들의 집합체 또는 체계 [^10]
 
 <br>
 
@@ -96,12 +97,12 @@ each being able to behave **independently** of each other
     - P2P 네트워크와 같은 분산 시스템은 노드가 인터넷 상에서 실행되기 때문에 오버레이 네트워크에 해당한다. [^4]
 - 이런 경우, 노드는 직접 메시지를 보낼 수 있는 소프트웨어 프로세스이다.
 - 메시지 전달은 TCP/IP or UDP 채널을 통해 이뤄진다.
-  - **TCP**(Transmission Control Protocol) : 신뢰성이 요구되는 애플리케이션에서 사용
-  - **UDP**(User Dtagram Protocol) : 간단한 데이터를 빠른 속도로 전송하는 애플리케이션에서 사용
+  - **TCP (Transmission Control Protocol)** : 신뢰성이 요구되는 애플리케이션에서 사용
+  - **UDP (User Dtagram Protocol)** : 간단한 데이터를 빠른 속도로 전송하는 애플리케이션에서 사용
   - **애플리케이션 (application)** : 다양한 범주의 정보처리 기능(컴퓨팅 작업) [^5]
 - 두 가지 유형이 있다.
-  - *1.* `Structured overlay` : 각 노드는 통신할 수 있는 잘 정의된 인접 노드 집합이 있다. (노드들은 tree이거나 ring형으로 이뤄져 있다.)
-  - *2.* `Unstructured overlay` : 각 노드는 다른 노드들을 **랜덤하게** 선택되는 많은 참조를 가지고 있다.
+  - *1.* **Structured overlay** : 각 노드는 통신할 수 있는 잘 정의된 인접 노드 집합이 있다. (노드들은 tree이거나 ring형으로 이뤄져 있다.)
+  - *2.* **Unstructured overlay** : 각 노드는 다른 노드들을 **랜덤하게** 선택되는 많은 참조를 가지고 있다.
 - 어떤 경우든 `overlay network`는 언제나 연결돼야 한다. $\nearrow$ (구체적으로) 두개의 노드 간에는 반드시 통신 통로가 있다. $\nearrow$ (통신 통로에 대해) 이런 노드들이 서로 메시지를 전송하게 허용하는 
 - 잘 알려진 오버레이로는 `peer-to-peer` (P2P) 네트워크가 있다.
 
@@ -151,7 +152,7 @@ each being able to behave **independently** of each other
 - 리소스 관리자 뿐만 아니라 대부분 운영체제에서 볼 수 있는 서비스도 제공한다. 다음은 항목들
   1. Facilities for interapplication communication
   2. Security services
-  3. Accounting services
+  3. Accounting services (회계 : 컴퓨터 자원에 대한 사용 기록)
   4. Masking of and recovery from failures
 
 - 운영체제와 다른점으로, 미들웨어 서비스는 네트워크 환경을 제공한다. 
@@ -301,13 +302,13 @@ files, services, and networks (사용될 수 있는 어떤 항목)
 ### Size scalability
 
 - 시스템이 크기를 확장하고 싶을 때 풀어야할 많은 문제점들이 있다.
-- 유저나 리소스를 더 필요로 한다면 집중 서비스의 한계에 직면한다.
-  - 예를 들어, 많은 서비스들은 센서에 집중되어 있어서 그들은 분산시스템에 단일 서버로 실행된다.
+- 유저나 리소스를 더 필요로 한다면 중앙 서비스의 한계에 직면한다.
+  - 예를 들어, 많은 서비스들은 센서에 중앙되어 있어서 그들은 분산시스템에 단일 서버로 실행된다.
   - 하지만 요청의 수가 증가하면 서버는 병목현상이 일어날 수 있다.
   - 병목현상이 될 수 있는 **3가지** 원인
     1. CPU 제한으로 인한 계산 용량
     2. 저장 용량 (I/O 전송 비율도 포함)
-    3. 유저와 집중 서비스간의 네트워크
+    3. 유저와 중앙 서비스간의 네트워크
 
 <br>
 <br>
@@ -492,6 +493,7 @@ associated host.
   - 클라우드 컴퓨팅은 가상 스토리지 장치와 가상 서버들을 할당하고 관리하며 발전했다.
 - **Platform** : 플랫폼 계층은 클라우드 컴퓨팅을 고객에게 제공한다. $\nearrow$ 운영 체제를 애플리케이션 개발자에게 제공(즉, 쉽게 개발하고 클라우드에서 실행을 필요로 하는 애플리케이션을 쉽게 배치할 수 있는 수단을)
   - 애플리케이션 개발자는 vendor-specific API를 제공받는다. $\nearrow$ (vendor-specific API란) 업로드와 공급업체의 클라우드에서 프로그램을 실행하는 호출들을 포함
+  - **API (Application Programming Interface)** : 응용 프로그래머에서 사용 가능한 함수의 집합을 지정 [^11]
   - 이것은 유닉스의 `exec`와 같다. $\nearrow$ (exec는) 실행가능한 파일을 운영 체제에게 실행될 수 있게 가져다 주는 것과 같다
   - 플랫폼 계층은 높은 수준의 추상화(스토리지를 위한)를 제공한다.
   - Amazon S3 스토리지 시스템이 그 예
@@ -520,7 +522,7 @@ associated host.
 ### Distributed transaction processing
 
 - 데이터베이스에서의 동작은 트랜잭션(`transaction`)의 형태로 수행된다.
-  - 트랜잭션을 사용한 프로그래밍은 특별한 기본 컴포넌트들을 요구한다. $\nearrow$ (컴포넌트는) 근본적인 분산 시스템이거나 언어 런타임 시스템에 의해 공급되는
+  - 트랜잭션을 사용한 프로그래밍은 특별한 기본 컴포넌트들을 요구한다. $\nearrow$ (컴포넌트는) 기본 분산 시스템이거나 언어 런타임 시스템에 의해 공급되는
 - RPC(; remote procedure calls)는 트랜잭션에 캡슐화된다. $\nearrow$ (RPC란) 프로시저를 원격 서버에 호출함
 
 ![image](https://user-images.githubusercontent.com/78655692/148694039-8ca6171f-2744-4587-a7cf-5a8a6389a3f8.png)
@@ -637,7 +639,7 @@ associated host.
 
 <br>
 
-- 위 그림의 첫번째는 센서들은 협력하진 않지만 그들의 데이터를 집중 데이터베이스(오퍼레이터의 위치에 자리한)에 보낸다.
+- 위 그림의 첫번째는 센서들은 협력하진 않지만 그들의 데이터를 중앙 데이터베이스(오퍼레이터의 위치에 자리한)에 보낸다.
 - 두번째 극단적인 그림은 쿼리를 관련 센서에 전달하고 각각이 응답을 계산하고, 운영자가 응답을 집계하도록 한다.
 - 위 방법들 모두 좋지는 않다.
   - 첫번째는 센서들이 모든 측정된 데이터를 네트워크를 통해 보내야 하는데, 이것은 네트워크 리소스와 에너지를 낭비한다.
@@ -679,3 +681,5 @@ associated host.
 [^7]: [해시넷 - 컴포넌트](http://wiki.hash.kr/index.php/%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8)
 [^8]: [해시넷 - 원격 프로시저 호출](http://wiki.hash.kr/index.php/%EC%9B%90%EA%B2%A9_%ED%94%84%EB%A1%9C%EC%8B%9C%EC%A0%80_%ED%98%B8%EC%B6%9C)
 [^9]: [해시넷 - 클라이언트 (컴퓨팅)](https://ko.wikipedia.org/wiki/%ED%81%B4%EB%9D%BC%EC%9D%B4%EC%96%B8%ED%8A%B8_(%EC%BB%B4%ED%93%A8%ED%8C%85))
+[^10]: [정보통신기술용어해설 - System   시스템](http://www.ktword.co.kr/test/view/view.php?nav=2&no=4433&sh=blocking+system)
+[^11]: [2.3 시스템 호출(system call) - pwnpwnhnpwn](https://pwnkidh8n.tistory.com/118)
