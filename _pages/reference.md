@@ -9,6 +9,8 @@ sidebar_main: true
 <br>
 <br>
 
+<img src='https://user-images.githubusercontent.com/78655692/151112972-d6745ec3-6511-42e2-b1c1-53d97a1bc14b.png' width='600' height='200'>
+
 ## Reference List
 
 <br>
@@ -32,11 +34,12 @@ sidebar_main: true
 - [Dive into Deep Learning](https://www.d2l.ai/index.html){: target="_blank"}
 - [TCP SCHOOL](http://tcpschool.com/python/intro){: target="_blank"}
 - [TensorFlow - 구글 머신러닝 플랫폼](https://codetorial.net/tensorflow/index.html){: target="_blank"}
-- [딥 러닝을 이용한 자연어 처리 입문](https://wikidocs.net/22886)
-- [ratsgo's blog for textmining](https://ratsgo.github.io/)
-- [귀퉁이 서재 - Baek Kyun Shin](https://bkshin.tistory.com/)
-- [핸즈온 머신러닝(2판)](https://formal.hknu.ac.kr/handson-ml2/)
-- [udemy(온라인 강의)](https://www.udemy.com/)
+- [딥 러닝을 이용한 자연어 처리 입문](https://wikidocs.net/22886){: target="_blank"}
+- [ratsgo's blog for textmining](https://ratsgo.github.io/){: target="_blank"}
+- [귀퉁이 서재 - Baek Kyun Shin](https://bkshin.tistory.com/){: target="_blank"}
+- [핸즈온 머신러닝(2판)](https://formal.hknu.ac.kr/handson-ml2/){: target="_blank"}
+- [udemy(온라인 강의)](https://www.udemy.com/){: target="_blank"}
+- [최적화 알고리즘 Optimizer - PGNV](https://pgnv.tistory.com/m/43){: target="_blank"}
 
 <br>
 
@@ -52,6 +55,7 @@ sidebar_main: true
 - [sqlalchemy](https://docs.sqlalchemy.org/en/14/tutorial/index.html){: target="_blank"}
 - [JSON Web Tokens](https://jwt.io/){: target="_blank"}
 - [Python web framework from scracth](https://oz123.github.io/advanced-python/book/middlewares.html){: target="_blank"}
+- [한눈에 보는 HTML 요소(Elements & Attributes) 총정리](https://heropy.blog/2019/05/26/html-elements/){: target="_blank"}
 
 <br>
 
@@ -78,6 +82,8 @@ sidebar_main: true
 
 - [(KOCW) 운영체제, 이화여자대학교 반효경 교수](http://www.kocw.or.kr/home/cview.do?mty=p&kemId=1046323){: target="_blank"}
 - [운영체제 정리 블로그 - SungBum Park](https://velog.io/@codemcd?tag=OS){: target="_blank"}
+- [Computer Science/OS Concepts - pwnpwnhnpwn](https://pwnkidh8n.tistory.com/category/Computer%20Science/OS%20Concepts)
+- [프로세스(Process)와 스레드(Thread) - gil0127.log](https://velog.io/@gil0127/%EC%8B%B1%EA%B8%80%EC%8A%A4%EB%A0%88%EB%93%9CSingle-thread-vs-%EB%A9%80%ED%8B%B0%EC%8A%A4%EB%A0%88%EB%93%9C-Multi-thread){: target="_blank"}
 
 <br>
 
@@ -86,6 +92,7 @@ sidebar_main: true
 - [Distributed Systems by Maarten van Steen, Andrew S. Tanenbaum](https://www.distributed-systems.net/index.php/books/ds3/ds3-ebook/){: target="_blank"}
 - [해시넷 위키](http://wiki.hash.kr/index.php/%EB%8C%80%EB%AC%B8){: target="_blank"}
 - [정보통신기술용어해설: 정보통신 및 과학기술 지식을 간결하게 정리,체계화시키고 있는 개인연구실 입니다.](http://www.ktword.co.kr/word/index.php){: target="_blank"}
+- [Federated Learning: A Simple Implementation of FedAvg (Federated Averaging) with PyTorch](https://towardsdatascience.com/federated-learning-a-simple-implementation-of-fedavg-federated-averaging-with-pytorch-90187c9c9577){: target="_blank"}
 
 <br>
 
@@ -173,3 +180,4 @@ sidebar_main: true
 ### 영어 관련
 
 - [영어학습사전](http://dic.impact.pe.kr/){: target="_blank"}
+
