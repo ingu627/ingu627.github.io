@@ -17,8 +17,10 @@ sidebar_main: true
 
 ### 논문 
 
-- [arxiv.org](https://arxiv.org/){: target="_blank"}
+[![image](https://user-images.githubusercontent.com/78655692/151177221-59131530-78c7-42fe-ad99-3b03c0b44d69.png)](https://scholar.google.co.kr/schhp?hl=ko){: target="_blank"}
+
 - [scholar.google.com](https://scholar.google.com/){: target="_blank"}
+- [arxiv.org](https://arxiv.org/){: target="_blank"}
 - [dbpia](https://www.dbpia.co.kr/){: target="_blank"}
 
 <br>
@@ -132,6 +134,16 @@ sidebar_main: true
 
 ### Azure certificate
 
+![image](https://user-images.githubusercontent.com/78655692/151176817-90cca8d4-1cbb-4574-9d1d-34ac03bb5f61.png)
+
+<br>
+
+![image](https://user-images.githubusercontent.com/78655692/151177803-67c4cb0e-401b-47d5-8785-0d9808c7cbf9.png)
+
+<br>
+
+- [MICROSOFT 클라우드 스킬 과제 - '30일 학습' (get 50% voucher)](https://developer.microsoft.com/ko-kr/offers/30-days-to-learn-it#segment-2){: target="_blank"}
+  - 6개월에 한번. 30일 안에
 - [AZ 900 - Azure Fundamentals Exam](https://quizlet.com/421206797/az-900-azure-fundamentals-exam-flash-cards/){: target="_blank"}
 - [Microsoft AZ-900 Exam](https://www.examtopics.com/exams/microsoft/az-900/){: target="_blank"}
 - [Microsoft Azure Fundamentals v1.0 (AZ-900)](https://www.itexams.com/exam/AZ-900){: target="_blank"}
