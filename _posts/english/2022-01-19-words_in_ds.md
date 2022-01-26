@@ -324,6 +324,15 @@ last_modified_at: 2022-01-26
 - `express` : 전달하다
 - `static` : 정적의
 - `access` : 접근
+- `initiate` : 개시하다
+- `display` : 보이다
+- `in effect` : 사실상
+- `replica` : 복제품
+- `allow` : 허용하다
+- `establish` : 설정하다
+
+
+
 
 <br>
 <br>
