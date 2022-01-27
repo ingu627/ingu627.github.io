@@ -8,7 +8,7 @@ toc: true
 sidebar_main: true
 classes: wide
 
-last_modified_at: 2022-01-09
+last_modified_at: 2022-01-27
 ---
 
 <img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/147629300-4d7acc5e-225a-454a-92cd-4da82f6828f6.png
@@ -46,9 +46,10 @@ test_images.shape # (10000, 28, 28)
 len(test_labels) # 10000
 test_labels # array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)
 ```
-- 클래스(class) = 분류 문제의 범주(category)
-- 샘플(sample) = 데이터 포인트
-- 레이블(label) = 특정 샘플의 클래스
+
+- **클래스 (class)** = 분류 문제의 범주(category)
+- **샘플 (sample)** = 데이터 포인트
+- **레이블 (label)** = 특정 샘플의 클래스
 
 <br>
 
@@ -61,7 +62,7 @@ network.add(Dense(512, activation='relu', input_shape=(28 * 28,)))
 network.add(Dense(10, activation='softmax'))
 ```
 
-- 신경망의 핵심 구성 요소는 일종의 데이터 처리 필터라고 생각할 수 있는 **층(layer)**이다.
+- 신경망의 핵심 구성 요소는 일종의 <span style="background-color:yellow">데이터 처리 필터</span>라고 생각할 수 있는 **층(layer)**이다.
 - 층은 주어진 문제에 더 의미 있는 **표현(representation)**을 입력된 데이터로부터 추출한다.
 - 여기서는 완전 연결된 신경망 층인 Dense 층 2개가 연속되어 있다. 
 - 두 번째 층은 10개의 확률 점수가 들어 있는 배열을 반환하는 소프트맥스이다.
@@ -137,9 +138,9 @@ print(test_acc) # 0.9799000024795532
 
 ### 텐서
 
-- **텐서(tensor)** : (거의 항상)수치형 데이터를 위한 컨테이너(container)
+- **텐서(tensor)** : (거의 항상)수치형 데이터를 위한 **컨테이너 (container)**
   - 임의의 차원 개수를 가지는 행렬의 일반화된 모습
-  - 텐서는 벡터 (Vector)와 행렬 (Matrix)을 일반화한 것이며, 3차원 이상으로 확장할 수 있다.
+  - 텐서는 <span style="background-color:yellow">벡터 (Vector)와 행렬 (Matrix)을 일반화</span>한 것이며, 3차원 이상으로 확장할 수 있다.
   - 텐서는 TensorFlow의 가장 주요한 객체이며, TensorFlow의 작업은 주로 텐서의 연산으로 이루어진다.
 - 텐서 scalar, vector, matrix, tensor는 각각 랭크 0, 1, 2, 3를 가진다.
 - 텐서 (Tensor)는 NumPy 어레이와 비슷하지만, GPU, TPU와 같은 가속기에서 사용할 수 있고, 값을 변경할 수 없다.
@@ -168,7 +169,7 @@ print(x.ndim)
 - 5D 벡터 != 5D 텐서
 - **행렬(matrix)** : 벡터의 배열 (**2D 텐서**) (2개의 축 - 행과 열)
   - 행렬은 숫자가 채워진 사각 격자
-- **2D 텐서** : (batch_size, dim)
+- **2D 텐서** : <span style="background-color:yellow">(batch_size, dim)</span>
   - 행의 크기가 batch_size, 열의 크기가 dim이다.
 
 ![image](https://user-images.githubusercontent.com/78655692/143195653-9297e916-7683-4207-9332-6837c4ecc275.png) 이미지출처: [^2]
@@ -194,7 +195,7 @@ print(x.ndim)
 <br>
 
 > 옮긴이 주 : 훈련 데이터 하나의 크기를 256이라고 해봅시다. [3, 1, 2, 5, ...] 이런 숫자들의 나열이 256의 길이로 있다고 상상하면됩니다. 다시 말해 훈련 데이터 하나 = 벡터의 차원은 256입니다. 만약 이런 훈련 데이터의 개수가 3000개라고 한다면, 현재 전체 훈련 데이터의 크기는 3,000 × 256입니다. 행렬이니까 2D 텐서네요. 3,000개를 1개씩 꺼내서 처리하는 것도 가능하지만 컴퓨터는 훈련 데이터를 하나씩 처리하는 것보다 보통 덩어리로 처리합니다. 3,000개에서 64개씩 꺼내서 처리한다고 한다면 이 때 batch size를 64라고 합니다. 그렇다면 컴퓨터가 한 번에 처리하는 2D 텐서의 크기는 (batch size × dim) = 64 × 256입니다.
->> "PyTorch로 시작하는 딥 러닝 입문 - 02. 텐서 조작하기(Tensor Manipulation) 1 에서 인용"
+>> "PyTorch로 시작하는 딥 러닝 입문 - 02. 텐서 조작하기(Tensor Manipulation) 1" 에서 인용
 
 <br>
 <br>
@@ -202,12 +203,12 @@ print(x.ndim)
 ### 3D 텐서
 
 - **3D 텐서** : 행렬들을 하나의 새로운 배열로 합치면 숫자가 채워진 직육면체 형태로 해석할 수 있는 3D 텐서가 만들어짐
-- (batch_size, width, height) - 비전 분야에서의 3차원 텐서
+- <span style="background-color:yellow">(batch_size, width, height)</span> - 비전 분야에서의 3차원 텐서
 - 자연어 처리보다 비전 분야(이미지, 영상 처리)를 하시게 된다면 좀 더 복잡한 텐서를 다루게 된다.
 
 ![image](https://user-images.githubusercontent.com/78655692/143198512-4bfa9b7f-0a77-460d-bfcb-ac04c5d11129.png) 이미지출처: [^2]
 
-- (batch_size, length, dim) - NLP 분야에서의 3차원 텐서
+- <span style="background-color:yellow">(batch_size, length, dim)</span> - NLP 분야에서의 3차원 텐서
   - length : 문장 길이
   - dim : 단어 벡터의 차원
 
@@ -255,7 +256,7 @@ print(x.shape)
 ### 2_2_6. 넘파이로 텐서 조작하기
 
 - **슬라이싱** (slicing) : 배열에 있는 특정 원소들을 선택하는 것
-  - `:`(콜론) : 전체 인덱스 선택
+  - **: (콜론)** : 전체 인덱스 선택
 
 <br>
 
@@ -270,7 +271,7 @@ print(x.shape)
 
 - **벡터 데이터** : (samples, features) 크기의 2D 텐서
 - **시계열 데이터** (또는 시퀀스(sequence) 데이터) : (samples, timesteps, features) 크기의 3D 텐서
-- **이미지** : (samples, height, width, channels) 또는 (samples, channels, height, width) 크기의 4D 텐서
+- **이미지** : <span style="background-color:yellow">(samples, height, width, channels) 또는 (samples, channels, height, width) 크기의 4D 텐서</span>
 - **동영상** : (samples, frames, height, width, channels) 또는 (samples, frames, channels, height, width) 크기의 5D 텐서
 
 <br>
@@ -297,7 +298,7 @@ print(x.shape)
 - 이미지는 전형적으로 높이, 너비, 컬러 채널의 3차원으로 이루어진다.
   - 256 x 256 크기의 흑백 이미지에 대한 128개의 배치는 (128, 256, 256, 1) 크기의 텐서에 저장 가능
   - 256 x 256 크기의 컬러 이미지에 대한 128개의 배치는 (128, 256, 256, 3
-  - ) 크기의 텐서에 저장 가능
+  - ) 크기의 텐서에 **저장 가능**
 
 <img src='https://user-images.githubusercontent.com/78655692/148704125-e8a670a0-c0bc-4179-92f0-7ca8adc7ae63.png' width=400> 이미지출처: [^5]
 
@@ -328,11 +329,14 @@ print(x.shape)
 <br>
 
 ### 2_3_4. 텐서 크기 변환 
-- `reshape()` : 텐서의 크기(shape)를 변경해준다.
-- `transpose()`
+
+- **reshape()** : 텐서의 크기(shape)를 변경해준다.
+- **transpose()**
 - **`shape=(5,)` 는 (1 x 5)를 의미한다.**
 
-<span style="color:red">딥러닝 : 기초적인 연산을 길게 연결하여 복잡한 기하하적 변환을 조금씩 분해하는 방식</span>
+<br>
+
+- **딥러닝** : <span style="background-color:yellow">기초적인 연산을 길게 연결하여 복잡한 기하하적 변환을 조금씩 분해하는 방식</span>
 
 <br>
 <br>

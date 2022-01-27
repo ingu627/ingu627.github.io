@@ -275,6 +275,7 @@ last_modified_at: 2022-01-26
 - `ordinary` : 정상적인
 - `compliant` : 따르는
 - `generate` : 생성하다
+- `generator` : 생성자
 - `specify` : 특정하다, 지정하다
 - `along with` : 와 함께
 - `across` : 을 통해
@@ -388,5 +389,6 @@ last_modified_at: 2022-01-26
 - `prerequisite` : 전제조건
 - `augmentation` : 증강
 - `active` : 능동
+- `latent` : 잠재
 
 
