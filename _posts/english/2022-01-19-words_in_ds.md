@@ -330,6 +330,10 @@ last_modified_at: 2022-01-26
 - `replica` : 복제품
 - `allow` : 허용하다
 - `establish` : 설정하다
+- `pend` : 보류하다
+- `retain` : 유지하다
+- `dedicated` : 전용
+- `idle` : 유후 상태의
 
 
 

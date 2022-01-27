@@ -9,7 +9,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-01-26
+last_modified_at: 2022-01-27
 ---
 
 <img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/147719090-5f0942f1-1647-44ad-8d72-f11e3fe400d7.png
@@ -145,7 +145,47 @@ last_modified_at: 2022-01-26
 
 ### Multithreaded servers
 
+- 실제로, 멀티스레드는 서버 코드를 상당히 단순화시킬 뿐 아니라, 쉽게 서버를 개발할 수 있다. $\nearrow$ (서버는) 고성능을 달성하기 위해 병렬을 이용함
+- 한 스레드(=**dispatcher**)는 파일 동작을 위해 들어오는 요청을 읽는다.
+  - cf. **인터럽트 (interrupt)** : 어떤 장치가 다른 장치의 일을 잠시 중단시키고 자신의 상태 변화를 알려주는 것
+
+<img src='https://user-images.githubusercontent.com/78655692/151277316-e29cf852-df78-4783-831a-722e45ad6599.png' width=400> [^6]
+
+<br>
+
+- 요청을 검수하면, 서버는 worker thread를 고르고, 이것에게 요청을 처리한다.
+- 워커는 로컬 파일 시스템에 있는 블록 읽기를 수행함으로써 진행되고, 이는 스레드가 데이터가 디스크로부터 불러와야 중단된다.
+- 스레드가 중단되면, 다른 스레드를 실행시킨다.
+
+![image](https://user-images.githubusercontent.com/78655692/151277468-3e64f629-3f5b-4067-b660-bea52f7e73c1.png)
+
+<br>
+
+- 파일 서버를 단일 스레드로 동작한다고 본다면?
+  - 파일 서버의 메인 루프는 요청을 받고, 검수하고, 수행되어 완성되고 다른 것을 받는다.
+  - 기다리는 동안, 서버는 유후 상태이고 다른 요청을 실행할 수 없다.
+  - 게다가, 파일 서버가 전용 기계에서 실행되면, CPU는 유후 상태가 된다. $\nearrow$ (동시에) 파일 서버가 디스크를 기다리는 동안
+  - 요청 수가 훨씬 적다 $\nearrow$ (요청은) 시간 당 처리할 수 있는
+  - 따라서, 스레드는 상당한 성능을 얻지만 각 스레드는 순차적으로 프로그램된다.
+ 
+![image](https://user-images.githubusercontent.com/78655692/151281598-e70c7c31-0a39-4335-b7bc-6a9e73589467.png)
+
+- **parallelism** $\approx$ **performance**
+- **blocking system** $\approx$ **programming** 
+
+<br>
+
+- 다중 프로세스를 쓸 때는 공유 데이터에 사고를 예방 가능
+  - 프로세스가 통신이 많아지면, 성능 하락 (스레드에 비해)
+
+<br>
+<br>
+
+## 3.2 Virtualization
+
 - 
+
+
 
 
 
@@ -164,6 +204,7 @@ last_modified_at: 2022-01-26
 [^3]: [정보통신기술용어해설 - MMU   Memory Management Unit   메모리 관리 장치](http://www.ktword.co.kr/test/view/view.php?nav=2&no=2664&sh=mmu)
 [^4]: [위키백과 - 오버헤드](https://ko.wikipedia.org/wiki/%EC%98%A4%EB%B2%84%ED%97%A4%EB%93%9C)
 [^5]: [프로세스(Process)와 스레드(Thread) - gil0127.log](https://velog.io/@gil0127/%EC%8B%B1%EA%B8%80%EC%8A%A4%EB%A0%88%EB%93%9CSingle-thread-vs-%EB%A9%80%ED%8B%B0%EC%8A%A4%EB%A0%88%EB%93%9C-Multi-thread)
+[^6]: [인터럽트(Interrupt)란? 그리고 디스패처(Dispatcher)란? - Crocus](https://www.crocus.co.kr/1406) []]
 
 
 
