@@ -183,9 +183,7 @@ last_modified_at: 2022-01-27
 
 ## 3.2 Virtualization
 
-- **생성자 (generator in GAN) or 디코더 (decoder in VAE)** : 잠재 공간의 한 포인트를 입력으로 받아 이미지(픽셀의 그리드)를 출력하는 모듈
-- **VAE**는 구조적인 잠재 공간을 학습하는 데 뛰어남
-- **GAN**는 실제 같은 이미지를 만든다.
+
 
 
 
