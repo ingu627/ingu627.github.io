@@ -3,12 +3,12 @@ layout: single
 title: '마크다운(markdown)문법, 사용법에 대한 거의 모든 것'
 excerpt: 'MarkDown (md), 목차 만들기, 크기 지정, 글꼴, 줄바꿈, 띄어쓰기(enter), 글자 색깔, 인용문, 문자 박스(notice), 문자 정렬, 구분선, check box,목록, 코드 블럭, 표 (table), 접기/펼치기 (토글바), 각주, 미주, 유튜브 동영상 넣기, 이미지, 링크, 수식, 그래프로 표시하기'
 categories: md
-tag : [grammar, tip, md, 마크다운, 문법]
+tag : [grammar, tip, md, 마크다운, 문법, 목차, 크기 지정, 글꼴, 줄바꿈, 띄어쓰기, 글자 색깔, 인용문, 문자 박스, 문자 정렬, 구분선, 코드 블럭, 표, 접기, 펼치기, 각주, 미주, 유튜브, 이미지, 링크, 수식, 그래프]
 toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-01-18
+last_modified_at: 2022-01-28
 ---
 
 저도 다 외우지 못합니다. <br>적용할 때마다 그때그때 보기 위해서 모두 정리해보았습니다. <br>보고 적용합시다! 🔥🔥
@@ -182,6 +182,86 @@ _italic_
 ```html
 <b><span style="color:white; background-color:red; font-size:150%">글자는 흰색, 배경은 빨강, 사이즈는 150, 굵기는 b태그로 설정</span></b>
 ```
+
+<br>
+<br>
+
+## 별표 (이미지)
+
+- 별 이미지는 직접 만들었습니다. 별 갯수에 따라 강조하고픈 내용에 첨가하시면 좋습니다. (마치 마크다운 글을 필기하는 것처럼!)
+- 크기 조정은 `width=` 부분을 조정하면 됩니다. (아래 코드는 마크다운 글에 최적화된 크기입니다.)
+  - 별 하나에서 일반 글크기 : 25 / 크게는 55
+  - 별 둘에서 일반 글크기 : 41 / 크게는 81
+  - 별 셋에서 일반 글크기 : 46 / 크게는 91
+- **별 하나** 
+
+<img width="25" alt="star1" src="https://user-images.githubusercontent.com/78655692/151471925-e5f35751-d4b9-416b-b41d-a059267a09e3.png">
+
+```html
+<img width="25" alt="star1" src="https://user-images.githubusercontent.com/78655692/151471925-e5f35751-d4b9-416b-b41d-a059267a09e3.png">
+```
+
+<img width="55" alt="star1" src="https://user-images.githubusercontent.com/78655692/151471925-e5f35751-d4b9-416b-b41d-a059267a09e3.png">
+
+```html
+<img width="55" alt="star1" src="https://user-images.githubusercontent.com/78655692/151471925-e5f35751-d4b9-416b-b41d-a059267a09e3.png">
+```
+
+<br>
+
+- **별 둘**
+
+<img width="41" alt="star2" src="https://user-images.githubusercontent.com/78655692/151471960-29c5febe-c509-4c6d-99f4-a2203eb193c5.png">
+
+```html
+<img width="41" alt="star2" src="https://user-images.githubusercontent.com/78655692/151471960-29c5febe-c509-4c6d-99f4-a2203eb193c5.png">
+```
+
+<img width="81" alt="star2" src="https://user-images.githubusercontent.com/78655692/151471960-29c5febe-c509-4c6d-99f4-a2203eb193c5.png">
+
+```html
+<img width="81" alt="star2" src="https://user-images.githubusercontent.com/78655692/151471960-29c5febe-c509-4c6d-99f4-a2203eb193c5.png">
+```
+
+<br>
+
+- **별 셋**
+
+<img width="46" alt="star3" src="https://user-images.githubusercontent.com/78655692/151471989-9e21d7a8-a7b6-44b0-b598-2bb204b56b00.png">
+
+```html
+<img width="46" alt="star3" src="https://user-images.githubusercontent.com/78655692/151471989-9e21d7a8-a7b6-44b0-b598-2bb204b56b00.png">
+```
+
+<img width="91" alt="star3" src="https://user-images.githubusercontent.com/78655692/151471989-9e21d7a8-a7b6-44b0-b598-2bb204b56b00.png">
+
+```html
+<img width="91" alt="star3" src="https://user-images.githubusercontent.com/78655692/151471989-9e21d7a8-a7b6-44b0-b598-2bb204b56b00.png">
+```
+
+<br>
+
+- **예시**
+
+### <img width="91" alt="star3" src="https://user-images.githubusercontent.com/78655692/151471989-9e21d7a8-a7b6-44b0-b598-2bb204b56b00.png"> Virtualization (예시)
+
+<img width="25" alt="star1" src="https://user-images.githubusercontent.com/78655692/151471925-e5f35751-d4b9-416b-b41d-a059267a09e3.png"> Threads and processes can be seen as a way to do more things at the same
+time. In effect, they allow us to build (pieces of) programs that appear to be
+executed simultaneously. <span style="background-color:yellow">On a single-processor computer, this simultaneous
+execution is, of course, an illusion.</span> As there is only a single CPU, only an
+instruction from a single thread or process will be executed at a time. By
+rapidly switching between threads and processes, the illusion of parallelism
+is created.
+<img width="41" alt="star2" src="https://user-images.githubusercontent.com/78655692/151471960-29c5febe-c509-4c6d-99f4-a2203eb193c5.png"> This separation between having a single CPU and being able to pretend
+there are more can be extended to other resources as well, <span style="background-color:yellow">leading to what
+is known as resource virtualization.</span> This virtualization has been applied for
+many decades, but has received renewed interest as (distributed) computer
+systems have become more commonplace and complex, <img width="46" alt="star3" src="https://user-images.githubusercontent.com/78655692/151471989-9e21d7a8-a7b6-44b0-b598-2bb204b56b00.png"> leading to the situation
+that application software is mostly always outliving its underlying
+systems software and hardware.
+
+
+
 
 <br>
 <br>
