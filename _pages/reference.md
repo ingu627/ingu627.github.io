@@ -17,6 +17,8 @@ sidebar_main: true
 
 [![image](https://user-images.githubusercontent.com/78655692/151275219-e4da2436-8033-4155-b7c7-532ea09b9ef2.png)](https://papago.naver.com/){: target="_blank"}
 
+- [Dictionary - Cambridge](https://dictionary.cambridge.org/ko/){: target="_blank"}
+
 <br>
 <br>
 
@@ -160,6 +162,9 @@ sidebar_main: true
 - [Microsoft AI-900 Exam](https://www.examtopics.com/exams/microsoft/ai-900/){: target="_blank"}
 - [Exam AI-900: Microsoft Azure AI Fundamentals](https://www.whizlabs.com/microsoft-azure-certification-ai-900/){: target="_blank"}
 - [200 Practice Questions For Azure AI-900 Fundamentals Exam](https://medium.com/bb-tutorials-and-thoughts/200-practice-questions-for-azure-ai-900-fundamentals-exam-e981d28ce91d)
+- [Microsoft AZ-104 Exam](https://www.examtopics.com/exams/microsoft/az-104/){: target="_blank"}
+- [Microsoft DP-900 Exam](https://www.examtopics.com/exams/microsoft/dp-900/){: target="_blank"}
+
 
 
 <br>
