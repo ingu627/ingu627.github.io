@@ -11,7 +11,12 @@ sidebar_main: true
 <br>
 <br>
 
-<img src='https://user-images.githubusercontent.com/78655692/151112972-d6745ec3-6511-42e2-b1c1-53d97a1bc14b.png' width='600' height='200'>
+![image](https://user-images.githubusercontent.com/78655692/152114672-b4b85063-26af-424d-9ec0-811cb2093cbb.png)
+
+
+<br>
+
+[Private Storage in NOTION](https://zinc-viscount-1a1.notion.site/AI-Distributed-Cloud-e9d3fabba0ad4d9791ce9c1c8eb19b90)
 
 <br>
 
