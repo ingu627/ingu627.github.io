@@ -9,7 +9,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-01-26
+last_modified_at: 2022-01-28
 ---
 
 <img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/147719090-5f0942f1-1647-44ad-8d72-f11e3fe400d7.png
@@ -135,6 +135,7 @@ last_modified_at: 2022-01-26
 - `myriad` : 무수한
 - `unobtrusive` : 눈에 띄지 않는
 - `operating system` : 운영 체제
+- `system` : 체제, 시스템, 장치
 - `bandwith` : 대역폭
 - `peripheral` : 주변기기
 - `context` : 문맥
@@ -335,6 +336,9 @@ last_modified_at: 2022-01-26
 - `retain` : 유지하다
 - `dedicated` : 전용
 - `idle` : 유후 상태의
+- `outlive` : 오래 지속되다.
+- `successor` : 후임자
+- `port` : (한 시스템기계에서 다른 시스템기계로 소프트웨어를) 복사하다
 
 
 

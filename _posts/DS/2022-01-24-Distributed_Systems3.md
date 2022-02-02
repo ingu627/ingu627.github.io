@@ -9,12 +9,12 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-01-27
+last_modified_at: 2022-02-02
 ---
 
 <img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/147719090-5f0942f1-1647-44ad-8d72-f11e3fe400d7.png
 '>
-본 글은 Distributed Systems 책의 내용을 개인 공부 목적을 위한 요약 및 정리한 내용입니다. <br> 번역보다는 직역을 통해 영문책을 이해하려다 보니 단어나 문장이 다소 어색할 수 있습니다. <br>  영어문장에 맞게 최대한 이해하려 했습니다. 가지치기($\nearrow$)로 꾸며주는 말을 따로 빼서 육하원칙, 지칭 등을 넣어 해석했습니다. <br>오타나 오류는 알려주시길 바라며, 도움이 되길 바랍니다.
+본 글은 Distributed Systems 책의 내용을 개인 공부 목적을 위한 요약 및 정리한 내용입니다. <br> 번역보다는 직역을 통해 영문책을 이해하려다 보니 단어나 문장이 다소 어색할 수 있습니다. <br>  영어문장에 맞게 최대한 이해하려 했습니다. 가지치기($\nearrow$)로 꾸며주는 말을 따로 빼서 육하원칙, 지칭 등을 넣어 해석했습니다. <br>오타나 오류는 알려주시길 바라며, 도움이 되길 바랍니다. <br><br> update(20220202) 순서 <br> 1. pdf 중요한 것 밑줄 그으면서 한번 읽기 <br> 2. 간략하게 정리 <br> 3. 블로그에 한글로 번역해서 정리
 {: .notice--info}
 
 **글을 읽으면서 스스로에게 물어보기 <br><br> 1. 왜 만들어 졌을까?(background, def) <br> 2. 왜 필요할까? (why?) <br> 3. 장점과 단점은 무엇인가? (adv, disadv)**
@@ -30,6 +30,7 @@ last_modified_at: 2022-01-27
 - 프로세스의 개념은 운영 체제 분야에서 기인한다. $\nearrow$ (운영 체제에서 프로세스 정의는) 실행 중인 프로그램.
 - **스레드 (thread)**는 멀티코어와 멀티프로세서의 성능을 획득하는 데 역할을 할 뿐만 아니라, 클라이언트와 서버를 구축하는 데도 중요하다.
 - 최근 몇년동안, 가상화의 개념은 다시 인기를 얻고 있다. **가상화**는 애플리케이션과 운영체제를 포함한 전체 환경을 다른 애플리케이션들과 동시에 실행하지만, 기본 하드웨어와 플랫폼과는 매우 독립적이어서, 이는 높은 수준의 이식성을 얻을 수 있다.
+  - **플랫폼 (platform)** : 소프트웨어를 개발하고 실행하는 기반환경 [^7]
 - 또한 **가상화**는 장애를 격리하는데 도움이 된다. $\nearrow$ (장애는) 에러나 보안 문제가 원인으로 인한
 - 특히 광역 분산 시스템에서 중요한 문제는 다른 시스템 간에 프로세스를 이동하는 것이다.
 - 프로세스 이동 또는 코드 이동은 확장성을 달성하는 데 도와줄 뿐 아니라, 동적으로 클라이언트와 서버를 구성할 수 있게 해준다.
@@ -183,9 +184,29 @@ last_modified_at: 2022-01-27
 
 ## 3.2 Virtualization
 
+- 스레드와 프로세스는 보이게 하는 방법이다. $\nearrow$ 동시에 더 많은 것들을 
+- 스레드와 프로세스 사이를 빠르게 전환함으로써, 병렬의 환상이 생성된다.
+- 단일 CPU와 더 많이 있어 보이는 "척" 하는 분리는 다른 리소스들로 확장되었다. (이것을 **resource virtualization**라 한다.)
 
+<br>
+<br>
 
+### Principle of virtualization
 
+- 모든 분산 컴퓨터 시스템은 프로그래밍 인터페이스를 높은 수준의 인터페이스에 제공한다.
+- **가상화 (virtualization)**는 기존 인터페이스를 확장하거나 대체를 처리한다. $\nearrow$ (이는) 다른 시스템의 행동을 흉내내기 위함이다.
+
+![image](https://user-images.githubusercontent.com/78655692/151499349-f69ad3e8-6534-4402-9f0d-2217f2ca226f.png)
+
+<br>
+<br>
+
+### Virtualization nad distributed systems
+
+- 1990년대에 이르러, 하드웨어와 낮은 수준의 시스템(소프트웨어가 빠르게 변한, 높은 수준의 추상화의 소프트웨어)이 안정적으로 되고 있다.
+  - 즉, 우리는 어떤 상황에 처해 있다. $\nearrow$ (어떤?) 레거시 소프트웨어는 같은 속도($\nearrow$ 의존하는 플랫폼과)로 유지되지 못할
+  - 가상화는 이것을 도와줄 것이다. $\nearrow$ (어떻게?) 레거시 인터페이스를 새로운 플랫폼으로 복사함으로써, 그리고 그 플랫폼을 기존 프로그램의 큰 클래스를 위해 즉시 개방으로써  
+- 또 중요한 것으로, 네트워킹은 완전히 퍼베이시브 되었다.
 
 
 
@@ -204,7 +225,8 @@ last_modified_at: 2022-01-27
 [^3]: [정보통신기술용어해설 - MMU   Memory Management Unit   메모리 관리 장치](http://www.ktword.co.kr/test/view/view.php?nav=2&no=2664&sh=mmu)
 [^4]: [위키백과 - 오버헤드](https://ko.wikipedia.org/wiki/%EC%98%A4%EB%B2%84%ED%97%A4%EB%93%9C)
 [^5]: [프로세스(Process)와 스레드(Thread) - gil0127.log](https://velog.io/@gil0127/%EC%8B%B1%EA%B8%80%EC%8A%A4%EB%A0%88%EB%93%9CSingle-thread-vs-%EB%A9%80%ED%8B%B0%EC%8A%A4%EB%A0%88%EB%93%9C-Multi-thread)
-[^6]: [인터럽트(Interrupt)란? 그리고 디스패처(Dispatcher)란? - Crocus](https://www.crocus.co.kr/1406) []]
+[^6]: [인터럽트(Interrupt)란? 그리고 디스패처(Dispatcher)란? - Crocus](https://www.crocus.co.kr/1406)
+[^7]: [정보통신기술용어해설 - Platform   플랫폼](http://www.ktword.co.kr/test/view/view.php?nav=2&no=3553&sh=%ED%94%8C%EB%9E%AB%ED%8F%BC)
 
 
 
