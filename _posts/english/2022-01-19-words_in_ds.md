@@ -107,7 +107,7 @@ last_modified_at: 2022-01-28
 - `resolve` : 해결하다
 - `degradation` : 저하
 - `performance` : 성능
-- `inconsistencies ` : 불일치
+- `inconsistency` : 불일치
 - `tolerate` : 용인하다, 견디다
 - `concurrently` : 동시에
 - `pitfall` : 함정
@@ -136,7 +136,7 @@ last_modified_at: 2022-01-28
 - `unobtrusive` : 눈에 띄지 않는
 - `operating system` : 운영 체제
 - `system` : 체제, 시스템, 장치
-- `bandwith` : 대역폭
+- `bandwidth` : 대역폭
 - `peripheral` : 주변기기
 - `context` : 문맥
 - `structured` : 정형
@@ -339,6 +339,15 @@ last_modified_at: 2022-01-28
 - `outlive` : 오래 지속되다.
 - `successor` : 후임자
 - `port` : (한 시스템기계에서 다른 시스템기계로 소프트웨어를) 복사하다
+- `previledged` : 난해한
+- `aforementioned` : 앞서 언급한
+- `emulate` : 모방하다
+- `runtime` : 런타임(컴퓨터 프로그램 실행을 돕는 소프트웨어)
+- `shield` : 가리다
+- `pinpoint` : 꼬집어 말하다
+- `map` : (배치구조 등에 대한 정보를)발견하다(보여주다)
+- `throughout` : ~동안 쭉, 내내
+- `lie` : (어떤 상태로) 있다
 
 
 

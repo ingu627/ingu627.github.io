@@ -16,7 +16,7 @@ sidebar_main: true
 
 <br>
 
-[Private Storage in NOTION](https://zinc-viscount-1a1.notion.site/AI-Distributed-Cloud-e9d3fabba0ad4d9791ce9c1c8eb19b90)
+[Private Storage in NOTION](https://zinc-viscount-1a1.notion.site/AI-Distributed-Cloud-e9d3fabba0ad4d9791ce9c1c8eb19b90){: target="_blank"}
 
 <br>
 
@@ -58,6 +58,11 @@ sidebar_main: true
 - [핸즈온 머신러닝(2판)](https://formal.hknu.ac.kr/handson-ml2/){: target="_blank"}
 - [udemy(온라인 강의)](https://www.udemy.com/){: target="_blank"}
 - [최적화 알고리즘 Optimizer - PGNV](https://pgnv.tistory.com/m/43){: target="_blank"}
+- [NAVER - edwith](https://www.edwith.org/){: target="_blank"}
+- [DeepLearning.AI](https://www.deeplearning.ai/){: target="_blank"}
+- [coursera](https://ko.coursera.org/){: target="_blank"}
+- [Learn With DataCamp](https://www.datacamp.com/){: target="_blank"}
+- [NVIDIA - DEEP Learning Institute](https://www.nvidia.com/ko-kr/training/){: target="_blank"}
 
 <br>
 
