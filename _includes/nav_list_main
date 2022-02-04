@@ -149,8 +149,8 @@
             </ul>
             <ul>
                 {% for category in site.categories %}
-                    {% if category[0] == "english_grammar" %}
-                        <li><a href="/categories/english_grammar" class="">영어 문법(grammar) ({{category[1].size}})</a></li>
+                    {% if category[0] == "eng_gr" %}
+                        <li><a href="/categories/eng_gr" class="">영어 문법(grammar) ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
