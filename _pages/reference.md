@@ -116,6 +116,9 @@ sidebar_main: true
 - [해시넷 위키](http://wiki.hash.kr/index.php/%EB%8C%80%EB%AC%B8){: target="_blank"}
 - [정보통신기술용어해설: 정보통신 및 과학기술 지식을 간결하게 정리,체계화시키고 있는 개인연구실 입니다.](http://www.ktword.co.kr/word/index.php){: target="_blank"}
 - [Federated Learning: A Simple Implementation of FedAvg (Federated Averaging) with PyTorch](https://towardsdatascience.com/federated-learning-a-simple-implementation-of-fedavg-federated-averaging-with-pytorch-90187c9c9577){: target="_blank"}
+- [분산 시스템 - 가천대학교](http://www.kocw.or.kr/home/cview.do?mty=p&kemId=983677){: target="_blank"}
+- [Distributed Systems by MITopencourseware](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-033-computer-system-engineering-spring-2018/week-8/){: target="_blank"}
+- [Distributed Systems lecture series](https://www.youtube.com/playlist?list=PLeKd45zvjcDFUEv_ohr_HdUFe97RItdiB){: target="_blank"}
 
 <br>
 
