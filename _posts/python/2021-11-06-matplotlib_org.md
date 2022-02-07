@@ -1,19 +1,28 @@
 ---
 layout: single
 title: "파이썬 matplotlib 총정리"
-excerpt: "figure, label, lim, marker, grid, vline, hline"
+excerpt: "figure, label, lim, marker, grid, vline, hline, xlim, ylim, axis, alpha, color, rotation, fill_between, tick_params, subplot, width, align, color, edgecolor, linewidth, histogram, autopct, startangle, shawdow"
 categories: python
 tag : [python, matplotlib, visualization]
 toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2021-11-19
+last_modified_at: 2022-02-08
 ---
+
+본 글은 [matplotlib.org](https://matplotlib.org/)사이트-의 튜토리얼을 참고해서 작성했습니다.
+{: .notice--info}
+
+<br>
+<br>
 
 ## figure의 구성요소 
 
 ![matplotlib_org_1_0](https://user-images.githubusercontent.com/78655692/140635477-5835141b-56cb-4d39-8d43-ce5ab43f9407.png)
+
+<br>
+<br>
 
 ## 라이브러리 불러오기 
 ```python
@@ -25,7 +34,10 @@ import pandas as pd
 pd.set_option('precision', 3)
 %matplotlib inline
 ```
-    
+
+<br>
+<br>
+
 ## plot()
 - plot()함수는 임의 개수의 인자를 받을 수 있다.
 - plot() : 선(line)또는 마커(marker)그래프 그리기에 사용되는 함수
@@ -47,6 +59,9 @@ plt.plot([1,2,3,4], [1,4,9, 16])
     
 ![matplotlib_org_4_1](https://user-images.githubusercontent.com/78655692/140635559-0e07da15-ce6e-4e26-bdef-ccee67d0e433.png)
 
+<br>
+<br>
+
 ## 레이블이 있는 데이터 사용하기
 ```python
 data_dict = {'data_x': [1,2,3,4,5], 'data_y': [2,3,5,10,8]}
@@ -55,6 +70,9 @@ plt.show()
 ```
 
 ![matplotlib_org_6_0](https://user-images.githubusercontent.com/78655692/140635567-47fcfb45-5eff-414f-a941-1177497e168c.png)
+
+<br>
+<br>
 
 ## 스타일 지정하기
 - x, y값 인자에 대해 선의 색상과 행태를 지정하는 포맷 문자열을 세번째 인자에 입력할 수 있다.
@@ -79,6 +97,9 @@ plt.show()
 
 ![matplotlib_org_9_0](https://user-images.githubusercontent.com/78655692/140635739-8b388ba5-c52e-4692-9327-126dfffb41fa.png)
 
+<br>
+<br>
+
 ## 축 레이블 설정하기
 ```python
 plt.plot([1,2,3,4], [1,4,9, 16])
@@ -88,6 +109,9 @@ plt.show()
 ```
 
 ![matplotlib_org_11_0](https://user-images.githubusercontent.com/78655692/140635762-07df6299-6df7-4711-9c83-bc16d6f6172d.png)
+
+<br>
+<br>
 
 ### 레이블 - 여백 지정하기(labelpad)
 ```python
@@ -99,9 +123,12 @@ plt.show()
 
 ![matplotlib_org_13_0](https://user-images.githubusercontent.com/78655692/140635781-e8a55782-f5de-47a3-8377-c7905bef5c4e.png)
 
+<br>
+<br>
+
 ### 레이블 - 위치 지정하기(loc)
-- xlabel() 함수의 loc 파라미터는 X축 레이블의 위치를 지정합니다. ({‘left’, ‘center’, ‘right’})
-- ylabel() 함수의 loc 파라미터는 Y축 레이블의 위치를 지정합니다. ({‘bottom’, ‘center’, ‘top’})
+- xlabel() 함수의 loc 파라미터는 X축 레이블의 위치를 지정한다. ({‘left’, ‘center’, ‘right’})
+- ylabel() 함수의 loc 파라미터는 Y축 레이블의 위치를 지정한다. ({‘bottom’, ‘center’, ‘top’})
 
 ```python
 plt.plot([1,2,3,4], [1,4,9, 16])
@@ -112,12 +139,25 @@ plt.show()
 
 ![matplotlib_org_15_0](https://user-images.githubusercontent.com/78655692/140635822-b7f99e12-aaea-4d8f-864a-d64b3c4ba0e0.png)
 
+<br>
+<br>
+
 ## 축 범위 지정하기  
+
+<br>
+<br>
+
 ### xlim()
 - x축이 표시되는 범위를 지정하거나 반환한다.
 
+<br>
+<br>
+
 ### ylim()
 - y축이 표시되는 범위를 지정하거나 반환한다.
+
+<br>
+<br>
 
 ### axis()
 - x,y축이 표시되는 범위를 지정하거나 반환한다.
@@ -132,6 +172,9 @@ plt.show()
 ```
 
 ![matplotlib_org_17_0](https://user-images.githubusercontent.com/78655692/140636689-d6141a41-9c44-44a0-8fa9-8627d2bbeac7.png)
+
+<br>
+<br>
 
 ## 범례 표시하기
     
@@ -150,11 +193,17 @@ plt.show()
 
 ![matplotlib_org_20_0](https://user-images.githubusercontent.com/78655692/140636713-1671664b-4226-467c-91eb-73124c162b8c.png)
 
+<br>
+<br>
+
 ## marker 설정
 
 ![matplotlib_org_22_0](https://user-images.githubusercontent.com/78655692/140636721-472c9ad7-4e4b-4dc5-945e-20347129e1b5.png)
     
 ![matplotlib_org_23_0](https://user-images.githubusercontent.com/78655692/140636728-8dcf0983-4e04-49d6-b9e7-2ec37ca110ea.png)
+
+<br>
+<br>
 
 ## 색상
 
@@ -162,34 +211,55 @@ plt.show()
 
 ![matplotlib_org_26_0](https://user-images.githubusercontent.com/78655692/140636751-c06359c7-3532-49e4-bfe9-cb8f4aa15808.png)
 
+<br>
+<br>
+
 ### alpha
 - 텍스트의 투명도
 - 범위 : 0.0 ~ 1.0 (float)
+
+<br>
+<br>
 
 ## color
 - 텍스트의 색상
 - Any Matplotlib color
 
+<br>
+<br>
+
 ## family
 - 텍스트의 글꼴
-- FONTNAME | ‘serif’ | ‘sans-serif’ | ‘cursive’ | ‘fantasy’ | ‘monospace’
+- FONTNAME , ‘serif’ , ‘sans-serif’ , ‘cursive’ , ‘fantasy’ , ‘monospace’
+
+<br>
+<br>
 
 ### rotation
 - 텍스트의 회전각
-- angle in degrees | ‘vertical’ | ‘horizontal’ 
+- angle in degrees , ‘vertical’ , ‘horizontal’ 
+
+<br>
+<br>
 
 ### size
 - 텍스트의 크기
-- size in points | ‘xx-small’ | ‘x-small’ | ‘small’ | ‘medium’ | ‘large’ | ‘x-large’ | ‘xx-large’
+- size in points , ‘xx-small’ , ‘x-small’ , ‘small’ , ‘medium’ , ‘large’ , ‘x-large’ , ‘xx-large’
+
+<br>
+<br>
 
 ### weight
 - 텍스트의 굵기
-- a numeric value in range 0-1000 | ‘ultralight’ | ‘light’ | ‘normal’ | ‘regular’ | ‘book’ | ‘medium’ | ‘roman’ | ‘semibold’ | ‘demibold’ | ‘demi’ | ‘bold’ | ‘heavy’ | ‘extra bold’ | ‘black’
+- a numeric value in range 0-1000 , ‘ultralight’ , ‘light’ , ‘normal’ , ‘regular’ , ‘book’ , ‘medium’ , ‘roman’ , ‘semibold’ , ‘demibold’ , ‘demi’ , ‘bold’ , ‘heavy’ , ‘extra bold’ , ‘black’
 
-- color 키워드 : 색상 지정  
-- marker 키워드 : 마커의 스타일 지정 (markersize 가능)  
-- linestyle 키워드 : 선의 스타일 지정 (linewidth 가능)  
-- alpha 키워드 : 투명도 결정 
+- **color 키워드** : 색상 지정  
+- **marker 키워드** : 마커의 스타일 지정 (markersize 가능)  
+- **linestyle 키워드** : 선의 스타일 지정 (linewidth 가능)  
+- **alpha 키워드** : 투명도 결정 
+
+<br>
+<br>
 
 ## 폰트 설정하기
 ```python
@@ -213,15 +283,27 @@ plt.show()
 
 ![matplotlib_org_30_0](https://user-images.githubusercontent.com/78655692/140636908-d170e322-6625-463f-a12e-ac7994aa92ec.png)
 
+<br>
+<br>
+
 ## 그래프 영역 채우기
 
+<br>
+
 ### fill_between()
-- 두 수평 방향의 곡선 사이를 채웁니다.
+- 두 수평 방향의 곡선 사이를 채운다.
+
+<br>
+<br>
 
 ### fill_betweenx()
-- 두 수직 방방의 곡선 사이를 채웁니다.
+- 두 수직 방방의 곡선 사이를 채운다.
+
+<br>
+<br>
+
 ### fill()
-- 다각형 영역을 채웁니다.
+- 다각형 영역을 채운다.
 - fill() 함수에 x,y 값의 리스트를 입력해주면, 각 x,y점들로 정의되는 다각형 영역을 자유롭게 지정해서 채울 수 있다.
 
 ```python
@@ -235,7 +317,11 @@ plt.fill_between(x[1:3], y[1:3], alpha=0.5)
 plt.show()
 ```
 
+<br>
+
 ![matplotlib_org_33_0](https://user-images.githubusercontent.com/78655692/140636927-29027239-6211-468f-9db0-642aff2a0979.png)
+
+<br>
 
 ```python
 x=[1,2,3,4]
@@ -248,7 +334,11 @@ plt.fill_betweenx(y[2:4], x[2:4], alpha=0.5)
 plt.show()
 ```
 
+<br>
+
 ![matplotlib_org_34_0](https://user-images.githubusercontent.com/78655692/140636939-7d5af981-c69c-4e59-b416-a78f6d7fe30a.png)
+
+<br>
 
 ```python
 # 두 그래프 사이 영역 채우기
@@ -263,8 +353,12 @@ plt.ylabel('Y-Label')
 plt.fill_between(x[1:3], y1[1:3], y2[1:3], alpha=0.5)
 plt.show()
 ```
-  
+
+<br>
+
 ![matplotlib_org_35_0](https://user-images.githubusercontent.com/78655692/140636954-72a85ef2-5b5a-4ff8-8f77-acedbfa39e71.png)
+
+<br>
 
 ```python
 #임의의 영역 채우기 
@@ -280,7 +374,11 @@ plt.fill([1.9, 1.9, 3.1, 3.1], [2,5,11,8], color='lightgray', alpha=0.5)
 plt.show()
 ```
 
+<br>
+
 ![matplotlib_org_36_0](https://user-images.githubusercontent.com/78655692/140636974-b0c402dc-fd4f-47cc-8112-7a7a9ac82693.png)
+
+<br>
 
 ```python
 x = np.arange(0, 2, 0.2)
@@ -291,7 +389,12 @@ plt.grid(True, axis='y', color='red', alpha=0.5, linestyle='--')
 plt.show()
 ```
 
+<br>
+
 ![matplotlib_org_37_0](https://user-images.githubusercontent.com/78655692/140638429-63bc1452-4118-4a69-b736-3cf6ac80622e.png)
+
+<br>
+<br>
 
 ## 그리드(grid) 설정하기
 - grid(True)로 설정하면, 그래프의 x,y축에 대해 그리드가 표시됨
@@ -307,6 +410,9 @@ plt.show()
 ```
 
 ![matplotlib_org_39_0](https://user-images.githubusercontent.com/78655692/140638457-926906c9-7587-4232-9d5e-b8fa8e3eb025.png)
+
+<br>
+<br>
 
 ## 눈금 표시하기
 - 틱(Tick)은 그래프의 축에 간격을 구분하기 위해 표시하는 눈금
@@ -340,35 +446,64 @@ plt.show()
 
 ![matplotlib_org_42_0](https://user-images.githubusercontent.com/78655692/140638513-76e32d52-8147-4c12-9a7e-df94df35d0d8.png)
 
+<br>
+<br>
+
 ### tick_params()
-- 함수를 사용하면 눈금의 스타일을 다양하게 설정할 수 있습니다.  (ticks는 간단하게, 이건 복잡할때)
+- 함수를 사용하면 눈금의 스타일을 다양하게 설정할 수 있다.  (ticks는 간단하게, 이건 복잡할때)
+
+<br>
+<br>
 
 ### axis
-- 설정이 적용될 축을 지정합니다. {‘x’, ‘y’, ‘both’} 중 선택할 수 있습니다.  
+- 설정이 적용될 축을 지정합니다. {‘x’, ‘y’, ‘both’} 중 선택할 수 있다.  
+
+<br>
+<br>
 
 ### direction
-- ‘in’, ‘out’으로 설정하면 눈금이 안/밖으로 표시됩니다. {‘in’, ‘out’, ‘inout’} 중 선택할 수 있습니다.  
+- ‘in’, ‘out’으로 설정하면 눈금이 안/밖으로 표시됩니다. {‘in’, ‘out’, ‘inout’} 중 선택할 수 있다.  
+
+<br>
+<br>
 
 ### length
-- 눈금의 길이를 지정합니다.  
+- 눈금의 길이를 지정한다.  
+
+<br>
+<br>
 
 ### pad
-- 눈금과 레이블과의 거리를 지정합니다.    
+- 눈금과 레이블과의 거리를 지정한다.    
+
+<br>
+<br>
 
 ### labelsize
-- 레이블의 크기를 지정합니다.    
+- 레이블의 크기를 지정한다.    
+
+<br>
+<br>
 
 ### labelcolor 
-- 레이블의 색상을 지정합니다.  
+- 레이블의 색상을 지정한다.  
+
+<br>
+<br>
 
 ### top/bottom/left/right 
-- `True/False`로 지정하면 눈금이 표시될 위치를 선택할 수 있습니다.  
+- `True/False`로 지정하면 눈금이 표시될 위치를 선택할 수 있다.  
+
+<br>
+<br>
 
 ### width
-- 눈금의 너비를 지정합니다.  
+- 눈금의 너비를 지정한다.
+<br>
+<br>
 
 ### color
-- 눈금의 색상을 지정합니다.  
+- 눈금의 색상을 지정한다.  
 
 ```python
 a = np.arange(0, 2, 0.2)
@@ -383,7 +518,12 @@ plt.tick_params(axis='y', direction='inout', length=10, pad=15, labelsize=12, wi
 plt.show()
 ```
 
+<br>
+
 ![matplotlib_org_44_0](https://user-images.githubusercontent.com/78655692/140638587-d8c5eebf-7786-4d23-a3ff-d5250706d932.png)
+
+<br>
+<br>
 
 ## 타이틀 설정하기
 - fontdict 파라미터에 딕셔너리 형태로 폰트 스타일을 설정할 수 있습니다.
@@ -412,6 +552,8 @@ plt.title('Sample graph', fontdict=title_font, loc='left', pad=20)
 
 plt.show()
 ```
+
+<br>
 
 ![matplotlib_org_47_0](https://user-images.githubusercontent.com/78655692/140638678-733e10f4-3f36-457a-a7de-fcc737e5543d.png)
 
@@ -442,7 +584,12 @@ print(title_right.get_text())
 plt.show()
 ```
 
+<br>
+
 ![matplotlib_org_48_1](https://user-images.githubusercontent.com/78655692/140638718-4cd61151-4379-4f77-8bce-253e7789125d.png)
+
+<br>
+<br>
 
 ## 선 종류 지정하기
 ```python
@@ -460,7 +607,12 @@ plt.show()
 
 ![matplotlib_org_50_0](https://user-images.githubusercontent.com/78655692/140638733-adea8293-f85a-4629-b284-842a5c3bbf62.png)
 
+<br>
+<br>
+
 ## 여러 개의 그래프 그리기
+
+<br>
 
 ### subplot()
 
@@ -478,24 +630,48 @@ plt.show()
 
 ![image](https://user-images.githubusercontent.com/78655692/142636675-3b62b7c1-692d-461a-ae7d-cff0be7bf60f.png)
 
+<br>
+<br>
 
 ## 수직선/수평선 표시하기
 - 그래프의 특정 값에 해당하는 위치에 수직선/수평선을 표시하기 위해서
-  
+
+<br>
+<br>
+
 ### axhline()
 - 축을 따라 수평선을 표시한다.
+
+<br>
+<br>
+
+
 ### axvline()
 - 축을 따라 수직선을 표시한다.
+
+<br>
+<br>
+
 ### hlines()
 - 지정한 점을 따라 수평선을 표시한다.
+
+<br>
+<br>
+
 ### vlines()
 - 지정한 점을 따라 수직선을 표시한다.
+
+<br>
+<br>
 
 ### axhline(), hline()
 - axhline, hline의 함수(1, 2, 3)
 - 첫번째 인자는 y값으로서 수평선의 위치가 된다.
 - 두번째 인자는 xmin(0에서 1사이의 값) 0은 아래쪽 끝, 1은 위쪽 끝
 - 세번째 인자는 xmax(0과 1사이의 값)
+
+<br>
+<br>
 
 ### avhline(), vline()
 - avhline, vline의 함수(1, 2, 3)
@@ -515,7 +691,11 @@ plt.hlines(-0.62, 1, 2.5, color='gray', linestyle='solid', linewidth=3)
 plt.show()
 ```
 
+<br>
+
 ![matplotlib_org_52_0](https://user-images.githubusercontent.com/78655692/140638766-28d81c4b-9e9b-48b2-8c0e-06eea5dbeeb5.png)
+
+<br>
 
 ```python
 x= np.arange(0, 4, 0.5)
@@ -529,7 +709,11 @@ plt.vlines(1.8, -3, 2, color='gray', linestyle='solid', linewidth=3)
 plt.show()
 ```
 
+<br>
+
 ![matplotlib_org_53_0](https://user-images.githubusercontent.com/78655692/140638774-68e88311-0bfc-4680-8368-04027c5e46c6.png)
+
+<br>
 
 ```python
 a = np.arange(0, 2, 0.2)
@@ -548,7 +732,12 @@ plt.axvline(1.8, 0, 0.95, color='lightgray', linestyle=':', linewidth='2')
 plt.show()
 ```
 
+<br>
+
 ![matplotlib_org_54_0](https://user-images.githubusercontent.com/78655692/140638813-45fdb741-b942-4adf-97c0-e8f3ce35e67b.png)
+
+<br>
+<br>
 
 ## 축 스케일 지정하기
 ```python
@@ -571,8 +760,13 @@ plt.yscale('linear')
 
 plt.show()
 ```
-    
+
+<br>
+
 ![matplotlib_org_57_0](https://user-images.githubusercontent.com/78655692/140638844-80f49bad-33ed-48b8-9d36-f2688cf030cc.png)
+
+<br>
+<br>
 
 ## Bar graph()
 - 막대 그래프 : 범주가 있는 데이터 값을 직사각형의 막대로 표현하는 그래프
@@ -588,7 +782,11 @@ plt.xticks(x, years)
 plt.show()
 ```
 
+<br>
+
 ![matplotlib_org_60_0](https://user-images.githubusercontent.com/78655692/140638880-bb6b10ea-c280-41cc-b044-8c18f0d57f54.png)
+
+<br>
 
 ```python
 x = np.arange(3)
@@ -603,28 +801,49 @@ plt.show()
 
 ![matplotlib_org_61_0](https://user-images.githubusercontent.com/78655692/140638893-3ef5479b-0478-4e5a-a3e2-92bebac8e0dd.png)
 
+<br>
+<br>
+
 ### width
 - 막대의 너비.
-- 디폴트 값은 0.8이며, 예제에서는 0.6으로 설정했습니다.
+- 디폴트 값은 0.8이며, 예제에서는 0.6으로 설정했다.
+
+<br>
+<br>
 
 ### align
 - 틱 (tick)과 막대의 위치를 조절
-- 디폴트 값은 ‘center’인데, ‘edge’로 설정하면 막대의 왼쪽 끝에 x_tick이 표시됩니다.
+- 디폴트 값은 ‘center’인데, ‘edge’로 설정하면 막대의 왼쪽 끝에 x_tick이 표시된다.
+
+<br>
+<br>
 
 ### color
 - 막대의 색을 지정
 
+<br>
+<br>
+
 ### edgecolor
 - 막대의 테두리 색을 지정
+
+<br>
+<br>
 
 ### linewidth
 - 테두리의 두께를 지정
 
+<br>
+<br>
+
 ### tick_label
-- 어레이 형태로 지정하면, 틱에 어레이의 문자열을 순서대로 나타낼 수 있습니다.
+- 어레이 형태로 지정하면, 틱에 어레이의 문자열을 순서대로 나타낼 수 있다.
+
+<br>
+<br>
 
 ### log=True
-- `log=True`로 설정하면, y축이 로그 스케일로 표시됩니다.
+- `log=True`로 설정하면, y축이 로그 스케일로 표시된다.
 
 ```python
 x = np.arange(3)
@@ -635,31 +854,54 @@ plt.bar(x, values, width=0.6, align='edge', color='springgreen',
 
 plt.show()
 ```
-    
+
+<br>
+
 ![matplotlib_org_63_0](https://user-images.githubusercontent.com/78655692/140639030-ab7e02b3-5ef6-4b6d-a3e2-1bfd727ba48d.png)
+
+<br>
+<br>
 
 ### height
 - 막대의 높이
 - 디폴트는 0.8
 
+<br>
+<br>
+
 ### align
 - tick과 막대의 위치를 조절
-- 디폴트는 ‘center’인데 ‘edge’로 설정하면 막대의 아래쪽 끝에 y_tick이 표시됩니다.
+- 디폴트는 ‘center’인데 ‘edge’로 설정하면 막대의 아래쪽 끝에 y_tick이 표시된다.
+
+<br>
+<br>
 
 ### color
 - 막대의 색을 지정
 
+<br>
+<br>
+
 ### edgecolor
 - 막대의 테두리색을 지정
 
+<br>
+<br>
+
 ### linewidth
 - 테두리의 두께를 지정
- 
+
+<br>
+<br>
+
 ### tick_label
-- 어레이 형태로 지정해주면, 틱에 어레이의 문자열을 순서대로 나타낼 수 있습니다.
+- 어레이 형태로 지정해주면, 틱에 어레이의 문자열을 순서대로 나타낼 수 있다.
+
+<br>
+<br>
 
 ### log=False
-- `log=False`로 설정하면, x 축이 선형 스케일로 표시됩니다. 디폴트는 False입니다.
+- `log=False`로 설정하면, x 축이 선형 스케일로 표시된다. 디폴트는 False이다.
 
 ```python
 y = np.arange(3)
@@ -672,7 +914,12 @@ plt.barh(y, values, height=-0.6, align='edge', color="springgreen",
 plt.show()
 ```
 
+<br>
+
 ![matplotlib_org_66_0](https://user-images.githubusercontent.com/78655692/140639117-b8f0d53d-0327-43b9-bf6e-49a95a46ea22.png)
+
+<br>
+<br>
 
 ## 산점도(scatter plot)
 - 두 변수의 상관 관계를 직교 좌표계의 평면에 데이터를 점으로 표현하는 그래프
@@ -694,7 +941,12 @@ plt.scatter(x, y, s=area, c=colors, alpha=0.5, cmap='Spectral')
             # 'RdYlBu', 'RdYlGn', 'Spectral', 'coolwarm', 'bwr', 'seismic
 ```
 
+<br>
+
 ![matplotlib_org_70_1](https://user-images.githubusercontent.com/78655692/140639163-91fb332b-63d0-4593-80a8-42408c72b165.png)
+
+<br>
+<br>
 
 ## 3차원 산점도 그리기
 
@@ -721,7 +973,12 @@ ax.scatter(xs, ys, zs, c=color, marker='o', s=15, cmap='Greens')
 plt.show()
 ```
 
+<br>
+
 ![matplotlib_org_73_0](https://user-images.githubusercontent.com/78655692/140639186-13c0def2-747e-4abe-a178-25708521b84c.png)
+
+<br>
+<br>
 
 ## histogram()
 - 히스토그램(histogram)은 도수분포표를 그래프로 나타낸 것으로서, 가로축은 계급, 세로축은 도수(횟수나 개수 등)을 나타낸다.
@@ -737,6 +994,8 @@ plt.show()
 
 ![matplotlib_org_75_0](https://user-images.githubusercontent.com/78655692/140639249-0764cd07-3b0c-4c44-b648-2b3ed9ea30ca.png)
 
+<br>
+
 ```python
 # bins: 히스토그램의 가로축 구간의 개수를 지정 
 # plt.his(values)
@@ -751,6 +1010,9 @@ plt.show()
 
 ![matplotlib_org_76_0](https://user-images.githubusercontent.com/78655692/140639285-3864e4a0-a9e1-41f6-b211-916f21faa0a7.png)
 
+<br>
+<br>
+
 ## 누적 히스토그램 그리기
 - `plt.hist(values, cumulative=True)`
 ```python
@@ -764,6 +1026,9 @@ plt.show()
 ```
 
 ![matplotlib_org_77_0](https://user-images.githubusercontent.com/78655692/140639317-bf22cc3d-3edc-4a17-9ee9-6a0a9e15a9b0.png)
+
+<br>
+<br>
 
 ## 히스토그램 종류 지정하기
 - plt.hist(values, histtype='bar')
@@ -819,11 +1084,22 @@ plt.show()
 
 ![matplotlib_org_80_0](https://user-images.githubusercontent.com/78655692/140639394-ee5afd51-e513-4dc6-885d-24f772134de9.png)
 
+<br>
+<br>
+
 ## pie(파이) 차트 그리기
 ### autopct
 - 부채꼴 안에 표시될 숫자의 형식을 지정
+
+<br>
+<br>
+
 ### startangle
 - 부채꼴이 그려지는 시작 각도를 설정
+
+<br>
+<br>
+
 ### counterclock=False
 - 시계 방향 순서로 부채꼴 영역이 표시됨
 
@@ -836,6 +1112,9 @@ plt.show()
 ```
 
 ![matplotlib_org_82_0](https://user-images.githubusercontent.com/78655692/140639435-4655c3b1-19c9-4d8a-ba22-d1ab284f4d4f.png)
+
+<br>
+<br>
 
 ### explode : 부채꼴이 파이 차트의 중심에서 벗어나는 정도를 설정
 ### shawdow : 그림자 설정 
@@ -865,8 +1144,14 @@ plt.pie(ratio, labels=labels, autopct='%.1f%%', startangle=260, counterclock=Fal
 plt.show()
 ```
 
+<br>
+
 ![matplotlib_org_84_0](https://user-images.githubusercontent.com/78655692/140639464-e0d43e3c-aff0-4f48-bb86-069dc1ca1688.png)
 
+<br>
+<br>
+<br>
+<br>
 
 ## References
 
