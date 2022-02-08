@@ -1,14 +1,14 @@
 ---
 layout: single
-title: "빅데이터 분석가를 위한 VSCode extensions 13개 추천"
-excerpt : "파이썬, 주피터를 vscode에서 더 전문적이고 생산적으로 활용하는 방법"
+title: "빅데이터 분석가를 위한 VSCode extensions 14개 추천"
+excerpt : "파이썬, 주피터를 vscode에서 더 전문적이고 생산적으로 활용하는 방법(+자동 완성)"
 categories: tips
-tag : [tip, vscode, extension, 파이썬, 주피터, Tabnine, Pylance, IntelliCode, MagicPython, Jupyter, Settings Sync, GitLens, GitGraph ]
+tag : [tip, vscode, extension, 파이썬, 주피터, Tabnine, Pylance, IntelliCode, MagicPython, Jupyter, Settings Sync, GitLens, GitGraph, 자동완성]
 toc: True
 toc_sticky: True
 sidebar_main: true
 
-last_modified_at: 2021-12-20
+last_modified_at: 2022-02-08
 ---
 
 많은 글들이 extension을 추천했지만 이글은 딥러닝 코드를 vscode에서 할 때 생산적으로 활용할 수 있는 extension들을 추천하고자 썼습니다.
@@ -35,6 +35,11 @@ last_modified_at: 2021-12-20
 
 - Python을 위한 빠르고 기능이 풍부한 언어 지원 Pylance는 Visual Studio Code에서 Python과 함께 작동하여 뛰어난 언어 지원을 제공하는 확장이다. 내부적으로 Pylance는 Microsoft의 정적 유형 검사 도구인 Pyright를 기반으로 한다. Pylance는 Pyright를 사용하여 풍부한 유형 정보로 Python IntelliSense 경험을 강화하여 더 나은 코드를 더 빠르게 작성할 수 있도록 지원한다.
 - settings에 들어가서 `Python > Analysis: Type Checking Mode`를 basic으로 변경해 준다.
+
+<br>
+
+- **(2022.02.08) 만약 이전에 다른 언어로 세팅되어 있다면, settings.json에 들어가 "python.languageServer": "Default" or "Pylance"을 설정해 준다.**
+  - settings.json은 `사용자\AppData\Roaming\Code\User\settings.json`에 위치해 있다.
 
 <br>
 <br>
@@ -202,5 +207,21 @@ last_modified_at: 2021-12-20
 ![image](https://user-images.githubusercontent.com/78655692/146767366-aeee43ac-ab34-4bbc-9f56-476064025640.png)
 
 
-- 그 외 다른 프로그램들도 많지만, 따로 글을 올려서 정리를 해보겠다. 
+<br>
+<br>
+<br> 
+
+## 14. PyTorch Snippets
+
+![image](https://user-images.githubusercontent.com/78655692/152934058-d82ad55a-c214-46e0-af22-e4a643cdbfa1.png)
+
+- **PyTorch Snippets**은 vscode에서 Pytorch안 torchvision을 사용할 때 빠른 작업을 할 수있도록 제공한다.
+
+<br>
+
+- 코드창에 pytorch를 치고 tab을 누르면 아래 그림처럼 나온다.
+
+![image](https://user-images.githubusercontent.com/78655692/152934361-7ab888e7-4250-4df2-bcee-a1f9225d9cc7.png)
+
+
 
