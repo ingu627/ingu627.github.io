@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "파이썬(python) 함수 기능 정리 - update"
+title: "파이썬(python) 함수 기능 정리"
 excerpt: "배웠던 것들. 알고리즘 사용한 것들 (계속 업데이트)"
 categories: python
 tag : [python, function, definition]
@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2021-12-31
+last_modified_at: 2022-02-08
 ---
 
 ## 알고리즘 문제에서 주어지는 것들을 구별한다. 나는 뼈대만 잡아준다.
