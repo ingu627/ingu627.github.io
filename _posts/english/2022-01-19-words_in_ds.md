@@ -53,7 +53,7 @@ last_modified_at: 2022-02-06
 - `equipped with` : 갖춘
 - `look up` : 찾다
 - `communicate.` : 통신하다, 메시지를 전달한다 
-- `intricate` : 뒤얽힌
+- `intricate` : 뒤얽힌, 복잡한
 - `opt for` : 선택하다
 - `roughly` : 대충
 - `take place` : 일어나다
@@ -162,6 +162,7 @@ last_modified_at: 2022-02-06
 - `centralized` : 중앙 
 - `request` : 요청
 - `response` : 응답
+- `hog` : 독차지하다
  
 <br>
 <br>
@@ -214,6 +215,7 @@ last_modified_at: 2022-02-06
 - `decoupled` : 분리된
 - `address` : (~ 앞으로 우편물을) 보내다
 - `correspond` : 일치하다, 해당하다
+- `correspond to` : 에 해당되다
 - `forward` : 보내다, 전달하다
 - `lease` : 임대하다
 - `build` : 구축하다
@@ -243,7 +245,7 @@ last_modified_at: 2022-02-06
 - `is common to` : 일반적이다.
 - `is responsible for` : 담당한다
 - `abbreviated` : 짧게 한
-- `implementation` : 구현
+- `implementation` : 실행, 구현
 - `boil down to` : ~으로 요약하다
 - `predetermine` : 미리 결정하다
 - `resort` : 재분류하다
@@ -358,6 +360,29 @@ last_modified_at: 2022-02-06
 - `cumbersome` : 번거러운, 복잡하고 느린
 - `advent` : 출현
 - `comprise` : 구성되다
+- `merely` : 그저
+- `jurisdiction` : 관할권
+- `swap` : 바꾸다
+- `viable` : 실행 가능한
+- `swamp` : 쇄도하다(넘쳐 나다)
+- `rely on` : ~에 의존하다
+- `adverticsed interface` : 보급 인터페이스
+- `tacitly` : 암암리에
+- `alleviate` : 안화시키다
+- `compartmentalize` : 구분하다
+- `migrate` : 이동하다
+- `prolong` : 시간을 끌다, 연장하다
+- `downtime` : 유후시간
+- `at stake` : 위태로운
+- `close` : 가까운, 비슷한
+- `subject to` : 종속되어 있는
+
+<br>
+<br>
+
+## Chapter 4. Communication
+
+- 
 
 
 
