@@ -7,7 +7,7 @@ sidebar_main: true
 classes: wide
 toc: true
 
-last_modified_at: 2022-02-06
+last_modified_at: 2022-02-09
 ---
 
 <img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/147879046-4dab21c1-fed0-4bfb-b022-9874d3a945f8.png
@@ -36,22 +36,90 @@ last_modified_at: 2022-02-06
 
 ## prefix
 
-1. **ad-** : denoting motion or direction to (**ac-, al-, af-**)
-2. **com-** : with; together; jointly; altogether (**co-, col-, con-, cor-**)
-3. **in-** : (added to adjectives) not, 2)(added to nouns) without; lacking (**il-, im-, ir-**)
-4. **en-** : (added to nouns) forming verbs expressing entry into the specified state or location, 2)within; inside
-5. **un-** : (added to adjectives, participles, and their derivatives) denoting the absence of a quality or state; **not**, 2)(added to nouns) lack of
-6. **ex-** : out; outside of
-7. **pro-** : favoring; supporting, 2)for, 3)denoting motion forward, out, or away, 4)before in time, place, order, etc
-8. **pre-** : before (in time, place, order, degree, or importance)
-9. **per-** : through; all over, 2)having the maximum proportion of some element in combination
-10. **de-** : (forming verbs and their derivatives) down; away, 2) (added to verbs and their derivatives) denoting removal or reversal
-11. **dis-** : expressing negation, 2)denoting reversal or absence of an action
-12. **sub-** : at, to, or from a lower level or position, 2)denoting support (**suc-, suf-, sug-, sup-, sur-, sus-**)
-13. **sur-** : equivalent to super-
-14. **re-** : once more; afresh; anew, 2)behind or after, 3)with frequentative or intensive force, 4)with negative force
-15. **ob-** : denoting exposure or openness, 2)denoting oppostion, hostility, or resistance
+### ad-
 
+- denoting motion or direction to (**ac-, al-, af-**)
+
+<br>
+
+### com-
+
+- with; together; jointly; altogether (**co-, col-, con-, cor-**)
+
+<br>
+
+### in-
+
+- (added to adjectives) not, 2)(added to nouns) without; lacking (**il-, im-, ir-**)
+
+<br>
+
+### en-
+
+- (added to nouns) forming verbs expressing entry into the specified state or location, 2)within; inside
+### un-
+
+- (added to adjectives, participles, and their derivatives) denoting the absence of a quality or state; **not**, 2)(added to nouns) lack of
+
+<br>
+
+### ex-
+
+- out; outside of
+
+<br>
+
+### pro-
+
+- favoring; supporting, 2)for, 3)denoting motion forward, out, or away, 4)before in time, place, order, etc
+
+<br>
+
+### pre-
+
+- before (in time, place, order, degree, or importance)
+
+<br>
+
+### per-
+
+- through; all over, 2)having the maximum proportion of some element in combination
+
+<br>
+
+### de-
+
+- (forming verbs and their derivatives) down; away, 2) (added to verbs and their derivatives) denoting removal or reversal
+
+<br>
+
+### dis-
+
+- expressing negation, 2)denoting reversal or absence of an action
+
+<br>
+
+### sub-
+
+- at, to, or from a lower level or position, 2)denoting support (suc-, suf-, sug-, sup-, sur-, sus-)
+
+<br>
+
+### sur-
+
+- equivalent to super-
+
+<br>
+
+### re-
+
+- once more; afresh; anew, 2)behind or after, 3)with frequentative or intensive force, 4)with negative force
+
+<br>
+
+### ob-
+
+- denoting exposure or openness, 2)denoting oppostion, hostility, or resistance
 
 <br>
 <br>

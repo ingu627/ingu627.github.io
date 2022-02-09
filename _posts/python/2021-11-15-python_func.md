@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-02-08
+last_modified_at: 2022-02-09
 ---
 
 문제 풀기 : 알고리즘 문제에서 주어지는 것들을 구별한다. 나는 뼈대만 잡아준다. <br>순서는 상관없이 배우는 대로 정리를 해 나가고 있습니다.<br> 
@@ -16,12 +16,30 @@ last_modified_at: 2022-02-08
 
 ## 파이썬 함수
 
-### map(function, iterable)
+<br>
 
-- map은 리스트의 요소를 지정된 함수로 처리해주는 함수
-- 첫 번째 매개변수로는 함수가 오고 두 번째 매개변수로는 반복 가능한 자료형(리스트, 튜플 등)이 온다.
-- map 함수의 반환 값은 map객체 이기 때문에 해당 자료형을 list 혹은 tuple로 형 변환시켜주어야 한다.
-  
+### class , object, instance
+
+- 클래스(class)는 틀이고, 객체(object)는 이 틀에 만들어진 피조물을 뜻함 
+  - **인스턴스(instance)** : 실체
+  - **객체(object)** : 그 실체를 말함
+- **클래스 정의** $\rightarrow$ **인스턴스명 = 클래스()** $\rightarrow$ 어떤 객체의 메서드를 사용할 때는 **객체.메서드**
+- **self**는 그 클래스의 객체를 가리킴
+
+![image](https://user-images.githubusercontent.com/78655692/152981730-f6e20f01-6dc4-4422-b708-981e7182231c.png)
+
+<br>
+
+- **__init__** : 초기화(initialize) 메서드, 어떤 클래스의 객체가 만들어질 때 자동으로 **호출**되어서 그 객체가 갖게 될 여러 가지 성질을 정해주는 일을 함
+
+<br>
+
+### inheritance, override, super
+
+- **상속 (inheritance)** : 클래스를 부모와 자식으로 나눈 뒤 부모클래스의 내용을 자식이 그대로 가져다 쓰는 것
+- **오버라이드 (override)** : 같은 이름을 가진 메소드를 덮을 때
+- **super()** : 자식 클래스에서 부모클래스의 내용을 사용하고 싶을 때
+
 <br>
 
 ### input()
@@ -50,7 +68,7 @@ last_modified_at: 2022-02-08
 
 <br>
 
-###sys.stdin.readline()
+### sys.stdin.readline()
 
 - input 대신 씀
 
@@ -224,6 +242,14 @@ last_modified_at: 2022-02-08
 
 <br>
 
+### map(function, iterable)
+
+- map은 리스트의 요소를 지정된 함수로 처리해주는 함수
+- 첫 번째 매개변수로는 함수가 오고 두 번째 매개변수로는 반복 가능한 자료형(리스트, 튜플 등)이 온다.
+- map 함수의 반환 값은 map객체 이기 때문에 해당 자료형을 list 혹은 tuple로 형 변환시켜주어야 한다.
+  
+<br>
+
 ### filter(f, iterable)
 
 - 첫 번째 인수로 함수 이름을, 두 번째 인수로 그 함수에 차례로 들어갈 반복 가능한 자료형을 받는다.<br>그리고 두 번째 인수인 반복 가능한 자료형 요소가 첫 번째 인수인 함수에 입력되었을 때 반환 값이 참인 것만 묶어서(걸러 내서) 돌려준다.
@@ -306,7 +332,7 @@ last_modified_at: 2022-02-08
 
 <br>
 
-### args
+### *args
 
 - 여러 개의 인자를 함수로 받고자 할 때
 - arguments의 줄임말 (꼭 이 단어를 쓸 필요는 없다.)
@@ -325,7 +351,7 @@ print(plus(1+2+3+2+1+4)) # 13
 
 <br>
 
-### kwargs
+### **kwargs
 
 - `(키워드 = 특정 값)` 형태로 함수를 호출
 - keyword argument의 줄임말
@@ -349,30 +375,6 @@ call_member(홍길동=23, 미나=27, 나나=22)
 # 이름: 나나
 # 나이: 22
 ```
-
-<br>
-
-### class , object, instance
-
-- 클래스(class)는 틀이고, 객체(object)는 이 틀에 만들어진 피조물을 뜻함 
-  - **인스턴스(instance)** : 실체
-  - **객체(object)** : 그 실체를 말함
-- **클래스 정의** $\rightarrow$ **인스턴스명 = 클래스()** $\rightarrow$ 어떤 객체의 메서드를 사용할 때는 **객체.메서드**
-- **self**는 그 클래스의 객체를 가리킴
-
-![image](https://user-images.githubusercontent.com/78655692/152981730-f6e20f01-6dc4-4422-b708-981e7182231c.png)
-
-<br>
-
-- **__init__** : 초기화(initialize) 메서드, 어떤 클래스의 객체가 만들어질 때 자동으로 호출되어서 그 객체가 갖게 될 여러 가지 성질을 정해주는 일을 함
-
-<br>
-
-### inheritance, override, super
-
-- **상속 (inheritance)** : 클래스를 부모와 자식으로 나눈 뒤 부모클래스의 내용을 자식이 그대로 가져다 쓰는 것
-- **오버라이드 (override)** : 같은 이름을 가진 메소드를 덮을 때
-- **super()** : 자식 클래스에서 부모클래스의 내용을 사용하고 싶을 때
 
 <br>
 <br>

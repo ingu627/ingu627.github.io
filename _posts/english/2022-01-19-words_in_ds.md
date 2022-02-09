@@ -122,6 +122,7 @@ last_modified_at: 2022-02-06
 - `prevalent` : 널리 퍼져있는, 만연한
 - `ponder` : 숙고하다
 - `implement` : 구현하다
+  - to complete, perform, carry into effect; to fulfill
 - `contain` : 들어있다
 - `backbone` : 근간, 척추
 - `carry out` : 수행하다
@@ -159,6 +160,8 @@ last_modified_at: 2022-02-06
 - `prefetch` : 미리 불러오다
 - `string` : 문자열
 - `centralized` : 중앙 
+- `request` : 요청
+- `response` : 응답
  
 <br>
 <br>
@@ -349,6 +352,12 @@ last_modified_at: 2022-02-06
 - `map` : (배치구조 등에 대한 정보를)발견하다(보여주다)
 - `throughout` : ~동안 쭉, 내내
 - `lie` : (어떤 상태로) 있다
+- `dispatch` : 보내다
+  - `tear down` : 분해[해체]하다
+  - the complete dismantling of a piece of machinery
+- `cumbersome` : 번거러운, 복잡하고 느린
+- `advent` : 출현
+- `comprise` : 구성되다
 
 
 
