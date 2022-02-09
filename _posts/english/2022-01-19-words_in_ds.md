@@ -244,7 +244,7 @@ last_modified_at: 2022-02-06
 - `look up` : 찾다
 - `is common to` : 일반적이다.
 - `is responsible for` : 담당한다
-- `abbreviated` : 짧게 한
+- `abbreviate` : 줄여 쓰다
 - `implementation` : 실행, 구현
 - `boil down to` : ~으로 요약하다
 - `predetermine` : 미리 결정하다
@@ -382,7 +382,9 @@ last_modified_at: 2022-02-06
 
 ## Chapter 4. Communication
 
-- 
+- `dissemination` : 보급
+- `elegance` : 정밀함, 간결함
+- `recapitulate` : 개요를 말하다
 
 
 
