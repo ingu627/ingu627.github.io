@@ -97,10 +97,11 @@ last_modified_at: 2022-02-06
 - `scaling out` : 확장
 - `latency` : 지연 시간
 - `applicable` : 적용 가능한
-- `asynchronous` : 비동기적
+- `asynchronous` : 비동기적, (동시에 발생하지 않는)
+- `synchronous` : 동기, (동시 발생하는)
 - `reply` : 대답, 대응
 - `interrupted` : 중단된
-- `acknowledgment` : 승인, 접수, 인정
+- `acknowledgment` : 승인
 - `involve` : 포함하다
 - `hierarchically` : 위계적으로
 - `nonoverlapping` : 겹치지 않는
@@ -127,7 +128,7 @@ last_modified_at: 2022-02-06
 - `backbone` : 근간, 척추
 - `carry out` : 수행하다
 - `encapsulate` : 압축하다, 캡슐화하다
-- `invariants` : 불변성
+- `invariant` : 불변성
 - `jointly` : 공동으로
 - `fork off` : 갈림길을 접어들다
 - `subtle` : 미묘한
@@ -385,7 +386,13 @@ last_modified_at: 2022-02-06
 - `dissemination` : 보급
 - `elegance` : 정밀함, 간결함
 - `recapitulate` : 개요를 말하다
-
+- `recipient` : 받는 사람, 수령인
+- `prescribe` : 규정(지시)하다
+- `mandatory` : 의무적인
+- `hinder` : 방해하다
+- `defer` : 지연
+- `straightforward` : 간단한
+- `spawn` : 낳다
 
 
 

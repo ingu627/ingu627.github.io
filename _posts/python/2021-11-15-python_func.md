@@ -42,6 +42,16 @@ last_modified_at: 2022-02-09
 
 <br>
 
+- **class** : a blueprint for creating objects of a particular type
+- **methods** : regular functions that are part of a class
+- **attributes** : variables that hold data that are part of a class
+- **object** : a specific instance of a class
+- **inheritance** : means by which a class can inherit capabilities from another
+- **composition** : means of building complex objects out of other objects
+
+
+<br>
+
 ### input()
 
 - 사용자가 입력한 값을 어떤 변수에 대입하고 싶을 때
