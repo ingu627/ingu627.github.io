@@ -177,6 +177,9 @@ sidebar_main: true
 - [200 Practice Questions For Azure AI-900 Fundamentals Exam](https://medium.com/bb-tutorials-and-thoughts/200-practice-questions-for-azure-ai-900-fundamentals-exam-e981d28ce91d)
 - [Microsoft AZ-104 Exam](https://www.examtopics.com/exams/microsoft/az-104/){: target="_blank"}
 - [Microsoft DP-900 Exam](https://www.examtopics.com/exams/microsoft/dp-900/){: target="_blank"}
+- [DP-900 Microsoft Azure Data Fundamentals Certification](https://www.youtube.com/playlist?list=PLQ2ktTy9rklh-q7hvc2dk1DhXvHQyLtGU){: target="_blank"}
+- [SC-900 Microsoft Security, Compliance, and Identity Fundamentals](https://www.youtube.com/playlist?list=PLCbzEkWetVXxNE-qiQzaX3fvAIywLmq06){: target="_blank"}
+- [Microsoft SC-900 Exam](https://www.examtopics.com/exams/microsoft/sc-900/){: target="_blank"}
 
 
 
