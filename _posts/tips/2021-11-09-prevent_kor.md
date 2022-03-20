@@ -29,8 +29,21 @@ warnings.filterwarnings("ignore")
 
 ## Colab에서 사용 시
 
-```linux
+```python
 !sudo apt-get install -y fonts-nanum
 !sudo fc-cache -fv
 !rm ~/.cache/matplotlib -rf
 ```
+
+- 실행 후 (런타임 재시작)
+
+<br>
+
+```python
+plt.rc('font', family='NanumBarunGothic')
+```
+
+<br>
+<br>
+<br>
+<br>
