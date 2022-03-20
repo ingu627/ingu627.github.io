@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "[2022최신] 텐서플로우(tensorflow), 파이토치(pytorch) GPU 설치 방법"
-excerpt : "NVIDIA DRIVER, CUDA Toolkit, Cudnn"
+excerpt : "NVIDIA DRIVER, CUDA Toolkit, Cudnn, tensorflow 최신 버전 2.8을 설치합니다. 윈도우10 환경에서 작업하여 쓴 글입니다."
 categories: tips
 tag : [tip, cuda, install, gpu, 텐서플로, 설치, 윈도우10, 쿠다, 파이토치, Cudnn, pytorch, window]
 
