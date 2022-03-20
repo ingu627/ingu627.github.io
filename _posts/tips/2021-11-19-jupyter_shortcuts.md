@@ -3,11 +3,11 @@ layout: single
 title: "Jupyter Notebook 단축키 모음"
 excerpt : "주피터 노트북으로 코딩 시 단축키를 알면 훨씬 더 편합니다."
 categories: tips
-tag : [tip, shortcuts]
+tag : [tip, shortcuts, 단축키, 주피터]
 toc : True
 sidebar_main: true
 
-last_modified_at: 2021-11-19
+last_modified_at: 2022-03-20
 ---
 
 ## Jupyter 주요 단축키 모음

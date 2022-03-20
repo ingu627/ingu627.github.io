@@ -8,7 +8,7 @@ tag: [git, linux, ubuntu, windows 10, WSL2, 리눅스, 우분투]
 toc: true
 toc_sticky: true
 
-last_modified_at: 2021-11-30
+last_modified_at: 2022-03-20
 
 sidebar_main: true
 ---

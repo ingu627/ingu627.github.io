@@ -3,12 +3,12 @@ layout: single
 title: "생산성 향상을 위한 VSCode extensions 12개 추천"
 excerpt: "Ponicode, Dracula Official, Debugger for Chrome, Bracket Pair Colorizer 2, Code Spell Checker, Code Runner, Live Server 등" 
 categories: tips
-tag : [tip, vscode, extension, Dracula, Debugger, Bracket, Live, Markdown]
+tag : [tip, vscode, extension, Dracula, Debugger, Bracket, Live, Markdown, 확장]
 toc: True
 toc_sticky: True
 sidebar_main: true
 
-last_modified_at: 2021-12-20
+last_modified_at: 2022-03-20
 ---
 
 <br>

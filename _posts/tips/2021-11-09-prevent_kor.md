@@ -2,7 +2,7 @@
 layout: single
 title: "파이썬 한글 방지 깨짐 코드 [Jupyter, Colab]"
 categories: tips
-tag : [tip, python, korea, colab]
+tag : [tip, python, korea, colab, 한글 깨짐, 파이썬, 코랩, 주피터]
 sidebar_main: true
 
 last_modified_at: 2022-03-17

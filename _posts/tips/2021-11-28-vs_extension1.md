@@ -3,12 +3,12 @@ layout: single
 title: "빅데이터 분석가를 위한 VSCode extensions 14개 추천"
 excerpt : "파이썬, 주피터를 vscode에서 더 전문적이고 생산적으로 활용하는 방법(+자동 완성)"
 categories: tips
-tag : [tip, vscode, extension, 파이썬, 주피터, Tabnine, Pylance, IntelliCode, MagicPython, Jupyter, Settings Sync, GitLens, GitGraph, 자동완성]
+tag : [tip, vscode, extension, 파이썬, 주피터, Tabnine, Pylance, IntelliCode, MagicPython, Jupyter, Settings Sync, GitLens, GitGraph, 자동완성, 확장]
 toc: True
 toc_sticky: True
 sidebar_main: true
 
-last_modified_at: 2022-02-08
+last_modified_at: 2022-03-20
 ---
 
 많은 글들이 extension을 추천했지만 이글은 딥러닝 코드를 vscode에서 할 때 생산적으로 활용할 수 있는 extension들을 추천하고자 썼습니다.

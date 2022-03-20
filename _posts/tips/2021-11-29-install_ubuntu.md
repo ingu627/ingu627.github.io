@@ -3,12 +3,12 @@ layout: single
 title: "윈도우10에서 리눅스(Linux) 설치하기 (Ubuntu)"
 categories: tips
 date: 2021-11-29
-tag: [linux, ubuntu, windows 10, WSL2]
+tag: [linux, ubuntu, windows 10, WSL2, 우분투, 리눅스]
 
 toc: true
 toc_sticky: true
 
-last_modified_at: 2021-11-29
+last_modified_at: 2022-03-20
 
 sidebar_main: true
 ---
