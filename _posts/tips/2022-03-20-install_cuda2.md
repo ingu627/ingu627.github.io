@@ -13,7 +13,7 @@ last_modified_at: 2022-03-20
 ---
 
 
-기존에 글을 썼지만, 쓰면 쓸수록 오류가 났었기 때문에 최신 버전을 설치하려고 결정했습니다. <br><br> **Pytorch** : pytorch==1.9.0 torchvision==0.10.0 torchaudio==0.9.0 <br> **Tensorflow** : CUDA==11.3 cuDNN==8.2.1 tensorflow : 2.8.0 tensorflow-gpu : 2.8.0 <br> **Python** : 3.9 <br> **OS** : Window 10 <br> **NVIDIA GPU Driver** : 465.xx.xx 이상
+기존에 글을 썼지만, tensorflow 2.4버전을 쓰면 쓸수록 오류가 났었기 때문에 최신 버전을 설치하려고 결정했습니다. <br><br> **Pytorch** : pytorch==1.9.0 torchvision==0.10.0 torchaudio==0.9.0 <br> **Tensorflow** : CUDA==11.3 cuDNN==8.2.1 tensorflow : 2.8.0 tensorflow-gpu : 2.8.0 <br> **Python** : 3.9 <br> **OS** : Window 10 <br> **NVIDIA GPU Driver** : 465.xx.xx 이상
 {: .notice--danger}
 
 <br>

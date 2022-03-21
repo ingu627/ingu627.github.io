@@ -3,7 +3,7 @@ layout: single
 title: "빅데이터분석기사(R) - 제1유형 10문제 풀이 (1)"
 excerpt: "2021년 제 3회 빅데이터분석기사 실기를 위한 문제풀이 내용입니다. - 1~10번"
 categories: R_ML
-tag : [R, certificate, 빅데이터 분석기사, 실기, 작업형]
+tag : [R, certificate, 빅데이터 분석기사, 실기, 작업형, 필답형, 자격증, dataq]
 toc: true
 sidebar_main: true
 classes: wide

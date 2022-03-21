@@ -3,7 +3,7 @@ layout: single
 title: "빅데이터분석기사(R) - 필답형 44문제 풀이 (3)"
 excerpt: "2021년 제 3회 빅데이터분석기사 실기를 위한 문제풀이 내용입니다. - 3단원. 빅데이터 모델링"
 categories: R_ML
-tag : [R, certificate, 빅데이터 분석기사, 실기, 필답형]
+tag : [R, certificate, 빅데이터 분석기사, 실기, 필답형, 자격증, dataq]
 sidebar_main: true
 classes: wide
 
