@@ -150,7 +150,7 @@ last_modified_at: 2022-03-20
 - **기본적인 패키지 설치**
   - `pip install tensorflow==2.8.0`
   - ~~`pip install tf-nightly`~~
-  - `pip install pandas matplotlib seaborn scipy`
+  - `pip install pandas matplotlib seaborn scipy sklearn`
   - `pip install tensorflow-gpu==2.8.0`
   - `pip install keras`
   - `conda install pytorch==1.9.0 torchvision==0.10.0 torchaudio==0.9.0 cudatoolkit=11.3 -c pytorch -c conda-forge`
