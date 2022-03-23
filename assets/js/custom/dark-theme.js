@@ -4,7 +4,7 @@ const darkTheme = [...document.styleSheets].find(style => /(main_dark.css)$/.tes
 let setDarkMode = (isDark) => {
     darkTheme.disabled = isDark !== true;
     defaultTheme.disabled = isDark === true;
-    localStorage.setItem('theme', isDark ? 'dark' : 'default');
+    localStorage.setItem('theme', isDark ? 'dark' : 'air');
 }
 
 if (darkTheme) {
