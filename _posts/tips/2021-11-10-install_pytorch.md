@@ -3,10 +3,10 @@ layout: single
 title: "[WINDOWS10 환경] 딥러닝을 위한 파이토치(pytorch) 설치 방법"
 excerpt : "windows10 환경 pytorch cuda11.0"
 categories: tips
-tag : [tip, pytorch, install, 파이토치 설치]
+tag : [tip, pytorch, install, 파이토치 설치, conda, pip]
 sidebar_main: true
 
-last_modified_at: 2022-03-20
+last_modified_at: 2022-03-25
 ---
 
 <br>
@@ -28,9 +28,9 @@ last_modified_at: 2022-03-20
 
 ## 3. CUDA 버전에 맞는 pytorch 설치
 
-![image](https://user-images.githubusercontent.com/78655692/141055924-842a15ce-5c94-40e1-b7bd-ffdf6bd43c7f.png)
+![image](https://user-images.githubusercontent.com/78655692/160165414-a2ee8389-fce6-48e4-a644-8b26fae23e70.png)
 
-`conda install pytorch==1.7.1 torchvision==0.8.2 torchaudio==0.7.2 cudatoolkit=11.0 -c pytorch`
+`pip install torch==1.7.1+cu110 torchvision==0.8.2+cu110 torchaudio==0.7.2 -f https://download.pytorch.org/whl/torch_stable.html`
 
 <br>
 <br>
