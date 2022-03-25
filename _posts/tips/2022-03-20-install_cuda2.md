@@ -153,7 +153,7 @@ last_modified_at: 2022-03-20
   - `pip install pandas matplotlib seaborn scipy sklearn`
   - `pip install tensorflow-gpu==2.8.0`
   - `pip install keras`
-  - `conda install pytorch==1.9.0 torchvision==0.10.0 torchaudio==0.9.0 cudatoolkit=11.3 -c pytorch -c conda-forge`
+  - `pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu113`
   - `pip install jupyter notebook`
   - `pip install ipykernel`
   - `python -m ipykernel install --user --name 가상환경이름 --display-name 표시할 가상환경 이름`
