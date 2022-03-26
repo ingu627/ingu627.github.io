@@ -9,7 +9,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-03-20
+last_modified_at: 2022-03-25
 ---
 
 
@@ -37,7 +37,7 @@ last_modified_at: 2022-03-20
 
 ## 1. 아나콘다 설치
 
-- ANACONDA 사이트 링크 : <https://www.anaconda.com/products/individual>
+- [ANACONDA 사이트 링크](https://www.anaconda.com/products/individual)
 
 ![image](https://user-images.githubusercontent.com/78655692/159163708-d344c839-6f2d-4c5b-b156-9ae68411a5a4.png)
 
@@ -52,7 +52,7 @@ last_modified_at: 2022-03-20
 
 - 본인의 GPU 모델 선택
 
-- NVIDIA 드라이버 링크 : <https://www.nvidia.com/download/index.aspx?lang=en-us>
+- [NVIDIA 드라이버 링크](https://www.nvidia.com/download/index.aspx?lang=en-us)
 
 ![image](https://user-images.githubusercontent.com/78655692/159163794-5476ca7e-9b52-447f-b956-e8bf96bbf039.png)
 
@@ -61,7 +61,7 @@ last_modified_at: 2022-03-20
 
 ## 3. Visual Studio 설치
 
-- Visual Studio 링크 : <https://visualstudio.microsoft.com/ko/downloads/>
+- [Visual Studio 링크](https://visualstudio.microsoft.com/ko/downloads/)
 
 ![image](https://user-images.githubusercontent.com/78655692/159163938-2d972336-6318-4e4d-8fce-6838e71b8c3f.png)
 
@@ -70,7 +70,7 @@ last_modified_at: 2022-03-20
 
 ## 4. CUDA Toolkit 버전 확인
 
-- CUDA Toolkit window(윈도우) 링크 : <https://www.tensorflow.org/install/source_windows#tested_build_configurations>
+- [CUDA Toolkit window(윈도우) 링크](https://www.tensorflow.org/install/source_windows#tested_build_configurations)
 
 ![image](https://user-images.githubusercontent.com/78655692/159164021-a3dc15ac-53db-410e-a804-b4de5f1bfc24.png)
 
@@ -87,7 +87,7 @@ last_modified_at: 2022-03-20
 
 ## 5. CUDA 설치
 
-- CUDA Toolkit 링크 : <https://developer.nvidia.com/cuda-toolkit-archive>
+- [CUDA Toolkit 링크](https://developer.nvidia.com/cuda-toolkit-archive)
 
 ![image](https://user-images.githubusercontent.com/78655692/159164129-b1a9d4b4-113e-43cd-87df-899da5062b0b.png)
 
@@ -102,7 +102,7 @@ last_modified_at: 2022-03-20
 ## 6. cuDNN 설치
 
 - cuDNN은 엔비디아 회원가입 및 로그인이 필요하다.
-- cuDNN 링크 : <https://developer.nvidia.com/cudnn>
+- [cuDNN 링크](https://developer.nvidia.com/cudnn)
 
 ![image](https://user-images.githubusercontent.com/78655692/159164251-9978e4a5-9fd1-410d-9edb-ffe7ebe0469b.png)
 
@@ -181,12 +181,24 @@ last_modified_at: 2022-03-20
 
 ### GPU 확인
 
+- **tensorflow**
+
 ```python
 from tensorflow.python.client import device_lib
 print(device_lib.list_local_devices())
 ```
 
 ![image](https://user-images.githubusercontent.com/78655692/141671882-b12399ab-9387-42ef-9869-c11f2a2fa43d.png)
+
+- **pytorch**
+
+```python
+DEVICE = ("cuda" if torch.cuda.is_available() else "cpu")
+print(DEVICE)
+```
+
+![image](https://user-images.githubusercontent.com/78655692/160109763-5c6b1351-eae2-49e5-82af-b3fe9bb11334.png)
+
 
 
 이렇게 뜨면 잘 설치가 된 것이다.

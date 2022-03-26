@@ -31,7 +31,7 @@ sidebar_main: true
 
 <br>
 
-### 논문 
+### papers 
 
 [![image](https://user-images.githubusercontent.com/78655692/151177221-59131530-78c7-42fe-ad99-3b03c0b44d69.png)](https://scholar.google.co.kr/schhp?hl=ko){: target="_blank"}
 
@@ -63,6 +63,8 @@ sidebar_main: true
 - [coursera](https://ko.coursera.org/){: target="_blank"}
 - [Learn With DataCamp](https://www.datacamp.com/){: target="_blank"}
 - [NVIDIA - DEEP Learning Institute](https://www.nvidia.com/ko-kr/training/){: target="_blank"}
+- [playground.tensorflow.org](http://playground.tensorflow.org){: target="_blank"}
+- [Computer Vision examples - scs.ryerson.ca](scs.ryerson.ca){: target="_blank"}
 
 <br>
 
