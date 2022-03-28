@@ -8,7 +8,7 @@ toc: true
 sidebar_main: true
 classes: wide
 
-last_modified_at: 2022-01-27
+last_modified_at: 2022-03-28
 ---
 
 <img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/147629300-4d7acc5e-225a-454a-92cd-4da82f6828f6.png
@@ -62,7 +62,7 @@ network.add(Dense(512, activation='relu', input_shape=(28 * 28,)))
 network.add(Dense(10, activation='softmax'))
 ```
 
-- 신경망의 핵심 구성 요소는 일종의 <span style="background-color:yellow">데이터 처리 필터</span>라고 생각할 수 있는 **층(layer)**이다.
+- 신경망의 핵심 구성 요소는 일종의 <b><span style="color:red">데이터 처리 필터</span></b>라고 생각할 수 있는 **층(layer)**이다.
 - 층은 주어진 문제에 더 의미 있는 **표현(representation)**을 입력된 데이터로부터 추출한다.
 - 여기서는 완전 연결된 신경망 층인 Dense 층 2개가 연속되어 있다. 
 - 두 번째 층은 10개의 확률 점수가 들어 있는 배열을 반환하는 소프트맥스이다.
@@ -140,7 +140,7 @@ print(test_acc) # 0.9799000024795532
 
 - **텐서(tensor)** : (거의 항상)수치형 데이터를 위한 **컨테이너 (container)**
   - 임의의 차원 개수를 가지는 행렬의 일반화된 모습
-  - 텐서는 <span style="background-color:yellow">벡터 (Vector)와 행렬 (Matrix)을 일반화</span>한 것이며, 3차원 이상으로 확장할 수 있다.
+  - 텐서는 <b><span style="color:red">벡터 (Vector)와 행렬 (Matrix)을 일반화</span></b>한 것이며, 3차원 이상으로 확장할 수 있다.
   - 텐서는 TensorFlow의 가장 주요한 객체이며, TensorFlow의 작업은 주로 텐서의 연산으로 이루어진다.
 - 텐서 scalar, vector, matrix, tensor는 각각 랭크 0, 1, 2, 3를 가진다.
 - 텐서 (Tensor)는 NumPy 어레이와 비슷하지만, GPU, TPU와 같은 가속기에서 사용할 수 있고, 값을 변경할 수 없다.
@@ -169,7 +169,7 @@ print(x.ndim)
 - 5D 벡터 != 5D 텐서
 - **행렬(matrix)** : 벡터의 배열 (**2D 텐서**) (2개의 축 - 행과 열)
   - 행렬은 숫자가 채워진 사각 격자
-- **2D 텐서** : <span style="background-color:yellow">(batch_size, dim)</span>
+- **2D 텐서** : <b><span style="color:red">(batch_size, dim)</span></b>
   - 행의 크기가 batch_size, 열의 크기가 dim이다.
 
 ![image](https://user-images.githubusercontent.com/78655692/143195653-9297e916-7683-4207-9332-6837c4ecc275.png) 이미지출처: [^2]
@@ -203,12 +203,12 @@ print(x.ndim)
 ### 3D 텐서
 
 - **3D 텐서** : 행렬들을 하나의 새로운 배열로 합치면 숫자가 채워진 직육면체 형태로 해석할 수 있는 3D 텐서가 만들어짐
-- <span style="background-color:yellow">(batch_size, width, height)</span> - 비전 분야에서의 3차원 텐서
+- <b><span style="color:red">(batch_size, width, height)</span></b> - 비전 분야에서의 3차원 텐서
 - 자연어 처리보다 비전 분야(이미지, 영상 처리)를 하시게 된다면 좀 더 복잡한 텐서를 다루게 된다.
 
 ![image](https://user-images.githubusercontent.com/78655692/143198512-4bfa9b7f-0a77-460d-bfcb-ac04c5d11129.png) 이미지출처: [^2]
 
-- <span style="background-color:yellow">(batch_size, length, dim)</span> - NLP 분야에서의 3차원 텐서
+- <b><span style="color:red">(batch_size, length, dim)</span></b> - NLP 분야에서의 3차원 텐서
   - length : 문장 길이
   - dim : 단어 벡터의 차원
 
@@ -271,7 +271,7 @@ print(x.shape)
 
 - **벡터 데이터** : (samples, features) 크기의 2D 텐서
 - **시계열 데이터** (또는 시퀀스(sequence) 데이터) : (samples, timesteps, features) 크기의 3D 텐서
-- **이미지** : <span style="background-color:yellow">(samples, height, width, channels) 또는 (samples, channels, height, width) 크기의 4D 텐서</span>
+- **이미지** : <b><span style="color:red">(samples, height, width, channels) 또는 (samples, channels, height, width) 크기의 4D 텐서</span></b>
 - **동영상** : (samples, frames, height, width, channels) 또는 (samples, frames, channels, height, width) 크기의 5D 텐서
 
 <br>
@@ -336,7 +336,7 @@ print(x.shape)
 
 <br>
 
-- **딥러닝** : <span style="background-color:yellow">기초적인 연산을 길게 연결하여 복잡한 기하하적 변환을 조금씩 분해하는 방식</span>
+- **딥러닝** : <b><span style="color:red">기초적인 연산을 길게 연결하여 복잡한 기하하적 변환을 조금씩 분해하는 방식</span></b>
 
 <br>
 <br>

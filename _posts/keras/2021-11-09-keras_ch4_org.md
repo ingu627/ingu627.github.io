@@ -8,7 +8,7 @@ toc: true
 sidebar_main: true
 classes: wide
 
-last_modified_at: 2022-01-28
+last_modified_at: 2022-03-28
 ---
 
 <img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/147629300-4d7acc5e-225a-454a-92cd-4da82f6828f6.png
@@ -73,7 +73,7 @@ last_modified_at: 2022-01-28
   - 예를 들어 하나의 이미지에 고양이와 강아지가 모두 들어 있을 때는 '고양이' 레이블과 '강아지' 레이블을 모두 할당해야 한다.
 - **스칼라 회귀** : 타깃이 연속적인 스칼라 값인 작업. 주택 가격이 예측이 그 예 
 - **벡터 회귀** : 타깃이 연속적인 값의 집합인 작업.
-- **미니 배치** 또는 **배치** : <span style="background-color:yellow">모델에 의해 동시에 처리되는 소량의 샘플 묶음(일반적으로 8개에서 128개 사이)</span>
+- **미니 배치** 또는 **배치** : <b><span style="color:red">모델에 의해 동시에 처리되는 소량의 샘플 묶음(일반적으로 8개에서 128개 사이)</span></b>
   - <u>샘플 개수는 GPU의 메모리 할당이 용이하도록 2의 거듭제곱으로 하는 경우가 많다.</u>
   - 훈련할 때 미니 배치마다 한 번씩 모델의 가중치에 적용할 경사 하강법 업데이트 값을 계산한다.
 
@@ -185,11 +185,11 @@ last_modified_at: 2022-01-28
 ## 4_4. 과대적합과 과소적합
 
 - 머신 러닝의 근본적인 이슈는 최적화와 일반화 사이의 줄다리기이다.
-- **최적화 (optimization)** : <span style="background-color:yellow">가능한 훈련 데이터에서 최고의 성능을 얻으려고 모델을 조정하는 과정이다.
-- **일반화 (generalization)** : <span style="background-color:yellow">훈련된 모델이 이전에 본 적 없는 데이터에서 얼마나 잘 수행되는지 의미한다.
+- **최적화 (optimization)** : <b><span style="color:red">가능한 훈련 데이터에서 최고의 성능을 얻으려고 모델을 조정하는 과정이다.</b>
+- **일반화 (generalization)** : <b><span style="color:red">훈련된 모델이 이전에 본 적 없는 데이터에서 얼마나 잘 수행되는지 의미한다.</b>
   - 모델을 만드는 목적은 좋은 일반화 성능을 얻는 것이다.
 - 더 많은 데이터에서 훈련된 모델은 일반화 성능이 더 뛰어나다.
-- **규제** : <span style="background-color:yellow">과대적합을 피하는 처리 과정
+- **규제** : <b><span style="color:red">과대적합을 피하는 처리 과정</b>
 
 
 <br>

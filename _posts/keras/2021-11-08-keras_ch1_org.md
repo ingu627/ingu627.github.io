@@ -8,7 +8,7 @@ toc: true
 sidebar_main: true
 classes: wide
 
-last_modified_at: 2022-01-27
+last_modified_at: 2022-03-28
 ---
 
 <img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/147629300-4d7acc5e-225a-454a-92cd-4da82f6828f6.png
@@ -50,9 +50,9 @@ last_modified_at: 2022-01-27
 
 ### 1_1_3. 데이터에서 표현을 학습하기
 
-- 머신 러닝 모델은 입력 데이터를 <span style="background-color:yellow">의미 있는</span> 출력으로 변환한다.
+- 머신 러닝 모델은 입력 데이터를 <b><span style="color:red">의미 있는</span></b> 출력으로 변환한다.
 - 머신 러닝과 딥러닝의 핵심 문제는 의미 있는 데이터로의 변환이다.
-- **표현** (representation) : <span style="background-color:yellow">데이터를 인코딩하거나 묘사하기 위해 데이터를 바라보는 다른 방법</span>
+- **표현** (representation) : <b><span style="color:red">데이터를 인코딩하거나 묘사하기 위해 데이터를 바라보는 다른 방법</span></b>
   - 컬러 이미지 -> RGB 포맷(빨간색-녹색-파란색), HSV 포맷(색상-채도-명도)
 - 모든 머신 러닝 알고리즘은 주어진 작업을 위해 데이터를 더 유용한 표현으로 바꾸는 변환을 자동으로 찾는다.
 
@@ -60,7 +60,7 @@ last_modified_at: 2022-01-27
 
 <br>
 
-- **학습 (Learning)** : <span style="background-color:yellow">더 나은 표현을 찾는 자동화된 과정</span>
+- **학습 (Learning)** : <b><span style="color:red">더 나은 표현을 찾는 자동화된 과정</span></b>
 - **머신 러닝 (Machine Learning)**은 <u>가능성 있는 공간을 사전에 정의하고 피드백 신호의 도움을 받아 입력 데이터에 대한 유용한 변환을 찾는 것이다.</u>
 
 <br>
@@ -72,7 +72,7 @@ last_modified_at: 2022-01-27
 
 - **딥러닝 (Deep Learning)** : 머신 러닝의 특정한 한 분야로서 연속된 **층 (Layer)**에서 점진적으로 의미 있는 표현을 배우는 데 강점이 있으며, 데이터로부터 표현을 학습하는 새로운 방식 (=층 기반 표현 학습)
   - **딥 (deep)** : 연속된 층으로 표현을 학습한다는 개념
-  - <span style="background-color:yellow">데이터로부터 모델을 만드는 데 얼마나 많은 층을 사용했는지</span>가 그 모델의 깊이가 된다.
+  - <b><span style="color:red">데이터로부터 모델을 만드는 데 얼마나 많은 층을 사용했는지</span></b>가 그 모델의 깊이가 된다.
 - 딥러닝은 그냥 데이터로부터 표현을 학습하는 수학 모델일 뿐이다.
 - 딥러닝은 기술적으로는 <u>데이터 표현을 학습하기 위한 다단계 처리 방식을 말한다.</u>
 - 딥러닝에서는 기본 층을 겹겹이 쌓아 올려 구성한 신경망이라는 모델을 사용하여 표현 층을 학습한다.
@@ -94,7 +94,7 @@ last_modified_at: 2022-01-27
 
 - 층에서 입력 데이터가 처리되는 상세 내용은 일련의 숫자로 이루어진 층의 **가중치 (weight)**에 저장되어 있다.
   - 어떤 층에서 일어나는 변환은 그 층의 가중치를 **파라미터 (parameter)**로 가지는 함수로 표현된다.
-- **학습**은 <span style="background-color:yellow">주어진 입력을 정확한 타깃에 매핑하기 위해 신경망의 모든 층에 있는 가중치 값을 찾는 것을 의미.</span>
+- **학습**은 <b><span style="color:red">주어진 입력을 정확한 타깃에 매핑하기 위해 신경망의 모든 층에 있는 가중치 값을 찾는 것을 의미.</span></b>
 
 <br>
 
@@ -103,7 +103,7 @@ last_modified_at: 2022-01-27
 <br>
 
 - 목표 : <u>가중치의 정확한 값을 찾는 것</u>
-- 신경망이 한 샘플에 대해 얼마나 잘 예측했는지 측정하기 위해 손실 함수가 <span style="background-color:yellow">신경망의 예측과 진짜 타킷의 차이를 점수로 계산</span> (**loss function**)
+- 신경망이 한 샘플에 대해 얼마나 잘 예측했는지 측정하기 위해 손실 함수가 <b><span style="color:red">신경망의 예측과 진짜 타킷의 차이를 점수로 계산</span></b> (**loss function**)
 - 손실 점수를 피드백 신호로 사용하여 현재 샘플의 손실 점수가 감소되는 방향으로 가중치 값을 조금씩 수정
 - 수정 과정은 역전파(backpropagation) 알고리즘을 구현한 옵티마이저(optimizer)가 담당
 
