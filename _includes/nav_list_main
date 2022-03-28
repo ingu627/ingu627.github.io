@@ -15,6 +15,8 @@
         <span class="nav__sub-title">AI</span>
             <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
             <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
                 {% for category in site.categories %}
                     {% if category[0] == "paper" %}
                         <li><a href="/categories/paper" class="">논문 리뷰 ({{category[1].size}})</a></li>
@@ -22,8 +24,13 @@
                 {% endfor %}
             </ul>
             <ul>
-                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
-                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                {% for category in site.categories %}
+                    {% if category[0] == "code" %}
+                        <li><a href="/categories/code" class="">코드 구현(Code Implementation) ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "python" %}
                         <li><a href="/categories/python" class="">파이썬(PYTHON) ({{category[1].size}})</a></li>
