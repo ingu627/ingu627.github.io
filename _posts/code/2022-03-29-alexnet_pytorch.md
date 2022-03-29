@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "AlexNet 구조 파악 및 pytorch로 코드 구현해보기"
+title: "AlexNet 구조 파악 및 pytorch로 구현해보기"
 excerpt: "Paper: ImageNet Classification with Deep Convolutional Neural Networks, Method: Pytorch"
 categories: code
 tag : [alexnet, pytorch, 파이토치, 알렉스넷, cnn]
@@ -329,6 +329,10 @@ for epoch in range(1, epochs+1):
     train(model, device, training_loader, optimizer, epoch)
     test(model, device, validation_loader)
 ```
+
+- **결과** : 10 에포크로 90% 정확도 달성
+
+![image](https://user-images.githubusercontent.com/78655692/160552918-08fd07e0-d848-4903-a6b3-22f3cd4cc0e8.png)
 
 
 
