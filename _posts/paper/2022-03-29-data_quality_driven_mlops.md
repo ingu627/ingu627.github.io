@@ -72,8 +72,8 @@ last_modified_at: 2022-03-29
 
 - $P(X,Y)$ 의 확률 분포가 시간이 지나도 고정되어 있는 경우, 실제에 잘 적용이 되지 않을 때가 있다. 이렇게 시간의 변동에 따른 분포의 변화를 **concept shift**라고 한다.
 - 특징 공간 $X$와 라벨 공간 $Y$가 모두 분포의 변경에 걸쳐 동일하게 유지된다고 가정하는 경우가 있는데, 이는 잘못될 수 있다. $X$ 또는 $Y$의 변경을 **data drift**라고 하고, 이로 인해 모델을 학습하거나 평가하기 위한 값이 누락될 수 있다.
-- $p(X)$의 변화가 $p(Y\midX)$를 수정하는 경우를, **real drift** 또는 **model drift**라고 한다.
-- 반면 $p(Y\midX)$가 온전히 유지한다면, 이를 **virtual drift**라고 한다.
+- $p(X)$의 변화가 $p(Y\mid X)$를 수정하는 경우를, **real drift** 또는 **model drift**라고 한다.
+- 반면 $p(Y\mid X)$가 온전히 유지한다면, 이를 **virtual drift**라고 한다.
   - $X$ feature에 걸쳐 posterior probability distribution이 근사한다고 가정할때, **virtual drift**는 ML 모델을 훈련할 때 어떠한 영향이 없다.
 
 <br>
