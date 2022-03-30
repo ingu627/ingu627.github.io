@@ -60,15 +60,15 @@ $$x^2+3*x+5=0 는 이차함수이다.$$
 
 <br>
 
-- `위키백과:TeX 문법` : <https://ko.wikipedia.org/wiki/%EC%9C%84%ED%82%A4%EB%B0%B1%EA%B3%BC:TeX_%EB%AC%B8%EB%B2%95>
+- [위키백과:TeX 문법](https://ko.wikipedia.org/wiki/%EC%9C%84%ED%82%A4%EB%B0%B1%EA%B3%BC:TeX_%EB%AC%B8%EB%B2%95)
 
 <br>
 
-- `MathJax에서 유용한 TEX 명령어` :<https://www.onemathematicalcat.org/MathJaxDocumentation/MathJaxKorean/TeXSyntax_ko.html>
+- [MathJax에서 유용한 TEX 명령어](https://www.onemathematicalcat.org/MathJaxDocumentation/MathJaxKorean/TeXSyntax_ko.html)
 
 <br>
 
-- `Symbols and Functions in KaTeX` : <https://utensil-site.github.io/available-in-katex/>
+- [Symbols and Functions in KaTeX](https://utensil-site.github.io/available-in-katex/)
 
 <br>
 <br>
