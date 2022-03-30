@@ -1,5 +1,5 @@
 ---
-title: "Git (블로그)Blog"
+title: "git 블로그(Github Pages)"
 layout: archive
 permalink: categories/git_blog
 author_profile: true
