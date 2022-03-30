@@ -3,7 +3,7 @@ layout: single
 title: "[논문 리뷰] A Data Quality-Driven View of MLOps"
 excerpt: "이 논문은 데이터 품질의 다양한 측면이 ML development 단계를 통해 어떻게 전파되는지를 고민했습니다. 이에 대한 요약 및 리뷰입니다."
 categories: paper
-tag : [mlops, data quality]
+tag : [mlops, data quality, 데이터 품질, concept shift, ML, 머신 러닝, 자동화,]
 toc: true
 toc_sticky: true
 sidebar_main: true
@@ -82,7 +82,7 @@ last_modified_at: 2022-03-29
 
 <br>
 
-- 추가 : 어떻게 방지해야 하나? [^1]
+### 추가 : 어떻게 방지해야 하나? [^1]
 
 1. **Online learning** : 모델이 한 번에 하나의 샘플을 처리함에 따라 학습자가 즉시 업데이트
 2. **Periodically re-train the model** : 다양한 instance에서 trigger에 발생될 수 있는 모델 재학습
@@ -225,4 +225,4 @@ last_modified_at: 2022-03-29
 
 ## References
 
-- [^1]: [Best Practices for Dealing With Concept Drift](https://neptune.ai/blog/concept-drift-best-practices)
+[^1]: [Best Practices for Dealing With Concept Drift](https://neptune.ai/blog/concept-drift-best-practices)
