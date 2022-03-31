@@ -3,18 +3,21 @@ layout: single
 title: "빅데이터분석기사 실기 작업형(3) - 데이터 정제, 변환"
 excerpt: "본 글은 빅데이터분석기사 실기 작업형에 대비하여 요약 및 실습한 것을 작성한 글입니다. 기출문제의 데이터는 https://github.com/ingu627/BigDataAnalysis에 데이터 셋을 남겨놨습니다."
 categories: R_ML
-tag : [R, visualization, adsp, certificate, 빅데이터 분석기사, 실기, 작업형, 필답형, 자격증, dataq]
+tag : [R, visualization, adsp, certificate, 빅데이터 분석기사, 실기, 작업형, 필답형, 자격증, dataq, 정리, pdf]
 toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-01-08
+last_modified_at: 2022-03-31
 ---
 
 <img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/148633895-2be87d4e-7edb-4391-b583-eb2888b19bbb.png
 '>
 본 글은 빅데이터분석기사 실기 작업형에 대비하여 요약 및 실습한 것을 작성한 글입니다. <br>기출문제의 데이터는 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis){: target="_blank"}에 데이터 셋을 남겨놨습니다.<br> 또한 해당 전체 코드는 `/concept/R_basic_to_pro_3.R` 파일에 담겨져 있습니다.
 {: .notice--info}
+
+혹시 해당 글을 pdf로 받고 싶으신 분은 이메일과 함께 댓글로 남겨주세요~
+{: .notice--success}
 
 <br>
 <br>
