@@ -1,5 +1,5 @@
 ---
-title: "논문 리뷰"
+title: "논문 리뷰(Review Papers)"
 layout: archive
 permalink: categories/paper
 author_profile: true
