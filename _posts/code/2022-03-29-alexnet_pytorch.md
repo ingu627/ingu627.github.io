@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-03-29
+last_modified_at: 2022-04-01
 ---
 
 본 글은 "ImageNet Classification with Deep Convolutional Neural Networks" 논문을 파악하고, 이를 파이토치로 구현해보는 내용입니다.<br>하나하나 분해해봅시다.  <br><br> 논문 : [AlexNet](https://proceedings.neurips.cc/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf) <br> 코드 : [kaggle - Fashion MNIST with AlexNet in Pytorch](https://www.kaggle.com/code/tiiktak/fashion-mnist-with-alexnet-in-pytorch-92-accuracy/notebook) <br> 블로그 글 코드 : [alexnet_pytorch.ipynb](https://github.com/data-science-DL/pytorch/blob/master/deeplearning_ajou/alexnet_pytorch.ipynb)<br> 파이토치 튜토리얼 : [pytorch.org](https://pytorch.org/docs/stable/index.html)
@@ -194,42 +194,46 @@ class fashion_mnist_alexnet(nn.Module):
             # 4D tensor : [number_of_kernels, input_channels, kernel_width, kernel_height] 
             # = 96x1x11x11
             # input size : 1x227x227
+            # input size 정의 : (N, C, H, W) or (C, H, W)
+            # W' = (W-F+2P)/S + 1
             # 55x55x96 feature map 생성 (55는 (227-11+1)/4)
             # 최종적으로 227 -> 55
-            nn.ReLU(),
+            nn.ReLU(), # 96x55x55
             nn.MaxPool2d(kernel_size=3, stride=2) 
             # 55 -> (55-3+1)/2 = 26.5 = 27
-            # 27x27x96 feature map 생성
+            # 96x27x27 feature map 생성
 
         ) 
         self.conv2 = nn.Sequential(
             nn.Conv2d(96, 256, 5, 1, 2), # in_channels: 96, out_channels: 256, kernel_size=5x5, stride=1, padding=2
             # kernel 수 = 48x5x5 (드롭아웃을 사용했기 때문에 96/2=48) 형태의 256개
+            # 256x27x27
             nn.ReLU(),
-            nn.MaxPool2d(3, 2) 
-            
-
-            # 27 -> 13
+            nn.MaxPool2d(3, 2) # 27 -> 13
+            # 256x13x13
         )
         self.conv3 = nn.Sequential(
             nn.Conv2d(256, 384, 3, 1, 1),
             nn.ReLU() # 13 유지
+            # 384x13x13
         )
         self.conv4 = nn.Sequential(
             nn.Conv2d(384, 384, 3, 1, 1),
             nn.ReLU() # 13 유지
+            # 384x13x13
         )
         self.conv5 = nn.Sequential(
             nn.Conv2d(384, 256, 3, 1, 1),
             nn.ReLU(),
             nn.MaxPool2d(3, 2) # 13 -> 6
+            # 256x6x6
         )
         
         self.fc1 = nn.Linear(256 * 6 * 6, 4096)
         self.fc2 = nn.Linear(4096, 4096)
         self.fc3 = nn.Linear(4096, 10)
 
-    def forward(self, x):
+    def forward(self, x): # input size = 3x227x227
         out = self.conv1(x)
         out = self.conv2(out)
         out = self.conv3(out)
@@ -282,13 +286,14 @@ optimizer = optim.Adam(model.parameters()) # model(신경망) 파라미터를 op
 def train(model, device, train_loader, optimizer, epoch):
     model.train()
     for batch_idx, (data, target) in enumerate(train_loader):
+        # enumberate() : 인덱스와 원소로 이루어진 튜플(tuple)을 만들어줌
         target = target.type(torch.LongTensor)
         data, target = data.to(device), target.to(device)
-        optimizer.zero_grad()
+        optimizer.zero_grad() # 항상 backpropagation 하기전에 미분(gradient)을 zero로 만들어주고 시작해야 한다.
         output = model(data)
-        loss = criterion(output, target)
+        loss = criterion(output, target) # criterion = loss_fn
         loss.backward() # Computes the gradient of current tensor w.r.t. graph leaves
-        optimizer.step()
+        optimizer.step() # step() : 파라미터를 업데이트함
         if (batch_idx + 1) % 30 == 0:
             print("Train Epoch:{} [{}/{} ({:.0f}%)]\tLoss: {:.6f}".format(
                 epoch, batch_idx * len(data), len(train_loader.dataset),
