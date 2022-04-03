@@ -2,11 +2,11 @@
 layout: single
 title: "[에러 해결 방법] 리눅스에서 파이썬 가상환경 설치안될 때"
 categories: error
-tag : [error, solution, linux, venv, 가상환경, 파이썬, 설치, 리눅스]
+tag : [error, solution, linux, venv, 가상환경, 파이썬, 설치, 리눅스, wsl]
 toc: true
 sidebar_main: true
 
-last_modified_at: 2022-03-31
+last_modified_at: 2022-04-03
 ---
 
 <br>
@@ -31,10 +31,7 @@ sudo apt-get install python3-venv
 <br>
 
 > 파일 위치 확인
-> C:\Users\{username}\AppData\Local\Packages\CanonicalGroupLimited.UbuntuonWindows_79rhkp1fndgsc\LocalState
-
-> 또는 탐색기에서 `\\wsl$`로 네트워크 환경으로 접속하기
-
+> 탐색기에서 `\\wsl$`로 네트워크 환경으로 접속하기
 
 <br>
 <br>
