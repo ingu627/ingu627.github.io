@@ -61,7 +61,7 @@ last_modified_at: 2022-04-02
 ### 1.2 Causes of a concept drift
 
 - $X \rightarrow c_i$로 분류하기 위한 최적의 분류는 온전히 **클래스에 대한 사전 확률** $P(c_i)$와 **클래스 조건부 확률 밀도 함수** $p(X\mid c_i),\ i=1,...,k$로 결정된다.
-  - $S= {(P(c_1),p(X\mid c_1)),(P(c_2),p(X\mid c_2)),...,(P(c_k)mp(X\mid c_k))}$
+  - $S= {(P(c_k),p(X\mid c_k))}$
 - 베이지안 의사결정 이론에서 동일한 실수 비용으로 인스턴스 $X$에 대한 분류 결정은 최대 사후 확률(posterior probability)에 기초하며, 클래스 $c_i$의 경우 다음과 같다.
   - $p(c_i\mid X) = \frac{P(c_i)P(X\mid c_i)}{p(X)}$
   - $p(c\mid X)$는 $p(X\mid c))$에 의존한다.
