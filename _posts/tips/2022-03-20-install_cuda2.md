@@ -9,7 +9,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-03-25
+last_modified_at: 2022-04-07
 ---
 
 
@@ -148,6 +148,7 @@ last_modified_at: 2022-03-25
 - **가상 환경 설치** : `conda create -n 가상환경이름 python=3.9`
 - **가상 환경 활성화** : `conda activate 가상환경 이름`
 - **기본적인 패키지 설치**
+  - `pip install --upgrade pip --user`
   - `pip install tensorflow==2.8.0`
   - ~~`pip install tf-nightly`~~
   - `pip install pandas matplotlib seaborn scipy sklearn`
@@ -195,13 +196,11 @@ print(device_lib.list_local_devices())
 ```python
 DEVICE = ("cuda" if torch.cuda.is_available() else "cpu")
 print(DEVICE)
+# 결과
+# cuda
 ```
 
-![image](https://user-images.githubusercontent.com/78655692/160109763-5c6b1351-eae2-49e5-82af-b3fe9bb11334.png)
-
-
-
-이렇게 뜨면 잘 설치가 된 것이다.
+- 위의 결과가 나오면 설치가 잘 된 것이다.
 
 
 
