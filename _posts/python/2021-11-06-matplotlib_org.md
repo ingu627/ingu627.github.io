@@ -1,14 +1,14 @@
 ---
 layout: single
-title: "파이썬 matplotlib 총정리"
+title: "파이썬 matplotlib 라이브러리에 대한 모든 것"
 excerpt: "figure, label, lim, marker, grid, vline, hline, xlim, ylim, axis, alpha, color, rotation, fill_between, tick_params, subplot, width, align, color, edgecolor, linewidth, histogram, autopct, startangle, shawdow"
 categories: python
-tag : [python, matplotlib, visualization]
+tag : [python, matplotlib, visualization, figure, label, lim, marker, grid, vline, hline, xlim, ylim, axis, alpha, color, rotation, fill_between, tick_params, subplot, width, align, color, edgecolor, linewidth, histogram, autopct, startangle, shawdow]
 toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-02-08
+last_modified_at: 2022-04-11
 ---
 
 본 글은 [matplotlib.org](https://matplotlib.org/)사이트-의 튜토리얼을 참고해서 작성했습니다.

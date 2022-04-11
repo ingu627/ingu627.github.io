@@ -1,14 +1,14 @@
 ---
 layout: single
-title: "파이썬(python) 함수 기능 정리"
-excerpt: "배웠던 것들. 알고리즘 사용한 것들, 모르는 것들, 헷갈리는 것들 (계속 업데이트)"
+title: "파이썬(python) 함수 기능에 대한 모든 것"
+excerpt: "파이썬을 이용하면서 배웠던 것들. 알고리즘 사용한 것들, 모르는 것들, 헷갈리는 것들을 정리하고 있습니다."
 categories: python
-tag : [python, function, definition]
+tag : [python, 파이선, 정의, 함수, 클래스, 인스턴스, 객체, self, __init__, args, kwargs]
 toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-02-09
+last_modified_at: 2022-04-11
 ---
 
 문제 풀기 : 알고리즘 문제에서 주어지는 것들을 구별한다. 나는 뼈대만 잡아준다. <br>순서는 상관없이 배우는 대로 정리를 해 나가고 있습니다.<br> 

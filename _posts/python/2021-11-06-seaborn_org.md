@@ -1,14 +1,14 @@
 ---
 layout: single
-title: "파이썬 seaborn 총정리"
+title: "파이썬 seaborn 라이브러리에 대한 모든 것"
 excerpt: "rugplot, kdeplot, distplot, countplot, jointplot, pairplot, heatmap, barplot, boxplot, violinplot, stripplot, swarmplot, catplot"
 categories: python
-tag : [python, seaborn, visualization]
+tag : [python, seaborn, visualization, rugplot, kdeplot, distplot, countplot, jointplot, pairplot, heatmap, barplot, boxplot, violinplot, stripplot, swarmplot, catplot]
 toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-02-08
+last_modified_at: 2022-04-11
 ---
 
 본 글은 [seaborn.pydata.org](https://seaborn.pydata.org/)사이트-의 튜토리얼을 참고해서 작성했습니다.
