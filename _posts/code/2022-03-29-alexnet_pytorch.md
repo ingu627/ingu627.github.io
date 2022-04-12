@@ -3,7 +3,7 @@ layout: single
 title: "AlexNet 구조 파악 및 PyTorch로 코드 구현해보기"
 excerpt: "Paper: ImageNet Classification with Deep Convolutional Neural Networks, Method: Pytorch"
 categories: code
-tag : [alexnet, pytorch, 파이토치, 알렉스넷, cnn]
+tag : [alexnet, pytorch, 파이토치, 알렉스넷, cnn, 코드, 구현]
 toc: true
 toc_sticky: true
 sidebar_main: true
