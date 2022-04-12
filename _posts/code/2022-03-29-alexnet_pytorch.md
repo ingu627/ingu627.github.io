@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "AlexNet 구조 파악 및 pytorch로 구현해보기"
+title: "AlexNet 구조 파악 및 PyTorch로 코드 구현해보기"
 excerpt: "Paper: ImageNet Classification with Deep Convolutional Neural Networks, Method: Pytorch"
 categories: code
 tag : [alexnet, pytorch, 파이토치, 알렉스넷, cnn]
@@ -8,9 +8,10 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-04-01
+last_modified_at: 2022-04-12
 ---
 
+<img align='right' width='350' src='https://user-images.githubusercontent.com/78655692/162920296-ea7abcc7-f497-4351-8152-838c140a1ba2.png'>
 본 글은 "ImageNet Classification with Deep Convolutional Neural Networks" 논문을 파악하고, 이를 파이토치로 구현해보는 내용입니다.<br>하나하나 분해해봅시다.  <br><br> 논문 : [AlexNet](https://proceedings.neurips.cc/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf) <br> 코드 : [kaggle - Fashion MNIST with AlexNet in Pytorch](https://www.kaggle.com/code/tiiktak/fashion-mnist-with-alexnet-in-pytorch-92-accuracy/notebook) <br> 블로그 글 코드 : [alexnet_pytorch.ipynb](https://github.com/data-science-DL/pytorch/blob/master/deeplearning_ajou/alexnet_pytorch.ipynb)<br> 파이토치 튜토리얼 : [pytorch.org](https://pytorch.org/docs/stable/index.html)
 {: .notice--info}
 
@@ -122,7 +123,7 @@ print(device)
 transform = transforms.Compose([
     transforms.Resize(227), # Compose : transforms 리스트 구성
     # 227x227 : input image(in alexnet) but fashionMNIST's input image : 28x28
-    transforms.ToTensor()]) # ToTensor : PIL imae or numpy.ndarray를 tensor로 바꿈
+    transforms.ToTensor()]) # ToTensor : PIL image or numpy.ndarray를 tensor로 바꿈
 
 training_data = datasets.FashionMNIST(
     root="data", # data가 저장될 경로(path)
