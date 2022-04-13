@@ -8,8 +8,10 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-03-29
+last_modified_at: 2022-04-13
 ---
+
+![image](https://user-images.githubusercontent.com/78655692/163179208-1e53a732-6f83-4bbb-ac80-a46d3561c930.png)
 
 "A Data Quality-Driven View of MLOps" 논문을 개인 공부 및 리뷰를 위해 쓴 글입니다. <br>
 논문 링크 : <https://arxiv.org/abs/2102.07750>

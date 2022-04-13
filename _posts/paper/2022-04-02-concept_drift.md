@@ -3,13 +3,15 @@ layout: single
 title: "[논문 리뷰] Learning under Concept Drift: an Overview"
 excerpt: "컨셉 드리프트는 시간이 지남에 따라 예기치 않은 방식으로 변경되는 것을 의미합니다. 서베이 논문 형식으로 작성되었고, 이것을 리뷰해보았습니다."
 categories: paper
-tag : [data quality, concept drift,]
+tag : [data quality, concept drift, 모델, mlops, data drift]
 toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-04-02
+last_modified_at: 2022-04-13
 ---
+
+![image](https://user-images.githubusercontent.com/78655692/163179465-84498a7b-65b6-4389-ab68-e2d64f1aefd9.png)
 
 "Learning under Concept Drift: an Overview" 논문을 개인 공부 및 리뷰를 위해 쓴 글입니다. <br>
 논문 링크 : <https://arxiv.org/abs/1010.4784>
