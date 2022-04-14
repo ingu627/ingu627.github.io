@@ -18,6 +18,13 @@ sidebar_main: true
 - [High-Performance Large-Scale Image Recognition Without Normalization](https://ingu627.github.io/paper/NFResNet/){: target="_blank"}
 
 <br>
+
+- [[코드 구현] LeNet using CIFAR10 in Pytorch](https://ingu627.github.io/code/LeNet_pytorch/){: target="_blank"}
+- [[코드 구현] Alexnet using Fashion MNIST in Pytorch](https://ingu627.github.io/code/alexnet_pytorch/){: target="_blank"}
+- [[코드 구현] Transfer Learning of ResNet in Pytorch](https://ingu627.github.io/code/ResNet50_pytorch/){: target="_blank"}
+
+
+<br>
 <br>
 
 ## MLOps
@@ -25,3 +32,13 @@ sidebar_main: true
 - [A Data Quality-Driven View of MLOps](https://ingu627.github.io/paper/data_quality_driven_mlops/){: target="_blank"}
 - [Learning under Concept Drift: an Overview](https://ingu627.github.io/paper/concept_drift/){: target="_blank"}
 
+
+
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
