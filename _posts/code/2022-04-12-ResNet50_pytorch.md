@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-04-12
+last_modified_at: 2022-04-15
 ---
 
 <img align='right' width='250' src='https://user-images.githubusercontent.com/78655692/162919635-d03d7e8f-c492-493b-8c4d-d2f0f88ae67e.png'>
@@ -122,7 +122,10 @@ else:
 
 ```python
 def get_data_loaders(train_batch_size, val_batch_size):
-    fashion_mnist = torchvision.datasets.FashionMNIST(download=True, train=True, root=".").train_data.float()
+    fashion_mnist = torchvision.datasets.FashionMNIST(
+        download=True, 
+        train=True, 
+        root=".").train_data.float()
     
     data_transform = transforms.Compose([ # Compose : transforms 리스트 구성
         transforms.Resize((224, 224)), # Resize : 입력 이미지의 크기를 지정된 크기로 조정

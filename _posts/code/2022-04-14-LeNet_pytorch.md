@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-04-14
+last_modified_at: 2022-04-15
 ---
 
 <img align='right' width='400' src='https://user-images.githubusercontent.com/78655692/163406315-98f4f545-6775-432e-90f1-6c15222f4e79.png'>
@@ -100,12 +100,26 @@ transform = transforms.Compose([transforms.Resize((32,32)),
 - DataLoader는 샘플에 쉽게 액세스할 수 있도록 데이터 집합 주위에 반복 가능한 레이블을 감싼다.
 
 ```python
-training_dataset = datasets.CIFAR10(root='./data', train=True, download=True, transform=transform_train)
+training_dataset = datasets.CIFAR10(
+  root='./data', 
+  train=True, 
+  download=True, 
+  transform=transform_train)
 # transform = simply dictates any image manipulations that you wish to apply on your images
-validation_dataset = datasets.CIFAR10(root='./data', train=False, download=True, transform=transform)
+validation_dataset = datasets.CIFAR10(
+  root='./data', 
+  train=False, 
+  download=True, 
+  transform=transform)
 
-training_loader = torch.utils.data.DataLoader(dataset=training_dataset, batch_size=100, shuffle=True)
-validation_loader = torch.utils.data.DataLoader(dataset=validation_dataset, batch_size=100, shuffle=False)
+training_loader = torch.utils.data.DataLoader(
+  dataset=training_dataset, 
+  batch_size=100, 
+  shuffle=True)
+validation_loader = torch.utils.data.DataLoader(
+  dataset=validation_dataset, 
+  batch_size=100, 
+  shuffle=False)
 ```
 
 <br>

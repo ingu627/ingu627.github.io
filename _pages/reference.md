@@ -20,8 +20,6 @@ sidebar_main: true
 
 <br>
 
-[![image](https://user-images.githubusercontent.com/78655692/151275219-e4da2436-8033-4155-b7c7-532ea09b9ef2.png)](https://papago.naver.com/){: target="_blank"}
-
 - [Dictionary - Cambridge](https://dictionary.cambridge.org/ko/){: target="_blank"}
 
 <br>
@@ -65,6 +63,7 @@ sidebar_main: true
 - [NVIDIA - DEEP Learning Institute](https://www.nvidia.com/ko-kr/training/){: target="_blank"}
 - [playground.tensorflow.org](http://playground.tensorflow.org){: target="_blank"}
 - [Computer Vision examples - scs.ryerson.ca](scs.ryerson.ca){: target="_blank"}
+- [스탠포드 CS231n 강의 - 한글 번역](http://aikorea.org/cs231n/){: target="_blank"}
 
 <br>
 
