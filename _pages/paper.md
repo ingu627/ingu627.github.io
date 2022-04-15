@@ -15,11 +15,12 @@ sidebar_main: true
 ## Computer Vision
 
 - [Deep Residual Learning for Image Recognition](https://ingu627.github.io/paper/ResNet){: target="_blank"}
+- [Squeeze-and-Excitation Networks](https://ingu627.github.io/paper/SENet/){: target="_blank"}
 - [High-Performance Large-Scale Image Recognition Without Normalization](https://ingu627.github.io/paper/NFResNet/){: target="_blank"}
 
 <br>
 
-### 코드 구현
+### Code Implementation
 
 - [LeNet using CIFAR10 in Pytorch](https://ingu627.github.io/code/LeNet_pytorch/){: target="_blank"}
 - [Alexnet using Fashion MNIST in Pytorch](https://ingu627.github.io/code/alexnet_pytorch/){: target="_blank"}
@@ -36,7 +37,7 @@ sidebar_main: true
 
 <br>
 
-### 코드 구현
+### Code Implementation
 
 - [Resolving Data Drift in Disaster Response Model using MLOps based Adaptation](https://github.com/ingu627/mlflow_detect_disaster_from_tweets){: target="_blank"}
 
