@@ -1,13 +1,13 @@
 ---
 layout: single
-title: "Github Pages에서 글 작성 시 수식 사용하기 (Mathjax)"
+title: "[Mathjax] Github Pages에서 수식 문법 사용하기"
 excerpt: "Mathjax란 MathML, LaTeX 및 ASCIIMathML 마크 업을 사용하여 웹 브라우저에 수학 표기법을 표시하는 크로스 브라우저 JavaScript 라이브러리이다. 웹 사이트에서 수학식 표시가 가능하다."
 categories: git_blog
-tag : [git, blog, markdown, 마크다운, mathjax, 문법, 깃블로그, github pages, 수식, 적용]
+tag : [git, blog, markdown, 마크다운, mathjax, 문법, 깃블로그, github pages, 수식, 적용, 명령어, tex, latex, 수학, 표기, katex]
 sidebar_main: true
 classes: wide
 
-last_modified_at: 2022-03-23
+last_modified_at: 2022-04-15
 ---
 
 <img src="https://user-images.githubusercontent.com/78655692/143910921-4b7d1a55-d2b0-49ee-b721-20ce1376df0b.png" width=650 alt="mathjax">
