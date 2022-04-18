@@ -3,12 +3,12 @@ layout: single
 title: "AlexNet 구조 파악 및 PyTorch로 코드 구현해보기"
 excerpt: "Paper: ImageNet Classification with Deep Convolutional Neural Networks, Method: Pytorch"
 categories: code
-tag : [alexnet, pytorch, 파이토치, 알렉스넷, cnn, 코드, 구현]
+tag : [alexnet, pytorch, 파이토치, 알렉스넷, cnn, 코드, 구현, design, 설명, layer, functional, nn, optim, torchvision, epoch, batch size, device, transforms, Compose, ToTensor, Resize, DataLoader, iter, next, Conv2d, Linear, dropout, relu, summary_, parameters]
 toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-04-15
+last_modified_at: 2022-04-18
 ---
 
 <img align='right' width='350' src='https://user-images.githubusercontent.com/78655692/162920296-ea7abcc7-f497-4351-8152-838c140a1ba2.png'>

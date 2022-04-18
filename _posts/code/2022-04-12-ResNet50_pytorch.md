@@ -3,16 +3,16 @@ layout: single
 title: "Pytorch 기반 ResNet 전이 학습 구현해보기"
 excerpt: "ResNet은 원래 ImageNet 경진대회를 위해 디자인되었습니다. 하지만 본 코드는 Fashion MNIST에 맞추기 위해 input과 output 층을 바꿨습니다, Method: Pytorch"
 categories: code
-tag : [alexnet, pytorch, 파이토치, resnet, 전이학습, fashion mnist, 코드, 구현]
+tag : [alexnet, pytorch, 파이토치, resnet, 전이학습, fashion mnist, 코드, 구현, design, 설명, layer, transfer, resnet50, Linear, 모델, 학습, 손실함수, 크로스 엔트로피, 다중 클래스, 옵티마이저, 에포크, 모델 저장, 로드, metric]
 toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-04-15
+last_modified_at: 2022-04-18
 ---
 
 <img align='right' width='250' src='https://user-images.githubusercontent.com/78655692/162919635-d03d7e8f-c492-493b-8c4d-d2f0f88ae67e.png'>
-본 글은 Pytorch 기반 ResNet 전이 학습 및 앙상블 기법 구현해보는 내용입니다.<br>하나하나 분해해봅시다.  <br><br> 논문 : [Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385)<br>코드 : [Pre-trained networks, Transfer learning and Ensembles](https://colab.research.google.com/github/kjamithash/Pytorch_DeepLearning_Experiments/blob/master/FashionMNIST_ResNet_TransferLearning.ipynb) <br> 블로그 글 코드 : [ResNet_with_PyTorch.ipynb](https://github.com/data-science-DL/pytorch/blob/master/deeplearning_ajou/ResNet_with_PyTorch.ipynb)<br> 파이토치 튜토리얼 : [pytorch.org](https://pytorch.org/docs/stable/index.html)
+본 글은 Pytorch 기반 ResNet 전이 학습을 이용해 구현해보는 내용입니다.<br>하나하나 분해해봅시다.  <br><br> 논문 : [Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385)<br>코드 : [Pre-trained networks, Transfer learning and Ensembles](https://colab.research.google.com/github/kjamithash/Pytorch_DeepLearning_Experiments/blob/master/FashionMNIST_ResNet_TransferLearning.ipynb) <br> 블로그 글 코드 : [ResNet_with_PyTorch.ipynb](https://github.com/data-science-DL/pytorch/blob/master/deeplearning_ajou/ResNet_with_PyTorch.ipynb)<br> 파이토치 튜토리얼 : [pytorch.org](https://pytorch.org/docs/stable/index.html)
 {: .notice--info}
 
 
@@ -194,7 +194,7 @@ loss_function = nn.CrossEntropyLoss()
 # 크로스 엔트로피 : 실제 값과 예측 값의 차이를 줄이기 위한 엔트로피
 # 다중 클래스 문제에서 잘 작동
 
-# 옵티마지어 : Adam 
+# 옵티마이저 : Adam 
 optimizer = torch.optim.Adam(model.parameters(), lr=3e-4) 
 # model(신경망) 파라미터를 optimizer에 전달해줄 때 nn.Module의 parameters() 메소드를 사용
 # Karpathy's learning rate 사용 (3e-4)

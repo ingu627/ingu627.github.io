@@ -3,12 +3,12 @@ layout: single
 title: "Pytorch 기반 LeNet 구현 및 데이터 증식된 CIFAR10 학습해보기"
 excerpt: "LeNet은 1998년 Yann LeCun의 논문 'Gradient-Based Learning Applied to Document Recognition'에 기재된 가장 기본적인 CNN 구조입니다. 이를 이해하고 파이토치로 구현해보았습니다."
 categories: code
-tag : [lenet, pytorch, 파이토치, cifar10, 코드, 구현]
+tag : [lenet, pytorch, 파이토치, cifar10, 코드, 구현, design, 설명, layer, compose, transforms, resize, RandomHorizontalFlip, RandomAffine, ColorJitter, ToTensor, normalize, DataLoader, Dataset, detach, cpu, numpy, clip, iter, next, Conv2d, max_pool2d, parameters, zero_grad, backward, step, item]
 toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-04-15
+last_modified_at: 2022-04-18
 ---
 
 <img align='right' width='400' src='https://user-images.githubusercontent.com/78655692/163406315-98f4f545-6775-432e-90f1-6c15222f4e79.png'>
@@ -217,7 +217,7 @@ model
 ### 손실 및 옵티마이저 정의
 
 - `torch.nn.Module.parameters()` : 신경망 파라미터를 optimizer에 전달 할 때 쓴다.
-  - 모듈의 파라미터를 iterator로 반환한다.
+  - **모듈의 학습 가능한 파라미터**를 iterator로 반환한다.
 
 ```python
 criterion = nn.CrossEntropyLoss() # 입력과 타겟 사이의 손실 계산을 위한 기준 정의
@@ -231,6 +231,7 @@ optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
 
 - `opt.zero_grad()` : 마지막 단계에서 이전 그레이디언트를 지운다.
 - `loss.backward()` : 역전파를 사용하여 파라미터(또는 그레이디언트가 필요한 모든 것)에 대한 손실의 도함수를 계산
+  - 모든 변수는 그레이디언트가 누적된 `.grad` 함수를 갖게 된다.
 - `opt.step()` : 파라미터의 그레이디언트를 기반으로 한 단계를 수행
 
 <br>

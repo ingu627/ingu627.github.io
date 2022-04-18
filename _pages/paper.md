@@ -13,26 +13,24 @@ sidebar_main: true
 {: .notice--danger}
 
 <br>
-<br>
 
 ![image](https://user-images.githubusercontent.com/78655692/163660855-f20fba44-7bf8-4d8d-b27d-7c6787e35b25.png)
 ![image](https://user-images.githubusercontent.com/78655692/163660885-67ef4ef3-df9e-4120-b91f-440cb77e7d6b.png)
 ![image](https://user-images.githubusercontent.com/78655692/163660929-bb53f8c8-e8ca-46f4-913f-3395207cfee7.png)
 
-## 컴퓨터 비전(Computer Vision)
-
-- [Deep Residual Learning for Image Recognition](https://ingu627.github.io/paper/ResNet){: target="_blank"}
-- [Squeeze-and-Excitation Networks](https://ingu627.github.io/paper/SENet/){: target="_blank"}
-- [High-Performance Large-Scale Image Recognition Without Normalization](https://ingu627.github.io/paper/NFResNet/){: target="_blank"}
-
+<br>
 <br>
 
-### 코드 구현(Code Implementation)
+## 컴퓨터 비전(Computer Vision)
 
-- [LeNet using CIFAR10 in Pytorch](https://ingu627.github.io/code/LeNet_pytorch/){: target="_blank"}
-- [Alexnet using Fashion MNIST in Pytorch](https://ingu627.github.io/code/alexnet_pytorch/){: target="_blank"}
-- [Transfer Learning of ResNet in Pytorch](https://ingu627.github.io/code/ResNet50_pytorch/){: target="_blank"}
-
+|Architecture|Paper Review|Code Implementation|
+|:---:|:---:|:---:|
+|<b><span style="color:red">LeNet</span>|X|[LeNet using CIFAR10 in Pytorch](https://ingu627.github.io/code/LeNet_pytorch/)
+|<b><span style="color:red">AlexNet</span>|X|[Alexnet using Fashion MNIST in Pytorch](https://ingu627.github.io/code/alexnet_pytorch/)
+|<b><span style="color:red">ResNet</span>|[Deep Residual Learning for Image Recognition](https://ingu627.github.io/paper/ResNet)|[Transfer Learning of ResNet in Pytorch](https://ingu627.github.io/code/ResNet50_pytorch/)
+|<b><span style="color:red">SENet</span>|[Squeeze-and-Excitation Networks](https://ingu627.github.io/paper/SENet/)|
+|<b><span style="color:red">NFNet</span>|[High-Performance Large-Scale Image Recognition Without Normalization](https://ingu627.github.io/paper/NFResNet/)
+|<b><span style="color:red">ResNext</span> |
 
 <br>
 <br>

@@ -265,6 +265,13 @@ category_archive:
 tag_archive:
   type: liquid
   path: /tags/
+
+# collection 추가
+collections:
+  portfolio:
+    output: true
+    permalink: /:collection/:path/
+
 # https://github.com/jekyll/jekyll-archives
 jekyll-archives:
   enabled:
@@ -306,4 +313,8 @@ defaults:
 
 
 date_format: "%Y-%m-%d"
+
+
+
+
 
