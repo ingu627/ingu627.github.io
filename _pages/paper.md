@@ -27,7 +27,7 @@ sidebar_main: true
 |:---:|:---:|:---:|
 |<b><span style="color:red">LeNet</span>|X|[LeNet using CIFAR10 in Pytorch](https://ingu627.github.io/code/LeNet_pytorch/)
 |<b><span style="color:red">AlexNet</span>|X|[Alexnet using Fashion MNIST in Pytorch](https://ingu627.github.io/code/alexnet_pytorch/)
-|<b><span style="color:red">ResNet</span>|[Deep Residual Learning for Image Recognition](https://ingu627.github.io/paper/ResNet)|[Transfer Learning of ResNet in Pytorch](https://ingu627.github.io/code/ResNet50_pytorch/)
+|<b><span style="color:red">ResNet</span>|[Deep Residual Learning for Image Recognition](https://ingu627.github.io/paper/ResNet)|[ResNet in Pytorch from Scratch](https://ingu627.github.io/code/ResNet_scratch_pytorch/)<br>[Transfer Learning of ResNet in Pytorch](https://ingu627.github.io/code/ResNet50_pytorch/)
 |<b><span style="color:red">SENet</span>|[Squeeze-and-Excitation Networks](https://ingu627.github.io/paper/SENet/)|
 |<b><span style="color:red">NFNet</span>|[High-Performance Large-Scale Image Recognition Without Normalization](https://ingu627.github.io/paper/NFResNet/)
 |<b><span style="color:red">ResNext</span> |
