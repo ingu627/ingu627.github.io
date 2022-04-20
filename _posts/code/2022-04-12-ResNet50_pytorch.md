@@ -3,7 +3,7 @@ layout: single
 title: "Pytorch 기반 ResNet 전이 학습 구현해보기"
 excerpt: "ResNet은 원래 ImageNet 경진대회를 위해 디자인되었습니다. 하지만 본 코드는 Fashion MNIST에 맞추기 위해 input과 output 층을 바꿨습니다, Method: Pytorch"
 categories: code
-tag : [alexnet, pytorch, 파이토치, resnet, 전이학습, fashion mnist, 코드, 구현, design, 설명, layer, transfer, resnet50, Linear, 모델, 학습, 손실함수, 크로스 엔트로피, 다중 클래스, 옵티마이저, 에포크, 모델 저장, 로드, metric]
+tag : [alexnet, pytorch, 파이토치, resnet, 전이학습, fashion mnist, 코드, 구현, design, 설명, layer, transfer, resnet50, Linear, 모델, 학습, 손실함수, 크로스 엔트로피, 다중 클래스, 옵티마이저, 에포크, 모델 저장, 로드, metric, 딥러닝, cv, 컴퓨티 비전]
 toc: true
 toc_sticky: true
 sidebar_main: true
