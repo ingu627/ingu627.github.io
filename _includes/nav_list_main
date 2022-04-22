@@ -53,6 +53,13 @@
             </ul>
             <ul>
                 {% for category in site.categories %}
+                    {% if category[0] == "cs231n" %}
+                        <li><a href="/categories/cs231n" class="">CS231N(CNN) ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul>
+                {% for category in site.categories %}
                     {% if category[0] == "R_ML" %}
                         <li><a href="/categories/R_ML" class="">빅데이터 분석기사(R) ({{category[1].size}})</a></li>
                     {% endif %}
