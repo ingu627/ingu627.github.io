@@ -1,9 +1,9 @@
 ---
 layout: single
 title: "빅데이터분석기사(R) - 2021년 2회 기출문제풀이"
-excerpt: "2021년 제 3회 빅데이터분석기사 실기를 위한 문제풀이 내용입니다."
+excerpt: "2021년 제 3회 빅데이터분석기사 실기를 위한 기출문제풀이 내용입니다."
 categories: R_ML
-tag : [R, certificate, 빅데이터 분석기사, 실기, 작업형, 필답형, 자격증, dataq, 정리, pdf, 기출문제]
+tag : [R, certificate, 빅데이터 분석기사, 실기, 작업형, 필답형, 자격증, dataq, 정리, pdf, 기출문제, 정리본]
 sidebar_main: true
 classes: wide
 
