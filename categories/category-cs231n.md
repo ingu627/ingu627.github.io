@@ -1,5 +1,5 @@
 ---
-title: "CS231N(CNN)"
+title: "CS231n(CNN with DL)"
 layout: archive
 permalink: categories/cs231n
 author_profile: true
