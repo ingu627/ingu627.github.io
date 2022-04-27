@@ -23,14 +23,20 @@ sidebar_main: true
 
 ## 컴퓨터 비전(Computer Vision)
 
-|Architecture|Paper Review|Code Implementation|
-|:---:|:---:|:---:|
-|<b><span style="color:red">LeNet</span>|X|[LeNet using CIFAR10 in Pytorch](https://ingu627.github.io/code/LeNet_pytorch/)
-|<b><span style="color:red">AlexNet</span>|X|[Alexnet using Fashion MNIST in Pytorch](https://ingu627.github.io/code/alexnet_pytorch/)
-|<b><span style="color:red">ResNet</span>|[Deep Residual Learning for Image Recognition](https://ingu627.github.io/paper/ResNet)|[ResNet in Pytorch from Scratch](https://ingu627.github.io/code/ResNet_scratch_pytorch/)<br>[Transfer Learning of ResNet in Pytorch](https://ingu627.github.io/code/ResNet50_pytorch/)
-|<b><span style="color:red">SENet</span>|[Squeeze-and-Excitation Networks](https://ingu627.github.io/paper/SENet/)|
-|<b><span style="color:red">NFNet</span>|[High-Performance Large-Scale Image Recognition Without Normalization](https://ingu627.github.io/paper/NFResNet/)
-|<b><span style="color:red">ResNext</span> |
+### Image Classification
+
+|Architecture|Year|Paper Review|Code Implementation|
+|:---:|:---:|:---:|:---:|
+|<b><span style="color:red">LeNet</span>|1998|X|[LeNet using CIFAR10 in Pytorch](https://ingu627.github.io/code/LeNet_pytorch/)
+|<b><span style="color:red">AlexNet</span>|2012|X|[Alexnet using Fashion MNIST in Pytorch](https://ingu627.github.io/code/alexnet_pytorch/)
+|<b><span style="color:red">VggNet</span>|2014||
+|<b><span style="color:red">GoogleNet</span>|2014||
+|<b><span style="color:red">ResNet</span>|2015|[Deep Residual Learning for Image Recognition](https://ingu627.github.io/paper/ResNet)|[ResNet in Pytorch from Scratch](https://ingu627.github.io/code/ResNet_scratch_pytorch/)<br>[Transfer Learning of ResNet in Pytorch](https://ingu627.github.io/code/ResNet50_pytorch/)
+|<b><span style="color:red">ResNext</span>|2016|[Aggregated Residual Transformations for Deep Neural Networks](https://ingu627.github.io/paper/ResNext/)|
+|<b><span style="color:red">SENet</span>|2017|[Squeeze-and-Excitation Networks](https://ingu627.github.io/paper/SENet/)|
+|<b><span style="color:red">MobileNet</span>|2017||
+|<b><span style="color:red">EfficientNet</span>|2019||
+|<b><span style="color:red">NFNet</span>|2021|[High-Performance Large-Scale Image Recognition Without Normalization](https://ingu627.github.io/paper/NFResNet/)
 
 <br>
 <br>
@@ -42,7 +48,7 @@ sidebar_main: true
 <br>
 <br>
 
-## MLOps, Data Drift
+## MLOps, Data Drift, Model Drift
 
 - [A Data Quality-Driven View of MLOps](https://ingu627.github.io/paper/data_quality_driven_mlops/){: target="_blank"}
 - [Learning under Concept Drift: an Overview](https://ingu627.github.io/paper/concept_drift/){: target="_blank"}
