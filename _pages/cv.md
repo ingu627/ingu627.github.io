@@ -48,8 +48,9 @@ Mar. 2022 ~ Present<br>*Department of Artificial Intelligence*<br>Major in Artif
 Undergraduate Student \| Advisor: Junsoon Jang, Ph.D. March 2021 ~ June 2021 
 - **Predicting the remaining life of bearings through PHM(Prognostics and Health Management)**
   - FPT was derived using LSTM algorithm using bearing vibration information of NASA FEMTO Bearing Data. After that, the time of failure was predicted using the EM model.
-
+<img align='right' width='100' height='100' src='https://user-images.githubusercontent.com/78655692/165741777-d4ca3556-a35a-4c2b-8000-9cb9aa6e51e1.png'>
 <br>
+
 
 Graduate Student \| Advisor: Sangyoon Oh, Ph.D. March 2022 ~ April 2022
 - **Resolving Data Drift in Disaster Response Model using MLOps based Adaptation**
@@ -108,8 +109,8 @@ Student \| June 2021 ~ September 2021
 - **System** : Windows, Linux
 
 
+
 <br>
 <br>
 <br>
 <br>
-![image]()
