@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-04-18
+last_modified_at: 2022-04-28
 ---
 
 <img align='right' width='350' src='https://user-images.githubusercontent.com/78655692/162920296-ea7abcc7-f497-4351-8152-838c140a1ba2.png'>
@@ -254,6 +254,17 @@ class fashion_mnist_alexnet(nn.Module):
 ```
 
 <br>
+<br>
+
+### 모델 생성
+
+```python
+model = fashion_mnist_alexnet().to(device) # to()로 모델에 gpu 사용
+criterion = F.nll_loss # nll_loss : negative log likelihood loss
+optimizer = optim.Adam(model.parameters()) # model(신경망) 파라미터를 optimizer에 전달해줄 때 nn.Module의 parameters() 메소드를 사용
+```
+
+<br>
 
 - **모델의 Summary()**
 
@@ -265,18 +276,6 @@ summary_(model, (1,227,227), batch_size)
 ```
 
 ![image](https://user-images.githubusercontent.com/78655692/160539431-ceb2788f-139e-4249-9665-87c46ad30e41.png)
-
-
-<br>
-<br>
-
-### 모델 생성
-
-```python
-model = fashion_mnist_alexnet().to(device) # to()로 모델에 gpu 사용
-criterion = F.nll_loss # nll_loss : negative log likelihood loss
-optimizer = optim.Adam(model.parameters()) # model(신경망) 파라미터를 optimizer에 전달해줄 때 nn.Module의 parameters() 메소드를 사용
-```
 
 <br>
 <br>
