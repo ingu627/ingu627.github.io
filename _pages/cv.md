@@ -11,6 +11,7 @@ sidebar_main: true
 
 ## Profile
 
+<img align='right' width='100' height='100' src='https://user-images.githubusercontent.com/78655692/165667773-41890611-67a4-4940-a489-137da27ae26b.jpeg'>
 - Name : HyunSeok Jung
 - University : Ajou University
 - Email : ingu627@ajou.ac.kr
@@ -20,6 +21,7 @@ sidebar_main: true
 
 ## RESEARCH INTERESTS
 
+<img align='right' width='100' height='100' src='https://user-images.githubusercontent.com/78655692/165668099-924170f6-6b4b-44df-a0aa-9e4e14fb3522.png'>
 - Distributed Deep Learning, Distributed Computing, NLP, MLOps
 - Federated Learning, Reinforcement Learning
 
@@ -27,15 +29,21 @@ sidebar_main: true
 
 ## EDUCATION
 
-|Period|Edu|Location|
-|---|---|---|
-Mar. 2015 ~<br> Aug. 2021|Ajou University<br>Department of Industrial Engineering<br> *Double major in Industrial Engineering and Psychology*|Suwon,<br> Korea
-|Mar. 2022 ~<br> Present|Ajou University<br>*Department of Artificial Intelligence*<br>Advisor: Sangyoon Oh<br>Master Student|Suwon,<br>Korea
+<img align='right' width='100' height='100' src='https://user-images.githubusercontent.com/78655692/165667340-bccb75ea-4605-4519-a3dd-2b14a2ccdd55.png'>
+**Ajou University** <br>
+Mar. 2015 ~ Aug. 2021<br>Department of Industrial Engineering<br> *Double major in Industrial Engineering and Psychology*<br>Suwon, Korea
+
+<br>
+
+<img align='right' width='100' height='100' src='https://user-images.githubusercontent.com/78655692/165667340-bccb75ea-4605-4519-a3dd-2b14a2ccdd55.png'>
+**Ajou University** <br>
+Mar. 2022 ~ Present<br>*Department of Artificial Intelligence*<br>Major in Artificial Intelligence<br>Advisor: Sangyoon Oh<br>Master Student <br>Suwon, Korea
 
 <br>
 
 ## RESEARCH EXPERIENCE
 
+<img align='right' width='100' height='100' src='https://user-images.githubusercontent.com/78655692/165667340-bccb75ea-4605-4519-a3dd-2b14a2ccdd55.png'>
 **Ajou University**<br> Suwon, South Korea<br>
 Undergraduate Student \| Advisor: Junsoon Jang, Ph.D. March 2021 ~ June 2021 
 - **Predicting the remaining life of bearings through PHM(Prognostics and Health Management)**
@@ -48,6 +56,7 @@ Graduate Student \| Advisor: Sangyoon Oh, Ph.D. March 2022 ~ April 2022
 
 <br>
 
+<img align='right' width='100' height='100' src='https://user-images.githubusercontent.com/78655692/165667617-0e8b4eef-aaba-42ad-8240-cb977ba84072.png'>
 **Multicampus**<br> Seoul, South Korea<br>
 Student \| June 2021 ~ September 2021
 - **TOEIC score prediction using Riiid data**
@@ -59,16 +68,31 @@ Student \| June 2021 ~ September 2021
 
 ## CERITIFICATES
 
+### National Technical Qualification
+
+<img align='right' width='100' height='100' src='https://user-images.githubusercontent.com/78655692/165668435-717e0cc8-d72b-46e1-afe3-f9daad6dd17b.png'><br>
 - **Big-Data Analysis Engineer (2021.12)**
 - **Engineer Quality Management (2021.06)**
 - **Survey Analyst, Junior (2020.11)**
-- **Advanced Data Analytics Semi-Professional (2021.06)** 
-- **Structured Query Language Developer (2021.10)**
-- **Artificial Intelligence of Things (2021.01)**
-- **DSAC Expert (2021.01)**
+<img align='right' width='100' height='100' src='https://user-images.githubusercontent.com/78655692/165668600-4292fd79-802c-4728-a15e-70cb2e71d49a.png'>
 - **Computer Specialist in Spreadsheet & Database Level-Ⅰ (2021.03)**
 - **Word Processor Specialist (2021.07)**
+
+### Accredited Private Qualification
+
+<img align='right' width='100' height='100' src='https://user-images.githubusercontent.com/78655692/165669206-a94b01ab-7bc8-42ea-9f94-f155ec79c9ce.png'>
+- **Advanced Data Analytics Semi-Professional (2021.06)** 
+- **Structured Query Language Developer (2021.10)**
 - **6-SIGMA Green Belt (2021.02)**
+
+### Private Qualification
+
+- **Artificial Intelligence of Things (2021.01)**
+- **DSAC Expert (2021.01)**
+
+### International Qualification
+
+<img align='right' width='100' height='100' src='https://user-images.githubusercontent.com/78655692/165668249-b9773ec4-ea19-44b2-a250-35bb2d6e7268.png'>
 - **Azure AI Fundamentals (2021.12)**
 - **Azure Fundamentals (2022.01)**
 - **Azure Data Fundamentals (2022.03)**
@@ -78,7 +102,14 @@ Student \| June 2021 ~ September 2021
 
 ## SKILLS
 
+<img align='right' width='100' height='100' src='https://user-images.githubusercontent.com/78655692/165668323-6fd26fd4-a83a-4445-b9bb-6f570bf13f09.png'>
 - **Software** : Python(Tensorflow, Pytorch), R, Excel, Database, SQL
 - **Soft Skills** : Leadership, Communication, Management, Surveying
 - **System** : Windows, Linux
 
+
+<br>
+<br>
+<br>
+<br>
+![image]()
