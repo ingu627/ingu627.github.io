@@ -11,7 +11,7 @@ sidebar_main: true
 
 ## Profile
 
-<img align='right' width='100' height='100' src='https://user-images.githubusercontent.com/78655692/165667773-41890611-67a4-4940-a489-137da27ae26b.jpeg'>
+<img align='right' width='100' src='https://user-images.githubusercontent.com/78655692/165901994-50896218-39a2-4139-8c05-772a1a4aafa3.jpg'>
 - Name : HyunSeok Jung
 - University : Ajou University
 - Email : ingu627@ajou.ac.kr
