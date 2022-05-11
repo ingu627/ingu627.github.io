@@ -8,8 +8,8 @@ main:
     url: /search/
   - title: "References"
     url: /reference/
-  # - title: "Categories"
-  #   url: /categories/
+  - title: "Categories"
+    url: /categories/
 
   
 
