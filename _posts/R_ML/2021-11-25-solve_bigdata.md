@@ -3,7 +3,7 @@ layout: single
 title: "빅데이터분석기사(R) - 2021년 2회 기출문제풀이"
 excerpt: "2021년 제 3회 빅데이터분석기사 실기를 위한 기출문제풀이 내용입니다."
 categories: R_ML
-tag : [R, certificate, 빅데이터 분석기사, 실기, 작업형, 필답형, 자격증, dataq, 정리, pdf, 기출문제, 정리본]
+tag : [R, 빅데이터 분석기사, 실기, 작업형, 필답형, 자격증, dataq, 정리, pdf, 기출문제, 정리본, 후기, 설명, 2회, 3회]
 sidebar_main: true
 classes: wide
 
@@ -13,7 +13,7 @@ last_modified_at: 2022-03-31
 빅데이터 분석기사 실기 대비 차원에서 쓴 글입니다. <br> 기출문제의 데이터는 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis)에 데이터 셋을 남겨놨습니다.<br> 또한 해당 전체 코드는 `2021_2nd.R` 파일에 담겨져 있습니다. <br><br> **전체 개요 <br> 1. help() 쓰기 <br> 2. library : caret, ModelMetrics, car, randomForest, e1071 <br> 3. 데이터 구조 파악 -> 결측값 처리 -> 전처리 -> 모델 평가 -> 모델 예측 -> 파일 저장**
 {: .notice--info}
 
-2022.01.08 : 제 3회 빅데이터 분석기사 실기를 합격했습니다. <br> [빅데이터 분석기사(R)](https://ingu627.github.io/categories/R_ML) 시리즈를 보시고 도움이 되길 바라며, 제 3회 기출문제 풀이는 추후에 업데이트하겠습니다.
+2022.01.08 : 제 3회 빅데이터 분석기사 실기를 합격했습니다. <br> [빅데이터 분석기사(R)](https://ingu627.github.io/categories/R_ML) 시리즈를 보시고 도움이 되길 바랍니다.
 {: .notice--danger}
 
 혹시 해당 글을 pdf로 받고 싶으신 분은 이메일과 함께 댓글로 남겨주세요~
