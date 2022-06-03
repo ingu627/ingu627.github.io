@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "Concept Drift Detection Method 정리"
+title: "[MLOps] Concept Drift Detection Method 정리"
 excerpt: "Concept Drift는 시간이 지남에 따라 데이터의 통계적인 특성이 변하는 것을 말합니다. 이에 학습된 모델은 자연스레 성능이 떨어지기 때문에 drift를 잘 감지해야 합니다. 감지하는 방법들이 무엇이 있는지 살펴봅니다."
 categories: mlops
 tag : [mlops, concept drift, 컨셉 드리프트, data drift, drift, detection, method, window, error, drift detection method, ddm, early drift detection method, eddm, adaptive windowing, adwin, 리뷰, 설명, 정리, 논문]
@@ -11,9 +11,12 @@ sidebar_main: true
 last_modified_at: 2022-06-03
 ---
 
-Concept Drift는 시간이 지남에 따라 데이터의 통계적인 특성이 변하는 것을 말합니다. 이에 학습된 모델은 자연스레 성능이 떨어지기 때문에 drift를 잘 감지해야 합니다. 감지하는 방법들이 무엇이 있는지 살펴봅니다.
+<img align='right' width='250' height='150' src='https://user-images.githubusercontent.com/78655692/171929140-bed18224-f05a-4a1c-bf18-a2607b8412e9.png'> 
+Concept Drift는 시간이 지남에 따라 데이터의 통계적인 특성이 변하는 것을 말합니다. 이에 학습된 모델은 자연스레 성능이 떨어지기 때문에 drift를 잘 감지해야 합니다. 감지하는 방법들이 무엇이 있는지 살펴봅니다. <br> 이미지출처 [^7] 
 {: .notice--info}
 
+<br>
+<br>
 <br>
 <br>
 
@@ -155,6 +158,6 @@ Concept Drift는 시간이 지남에 따라 데이터의 통계적인 특성이 
 [^4]: [[시계열] Time Series에 대한 머신러닝(ML) 접근 - 다이엔 스페이스](https://diane-space.tistory.com/316)
 [^5]: [Gonçalves Jr, Paulo M., et al. "A comparative study on concept drift detectors." Expert Systems with Applications 41.18 (2014): 8144-8156.](https://www.sciencedirect.com/science/article/pii/S0957417414004175?casa_token=J_t_GmNpmVAAAAAA:q4WVlYJzArjTAlq7NxLQfL0u_j51HL0F0pNkOsrjb-wGPo25EMxqFqC9Qd5USMO0gqxhDZRw3-c)
 [^6]: [Khamassi, Imen, et al. "Self-adaptive windowing approach for handling complex concept drift." Cognitive Computation 7.6 (2015): 772-790.](https://link.springer.com/article/10.1007/s12559-015-9341-0)
-
+[^7]: [Machine Learning Concept Drift – What is it and Five Steps to Deal With it](https://www.seldon.io/machine-learning-concept-drift)
 
 
