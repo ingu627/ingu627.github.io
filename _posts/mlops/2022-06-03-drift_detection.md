@@ -11,6 +11,9 @@ sidebar_main: true
 last_modified_at: 2022-06-03
 ---
 
+Concept Drift는 시간이 지남에 따라 데이터의 통계적인 특성이 변하는 것을 말합니다. 이에 학습된 모델은 자연스레 성능이 떨어지기 때문에 drift를 잘 감지해야 합니다. 감지하는 방법들이 무엇이 있는지 살펴봅니다.
+{: .notice--info}
+
 <br>
 <br>
 
@@ -123,8 +126,8 @@ last_modified_at: 2022-06-03
   - $\epsilon_{cut}=\sqrt{\frac{1}{2m}\cdot ln{\frac{4n}{\delta}}}$
     - $m=\frac{2}{1/n_o+1/n_1}$
     - $\delta$ : 사용자 정의 신뢰도 수준 (보통 0.2로 설정)
-- 변화가 감지될 때 : $|\hat \mu_{w_0} - \hat \mu_{w_1}|\ge \epsilon_{cut}$
-- 따라서, $|\hat \mu_{w_0} - \hat \mu_{w_1}| < \epsilon_{cut}$ 될때까지 $w$의 오래된 부분을 버린다.
+- 변화가 감지될 때 : $\vert\hat \mu_{w_0} - \hat \mu_{w_1}\vert\ge \epsilon_{cut}$
+- 따라서, $\vert\hat \mu_{w_0} - \hat \mu_{w_1}\vert < \epsilon_{cut}$ 될때까지 $w$의 오래된 부분을 버린다.
 
 <br>
 
