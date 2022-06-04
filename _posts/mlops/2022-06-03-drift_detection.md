@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-06-03
+last_modified_at: 2022-06-04
 ---
 
 <img align='right' width='250' height='150' src='https://user-images.githubusercontent.com/78655692/171929140-bed18224-f05a-4a1c-bf18-a2607b8412e9.png'> 
@@ -66,7 +66,7 @@ Concept Drift는 시간이 지남에 따라 데이터의 통계적인 특성이 
 <br>
 
 - 입력 데이터의 예측(prediction)에 대한 에러율(error rate)을 monitor한다.
-  - **에러율(error rate)** : 1 - 정확도(accuracy) = $p_n$
+  - **에러율(error rate; $p_n$)** : 1 - 정확도(accuracy) 
   - 각 예측마다 $p_n$은 처음부터 계산되며, 표준 편차 $s_n$은 $\sqrt{p_n(1-p_n)/n}$으로 계산된다.
 - $p_n+s_n$ 의 최소 : $p_{min}+s_{min}$
 - concept drift의 경고(warning) 수준 : $p_n+s_n>p_{min}+2*s_{min}$ : 
@@ -124,6 +124,8 @@ Concept Drift는 시간이 지남에 따라 데이터의 통계적인 특성이 
   <br>
 
 - $w$의 하위 윈도우를 $w_0$, $w_1$이라 하고, 각각 크기를 $n_0$, $n_1$, 즉 $w$의 크기 $n$은 $n=n_0+n_1$이다. [^6]
+  - $w_0$ : older instances
+  - $w_1$ : recent instances
 - $\hat \mu_{w_0}$와 $\hat \mu_{w_1}$을 각각 $w_0$, $w_1$의 평균 값이라 한다.
 - $\epsilon_{cut}$을 다음과 같이 정의할 수 있다.
   - $\epsilon_{cut}=\sqrt{\frac{1}{2m}\cdot ln{\frac{4n}{\delta}}}$
@@ -139,6 +141,23 @@ Concept Drift는 시간이 지남에 따라 데이터의 통계적인 특성이 
   - ADWIN은 abrupt drift일 때 좋은 성능을 낸다.
 - **Cons** [^6]
   - $\hat \mu_{w_0} \ge \hat \mu_{w_1}$ 일 때, 에러의 평균은 최근 윈도우에서 감소했는데, 이는 learner가 성능을 향상시켰다는 의미이다. 이 경우, ADWIN은 이런 변화를 drift로 잘못 고려할 수 있다. 
+
+<br>
+<br>
+
+### 2. (SeqDrift) Sequential Hypothesis Testing Drift Detector [^8]
+
+- 두개의 sliding window는 샘플의 평균을 계산하는데 사용된다.
+- 두 개의 샘플 평균의 차이는 **번스타인 부등식(Bernstein inequality)** statistical test에 의해 평가된다.
+  - **Bernstein inequality** : $Pr(\vert \frac{1}{n}\sum_{i=1}^n X_i-E[X]\vert > \epsilon)$ $\le 2exp(\frac{-n\epsilon^2}{2\hat \alpha^2+\frac{2}{3}\epsilon (c-a)})$
+- 이 부등식은 실제 평균값(true mean)과 샘플 평균값 사이의 차이에 대한 엄격한 경계(bound)를 제공한다.
+- 만약 이 차이가 임계값(threshold)보다 크면, 오래된 부분(older instance)은 버려진다.
+- 그렇지 않으면 오래된 윈도우는 새로운 인스턴스를 받아들인다.
+
+<br>
+<br>
+
+
 
 
 
@@ -159,5 +178,5 @@ Concept Drift는 시간이 지남에 따라 데이터의 통계적인 특성이 
 [^5]: [Gonçalves Jr, Paulo M., et al. "A comparative study on concept drift detectors." Expert Systems with Applications 41.18 (2014): 8144-8156.](https://www.sciencedirect.com/science/article/pii/S0957417414004175?casa_token=J_t_GmNpmVAAAAAA:q4WVlYJzArjTAlq7NxLQfL0u_j51HL0F0pNkOsrjb-wGPo25EMxqFqC9Qd5USMO0gqxhDZRw3-c)
 [^6]: [Khamassi, Imen, et al. "Self-adaptive windowing approach for handling complex concept drift." Cognitive Computation 7.6 (2015): 772-790.](https://link.springer.com/article/10.1007/s12559-015-9341-0)
 [^7]: [Machine Learning Concept Drift – What is it and Five Steps to Deal With it](https://www.seldon.io/machine-learning-concept-drift)
-
+[^8]: [Sakthithasan, Sripirakas, Russel Pears, and Yun Sing Koh. "One pass concept change detection for data streams." Pacific-Asia conference on knowledge discovery and data mining. Springer, Berlin, Heidelberg, 2013.](https://link.springer.com/chapter/10.1007/978-3-642-37456-2_39)
 
