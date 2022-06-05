@@ -106,29 +106,6 @@ Concept Drift는 시간이 지남에 따라 데이터의 통계적인 특성이 
 <br>
 <br>
 
-### 3. (HDDMs) Drift Detection methods based on Hoeffding's Bound
-
-- $HDDMs$은 $HDDM_{A-test}$와 $HDDM_{W-test}$가 있다.
-  - $HDDM_{A-test}$ : 이동 평균(moving average)를 이용하여 drift를 detect
-  - $HDDM_{W-test}$ : 가중 이동 평균(weighted moving average)를 이용하여 drift를 detect
-- 모두 Hoeffding 부등식을 이용하여 상한선을 잡아 평균 사이의 차이의 수준을 정한다.
-  - **Hoeffding 부등식** : 변수들의 관찰 평균값($\nu$)이 기대치($\mu$)에서 벗어날 확률을 계산 [^12]
-  - $P[\vert \nu - \mu \vert > \epsilon] \le 2e^{-2\epsilon^2N}$
-  - 이 부등식은 샘플 데이터가 임의로 선택되었을 때만 적용된다.
-
-
-<br>
-
-- **Pros**
-  - DDM과는 달리 HDDM은 데이터 스트림에 대한 어떤 가정도 하지 않는다.
-- **Cons**
-  - $HDDM_{A-test}$은 abrupt drift를 detect할 때 유용 
-  - $HDDM_{M-test}$은 gradual drift를 detect할 때 유용
-  - 즉, 이것은 각각 다르게 사용해야 된다는 점에서 단점이 될 수 있다.
-
-<br>
-<br>
-
 ## Window-based approaches
 
 ![image](https://user-images.githubusercontent.com/78655692/172005456-669d0222-c340-487f-9985-b5250bc4da21.png) <br> 이미지출처 [^9]
@@ -180,7 +157,7 @@ Concept Drift는 시간이 지남에 따라 데이터의 통계적인 특성이 
 
 - 두개의 sliding window는 샘플의 평균을 계산하는데 사용된다.
 - 두 개의 샘플 평균의 차이는 **번스타인 부등식(Bernstein inequality)** statistical test에 의해 평가된다.
-  - **Bernstein inequality** : $Pr(\vert \frac{1}{n}\sum_{i=1}^n X_i-E[X]\vert > \epsilon)$ $\le 2exp(\frac{-n\epsilon^2}{2\hat \alpha^2+\frac{2}{3}\epsilon (c-a)})$
+  - **Bernstein inequality** : $P(\vert \bar X_i-\mu \vert > \epsilon)$ $\le 2e^{(\frac{-n\epsilon^2}{2\hat \alpha^2+\frac{2}{3}\epsilon (b-a)})}$
 - 이 부등식은 실제 평균값(true mean)과 샘플 평균값 사이의 차이에 대한 엄격한 경계(bound)를 제공한다.
 - 만약 이 차이가 임계값(threshold)보다 크면, 오래된 부분(older instance)은 버려진다.
 - 그렇지 않으면 오래된 윈도우는 새로운 인스턴스를 받아들인다.
@@ -201,7 +178,30 @@ Concept Drift는 시간이 지남에 따라 데이터의 통계적인 특성이 
 <br>
 <br>
 
-### 3. (FHDDM) Fast Hoeffding Drift Detection Method [^11]
+### 3. (HDDMs) Drift Detection methods based on Hoeffding's Bound
+
+- $HDDMs$은 $HDDM_{A-test}$와 $HDDM_{W-test}$가 있다.
+  - $HDDM_{A-test}$ : 이동 평균(moving average)를 이용하여 drift를 detect
+  - $HDDM_{W-test}$ : 가중 이동 평균(weighted moving average)를 이용하여 drift를 detect
+- 모두 Hoeffding 부등식을 이용하여 상한선을 잡아 평균 사이의 차이의 수준을 정한다.
+  - **Hoeffding 부등식** : 변수들의 관찰 평균값($\nu$)이 기대치($\mu$)에서 벗어날 확률을 계산 [^12]
+    - $P[\vert \nu - \mu \vert > \epsilon] \le 2e^{-2\epsilon^2N}$
+  - 이 부등식은 샘플 데이터가 임의로 선택되었을 때만 적용된다.
+
+
+<br>
+
+- **Pros**
+  - DDM과는 달리 HDDM은 데이터 스트림에 대한 어떤 가정도 하지 않는다.
+- **Cons**
+  - $HDDM_{A-test}$은 abrupt drift를 detect할 때 유용 
+  - $HDDM_{M-test}$은 gradual drift를 detect할 때 유용
+  - 즉, 이것은 각각 다르게 사용해야 된다는 점에서 단점이 될 수 있다.
+
+<br>
+<br>
+
+### 4. (FHDDM) Fast Hoeffding Drift Detection Method [^11]
 
 - 슬라이딩 윈도우(sliding window) 메커니즘과 Hoeffding 부등식에 기반한다.
 - 윈도우 크기 n을 분류 결과에 슬라이드한다.
