@@ -11,7 +11,7 @@ sidebar_main: true
 last_modified_at: 2022-06-05
 ---
 
-Concept Drift Detection에 대한 기법들을 공부하면서 자연스레 나온 부등식들을 정리해보았습니다. <br> 대부분의 기계 학습 문제에서 일부 샘플 훈련 세트가 제공되고 전체 모집단에 적용되는 일반 모델을 도출합니다.
+Concept Drift Detection에 대한 기법들을 공부하면서 자연스레 나온 부등식들을 정리해보았습니다. <br> 대부분의 기계 학습 문제에서 일부 샘플 훈련 세트가 제공되고 전체 모집단에 적용되는 일반 모델을 도출합니다. <br><br>Markov’s inequality<br>Chebyshev’s inequality<br>Hoeffding’s inequality<br>Bernstein’s inequality
 {: .notice--info}
 
 <br>
@@ -93,7 +93,7 @@ Concept Drift Detection에 대한 기법들을 공부하면서 자연스레 나�
 ## Bernstein's inequality
 
 - $X_1,...,X_n$이 독립적인 댄덤 변수이고, $\mu$는 기댓값, $X_i\in [a,b]$에 수렴할 때, 번슈타인 부등식은 다음과 같다.
-  - $P(\vert \bar X_i-\mu \vert > \epsilon)$ $\le 2e^{(\frac{-n\epsilon^2}{2\hat Var^2+\frac{2}{3}\epsilon (b-a)})}$
+  - $P(\vert \bar X_i-\mu \vert > \epsilon)$ $\le 2e^{(\frac{-n\epsilon^2}{2\sigma^2+\frac{2}{3}\epsilon (b-a)})}$
 
 
 
