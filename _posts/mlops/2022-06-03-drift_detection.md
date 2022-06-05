@@ -1,14 +1,14 @@
 ---
 layout: single
-title: "[MLOps] Concept Drift Detection Method 정리"
+title: "Concept Drift Detection Method 정리"
 excerpt: "Concept Drift는 시간이 지남에 따라 데이터의 통계적인 특성이 변하는 것을 말합니다. 이에 학습된 모델은 자연스레 성능이 떨어지기 때문에 drift를 잘 감지해야 합니다. 감지하는 방법들이 무엇이 있는지 살펴봅니다."
 categories: mlops
-tag : [mlops, concept drift, 컨셉 드리프트, data drift, drift, detection, method, window, error, drift detection method, ddm, early drift detection method, eddm, adaptive windowing, adwin, 리뷰, 설명, 정리, 논문]
+tag : [mlops, concept drift, 컨셉 드리프트, data drift, drift, detection, method, window, error, drift detection method, ddm, early drift detection method, eddm, adaptive windowing, adwin, hddm, hoeffding, bernstein, fhddm, 리뷰, 설명, 정리, 논문]
 toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-06-04
+last_modified_at: 2022-06-05
 ---
 
 <img align='right' width='250' height='150' src='https://user-images.githubusercontent.com/78655692/171929140-bed18224-f05a-4a1c-bf18-a2607b8412e9.png'> 
@@ -131,20 +131,21 @@ Concept Drift는 시간이 지남에 따라 데이터의 통계적인 특성이 
 
 ## Window-based approaches
 
+![image](https://user-images.githubusercontent.com/78655692/172005456-669d0222-c340-487f-9985-b5250bc4da21.png) <br> 이미지출처 [^9]
+
+<br>
+
 ### 1. (ADWIN) Adaptive WINdowing
 
 - ADWIN은 time window $w$가 있는데, 만약 내용의 변화가 보이지 않는다면 동적으로 window $w$ 크기를 증가하고, 만약 변화가 감지(detect)되면 윈도우 $w$ 크기를 축소한다.
   - **윈도우(window)** : 시계열 데이터가 있을 때 창같은 고정된 크기를 생성해 다음 시간 데이터를 예측
+  - **슬라이딩 윈도우(sliding window)** : 고정 사이즈의 윈도우가 이동하면서 윈도우 내에 있는 데이터를 읽는 방법
 
     <img src='https://user-images.githubusercontent.com/78655692/171905685-4200eabb-ac74-4b23-ab11-74c9311efe7a.png' width=550> <br> 이미지출처 [^4]
 
 <br>
 
 - 이 알고리즘은 뚜렷한(distinct) 평균을 나타내는 $w$의 2개의 하위 윈도우(sub window)를 찾으려고 한다.
-
-  ![image](https://user-images.githubusercontent.com/78655692/172005456-669d0222-c340-487f-9985-b5250bc4da21.png) <br> 이미지출처 [^9]
-
-
 - $w$의 하위 윈도우를 $w_0$, $w_1$이라 하고, 각각 크기를 $n_0$, $n_1$, 즉 $w$의 크기 $n$은 $n=n_0+n_1$이다. [^6]
   - $w_0$ : older instances
   - $w_1$ : recent instances
