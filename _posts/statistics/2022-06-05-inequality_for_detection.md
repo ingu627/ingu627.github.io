@@ -86,13 +86,16 @@ Concept Drift Detection에 대한 기법들을 공부하면서 자연스레 나�
 
 - **Pros**
   - hoeffding's inequality는 chebyshev inquality보다 더 tight한 bound를 제공한다.
+- **Cons**
+  - 분산이 작은 분포에 대한 큰 편차 확률을 과대평가하여 너무 보수적(conservative)이다. [^4] 
+
 
 <br>
 <br>
 
 ## Bernstein's inequality
 
-- $X_1,...,X_n$이 독립적인 댄덤 변수이고, $\mu$는 기댓값, $X_i\in [a,b]$에 수렴할 때, 번슈타인 부등식은 다음과 같다.
+- $X_1,...,X_n$이 독립적인 랜덤 변수이고, $\mu$는 기댓값, $X_i\in [a,b]$에 수렴할 때, 번슈타인 부등식은 다음과 같다.
   - $P(\vert \bar X_i-\mu \vert > \epsilon)$ $\le 2e^{(\frac{-n\epsilon^2}{2\sigma^2+\frac{2}{3}\epsilon (b-a)})}$
 
 
@@ -110,4 +113,4 @@ Concept Drift Detection에 대한 기법들을 공부하면서 자연스레 나�
 [^1]: [Markov / Chebyshev / Hoeffding Inequality](https://ricoshin.tistory.com/6)
 [^2]: [[기초통계학] 체비셰프 부등식(Chebyshev Inequality) - 간토끼 DataMining Lab](https://datalabbit.tistory.com/26)
 [^3]: [How do Machines Learn : Hoeffding’s Inequality, in sample and out of sample using Game of Throne Analogy](https://nulpointerexception.com/2018/01/21/how-do-machines-learn-hoeffdings-inequality-in-sample-and-out-of-sample-using-game-of-throne-analogy/)
-
+[^4]: [Sakthithasan, Sripirakas, Russel Pears, and Yun Sing Koh. "One pass concept change detection for data streams." Pacific-Asia conference on knowledge discovery and data mining. Springer, Berlin, Heidelberg, 2013.](https://link.springer.com/chapter/10.1007/978-3-642-37456-2_39)
