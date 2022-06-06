@@ -8,10 +8,10 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-06-05
+last_modified_at: 2022-06-06
 ---
 
-Concept Drift Detection에 대한 기법들을 공부하면서 자연스레 나온 부등식들을 정리해보았습니다. <br> 대부분의 기계 학습 문제에서 일부 샘플 훈련 세트가 제공되고 전체 모집단에 적용되는 일반 모델을 도출합니다. <br><br>Markov’s inequality<br>Chebyshev’s inequality<br>Hoeffding’s inequality<br>Bernstein’s inequality
+Concept Drift Detection에 대한 기법들을 공부하면서 자연스레 나온 부등식들을 정리해보았습니다. <br> 대부분의 기계 학습 문제에서 일부 샘플 훈련 세트가 제공되고 전체 모집단에 적용되는 일반 모델을 도출합니다. <br><br>마르코브 부등식 (Markov’s inequality)<br>체비쇼프 부등식 (Chebyshev’s inequality)<br>호에프딩 부등식 (Hoeffding’s inequality)<br>번스타인 부등식 (Bernstein’s inequality)
 {: .notice--info}
 
 <br>

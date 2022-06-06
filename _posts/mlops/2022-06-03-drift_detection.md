@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-06-05
+last_modified_at: 2022-06-06
 ---
 
 <img align='right' width='250' height='150' src='https://user-images.githubusercontent.com/78655692/171929140-bed18224-f05a-4a1c-bf18-a2607b8412e9.png'> 
@@ -228,9 +228,11 @@ Concept Drift는 시간이 지남에 따라 데이터의 통계적인 특성이 
 <br>
 
 - **Pros**
-  - 하나의 윈도우를 쓰므로 계산량 및 메모리를 크게 절약할 수 있다. 
+  - 지연(delay)를 다른 윈도우 기반 알고리즘 대비 대폭 증가시켰다.
+  - SOTA 정확도를 달성했다. 
 - **Cons**
-  - 윈도우 크기가 고정되어 있다는 점은 실제 환경에서 drift를 detect할 시 다소의 latency가 있을 수 있다.
+  - 아직 메모리 사용량이 많은 편에 속한다.
+  - 슬라이딩 윈도우의 사이즈 크기가 고정되어 있어 상황에 유동적이지 못할 수 있다.
 
 
 
