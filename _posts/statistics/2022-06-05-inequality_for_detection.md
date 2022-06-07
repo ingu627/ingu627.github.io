@@ -98,8 +98,10 @@ Concept Drift Detection에 대한 기법들을 공부하면서 자연스레 나�
 - $X_1,...,X_n$이 독립적인 랜덤 변수이고, $\mu$는 기댓값, $X_i\in [a,b]$에 수렴할 때, 번슈타인 부등식은 다음과 같다.
   - $P(\vert \bar X_i-\mu \vert > \epsilon)$ $\le 2e^{(\frac{-n\epsilon^2}{2\sigma^2+\frac{2}{3}\epsilon (b-a)})}$
 
+<br>
 
-
+- **Cons**
+  - 샘플 데이터가 정규 분포를 따른다고 가정하여 모두 같은 분산을 쓰는데, 이는 현실 세계에서 너무 제한적이다.
 
 
 
