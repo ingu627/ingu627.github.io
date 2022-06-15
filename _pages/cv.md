@@ -110,11 +110,11 @@ Student \| June 2021 ~ September 2021
 <img align='right' width='100' height='100' src='https://user-images.githubusercontent.com/78655692/165668249-b9773ec4-ea19-44b2-a250-35bb2d6e7268.png'>
 
 - **Azure AI Fundamentals (2021.12)**
-  - **AI 900**
+  - **AI-900**
 - **Azure Fundamentals (2022.01)**
-  - **AZ 900**
+  - **AZ-900**
 - **Azure Data Fundamentals (2022.03)**
-  - **AD 900**
+  - **AD-900**
 - **Google Analytics Individual Qualification (2021.09)**
   - **GAIQ**
 
