@@ -72,38 +72,58 @@ Student \| June 2021 ~ September 2021
 ### National Technical Qualification
 
 <img align='right' width='100' height='100' src='https://user-images.githubusercontent.com/78655692/165668435-717e0cc8-d72b-46e1-afe3-f9daad6dd17b.png'><br>
+
 - **Big-Data Analysis Engineer (2021.12)**
+  - **빅데이터분석기사** 
 - **Engineer Quality Management (2021.06)**
+  - **품질경영기사**
 - **Survey Analyst, Junior (2020.11)**
+  - **사회조사분석사 2급**
+
 <img align='right' width='100' height='100' src='https://user-images.githubusercontent.com/78655692/165668600-4292fd79-802c-4728-a15e-70cb2e71d49a.png'>
+
 - **Computer Specialist in Spreadsheet & Database Level-Ⅰ (2021.03)**
+  - **컴퓨터활용능력 1급**
 - **Word Processor Specialist (2021.07)**
+  - **워드프로세서**
 
 ### Accredited Private Qualification
 
 <img align='right' width='100' height='100' src='https://user-images.githubusercontent.com/78655692/165669206-a94b01ab-7bc8-42ea-9f94-f155ec79c9ce.png'>
+
 - **Advanced Data Analytics Semi-Professional (2021.06)** 
+  - **ADsP**
 - **Structured Query Language Developer (2021.10)**
+  - **SQLD**
 - **6-SIGMA Green Belt (2021.02)**
+  - **6시그마 GB**
 
 ### Private Qualification
 
 - **Artificial Intelligence of Things (2021.01)**
+  - **AIoT**
 - **DSAC Expert (2021.01)**
+  - **데이터사이언티스트 자격 2급**
 
 ### International Qualification
 
 <img align='right' width='100' height='100' src='https://user-images.githubusercontent.com/78655692/165668249-b9773ec4-ea19-44b2-a250-35bb2d6e7268.png'>
+
 - **Azure AI Fundamentals (2021.12)**
+  - **AI 900**
 - **Azure Fundamentals (2022.01)**
+  - **AZ 900**
 - **Azure Data Fundamentals (2022.03)**
+  - **AD 900**
 - **Google Analytics Individual Qualification (2021.09)**
+  - **GAIQ**
 
 <br>
 
 ## SKILLS
 
 <img align='right' width='100' height='100' src='https://user-images.githubusercontent.com/78655692/165668323-6fd26fd4-a83a-4445-b9bb-6f570bf13f09.png'>
+
 - **Software** : Python(Tensorflow, Pytorch), R, Excel, Database, SQL
 - **Soft Skills** : Leadership, Communication, Management, Surveying
 - **System** : Windows, Linux
