@@ -61,7 +61,7 @@
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "statistics" %}
-                        <li><a href="/categories/mlops" class="">확률(Probability)통계(Statistics) ({{category[1].size}})</a></li>
+                        <li><a href="/categories/statistics" class="">확률(Probability)통계(Statistics) ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
