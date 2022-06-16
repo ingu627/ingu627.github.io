@@ -185,11 +185,11 @@ last_modified_at: 2022-03-28
 ## 4_4. 과대적합과 과소적합
 
 - 머신 러닝의 근본적인 이슈는 최적화와 일반화 사이의 줄다리기이다.
-- **최적화 (optimization)** : <b><span style="color:red">가능한 훈련 데이터에서 최고의 성능을 얻으려고 모델을 조정하는 과정이다.</b>
-- **일반화 (generalization)** : <b><span style="color:red">훈련된 모델이 이전에 본 적 없는 데이터에서 얼마나 잘 수행되는지 의미한다.</b>
+- **최적화 (optimization)** : <b><span style="color:red">가능한 훈련 데이터에서 최고의 성능을 얻으려고 모델을 조정하는 과정이다.</span></b>
+- **일반화 (generalization)** : <b><span style="color:red">훈련된 모델이 이전에 본 적 없는 데이터에서 얼마나 잘 수행되는지 의미한다.</span></b>
   - 모델을 만드는 목적은 좋은 일반화 성능을 얻는 것이다.
 - 더 많은 데이터에서 훈련된 모델은 일반화 성능이 더 뛰어나다.
-- **규제** : <b><span style="color:red">과대적합을 피하는 처리 과정</b>
+- **규제** : <b><span style="color:red">과대적합을 피하는 처리 과정</span></b>
 
 
 <br>
