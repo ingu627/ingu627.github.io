@@ -102,8 +102,8 @@ Student \| June 2021 ~ September 2021
 
 - **Artificial Intelligence of Things (2021.01)**
   - **AIoT**
-- **DSAC Expert (2021.01)**
-  - **데이터사이언티스트 자격 2급**
+- **Data Scientist Academic Certification Expert (2021.01)**
+  - **DSAC 2급**
 
 ### International Qualification
 
