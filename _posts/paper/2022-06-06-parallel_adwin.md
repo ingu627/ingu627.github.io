@@ -3,12 +3,12 @@ layout: single
 title: "[논문 리뷰] Scalable Detection of Concept Drifts on Data Streams with Parallel Adaptive Windowing"
 excerpt: "Adaptive Windowing (ADWIN)은 윈도우 기반 드리프트 감지 기법입니다. 하지만, 이 기법은 메모리 사용량이 많이 요구되는 단점이 있습니다. 이 논문은 병렬화를 통해 극복하려고 했습니다."
 categories: paper
-tag : [컨셉 드리프트, concept drift, detection, adaptive windowing, adwin, exponential histogram, stream, 스트림, 머신 러닝, 기계학습, 모델, 리뷰, 논문, 정리, 설명, 병렬]
+tag : [컨셉 드리프트, concept drift, detection, adaptive windowing, adwin, exponential histogram, stream, 스트림, 머신 러닝, 기계학습, 모델, 리뷰, 논문, 정리, 설명, 병렬, 윈도우, 란]
 toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-06-06
+last_modified_at: 2022-06-25
 ---
 
 ![image](https://user-images.githubusercontent.com/78655692/172111947-570a483a-c49a-4912-af2d-efa6c23f213c.png)
@@ -104,10 +104,78 @@ last_modified_at: 2022-06-06
 
 ## 3. Parallel Adaptive Windowing
 
-- (추가)
+- 본 논문에서는 몇 가지 접근법을 이용하여 ADIWN을 병렬화하여 처리량(throughput)을 향상시키는 방법을 소개한다.
+  - 2.3의 Fig 3에서 보았듯이, 병목현상을 확인하기 위해 cut detection을 병렬화하는 것에 집중해본다.
 
+<br>
 
+### 3.1 Single-Node Parallelization
 
+![image](https://user-images.githubusercontent.com/78655692/175618608-98cdfb44-bc4b-4d8d-96c9-7fc7dca90fbe.png)
+
+- 다음은 ADWIN이 입력 튜플을 어떻게 처리하는지 수도 코드를 보여주고, 단일 노드 병렬화를 가리킨다.
+  - 위 과정을 3.1.1, 3.1.2, 3.1.3으로 각각 나누어 자세히 설명한다.
+- **3.1.1**
+  - cut check가 입력 튜플 처리를 지연시킬 수 없도록 히스토그램 업데이트와 cut check를 서로 분리한다.
+- **3.1.2**
+  - cut check 내 병렬화인 cut check 절차 자체를 병렬화한다.
+- **3.1.3**
+  - Adwin이 cut을 감지하는 경우 여러 cut check 절차를 병렬로 수행하는 방법을 논의한다.
+
+<br>
+<br>
+
+### 3.1.1 Cut-Check Decoupling
+
+- 대부분의 입력 튜플이 컨셉 드리프트를 가리키지 않을거라 가정하는 ADWIN의 optimistic 병렬화를 도입한다.
+  - 이 가정은 빅 데이터 스트림에 적용된다.
+- ADWIN은 다음의 2가지 태스크를 진행한다.
+  - 새로운 튜플로 히스토그램을 업데이트하고, cut detection 절차로 컨셉 드리프트를 감지한다.
+- 원래 ADWIN은 이 두가지 태스크를 연속적으로 수행한다.
+- 하지만, 이것은 처리량의 한계가 있는데, cut detection은 입력 스트림의 처리를 블록하기 때문이다.
+
+<br>
+
+![image](https://user-images.githubusercontent.com/78655692/175768557-800a9675-f54b-4249-b271-e2e6a7bd46b9.png)
+
+- Optimistic ADWIN은 히스토그램 업데이트와 컷 체크를 다른 것들과 분리하여 처리량 한계를 극복한다.
+  - 이 알고리즘은 컷 체크를 분리된 snapshot 히스토그램에서 수행하고 새로운 튜플을 primary 히스토그램에 동시에 추가한다.
+  - 첫 체크 절차의 각 실행 후 히스토그램을 동기화한다.
+- 하나의 스레드가 기본 히스토그램과 redo 로그에 새 입력 튜플을 추가한다.
+- (step1) 다른 스레드는 기본 히스토그램의 심층 복사본을 만든다.
+- (step2) 이 복사본에 대해 컷 체크 절차를 수행한다.
+- (step3) 컨셉 드리프트의 경우, 기본 히스토그램을 컷 체크 절차에 의해 조작된 snapshot으로 대체하는 롤백을 시작한다.
+  - 마지막으로 redo 로그를 사용하여 누락된 입력 튜플을 기본 히스토그램에 다시 추가한다. 
+- 위 과정을 연속적으로 반복한다.
+
+<br>
+
+- optimistic ADWIN은 기본 히스토그램에 새 튜플 삽입과 컷에 대한 알림 사이에 대기시간(latency)을 도입한다.
+
+<br>
+<br>
+
+### 3.1.2 Intra-Cut-Check Parallelization
+
+![image](https://user-images.githubusercontent.com/78655692/175769135-079c9ab3-025c-47af-b410-e530e103fa57.png)
+
+- 컷 체크 절차의 단일 스레드가 실행되면 히스토그램의 끝 부분에서 컷이 확인되기 시작하고 시작 부분으로 이동한다.
+- 알고리즘은 슬라이딩 서브 윈도우를 비교한다.
+  - 비교에는 하위 윈도우에 포함된 버킷의 합과 분산이 필요하다.
+- 컷 체크 반복의 초기화로 히스토그램은 전체 집계를 저장하고 유지한다.
+- 여기서 두 컷 체크가 병렬로 실행되도록 하프컷 애드윈을 도입한다.
+  - 각 반복 단계의 컷 체크는 이전 반복 단계의 컷 체크와 독립적이기 때문에 두 개의 스레드가 히스토그램에서 동시에 반복될 수 있다.
+- 하프컷 애드윈은 두 스레드가 히스토그램의 중간에 도달하거나 컷을 발견하면 컷 체크 절차를 종료한다.
+
+<br>
+<br>
+
+### 3.1.3 Inter-Cut-Check Parallelization
+
+- ADWIN이 컷을 찾으면, 히스토그램에서 가장 오래된 버킷을 제거하고 더 이상 컷이 감지되지 않을 때까지 컷 체크 절차를 반복한다.
+- 이를 통해 히스토그램에서 오래된 버킷을 제거한 후 추가 컷을 감지한다고 가정하는 pessimisitic 병렬화가 가능하다. 
+- 스레드 1이 모든 버킷 1...n에 대해 컷 검사를 수행하는 동안 스레드 2는 이전 버킷을 제거한 후 다른 컷이 있는지 확인하고 버킷 2...n에 대해 컷 감지를 수행할 수 있다. 
+- 이는 각각 Half-Cut Adwin을 적용할 수 있는 n - 1 병렬 절단 검사 절차로 확장된다.
 
 
 <br>
