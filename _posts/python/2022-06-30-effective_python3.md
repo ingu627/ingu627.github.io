@@ -1,9 +1,9 @@
 ---
 layout: single
 title: "[Effective Python] 3장 함수 리뷰"
-excerpt: "파이썬 코딩의 기술 개정 2판 책에 대한 내용입니다. try, exception, 언패킹, 타입 애너테이션, 클로저, 위치 인자, args, kwargs"
+excerpt: "파이썬 코딩의 기술 개정 2판 책에 대한 내용입니다. try, exception, 언패킹, 타입 애너테이션, 클로저, 위치 인자, args, kwargs, 데코레이터"
 categories: python
-tag : [python, 파이썬, 언패킹, assert, raise, 예외, except, try, 타입 애너테이션, 클로저, nonlocal, 위치 인자, args, 제너레이터, 키워드 인자, kwargs, 독스트링, 위치로만 인자, 키워드만 사용하는 인자, ]
+tag : [python, 파이썬, 언패킹, assert, raise, 예외, except, try, 타입 애너테이션, 클로저, nonlocal, 위치 인자, args, 제너레이터, 키워드 인자, kwargs, 독스트링, 위치로만 인자, 키워드만 사용하는 인자, 데코레이터]
 toc: true
 toc_sticky: true
 sidebar_main: true
@@ -346,7 +346,51 @@ last_modified_at: 2022-07-01
 
 ## Better way 26: functools.wrap을 사용해 함수 데코레이터를 정의하라
 
-- 
+- **데코레이터(decorator)**는 자신이 감싸고 있는 함수가 호출되기 전과 후에 코드를 추가로 실행해준다.
+  - 이는 데코레이터가 자신이 감싸고 있는 함수의 입력 인자, 반환 값, 함수에서 발생한 오류에 접근할 수 있다는 뜻이다.
+- 함수의 의미를 강화하거나 디버깅을 하거나 함수를 등록하는 등의 일에 이런 기능을 유용하게 쓸 수 있다.
+- 데코레이터를 함수에 적용할 때는 `@` 기호를 사용한다.
+  - `@` 기호를 사용하는 것은 이 함수에 대해 데코레이터를 호출한 후, 데코레이터가 반환한 결과를 원래 함수가 속해야 하는 영역에 원래 함수와 같은 이름으로 등록하는 것과 같다.
+
+    ```python
+    def trace(func):
+        def wrapper(*args, **kwargs):
+            result = func(*args, **kwargs)
+            print(f'{func.__name__}({args!r}, {kwargs!r}) '
+                f'-> {result!r}')
+            return result
+        return wrapper
+
+    @trace
+    def fibonacci(n):
+        """n번째 피보나치 수를 반환한다."""
+        if n in (0,1):
+            return n
+        return (fibonacci(n - 2) + fibonacci(n - 1))
+
+    fibonacci = trace(fibonacci)
+
+    fibonacci(4)
+    # fibonacci((0,), {}) -> 0
+    # wrapper((0,), {}) -> 0
+    # fibonacci((1,), {}) -> 1
+    # wrapper((1,), {}) -> 1
+    # fibonacci((2,), {}) -> 1
+    # wrapper((2,), {}) -> 1
+    # fibonacci((1,), {}) -> 1
+    # wrapper((1,), {}) -> 1
+    # fibonacci((0,), {}) -> 0
+    # wrapper((0,), {}) -> 0
+    # fibonacci((1,), {}) -> 1
+    # wrapper((1,), {}) -> 1
+    # fibonacci((2,), {}) -> 1
+    # wrapper((2,), {}) -> 1
+    # fibonacci((3,), {}) -> 2
+    # wrapper((3,), {}) -> 2
+    # fibonacci((4,), {}) -> 3
+    # wrapper((4,), {}) -> 3
+    ```
+
 
 
 
