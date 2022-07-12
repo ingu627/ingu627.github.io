@@ -1,11 +1,11 @@
 ---
-title: "확률(Probability)통계(Statistics)"
+title: "MLOps"
 layout: archive
-permalink: categories/statistics
+permalink: categories/mlops
 author_profile: true
 sidebar_main: true
 ---
 
 
-{% assign posts = site.categories.statistics %}
+{% assign posts = site.categories.mlops %}
 {% for post in posts %} {% include archive-single.html type=page.entries_layout %} {% endfor %}

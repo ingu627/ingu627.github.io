@@ -2,7 +2,7 @@
 layout: single
 title: "호에프딩, 마르코브, 체비쇼프, 번스타인 부등식 정리"
 excerpt: "Concept Drift Detection에 대한 기법들을 공부하면서 자연스레 나온 부등식들을 정리해보았습니다."
-categories: statistics
+categories: mlops
 tag : [hoeffding, markov, chebyshev, bernstein, 호에프딩, 마코브, 체비쇼프, 번스타인, 통계, 확률, 부등식, inequality, 머신러닝, machine learning, 기계 학습,]
 toc: true
 toc_sticky: true
