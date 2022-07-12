@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-07-11
+last_modified_at: 2022-07-12
 ---
 
 <img align='right' width='250' src='https://user-images.githubusercontent.com/78655692/178315781-684e139b-9095-45a4-ba26-41d4acacfc2b.png'>
@@ -40,6 +40,12 @@ last_modified_at: 2022-07-11
   - `pl.LightningModule` 클래스를 상속받아 새로운 `LightningModule` 클래스를 생성한다. [^2]
   - `__init__`, `forward`, `configure_optimizers`, `training_step`, `validation_step` 등을 구현한다. 
 - **Trainer**는 모델읠 학습을 담당하는 클래스이다. 모델의 학습 epoch나 batch 상태들과 모델을 저장해 로그를 생성하는 부분들을 담당한다.
+
+<br>
+
+<img src='https://user-images.githubusercontent.com/78655692/178400817-4c991d13-4e47-4545-a739-b5b6237a23dd.png' width=650> <br> 이미지출처 [^3]
+
+- 사용자는 파란색 부분만 건드리면 된다. 나머지는 pytorch-lightning이 알아서 해준다.
 
 <br>
 <br>
@@ -159,7 +165,7 @@ last_modified_at: 2022-07-11
     model = LitAutoEncoder()
 
     # training
-    trainer = pl.Trainer(logger=wandb_logger)
+    trainer = pl.Trainer()
     trainer.fit(model, train_loader, val_loader)
     ```
 
@@ -287,3 +293,4 @@ last_modified_at: 2022-07-11
 
 [^1]: [OneBook(Python & Deep Learning)](https://sdc-james.gitbook.io/onebook/9.6-6.-pytorch-lightning)
 [^2]: [PyTorch 딥러닝 챗봇 - 6-1. LightningModule Class](https://wikidocs.net/157586)
+[^3]: [36 Ways Pytorch Lightning Can Supercharge Your AI Research - William Falcon](https://towardsdatascience.com/supercharge-your-ai-research-with-pytorch-lightning-337948a99eec)
