@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-07-12
+last_modified_at: 2022-07-13
 ---
 
 <img align='right' width='250' src='https://user-images.githubusercontent.com/78655692/178315781-684e139b-9095-45a4-ba26-41d4acacfc2b.png'>
@@ -102,6 +102,10 @@ last_modified_at: 2022-07-12
 ### training_step
 
 - `training_step`은 forward와 유사하지만, 단일 배치에서의 손실을 반환해야 하며, 이는 train loop로 자동 반복된다.
+- 모델 학습은 배치 단위로 이뤄진다.
+- 배치를 모델에 입력한 뒤 모델 출력을 정답과 비교해 차이를 계산한다.
+- 그리고 그 차이를 최소화하는 방향으로 모델을 업데이트한다.
+  - 이 일련의 순환 과정을 **스텝(step)**이라 한다.
 
     ```python
     def training_step(self, train_batch, batch_idx):
@@ -153,6 +157,8 @@ last_modified_at: 2022-07-12
 - **model** 부분에서 앞서 정의한 LitAutoEncoder() 모델을 초기화한다.
 - **training** 부분에서 Trainer를 초기화해주고 fit을 통해 모델을 학습시킨다.
   - Pytorch lightning의 Trainer는 굉장히 많은 기능을 제공한다. (gpu, epoch, node 등등 설정 가능하다.)
+  - **트레이너(Trainer)**는 pytorch lightning에서 제공하는 객체로 실제 학습을 수행한다.
+  - 이 트레이너는 GPU 등 하드웨어 설정, 학습 기록 로깅, 체크포인트 저장 등 복잡한 설정을 알아서 해준다.
 
     ```python
     # data

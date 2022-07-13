@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-04-28
+last_modified_at: 2022-07-13
 ---
 
 <img align='right' width='350' src='https://user-images.githubusercontent.com/78655692/162920296-ea7abcc7-f497-4351-8152-838c140a1ba2.png'>
@@ -144,6 +144,9 @@ validation_data = datasets.FashionMNIST(
 <br>
 
 ### 데이터로더 (DataLoader)
+
+- **데이터 로더(DataLoader)**는 데이터를 배치(batch) 단위로 모델에 밀어 넣어주는 역할이다. 
+  - 전체 데이터 가운데 일부 인스턴스를 뽑아(sample) 배치를 구성한다.
 
 ```python
 # (class) DataLoader(dataset, batch_size, shuffle, ...)
