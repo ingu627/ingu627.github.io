@@ -90,6 +90,7 @@ last_modified_at: 2022-07-13
 ### forward
 
 - forward은 추론(inference)에 사용된다.
+- 모델의 입력에 대한 output을 낸다.
 
     ```python
     def forward(self, x):
@@ -102,10 +103,12 @@ last_modified_at: 2022-07-13
 ### training_step
 
 - `training_step`은 forward와 유사하지만, 단일 배치에서의 손실을 반환해야 하며, 이는 train loop로 자동 반복된다.
+  - 1 iter 에 대한 training을 의미하며, batch만큼의 output을 얻고 loss를 반환한다.
 - 모델 학습은 배치 단위로 이뤄진다.
 - 배치를 모델에 입력한 뒤 모델 출력을 정답과 비교해 차이를 계산한다.
 - 그리고 그 차이를 최소화하는 방향으로 모델을 업데이트한다.
   - 이 일련의 순환 과정을 **스텝(step)**이라 한다.
+  - step 함수는 forward를 통해 output을 얻고 loss를 계산한다.
 
     ```python
     def training_step(self, train_batch, batch_idx):

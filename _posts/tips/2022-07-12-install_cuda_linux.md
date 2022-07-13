@@ -9,7 +9,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-07-12
+last_modified_at: 2022-07-13
 ---
 
 
@@ -72,7 +72,7 @@ ubuntu 20.04, nvidia driver 495, cuda 11.3, cudnn 8.2.1, pytorch 버전을 설�
 - nvidia 드라이버 설치가 끝나면 NVIDIA kernel module의 load를 도와주는 `modprobe` 패키지를 설치한다. [^3]
 
     ```linux
-    $sudo apt-get install dkms nvidia-modprobe
+    $ sudo apt-get install dkms nvidia-modprobe
     ```
 
 - 그리고 다음 명령어로 마무리해준다.
@@ -116,8 +116,20 @@ ubuntu 20.04, nvidia driver 495, cuda 11.3, cudnn 8.2.1, pytorch 버전을 설�
 <br>
 
 ```linux
+# runfile(local)
 $ wget https://developer.download.nvidia.com/compute/cuda/11.3.1/local_installers/cuda_11.3.1_465.19.01_linux.run
 $ sudo sh cuda_11.3.1_465.19.01_linux.run
+```
+
+```linux
+# 만약 위 과정이 안되면 아래 명령어를 실행한다. - deb(local)
+$ wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin
+$ sudo mv cuda-ubuntu2004.pin /etc/apt/preferences.d/cuda-repository-pin-600
+$ wget https://developer.download.nvidia.com/compute/cuda/11.3.1/local_installers/cuda-repo-ubuntu2004-11-3-local_11.3.1-465.19.01-1_amd64.deb
+$ sudo dpkg -i cuda-repo-ubuntu2004-11-3-local_11.3.1-465.19.01-1_amd64.deb
+$ sudo apt-key add /var/cuda-repo-ubuntu2004-11-3-local/7fa2af80.pub
+$ sudo apt-get update
+$ sudo apt-get -y install cuda
 ```
 
 <br>
@@ -135,6 +147,13 @@ $ sudo sh cuda_11.3.1_465.19.01_linux.run
 - 설치가 잘 진행되었다면 아래 그림처럼 나올 것이다.
 
 ![image](https://user-images.githubusercontent.com/78655692/178491438-7219204f-f98e-4421-af53-989902d61472.png)
+
+<br>
+
+> 만약 gcc가 없어서 문제가 발생한다면, 다음 명령어를 수행한다.
+>> $ sudo apt update
+>> $ sudo apt install build-essential
+>> $ sudo apt-get install manpages-dev
 
 - cuda 버전을 확인하고 싶으면, 다음 명령어를 실행한다.
 
@@ -203,7 +222,7 @@ $ sudo sh cuda_11.3.1_465.19.01_linux.run
 
 <br>
 
-- 새로 추가된 라이브러리를 시스템에서 찾을 수 잇도록 한다.
+- 새로 추가된 라이브러리를 시스템에서 찾을 수 있도록 한다.
 
     ```linux
     $ sudo ldconfig
