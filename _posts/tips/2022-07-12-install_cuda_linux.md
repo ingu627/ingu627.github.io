@@ -9,7 +9,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-07-13
+last_modified_at: 2022-07-14
 ---
 
 
@@ -151,9 +151,12 @@ $ sudo apt-get -y install cuda
 <br>
 
 > 만약 gcc가 없어서 문제가 발생한다면, 다음 명령어를 수행한다.
->> $ sudo apt update
->> $ sudo apt install build-essential
->> $ sudo apt-get install manpages-dev
+
+```linux
+$ sudo apt update 
+$ sudo apt install build-essential 
+$ sudo apt-get install manpages-dev
+```
 
 - cuda 버전을 확인하고 싶으면, 다음 명령어를 실행한다.
 

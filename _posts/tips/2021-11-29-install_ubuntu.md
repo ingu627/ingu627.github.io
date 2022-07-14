@@ -9,11 +9,13 @@ tag: [linux, ubuntu, windows 10, WSL2, 우분투, 리눅스]
 toc: true
 toc_sticky: true
 
-last_modified_at: 2022-03-20
+last_modified_at: 2022-07-14
 
 sidebar_main: true
 ---
 
+- **Update(20220714)**
+  - 윈도우 11 또는 윈도우 10의 21H2 버전 이상이어야 WSL2가 설치가 된다.
 - AWS에서 가상의 환경을 작업하던 중, 내 PC에서 구동해 보았으면 싶어서 설치를 진행해 보았다.
 
 ![image](https://user-images.githubusercontent.com/78655692/143879564-f6e63337-035a-48a0-aba0-b0c658b3b4de.png)
@@ -141,13 +143,29 @@ sidebar_main: true
 <br>
 <br>
 
+## Appendix A
+
+- 만약 wsl를 vscode와 연동시키려면, command에 `code .` 명령어를 실행해주면 된다.
+
+![image](https://user-images.githubusercontent.com/78655692/178905640-e0217aaa-f25f-4161-9822-b8df67707fd8.png)
+
+<br>
+
+- 또는 vscode에 `ctrl+shift+p`를 눌러 Remote-WSL: New WSL Window를 실행해주면 된다.
+
+![image](https://user-images.githubusercontent.com/78655692/178905818-d0463e55-4bf6-4305-8a95-17a6eb52add9.png)
+
+<br>
+<br>
+<br>
+
 ## References
 
-- [microsoft docs](https://docs.microsoft.com/ko-kr/windows/wsl/install-manual)
-- [Windows 10 에서 Linux 환경 구축하기](https://knackin.tistory.com/1)
-- [[WSL2] 윈도우에서 리눅스 사용하기](https://blog.naver.com/PostView.naver?blogId=skyshin0304&logNo=222079393598&redirect=Dlog&widgetTypeCall=true&directAccess=false)
-- [Wsl 사용시 WslRegisterDistribution Failed With Error: 0x800701bc 해결하기.](https://blog.dalso.org/article/wslregisterdistribution-failed-with-error)
-
+[microsoft docs](https://docs.microsoft.com/ko-kr/windows/wsl/install-manual)
+[Windows 10 에서 Linux 환경 구축하기](https://knackin.tistory.com/1)
+[[WSL2] 윈도우에서 리눅스 사용하기](https://blog.naver.com/PostView.naver?blogId=skyshin0304&logNo=222079393598&redirect=Dlog&widgetTypeCall=true&directAccess=false)
+[Wsl 사용시 WslRegisterDistribution Failed With Error: 0x800701bc 해결하기.](https://blog.dalso.org/article/wslregisterdistribution-failed-with-error)
+[WSL & WSL2 설치와 VSCode 연동하기 - gidskql6671](https://velog.io/@gidskql6671/WSL-WSL2-%EC%84%A4%EC%B9%98-VSCode-%EC%97%B0%EB%8F%99)
 
 
 
