@@ -1,10 +1,10 @@
 ---
 layout: single
-title: "윈도우10에서 리눅스(Linux) 설치하기 (Ubuntu)"
-excerpt: "AWS에서 가상의 환경을 작업하던 중, 내 PC에서 구동해 보았으면 싶어서 설치를 진행해 보았다."
+title: "윈도우10에서 리눅스(Linux) 설치하기 (Ubuntu on WSL2)"
+excerpt: "AWS에서 가상의 환경을 작업하던 중, 내 PC에서 구동해 보았으면 싶어서 설치를 진행해 보았습니다. 윈도우10 환경에서 wsl2를 설치해봅니다."
 categories: tips
-date: 2021-11-29
-tag: [linux, ubuntu, windows 10, WSL2, 우분투, 리눅스]
+date: 2022-07-16
+tag: [linux, ubuntu, windows 10, WSL2, 우분투, 리눅스, wsl, 윈도우10, 설치, 오류, 사용법, 정리]
 
 toc: true
 toc_sticky: true
@@ -44,6 +44,9 @@ sidebar_main: true
 ## 3. Windows 10 최신 업데이트하기
 
 ![image](https://user-images.githubusercontent.com/78655692/143835974-0f398f40-6f89-4138-9a44-5a8e7e6aeb3e.png)
+
+- **추가(20220717)**
+  - 설정 -> Windows 업데이트 -> 고급 옵션 -> "Window를 업데이트할 때 다른 Microsoft 제품에 대한 업데이트 받기" 활성화
 
 <br>
 <br>
@@ -134,11 +137,14 @@ sidebar_main: true
 
 ## 10. 최종
 
-- Windows Terminal을 설치해주면 커스텀마이징을 할 수 있다. 끝!
+- Windows Terminal을 설치해주면 커스텀마이징을 할 수 있다.
 
 ![image](https://user-images.githubusercontent.com/78655692/143837531-40e5d018-ccf8-4fa4-b63f-beda5eb4e800.png)
 
 ![image](https://user-images.githubusercontent.com/78655692/143837437-b1ceb809-ce61-4d64-9379-b4cd4749759b.png)
+
+- 초기에 `sudo apt update`, `sudo apt upgrade` 명령어 실행한다.
+  - aply 오류가 난다면 `sudo apt-get install alsa-utils` 명령어 실행한다.
 
 <br>
 <br>
