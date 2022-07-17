@@ -131,6 +131,9 @@ author:
     - label: "LinkedIn"
       icon: "fab fa-fw fa-linkedin"
       url: "https://www.linkedin.com/in/ingu627"
+    - label: "Docker"
+      icon: "fab fa-fw fa-docker"
+      url: "https://hub.docker.com/u/ingu627"
 
 # Site Footer
 footer:
@@ -150,6 +153,9 @@ footer:
     - label: "LinkedIn"
       icon: "fab fa-fw fa-linkedin"
       url: "https://www.linkedin.com/in/ingu627"
+    - label: "Docker"
+      icon: "fab fa-fw fa-docker"
+      url: "https://hub.docker.com/u/ingu627"
     # - label: "GitLab"
       # icon: "fab fa-fw fa-gitlab"
       # url:
