@@ -3,7 +3,7 @@ layout: single
 title: "도커(docker)를 이용해 파이썬 가상환경 구축을 위한 이미지 배포하기"
 excerpt: "도커는 특정 프로그램의 배포 및 관리를 단순하게 해주는 오픈소스 플랫폼입니다. 이번 글에서는 도커를 이용해 간단하게 파이썬 가상환경 이미지를 배포해봅니다."
 categories: docker
-tag : [docker, 도커, 컨테이너, 파이썬, 파이토치, cuda, cudnn, build, pull, push, commit, run, docker hub, 도커 허브, 설치, 사용법]
+tag : [docker, 도커, 컨테이너, 파이썬, 파이토치, cuda, cudnn, build, pull, push, commit, run, docker hub, 도커 허브, 설치, 사용법, docker nvidia, gpu]
 toc: true
 toc_sticky: true
 sidebar_main: true
@@ -183,10 +183,10 @@ RUN apt-get install git -y
 - 다음 한줄 코드만 쓰면 된다.
 
     ```linux
-    docker pull ingu627/pytorch_venv:anaconda
+    docker pull ingu627/pytorch_venv:pytorch-gpu
     ```
 
-- 해당 이미지 정보 : anaconda, cuda 11.3, cudnn 8.2.1, ubuntu 20.04 설치
+- 해당 이미지 정보 : anaconda, cuda 11.3, cudnn 8.2.1, git, pytorch, ubuntu 20.04 등 설치
 
 <br>
 <br>
@@ -197,8 +197,36 @@ RUN apt-get install git -y
 - 가장 유연하게 쓸 수 있는 툴이 vs code인데, 이 경우 터미널에서 해당 컨테이너 이름을 attach해주면 된다.
 
   ```linux
-  docker attach [container name]
+  # 해당 이미지를 이용하여 컨테이너 실행
+  docker run -d -it --gpus all --name pytorch ingu627/pytorch_venv:pytorch-gpu
   ```
+
+  ```linux
+  docker attach [container name]
+  # 예시
+  docker attach pytorch
+  ```
+
+- gpu를 쓰려면, 해당 명령어들을 실행해 설치해준다.
+
+  ```linux
+  $ distribution=$(. /etc/os-release;echo $ID$VERSION_ID) \
+    && curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add - \
+    && curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
+
+  $ sudo apt-get update
+  $ sudo apt-get install -y nvidia-docker2 
+  ```
+
+<br>
+
+<img src='https://user-images.githubusercontent.com/78655692/179695593-67e68132-1430-497e-a36c-3e2551004db8.png' width=600>
+
+- 도커 이미지 안에 `tf2.8` 이름의 가상환경이 내장돼 있다.
+- `cd ~`
+- `source tf2.8/bin/activate` 하면 pytorch 등이 설치된 가상환경이 활성화된다.
+- git 도 설치되어 있으니 git clone도 가능하다. 
+- 즉, 도커 이미지를 바로 pull해서 사용하면 된다.
 
 <br>
 <br>
