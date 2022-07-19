@@ -188,6 +188,17 @@ RUN apt-get install git -y
 
 - 해당 이미지 정보 : anaconda, cuda 11.3, cudnn 8.2.1, ubuntu 20.04 설치
 
+<br>
+<br>
+
+## 추가 : docker와 vs code 연동
+
+- 그렇다면, docker에 있는 파이썬 가상 환경을 제대로 써봐야 한다.
+- 가장 유연하게 쓸 수 있는 툴이 vs code인데, 이 경우 터미널에서 해당 컨테이너 이름을 attach해주면 된다.
+
+  ```linux
+  docker attach [container name]
+  ```
 
 <br>
 <br>
