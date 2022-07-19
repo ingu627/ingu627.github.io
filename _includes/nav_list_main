@@ -132,6 +132,13 @@
         </ul>
         <ul>
             {% for category in site.categories %}
+                {% if category[0] == "docker" %}
+                    <li><a href="/categories/docker" class="">도커(Docker) ({{category[1].size}})</a></li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        <ul>
+            {% for category in site.categories %}
                 {% if category[0] == "web" %}
                     <li><a href="/categories/web" class="">웹(web) 개발 ({{category[1].size}})</a></li>
                 {% endif %}
