@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-07-18
+last_modified_at: 2022-07-19
 ---
 
 <img src='https://user-images.githubusercontent.com/78655692/179643735-e64c6545-9239-4d81-9e63-d7d8f834d456.png' width=650>
@@ -37,7 +37,7 @@ last_modified_at: 2022-07-18
 
 ### build
 
-- 다음 명령어는 로컬 디렉터리에 있는 Dockerfile을 이용해 이미지를 만들고(생성) [account]/[repository]:tag 를 부여한다.
+- `build` 명령어는 로컬 디렉터리에 있는 Dockerfile을 이용해 이미지를 만들고(생성) [account]/[repository]:tag 를 부여한다.
   - Dockerfile이 있는 경로에 있어야 한다.
   - `-t` 또는 `--tag`를 붙인다.
 
@@ -49,7 +49,7 @@ last_modified_at: 2022-07-18
 
 ### pull
 
-- 다음 명령어는 docker hub로부터 우분투 도커 이미지를 가져온다.
+- `pull` 명령어는 docker hub로부터 우분투 도커 이미지를 가져온다.
 
     ```linux
     docker pull ubuntu:20.04
@@ -59,12 +59,22 @@ last_modified_at: 2022-07-18
 
 ### push
 
-- 다음 명령어는 도커 명령어로 만든 컨테이너를 저장소에 푸시하기 위함이다.
+- `push` 명령어는 도커 명령어로 만든 컨테이너를 저장소에 푸시하기 위함이다.
   - "업로드한다"고 이해하면 된다.
 
     ```linux
     docker push account/repository:tag
     ```
+
+<br>
+
+### commit
+
+- `commit` 명령어는 종료된 도커 컨테이너 상태 그대로 이미지를 생성해준다. [^3]
+
+  ```linux
+  docker commit [container ID] [Image name]
+  ```
 
 <br>
 <br>
@@ -139,11 +149,14 @@ RUN apt-get install git -y
 
 - 그 다음, 해당 이미지를 run 명령어로 실행하여 컨테이너를 생성한다.
   - `-d` : 백그라운드 모드로 실행
+  - `-it` : 인터랙티브 모드로 실행
+  - `--name` : 해당 컨테이너 이름을 생성
   - `-p` : [host port][container port] port 연결
+- 만약 실행이 안된다면, docker desktop의 `run`을 실행해본다.
 
-    ```linux
-    docker run -d -p 80:80 ingu627/venv:0.1
-    ```
+  ```linux
+  docker run -d -it --name pytorch ingu627/venv:0.1
+  ```
 
 - 현재 컨테이너가 실행되고 있는지 확인하고 싶다면 다음 명령어를 사용한다.
 
@@ -173,6 +186,7 @@ RUN apt-get install git -y
     docker pull ingu627/pytorch_venv:anaconda
     ```
 
+- 해당 이미지 정보 : anaconda, cuda 11.3, cudnn 8.2.1, ubuntu 20.04 설치
 
 
 <br>
@@ -184,3 +198,4 @@ RUN apt-get install git -y
 
 [^1]: [도커 튜토리얼 해보기 - yohanpro](https://yohanpro.com/posts/docker/tutorial)
 [^2]: [docker에 대해 알아보자! (docker 기본) - 정찡이](https://ryu-e.tistory.com/3?category=784316)
+[^3]: [도커(Docker) : 이미지 커밋(업데이트)하기 - 오늘도 야근](https://tttsss77.tistory.com/230)
