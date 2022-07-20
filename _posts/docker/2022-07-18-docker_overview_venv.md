@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-07-19
+last_modified_at: 2022-07-20
 ---
 
 <img src='https://user-images.githubusercontent.com/78655692/179643735-e64c6545-9239-4d81-9e63-d7d8f834d456.png' width=650>
@@ -96,6 +96,8 @@ last_modified_at: 2022-07-19
 ```dockerfile
 FROM ubuntu:20.04
 FROM nvidia/cuda:11.3.0-cudnn8-devel-ubuntu20.04
+
+RUN rm -rf /var/lib/apt/lists/*
 
 RUN apt-get -y update -y
 RUN apt-get -y upgrade -y
@@ -227,6 +229,8 @@ RUN apt-get install git -y
 - `source tf2.8/bin/activate` 하면 pytorch 등이 설치된 가상환경이 활성화된다.
 - git 도 설치되어 있으니 git clone도 가능하다. 
 - 즉, 도커 이미지를 바로 pull해서 사용하면 된다.
+
+
 
 <br>
 <br>
