@@ -134,9 +134,7 @@ author:
     - label: "Docker"
       icon: "fab fa-fw fa-docker"
       url: "https://hub.docker.com/u/ingu627"
-    - label: "WandB"
-      icon: "fab fa-fw fa-light fa-code-pull-request-draft"
-      url: "https://wandb.ai/ingu627"
+    
 
 # Site Footer
 footer:
@@ -157,7 +155,7 @@ footer:
       icon: "fab fa-fw fa-linkedin"
       url: "https://www.linkedin.com/in/ingu627"
     - label: "Docker"
-      icon: "fab fa-fw fa-laptop-code"
+      icon: "fab fa-fw fa-docker"
       url: "https://hub.docker.com/u/ingu627"
     # - label: "GitLab"
       # icon: "fab fa-fw fa-gitlab"
@@ -168,9 +166,6 @@ footer:
     # - label: "Instagram"
       # icon: "fab fa-fw fa-instagram"
       # url:
-    - label: "WandB"
-      icon: "fab fa-fw fa-light fa-code-pull-request-draft"
-      url: "https://wandb.ai/ingu627"
 
 
 # Reading Files
