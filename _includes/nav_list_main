@@ -32,13 +32,6 @@
             </ul>
             <ul>
                 {% for category in site.categories %}
-                    {% if category[0] == "python" %}
-                        <li><a href="/categories/python" class="">파이썬(PYTHON) ({{category[1].size}})</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-            <ul>
-                {% for category in site.categories %}
                     {% if category[0] == "keras" %}
                         <li><a href="/categories/keras" class="">케라스 창시자에게 배우는 딥러닝 ({{category[1].size}})</a></li>
                     {% endif %}
@@ -86,29 +79,14 @@
                     {% endif %}
                 {% endfor %}
             </ul>   
-        <span class="nav__sub-title">Computing</span>
-        <ul>
-            {% for category in site.categories %}
-                {% if category[0] == "OS" %}
-                    <li><a href="/categories/OS" class="">운영 체제(OS) ({{category[1].size}})</a></li>
-                {% endif %}
-            {% endfor %}
-        </ul>
-        <ul>
-            {% for category in site.categories %}
-                {% if category[0] == "DS" %}
-                    <li><a href="/categories/DS" class="">분산 시스템(Distributed System) ({{category[1].size}})</a></li>
-                {% endif %}
-            {% endfor %}
-        </ul>
-        <ul>
-            {% for category in site.categories %}
-                {% if category[0] == "diapp" %}
-                    <li><a href="/categories/diapp" class="">데이터 중심 애플리케이션 설계 ({{category[1].size}})</a></li>
-                {% endif %}
-            {% endfor %}
-        </ul>
         <span class="nav__sub-title">Programming</span>
+        <ul>
+            {% for category in site.categories %}
+                {% if category[0] == "python" %}
+                    <li><a href="/categories/python" class="">파이썬(PYTHON) ({{category[1].size}})</a></li>
+                {% endif %}
+            {% endfor %}
+        </ul>
         <ul>
             {% for category in site.categories %}
                 {% if category[0] == "java" %}
@@ -141,6 +119,28 @@
             {% for category in site.categories %}
                 {% if category[0] == "web" %}
                     <li><a href="/categories/web" class="">웹(web) 개발 ({{category[1].size}})</a></li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        <span class="nav__sub-title">Computing</span>
+        <ul>
+            {% for category in site.categories %}
+                {% if category[0] == "OS" %}
+                    <li><a href="/categories/OS" class="">운영 체제(OS) ({{category[1].size}})</a></li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        <ul>
+            {% for category in site.categories %}
+                {% if category[0] == "DS" %}
+                    <li><a href="/categories/DS" class="">분산 시스템(Distributed System) ({{category[1].size}})</a></li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        <ul>
+            {% for category in site.categories %}
+                {% if category[0] == "diapp" %}
+                    <li><a href="/categories/diapp" class="">데이터 중심 애플리케이션 설계 ({{category[1].size}})</a></li>
                 {% endif %}
             {% endfor %}
         </ul>
