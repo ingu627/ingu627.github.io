@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "도커 환경내 Hortonworks Data Platform(HDP) 설치하기"
+title: "도커(docker) 환경 내 Hortonworks Data Platform(HDP) 설치하기"
 excerpt : "Hortonworks Data Platform(HDP)는 분산 스토리지 및 대규모 멀티 소스 데이터 세트 처리를 위한 오픈소스 프레임워크입니다. 도커 내 hdp를 설치해봅시다."
 categories: tips
 tag : [tip, 리눅스, 도커, docker, linux, hdp, 호튼웍스, hdp, hortonworks, 설치, wsl2, ambari, hadoop, 하둡, sandbox]
