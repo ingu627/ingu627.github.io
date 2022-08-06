@@ -97,7 +97,7 @@
         <ul>
             {% for category in site.categories %}
                 {% if category[0] == "SQL" %}
-                    <li><a href="/categories/SQL" class="">SQL ({{category[1].size}})</a></li>
+                    <li><a href="/categories/SQL" class="">관계형 데이터베이스(SQL) ({{category[1].size}})</a></li>
                 {% endif %}
             {% endfor %}
         </ul>

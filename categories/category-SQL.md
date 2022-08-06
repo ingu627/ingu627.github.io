@@ -1,5 +1,5 @@
 ---
-title: "SQL 문법"
+title: "관계형 데이터베이스(SQL)"
 layout: archive
 permalink: categories/SQL
 author_profile: true
