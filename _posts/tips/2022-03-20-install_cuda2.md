@@ -3,17 +3,17 @@ layout: single
 title: "[2022최신] 텐서플로우(tensorflow), 파이토치(pytorch) GPU 설치 방법"
 excerpt : "NVIDIA DRIVER, CUDA Toolkit, Cudnn, tensorflow 최신 버전 2.8을 설치합니다. 윈도우10 환경에서 작업하여 쓴 글입니다."
 categories: tips
-tag : [tip, cuda, install, gpu, 텐서플로, 설치, 윈도우10, 쿠다, 파이토치, Cudnn, pytorch, window]
+tag : [tip, cuda, install, gpu, 텐서플로, 설치, 윈도우10, 쿠다, 파이토치, Cudnn, pytorch, window, 아나콘다, tensorflow,]
 
 toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-04-07
+last_modified_at: 2022-08-07
 ---
 
 
-기존에 글을 썼지만, tensorflow 2.4버전을 쓰면 쓸수록 오류가 났었기 때문에 최신 버전을 설치하려고 결정했습니다. <br><br> **Pytorch** : pytorch==1.9.0 torchvision==0.10.0 torchaudio==0.9.0 <br> **Tensorflow** : CUDA==11.3 cuDNN==8.2.1 tensorflow : 2.8.0 tensorflow-gpu : 2.8.0 <br> **Python** : 3.9 <br> **OS** : Window 10 <br> **NVIDIA GPU Driver** : 465.xx.xx 이상
+기존에 글을 썼지만, tensorflow 2.4버전을 쓰면 쓸수록 오류가 났었기 때문에 최신 버전을 설치하려고 결정했습니다. <br><br> **Pytorch** : pytorch==1.9.0 torchvision==0.10.0 torchaudio==0.9.0 <br> **Tensorflow** : CUDA==11.3 cuDNN==8.2.1 tensorflow : 2.8.0 tensorflow-gpu : 2.8.0 <br> **Python** : 3.9 <br> **NVIDIA GPU Driver** : 465.xx.xx 이상 <br><br> **컴퓨터 환경** <br> **OS** : Window 10 <br> **CPU** : i7-6700HQ <br> **GPU** : GTX1070 <br> **Memory** : 16 GB 
 {: .notice--danger}
 
 <br>
@@ -21,6 +21,7 @@ last_modified_at: 2022-04-07
 
 ## 순서
 
+- 아래 순서대로 설치를 진행한다.
 - 참고 : <https://www.tensorflow.org/install/gpu>
 
   1. Anaconda
@@ -50,7 +51,7 @@ last_modified_at: 2022-04-07
 
 ## 2. NVIDIA DRIVER 설치
 
-- 본인의 GPU 모델 선택
+- 본인의 GPU 모델을 선택한다.
 
 - [NVIDIA 드라이버 링크](https://www.nvidia.com/download/index.aspx?lang=en-us)
 
@@ -76,7 +77,7 @@ last_modified_at: 2022-04-07
 
 <br>
 
-- 여기에는 없지만, 우리가 설치할 버전은
+- 여기에는 없지만, 우리가 설치할 버전은 다음과 같다.
   - tensorflow_gpu : 2.8.0 
   - Python 버전 : 3.9
   - cuDNN : 8.2.1
@@ -118,12 +119,14 @@ last_modified_at: 2022-04-07
 ![image](https://user-images.githubusercontent.com/78655692/159164710-e506de50-99bf-4ab0-aa9e-2feb656b6151.png)
 
 
-- `C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.3` 여기에 `bin`, `include`, `lib` 폴더를 각각 들어가 안의 파일들을 복사.
+- `C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.3` 여기에 `bin`, `include`, `lib` 폴더를 각각 들어가 안의 파일들을 복사한다.
 
 <br>
 <br>
 
 ## 7. 환경변수 설정
+
+- 사용자 변수에 `path`의 편집 버튼을 클릭하여 아래 그림과 같이 환경변수를 설정해준다.
 
 ![image](https://user-images.githubusercontent.com/78655692/141051481-d8806d86-07f7-46f9-aa80-8c77fdd7a097.png)
 
@@ -138,7 +141,7 @@ last_modified_at: 2022-04-07
 
 ## 8. 가상환경 
 
-- 가상 환경을 생성하는 이유는 다른 프로젝트들과 라이브버리 충돌을 피하기 위해.
+- 가상 환경을 생성하는 이유는 다른 프로젝트들과 라이브버리 충돌을 피하기 위함이다.
 
 - `Anaconda Powershell Prompt (anaconda3)` 실행
 
