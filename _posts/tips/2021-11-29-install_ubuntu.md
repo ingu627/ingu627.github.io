@@ -167,11 +167,11 @@ sidebar_main: true
 
 ## References
 
-[microsoft docs](https://docs.microsoft.com/ko-kr/windows/wsl/install-manual)
-[Windows 10 에서 Linux 환경 구축하기](https://knackin.tistory.com/1)
-[[WSL2] 윈도우에서 리눅스 사용하기](https://blog.naver.com/PostView.naver?blogId=skyshin0304&logNo=222079393598&redirect=Dlog&widgetTypeCall=true&directAccess=false)
-[Wsl 사용시 WslRegisterDistribution Failed With Error: 0x800701bc 해결하기.](https://blog.dalso.org/article/wslregisterdistribution-failed-with-error)
-[WSL & WSL2 설치와 VSCode 연동하기 - gidskql6671](https://velog.io/@gidskql6671/WSL-WSL2-%EC%84%A4%EC%B9%98-VSCode-%EC%97%B0%EB%8F%99)
+- [microsoft docs](https://docs.microsoft.com/ko-kr/windows/wsl/install-manual)
+- [Windows 10 에서 Linux 환경 구축하기](https://knackin.tistory.com/1)
+- [[WSL2] 윈도우에서 리눅스 사용하기](https://blog.naver.com/PostView.naver?blogId=skyshin0304&logNo=222079393598&redirect=Dlog&widgetTypeCall=true&directAccess=false)
+- [Wsl 사용시 WslRegisterDistribution Failed With Error: 0x800701bc 해결하기.](https://blog.dalso.org/article/wslregisterdistribution-failed-with-error)
+- [WSL & WSL2 설치와 VSCode 연동하기 - gidskql6671](https://velog.io/@gidskql6671/WSL-WSL2-%EC%84%A4%EC%B9%98-VSCode-%EC%97%B0%EB%8F%99)
 
 
 
