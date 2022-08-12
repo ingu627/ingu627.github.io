@@ -3,7 +3,7 @@ layout: single
 title: "[논문 리뷰] MapReduce: Simplified Data Processing on Large Clusters 리뷰"
 excerpt: "맵리듀스는 2004년 구글에서 발표한 빅데이터를 처리하고 생성하기 위한 프로그래밍 모델입니다. 키,값을 처리하여 중간 키,값 쌍 집합을 생성하는 map 함수와 동일한 키와 연관된 값을 merge하는 reduce 함수를 지정합니다."
 categories: paper
-tag : [리뷰, 논문, 정리, 설명, 란, gfs, 구글 파일 시스템, 분산, distributed, mapreduce, 맵리듀스, 개념, 정의, 원리, map, reduce, 마스터, failure, fault tolerance]
+tag : [리뷰, 논문, 정리, 설명, 란, gfs, 구글 파일 시스템, 분산, distributed, mapreduce, 맵리듀스, 개념, 정의, 원리, map, reduce, 마스터, failure, fault tolerance, 하둡, hadoop]
 toc: true
 toc_sticky: true
 sidebar_main: true
@@ -14,7 +14,7 @@ last_modified_at: 2022-08-11
 ![image](https://user-images.githubusercontent.com/78655692/183697704-2aeab667-34f8-4369-bb93-7f42d326e9a4.png)
 
 "MapReduce: Simplified Data Processing on Large Clusters" 논문을 개인 공부 및 리뷰를 위해 쓴 글입니다. <br> 맵리듀스에 입문하시거나 관련 논문을 처음 보는 분을 위해 용어 설명도 덧붙였습니다. <br> 또한, MapReduce의 모든 것을 알기 위해 최대한 요약없이 논문 내용을 담았습니다. <br>
-논문 출처 : <https://www.usenix.org/legacy/event/osdi04/tech/full_papers/dean/dean_html/>
+논문 출처 : [OSDI 04 paper - mapreduce](https://www.usenix.org/legacy/event/osdi04/tech/full_papers/dean/dean_html/)
 {: .notice--info}
 
 <br>
