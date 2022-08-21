@@ -24,7 +24,7 @@ last_modified_at: 2022-06-02
 
 - 슬라이싱(slicing)을 사용하면 시퀀스에 들어 있는 아이템의 부분집합에 쉽게 접근할 수 있다.
 
-![image](https://user-images.githubusercontent.com/78655692/171543679-31ea7ac0-3c61-434d-9890-909eeb456e76.png) <br> 이미지출처 [^1]
+  ![image](https://user-images.githubusercontent.com/78655692/171543679-31ea7ac0-3c61-434d-9890-909eeb456e76.png) <br> 이미지출처 [^1]
 
 
 - 슬라이싱의 기본 형태는 `리스트[시작:끝]`이다.

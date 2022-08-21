@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-05-27
+last_modified_at: 2022-08-21
 ---
 
 <img align='right' width='150' height='150' src='https://user-images.githubusercontent.com/78655692/170685528-4060a9d3-172e-45d8-897b-3a8eb539970c.png'>
@@ -60,13 +60,16 @@ last_modified_at: 2022-05-27
 
 ### 명명 규약
 
-- 함수, 변수, 애트리뷰트(attribute)는 lowercase_underscore처럼 소문자와 밑줄을 사용한다.
+- 함수, 변수, 애트리뷰트(attribute, 속성)는 lowercase_underscore처럼 소문자와 밑줄을 사용한다.
+  - **속성(attribute)** : 클래스 내부에 포함돼 있는 메서드나 변수를 의미한다. [^4]
 - protected instance attribute는 일반적인 애트리뷰트 이름 규칙을 따르되, _leading_underscore처럼 밑줄로 시작한다.
+  - **protected** : protected로 선언된 attribute, method는 해당 클래스 또는 해당 클래스를 상속받은 클래스에서만 접근 가능 [^3]
 - private instance attribute는 일반적인 애트리뷰트 이름 규칙을 따르되, __leading_underscore처럼 밑줄 두 개로 시작한다.
-  - private : 한 클래스 안에서만 쓰이고 다른 곳에서는 쓰면 안 되는 경우
+  - **private** : private로 선언된 attribute, method는 해당 클래스에서만 접근 가능 [^3]
 - 클래스는 CapitalizedWord처럼 여러 단어를 이어 붙이되, 각 단어의 첫 글자를 대문자로 만든다.
 - 모듈 수준의 상수는 ALL_CAPS처럼 모든 글자를 대문자로 하고 단어와 단어 사이를 밑줄로 연결한 형태를 사용한다.
 - 클래스에 들어 있는 인스턴스 메서드는 호출 대상 객체를 가리키는 첫 번째 인자의 이름으로 반드시 self를 사용해야 한다.
+  - **인스턴스(instance)** : 클래스를 실체화한 것이다. [^6]
 - 클래스 메서드는 클래스를 가리키는 첫 번째 인자의 이름으로 반드시 cls를 사용해야 한다.
 
 <br>
@@ -220,6 +223,8 @@ print(notebook)
 <br>
 
 - **enumerate**는 이터레이터를 지연 계산 제너레이터(lazy generator)로 감싼다.
+  - **느긋한 계산법(Lazy evaluation)** : 계산의 결과값이 필요할 때까지 계산을 늦추는 기법이다. [^5]
+  - 제너레이터의 next가 호출되어야만 실제로 파일에서 한줄을 읽는 등을 지연실행이라 한다.
 - **enumerate**는 루프 인덱스와 이터레이터의 다음 값으로 이뤄진 쌍을 넘겨준다. (yield)
   - 기본적으로 인덱스와 원소로 이루어진 튜플(tuple)을 만들어 준다.
 - **next** 내장 함수를 사용해 다음 원소를 가져온다.
@@ -342,3 +347,7 @@ print(notebook)
 
 [^1]: [[파이썬] 튜플(tuple) - sunnamgung8](https://velog.io/@sunnamgung8/%ED%8C%8C%EC%9D%B4%EC%8D%AC-%ED%8A%9C%ED%94%8Ctuple)
 [^2]: [파이썬 기본을 갈고 닦자! - 19. for in 반복문, Range, enumerate](https://wikidocs.net/16045)
+[^3]: [객체지향(public, private, protected - 잔재미코딩)](https://www.fun-coding.org/PL&OOP1-5.html)
+[^4]: [Python 강좌 : 제 37강 - 속성(Attribute) - Daehee YUN Tech Blog](https://076923.github.io/posts/Python-37/)
+[^5]: [느긋한 계산법 - 위키백과](https://ko.wikipedia.org/wiki/%EB%8A%90%EA%B8%8B%ED%95%9C_%EA%B3%84%EC%82%B0%EB%B2%95)
+[^6]: [[python] python의 self와 __init__의 이해 - 두더지 개발자](https://engineer-mole.tistory.com/190)
