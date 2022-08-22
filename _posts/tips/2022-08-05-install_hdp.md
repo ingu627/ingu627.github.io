@@ -10,7 +10,7 @@ toc_sticky: true
 sidebar_main: true
 
 data: 2022-08-05
-last_modified_at: 2022-08-05
+last_modified_at: 2022-08-21
 ---
 
 Hortonworks Data Platform(HDP)는 분산 스토리지 및 대규모 멀티 소스 데이터 세트 처리를 위한 오픈소스 프레임워크입니다. 도커 내 hdp를 설치해봅시다. <br><br> 도커 내 HDP 설치 참고 : [
@@ -140,6 +140,22 @@ Cloudera 공식 사이트](https://www.cloudera.com/tutorials/sandbox-deployment
 - 다음 화면이 뜬다면, 성공적으로 설치가 된거다.
 
     <img src='https://user-images.githubusercontent.com/78655692/183083645-883d4d6d-33b7-440b-b579-d7b8111c64ed.png' width=700>
+
+<br>
+<br>
+
+## 만약 이런 에러가 뜬다면, Ports are not available: listen tcp 0.0.0.0/50070: bind: An attempt was made to access a socket in a way forbidden by its access permissions
+
+- **해결책**
+  - 명령 프롬프트에서 다음과 같은 명령어를 실행해준다.
+
+  ```cmd
+  net stop winnat
+  docker start container_name
+  net start winnat
+  ```
+
+
 
 <br>
 <br>
