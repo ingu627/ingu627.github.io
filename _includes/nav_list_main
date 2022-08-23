@@ -103,6 +103,13 @@
         </ul>
         <ul>
             {% for category in site.categories %}
+                {% if category[0] == "spark" %}
+                    <li><a href="/categories/spark" class="">스파크(Spark) ({{category[1].size}})</a></li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        <ul>
+            {% for category in site.categories %}
                 {% if category[0] == "linux" %}
                     <li><a href="/categories/linux" class="">리눅스(Linux) ({{category[1].size}})</a></li>
                 {% endif %}
