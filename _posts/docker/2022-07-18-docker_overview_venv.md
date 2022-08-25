@@ -41,8 +41,8 @@ last_modified_at: 2022-07-20
   - Dockerfile이 있는 경로에 있어야 한다.
   - `-t` 또는 `--tag`를 붙인다.
 
-    ```linux
-    docker build . -t [account]/[repository]:[tag] 
+    ```shell
+    $ docker build . -t [account]/[repository]:[tag] 
     ```
 
 <br>
@@ -51,8 +51,8 @@ last_modified_at: 2022-07-20
 
 - `pull` 명령어는 docker hub로부터 우분투 도커 이미지를 가져온다.
 
-    ```linux
-    docker pull ubuntu:20.04
+    ```shell
+    $ docker pull ubuntu:20.04
     ```
 
 <br>
@@ -62,8 +62,8 @@ last_modified_at: 2022-07-20
 - `push` 명령어는 도커 명령어로 만든 컨테이너를 저장소에 푸시하기 위함이다.
   - "업로드한다"고 이해하면 된다.
 
-    ```linux
-    docker push account/repository:tag
+    ```shell
+    $ docker push account/repository:tag
     ```
 
 <br>
@@ -72,8 +72,8 @@ last_modified_at: 2022-07-20
 
 - `commit` 명령어는 종료된 도커 컨테이너 상태 그대로 이미지를 생성해준다. [^3]
 
-  ```linux
-  docker commit [container ID] [Image name]
+  ```shell
+  $ docker commit [container ID] [Image name]
   ```
 
 <br>
@@ -116,8 +116,8 @@ RUN apt-get install git -y
 - 해당 저장소로 dockerfile 내용을 토대로 이미지를 빌드한다.
   - tag를 지정안하면 default 값으로 latest로 된다.
 
-    ```linux
-    docker build . -t ingu627/venv:0.1
+    ```shell
+    $ docker build . -t ingu627/venv:0.1
     ```
 
 <br>
@@ -125,8 +125,8 @@ RUN apt-get install git -y
 - docker hub에 이미지를 업로드하기 전에 도커에 로그인부터 해야 한다.
 - 해당 명령어로 로그인을 한다.
 
-    ```linux
-    docker login
+    ```shell
+    $ docker login
     ```
 
 
@@ -135,16 +135,16 @@ RUN apt-get install git -y
 - `docker images` 명령어를 실행해 이미지가 잘 만들어졌는지 확인한다.
 - 그 후, 다음 명령어를 통해 해당 저장소로 푸시한다.
 
-    ```linux
-    docker push ingu627/venv:0.1
+    ```shell
+    $ docker push ingu627/venv:0.1
     ```
 
 <br>
 
 - docker hub로 잘 업로드되었다면, 해당 이미지를 로컬로 불러올 수 있다. 이때 pull 명령어를 쓴다.
 
-    ```linux
-    docker pull ingu627/venv:0.1
+    ```shell
+    $ docker pull ingu627/venv:0.1
     ```
 
 <br>
@@ -156,14 +156,14 @@ RUN apt-get install git -y
   - `-p` : [host port][container port] port 연결
 - 만약 실행이 안된다면, docker desktop의 `run`을 실행해본다.
 
-  ```linux
-  docker run -d -it --name pytorch ingu627/venv:0.1
+  ```shell
+  $ docker run -d -it --name pytorch ingu627/venv:0.1
   ```
 
 - 현재 컨테이너가 실행되고 있는지 확인하고 싶다면 다음 명령어를 사용한다.
 
-    ```linux
-    docker ps
+    ```shell
+    $ docker ps
     ```
 
 <br>
@@ -184,8 +184,8 @@ RUN apt-get install git -y
 - 하지만.. 매번 설치할 때마다 힘들었던 것을 도커가 대신 해주지 않는가. 위의 과정이 복잡한 분을 위해 아나콘다 설치까지 모든 과정을 한 이미지를 미리 업로드 해놨다.
 - 다음 한줄 코드만 쓰면 된다.
 
-    ```linux
-    docker pull ingu627/pytorch_venv:pytorch-gpu
+    ```shell
+    $ docker pull ingu627/pytorch_venv:pytorch-gpu
     ```
 
 - 해당 이미지 정보 : anaconda, cuda 11.3, cudnn 8.2.1, git, pytorch, ubuntu 20.04 등 설치
@@ -198,20 +198,20 @@ RUN apt-get install git -y
 - 그렇다면, docker에 있는 파이썬 가상 환경을 제대로 써봐야 한다.
 - 가장 유연하게 쓸 수 있는 툴이 vs code인데, 이 경우 터미널에서 해당 컨테이너 이름을 attach해주면 된다.
 
-  ```linux
+  ```shell
   # 해당 이미지를 이용하여 컨테이너 실행
-  docker run -d -it --gpus all --name pytorch ingu627/pytorch_venv:pytorch-gpu
+  $ docker run -d -it --gpus all --name pytorch ingu627/pytorch_venv:pytorch-gpu
   ```
 
-  ```linux
-  docker attach [container name]
+  ```shell
+  $ docker attach [container name]
   # 예시
-  docker attach pytorch
+  $ docker attach pytorch
   ```
 
 - gpu를 쓰려면, 해당 명령어들을 실행해 설치해준다.
 
-  ```linux
+  ```shell
   $ distribution=$(. /etc/os-release;echo $ID$VERSION_ID) \
     && curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add - \
     && curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list

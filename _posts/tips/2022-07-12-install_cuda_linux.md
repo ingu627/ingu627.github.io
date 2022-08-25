@@ -23,19 +23,19 @@ ubuntu 20.04, nvidia driver 495, cuda 11.3, cudnn 8.2.1, pytorch 버전을 설�
 
 - 혹시 우분투에 nvidia, cuda를 설치한 적이 있다면 해당 명령어를 터미널에 실행해보길 바란다. [^1]
 
-    ```linux
+    ```shell
     $ sudo apt-get purge nvidia*
     ```
 
-    ```linux
+    ```shell
     $ sudo apt-get autoremove
     ```
 
-    ```linux
+    ```shell
     $ sudo apt-get autoclean
     ```
 
-    ```linux
+    ```shell
     $ sudo rm -rf /usr/local/cuda*
     ```
 
@@ -46,7 +46,7 @@ ubuntu 20.04, nvidia driver 495, cuda 11.3, cudnn 8.2.1, pytorch 버전을 설�
 
 - 그래픽 카드 및 설치 가능한 드라이버를 다음 명령어로 확인해본다.
 
-    ```linux
+    ```shell
     $ ubuntu-drivers devices
     ```
 
@@ -57,12 +57,12 @@ ubuntu 20.04, nvidia driver 495, cuda 11.3, cudnn 8.2.1, pytorch 버전을 설�
 - 이제 설치하고픈 버전을 골라 설치하거나, 자동으로 드라이버를 설치한다. [^2]
 - 본인은 `nvidia-driver-495`로 설치해보겠다.
 
-    ```linux
+    ```shell
     # 자동으로 드라이버 설치
     $ sudo ubuntu-drivers autoinstall
     ```
 
-    ```linux
+    ```shell
     # 원하는 버전 설치
     $ sudo apt install nvidia-driver-495
     ```
@@ -71,13 +71,13 @@ ubuntu 20.04, nvidia driver 495, cuda 11.3, cudnn 8.2.1, pytorch 버전을 설�
 
 - nvidia 드라이버 설치가 끝나면 NVIDIA kernel module의 load를 도와주는 `modprobe` 패키지를 설치한다. [^3]
 
-    ```linux
+    ```shell
     $ sudo apt-get install dkms nvidia-modprobe
     ```
 
 - 그리고 다음 명령어로 마무리해준다.
 
-    ```linux
+    ```shell
     $ sudo apt update
     $ sudo apt upgrade
 
@@ -90,7 +90,7 @@ ubuntu 20.04, nvidia driver 495, cuda 11.3, cudnn 8.2.1, pytorch 버전을 설�
 - 재부팅 후 설치가 잘 되었는지 확인하기 위해 다음 명령어를 실행해본다.
 - 아래처럼 잘 나오면 설치가 잘 된것이다.
 
-    ```linux
+    ```shell
     $ nvidia-smi
     ```
 
@@ -115,13 +115,13 @@ ubuntu 20.04, nvidia driver 495, cuda 11.3, cudnn 8.2.1, pytorch 버전을 설�
 
 <br>
 
-```linux
+```shell
 # runfile(local)
 $ wget https://developer.download.nvidia.com/compute/cuda/11.3.1/local_installers/cuda_11.3.1_465.19.01_linux.run
 $ sudo sh cuda_11.3.1_465.19.01_linux.run
 ```
 
-```linux
+```shell
 # 만약 위 과정이 안되면 아래 명령어를 실행한다. - deb(local)
 $ wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin
 $ sudo mv cuda-ubuntu2004.pin /etc/apt/preferences.d/cuda-repository-pin-600
@@ -152,7 +152,7 @@ $ sudo apt-get -y install cuda
 
 > 만약 gcc가 없어서 문제가 발생한다면, 다음 명령어를 수행한다.
 
-```linux
+```shell
 $ sudo apt update 
 $ sudo apt install build-essential 
 $ sudo apt-get install manpages-dev
@@ -160,7 +160,7 @@ $ sudo apt-get install manpages-dev
 
 - cuda 버전을 확인하고 싶으면, 다음 명령어를 실행한다.
 
-    ```linux
+    ```shell
     $ nvcc -V
     ```
 
@@ -170,7 +170,7 @@ $ sudo apt-get install manpages-dev
 
 - CUDA Toolkit 관련 설정을 환경 변수에 추가하기 위해 다음 명령어를 실행한다. [^4]
 
-    ```linux
+    ```shell
     $ sudo sh -c "echo 'export PATH=$PATH:/usr/local/cuda-11.3/bin'>> /etc/profile"
     $ sudo sh -c "echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-11.3/lib64'>> /etc/profile"
     $ sudo sh -c "echo 'export CUDARDIR=/usr/local/cuda-11.3'>> /etc/profile"
@@ -208,7 +208,7 @@ $ sudo apt-get install manpages-dev
   - 압축 풀기 명령어 : `tar xvzf [압축 파일명]`
   - `*`은 모든 것을 포함한다는 의미
 
-    ```linux
+    ```shell
     $ tar xvzf cudnn-11.3-linux-x64-v8.2.1.32.tgz
     $ sudo cp cuda/include/cudnn* /usr/local/cuda/include
     $ sudo cp cuda/lib64/libcudnn* /usr/local/cuda/lib64
@@ -227,7 +227,7 @@ $ sudo apt-get install manpages-dev
 
 - 새로 추가된 라이브러리를 시스템에서 찾을 수 있도록 한다.
 
-    ```linux
+    ```shell
     $ sudo ldconfig
     ```
 
@@ -235,7 +235,7 @@ $ sudo apt-get install manpages-dev
 
 - 다음은 설정이 제대로 되었는지 확인하기 위한 명령어이다.
 
-    ```linux
+    ```shell
     ldconfig -N -v $(sed 's/:/ /' <<< $LD_LIBRARY_PATH) 2>/dev/null | grep libcudnn
     ```
 
@@ -248,7 +248,7 @@ $ sudo apt-get install manpages-dev
 
 - 먼저 python 버전을 확인하고, venv를 설치해준다. [^5]
 
-    ```linux
+    ```shell
     $ python3 --version
     $ sudo apt-get install python3-venv
     ```
@@ -257,7 +257,7 @@ $ sudo apt-get install manpages-dev
 
 - 그다음, 원하는 이름으로 가상환경을 생성한다.
 
-    ```linux
+    ```shell
     $ python3 -m venv [가상환경 이름]
     # 예시로
     $ python3 -m venv tf2.8
@@ -268,7 +268,7 @@ $ sudo apt-get install manpages-dev
 - 다음은 가상환경를 활성화하는 과정이다.
 - 활성화하면 터미널 앞에 가상환경 이름이 나타날 것이다.
 
-    ```linux
+    ```shell
     $ source [가상환경 이름]/bin/activate
     # 예시로
     $ source tf2.8/bin/activate
@@ -289,7 +289,7 @@ $ sudo apt-get install manpages-dev
   - [pytorch.org - get_started](https://pytorch.org/get-started/previous-versions/)
 - 그외 필요한 패키지는 아래와 같은 방식으로 설치해주면 된다.
 
-    ```linux
+    ```shell
     $ pip install --upgrade pip --user
     $ pip install pandas matplotlib seaborn scipy sklearn
     $ pip install jupyter notebook

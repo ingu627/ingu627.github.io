@@ -111,16 +111,16 @@ Cloudera 공식 사이트](https://www.cloudera.com/tutorials/sandbox-deployment
 
 - HDF sandbox를 중지하고 싶다면, 다음 명령어를 실행한다. 
   
-    ```linux
-    docker stop sandbox-hdf
-    docker stop sandbox-proxy
+    ```shell
+    $ docker stop sandbox-hdf
+    $ docker stop sandbox-proxy
     ```
 
 - HDF sandbox를 시작하고 싶다면, 다음 명령어를 실행한다. 
 
-    ```linux
-    docker start sandbox-hdf
-    docker start sandbox-proxy
+    ```shell
+    $ docker start sandbox-hdf
+    $ docker start sandbox-proxy
     ```
 
 <br>
