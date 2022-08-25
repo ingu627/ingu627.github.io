@@ -97,11 +97,10 @@ last_modified_at: 2022-07-20
 FROM ubuntu:20.04
 FROM nvidia/cuda:11.3.0-cudnn8-devel-ubuntu20.04
 
-RUN rm -rf /var/lib/apt/lists/*
-
 RUN apt-get -y update -y
 RUN apt-get -y upgrade -y
 RUN apt-get install git -y
+RUN rm -rf /var/lib/apt/lists/*
 ```
 
 <br>
