@@ -72,6 +72,7 @@ last_modified_at: 2022-08-07
 ## 4. CUDA Toolkit 버전 확인
 
 - [CUDA Toolkit window(윈도우) 링크](https://www.tensorflow.org/install/source_windows#tested_build_configurations)
+- 찾는 버전이 없다면 : [CUDA/Cudnn/Driver/GCC/TensorFlow/Python version compatibility charts 링크](https://transang.me/cuda-cudnn-driver-gcc-tensorflow-python-version-compatibility-charts/)
 
 ![image](https://user-images.githubusercontent.com/78655692/159164021-a3dc15ac-53db-410e-a804-b4de5f1bfc24.png)
 

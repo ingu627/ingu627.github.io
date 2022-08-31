@@ -79,6 +79,8 @@ Student \| June 2021 ~ September 2021
   - **품질경영기사**
 - **Survey Analyst, Junior (2020.11)**
   - **사회조사분석사 2급**
+- **Korean History Proficiency Test (2020.08)**
+  - **한국사능력검정시험 2급**
 
 <img align='right' width='100' height='100' src='https://user-images.githubusercontent.com/78655692/165668600-4292fd79-802c-4728-a15e-70cb2e71d49a.png'>
 
