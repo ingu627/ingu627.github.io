@@ -3,7 +3,7 @@ layout: single
 title: "윈도우10 환경에서 konlpy 설치하는 방법"
 excerpt: "KoNLPy는 한국어 정보처리를 위한 파이썬 패키지입니다. NLP (자연어 처리)를 할 때 쓰이지만 운영체제가 윈도우같은 경우는 설치 버전을 좀 맞춰야 합니다."
 categories: tips
-tag : [tip, konlpy, nlp, 윈도우10, 설치, jpype, tweepy, 자연어 처리, 환경 변수]
+tag : [tip, konlpy, nlp, 윈도우10, 설치, jpype, tweepy, 자연어 처리, 환경 변수, 윈도우]
 toc: True
 toc_sticky: True
 sidebar_main: true
