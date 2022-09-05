@@ -124,6 +124,13 @@
         </ul>
         <ul>
             {% for category in site.categories %}
+                {% if category[0] == "git" %}
+                    <li><a href="/categories/git" class="">깃(GIT) ({{category[1].size}})</a></li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        <ul>
+            {% for category in site.categories %}
                 {% if category[0] == "web" %}
                     <li><a href="/categories/web" class="">웹(web) 개발 ({{category[1].size}})</a></li>
                 {% endif %}
@@ -171,13 +178,6 @@
                 {% for category in site.categories %}
                     {% if category[0] == "git_blog" %}
                         <li><a href="/categories/git_blog" class="">git 블로그(Github Pages) ({{category[1].size}})</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-            <ul>
-                {% for category in site.categories %}
-                    {% if category[0] == "git" %}
-                        <li><a href="/categories/git" class="">깃(GIT) 사용법 ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
