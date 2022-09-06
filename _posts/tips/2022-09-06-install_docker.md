@@ -12,7 +12,7 @@ sidebar_main: true
 last_modified_at: 2022-09-06
 ---
 
-윈도우10 또는 우분투 내에서 도커를 설치하는 과정을 정리할 필요가 있다고 느꼈습니다. <br> 설치에 도움이 되었으면 합니다. <br><br> **참조** <br> [Install Docker Engine on Ubuntu - 공식사이트](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository) <br> [윈도우10에서 리눅스(Linux) 설치하기 (Ubuntu on WSL2) - poeun](https://ingu627.github.io/tips/install_ubuntu/) <br> [Install Docker Desktop on Windows](https://docs.docker.com/desktop/install/windows-install/)
+윈도우10 또는 우분투 내에서 도커를 설치하는 과정을 정리할 필요가 있다고 느꼈습니다. <br> 설치에 도움이 되었으면 합니다. <br><br> **참조** 1. <br> [Install Docker Engine on Ubuntu - 공식사이트](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository) <br> 2. [윈도우10에서 리눅스(Linux) 설치하기 (Ubuntu on WSL2) - poeun](https://ingu627.github.io/tips/install_ubuntu/) <br> 3. [Install Docker Desktop on Windows](https://docs.docker.com/desktop/install/windows-install/)
 {: .notice--danger} 
 
 <br>
