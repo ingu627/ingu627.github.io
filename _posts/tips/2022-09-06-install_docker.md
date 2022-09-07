@@ -107,8 +107,8 @@ $ apt-cache madison docker-ce
 ## 2. 도커 설치하기 (WINDOW 10)
 
 - 먼저 윈도우10 내 리눅스를 사용하기 위해 WSL2를 설치해야 한다.
-- 설치하는 방법은 아래 링크를 참조한다.
-  - [윈도우10에서 리눅스(Linux) 설치하기 (Ubuntu on WSL2) - poeun](https://ingu627.github.io/tips/install_ubuntu/)
+- 윈도우10 내 WSL2를 설치하는 방법은 아래 링크를 참조한다.
+  - 링크 : [윈도우10에서 리눅스(Linux) 설치하기 (Ubuntu on WSL2) - poeun](https://ingu627.github.io/tips/install_ubuntu/)
 - 또한 WSL2 backend의 요구 사항도 충족하는지 살펴본다.
 
 ![Screenshot from 2022-09-06 19-43-13](https://user-images.githubusercontent.com/78655692/188615539-4843b1ea-eb24-40d6-ad4d-51283a1a49fa.png) [^1]
