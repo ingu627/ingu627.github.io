@@ -111,7 +111,7 @@ $ apt-cache madison docker-ce
   - 링크 : [윈도우10에서 리눅스(Linux) 설치하기 (Ubuntu on WSL2) - poeun](https://ingu627.github.io/tips/install_ubuntu/)
 - 또한 WSL2 backend의 요구 사항도 충족하는지 살펴본다.
 
-![Screenshot from 2022-09-06 19-43-13](https://user-images.githubusercontent.com/78655692/188615539-4843b1ea-eb24-40d6-ad4d-51283a1a49fa.png) [^1]
+![Screenshot from 2022-09-06 19-43-13](https://user-images.githubusercontent.com/78655692/188615539-4843b1ea-eb24-40d6-ad4d-51283a1a49fa.png) <br> 이미지 출처 [^1]
 
 
 <br>
@@ -121,6 +121,17 @@ $ apt-cache madison docker-ce
 
 ![ss](https://user-images.githubusercontent.com/78655692/188615378-13cd3547-23e6-4cb0-ad04-630af651e859.png)
 
+<br>
+
+### [에러 해결] Got permission denied while trying to connect to the Docker daemon socket
+
+- 권한이 없다고 뜬다면, 아래 명령어들을 실행해 docker group에 유저를 추가해 준다. [^2]
+
+```shell
+$ sudo groupadd docker
+$ sudo usermod -aG docker $USER
+$ newgrp docker
+```
 
 
 <br>
@@ -131,3 +142,4 @@ $ apt-cache madison docker-ce
 ## References
 
 [^1] : [Install Docker Desktop on Windows](https://docs.docker.com/desktop/install/windows-install/)
+[^2]: [도커 권한문제 해결하기: "Got permission denied while trying to connect to the Docker daemon socket" - seul chan](https://seulcode.tistory.com/557)
