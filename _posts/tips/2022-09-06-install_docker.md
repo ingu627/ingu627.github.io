@@ -141,5 +141,5 @@ $ newgrp docker
 
 ## References
 
-[^1] : [Install Docker Desktop on Windows](https://docs.docker.com/desktop/install/windows-install/)
+[^1]: [Install Docker Desktop on Windows](https://docs.docker.com/desktop/install/windows-install/)
 [^2]: [도커 권한문제 해결하기: "Got permission denied while trying to connect to the Docker daemon socket" - seul chan](https://seulcode.tistory.com/557)
