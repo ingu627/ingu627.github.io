@@ -62,7 +62,9 @@ sidebar_main: true
 
 ## 5. 코드 복사 -> 붙여넣기
 
-- `dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart`
+```shell
+dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
+```
 
 ![image](https://user-images.githubusercontent.com/78655692/143835757-843a4d19-048b-428e-be6f-1fedad631cfd.png)
 
@@ -73,7 +75,9 @@ sidebar_main: true
 
 ## 6. 코드 복사 -> 붙여넣기
 
-- `dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart`
+```shell
+dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
+```
 
 ![image](https://user-images.githubusercontent.com/78655692/143836164-91bd1c3f-db2f-42f9-b9d9-41ba588ed8af.png)
 
