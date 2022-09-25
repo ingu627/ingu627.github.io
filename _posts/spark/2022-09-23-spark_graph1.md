@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "[Spark] GraphFrame을 활용한 그래프, 서브그래프, 모티프"
-excerpt: "Spark The Definitive Guide 책을 중심으로 스파크를 요약 및 정리해보았습니다. spark 예제를 통해 RDD 고급 연산에 대해 알아봅니다."
+excerpt: "Spark The Definitive Guide 책을 중심으로 스파크를 요약 및 정리해보았습니다. spark 예제를 통해 그래프, 서브그래프, 모티프에 대해 알아봅니다."
 categories: spark
 tag : [스파크, spark, sql, 스칼라, scala, 정리, 의미, 란, 실행, 그래프, graphframe, graphx, vertex, edge, directed, 서브그래프, 모티프, motifs]
 toc: true
@@ -173,6 +173,7 @@ val motifs = stationGraph.find("(a)-[ab]->(b); (b)-[bc]->(c); (c)-[ca]->(a)")
 
 - 위 쿼리를 실행하면 정점 a, b, c와 가 에지의 중첩(nested) 필드가 포함된 DataFrame이 생성된다.
 - 아래 예제는 기존의 타임스탬프를 스파크의 타임스탬프로 파싱(parsing)한 다음 특정 지점에서 다른 지점으로 이동한 자전거가 동일한 것인지, 각 이동을 시작하는 시점이 올바른지 확인하기 위해 비교를 수행한다.
+  - **파싱(parsing)** : 구문 분석이라고도 하며, 문장을 그것을 이루고 있는 구성 성분으로 분해하고 그들 사이의 위치 관계를 분석하여 문장의 구조를 결정하는 것을 말한다. [^2]
 
 ```scala
 import org.apache.spark.sql.functions.{expr, to_timestamp}
@@ -199,8 +200,6 @@ motifs.selectExpr("*",
 
 
 
-
-
 <br>
 <br>
 <br>
@@ -209,3 +208,4 @@ motifs.selectExpr("*",
 ## References
 
 [^1]: [wikipedia - network motif](https://en.wikipedia.org/wiki/Network_motif)
+[^2]: [위키백과 - 구문 분석](https://ko.wikipedia.org/wiki/%EA%B5%AC%EB%AC%B8_%EB%B6%84%EC%84%9D)
