@@ -29,6 +29,8 @@ last_modified_at: 2022-09-25
 $ ./bin/spark-shell --packages graphframes:graphframes:0.8.2-spark3.2-s_2.12
 ```
 
+<br>
+
 ```scala
 val bikeStations = spark.read.option("header", "true"
   ).csv("./data/bike-data/201508_station_data.csv")
@@ -66,8 +68,8 @@ stationGraph.cache()
 - 페이지랭크 알고리즘은 랜덤으로 링크를 클릭하는 사람이 특정 페이지에 도달할 가능성을 나타내는 데 사용되는 확률 분포를 출력한다. [^1]
 - 알고리즘은 다음과 같다.
   1. 각 페이지 랭크를 1.0으로 초기화한다.
-  2. 각 반복마다, 페이지 p가 랭크 확률(p)/n(총 정점 수)를 이웃에게 전송한다.
-  3. 각 페이지의 랭크를 0.15 + 0.85*sum(총 기여 받은 수)로 계산한다.
+  2. 각 반복마다, 페이지 p가 `랭크 확률(p)/n(총 정점 수)`를 이웃에게 전송한다.
+  3. 각 페이지의 랭크를 `0.15 + 0.85*sum(총 기여 받은 수)`로 계산한다.
 - 마지막 두 단계는 알고리즘이 각 페이지에 대한 올바른 페이지랭크 값으로 수렴하는 동안 여러 번 반복된다.
   - default : 10회 
 
@@ -178,7 +180,7 @@ stationGraph.bfs.fromExpr("id = 'Townsend at 7th'"
 
 - 로컬 시스템에서 이 알고리즘을 실행하기 위해 해야 할 일은 먼저 데이터를 샘플링하는 것이다.
 - 샘플을 사용하면 가비지 컬렉션(garbage collection) 이슈와 같은 스파크 애플리케이션 충돌을 발생시키지 않고 결과를 얻을 수 있다.
-  - **가비지 컬렉션(garbage collection)** : 메모리 과니 기법의 하나로, 프로그램이 동적으로 할당했던 메모리 영역 중 필요 없게 된 영역을 해제하는 기능이다.
+  - **가비지 컬렉션(garbage collection)** : 메모리 관리 기법의 하나로, 프로그램이 동적으로 할당했던 메모리 영역 중 필요 없게 된 영역을 해제하는 기능이다.
 
 ```scala
 spark.sparkContext.setCheckpointDir("/tmp/checkpoints")
