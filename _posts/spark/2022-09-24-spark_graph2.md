@@ -155,8 +155,8 @@ degreeRatio.orderBy("degreeRatio").show(10, false)
 <br>
 
 - 예제에서는 이 알고리즘을 서로 다른 지점 간 최단 경로를 찾기 위해 사용하지만 SQL 표현식으로 지정된 노드 집합에도 적용할 수 있다.
-- **maxPathLength**로 최대 에지 수를 지정할 수 있다.
-- **edgeFilter**로 조건에 맞지 않는 에지를 필터링할 수도 있다.
+  - **maxPathLength**로 최대 에지 수를 지정할 수 있다.
+  - **edgeFilter**로 조건에 맞지 않는 에지를 필터링할 수도 있다.
 
 ```scala
 stationGraph.bfs.fromExpr("id = 'Townsend at 7th'"
