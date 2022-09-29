@@ -4,15 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "a31e6eb1b6570ef1",
+        "id": "9435c1ea919fe2c5",
         "type": "leaf",
         "state": {
-          "type": "markdown",
-          "state": {
-            "file": "_posts/paper/2022-08-29-kafka.md",
-            "mode": "source",
-            "source": false
-          }
+          "type": "empty",
+          "state": {}
         }
       }
     ],
@@ -69,7 +65,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "_posts/paper/2022-08-29-kafka.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -87,6 +82,8 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "a31e6eb1b6570ef1",
-  "lastOpenFiles": []
+  "active": "9435c1ea919fe2c5",
+  "lastOpenFiles": [
+    "_posts/paper/2022-08-29-kafka.md"
+  ]
 }
