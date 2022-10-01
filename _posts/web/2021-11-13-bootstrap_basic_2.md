@@ -1,17 +1,22 @@
 ---
 layout: single
 title: 'Bootstrap(부트스트랩) 기초 실습 (2)'
-excerpt: "문법 및 github 예제로 실습" 
+excerpt: '본 글은 패스트캠퍼스의 한 번에 끝내는 파이썬 웹 개발 초격차 패키지 강의를 개인 실습하여 정리했습니다. 문법 및 github 예제로 실습'
 categories: web
-tag : [web, frontend, concept, bootstrap]
+tag : [web, frontend, concept, bootstrap, 정리, 웹, 기초, 예제]
 toc: true
 sidebar_main: true
 
-last_modified_at: 2021-11-14
+last_modified_at: 2022-10-01
 ---
 
-> 본 글은 패스트캠퍼스의 "한 번에 끝내는 파이썬 웹 개발 초격차 패키지" 강의를 개인 실습하여 따라 한 것입니다.
-> 기타 완성용 파일을 원하시는 분은 [https://github.com/ParkYoungWoong/bootstrap5-github-landing](https://github.com/ParkYoungWoong/bootstrap5-github-landing) 링크로 가주시면 됩니다. 
+본 글은 패스트캠퍼스의 "한 번에 끝내는 파이썬 웹 개발 초격차 패키지" 강의를 개인 실습하여 따라 한 것입니다. <br>
+기타 완성용 파일을 원하시는 분은 [https://github.com/ParkYoungWoong/bootstrap5-github-landing](https://github.com/ParkYoungWoong/bootstrap5-github-landing) 링크로 가주시면 됩니다. 
+{: .notice--info}
+
+<br>
+<br>
+<br>
 
 ## youtube
 
@@ -25,11 +30,15 @@ last_modified_at: 2021-11-14
 - `border-radius:` : 모서리를 둥글게 깎아 준다. 
 - css에서 부모요소는 위쪽에 작성한다.
 
+<br>
+
 ![image](https://user-images.githubusercontent.com/78655692/141646962-333fa385-7b36-4812-929d-a6a58f5b9eef.png)
 
 <script src="https://gist.github.com/ingu627/010cce714a0d210e47fb62ed30e188c0.js"></script>
 
 <script src="https://gist.github.com/ingu627/7ab7e83d662eb5b0cb7bf74faf4059ad.js"></script>
+
+<br>
 
 ## Features
 
@@ -40,6 +49,8 @@ last_modified_at: 2021-11-14
 <script src="https://gist.github.com/ingu627/9e292618b6e893f0a2168089416bc387.js"></script>
 
 - `<div class="col-3">` : col이 3칸을 차지 (기본적으로 row는 12칸 차지)
+
+<br>
 
 ![image](https://user-images.githubusercontent.com/78655692/141679708-b8c22501-6ffa-451d-9b5e-80bd2c7907e5.png)
 
@@ -56,6 +67,8 @@ last_modified_at: 2021-11-14
 
 <script src="https://gist.github.com/ingu627/cfebe72d19cce05e626d076adabf025c.js"></script>
 
+<br>
+
 ## Google Maps
 
 ![image](https://user-images.githubusercontent.com/78655692/141680920-75ab22af-57f2-498e-aec0-ce2bfd6f574d.png)
@@ -69,6 +82,8 @@ last_modified_at: 2021-11-14
   - `&`는 다음 파라미터를 입력 (callback)
 - `const`로 변수를 만듦 (하나의 객체 데이터 할당)
 - `new` : 생성자 함수
+
+<br>
 
 ## Footer
 
@@ -85,6 +100,8 @@ last_modified_at: 2021-11-14
 - `transform: scale(-1,1);` : 이미지의 크기를 x, y축으로 지정. -1은 x축기준으로 반전 효과 
 - `opacity` : 투명도
 
+<br>
+
 ![image](https://user-images.githubusercontent.com/78655692/141681854-3f8e27b5-3d03-4c11-953a-cdba8caea1a3.png)
 
 <script src="https://gist.github.com/ingu627/00f27c92fb7734abc2f74fe07c46e907.js"></script>
@@ -97,6 +114,8 @@ last_modified_at: 2021-11-14
   - `text-decoration: none;` : css에서 이 코드를 적용하면 관련 요소 다 적용됨.
 - `transition` : 몇 초에 걸쳐서 자연스럽게 변화할 것인가 (css) (전후 상태)
 - `d-flex` : 수평 정렬 (html)
+
+<br>
 
 ![image](https://user-images.githubusercontent.com/78655692/141682207-c0b0c62b-e458-4a45-92bf-df25350f9559.png)
 
@@ -114,6 +133,8 @@ last_modified_at: 2021-11-14
 - `margin-right: 20px;` : 우측으로 여백이 요소사이에 20만큼 각각 생성
 - `href` : 클릭하면 링크따라 이동 
 - `margin: 0;` : 마진 초기화 
+
+<br>
 
 ## 반응형 - @media
 
@@ -133,6 +154,8 @@ last_modified_at: 2021-11-14
 - `min-width` : ~이상 일 때
 - `all` : 모든
 
+<br>
+
 ## 반응형 - Offcavnas
 
 <script src="https://gist.github.com/ingu627/f1a58e8466352d19e5710efc78539c54.js"></script>
@@ -141,14 +164,26 @@ last_modified_at: 2021-11-14
 - `flex-grow: 1;` : 차지하는 영역이 최대한 늘어남
 - `ms-2` : 외부여백이 2만큼 증가 
 
+<br>
+
 ![image](https://user-images.githubusercontent.com/78655692/141683895-2059ffc3-6f50-4e6f-ac4a-14e4dcb49381.png)
 
 - `mb-4` : margin-bottom 4를 채워줌 
 - `col-lg-7` : 뷰포트가 Large Size 보다 크면 컬럼을 7개 사용한다.
   - `<div class="col-lg-7 col-12">` : 뷰포트가 large size보다 크지 않을 때 12개를 쓴다.
 
-## 최종 완성본 : [https://github.com/ingu627/bootstrap5-github-landing](https://github.com/ingu627/bootstrap5-github-landing)
+<br>
+
+## 최종 완성본
+
+- [https://github.com/ingu627/bootstrap5-github-landing](https://github.com/ingu627/bootstrap5-github-landing)
+
+<br>
+<br>
+<br>
+<br>
 
 ## Reference
-[fastcampus](https://fastcampus.co.kr/dev_online_pyweb)
-[bootstrap 공식링크](https://getbootstrap.com/)
+
+- [fastcampus](https://fastcampus.co.kr/dev_online_pyweb)
+- [bootstrap 공식링크](https://getbootstrap.com/)
