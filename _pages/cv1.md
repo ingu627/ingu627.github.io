@@ -1,7 +1,7 @@
 ---
 title: "CV"
 layout: splash
-permalink: /cv/
+permalink: /cv1/
 author_profile: true
 sidebar_main: true
 ---
