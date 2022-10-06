@@ -210,8 +210,9 @@ last_modified_at: 2022-10-01
   - `target=` : 링크 URL의 표시(브라우저 탭) 위치 
 - `<span></span>` : 특별한 의미가 없는 구분을 위한 요소 (inline element)
   - 스타일(CSS) 추가 가능
-- `<br/>` : 줄바꿈 요소. (inline element) (Break)
+- `<br>` : 줄바꿈 요소. (inline element) (Break)
   - enter 키와 동일한 기능
+  - self-closing tag
 - `<input />` : 사용자가 데이터를 입력하는 요소 (inline-block element)
   - `type="text"` : 입력받을 데이터의 타입
     - 텍스트를 입력할 수 있는 UI 제공
