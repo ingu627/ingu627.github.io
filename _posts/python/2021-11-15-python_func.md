@@ -8,10 +8,10 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-08-21
+last_modified_at: 2022-10-09
 ---
 
-문제 풀기 : 알고리즘 문제에서 주어지는 것들을 구별한다. 나는 뼈대만 잡아준다. <br>순서는 상관없이 배우는 대로 정리를 해 나가고 있습니다.<br> 
+문제 풀기 : 알고리즘 문제에서 주어지는 것들을 구별하는 습관 가지기!! <br><br>순서는 상관없이 배우는 대로 정리를 해 나가고 있습니다.
 {: .notice--danger}
 
 ## 파이썬 함수
@@ -385,6 +385,41 @@ call_member(홍길동=23, 미나=27, 나나=22)
 # 이름: 나나
 # 나이: 22
 ```
+
+<br>
+
+### permutations
+
+- **permutations**는 리스트와 같은 iterable 객체에서 r개의 데이터를 뽑아 일렬로 나열하는 모든 경우(순열)을 계산해준다. 
+- **코드**
+
+  ```python
+  from itertools import permutations
+
+  data = ['A', 'B', 'C']
+  result = list(permutations(data, 3))
+
+  print(result)
+  # [('A', 'B', 'C'), ('A', 'C', 'B'), ('B', 'A', 'C'), ('B', 'C', 'A'), ('C', 'A', 'B'), ('C', 'B', 'A')]
+  ```
+
+<br>
+
+### combinations
+
+- **combinations**는 리스트와 같은 iterable 객체에서 r개의 데이터를 뽑아 순서를 고려하지 않고 나열하는 모든 경우(조합)을 계산한다.
+- **코드**
+
+  ```python
+  from itertools import combinations
+
+  data = ['A', 'B', 'C']
+  result = list(combinations(data, 2))
+
+  print(result)
+  # [('A', 'B'), ('A', 'C'), ('B', 'C')]
+  ```
+
 
 <br>
 <br>
