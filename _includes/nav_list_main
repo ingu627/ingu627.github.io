@@ -165,6 +165,20 @@
                 {% endif %}
             {% endfor %}
         </ul>
+        <ul>
+            {% for category in site.categories %}
+            {% if category[0] == "algorithm" %}
+            <li><a href="/categories/algorithm" class="">알고리즘(Algorithm) ({{category[1].size}})</a></li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+        <ul>
+            {% for category in site.categories %}
+            {% if category[0] == "graph" %}
+            <li><a href="/categories/graph" class="">그래프(Graph) ({{category[1].size}})</a></li>
+            {% endif %}
+            {% endfor %}
+        </ul>
         <span class="nav__sub-title">Social Science</span>
             <ul>
                 {% for category in site.categories %}
