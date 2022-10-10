@@ -2,7 +2,7 @@
 layout: single
 title: '[신상현 영단어 리뷰] 영단어 어근 정리'
 categories: englishWord
-tag : [english, word, grammar]
+tag : [영단어, 정리, 신상현, 뜻, 영어, 토익]
 sidebar_main: true
 classes: wide
 
