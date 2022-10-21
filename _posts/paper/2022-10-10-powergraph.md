@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-10-10
+last_modified_at: 2022-10-21
 ---
 
 ![image](https://user-images.githubusercontent.com/78655692/194746413-0494aaf8-179e-4244-a388-f3baf1a8f915.png)
@@ -47,7 +47,7 @@ last_modified_at: 2022-10-10
 - 결과값 $\sum$은 **적용(apply)** 단계에서 central 버텍스 값을 업데이트하는 데 사용된다.
   - $D_u^{new}\leftarrow a(D_u,\sum)$
 - 마지막으로 **분산(scatter)** 단계는 central 버텍스의 새로운 값을 사용하여 인접한 에지의 데이터를 업데이트한다.
-  - $(D_(u,v))\leftarrow s(D_u^{new},D_{(u,v)},D_v)$
+  - $(D_{(u,v)})\leftarrow s(D_u^{new},D_{(u,v)},D_v)$
 
 <br>
 
@@ -107,7 +107,7 @@ last_modified_at: 2022-10-10
 <br>
 
 - Gather 단계가 완료된 후, Apply 기능은 최종 어큐뮬레이터를 사용하여 그래프에 원자적으로 다시 기록되는 새 버텍스 값 $D_u$를 계산한다.
-- Scatter 단계 동안 Scatter 함수는 $u$에 인접한 에지에서 병렬로 호출되어 데이터 그래프에서 다시 기록되는 새 에지 값 $D_(u,v)$를 생성한다.
+- Scatter 단계 동안 Scatter 함수는 $u$에 인접한 에지에서 병렬로 호출되어 데이터 그래프에서 다시 기록되는 새 에지 값 $D_{(u,v)}$를 생성한다.
 - Scatter 함수는 인접한 버텍스에 대해 캐시된 어큐뮬레이터 $a_v$를 동적으로 업데이트하는 데 사용되는 optional 값 $\Delta a$를 반환한다.
 
 <br>
