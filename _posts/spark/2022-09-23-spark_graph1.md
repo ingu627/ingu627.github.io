@@ -149,7 +149,7 @@ val subgraph = GraphFrame(stationGraph.vertices, townAnd7thEdges)
 
 ## 5. 모티프
 
-- **모티프(motifs)**는 구조적 패턴을 그래프로 표현하는 방법이다.
+- **모티프(motifs)**는 정형 패턴을 그래프로 표현하는 방법이다.
 - 모티프를 지정하면 실제 데이터 대신 데이터의 패턴을 쿼리한다.
 - DataFrame에서는 Neo4J의 Cypher 언어와 유사한 도메인에 특화된 언얼 쿼리를 지정한다.
   - 이 언어를 사용하면 정점과 에지의 조합을 지정하고 그에 대한 이름을 할당할 수 있다.
