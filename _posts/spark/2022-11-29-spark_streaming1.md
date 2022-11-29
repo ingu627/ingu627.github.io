@@ -244,8 +244,77 @@ spark.streams.active
 
   <img width="165" alt="image" src="https://user-images.githubusercontent.com/78655692/204505118-b188581f-2bd4-4f9d-9720-cef8d48157e6.png">
 
+<br>
+<br>
 
+## 6. 스트림 트랜스포메이션
 
+- 스트리밍 트랜스포메이션은 정적 DataFrame의 트랜스포메이션을 대부분 포함한다.
+- 하지만, 스트리밍 데이터에 맞지 않는 트랜스포메이션 제약들이 있을 수 있다.
+  - 예를 들어 사용자가 집계하지 않은 스트림을 정렬할 수 없다.
+  - 그리고 상태 기반 처리(stateful processing)를 사용하지 않으면 계층적 집계가 불가능하다.
+
+<br>
+
+### 6.1 선택과 필터링
+
+- 정형 스트르밍은 DataFrame의 모든 함수와 개별 컬럼을 처리하는 선택(Selection)과 필터링(Filtering) 그리고 단순 트랜스포메이션을 지원한다.
+- 먼저, 앞서 생성한 `streaming`의 컬럼들은 다음과 같다.
+  - `streaming.columns` : ['Arrival_Time', 'Creation_Time', 'Device', 'Index', 'Model', 'User', 'gt', 'x', 'y', 'z']
+- 선택과 필터링을 사용하는 예제는 다음 코드와 같다.
+  - DataFrame의 트랜스포메이션에 대해 더 자세히 알고 싶다면 : [Spark] 집계 연산, 함수, SQL 명령어 정리](https://ingu627.github.io/spark/spark_db9/)
+  
+  ```python
+  from pyspark.sql.functions import expr
+
+  simpleTransform = streaming.withColumn("stairs", expr("gt like '%stairs%'")) \
+      .where("stairs") \
+      .where("gt is not null") \
+      .select("gt", "Model", "Arrival_Time", "Creation_Time") \
+      .writeStream \
+      .queryName("simple_transform") \
+      .format("memory") \
+      .outputMode("append") \
+      .start()
+  ```
+
+<br>
+
+- 정규 표현식 기본 구문 정리 그림 [^1]
+
+  <img width="777" alt="image" src="https://user-images.githubusercontent.com/78655692/204510084-4e173d48-c506-40c9-bca8-a1576c511121.png">
+
+<br>
+
+### 6.2 집계
+
+- 정형 스트리밍은 집계 기능을 지원한다.
+
+  ```python
+  deviceModelStats = streaming.cube("gt", "model").avg() \
+      .drop("avg(Arrival_Time)") \
+      .drop("avg(Creation_Time)") \
+      .drop("avg(Index)") \
+      .writeStream.queryName("device_counts").format("memory") \
+      .outputMode("complete") \
+      .start()
+  ```
+
+<br>
+
+### 6.3 조인
+
+- 스트리밍 DataFrame과 정적 DataFrame의 조인(join)을 지원한다.
+
+  ```python
+  historicalAgg = static.groupBy("gt", "model").avg()
+  deviceModelStats = streaming.drop("Arrival_Time", "Creation_Time", "Index") \
+      .cube("gt", "model").avg() \
+      .join(historicalAgg, ["gt", "model"]) \
+      .writeStream.queryName("device_counts").format("memory") \
+      .outputMode("complete") \
+      .start()
+  ```
 
 
 <br>
@@ -254,3 +323,4 @@ spark.streams.active
 
 ## References
 
+[^1]: [SQL, 정규 표현식 패턴 - BELLSTONE](https://itbellstone.tistory.com/88)
