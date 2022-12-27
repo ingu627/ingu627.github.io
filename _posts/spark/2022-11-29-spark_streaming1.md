@@ -262,7 +262,7 @@ spark.streams.active
 - 먼저, 앞서 생성한 `streaming`의 컬럼들은 다음과 같다.
   - `streaming.columns` : ['Arrival_Time', 'Creation_Time', 'Device', 'Index', 'Model', 'User', 'gt', 'x', 'y', 'z']
 - 선택과 필터링을 사용하는 예제는 다음 코드와 같다.
-  - DataFrame의 트랜스포메이션에 대해 더 자세히 알고 싶다면 : [Spark] 집계 연산, 함수, SQL 명령어 정리](https://ingu627.github.io/spark/spark_db9/)
+  - DataFrame의 트랜스포메이션에 대해 더 자세히 알고 싶다면 : [[Spark] 집계 연산, 함수, SQL 명령어 정리](https://ingu627.github.io/spark/spark_db9/)
   
   ```python
   from pyspark.sql.functions import expr
