@@ -217,17 +217,6 @@
                     {% endif %}
                 {% endfor %}
             </ul>
-            <ul>
-                <li><a href="https://zinc-viscount-1a1.notion.site/Study-Daily-ba1944692c1f45758b2ef820ce5b6a73" class="">매일 영어작문 (daily) </a></li>
-            </ul>
-        <span class="nav__sub-title">HUMANITIES</span>
-            <ul>
-                {% for category in site.categories %}
-                    {% if category[0] == "book" %}
-                        <li><a href="/categories/book" class="">책들 정리(요약) ({{category[1].size}})</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
       </li>
   </ul>
 </nav>
