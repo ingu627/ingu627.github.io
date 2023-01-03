@@ -2,8 +2,8 @@
 main:
   - title: "CV"
     url: /cv/
-  - title: "Paper"
-    url: /paper/
+  - title: "Project"
+    url: /project/
   - title: "🔍"
     url: /search/
   - title: "References"
