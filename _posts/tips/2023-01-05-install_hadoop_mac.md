@@ -1,15 +1,15 @@
 ---
 layout: single
-title: "맥 m1 환경에서 하둡(Hadoop), 스파크(Spark) 설치하기"
+title: "맥 m1 환경에서 하둡(Hadoop), 스파크(Spark) 설치 및 환경설정하기"
 excerpt : "하둡과 스파크를 로컬환경에서 설치하는 과정을 글로 담기 위해 적어보았습니다."
 categories: tips
-tag : [하둡, m1, 맥, hadoop, spark, 설치, ssh, 자바, 환경설정, hdfs, yarn, 맵리듀스]
+tag : [하둡, m1, 맥, hadoop, 스파크, 설치, ssh, 자바, 환경설정, hdfs, yarn, 맵리듀스]
 
 toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2023-01-05
+last_modified_at: 2023-01-06
 ---
 
 <br>
@@ -83,7 +83,7 @@ $ chmod 0600 ~/.ssh/authorized_keys
 
 <br>
 
-- 보통 `Downloads` 경로에 다운로드받아지므로 이를 root 경로로 변경해준다.
+- 보통 `Downloads` 경로에 다운로드 받아지므로 이를 root 경로로 변경해준다.
 - `mv hadoop-3.3.4 ~/hadoop-3.3.4`
 
 <br>
@@ -110,7 +110,7 @@ export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
 
 <br>
 
-- **수도 분산(Pseudo-Distributed) 모드**는 모든 하둡 데몬을 로컬 머신에서 실행하는 방법이다. 지금은 이 모드를 사용해본다.
+- **가상 분산(Pseudo-Distributed) 모드**는 모든 하둡 데몬을 로컬 머신에서 실행하는 방법이다. 지금은 이 모드를 사용해본다.
   - 하둡 데몬을 여러 대의 머신으로 구성된 클러스터에서 실행하는 방법은 추후에 쓰겠다.
 - `etc/hadoop` 디렉토리에 다음 내용이 담긴 환경 설정 파일을 만든다.
 
@@ -120,7 +120,7 @@ export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
 <configuration>
     <property>
         <name>fs.defaultFS</name>
-        <value>hdfs://localhost</value>
+        <value>hdfs://localhost:9000</value>
     </property>
 </configuration>
 ```
@@ -147,6 +147,10 @@ export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
   <property>
       <name>mapreduce.framework.name</name>
       <value>yarn</value>
+  </property>
+  <property>
+    <name>mapred.job.tracker</name>
+    <value>localhost:8021</value>
   </property>
 </configuration>
 ```
@@ -188,6 +192,16 @@ $ sbin/start-yarn.sh ## YARN
 
 <br>
 
+- `http://locathost:9870` 웹 UI를 통해 데몬 프로세스를 확인할 수 있다.
+- **결과**
+
+  <img width="1323" alt="image" src="https://user-images.githubusercontent.com/78655692/210920628-0753f437-9d08-4fb1-9528-acb6da86328e.png">
+
+- 또한, 자바의 `jps` 명령어를 사용해 데몬 동작 여부를 파악할 수 있다.
+
+
+<br>
+
 - 데몬 중지는 다음과 같다.
 
 ```shell
@@ -206,8 +220,30 @@ $ sbin/stop-yarn.sh ## YARN
 $ hadoop fs -mkdir -p /user/$USER
 ```
 
+<br>
+<br>
 
+## 4. 스파크 설치 
 
+- **스파크(Apahce Spark)**는 빅데이터 처리를 위한 오픈 소스 분산 시스템이다.
+- 하둡과 마찬가지로 [[Apache Spark Homepage - Download]](https://spark.apache.org/downloads.html) 링크로 가 최신 버전을 설치해준다.
+- **스크린샷**
+
+  <img width="1312" alt="image" src="https://user-images.githubusercontent.com/78655692/210923882-6b59709b-be2b-4a95-9a77-cc0b33508a20.png">
+
+<br>
+
+- 보통 `Downloads` 경로에 다운로드 받아지므로 이를 root 경로로 변경해준다.
+- `mv spark-3.3.0-bin-hadoop3 ~/spark-3.3.0`
+- 그리고 `~/.zshrc` 로 가 spark에 대한 환경설정을 해준다.
+
+```shell
+export SPARK_HOME="/Users/hyunseokjung/spark-3.3.0"
+export PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin
+export SPARK_LOCAL_HOSTNAME=localhost
+```
+
+> 그 외 스파크에 대한 자세한 내용은 [Category - SPARK](https://ingu627.github.io/categories/spark) 링크로 가 참조하면 된다.
 
 
 <br>
