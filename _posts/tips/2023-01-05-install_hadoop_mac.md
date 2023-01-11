@@ -62,7 +62,6 @@ export PATH=${PATH}:$JAVA_HOME/bin
 - `ssh localhost` 명령어를 통해 ssh 설치 여부를 확인할 수 있다.
 - 키 수정은 다음과 같다. 
   - 인증키를 미리 생성해서 ssh에 로그인할 때 비밀번호 대신 사용하는 방식이다. [^1] 
-- 
 
 ```shell
 $ ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
@@ -217,7 +216,7 @@ $ sbin/stop-yarn.sh ## YARN
 - 다음 명령어를 통해 홈 디렉토리를 생성한다.
 
 ```shell
-$ hadoop fs -mkdir -p /user/$USER
+$ hadoop fs -mkdir -p /user/hyunseokjung 
 ```
 
 <br>

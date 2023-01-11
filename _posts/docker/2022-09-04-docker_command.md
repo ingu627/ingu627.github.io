@@ -3,12 +3,12 @@ layout: single
 title: "터미널 내 도커(docker) 컨테이너 명령어, 옵션 정리"
 excerpt: "윈도우 프롬프트, 리눅스 터미널 등에서 사용되는 도커 명령어, 옵션들을 정리해보았습니다. pull, run, start, stop, rm"
 categories: docker
-tag : [docker, 도커, 컨테이너, 설치, 사용법, docker, 명령어, 정리, pull, run, start, stop, rm, 옵션]
+tag : [docker, 도커, 컨테이너, 설치, 사용법, docker, 명령어, 정리, pull, run, start, stop, rm, exec, 옵션]
 toc: true
 toc_sticky: true
 sidebar_main: true
 
-last_modified_at: 2022-09-04
+last_modified_at: 2023-01-11
 ---
 
 
@@ -66,7 +66,7 @@ $ docker pull ingu627/hadoop:spark3.3.0
 
 ## 3. 컨테이너 생성 및 시작
 
-- **run**은 여러가지 옵션을 통해 다양한 방식으로 컨테이너를 실행할 수 있도록 해준다.
+- **run**은 여러가지 옵션을 통해 다양한 방식으로 컨테이너를 생성하고 실행할 수 있도록 해준다.
 - 명령어는 다음과 같다.
 
 ```shell
@@ -129,6 +129,23 @@ $ docker start spark
 <br>
 <br>
 
+### 4.2 실행중인 컨테이너에 접속하기
+
+- **exec** : 실행중인 컨테이너에서 명령어를 실행시켜 준다.
+  - `docker exec [option] [컨테이너 id] [명령어]` [^5]
+
+<br>
+
+- **옵션**
+  - **-\-it** : 컨테이너를 종료하지 않은 채, 터미널의 입력을 계속해서 컨테이너로 전달하기 위해서 사용한다. (세션 연결)
+  - **-\-d** : 명령어를 백그라운드에서 실행하게 해준다.
+
+```shell
+$ docker exec -it spark \bin\bash
+```
+
+
+
 ## 5. 컨테이너 중지
 
 - **stop** : 실행 중인 컨테이너를 중지하고 싶을 때 이 명령어를 쓴다.
@@ -166,3 +183,4 @@ $ docker rm [옵션] [컨테이너 id]
 [^2]: [Docker 이미지 관련 커맨드 사용법](https://www.daleseo.com/docker-images/)
 [^3]: [docker run 커맨드 사용법](https://www.daleseo.com/docker-run/)
 [^4]: [[Docker] Docker run 옵션 종류 - 우노](https://wooono.tistory.com/348)
+[^5]: [docker docs - exec](https://docs.docker.com/engine/reference/commandline/exec/)
