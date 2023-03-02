@@ -105,7 +105,7 @@ analytics:
 # Site Author
 author:
   name             : "poeun 🔅"
-  avatar           : "/assets/images/Henri_Matisse_horse.jpg" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
+  avatar           : "/assets/images/Henri_Matisse_horse_ver2.jpg" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
   bio              : "Original Artwork © Henri Matisse (1869 ~ 1954), Le Cheval L'Ecuyere et le Clown, 1947, 64.6 x 42.5, Centre Georges-Pompidou<br/><br/>개인 저장공간입니다.<br/>도움이 되길 바랍니다. <br/>Since 2021.10"
   location         : "South Korea"
   # email            : "rjsdudans@naver.com"
