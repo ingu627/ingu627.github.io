@@ -6,7 +6,7 @@ categories: web
 tag : [web, frontend, 개념, html, 웹, 정리, 기초, 예제]
 toc: true
 toc_sticky: true
-sidebar_main: true
+sidebar_main: false
 
 date: 2021-11-02
 last_modified_at: 2022-10-01

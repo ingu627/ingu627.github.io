@@ -5,7 +5,7 @@ excerpt: "케라스 창시자에게 배우는 딥러닝 - 머신 러닝의 네 �
 categories: keras
 tag : [python, keras, DL, ML, AI, 인고지능, 딥러닝, 케라스, 머신러닝, 리뷰, 정리, 이해, 모델, 케라스 창시자에게 배우는 딥러닝]
 toc: true
-sidebar_main: true
+sidebar_main: false
 classes: wide
 
 last_modified_at: 2022-03-28

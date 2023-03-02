@@ -7,7 +7,7 @@ tag : [하둡, m1, 맥, hadoop, 스파크, 설치, ssh, 자바, 환경설정, hd
 
 toc: true
 toc_sticky: true
-sidebar_main: true
+sidebar_main: false
 
 last_modified_at: 2023-01-06
 ---

@@ -6,7 +6,7 @@ categories: mlops
 tag : [hoeffding, markov, chebyshev, bernstein, 호에프딩, 마코브, 체비쇼프, 번스타인, 통계, 확률, 부등식, inequality, 머신러닝, machine learning, 기계 학습,]
 toc: true
 toc_sticky: true
-sidebar_main: true
+sidebar_main: false
 
 last_modified_at: 2022-06-06
 ---

@@ -7,7 +7,7 @@ tag : [resnet, resnext]
 toc: true
 
 classes: wide
-sidebar_main: true
+sidebar_main: false
 
 last_modified_at: 2022-04-28
 ---

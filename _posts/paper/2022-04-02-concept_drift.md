@@ -6,7 +6,7 @@ categories: [paper, mlops]
 tag : [data quality, concept drift, 모델, mlops, data drift, 논문, 리뷰, 정리, 후기, design, 설명, layer, paper]
 toc: true
 toc_sticky: true
-sidebar_main: true
+sidebar_main: false
 
 last_modified_at: 2022-04-13
 ---

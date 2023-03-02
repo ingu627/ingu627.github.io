@@ -6,7 +6,7 @@ categories: docker
 tag : [docker, 도커, 컨테이너, 파이썬, 파이토치, cuda, cudnn, build, pull, push, commit, run, docker hub, 도커 허브, 설치, 사용법, docker nvidia, gpu, 명령어, 정리]
 toc: true
 toc_sticky: true
-sidebar_main: true
+sidebar_main: false
 
 last_modified_at: 2022-07-20
 ---

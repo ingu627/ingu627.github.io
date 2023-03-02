@@ -6,7 +6,7 @@ categories: spark
 tag : [아파치, 스파크, spark, 정리, 의미, 란, 이란, 사용법, pyspark, 추천 시스템, recommender system, 협업 필터링, 교차최소제곱, als]
 toc: true
 toc_sticky: true
-sidebar_main: true
+sidebar_main: false
 
 last_modified_at: 2022-12-02
 ---

@@ -11,7 +11,7 @@ toc_sticky: true
 
 last_modified_at: 2022-07-14
 
-sidebar_main: true
+sidebar_main: false
 ---
 
 - **Update(20220714)**

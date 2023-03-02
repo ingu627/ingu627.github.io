@@ -7,7 +7,7 @@ tag : [리눅스, 우분투, window10, 윈도우, 도커, docker, linux, 설치,
 
 toc: true
 toc_sticky: true
-sidebar_main: true
+sidebar_main: false
 
 last_modified_at: 2022-09-06
 ---

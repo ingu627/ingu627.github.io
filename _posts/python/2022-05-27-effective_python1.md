@@ -6,7 +6,7 @@ categories: python
 tag : [파이썬 코딩의 기술, 버전, sys, pep8, 공백, 명명, str, f 문자열, 대입, 언패킹, unpacking, enumerate, iterable, range, next, zip, 대입식, 왈러스, pdf, 정리]
 toc: true
 toc_sticky: true
-sidebar_main: true
+sidebar_main: false
 
 last_modified_at: 2022-08-21
 ---

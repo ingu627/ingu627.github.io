@@ -11,7 +11,7 @@ toc_label: 짧지만 써보는 목차
 
 last_modified_at: 2022-01-21
 
-sidebar_main: true
+sidebar_main: false
 
 header:
     overlay_image: /assets/images/Almond_Blossom_1280.jpg
@@ -57,7 +57,7 @@ header:
 |canonical_url|페이지를 특정 url로 지정할 때 |
 |classes: wide| 페이지를 넓게 쓰고자 할때|
 
-**sidebar_main: true**는 기본문법에서 수정된 버전입니다.
+**sidebar_main: false**는 기본문법에서 수정된 버전입니다.
 {: .notice--danger}
 
 <br>
@@ -77,7 +77,7 @@ toc_label: 짧지만 써보는 목차
 
 last_modified_at: 2021-11-19
 
-sidebar_main: true
+sidebar_main: false
 # canonical_url:
 # classes: wide
 ---

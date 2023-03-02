@@ -10,7 +10,7 @@ toc_sticky: true
 
 last_modified_at: 2022-01-18
 
-sidebar_main: true
+sidebar_main: false
 ---
 
 <img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/149885926-86d336ea-fe65-4bb1-96f8-c556918fbb5a.png

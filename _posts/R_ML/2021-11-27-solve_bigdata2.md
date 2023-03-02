@@ -5,7 +5,7 @@ excerpt: "2021년 제 3회 빅데이터분석기사 실기를 위한 문제풀�
 categories: R_ML
 tag : [R, 빅데이터 분석기사, 실기, 작업형, 필답형, 자격증, dataq, 정리, pdf, 기출문제, 정리본, 후기, 설명, 2회, 3회]
 toc: true
-sidebar_main: true
+sidebar_main: false
 classes: wide
 
 last_modified_at: 2022-03-31

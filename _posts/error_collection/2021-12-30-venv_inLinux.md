@@ -4,7 +4,7 @@ title: "[에러 해결 방법] 리눅스에서 파이썬 가상환경 설치안�
 categories: error
 tag : [error, solution, linux, venv, 가상환경, 파이썬, 설치, 리눅스, wsl]
 toc: true
-sidebar_main: true
+sidebar_main: false
 
 last_modified_at: 2022-04-03
 ---

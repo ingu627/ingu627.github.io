@@ -6,7 +6,7 @@ categories: code
 tag : [lenet, pytorch, 파이토치, cifar10, 코드, 구현, design, 설명, layer, compose, transforms, resize, RandomHorizontalFlip, RandomAffine, ColorJitter, ToTensor, normalize, DataLoader, Dataset, detach, cpu, numpy, clip, iter, next, Conv2d, max_pool2d, parameters, zero_grad, backward, step, item, 딥러닝, cv, 컴퓨티 비전]
 toc: true
 toc_sticky: true
-sidebar_main: true
+sidebar_main: false
 
 last_modified_at: 2022-04-18
 ---

@@ -5,7 +5,7 @@ categories: git
 tag : [git]
 toc: true
 toc_sticky: true
-sidebar_main: true
+sidebar_main: false
 
 last_modified_at: 2022-01-11
 ---

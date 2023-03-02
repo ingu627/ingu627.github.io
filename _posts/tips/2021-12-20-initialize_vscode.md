@@ -5,7 +5,7 @@ excerpt: "vsocde를 하도 지웠다 설치를 반복해서 글로 남긴다. 2�
 categories: tips
 tag : [tip, vscode, 초기화, 윈도우, 설치]
 toc: True
-sidebar_main: true
+sidebar_main: false
 
 last_modified_at: 2021-12-20
 ---

@@ -7,7 +7,7 @@ tag : [tip, 리눅스, 도커, docker, linux, hdp, 호튼웍스, hdp, hortonwork
 
 toc: true
 toc_sticky: true
-sidebar_main: true
+sidebar_main: false
 
 data: 2022-08-05
 last_modified_at: 2022-08-21

@@ -7,7 +7,7 @@ categories: englishWord
 tag : [DS, 영단어, 분산 시스템, distributed systems]
 toc: true
 toc_sticky: true
-sidebar_main: true
+sidebar_main: false
 
 last_modified_at: 2022-02-06
 ---

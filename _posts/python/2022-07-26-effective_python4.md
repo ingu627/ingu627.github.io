@@ -6,7 +6,7 @@ categories: python
 tag : [파이썬 코딩의 기술, 컴프리헨션, 대입식, 제너레이터, 이터레이션, yield, yield from, throw, itertools, 설명, 란, 정리, 정의, chain, repeat, cycle, tee, zip_longest, islice, takewhile, filterfalse, accumulate, product, pdf, 정리]
 toc: true
 toc_sticky: true
-sidebar_main: true
+sidebar_main: false
 
 last_modified_at: 2022-07-27
 ---

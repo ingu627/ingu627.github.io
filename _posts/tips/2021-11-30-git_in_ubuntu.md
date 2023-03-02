@@ -10,7 +10,7 @@ toc_sticky: true
 
 last_modified_at: 2022-03-20
 
-sidebar_main: true
+sidebar_main: false
 ---
 
 ## Git이란? 

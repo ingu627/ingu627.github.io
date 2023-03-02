@@ -5,7 +5,7 @@ excerpt: '본 글은 패스트캠퍼스의 한 번에 끝내는 파이썬 웹 �
 categories: web
 tag : [web, frontend, concept, bootstrap, 정리, 웹, 기초, 예제]
 toc: true
-sidebar_main: true
+sidebar_main: false
 
 last_modified_at: 2022-10-01
 ---

@@ -6,7 +6,7 @@ categories: spark
 tag : [아파치, 스파크, spark, 정리, 의미, 란, 이란, 사용법, pyspark, 스트리밍, 정형, 스트림, 카프카, kafka, 싱크, 트리거]
 toc: true
 toc_sticky: true
-sidebar_main: true
+sidebar_main: false
 
 last_modified_at: 2022-11-29
 ---

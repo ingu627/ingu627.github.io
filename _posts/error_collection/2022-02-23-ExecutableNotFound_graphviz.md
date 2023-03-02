@@ -4,7 +4,7 @@ title: "[에러 해결 방법]  ExecutableNotFound: failed to execute 'dot', mak
 categories: error
 tag : [error, solution, graphviz]
 toc: true
-sidebar_main: true
+sidebar_main: false
 
 last_modified_at: 2022-02-23
 ---

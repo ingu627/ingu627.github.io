@@ -3,7 +3,7 @@ layout: single
 title: '[신상현 영단어 리뷰] 영단어 접두사 총정리'
 categories: eng_gr
 tag : [english, word, prefix, 접두사]
-sidebar_main: true
+sidebar_main: false
 classes: wide
 toc: true
 

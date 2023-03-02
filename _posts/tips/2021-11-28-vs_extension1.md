@@ -6,7 +6,7 @@ categories: tips
 tag : [tip, vscode, extension, 파이썬, 주피터, Tabnine, Pylance, IntelliCode, MagicPython, Jupyter, Settings Sync, GitLens, GitGraph, 자동완성, 확장]
 toc: True
 toc_sticky: True
-sidebar_main: true
+sidebar_main: false
 
 last_modified_at: 2022-03-20
 ---

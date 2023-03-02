@@ -7,7 +7,7 @@ categories: DS
 tag : [DS, 아키텍처, 레이어드, 객체기반, 자원기반, 이벤트기반, 미들웨어, 시스템, P2P, NFS, 래퍼, 인터셉터]
 toc: true
 toc_sticky: true
-sidebar_main: true
+sidebar_main: false
 
 last_modified_at: 2022-01-24
 ---

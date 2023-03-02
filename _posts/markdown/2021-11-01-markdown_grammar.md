@@ -6,7 +6,7 @@ categories: md
 tag : [grammar, tip, md, 마크다운, 문법, 사용법, 란, 크기 지정, 글꼴, 줄바꿈, 띄어쓰기, 글자 색깔, 인용문, 문자 박스, 문자 정렬, 구분선, 코드 블럭, 표, 접기, 펼치기, 각주, 미주, 유튜브, 이미지, 링크, 수식, 그래프, 글씨 크기, 에디터]
 toc: true
 toc_sticky: true
-sidebar_main: true
+sidebar_main: false
 
 last_modified_at: 2022-08-30
 ---

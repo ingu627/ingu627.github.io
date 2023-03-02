@@ -6,7 +6,7 @@ categories: python
 tag : [파이썬 코딩의 기술, pdf, 정리, 문법, 효율, 사용법, 란, 뜻, 클래스, 함수, class, def, super, mixin, public, private, 인터페이스]
 toc: true
 toc_sticky: true
-sidebar_main: true
+sidebar_main: false
 
 last_modified_at: 2022-10-08
 ---

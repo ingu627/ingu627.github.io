@@ -6,7 +6,7 @@ categories: [paper, hadoop]
 tag : [리뷰, 논문, 정리, 설명, 란, gfs, 구글 파일 시스템, 분산, distributed, mapreduce, 맵리듀스, 개념, 정의, 원리, map, reduce, 마스터, failure, fault tolerance, 하둡, hadoop, paper]
 toc: true
 toc_sticky: true
-sidebar_main: true
+sidebar_main: false
 
 last_modified_at: 2022-08-11
 ---

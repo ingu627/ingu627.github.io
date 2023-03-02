@@ -5,7 +5,7 @@ excerpt : "주피터 노트북으로 코딩 시 단축키를 알면 훨씬 더 �
 categories: tips
 tag : [tip, shortcuts, 단축키, 주피터]
 toc : True
-sidebar_main: true
+sidebar_main: false
 
 last_modified_at: 2022-03-20
 ---

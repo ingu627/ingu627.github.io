@@ -4,7 +4,7 @@ title: '[에러 해결 방법] NotImplementedError: Cannot convert a symbolic Te
 categories: error
 tag : [error, solution]
 toc: true
-sidebar_main: true
+sidebar_main: false
 
 date: 2021-11-03
 last_modified_at: 2021-11-03

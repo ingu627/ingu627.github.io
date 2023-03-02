@@ -7,7 +7,7 @@ tag : [resnet, resnet50, resnet101, resnet152, scratch, 파이토치, fashion mn
 toc: true
 
 classes: wide
-sidebar_main: true
+sidebar_main: false
 
 last_modified_at: 2022-04-18
 ---

@@ -5,7 +5,7 @@ excerpt : "주피터 노트북 파일을 한번에 업로드하여 블로그 글
 categories: git_blog
 tag : [git, blog, jupyter_notebook, 주피터, 파일, gist, 블로그, 업로드]
 toc : True
-sidebar_main: true
+sidebar_main: false
 
 last_modified_at: 2022-03-26
 ---

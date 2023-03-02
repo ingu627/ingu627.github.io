@@ -7,7 +7,7 @@ tag : [tip, cuda, install, gpu, 텐서플로, 설치, 윈도우10]
 
 toc: true
 toc_sticky: true
-sidebar_main: true
+sidebar_main: false
 
 last_modified_at: 2022-03-20
 ---

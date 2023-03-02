@@ -6,7 +6,7 @@ categories: code
 tag : [pytorch lightning, wandb, pytorch, mnist, 예제, 코드, init, forward, training_step, validation_step, configure_optimizers, 사용법, 정리, 설명, mlops]
 toc: true
 toc_sticky: true
-sidebar_main: true
+sidebar_main: false
 
 last_modified_at: 2022-07-13
 ---

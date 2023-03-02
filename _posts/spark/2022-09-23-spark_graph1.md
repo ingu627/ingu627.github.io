@@ -6,7 +6,7 @@ categories: spark
 tag : [스파크, spark, sql, 스칼라, scala, 정리, 의미, 란, 실행, 그래프, graphframe, graphx, vertex, edge, directed, 서브그래프, 모티프, motifs]
 toc: true
 toc_sticky: true
-sidebar_main: true
+sidebar_main: false
 
 last_modified_at: 2022-09-25
 ---

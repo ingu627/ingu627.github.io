@@ -6,7 +6,7 @@ categories: docker
 tag : [docker, 도커, 컨테이너, 설치, 사용법, docker, 명령어, 정리, pull, run, start, stop, rm, exec, 옵션]
 toc: true
 toc_sticky: true
-sidebar_main: true
+sidebar_main: false
 
 last_modified_at: 2023-01-11
 ---

@@ -6,7 +6,7 @@ categories: python
 tag : [파이썬 코딩의 기술, 시퀀스, 슬라이싱, 스트라이드, 언패킹, key, 딕셔너리, in, get, keyerror, setdefault, defaultdict, missing, pdf, 정리]
 toc: true
 toc_sticky: true
-sidebar_main: true
+sidebar_main: false
 
 last_modified_at: 2022-06-02
 ---

@@ -6,7 +6,7 @@ categories: tips
 tag : [tip, konlpy, nlp, 윈도우10, 설치, jpype, tweepy, 자연어 처리, 환경 변수, 윈도우]
 toc: True
 toc_sticky: True
-sidebar_main: true
+sidebar_main: false
 
 last_modified_at: 2022-04-17
 ---

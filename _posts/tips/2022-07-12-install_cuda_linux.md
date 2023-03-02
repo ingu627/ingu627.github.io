@@ -7,7 +7,7 @@ tag : [tip, cuda, install, gpu, ubuntu, nvidia driver, cuda, pytorch, cudnn, 설
 
 toc: true
 toc_sticky: true
-sidebar_main: true
+sidebar_main: false
 
 last_modified_at: 2022-07-16
 ---

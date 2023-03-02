@@ -6,7 +6,7 @@ categories: spark
 tag : [스파크, spark, sql, 스칼라, scala, 정리, 의미, 란, 실행, 그래프, graphframe, pagerank, 알고리즘, algorithm, 페이지랭크, outdegree, 너비 우선 탐색, bfs, breadth first search]
 toc: true
 toc_sticky: true
-sidebar_main: true
+sidebar_main: false
 
 last_modified_at: 2022-09-25
 ---

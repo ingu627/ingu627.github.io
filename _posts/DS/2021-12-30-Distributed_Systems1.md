@@ -7,7 +7,7 @@ categories: DS
 tag : [DS, 분산 시스템, 확장성, 투명성, 미들웨어, 컴퓨팅, grid, cluster, cloud, 인터페이스, distributed system, transparency, middleware]
 toc: true
 toc_sticky: true
-sidebar_main: true
+sidebar_main: false
 
 last_modified_at: 2022-10-24
 ---

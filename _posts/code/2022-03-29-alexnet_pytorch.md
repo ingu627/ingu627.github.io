@@ -6,7 +6,7 @@ categories: code
 tag : [alexnet, pytorch, 파이토치, 알렉스넷, cnn, 코드, 구현, design, 설명, layer, functional, nn, optim, torchvision, epoch, batch size, device, transforms, Compose, ToTensor, Resize, DataLoader, iter, next, Conv2d, Linear, dropout, relu, summary_, parameters, 딥러닝, cv, 컴퓨티 비전]
 toc: true
 toc_sticky: true
-sidebar_main: true
+sidebar_main: false
 
 last_modified_at: 2022-07-13
 ---

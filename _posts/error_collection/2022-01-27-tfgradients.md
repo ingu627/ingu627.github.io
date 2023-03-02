@@ -4,7 +4,7 @@ title: "[에러 해결 방법]  tf.gradients is not supported when eager executi
 categories: error
 tag : [error, solution, tf.gradients]
 toc: true
-sidebar_main: true
+sidebar_main: false
 
 last_modified_at: 2022-01-27
 ---
