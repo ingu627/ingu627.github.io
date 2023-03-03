@@ -6,10 +6,10 @@ main:
     url: /project/
   - title: "🔍"
     url: /search/
-  - title: "References"
-    url: /reference/
-  # - title: "Categories"
-  #   url: /categories/
+#  - title: "References"
+#    url: /reference/
+  - title: "Categories"
+    url: /categories/
 
 docs:
   - title: "Quick Click"
