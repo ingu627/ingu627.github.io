@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "분산 시스템(Distributed Systems) - 2. Architectures"
+title: "[DS] 분산 시스템(Distributed Systems) - 2. Architectures 정리"
 excerpt: "Distributed Systems Third edition by Maarten van Steen,
 Andrew S. Tanenbaum - cha2. Architectures 2.1, 2.2, 2.3, 2.4"
 categories: DS

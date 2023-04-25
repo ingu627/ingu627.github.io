@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "분산 시스템(Distributed Systems) - 1. Introduction"
+title: "[DS] 분산 시스템(Distributed Systems) - 1. Introduction 정리"
 excerpt: "Distributed Systems Third edition by Maarten van Steen,
 Andrew S. Tanenbaum - cha1. Introduction 1.1, 1.2, 1.3, 1.4"
 categories: DS
