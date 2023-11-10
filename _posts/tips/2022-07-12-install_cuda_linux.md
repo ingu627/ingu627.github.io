@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "[2022최신] Ubuntu 20.04에서 nvidia driver, cuda, cudnn, pytorch 설치의 모든 것"
+title: "Ubuntu 20.04에서 nvidia driver, cuda, cudnn, pytorch 설치의 모든 것"
 excerpt : "ubuntu 20.04, nvidia driver 495, cuda 11.3, cudnn 8.2.1, pytorch 버전을 설치하는 방법입니다."
 categories: tips
 tag : [tip, cuda, install, gpu, ubuntu, nvidia driver, cuda, pytorch, cudnn, 설치, 버전, 확인, 리눅스, linux, 우분투, 가상환경, 삭제, 드라이버, 패키지]
