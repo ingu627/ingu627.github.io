@@ -155,6 +155,10 @@ last_modified_at: 2022-10-09
 
 <br>
 
+- 
+
+<br>
+
 ### list[index] = value
 
 - index 위치에 value 값을 넣어라

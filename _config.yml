@@ -19,16 +19,16 @@ after_footer_scripts:
 
 # Site Settings
 locale                   : "ko-KR"
-title                    : "AI & PSYC"
+title                    : "DATA & AI"
 title_separator          : "|"
-subtitle                 : "Deep Learning | Distributed Computing | Psychology"
+subtitle                 : ""
 name                     : "POUEN"
-description              : "개인 저장공간입니다.<br/>도움이 되길 바랍니다. <br/>Since 2021.10"
+description              : "개인 저장공간입니다.<br/>Since 2021.10"
 url                      : "https://ingu627.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : "ingu627/ingu627.github.io" # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
 teaser                   : # path of fallback teaser image, e.g. "/assets/images/500x300.png"
-logo                     : "/assets/images/logo_radius.png"
+logo                     : "/assets/images/logo_poeun_by_dalle.png"
 masthead_title           : # overrides the website title displayed in the masthead, use " " for no title
 breadcrumbs              : true # true, false (default)
 words_per_minute         : 250
@@ -112,7 +112,7 @@ author:
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
-      url: "mailto:rjsdudans@naver.com"
+      url: "mailto:ingu627@gmail.com"
     # - label: "Website"
       # icon: "fas fa-fw fa-link"
       # url: "https://ingu627.github.io"
@@ -141,7 +141,7 @@ footer:
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
-      url: "mailto:rjsdudans@naver.com"
+      url: "mailto:ingu627@gmail.com"
     # - label: "Twitter"
       # icon: "fab fa-fw fa-twitter-square"
       # url:
