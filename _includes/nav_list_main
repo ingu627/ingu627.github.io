@@ -67,13 +67,6 @@
             </ul>
             <ul>
                 {% for category in site.categories %}
-                    {% if category[0] == "R_ML" %}
-                        <li><a href="/categories/R_ML" class="">빅데이터 분석기사(R) ({{category[1].size}})</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-            <ul>
-                {% for category in site.categories %}
                     {% if category[0] == "error" %}
                         <li><a href="/categories/error" class="">에러 해결 방법 ({{category[1].size}})</a></li>
                     {% endif %}
@@ -179,7 +172,14 @@
             {% endif %}
             {% endfor %}
         </ul>
-        <span class="nav__sub-title">Social Science</span>
+        <span class="nav__sub-title">Data Analytics</span>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "R_ML" %}
+                        <li><a href="/categories/R_ML" class="">빅데이터 분석기사(R) ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "survey_a" %}
