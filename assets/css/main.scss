@@ -11,3 +11,10 @@
 @import "minimal-mistakes"; // main partials
 
 @import "custom/customOverride.scss";
+
+@font-face {
+    font-family: 'YESMyoungjo-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_13@1.0/YESMyoungjo-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
