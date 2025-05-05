@@ -105,8 +105,8 @@ analytics:
 # Site Author
 author:
   name             : "poeun 🔅"
-  avatar           : "/assets/images/Henri_Matisse_horse.jpg" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "Original Artwork © Henri Matisse (1869 ~ 1954), Le Cheval L'Ecuyere et le Clown, 1947, 64.6 x 42.5, Centre Georges-Pompidou<br/><br/>개인 저장공간입니다. <br/>Since 2021.10"
+  avatar           : "/assets/images/cr_ai_gpt_image_1.png" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
+  bio              : "Circuit rhythms, neural visions: the art of artificial intelligence 64.6 x 65 Hyunseok Jung <br/><br/>개인 저장공간입니다. <br/>Since 2021.10"
   location         : "South Korea"
   # email            : "rjsdudans@naver.com"
   links:
