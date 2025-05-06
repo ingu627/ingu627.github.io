@@ -3,7 +3,7 @@ layout: single
 title: '벡터 데이터베이스(Vector Database) 완전 정복: 정의부터 선택 기준까지'
 excerpt: "벡터 데이터베이스의 개념, 특징, 주요 종류(Pinecone, Milvus, Weaviate 등) 비교 및 사용 사례별 선택 가이드를 제공합니다. AI 및 RAG 아키텍처의 핵심 기술을 알아보세요."
 categories: llm
-tag : [llm, 청킹]
+tag : [llm, 청킹, 벡터, 벡터db, 종류, pinecone, milvus, weaviate]
 toc: true
 toc_sticky: true
 sidebar_main: true
@@ -13,18 +13,17 @@ last_modified_at: 205-05-05
 ---
 
 
-
-**벡터 데이터베이스(Vector Database) 완전 정복: 정의부터 선택 기준까지**  <br>
 벡터 데이터베이스는 인공지능과 머신러닝 기술의 발전과 함께 최근 급부상하고 있는 특수 목적 데이터베이스입니다. <br>
 특히 생성형 AI와 검색 증강 생성(RAG) 아키텍처가 확산되면서 벡터 데이터베이스의 중요성이 더욱 커지고 있습니다. <br>
 이 글에서는 벡터 데이터베이스의 정의와 특징부터 주요 제품별 비교, 선택 시 고려사항까지 상세히 알아봅니다. <br>
 {: .notice--info}
 
 <br>
+<br>
 
 ## 벡터 데이터베이스의 정의와 특징
 
-<img src="/assets/imgs/llm/250506_vector_db.png" alt="벡터 데이터베이스 개념 설명 다이어그램" width="600"> 
+<img src="https://github.com/user-attachments/assets/cab36080-2c29-4e82-9f2c-410d152e00b3" alt="벡터 데이터베이스 개념 설명 다이어그램" width="600"> 
 
 
 ### 벡터 데이터베이스란?
@@ -71,6 +70,8 @@ last_modified_at: 205-05-05
 ## 주요 벡터 데이터베이스 종류
 
 벡터 데이터베이스 시장은 빠르게 성장하고 있으며, 다양한 제품들이 등장하고 있다. 주요 벡터 데이터베이스는 다음과 같다:
+
+<img src="https://github.com/user-attachments/assets/af90886f-4f60-4a44-9129-7ba921e01aca" width="800">
 
 ### 1. 완전 관리형 벡터 데이터베이스
 
@@ -301,6 +302,7 @@ Chroma는 AI 애플리케이션을 위해 설계된 오픈소스 벡터 데이�
 - 어떤 벡터 데이터베이스를 선택하든, 해당 솔루션이 애플리케이션의 성능 요구사항, 확장성 목표, 예산 제약을 충족하는지 면밀히 평가하고, 가능하다면 프로토타입을 통해 실제 워크로드에서 테스트해보는 것이 중요하다.
 - 벡터 데이터베이스는 계속해서 발전하고 있는 분야이므로, 정기적으로 최신 벤치마크와 기능을 확인하여 현재의 선택이 여전히 최적인지 재평가하는 것이 좋다.
 
+<br>
 <br>
 <br>
 

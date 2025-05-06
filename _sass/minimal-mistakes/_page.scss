@@ -160,6 +160,17 @@ body {
     margin-top: -1.5em;
     padding-left: 1.25rem;
   }
+
+  figure {
+    background: none; // <figure> 요소의 배경색 제거
+    padding: 0;      // <figure> 요소의 패딩 제거
+    border: none;    // 혹시 모를 테두리도 제거
+    margin-bottom: 1em; // 이미지 아래 여백은 유지 (필요에 따라 조절)
+
+    img {
+      margin-bottom: 0; // 이미지 자체의 하단 여백 제거 (캡션과 붙이기 위해)
+    }
+  }
 }
 
 .page__hero {
