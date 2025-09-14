@@ -13,8 +13,15 @@
 @import "custom/customOverride.scss";
 
 @font-face {
-    font-family: 'YESMyoungjo-Regular';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_13@1.0/YESMyoungjo-Regular.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'JetBrains Mono';
+  src: url('https://cdn.jsdelivr.net/gh/JetBrains/JetBrainsMono/web/fonts/JetBrainsMono-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('https://cdn.jsdelivr.net/gh/JetBrains/JetBrainsMono/web/fonts/JetBrainsMono-Bold.woff2') format('woff2');
+  font-weight: bold;
+  font-style: normal;
 }
