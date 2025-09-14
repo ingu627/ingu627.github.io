@@ -25,7 +25,7 @@ last_modified_at: 205-09-14
 
 ### 1. 프루닝: 불필요한 부분은 ‘과감히 잘라라’
 
-<img src="https://1drv.ms/i/c/15c0c4c064518623/IQRQ01lkxfNPS6wM6trXYSjwAQc24_3Ei-DeCg-WLjfLtNM?width=726&height=214" width="726" height="214" />
+<img width="726" height="214" alt="quantization2" src="https://gist.github.com/user-attachments/assets/2b4e2aba-4375-4ec2-918f-2f89dde9a8ba" />
 [^2]
 
 - **Q: 프루닝이란?**
@@ -64,7 +64,7 @@ last_modified_at: 205-09-14
 
 ### 3. 지식 증류 (Knowledge Distillation): “큰 모델”의 똑똑함, “작은 모델”에게 전수해라
 
-<img src="https://1drv.ms/i/c/15c0c4c064518623/IQRlcKQGXS_2RKUKRT4yF4f3AQ35xShpyhWCq9nSH4CP_4M?width=660" width="800" height="auto" /> 
+<img width="710" height="304" alt="quantization3" src="https://gist.github.com/user-attachments/assets/f2394b25-7565-4b40-bcd4-5d3cb9a27bcb" />
 [^2]
 
 - **Q: 원리와 실제 활용 방법은?**
@@ -106,7 +106,7 @@ last_modified_at: 205-09-14
 
 - LLM 경량화의 모든 기술은 효율성과 실용성의 균형을 위해 발전했다. 아래 도식 이미지는 실제 경량화 워크플로우에서 어떤 기법을 언제 어떻게 활용할 수 있는지 쉽게 보여준다.
 
-<img src="https://1drv.ms/i/c/15c0c4c064518623/IQR4fTKmoAJVQaPoQZaoiXFpAdN4hzeSNDYOmJTdU79wT08?width=811&height=649" width="811" height="649" /> 
+<img width="811" height="649" alt="quantization1" src="https://gist.github.com/user-attachments/assets/56b6e7b1-ae1e-4cf5-a37d-d6282125b56f" /> 
 [^1]
 
 - 모델 입력단계에서 프루닝(Pruning), 양자화(Quantization), 지식 증류(Knowledge Distillation), 저랭크 팩터화(Low-Rank Factorization), 파라미터 공유 등 다양한 경량화 기법이 병합적 또는 선택적으로 적용됨을 보여준다.
