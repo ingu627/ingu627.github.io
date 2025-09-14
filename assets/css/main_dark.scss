@@ -12,6 +12,13 @@
 @import "custom/customOverride.scss";
 
 @font-face {
+  font-family: 'Fira Mono';
+  src: url('https://cdn.jsdelivr.net/npm/@fontsource/fira-mono/files/fira-mono-latin-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
   font-family: 'JetBrains Mono';
   src: url('https://cdn.jsdelivr.net/gh/JetBrains/JetBrainsMono/web/fonts/JetBrainsMono-Regular.woff2') format('woff2');
   font-weight: normal;
@@ -23,5 +30,14 @@
   src: url('https://cdn.jsdelivr.net/gh/JetBrains/JetBrainsMono/web/fonts/JetBrainsMono-Bold.woff2') format('woff2');
   font-weight: bold;
   font-style: normal;
+}
+
+body {
+  font-family: 'Fira Mono', monospace;
+}
+
+code {
+  font-family: 'JetBrains Mono', monospace;
+  -webkit-font-feature-settings: 'liga' on, 'calt' on;
 }
 

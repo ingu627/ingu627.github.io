@@ -12,9 +12,9 @@ $doc-font-size: 16 !default;
 $paragraph-indent: false !default; // true, false (default)
 $indent-var: 1.3em !default;
 
-/* system typefaces */ /* RIDIBatang */
+/* system typefaces */
 $serif: Georgia, Times, serif !default;
-$sans-serif: "JetBrains Mono", "Nanum Gothic", -apple-system, BlinkMacSystemFont, "JetBrains Mono", "Roboto", "Segoe UI",
+$sans-serif: "Fira Mono", "Nanum Gothic", -apple-system, BlinkMacSystemFont, "Fira Mono", "Roboto", "Segoe UI",
   "Helvetica Neue", "Lucida Grande", Arial, sans-serif !default;
 $monospace: Monaco, Consolas, "Lucida Console", monospace !default;
 
