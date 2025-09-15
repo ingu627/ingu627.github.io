@@ -1,13 +1,11 @@
 # main links
 main:
-  - title: "CV"
-    url: /cv/
-  - title: "Projects"
-    url: /project/
+  - title: "Portfolio"
+    url: /portfolio/
   - title: "🔍"
     url: /search/
-#  - title: "References"
-#    url: /reference/
+  - title: "Algorithms"
+    url: /algorithms/
   - title: "Categories"
     url: /categories/
 
@@ -15,4 +13,4 @@ docs:
   - title: "Quick Click"
     children:
       - title: "Home"
-        url: /
+        url: /`
