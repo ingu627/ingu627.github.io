@@ -277,6 +277,9 @@ collections:
   portfolio:
     output: true
     permalink: /:collection/:path/
+  algorithm:
+    output: true
+    permalink: /algorithms/:path/
 
 # https://github.com/jekyll/jekyll-archives
 jekyll-archives:
