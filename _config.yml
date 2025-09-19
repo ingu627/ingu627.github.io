@@ -277,7 +277,7 @@ collections:
   portfolio:
     output: true
     permalink: /:collection/:path/
-  algorithm:
+  algorithms:
     output: true
     permalink: /algorithms/:path/
 
