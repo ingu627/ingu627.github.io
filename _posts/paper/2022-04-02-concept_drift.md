@@ -2,7 +2,7 @@
 layout: single
 title: "[논문 리뷰] Learning under Concept Drift: an Overview"
 excerpt: "컨셉 드리프트는 시간이 지남에 따라 예기치 않은 방식으로 변경되는 것을 의미합니다. 서베이 논문 형식으로 작성되었고, 이것을 리뷰해보았습니다."
-categories: [paper, mlops]
+categories: paper
 tag : [data quality, concept drift, 모델, mlops, data drift, 논문, 리뷰, 정리, 후기, design, 설명, layer, paper]
 toc: true
 toc_sticky: true
