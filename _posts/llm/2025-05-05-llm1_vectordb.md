@@ -170,3 +170,4 @@ last_modified_at: 2025-09-14
 [^17]: [벡터 데이터베이스란 무엇인가요? - IBM](https://www.ibm.com/kr-ko/topics/vector-database)
 [^18]: [벡터 데이터베이스란 무엇인가요? - MongoDB](https://www.mongodb.com/ko-kr/resources/basics/databases/vector-databases)
 [^19]: [Vector Database (feat. Pinecone) - velog](https://velog.io/@tura/vector-databases)
+*
