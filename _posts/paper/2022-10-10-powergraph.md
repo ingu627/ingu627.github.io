@@ -3,7 +3,7 @@ layout: single
 title: "[논문 리뷰] PowerGraph: Distributed Graph-Parallel Computation on Natural Graphs"
 excerpt: "PowerGraph는 Gather, Apply, Scatter 기능을 구현하여 그래프 처리를 하는 방법을 제안했습니다. large scale graph processing 분야에서 꼭 읽어봐야 할 논문 중 하나라고 생각됩니다."
 categories: paper
-tag : [리뷰, 논문, 정리, 설명, 란, 뜻, gas, 그래프, 처리, 캐시, vertex, edge, cut, partitioning, powergraph, pregel, graphlab]
+tags : [리뷰, 논문, 정리, 설명, 란, 뜻, gas, 그래프, 처리, 캐시, vertex, edge, cut, partitioning, powergraph, pregel, graphlab]
 toc: true
 toc_sticky: true
 sidebar_main: false

@@ -3,7 +3,7 @@ layout: single
 title: "[Spark] pyspark를 이용한 간단한 추천 시스템 만들어보기"
 excerpt: "Spark The Definitive Guide 책을 중심으로 스파크를 요약 및 정리해보았습니다. spark 예제를 통해 pyspark를 이용한 간단한 추천 시스템 만드는 것에 대해 알아봅니다."
 categories: spark
-tag : [아파치, 스파크, spark, 정리, 의미, 란, 이란, 사용법, pyspark, 추천 시스템, recommender system, 협업 필터링, 교차최소제곱, als]
+tags: [아파치, 스파크, spark, 정리, 의미, 란, 이란, 사용법, pyspark, 추천 시스템, recommender system, 협업 필터링, 교차최소제곱, als]
 toc: true
 toc_sticky: true
 sidebar_main: false

@@ -2,7 +2,7 @@
 layout: single
 title: "[에러 해결 방법] ModuleNotFoundError: No module named 'tensorflow.keras'"
 categories: error
-tag : [error, solution]
+tags: [error, ModuleNotFoundError]
 toc: true
 sidebar_main: false
 

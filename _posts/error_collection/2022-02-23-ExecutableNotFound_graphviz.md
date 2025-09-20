@@ -2,7 +2,7 @@
 layout: single
 title: "[에러 해결 방법]  ExecutableNotFound: failed to execute 'dot', make sure the Graphviz executables are on your systems' PATH 일때"
 categories: error
-tag : [error, solution, graphviz]
+tags: [error, ExecutableNotFound, graphviz]
 toc: true
 sidebar_main: false
 

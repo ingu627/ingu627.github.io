@@ -2,7 +2,7 @@
 layout: single
 title: "[에러 해결 방법] R package 설치 오류 : ~로 복사하는데 문제가 발생했습니다: Permission denied"
 categories: error
-tag : [error, solution, R]
+tags: [error, package, R]
 toc: true
 sidebar_main: false
 

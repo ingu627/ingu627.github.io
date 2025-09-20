@@ -4,7 +4,7 @@ title: "[DS] 분산 시스템(Distributed Systems) - 1. Introduction 정리"
 excerpt: "Distributed Systems Third edition by Maarten van Steen,
 Andrew S. Tanenbaum - cha1. Introduction 1.1, 1.2, 1.3, 1.4"
 categories: DS
-tag : [DS, 분산 시스템, 확장성, 투명성, 미들웨어, 컴퓨팅, grid, cluster, cloud, 인터페이스, distributed system, transparency, middleware]
+tags : [DS, 분산 시스템, 확장성, 투명성, 미들웨어, 컴퓨팅, grid, cluster, cloud, 인터페이스, distributed system, transparency, middleware]
 toc: true
 toc_sticky: true
 sidebar_main: false

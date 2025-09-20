@@ -3,7 +3,7 @@ layout: single
 title: "vscode 설정 셋팅 초기화하는 방법"
 excerpt: "vsocde를 하도 지웠다 설치를 반복해서 글로 남긴다. 2가지 단계만 거치면 초기화가 가능하다. (단순 vscode를 삭제한다 해도 local pc에 설정들이 남아있다.)"
 categories: tips
-tag : [tip, vscode, 초기화, 윈도우, 설치]
+tags: [tip, vscode, 초기화, 윈도우, 설치]
 toc: True
 sidebar_main: false
 

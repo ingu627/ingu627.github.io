@@ -4,7 +4,7 @@ title: "[DS] 분산 시스템(Distributed Systems) - 3. Processes 정리"
 excerpt: "Distributed Systems Third edition by Maarten van Steen,
 Andrew S. Tanenbaum - cha3. Processes 3.1, 3.2, 3.3, 3.4"
 categories: DS
-tag : [DS]
+tags: [DS]
 toc: true
 toc_sticky: true
 sidebar_main: false
@@ -224,8 +224,3 @@ last_modified_at: 2023-04-25
 [^5]: [프로세스(Process)와 스레드(Thread) - gil0127.log](https://velog.io/@gil0127/%EC%8B%B1%EA%B8%80%EC%8A%A4%EB%A0%88%EB%93%9CSingle-thread-vs-%EB%A9%80%ED%8B%B0%EC%8A%A4%EB%A0%88%EB%93%9C-Multi-thread)
 [^6]: [인터럽트(Interrupt)란? 그리고 디스패처(Dispatcher)란? - Crocus](https://www.crocus.co.kr/1406)
 [^7]: [정보통신기술용어해설 - Platform   플랫폼](http://www.ktword.co.kr/test/view/view.php?nav=2&no=3553&sh=%ED%94%8C%EB%9E%AB%ED%8F%BC)
-
-
-
-
-

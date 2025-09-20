@@ -3,7 +3,7 @@ layout: single
 title: "Git Blog - POST 글 작성하는 방법"
 excerpt: YAML을 이용하여 글의 제목, 날짜, 카테고리, 태그, 레이아웃 등을 정의해봅니다.
 categories: git_blog
-tag: [git, blog, post]
+tags: [git, blog, post]
 
 toc: true
 toc_sticky: true

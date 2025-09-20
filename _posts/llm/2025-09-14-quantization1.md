@@ -3,7 +3,7 @@ layout: single
 title: 'LLM 경량화 기법: 거대 언어 모델을 가볍게 만드는 비법들'
 excerpt: "프루닝(Pruning), 양자화(Quantization), 지식 증류(Knowledge Distillation), 리랭킹(Reranking), 파라미터 공유(Parameter Sharing) 등"
 categories: llm
-tag : [llm, 경량화, quantization, pruning, 증류, 서비스, 리랭킹, 양자화]
+tags : [llm, 경량화, quantization, pruning, 증류, 서비스, 리랭킹, 양자화]
 toc: true
 toc_sticky: true
 sidebar_main: true

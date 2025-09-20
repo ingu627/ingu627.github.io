@@ -3,7 +3,7 @@ layout: single
 title: "[논문 리뷰] MapReduce: Simplified Data Processing on Large Clusters"
 excerpt: "맵리듀스는 2004년 구글에서 발표한 빅데이터를 처리하고 생성하기 위한 프로그래밍 모델입니다. 키,값을 처리하여 중간 키,값 쌍 집합을 생성하는 map 함수와 동일한 키와 연관된 값을 merge하는 reduce 함수를 지정합니다."
 categories: paper
-tag : [리뷰, 논문, 정리, 설명, 란, gfs, 구글 파일 시스템, 분산, distributed, mapreduce, 맵리듀스, 개념, 정의, 원리, map, reduce, 마스터, failure, fault tolerance, 하둡, hadoop, paper]
+tags : [리뷰, 논문, 정리, 설명, 란, gfs, 구글 파일 시스템, 분산, distributed, mapreduce, 맵리듀스, 개념, 정의, 원리, map, reduce, 마스터, failure, fault tolerance, 하둡, hadoop, paper]
 toc: true
 toc_sticky: true
 sidebar_main: false

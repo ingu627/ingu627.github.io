@@ -3,7 +3,7 @@ layout: single
 title: 'Bootstrap(부트스트랩) 기초 실습'
 excerpt: '본 글은 패스트캠퍼스의 한 번에 끝내는 파이썬 웹 개발 초격차 패키지 강의를 개인 실습하여 정리했습니다. 문법 및 github 예제로 실습' 
 categories: web
-tag : [web, frontend, concept, bootstrap, 정리, 웹, 기초, 예제]
+tags: [web, frontend, concept, bootstrap, 정리, 웹, 기초, 예제]
 toc: true
 sidebar_main: false
 

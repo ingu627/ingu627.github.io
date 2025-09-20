@@ -3,7 +3,7 @@ layout: single
 title: "[Spark] 스트림 처리 및 정형 스트리밍의 기초 개념 정리"
 excerpt: "Spark The Definitive Guide 책을 중심으로 스파크를 요약 및 정리해보았습니다. spark 예제를 통해 스트림 처리 및 정형 스트리밍의 기초 개념 정리에 대해 알아봅니다."
 categories: spark
-tag : [아파치, 스파크, spark, 정리, 의미, 란, 이란, 사용법, pyspark, 스트리밍, 정형, 스트림, awaitTermination, 예제, 기초]
+tags: [아파치, 스파크, spark, 정리, 의미, 란, 이란, 사용법, pyspark, 스트리밍, 정형, 스트림, awaitTermination, 예제, 기초]
 toc: true
 toc_sticky: true
 sidebar_main: false

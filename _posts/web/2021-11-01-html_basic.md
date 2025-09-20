@@ -3,7 +3,7 @@ layout: single
 title: 'HTML 기초 총정리'
 excerpt: '본 글은 패스트캠퍼스의 한 번에 끝내는 파이썬 웹 개발 초격차 패키지 강의를 개인 실습하여 정리했습니다.'
 categories: web
-tag : [web, frontend, 개념, html, 웹, 정리, 기초, 예제]
+tags: [web, frontend, 개념, html, 웹, 정리, 기초, 예제]
 toc: true
 toc_sticky: true
 sidebar_main: false

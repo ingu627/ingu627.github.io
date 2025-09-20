@@ -3,7 +3,7 @@ layout: single
 title: "[케라스(keras) 이해] 1장. 딥러닝이란 무엇인가"
 excerpt: "케라스 창시자에게 배우는 딥러닝 - 역사, 분류, 특징"
 categories: keras
-tag : [python, keras, DL, ML, AI, 인고지능, 딥러닝, 케라스, 리뷰, 정리, 이해, 모델, 케라스 창시자에게 배우는 딥러닝]
+tags: [python, keras, DL, ML, AI, 인고지능, 딥러닝, 케라스, 리뷰, 정리, 이해, 모델, 케라스 창시자에게 배우는 딥러닝]
 toc: true
 sidebar_main: false
 classes: wide

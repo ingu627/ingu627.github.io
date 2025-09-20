@@ -3,7 +3,7 @@ layout: single
 title: "터미널 내 도커(docker) 컨테이너 명령어, 옵션 정리"
 excerpt: "윈도우 프롬프트, 리눅스 터미널 등에서 사용되는 도커 명령어, 옵션들을 정리해보았습니다. pull, run, start, stop, rm"
 categories: docker
-tag : [docker, 도커, 컨테이너, 설치, 사용법, docker, 명령어, 정리, pull, run, start, stop, rm, exec, 옵션]
+tags : [docker, 도커, 컨테이너, 설치, 사용법, docker, 명령어, 정리, pull, run, start, stop, rm, exec, 옵션]
 toc: true
 toc_sticky: true
 sidebar_main: false

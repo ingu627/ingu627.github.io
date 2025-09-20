@@ -3,7 +3,7 @@ layout: single
 title: "Pytorch Lightning + Wandb을 활용하여 mnist 예제 살펴보기"
 excerpt: "PyTorch Lightning은 PyTorch 코드를 구성하고 분산 훈련 및 16-비트 정밀도와 같은 고급 기능을 쉽게 추가할 수 있는 래퍼입니다."
 categories: code
-tag : [pytorch lightning, wandb, pytorch, mnist, 예제, 코드, init, forward, training_step, validation_step, configure_optimizers, 사용법, 정리, 설명, mlops]
+tags: [pytorch lightning, wandb, pytorch, mnist, 예제, 코드, init, forward, training_step, validation_step, configure_optimizers, 사용법, 정리, 설명, mlops]
 toc: true
 toc_sticky: true
 sidebar_main: false
