@@ -61,7 +61,7 @@ last_modified_at: 2025-09-21
 - 이제 간단한 Nginx 웹 서버를 컨테이너로 직접 만들어보자.
 - 새 폴더를 하나 만들고, 그 안에 Dockerfile과 index.html이라는 두 개의 파일을 생성한다.
 
-1. index.html 파일 생성
+[1] index.html 파일 생성
 
 - 원하는 폴더에 환영 메시지를 담은 index.html 파일을 만든다.
 
@@ -80,7 +80,7 @@ last_modified_at: 2025-09-21
 
 <br>
 
-2. Dockerfile 생성[^23]
+[2] Dockerfile 생성[^23]
 
 - 같은 폴더에 Dockerfile을 만들고 아래 내용을 작성한다.
 
@@ -97,7 +97,7 @@ COPY ./index.html /usr/share/nginx/html/index.html
 
 <br>
 
-3. 이미지 빌드[^25]
+[3] 이미지 빌드[^25]
 
 - 터미널을 열고 프로젝트 폴더로 이동한 뒤, docker build 명령어를 실행한다.
 - **명령어:** docker build -t my-nginx-server .
@@ -106,7 +106,7 @@ COPY ./index.html /usr/share/nginx/html/index.html
   - `-t my-nginx-server`: -t 플래그는 이미지에 사람이 읽기 쉬운 이름(my-nginx-server)으로 "태그"를 지정한다. 
   - `.`: 현재 디렉터리에서 Dockerfile을 찾으라는 의미다.
 
-4. 컨테이너 실행[^25]
+[4] 컨테이너 실행[^25]
 
 - 이제 이미지가 준비되었으니, docker run 명령어를 사용해 컨테이너로 실행해 보자.
 - **명령어**: docker run -d -p 8080:80 --name my-first-container my-nginx-server
@@ -119,7 +119,7 @@ COPY ./index.html /usr/share/nginx/html/index.html
 
 <br>
 
-5. 확인
+[5] 확인
 
 - 웹 브라우저에서 http://localhost:8080 으로 접속해 직접 만든 환영 페이지가 뜨는지 확인한다.
 
@@ -156,7 +156,7 @@ COPY ./index.html /usr/share/nginx/html/index.html
 
 - 앞서 만든 도커 이미지를 쿠버네티스에 배포해보자. (Minikube 등 로컬 클러스터 환경 필요)
 
-1. deployment.yaml 파일 생성[^43]
+[1] deployment.yaml 파일 생성[^43]
 
 - 이 매니페스트는 쿠버네티스에게 무엇을 실행할지 알려준다. 
 - my-nginx-server 이미지로 파드 3개를 실행하라고 정의한다.
@@ -184,12 +184,12 @@ spec:
         - containerPort: 80
 ```
 
-| 참고: imagePullPolicy: IfNotPresent는 쿠버네티스가 이미지를 원격 레지스트리에서 가져오기 전에 로컬에 이미지가 있는지 먼저 확인하도록 한다. <br> 
-| 로컬에서 빌드한 이미지를 사용할 때 유용하다.
+> 참고: imagePullPolicy: IfNotPresent는 쿠버네티스가 이미지를 원격 레지스트리에서 가져오기 전에 로컬에 이미지가 있는지 먼저 확인하도록 한다. <br> 
+> 로컬에서 빌드한 이미지를 사용할 때 유용하다.
 
 <br>
 
-2. service.yaml 파일 생성[^45]
+[2] service.yaml 파일 생성[^45]
 
 - 외부에서 디플로이먼트에 접근할 수 있도록 NodePort 타입의 서비스를 정의한다.
 
@@ -210,7 +210,7 @@ spec:
 
 <br>
 
-3. 클러스터에 적용
+[3] 클러스터에 적용
 
 - kubectl apply 명령어를 사용해 이 매니페스트들을 쿠버네티스 클러스터에 제출한다.
 
@@ -221,7 +221,7 @@ kubectl apply -f service.yaml
 
 <br>
 
-4. 확인 및 접속
+[4] 확인 및 접속
 
 - 생성된 리소스들의 상태를 확인한다. 
   - `kubectl get deployment`: nginx-deployment가 3/3개의 복제본으로 준비된 것을 볼 수 있다. 
@@ -230,7 +230,8 @@ kubectl apply -f service.yaml
 
 <br>
 
-5. 애플리케이션 접속
+[5] 애플리케이션 접속
+
 - Minikube를 사용 중이라면 minikube service nginx-service 명령을 실행하여 브라우저에서 바로 확인할 수 있다. 
 - 다른 환경에서는 클러스터 노드의 IP 주소와 위에서 확인한 NodePort를 조합하여 브라우저에 입력한다 (예: http://<노드_IP>:<NodePort>). 
 - 이제 여러분의 맞춤형 Nginx 페이지가 확장 가능하고 안정적으로 관리되는 쿠버네티스 배포 환경 위에서 서비스되는 것을 확인할 수 있다.
