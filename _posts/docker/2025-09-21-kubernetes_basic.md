@@ -109,7 +109,7 @@ COPY ./index.html /usr/share/nginx/html/index.html
 [4] 컨테이너 실행[^25]
 
 - 이제 이미지가 준비되었으니, docker run 명령어를 사용해 컨테이너로 실행해 보자.
-- **명령어**: docker run -d -p 8080:80 --name my-first-container my-nginx-server
+- **명령어**: `docker run -d -p 8080:80 --name my-first-container my-nginx-server`
 - **설명**:
   - `docker run`: 이미지로부터 컨테이너를 생성하고 시작하는 명령어다. 
   - `-d`: "분리 모드(Detached mode)"를 의미한다. 컨테이너를 백그라운드에서 실행하여 터미널을 계속 사용할 수 있게 한다. 
