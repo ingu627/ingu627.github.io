@@ -114,6 +114,8 @@ body {
   li,
   dl {
     font-size: 1em;
+    /* 250923 줄간격 수정 */
+    line-height: 1.625;
   }
 
   /* paragraph indents */
