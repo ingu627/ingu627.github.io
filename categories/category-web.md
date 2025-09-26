@@ -1,5 +1,5 @@
 ---
-title: "프론트엔드(Front End)"
+title: "웹(Web)"
 layout: archive
 permalink: categories/web
 author_profile: true

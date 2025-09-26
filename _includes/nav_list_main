@@ -148,7 +148,7 @@
         <ul>
             {% for category in site.categories %}
                 {% if category[0] == "web" %}
-                    <li><a href="/categories/web" class="">프론트엔드(Front End) ({{category[1].size}})</a></li>
+                    <li><a href="/categories/web" class="">웹(WEB) ({{category[1].size}})</a></li>
                 {% endif %}
             {% endfor %}
         </ul>

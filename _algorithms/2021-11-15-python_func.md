@@ -2,12 +2,12 @@
 layout: single
 title: "파이썬(python) 함수 기능에 대한 모든 것"
 excerpt: "파이썬을 이용하면서 배웠던 것들. 알고리즘 사용한 것들, 모르는 것들, 헷갈리는 것들을 정리하고 있습니다."
-categories: python
 tags: [python, 파이썬, 정의, 함수, 클래스, 인스턴스, 객체, self, __init__, args, kwargs, 리스트]
 toc: true
 toc_sticky: true
 sidebar_main: false
 
+author_profile: true
 last_modified_at: 2022-10-09
 ---
 
