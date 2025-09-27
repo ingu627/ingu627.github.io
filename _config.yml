@@ -279,7 +279,7 @@ collections:
     permalink: /:collection/:path/
   algorithms:
     output: true
-    permalink: /algorithms/:path/
+    permalink: /algorithms/:title/
 
 # https://github.com/jekyll/jekyll-archives
 jekyll-archives:
