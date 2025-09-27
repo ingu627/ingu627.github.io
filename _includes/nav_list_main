@@ -13,204 +13,165 @@
       <li>
         <!--span 태그로 카테고리들을 크게 분류 ex) C/C++/C -->
         <span class="nav__sub-title">AI</span>
-            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
-            <ul>
-                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
-                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
-                {% for category in site.categories %}
-                    {% if category[0] == "llm" %}
-                        <li><a href="/categories/llm" class="">LLM ({{category[1].size}})</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-            <ul>
-                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
-                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
-                {% for category in site.categories %}
-                    {% if category[0] == "paper" %}
-                        <li><a href="/categories/paper" class="">논문 리뷰(Review Papers) ({{category[1].size}})</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-            <ul>
-                {% for category in site.categories %}
-                    {% if category[0] == "code" %}
-                        <li><a href="/categories/code" class="">코드 구현(Code Implementation) ({{category[1].size}})</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-            <ul>
-                {% for category in site.categories %}
-                    {% if category[0] == "keras" %}
-                        <li><a href="/categories/keras" class="">케라스 창시자에게 배우는 딥러닝 ({{category[1].size}})</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-            <ul>
-                {% for category in site.categories %}
-                    {% if category[0] == "hands_on" %}
-                        <li><a href="/categories/hands_on" class="">핸즈온 머신러닝 ({{category[1].size}})</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-            <ul>
-                {% for category in site.categories %}
-                    {% if category[0] == "cs231n" %}
-                        <li><a href="/categories/cs231n" class="">CS231n(CNN with DL) ({{category[1].size}})</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-            <ul>
-                {% for category in site.categories %}
-                    {% if category[0] == "mlops" %}
-                        <li><a href="/categories/mlops" class="">MLOps ({{category[1].size}})</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-            <ul>
-                {% for category in site.categories %}
-                {% if category[0] == "graph" %}
-                <li><a href="/categories/graph" class="">그래프(Graph) ({{category[1].size}})</a></li>
-                {% endif %}
-                {% endfor %}
-            </ul>
-            <ul>
-                {% for category in site.categories %}
-                    {% if category[0] == "error" %}
-                        <li><a href="/categories/error" class="">에러 해결 방법 ({{category[1].size}})</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-            <ul>
-                {% for category in site.categories %}
-                    {% if category[0] == "tips" %}
-                        <li><a href="/categories/tips" class="">기타 팁들(설치, 방법,...) ({{category[1].size}})</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>   
+        <ul>
+          {% assign ai_categories = "llm|paper|code|mlops|graph" | split: "|" %}
+          {% for cat in ai_categories %}
+            {% assign cat_posts = site.categories[cat] %}
+            {% if cat_posts %}
+              {% assign cat_label = cat %}
+              {% case cat %}
+              {% when "llm" %}
+                {% assign cat_label = "LLM" %}
+              {% when "paper" %}
+                {% assign cat_label = "논문 리뷰(Review Papers)" %}
+              {% when "code" %}
+                {% assign cat_label = "코드 구현(Code Implementation)" %}
+              {% when "mlops" %}
+                {% assign cat_label = "MLOps" %}
+              {% when "graph" %}
+                {% assign cat_label = "그래프(Graph)" %}
+              {% endcase %}
+              <li><a href="/categories/{{ cat }}" class="">{{ cat_label }} ({{ cat_posts | size }})</a></li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+
+        <span class="nav__sub-title">Data Engineering</span>
+        <ul>
+          {% assign data_categories = "SQL|hadoop|spark" | split: "|" %}
+          {% for cat in data_categories %}
+            {% assign cat_posts = site.categories[cat] %}
+            {% if cat_posts %}
+              {% assign cat_label = cat %}
+              {% case cat %}
+              {% when "SQL" %}
+                {% assign cat_label = "관계형 데이터베이스(SQL)" %}
+              {% when "hadoop" %}
+                {% assign cat_label = "하둡(Hadoop)" %}
+              {% when "spark" %}
+                {% assign cat_label = "스파크(Spark)" %}
+              {% endcase %}
+              <li><a href="/categories/{{ cat }}" class="">{{ cat_label }} ({{ cat_posts | size }})</a></li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+
+        <span class="nav__sub-title">DevOps & Infra</span>
+        <ul>
+          {% assign infra_categories = "linux|docker|git" | split: "|" %}
+          {% for cat in infra_categories %}
+            {% assign cat_posts = site.categories[cat] %}
+            {% if cat_posts %}
+              {% assign cat_label = cat %}
+              {% case cat %}
+              {% when "linux" %}
+                {% assign cat_label = "리눅스(Linux)" %}
+              {% when "docker" %}
+                {% assign cat_label = "도커(Docker)" %}
+              {% when "git" %}
+                {% assign cat_label = "깃(GIT)" %}
+              {% endcase %}
+              <li><a href="/categories/{{ cat }}" class="">{{ cat_label }} ({{ cat_posts | size }})</a></li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+
+        <span class="nav__sub-title">Study</span>
+        <ul>
+          {% assign study_pairs = "ho_ML:핸즈온 머신러닝|keras:케라스 창시자에게 배우는 딥러닝|cs231n:CS231n(CNN with DL)|diapp:데이터 중심 애플리케이션 설계|DS:분산 시스템|OS:운영 체제(OS)" | split: "|" %}
+          {% for pair in study_pairs %}
+            {% assign parts = pair | split: ":" %}
+            {% assign cat_key = parts[0] %}
+            {% assign cat_label = parts[1] %}
+            {% assign cat_slug = cat_key %}
+            {% assign cat_posts = site.categories[cat_key] %}
+            {% if cat_key == "ho_ML" and (cat_posts == nil or cat_posts == empty) %}
+              {% if site.categories["hands_on"] %}
+                {% assign cat_posts = site.categories["hands_on"] %}
+                {% assign cat_slug = "hands_on" %}
+              {% endif %}
+            {% endif %}
+            {% if cat_posts %}
+              <li><a href="/categories/{{ cat_slug }}" class="">{{ cat_label }} ({{ cat_posts | size }})</a></li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+
         <span class="nav__sub-title">Programming</span>
         <ul>
-            {% for category in site.categories %}
-                {% if category[0] == "python" %}
-                    <li><a href="/categories/python" class="">파이썬(PYTHON) ({{category[1].size}})</a></li>
-                {% endif %}
-            {% endfor %}
-        </ul>
-        <ul>
-            {% for category in site.categories %}
-                {% if category[0] == "java" %}
-                    <li><a href="/categories/java" class="">자바(JAVA) ({{category[1].size}})</a></li>
-                {% endif %}
-            {% endfor %}
-        </ul>
-        <ul>
-            {% for category in site.categories %}
-                {% if category[0] == "SQL" %}
-                    <li><a href="/categories/SQL" class="">관계형 데이터베이스(SQL) ({{category[1].size}})</a></li>
-                {% endif %}
-            {% endfor %}
-        </ul>
-        <ul>
-            {% for category in site.categories %}
-                {% if category[0] == "hadoop" %}
-                    <li><a href="/categories/hadoop" class="">하둡(Hadoop) ({{category[1].size}})</a></li>
-                {% endif %}
-            {% endfor %}
-        </ul>
-        <ul>
-            {% for category in site.categories %}
-                {% if category[0] == "spark" %}
-                    <li><a href="/categories/spark" class="">스파크(Spark) ({{category[1].size}})</a></li>
-                {% endif %}
-            {% endfor %}
-        </ul>
-        <ul>
-            {% for category in site.categories %}
-                {% if category[0] == "linux" %}
-                    <li><a href="/categories/linux" class="">리눅스(Linux) ({{category[1].size}})</a></li>
-                {% endif %}
-            {% endfor %}
-        </ul>
-        <ul>
-            {% for category in site.categories %}
-                {% if category[0] == "docker" %}
-                    <li><a href="/categories/docker" class="">도커(Docker) ({{category[1].size}})</a></li>
-                {% endif %}
-            {% endfor %}
-        </ul>
-        <ul>
-            {% for category in site.categories %}
-                {% if category[0] == "git" %}
-                    <li><a href="/categories/git" class="">깃(GIT) ({{category[1].size}})</a></li>
-                {% endif %}
-            {% endfor %}
-        </ul>
-        <ul>
-            {% for category in site.categories %}
-                {% if category[0] == "web" %}
-                    <li><a href="/categories/web" class="">웹(WEB) ({{category[1].size}})</a></li>
-                {% endif %}
-            {% endfor %}
-        </ul>
-        <span class="nav__sub-title">Computing</span>
-        <ul>
-            {% for category in site.categories %}
-                {% if category[0] == "OS" %}
-                    <li><a href="/categories/OS" class="">운영 체제(OS) ({{category[1].size}})</a></li>
-                {% endif %}
-            {% endfor %}
-        </ul>
-        <ul>
-            {% for category in site.categories %}
-                {% if category[0] == "DS" %}
-                    <li><a href="/categories/DS" class="">분산 시스템(Distributed System) ({{category[1].size}})</a></li>
-                {% endif %}
-            {% endfor %}
-        </ul>
-        <ul>
-            {% for category in site.categories %}
-                {% if category[0] == "diapp" %}
-                    <li><a href="/categories/diapp" class="">데이터 중심 애플리케이션 설계 ({{category[1].size}})</a></li>
-                {% endif %}
-            {% endfor %}
-        </ul>
-        <ul>
-            {% for category in site.categories %}
-            {% if category[0] == "algorithm" %}
-            <li><a href="/categories/algorithm" class="">알고리즘(Algorithm) ({{category[1].size}})</a></li>
+          {% assign prog_categories = "python|java|algorithm|web" | split: "|" %}
+          {% for cat in prog_categories %}
+            {% assign cat_posts = site.categories[cat] %}
+            {% if cat_posts %}
+              {% assign cat_label = cat %}
+              {% case cat %}
+              {% when "python" %}
+                {% assign cat_label = "파이썬(PYTHON)" %}
+              {% when "java" %}
+                {% assign cat_label = "자바(JAVA)" %}
+              {% when "algorithm" %}
+                {% assign cat_label = "알고리즘(Algorithm)" %}
+              {% when "web" %}
+                {% assign cat_label = "웹(WEB)" %}
+              {% endcase %}
+              <li><a href="/categories/{{ cat }}" class="">{{ cat_label }} ({{ cat_posts | size }})</a></li>
             {% endif %}
-            {% endfor %}
+          {% endfor %}
         </ul>
-        <span class="nav__sub-title">Data Analytics</span>
-            <ul>
-                {% for category in site.categories %}
-                    {% if category[0] == "R_ML" %}
-                        <li><a href="/categories/R_ML" class="">빅데이터 분석기사(R) ({{category[1].size}})</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-            <ul>
-                {% for category in site.categories %}
-                    {% if category[0] == "survey_a" %}
-                        <li><a href="/categories/survey_a" class="">사회조사분석사 2급 ({{category[1].size}})</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
+
+        <span class="nav__sub-title">Troubleshooting & Tips</span>
+        <ul>
+          {% assign support_categories = "error|tips" | split: "|" %}
+          {% for cat in support_categories %}
+            {% assign cat_posts = site.categories[cat] %}
+            {% if cat_posts %}
+              {% assign cat_label = cat %}
+              {% case cat %}
+              {% when "error" %}
+                {% assign cat_label = "에러 해결 방법" %}
+              {% when "tips" %}
+                {% assign cat_label = "기타 팁들(설치, 방법,...)" %}
+              {% endcase %}
+              <li><a href="/categories/{{ cat }}" class="">{{ cat_label }} ({{ cat_posts | size }})</a></li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+
+        <span class="nav__sub-title">자격증</span>
+        <ul>
+          {% assign cert_categories = "R_ML|survey_a" | split: "|" %}
+          {% for cat in cert_categories %}
+            {% assign cat_posts = site.categories[cat] %}
+            {% if cat_posts %}
+              {% assign cat_label = cat %}
+              {% case cat %}
+              {% when "R_ML" %}
+                {% assign cat_label = "빅데이터 분석기사(R)" %}
+              {% when "survey_a" %}
+                {% assign cat_label = "사회조사분석사 2급" %}
+              {% endcase %}
+              <li><a href="/categories/{{ cat }}" class="">{{ cat_label }} ({{ cat_posts | size }})</a></li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+
         <span class="nav__sub-title">GIT BLOG</span>
-            <ul>
-                {% for category in site.categories %}
-                    {% if category[0] == "md" %}
-                        <li><a href="/categories/md" class="">마크다운(Markdown) ({{category[1].size}})</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-            <ul>
-                {% for category in site.categories %}
-                    {% if category[0] == "git_blog" %}
-                        <li><a href="/categories/git_blog" class="">git 블로그(Github Pages) ({{category[1].size}})</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
+        <ul>
+          {% assign blog_categories = "md|git_blog" | split: "|" %}
+          {% for cat in blog_categories %}
+            {% assign cat_posts = site.categories[cat] %}
+            {% if cat_posts %}
+              {% assign cat_label = cat %}
+              {% case cat %}
+              {% when "md" %}
+                {% assign cat_label = "마크다운(Markdown)" %}
+              {% when "git_blog" %}
+                {% assign cat_label = "git 블로그(Github Pages)" %}
+              {% endcase %}
+              <li><a href="/categories/{{ cat }}" class="">{{ cat_label }} ({{ cat_posts | size }})</a></li>
+            {% endif %}
+          {% endfor %}
+        </ul>
         
       </li>
   </ul>
