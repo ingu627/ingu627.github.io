@@ -1,0 +1,23 @@
+{%- assign notice_type = include.type | default: 'info' -%}
+{%- assign notice_title = include.title | default: '' -%}
+{%- assign notice_icon = include.icon | default: '' -%}
+{%- assign notice_class = include.class | default: '' -%}
+{%- assign notice_body = include.content | default: include.body | default: '' -%}
+
+{%- if notice_body == '' and include.text -%}
+  {%- assign notice_body = include.text -%}
+{%- endif -%}
+
+<div class="notice-block notice--{{ notice_type }} {{ notice_class | strip }}">
+  {%- if notice_title != '' -%}
+  <div class="notice-block__head">
+    {%- if notice_icon != '' -%}
+    <span class="notice-block__icon" aria-hidden="true">{{ notice_icon }}</span>
+    {%- endif -%}
+    <strong class="notice-block__title">{{ notice_title }}</strong>
+  </div>
+  {%- endif -%}
+  <div class="notice-block__body">
+    {{ notice_body | markdownify }}
+  </div>
+</div>

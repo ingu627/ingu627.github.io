@@ -25,9 +25,6 @@ last_modified_at: 2022-07-13
 {: .notice--info}
 
 <br>
-<br>
-<br>
-<br>
 
 ## AlexNet 이란?
 
@@ -49,7 +46,6 @@ last_modified_at: 2022-07-13
 
 ![image](https://user-images.githubusercontent.com/78655692/160422169-afaeee33-f486-461d-b974-3f16731a8d34.png)
 
-<br>
 <br>
 
 ## 파이토치로 구현해보기
@@ -81,7 +77,6 @@ last_modified_at: 2022-07-13
   - label : integer
 
 <br>
-<br>
 
 ### 라이브러리 불러오기
 
@@ -103,7 +98,6 @@ from torch.utils.data import Dataset, DataLoader
 ```
 
 <br>
-<br>
 
 ### 에포크, 배치 크기, 디바이스 정의
 
@@ -123,7 +117,6 @@ print(device)
 # cuda
 ```
 
-<br>
 <br>
 
 ### 데이터셋 준비
@@ -150,7 +143,6 @@ validation_data = datasets.FashionMNIST(
 ```
 
 <br>
-<br>
 
 ### 데이터로더 (DataLoader)
 
@@ -163,7 +155,6 @@ training_loader = DataLoader(training_data, batch_size=64, shuffle=True)
 validation_loader = DataLoader(validation_data, batch_size=64, shuffle=True)
 ```
 
-<br>
 <br>
 
 ### 이미지 보기
@@ -188,7 +179,6 @@ matplotlib_imshow(img_grid)
 print(class_names[labels[0]])
 ```
 
-<br>
 <br>
 
 ### 알렉스넷(AlexNet) 모델 구현
@@ -266,7 +256,6 @@ class fashion_mnist_alexnet(nn.Module):
 ```
 
 <br>
-<br>
 
 ### 모델 생성
 
@@ -290,7 +279,6 @@ summary_(model, (1,227,227), batch_size)
 ![image](https://user-images.githubusercontent.com/78655692/160539431-ceb2788f-139e-4249-9665-87c46ad30e41.png)
 
 <br>
-<br>
 
 ### train 정의
 
@@ -312,7 +300,6 @@ def train(model, device, train_loader, optimizer, epoch):
                 100. * batch_idx / len(train_loader), loss.item()))
 ```
 
-<br>
 <br>
 
 ### test 정의
@@ -337,7 +324,6 @@ def test(model, device, test_loader):
 ```
 
 <br>
-<br>
 
 ### 학습 시작하기
 
@@ -353,9 +339,6 @@ for epoch in range(1, epochs+1):
 
 
 
-<br>
-<br>
-<br>
 <br>
 
 ## References

@@ -25,8 +25,6 @@ last_modified_at: 2022-07-13
 {: .notice--info}
 
 <br>
-<br>
-<br>
 
 ## Introduction
 
@@ -39,7 +37,6 @@ last_modified_at: 2022-07-13
   3. 다른 사람이 작성한 코드를 쉽게 볼 수 있도록 공통된 스타일을 갖도록 하고,
   4. 모델의 개별적인 부분은 유연하게 커스터마징하여 실험할 수 있게 해주는 라이브러리이다.
 
-<br>
 <br>
 
 ## Pytorch Lightning
@@ -56,7 +53,6 @@ last_modified_at: 2022-07-13
 
 - 사용자는 파란색 부분만 건드리면 된다. 나머지는 pytorch-lightning이 알아서 해준다.
 
-<br>
 <br>
 
 ### init
@@ -188,7 +184,6 @@ last_modified_at: 2022-07-13
     ```
 
 <br>
-<br>
 
 ## Wandb
 
@@ -216,7 +211,6 @@ last_modified_at: 2022-07-13
     ...
     ```
 
-<br>
 <br>
 
 ## 전체 코드
@@ -290,7 +284,6 @@ last_modified_at: 2022-07-13
     ```
 
 <br>
-<br>
 
 ## 결과
 
@@ -302,9 +295,6 @@ last_modified_at: 2022-07-13
 
 
 
-<br>
-<br>
-<br>
 <br>
 
 ## References

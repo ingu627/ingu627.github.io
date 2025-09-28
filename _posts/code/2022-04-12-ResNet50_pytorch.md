@@ -28,9 +28,6 @@ last_modified_at: 2022-04-18
 
 
 <br>
-<br>
-<br>
-<br>
 
 ## ResNet
 
@@ -61,7 +58,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 ```
 
-<br>
 <br>
 
 ### 사전훈련된 네트워크 불러오기
@@ -96,7 +92,6 @@ my_resnet = MnistResNet()
 ```
 
 <br>
-<br>
 
 ### 정의한 네트워크 테스트
 
@@ -113,7 +108,6 @@ print(my_resnet)
 ![image](https://user-images.githubusercontent.com/78655692/162910028-478bd3ea-9861-4d49-b529-8a3305205890.png)
 
 <br>
-<br>
 
 ### device 정의
 
@@ -124,7 +118,6 @@ else:
     device = torch.device("cpu")
 ```
 
-<br>
 <br>
 
 ### Dataloaders 함수 정의
@@ -161,7 +154,6 @@ def get_data_loaders(train_batch_size, val_batch_size):
 ```
 
 <br>
-<br>
 
 ### Metric 계산을 위한 함수 정의
 
@@ -182,7 +174,6 @@ def print_scores(p, r, f1, a, batch_size):
         print(f"\t{name.rjust(14, ' ')}: {sum(scores)/batch_size:.4f}")
 ```
 
-<br>
 <br>
 
 ### 정의된 내용을 바탕으로 실제 학습하기
@@ -277,7 +268,6 @@ print(f"Training time: {time.time()-start_ts}s")
 ```
 
 <br>
-<br>
 
 ### 모델 저장하기
 
@@ -297,7 +287,4 @@ model.load_state_dict(model_state_dict)
 
 
 
-<br>
-<br>
-<br>
 <br>

@@ -16,7 +16,6 @@ last_modified_at: 2022-04-18
 {: .notice--info}
 
 <br>
-<br>
 
 ## Introduction
 
@@ -31,7 +30,6 @@ last_modified_at: 2022-04-18
 - **CIFAR10 Dataset**은 10개 클래스 범주의 60000x32x32 컬러 이미지로 구성되며, 클래스당 6000개의 이미지로 구성되어 있다.
   - 50000개의 training image와 10000개의 test image가 있다.
 
-<br>
 <br>
 
 ## LeNet using CIFAR10 in Pytorch
@@ -91,7 +89,6 @@ transform = transforms.Compose([transforms.Resize((32,32)),
 ```
 
 <br>
-<br>
 
 ### CIFAR10 데이터 불러오기
 
@@ -122,7 +119,6 @@ validation_loader = torch.utils.data.DataLoader(
   shuffle=False)
 ```
 
-<br>
 <br>
 
 ### 이미지 변환 및 클래스 지정하기
@@ -172,7 +168,6 @@ for idx in np.arange(20):
 
 
 <br>
-<br>
 
 ### LeNet 구조 정의
 
@@ -212,7 +207,6 @@ model
 ![image](https://user-images.githubusercontent.com/78655692/163420040-41138789-5766-4682-b1b0-c02d29247b87.png)
 
 <br>
-<br>
 
 ### 손실 및 옵티마이저 정의
 
@@ -224,7 +218,6 @@ criterion = nn.CrossEntropyLoss() # 입력과 타겟 사이의 손실 계산을 
 optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
 ```
 
-<br>
 <br>
 
 ### 학습하기
@@ -295,7 +288,6 @@ for e in range(epochs):
 ```
 
 <br>
-<br>
 
 ### 결과 출력
 
@@ -317,9 +309,6 @@ plt.legend()
 
 
 
-<br>
-<br>
-<br>
 <br>
 
 ## References

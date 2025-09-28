@@ -30,7 +30,6 @@ last_modified_at: 2022-04-18
 {: .notice--danger}
 
 <br>
-<br>
 
 
 ## A "bottleneck" Block 정의하기
@@ -92,7 +91,6 @@ class block(nn.Module):
          
 ```
 
-<br>
 <br>
 
 ## ResNet 클래스 정의하기
@@ -166,7 +164,6 @@ class ResNet(nn.Module): # resnet50 : [3, 4, 6, 3]
 ```
 
 <br>
-<br>
 
 ## ResNet50, 101, 152 정의하기
 
@@ -184,7 +181,4 @@ def ResNet152(img_channels=3, num_classes=1000):
 
 
 
-<br>
-<br>
-<br>
 <br>

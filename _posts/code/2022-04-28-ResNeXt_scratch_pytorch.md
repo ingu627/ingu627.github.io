@@ -30,7 +30,6 @@ last_modified_at: 2022-04-28
 {: .notice--danger}
 
 <br>
-<br>
 
 
 ## ResNextBottleNeck 클래스 정의하기
@@ -78,7 +77,6 @@ class ResNextBottleNeck(nn.Module):
         return F.relu(self.split_transform(x) + self.shortcut(x))
 ```
 
-<br>
 <br>
 
 ## ResNeXt 클래스 정의하기
@@ -133,7 +131,6 @@ class ResNext(nn.Module):
 ```
 
 <br>
-<br>
 
 ## ResNeXt50, 101, 152 정의하기
 
@@ -151,7 +148,4 @@ def resnext152():
 
 
 
-<br>
-<br>
-<br>
 <br>
