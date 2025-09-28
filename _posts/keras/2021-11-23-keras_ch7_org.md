@@ -17,9 +17,6 @@ last_modified_at: 2025-09-27
 {: .notice--info}
 
 <br>
-<br>
-<br>
-<br>
 
 ## 7_1. Sequential 모델을 넘어서: 케라스의 함수형 API 
 
@@ -51,13 +48,11 @@ last_modified_at: 2025-09-27
 ![image](https://user-images.githubusercontent.com/78655692/143163083-c8493abf-2538-43e7-9876-6f8d0d2449a9.png)
 
 <br>
-<br>
 
 ## 7_1_1. 함수형 API 소개 
 
 - **함수형 API**에서는 직접 텐서들의 입출력을 다룬다. 함수처럼 층을 사용하여 텐서를 입력받고 출력한다.
 
-<br>
 <br>
 
 ### Sequential vs 함수형 API
@@ -71,7 +66,6 @@ last_modified_at: 2025-09-27
 <script src="https://gist.github.com/ingu627/8865ae1247c88a2fc0083b127974af1a.js"></script>
 
 <br>
-<br>
 
 ## 7_1_2. 다중 입력 모델 
 
@@ -84,7 +78,6 @@ last_modified_at: 2025-09-27
 ![image](https://user-images.githubusercontent.com/78655692/143165187-5d882104-4c38-4803-8a01-0d8aef21cae2.png)
 
 <br>
-<br>
 
 ### 2개의 입력을 가진 질문-응답 모델의 함수형 API 구현하기
 
@@ -92,7 +85,6 @@ last_modified_at: 2025-09-27
 
 <script src="https://gist.github.com/ingu627/05d44ab6793e515443f7267571a78900.js"></script>
 
-<br>
 <br>
 
 ### 다중 입력 모델에 데이터 주입하기 
@@ -104,7 +96,6 @@ last_modified_at: 2025-09-27
 
 <script src="https://gist.github.com/ingu627/eff1b6517f3629a0e5c1e7cbc1454757.js"></script>
 
-<br>
 <br>
 
 ## 7_1_3. 다중 출력 모델 
@@ -118,7 +109,6 @@ last_modified_at: 2025-09-27
 <script src="https://gist.github.com/ingu627/07e284fe1531a16c96e2ed9be03e5214.js"></script>
 
 <br>
-<br>
 
 ### 다중 출력 모델의 컴파일 옵션: 다중 손실 
 
@@ -129,7 +119,6 @@ last_modified_at: 2025-09-27
 <script src="https://gist.github.com/ingu627/73c915acc3f53a34b6370b35a964671e.js"></script>
 
 <br>
-<br>
 
 ### 다중 출력 모델의 컴파일 옵션: 손실 가중치
 
@@ -137,7 +126,6 @@ last_modified_at: 2025-09-27
 
 <script src="https://gist.github.com/ingu627/252990cabd5519608e7a844ddb52d5bc.js"></script>
 
-<br>
 <br>
 
 ### 다중 출력 모델에 데이터 주입하기 
@@ -147,14 +135,12 @@ last_modified_at: 2025-09-27
 <script src="https://gist.github.com/ingu627/6f3fbd903995c9e3fd28661c7b2d3900.js"></script>
 
 <br>
-<br>
 
 ## 7_1_4. 층으로 구성된 비순환 유향 그래프
 
 - 함수형 API를 사용하면 다중 입력이나 다중 출력 모델뿐만 아니라 내부 토폴로지가 복잡한 네트워크도 만들 수 있다.
 - 케라스의 신경망은 층으로 구성된 어떤 비순환 유향 그래프도 만들 수 있다. 
 
-<br>
 <br>
 
 ### 인셉션 모듈 
@@ -175,7 +161,6 @@ last_modified_at: 2025-09-27
 - 이 합성곱은 깊이별 합성곱 다음에 점별 합성곱이 뒤따른다. 인셉션 모듈의 극한 형태로 공간 특성과 채널 방향 특성을 완전히 분리한다. 엑셉션은 인셉션V3와 거의 동일한 개수의 모델 파라미터를 가지지만 실행 속도가 더 빠르고 대규모 데이터셋에서 정확도가 더 높다. (효율적 사용)
 
 <br>
-<br>
 
 ### 잔차 연결
 
@@ -183,13 +168,11 @@ last_modified_at: 2025-09-27
 - 순서대로 놓인 네트워크를 질러가는 연결이 만들어진다. 하위 층의 출력이 상위 층의 출력에 연결되는 것이 아니라 더해진다. 따라서 두 출력의 크기가 동일해야 한다. 크기가 다르면 선형 변환을 사용하여 하위 층의 활성화 출력을 목표 크기로 변환한다.
 
 <br>
-<br>
 
 ### 특성 맵의 크기가 다를 때 잔차 연결을 구현
 
 <script src="https://gist.github.com/ingu627/3b2b0e63d94a20f512c3e3cb4a471d45.js"></script>
 
-<br>
 <br>
 
 ## 7_1_5. 층 가중치 공유 
@@ -200,20 +183,17 @@ last_modified_at: 2025-09-27
 - 다시 말해 같은 표현을 공유하고 이런 표현을 다른 입력에서 함께 학습한다.
 
 <br>
-<br>
 
 ### 함수형 APi를 통해 공유 층을 사용하는 모델 
 
 <script src="https://gist.github.com/ingu627/049ed17fba72be2c7734e3dcd32feaf7.js"></script>
 
 <br>
-<br>
 
 ## 7_1_6. 층과 모델 
 
 - 함수형 API에서는 모델을 층처럼 사용할 수 있다.
 
-<br>
 <br>
 
 ## 7_2. 케라스 콜백과 텐서보드를 사용한 딥러닝 모델 검사와 모니터링 
@@ -233,7 +213,6 @@ last_modified_at: 2025-09-27
 4. **훈련과 검증 지표를 로그에 기록하거나 모델이 학습한 표현이 업데이트될 때마다 시각화한다** : 진행 표시줄이 하나의 콜백이다.
 
 <br>
-<br>
 
 ### ModelCheckpoint와 EarlyStopping 콜백 
 
@@ -243,7 +222,6 @@ last_modified_at: 2025-09-27
 <script src="https://gist.github.com/ingu627/7989e0b8314b61be701dd27c4440e3af.js"></script>
 
 <br>
-<br>
 
 ### ReduceLROnPlateau 콜백
 
@@ -252,7 +230,6 @@ last_modified_at: 2025-09-27
 
 <script src="https://gist.github.com/ingu627/64c703e7fb295c622c162e5010c8ee9e.js"></script>
 
-<br>
 <br>
 
 ### 자신만의 콜백 만들기
@@ -281,7 +258,6 @@ last_modified_at: 2025-09-27
 <script src="https://gist.github.com/ingu627/7a4779c9bfd1116544380758c85435f6.js"></script>
 
 <br>
-<br>
 
 ## 7_2_2. 텐서보드 소개: 텐서플로의 시각화 프레임워크 
 
@@ -299,13 +275,11 @@ last_modified_at: 2025-09-27
 ![image](https://user-images.githubusercontent.com/78655692/148879749-80634d69-2686-4faf-9366-5dd521e60262.png)
 
 <br>
-<br>
 
 ### 텐서보드를 사용한 텍스트 분류 모델 
 
 <script src="https://gist.github.com/ingu627/977e5ca09730e0992cbc046accd1504b.js"></script>
 
-<br>
 <br>
 
 ### 텐서보드 로그 파일을 위한 디렉터리 생성하기
@@ -314,7 +288,6 @@ last_modified_at: 2025-09-27
 $ mkdir my_log_dir
 ```
 
-<br>
 <br>
 
 ### 텐서보드 콜백과 함께 모델 훈련하기 
@@ -334,7 +307,6 @@ $ tensorboard --logdir=my_log_dir
 
 > 11.24 위 주소로 들어가지지만 해당 파일을 찾지 못하는 에러 발생 
 
-<br>
 <br>
 
 ## 7_3. 모델의 성능을 최대로 끌어올리기
@@ -360,7 +332,6 @@ dense_model.add(Dense(32, activation='relu'))
 dense_model.add(BatchNormalization())
 ```
 
-<br>
 <br>
 
 ### 깊이별 분리 합성곱 
@@ -406,7 +377,6 @@ model.compile(optimizer='rmsprop', loss='categorical_crossentropy')
 
 
 <br>
-<br>
 
 ## 7_3_2. 하이퍼파라미터 최적화
 
@@ -424,7 +394,6 @@ model.compile(optimizer='rmsprop', loss='categorical_crossentropy')
 
 - 하이퍼파라미터 최적화는 어느 작업에서 최고의 모델을 얻거나 머신 러닝 경연 대회에서 우승하기 위한 강력한 도구이다.
 
-<br>
 <br>
 
 ### 모델 앙상블
@@ -445,7 +414,6 @@ final_preds = 0.5 * preds_a + 0.25 * preds_b + 0.1 * preds_c + 0.15 * preds_d # 
 
 - 좋은 앙상블 가중치는 랜덤 서치나 넬더-미드 방법 같은 간단한 최적화 방법이 있다. 이외에도 지수 값을 평균할 수 있다.
 
-<br>
 <br>
 
 ## References 

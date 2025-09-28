@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "빅데이터분석기사 실기: 데이터 정제 및 변환"
+title: "빅데이터분석기사 실기 작업형(3) - 데이터 정제, 변환"
 excerpt: "본 글은 빅데이터분석기사 실기 작업형에 대비하여 요약 및 실습한 것을 작성한 글입니다. 기출문제의 데이터는 https://github.com/ingu627/BigDataAnalysis에 데이터 셋을 남겨놨습니다."
 categories: R_ML
 tags : [R, visualization, adsp, 빅데이터 분석기사, 실기, 작업형, 필답형, 자격증, dataq, 정리, pdf, 기출문제, 정리본, 후기, 설명, 2회, 3회]
