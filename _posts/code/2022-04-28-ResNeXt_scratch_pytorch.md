@@ -1,7 +1,7 @@
 ---
 layout: single
-title: "ResNeXt: Pytorch로 밑바닥부터 구현하기"
-excerpt: "ResNet에 이어 ResNeXt의 구조를 직접 구현해보았습니다. cardinality를 이용하여 split-transform-merge 기법이 핵심입니다."
+title: "ResNeXt50 Scratch: Cardinality(그룹) 확장으로 성능/파라미터 균형"
+excerpt: "Split-Transform-Merge·grouped conv(cardinality) 설계를 ResNet과 비교 구현하며 파라미터 증가 없이 표현력 높이는 원리 분석"
 categories: code
 tags: [resnet, resnext]
 toc: true

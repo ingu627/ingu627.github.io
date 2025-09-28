@@ -1,7 +1,7 @@
 ---
 layout: single
-title: "ResNet152: Pytorch로 밑바닥부터 구현하기"
-excerpt: "잔차 유닛을 정의한 후, ResNet의 구조를 직접 구현해보았습니다."
+title: "ResNet152 Scratch 구현: Bottleneck 블록 설계·스킵연결·깊이 확장"
+excerpt: "Bottleneck 구조 채널 압축·확장, identity/다운샘플 경로와 layer 스택 구성을 직접 코드로 구현해 깊은 네트워크 학습 안정 원리 이해"
 categories: code
 tags: [resnet, resnet50, resnet101, resnet152, scratch, 파이토치, fashion mnist, 코드, 구현, 모델, design, 설명, layer, 역전파, backpropagation, forward, __init__, nn.Module, Conv2d, BatchNrom2d, ReLU, dwonsample, identity, block, super, MaxPool2d, 딥러닝, cv, 컴퓨티 비전]
 toc: true

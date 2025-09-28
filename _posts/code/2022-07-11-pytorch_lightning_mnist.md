@@ -1,7 +1,7 @@
 ---
 layout: single
-title: "Pytorch Lightning과 Wandb로 MNIST 학습하기"
-excerpt: "PyTorch Lightning은 PyTorch 코드를 구성하고 분산 훈련 및 16-비트 정밀도와 같은 고급 기능을 쉽게 추가할 수 있는 래퍼입니다."
+title: "PyTorch Lightning + Weights & Biases: MNIST 실험 템플릿 자동화"
+excerpt: "Lightning Module·Trainer 구조로 학습 루프/로깅 추상화하고 W&B 연동으로 실험 추적·메트릭 시각화 자동화하는 워크플로"
 categories: code
 tags: [pytorch lightning, wandb, pytorch, mnist, 예제, 코드, init, forward, training_step, validation_step, configure_optimizers, 사용법, 정리, 설명, mlops]
 toc: true

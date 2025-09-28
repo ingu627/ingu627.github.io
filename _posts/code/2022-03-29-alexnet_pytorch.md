@@ -1,7 +1,7 @@
 ---
 layout: single
-title: "AlexNet: Pytorch로 구현하기"
-excerpt: "Paper: ImageNet Classification with Deep Convolutional Neural Networks, Method: Pytorch"
+title: "AlexNet 구조 분석 & PyTorch 구현: LRN·Dropout·Data Augmentation"
+excerpt: "ImageNet 우승 모델 AlexNet의 LRN·드롭아웃·데이터 증식 아이디어를 Fashion/CIFAR 예제로 PyTorch로 모듈별 분해 구현"
 categories: code
 tags : [alexnet, pytorch, 파이토치, 알렉스넷, cnn, 코드, 구현, design, 설명, layer, functional, nn, optim, torchvision, epoch, batch size, device, transforms, Compose, ToTensor, Resize, DataLoader, iter, next, Conv2d, Linear, dropout, relu, summary_, parameters, 딥러닝, cv, 컴퓨티 비전]
 toc: true
