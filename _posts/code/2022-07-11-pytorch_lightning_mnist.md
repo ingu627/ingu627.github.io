@@ -11,6 +11,15 @@ sidebar_main: false
 last_modified_at: 2022-07-13
 ---
 
+{% capture related %}
+**관련 구현 글**  
+- [ResNet 전이학습](/code/ResNet50_pytorch/)  
+- [ResNet Scratch](/code/ResNet_scratch_pytorch/)  
+- [ResNeXt Scratch](/code/ResNeXt_scratch_pytorch/)  
+- [AlexNet 구현](/code/alexnet_pytorch/)  
+{% endcapture %}
+{% include notice.html content=related %}
+
 <img align='right' width='250' src='https://user-images.githubusercontent.com/78655692/178315781-684e139b-9095-45a4-ba26-41d4acacfc2b.png'>
 본 글은 Pytorch Lightning + Wandb을 활용하여 mnist 예제 살펴보는 내용입니다. <br> 개인 공부를 목적으로 썼습니다. <br><br>  참고 : <br> [pytorchlightning 공식 사이트](https://www.pytorchlightning.ai/) <br> [wandb - pytorch-lighning](https://wandb.ai/quickstart/pytorch-lightning) <br> [Use Pytorch Lightning with Weights & Biases](https://wandb.ai/cayush/pytorchlightning/reports/Use-Pytorch-Lightning-with-Weights-Biases--Vmlldzo2NjQ1Mw)
 {: .notice--info}

@@ -12,6 +12,15 @@ sidebar_main: false
 last_modified_at: 2022-04-28
 ---
 
+{% capture related %}
+**관련 구현 글**  
+- [ResNet 전이학습](/code/ResNet50_pytorch/)  
+- [ResNet Scratch](/code/ResNet_scratch_pytorch/)  
+- [AlexNet 구현](/code/alexnet_pytorch/)  
+- [Lightning + W&B](/code/pytorch_lightning_mnist/)  
+{% endcapture %}
+{% include notice.html content=related %}
+
 <img align='right' width='250' src='https://user-images.githubusercontent.com/78655692/165755215-c33df78b-b30d-4f9b-926a-bef008ff5b93.png'>
 본 글은 Pytorch 기반 ResNeXt50 구조 처음부터 구현해보는 내용입니다.<br>하나하나 자세히 분해해봅시다.  <br><br>논문 : [Aggregated Residual Transformations for Deep Neural Networks](https://arxiv.org/abs/1611.05431) <br> 코드 : [pytorch-cifar100/models/resnext.py - weiaicunzai](https://github.com/weiaicunzai/pytorch-cifar100/blob/master/models/resnext.py) <br> 블로그 글 코드 : [poeun - resnext.ipynb](https://github.com/data-science-DL/pytorch/blob/master/code_implementation/resnext.ipynb) <br> 파이토치 torchvision/models/resnet.py : [resnet.py](https://github.com/pytorch/vision/blob/main/torchvision/models/resnet.py)
 {: .notice--info}

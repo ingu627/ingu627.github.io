@@ -11,6 +11,15 @@ sidebar_main: false
 last_modified_at: 2022-07-13
 ---
 
+{% capture related %}
+**관련 구현 글**  
+- [ResNet 전이학습](/code/ResNet50_pytorch/)  
+- [ResNet Scratch](/code/ResNet_scratch_pytorch/)  
+- [ResNeXt Scratch](/code/ResNeXt_scratch_pytorch/)  
+- [Lightning + W&B](/code/pytorch_lightning_mnist/)  
+{% endcapture %}
+{% include notice.html content=related %}
+
 <img align='right' width='350' src='https://user-images.githubusercontent.com/78655692/162920296-ea7abcc7-f497-4351-8152-838c140a1ba2.png'>
 본 글은 "ImageNet Classification with Deep Convolutional Neural Networks" 논문을 파악하고, 이를 파이토치로 구현해보는 내용입니다.<br>하나하나 분해해봅시다.  <br><br> 논문 : [AlexNet](https://proceedings.neurips.cc/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf) <br> 코드 : [kaggle - Fashion MNIST with AlexNet in Pytorch](https://www.kaggle.com/code/tiiktak/fashion-mnist-with-alexnet-in-pytorch-92-accuracy/notebook) <br> 블로그 글 코드 : [alexnet_pytorch.ipynb](https://github.com/data-science-DL/pytorch/blob/master/deeplearning_ajou/alexnet_pytorch.ipynb)<br> 파이토치 튜토리얼 : [pytorch.org](https://pytorch.org/docs/stable/index.html)
 {: .notice--info}

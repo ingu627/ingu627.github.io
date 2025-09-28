@@ -12,6 +12,15 @@ sidebar_main: false
 last_modified_at: 2022-04-18
 ---
 
+{% capture related %}
+**관련 구현 글**  
+- [ResNet 전이학습](/code/ResNet50_pytorch/)  
+- [ResNeXt Scratch](/code/ResNeXt_scratch_pytorch/)  
+- [AlexNet 구현](/code/alexnet_pytorch/)  
+- [Lightning + W&B](/code/pytorch_lightning_mnist/)  
+{% endcapture %}
+{% include notice.html content=related %}
+
 <img align='right' width='250' src='https://user-images.githubusercontent.com/78655692/162919635-d03d7e8f-c492-493b-8c4d-d2f0f88ae67e.png'>
 본 글은 Pytorch 기반 ResNet 모델 처음부터 구현해보는 내용입니다.<br>하나하나 자세히 분해해봅시다.  <br><br>논문 : [Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385) <br> 코드 : [Pytorch ResNet implementation from Scratch](https://www.youtube.com/watch?v=DkNIBBBvcPs) <br> 블로그 글 코드 : [poeun - resnet.ipynb](https://github.com/data-science-DL/pytorch/blob/master/code_implementation/resnet.ipynb) <br> 파이토치 torchvision/models/resnet.py : [resnet.py](https://github.com/pytorch/vision/blob/main/torchvision/models/resnet.py)
 {: .notice--info}
