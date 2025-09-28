@@ -1,7 +1,7 @@
 ---
 layout: single
-title: "케라스 8장: 생성 모델 - 오토인코더·GAN 개념 & 활용"
-excerpt: "케라스 창시자에게 배우는 딥러닝 - LSTM으로 텍스트 생성하기, 딥드림, 뉴런 스타일 트랜스퍼"
+title: "케라스 8장: 생성 모델 기초 - LSTM 생성·오토인코더·스타일 전이"
+excerpt: "텍스트 시퀀스 샘플링, 잠재 공간 압축(오토인코더), 합성 스타일 트랜스퍼 파이프라인 핵심 단계 요약"
 categories: keras
 tags: [python, keras, DL, API, 딥러닝, 케라스, 리뷰, 정리, 이해, 모델, 케라스 창시자에게 배우는 딥러닝]
 toc: true

@@ -1,7 +1,7 @@
 ---
 layout: single
-title: "케라스 1장: 딥러닝 개념 정리 & 주요 활용 분야 개요"
-excerpt: "케라스 창시자에게 배우는 딥러닝 - 역사, 분류, 특징"
+title: "케라스 1장: 딥러닝 정의·역사·활용 영역 빠른 개관"
+excerpt: "AI→ML→DL 계층 관계, 대표 활용 분야, 데이터·표현 학습 핵심 개념을 구조도로 정리해 방향 감 잡기"
 categories: keras
 tags: [python, keras, DL, ML, AI, 인고지능, 딥러닝, 케라스, 리뷰, 정리, 이해, 모델, 케라스 창시자에게 배우는 딥러닝]
 toc: true

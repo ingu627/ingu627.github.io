@@ -1,7 +1,7 @@
 ---
 layout: single
-title: "케라스 7장: 딥러닝 고급 기법 - 콜백·모니터링·튜닝 전략"
-excerpt: "케라스 창시자에게 배우는 딥러닝 - 케라스의 함수형 API, 케라스 콜백과 텐서보드를 사용한 딥러닝 모델 검사와 모니터링"
+title: "케라스 7장: 함수형 API·다중 입출력·콜백·모니터링 전략"
+excerpt: "Sequential 한계 극복하는 DAG 모델 구성, 조기 종료·체크포인트·TensorBoard로 실험 가시화/안정화"
 categories: keras
 tags: [python, keras, DL, API, 딥러닝, 케라스, 다중 입력 모델, 다중 출력 모델, 콜백, 텐서보드, 리뷰, 정리, 이해, 모델, 케라스 창시자에게 배우는 딥러닝]
 toc: true

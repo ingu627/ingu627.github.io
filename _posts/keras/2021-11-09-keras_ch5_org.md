@@ -1,7 +1,7 @@
 ---
 layout: single
-title: "케라스 5장: 컴퓨터 비전 기초 - 합성곱·특징추출·데이터증강"
-excerpt: "케라스 창시자에게 배우는 딥러닝 - 합성곱 신경망, 컨브넷 훈련하기, 데이터 증식 사용하기"
+title: "케라스 5장: CNN 합성곱·풀링 계층과 데이터 증강 실전"
+excerpt: "패딩·스트라이드·필터로 특징 계층화, overfitting 완화를 위한 증강(ImageDataGenerator) 전략 정리"
 categories: keras
 tags: [python, keras, DL, ML, AI, 인고지능, 딥러닝, 케라스, CV, 합성곱, 풀링, 필터, 컨브넷, ImageDataGenerator, 제너레이터, 증식, 리뷰, 정리, 이해, 모델, 케라스 창시자에게 배우는 딥러닝]
 toc: true
