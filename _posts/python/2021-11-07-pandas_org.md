@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "Python: Pandas 라이브러리 사용법"
+title: "Python Pandas: 데이터프레임 필수 연산 & 분석 패턴"
 excerpt: "+ 판다스 문법 + 타이타닉(titanic) 예제 실습, index, dtype, size, shape, unique, count, mean, value_counts, head, tail, drop, update, axis, join, merge, dataframe, group by, pivot, concat, join, on"
 categories: python
 tags: [python, pandas,  index, dtype, size, shape, unique, count, mean, value_counts, head, tail, drop, update, axis, join, merge, dataframe, group by, pivot, concat, join]

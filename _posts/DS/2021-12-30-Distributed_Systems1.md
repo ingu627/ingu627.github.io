@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "분산 시스템 1장: 소개"
+title: "분산 시스템 1장: 개요와 실패·지연·확장성 핵심 개념"
 excerpt: "Distributed Systems Third edition by Maarten van Steen,
 Andrew S. Tanenbaum - cha1. Introduction 1.1, 1.2, 1.3, 1.4"
 categories: DS

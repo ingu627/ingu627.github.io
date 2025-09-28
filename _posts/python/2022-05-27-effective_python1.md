@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "Effective Python 1장: 파이썬답게 생각하기"
+title: "Effective Python 1장: 파이썬다운 사고방식 & 코드 스타일 원칙"
 excerpt: "파이썬 코딩의 기술 개정 2판 책에 대한 내용입니다. PEP 8 style, f-문자열, 도우미 함수, 대입, enumerate, zip, 반복문, 대입식..."
 categories: python
 tags: [파이썬 코딩의 기술, 버전, sys, pep8, 공백, 명명, str, f 문자열, 대입, 언패킹, unpacking, enumerate, iterable, range, next, zip, 대입식, 왈러스, pdf, 정리]

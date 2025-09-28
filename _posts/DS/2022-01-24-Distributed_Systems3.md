@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "분산 시스템 3장: 프로세스"
+title: "분산 시스템 3장: 프로세스 모델·스레드·가상화와 통신 기초"
 excerpt: "Distributed Systems Third edition by Maarten van Steen,
 Andrew S. Tanenbaum - cha3. Processes 3.1, 3.2, 3.3, 3.4"
 categories: DS

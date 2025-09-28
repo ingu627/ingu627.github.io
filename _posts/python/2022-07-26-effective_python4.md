@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "Effective Python 4장: 컴프리헨션과 제너레이터"
+title: "Effective Python 4장: 컴프리헨션·제너레이터 활용과 메모리 효율"
 excerpt: "파이썬 코딩의 기술 개정 2판 책에 대한 내용입니다. 컴프리헨션, 대입식, 제너레이터, 이터레이션, yield, yield from, throw, itertools"
 categories: python
 tags: [파이썬 코딩의 기술, 컴프리헨션, 대입식, 제너레이터, 이터레이션, yield, yield from, throw, itertools, 설명, 란, 정리, 정의, chain, repeat, cycle, tee, zip_longest, islice, takewhile, filterfalse, accumulate, product, pdf, 정리]

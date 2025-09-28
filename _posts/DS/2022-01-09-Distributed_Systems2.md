@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "분산 시스템 2장: 아키텍처"
+title: "분산 시스템 2장: 아키텍처 패턴과 투명성 설계 전략"
 excerpt: "Distributed Systems Third edition by Maarten van Steen,
 Andrew S. Tanenbaum - cha2. Architectures 2.1, 2.2, 2.3, 2.4"
 categories: DS
