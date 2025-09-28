@@ -1,6 +1,7 @@
 ---
 layout: single
-title: "에러 해결: ExecutableNotFound, Graphviz"
+title: "에러 해결: Graphviz ExecutableNotFound - 설치 & PATH 설정"
+excerpt: "Graphviz ExecutableNotFound 발생 시 패키지 설치, PATH 등록, platform 별 확인 방법"
 categories: error
 tags: [error, ExecutableNotFound, graphviz]
 toc: true

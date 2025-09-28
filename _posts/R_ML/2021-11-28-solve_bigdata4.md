@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "빅데이터분석기사(R) - 제2유형 문제풀이"
+title: "빅데이터분석기사 실기 제2유형: 통계·모델링 문제 풀이 전략"
 excerpt: "2021년 제 3회 빅데이터분석기사 실기를 위한 문제풀이 내용입니다."
 categories: R_ML
 tags : [R, 빅데이터 분석기사, 실기, 작업형, 제2유형, 필답형, 자격증, dataq, 정리, pdf, 기출문제, 정리본, 후기, 설명, 2회, 3회]
@@ -12,18 +12,22 @@ classes: wide
 last_modified_at: 2022-03-31
 ---
 
-빅데이터 분석기사 실기 대비 차원에서 쓴 글입니다. <br> 기출문제의 데이터는 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis)에 데이터 셋을 남겨놨습니다.<br> 또한 해당 전체 코드는 `sujebi_3.R` 파일에 담겨져 있습니다.
+빅데이터 분석기사 실기 대비용 정리입니다. 기출 데이터는 [GitHub 저장소](https://github.com/ingu627/BigDataAnalysis)에 있으며 전체 코드는 `sujebi_3.R` 파일에 포함되어 있습니다.
 {: .notice--info}
 
-**1. help() 쓰기 <br> 2. library : caret, ModelMetrics, car, randomForest, e1071 <br> 3. 데이터 구조 파악 -> 결측값 처리 -> 전처리 -> 모델 평가 -> 모델 예측 -> 파일 저장**
+### 학습 흐름 체크리스트
+
+1. help() 활용으로 함수/객체 구조 확인
+2. 사용 라이브러리: caret, ModelMetrics, car, randomForest, e1071
+3. 전체 프로세스: 데이터 구조 파악 → 결측값 처리 → 전처리 → 모델 평가 → 예측 → 파일 저장
 {: .notice--danger}
 
 혹시 해당 글을 pdf로 받고 싶으신 분은 이메일과 함께 댓글로 남겨주세요~
 {: .notice--success}
 
-<br>
-<br>
-<br>
+
+
+
 
 ## 1. 백화점 고객의 1년 데이터 (dataq.or.kr 예시 문제)
 
@@ -91,8 +95,8 @@ head(result)
 write.csv(result, '0000.csv', row.names=FALSE)
 ```
 
-<br>
-<br>
+
+
 
 ## 2. WA_Fn-UseC_-Telco-Customer-Churn
 
@@ -157,8 +161,8 @@ auc(y_test$Churn, pred1) # 0.6890504
 write.csv(pred, 'y_test.csv', row.names=FALSE)
 ```
 
-<br>
-<br>
+ 
+ 
 
 ## 3. mtcars
 

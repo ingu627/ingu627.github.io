@@ -1,6 +1,7 @@
 ---
 layout: single
-title: "에러 해결: Kernel died, AttributeError"
+title: "에러 해결: Jupyter 'Kernel died' & AttributeError 발생 원인과 조치"
+excerpt: "Jupyter Notebook 실행 중 Kernel died와 SelectIOLoop AttributeError 발생 시 재설치 및 ipykernel 초기화 대응 요약"
 categories: error
 tags: [error, Kernel died]
 toc: true

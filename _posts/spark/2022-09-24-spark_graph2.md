@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "스파크: GraphFrame 그래프 알고리즘 예제"
+title: "스파크 GraphFrame 알고리즘: PageRank 등 핵심"
 excerpt: "Spark The Definitive Guide 책을 중심으로 스파크를 요약 및 정리해보았습니다. spark 예제를 통해 RDD 고급 연산에 대해 알아봅니다."
 categories: spark
 tags: [스파크, spark, sql, 스칼라, scala, 정리, 의미, 란, 실행, 그래프, graphframe, pagerank, 알고리즘, algorithm, 페이지랭크, outdegree, 너비 우선 탐색, bfs, breadth first search]

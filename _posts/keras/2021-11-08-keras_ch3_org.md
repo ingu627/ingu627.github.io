@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "케라스 3장: 신경망 시작하기 (1)"
+title: "케라스 3장: 첫 신경망 구축 - 데이터 준비부터 학습 흐름"
 excerpt: "케라스 창시자에게 배우는 딥러닝 - 신경망의 구조"
 categories: keras
 tags: [python, keras, DL, ML, AI, 인고지능, 딥러닝, 케라스, 층, 텐서, imdb, 리뷰, 정리, 이해, 모델, 케라스 창시자에게 배우는 딥러닝]

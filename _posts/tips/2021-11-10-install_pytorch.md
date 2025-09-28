@@ -1,7 +1,7 @@
 ---
 layout: single
-title: "Windows10: 파이토치(PyTorch) 설치 방법"
-excerpt : "windows10 환경 pytorch cuda11.0"
+title: "Windows10 PyTorch 설치: CUDA 버전 선택과 conda/pip 설치 커맨드"
+excerpt: "Windows10에서 CUDA 호환표 확인 후 conda·pip 중 선택해 PyTorch 특정 버전을 설치하고 import torch로 GPU 인식 검증"
 categories: tips
 tags: [tip, pytorch, install, 파이토치 설치, conda, pip, 윈도우10, 윈도우, 딥러닝]
 sidebar_main: false

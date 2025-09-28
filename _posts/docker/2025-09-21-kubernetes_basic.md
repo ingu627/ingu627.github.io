@@ -1,6 +1,6 @@
 ---
 layout: single
-title: '컨테이너, 도커, 쿠버네티스 개념'
+title: 'Docker & Kubernetes 핵심 개념 정리'
 excerpt: "개발 환경 불일치 문제를 해결하는 컨테이너 기술부터 대규모 배포를 자동화하는 쿠버네티스까지, 현대 개발의 핵심 3요소를 쉽고 명확하게 설명한다."
 categories: [docker]
 tags : [컨테이너, 도커, 쿠버네티스, 가상화, 데브옵스, 도커 빌드, 파드, yaml, kubectl, 서버 환경, 개발 환경]

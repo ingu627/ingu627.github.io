@@ -1,6 +1,6 @@
 ---
 layout: single
-title: 'API 아키텍처와 FastAPI 프로덕션 전략'
+title: 'FastAPI 운영: API 아키텍처 설계 & 프로덕션 배포 전략'
 excerpt: 'REST, GraphQL, gRPC 비교부터 FastAPI 비동기/스트리밍, 보안, 버전관리, 캐싱, 문서화, 운영 전략까지, 프로덕션급 API 개발의 모든 것을 한 번 정리해본다.'
 categories: [web]
 tags: [fastapi, api, rest, graphql, grpc, 보안, 문서화, 배포, 운영, REST, GraphQL, gRPC]

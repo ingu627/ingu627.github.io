@@ -1,6 +1,7 @@
 ---
 layout: single
-title: "에러 해결: 리눅스에서 파이썬 가상환경 설치"
+title: "에러 해결: 리눅스 Python 가상환경 생성(venv) 오류 & 권한 해결"
+excerpt: "Linux에서 venv 생성 실패(권한/누락 패키지) 발생 시 의존 패키지 설치 및 권한 정비"
 categories: error
 tags: [error, solution, linux, venv, 가상환경, 파이썬, 설치, 리눅스, wsl]
 toc: true

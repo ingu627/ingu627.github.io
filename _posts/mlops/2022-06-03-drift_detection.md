@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "MLOps: Concept Drift 탐지 방법"
+title: "MLOps: Concept Drift 탐지 전략 - 통계·모델 기반 방법 비교"
 excerpt: "Concept Drift는 시간이 지남에 따라 데이터의 통계적인 특성이 변하는 것을 말합니다. 이에 학습된 모델은 자연스레 성능이 떨어지기 때문에 drift를 잘 감지해야 합니다. 감지하는 방법들이 무엇이 있는지 살펴봅니다."
 categories: mlops
 tags: [mlops, concept drift, 컨셉 드리프트, data drift, drift, detection, method, window, error, drift detection method, ddm, early drift detection method, eddm, adaptive windowing, adwin, hddm, hoeffding, bernstein, fhddm, 리뷰, 설명, 정리, 논문]

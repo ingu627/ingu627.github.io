@@ -1,6 +1,6 @@
 ---
 layout: single
-title: 'Bootstrap 기초 개념과 사용법'
+title: 'Bootstrap 활용: 그리드·컴포넌트·반응형 레이아웃 실전'
 excerpt: '본 글은 패스트캠퍼스의 한 번에 끝내는 파이썬 웹 개발 초격차 패키지 강의를 개인 실습하여 정리했습니다. 문법 및 github 예제로 실습' 
 categories: web
 tags: [web, frontend, concept, bootstrap, 정리, 웹, 기초, 예제]

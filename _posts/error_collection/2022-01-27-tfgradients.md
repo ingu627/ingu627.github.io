@@ -1,6 +1,7 @@
 ---
 layout: single
-title: "에러 해결: tf.gradients is not supported"
+title: "에러 해결: TensorFlow2 'tf.gradients not supported' → GradientTape 대체"
+excerpt: "TensorFlow2에서 tf.gradients 제거로 인한 오류 발생 시 GradientTape 기반 재작성 가이드"
 categories: error
 tags: [error, solution, tf.gradients]
 toc: true

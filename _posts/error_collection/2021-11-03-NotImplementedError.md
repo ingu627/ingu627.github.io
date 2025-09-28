@@ -1,6 +1,7 @@
 ---
 layout: single
-title: '에러 해결: NotImplementedError, Tensor to numpy array'
+title: '에러 해결: NotImplementedError - Tensor를 NumPy로 변환 실패 시 대처'
+excerpt: 'Tensor -> NumPy 변환 시 NotImplementedError 발생 원인(그래프 모드/디바이스)과 안전한 변환 방법'
 categories: error
 tags: [error, NotImplementedError]
 toc: true

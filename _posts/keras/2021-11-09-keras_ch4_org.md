@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "케라스 4장: 머신러닝의 기본 요소"
+title: "케라스 4장: 머신러닝 기본 요소 - 일반화·과적합·정규화 이해"
 excerpt: "케라스 창시자에게 배우는 딥러닝 - 머신 러닝의 네 가지 분류"
 categories: keras
 tags: [python, keras, DL, ML, AI, 인고지능, 딥러닝, 케라스, 머신러닝, 리뷰, 정리, 이해, 모델, 케라스 창시자에게 배우는 딥러닝]

@@ -1,7 +1,7 @@
 ---
 layout: single
-title: "Windows10: 리눅스(Linux) 설치하기 (Ubuntu on WSL2)"
-excerpt: "AWS에서 가상의 환경을 작업하던 중, 내 PC에서 구동해 보았으면 싶어서 설치를 진행해 보았습니다. 윈도우10 환경에서 wsl2를 설치해봅니다."
+title: "Windows10 WSL2: Ubuntu 설치·업그레이드·기본 설정 완전 가이드"
+excerpt: "Windows10에서 WSL2 활성화→커널 업데이트→Ubuntu 설치 후 사용자·패키지·파일시스템·GPU 연동(옵션)까지 초기 설정 절차"
 categories: tips
 date: 2022-07-16
 tag: [linux, ubuntu, windows 10, WSL2, 우분투, 리눅스, wsl, 윈도우10, 설치, 오류, 사용법, 정리, 윈도우, 도커, docker]

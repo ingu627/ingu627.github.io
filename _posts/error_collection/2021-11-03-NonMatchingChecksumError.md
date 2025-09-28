@@ -1,6 +1,7 @@
 ---
 layout: single
-title: '에러 해결: NonMatchingChecksumError'
+title: '에러 해결: Conda NonMatchingChecksumError 패키지 검증 실패 조치'
+excerpt: 'Conda NonMatchingChecksumError 발생 시 캐시 정리·미러 변경·채널 재구성 절차'
 categories: error
 tags: [error, NonMatchingChecksumError]
 toc: true

@@ -1,6 +1,7 @@
 ---
 layout: single
-title: "에러 해결: ModuleNotFoundError, 'tensorflow.keras'"
+title: "에러 해결: ModuleNotFoundError 'tensorflow.keras' 원인 & 설치 방법"
+excerpt: "tensorflow.keras 모듈 로드 실패 시 환경 충돌/버전 문제 진단 및 패키지 재설치 절차"
 categories: error
 tags: [error, ModuleNotFoundError]
 toc: true

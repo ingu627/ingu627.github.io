@@ -1,7 +1,7 @@
 ---
 layout: single
-title: "Docker: Hortonworks Data Platform(HDP) 설치"
-excerpt : "Hortonworks Data Platform(HDP)는 분산 스토리지 및 대규모 멀티 소스 데이터 세트 처리를 위한 오픈소스 프레임워크입니다. 도커 내 hdp를 설치해봅시다."
+title: "Docker HDP(Hortonworks) 샌드박스: 설치·포트·서비스 기동 가이드"
+excerpt: "Docker 기반 HDP 샌드박스 이미지 다운로드부터 메모리/포트 설정, Ambari로 HDFS·YARN·Hive 서비스 기동 확인 단계별 정리"
 categories: tips
 tags: [tip, 리눅스, 도커, docker, linux, hdp, 호튼웍스, hdp, hortonworks, 설치, wsl2, ambari, hadoop, 하둡, sandbox, 사용법]
 

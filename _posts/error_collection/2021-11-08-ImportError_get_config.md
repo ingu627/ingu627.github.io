@@ -1,6 +1,7 @@
 ---
 layout: single
-title: "에러 해결: ImportError, cannot import get_config"
+title: "에러 해결: Keras ImportError 'cannot import get_config' 원인 & 해결"
+excerpt: "Keras get_config 임포트 실패의 버전/네임스페이스 원인과 모듈 재정렬 및 업그레이드 방법"
 categories: error
 tags: [error, ImportError]
 toc: true

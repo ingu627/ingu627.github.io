@@ -1,7 +1,7 @@
 ---
 layout: single
-title: "Jupyter Notebook 단축키 모음"
-excerpt : "주피터 노트북으로 코딩 시 단축키를 알면 훨씬 더 편합니다."
+title: "Jupyter Notebook 단축키 핵심: 셀 편집·명령·실행 속도 향상"
+excerpt: "모드 전환, 셀 추가/삭제, 다중 실행·커서·코드 일괄 편집 등 생산성을 높이는 필수·고급 단축키 정리"
 categories: tips
 tags: [tip, shortcuts, 단축키, 주피터]
 toc : True

@@ -1,7 +1,7 @@
 ---
 layout: single
-title: "macOS(M1): 하둡(Hadoop), 스파크(Spark) 설치 및 환경설정"
-excerpt : "하둡과 스파크를 로컬환경에서 설치하는 과정을 글로 담기 위해 적어보았습니다."
+title: "macOS(M1) Hadoop·Spark 단일 노드 설치: JDK·SSH·환경변수·데몬"
+excerpt: "M1 macOS에서 JDK 확인→SSH 무암호 설정→Hadoop/HDFS 포맷→Spark 실행까지 단일 노드 개발 환경 구성 절차"
 categories: [tips, hadoop]
 tags: [하둡, m1, 맥, hadoop, 스파크, 설치, ssh, 자바, 환경설정, hdfs, yarn, 맵리듀스]
 

@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "케라스 2장: 신경망의 수학적 구성 요소"
+title: "케라스 2장: 신경망 핵심 수학 - 텐서·연산·미분 직관"
 excerpt: "케라스 창시자에게 배우는 딥러닝 - 신경망과의 첫 만남"
 categories: keras
 tags: [python, keras, DL, ML, AI, 인고지능, 딥러닝, 케라스, 텐서, 신경망, 리뷰, 정리, 이해, 모델, 케라스 창시자에게 배우는 딥러닝]

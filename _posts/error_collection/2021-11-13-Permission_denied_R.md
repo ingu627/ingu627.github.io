@@ -1,6 +1,7 @@
 ---
 layout: single
-title: "에러 해결: R 패키지 설치, Permission denied"
+title: "에러 해결: R 패키지 설치 Permission denied 권한 문제 해결"
+excerpt: "R 패키지 설치 시 Permission denied 오류 원인(라이브러리 경로/권한)과 수정 전략"
 categories: error
 tags: [error, package, R]
 toc: true

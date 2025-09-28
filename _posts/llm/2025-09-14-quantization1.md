@@ -1,6 +1,6 @@
 ---
 layout: single
-title: 'LLM: 경량화 기법 (양자화, 프루닝, 지식 증류 등)'
+title: 'LLM: 모델 경량화 총정리 - 양자화·프루닝·지식증류 핵심 비교'
 excerpt: "프루닝(Pruning), 양자화(Quantization), 지식 증류(Knowledge Distillation), 리랭킹(Reranking), 파라미터 공유(Parameter Sharing) 등"
 categories: llm
 tags : [llm, 경량화, quantization, pruning, 증류, 서비스, 리랭킹, 양자화]

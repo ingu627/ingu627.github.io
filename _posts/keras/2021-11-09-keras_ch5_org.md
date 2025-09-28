@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "케라스 5장: 컴퓨터 비전을 위한 딥러닝 (1)"
+title: "케라스 5장: 컴퓨터 비전 기초 - 합성곱·특징추출·데이터증강"
 excerpt: "케라스 창시자에게 배우는 딥러닝 - 합성곱 신경망, 컨브넷 훈련하기, 데이터 증식 사용하기"
 categories: keras
 tags: [python, keras, DL, ML, AI, 인고지능, 딥러닝, 케라스, CV, 합성곱, 풀링, 필터, 컨브넷, ImageDataGenerator, 제너레이터, 증식, 리뷰, 정리, 이해, 모델, 케라스 창시자에게 배우는 딥러닝]

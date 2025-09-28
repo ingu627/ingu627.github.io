@@ -1,7 +1,7 @@
 ---
 layout: single
-title: "TensorFlow/PyTorch GPU 설치 방법"
-excerpt : "NVIDIA DRIVER, CUDA Toolkit, Cudnn, tensorflow 최신 버전 2.8을 설치합니다. 윈도우10 환경에서 작업하여 쓴 글입니다."
+title: "Windows10: TensorFlow·PyTorch GPU 환경 최신 버전 설치 전체 절차"
+excerpt: "Windows10에서 Anaconda→NVIDIA Driver→CUDA 11.x→cuDNN→가상환경 순으로 TensorFlow·PyTorch GPU 세팅하고 버전 호환 검증하는 과정"
 categories: tips
 tags: [tip, cuda, install, gpu, 텐서플로, 설치, 윈도우10, 쿠다, 파이토치, Cudnn, pytorch, window, 아나콘다, tensorflow, 윈도우]
 

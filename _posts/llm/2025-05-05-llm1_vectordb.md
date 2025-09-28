@@ -1,6 +1,6 @@
 ---
 layout: single
-title: 'LLM: 벡터 데이터베이스 개념 및 선택 가이드'
+title: 'LLM: 벡터DB 선택 가이드 - 구조·검색전략·운영 체크리스트'
 excerpt: "벡터 데이터베이스의 개념, 특징, 주요 종류(Pinecone, Milvus, Weaviate 등) 비교 및 사용 사례별 선택 가이드를 제공합니다. AI 및 RAG 아키텍처의 핵심 기술을 알아보세요."
 categories: llm
 tags : [llm, 청킹, 벡터, 벡터db, 종류, pinecone, milvus, weaviate]

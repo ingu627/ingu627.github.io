@@ -1,7 +1,7 @@
 ---
 layout: single
-title: "Windows10: 텐서플로우 GPU 설치 방법"
-excerpt : "NVIDIA DRIVER, CUDA Toolkit, Cudnn"
+title: "Windows10 TensorFlow GPU: CUDA·cuDNN 버전 매칭 & 설치 검증"
+excerpt: "TensorFlow GPU 실행을 위한 CUDA·cuDNN 버전 선정, 환경변수(PATH) 구성과 tf.config.list_physical_devices('GPU')로 검증하는 절차"
 categories: tips
 tags: [tip, cuda, install, gpu, 텐서플로, 설치, 윈도우10]
 
