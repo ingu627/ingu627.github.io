@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "Pytorch 기반 ResNeXt 구조 처음부터 구현해보기"
+title: "ResNeXt: Pytorch로 밑바닥부터 구현하기"
 excerpt: "ResNet에 이어 ResNeXt의 구조를 직접 구현해보았습니다. cardinality를 이용하여 split-transform-merge 기법이 핵심입니다."
 categories: code
 tags: [resnet, resnext]

@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "[DS] 분산 시스템(Distributed Systems) - 3. Processes 정리"
+title: "분산 시스템 3장: 프로세스"
 excerpt: "Distributed Systems Third edition by Maarten van Steen,
 Andrew S. Tanenbaum - cha3. Processes 3.1, 3.2, 3.3, 3.4"
 categories: DS

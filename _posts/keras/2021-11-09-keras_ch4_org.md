@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "[케라스(keras) 이해] 4장. 머신 러닝의 기본 요소"
+title: "케라스 4장: 머신러닝의 기본 요소"
 excerpt: "케라스 창시자에게 배우는 딥러닝 - 머신 러닝의 네 가지 분류"
 categories: keras
 tags: [python, keras, DL, ML, AI, 인고지능, 딥러닝, 케라스, 머신러닝, 리뷰, 정리, 이해, 모델, 케라스 창시자에게 배우는 딥러닝]
@@ -8,7 +8,7 @@ toc: true
 sidebar_main: false
 classes: wide
 
-last_modified_at: 2022-03-28
+last_modified_at: 2025-09-27
 ---
 
 <img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/147629300-4d7acc5e-225a-454a-92cd-4da82f6828f6.png

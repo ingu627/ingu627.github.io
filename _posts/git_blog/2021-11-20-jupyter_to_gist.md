@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "Jupyter Notebook 파일 Git 블로그에 업로드하는 방법"
+title: "Jekyll 블로그: Jupyter Notebook 파일 업로드"
 excerpt : "주피터 노트북 파일을 한번에 업로드하여 블로그 글에 보여주기"
 categories: git_blog
 tags: [git, blog, jupyter_notebook, 주피터, 파일, gist, 블로그, 업로드]

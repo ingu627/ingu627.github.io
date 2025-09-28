@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "[WINDOWS10 환경] 딥러닝을 위한 텐서플로우(tensorflow) GPU 설치 방법"
+title: "Windows10: 텐서플로우 GPU 설치 방법"
 excerpt : "NVIDIA DRIVER, CUDA Toolkit, Cudnn"
 categories: tips
 tags: [tip, cuda, install, gpu, 텐서플로, 설치, 윈도우10]

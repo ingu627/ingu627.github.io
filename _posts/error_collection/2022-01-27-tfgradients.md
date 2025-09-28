@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "[에러 해결 방법]  tf.gradients is not supported when eager execution is enabled 일때"
+title: "에러 해결: tf.gradients is not supported"
 categories: error
 tags: [error, solution, tf.gradients]
 toc: true

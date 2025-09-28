@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "Window10 또는 Ubuntu 22.04 내 도커(docker) 설치하기"
+title: "Window10/Ubuntu 22.04: 도커(Docker) 설치"
 excerpt : "윈도우10 또는 우분투 내에서 도커를 설치하는 과정을 정리할 필요가 있다고 느꼈습니다. 설치에 도움이 되었으면 합니다."
 categories: [tips, docker]
 tags: [리눅스, 우분투, window10, 윈도우, 도커, docker, linux, 설치, ubuntu, 윈도우10, wsl2, docker desktop, 사용법]

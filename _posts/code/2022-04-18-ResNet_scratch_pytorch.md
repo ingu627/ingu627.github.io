@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "Pytorch 기반 ResNet152 구조 처음부터 구현해보기"
+title: "ResNet152: Pytorch로 밑바닥부터 구현하기"
 excerpt: "잔차 유닛을 정의한 후, ResNet의 구조를 직접 구현해보았습니다."
 categories: code
 tags: [resnet, resnet50, resnet101, resnet152, scratch, 파이토치, fashion mnist, 코드, 구현, 모델, design, 설명, layer, 역전파, backpropagation, forward, __init__, nn.Module, Conv2d, BatchNrom2d, ReLU, dwonsample, identity, block, super, MaxPool2d, 딥러닝, cv, 컴퓨티 비전]

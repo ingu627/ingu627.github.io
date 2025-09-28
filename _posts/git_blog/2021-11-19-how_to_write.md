@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "Git Blog - POST 글 작성하는 방법"
+title: "Jekyll 블로그: 포스트 작성법"
 excerpt: YAML을 이용하여 글의 제목, 날짜, 카테고리, 태그, 레이아웃 등을 정의해봅니다.
 categories: git_blog
 tags: [git, blog, post]

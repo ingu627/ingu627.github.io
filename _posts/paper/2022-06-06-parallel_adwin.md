@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "[논문 리뷰] Scalable Detection of Concept Drifts on Data Streams with Parallel Adaptive Windowing"
+title: "논문 리뷰: Scalable Detection of Concept Drifts on Data Streams with Parallel Adaptive Windowing"
 excerpt: "Adaptive Windowing (ADWIN)은 윈도우 기반 드리프트 감지 기법입니다. 하지만, 이 기법은 메모리 사용량이 많이 요구되는 단점이 있습니다. 이 논문은 병렬화를 통해 극복하려고 했습니다."
 categories: paper
 tags : [컨셉 드리프트, concept drift, detection, adaptive windowing, adwin, exponential histogram, stream, 스트림, 머신 러닝, 기계학습, 모델, 리뷰, 논문, 정리, 설명, 병렬, 윈도우, 란, paper]

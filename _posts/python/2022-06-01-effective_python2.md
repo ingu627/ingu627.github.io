@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "[Effective Python] 2장 리스트와 딕셔너리 리뷰"
+title: "Effective Python 2장: 리스트와 딕셔너리"
 excerpt: "파이썬 코딩의 기술 개정 2판 책에 대한 내용입니다. 시퀀스, 슬라이싱, 스트라이드, 언패킹, key, 딕셔너리, in, get, defaultdict, missing"
 categories: python
 tags: [파이썬 코딩의 기술, 시퀀스, 슬라이싱, 스트라이드, 언패킹, key, 딕셔너리, in, get, keyerror, setdefault, defaultdict, missing, pdf, 정리]

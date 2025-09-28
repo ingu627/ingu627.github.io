@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "[에러 해결 방법] Kernel died (code: 1). AttributeError: 'SelectIOLoop' object has no attribute 'asyncio_loop'"
+title: "에러 해결: Kernel died, AttributeError"
 categories: error
 tags: [error, Kernel died]
 toc: true

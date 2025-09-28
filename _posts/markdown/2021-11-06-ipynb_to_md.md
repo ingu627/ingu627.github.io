@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "주피터(.ipynb) 마크다운(.md)로 전환하는 방법"
+title: "마크다운(Markdown): Jupyter(.ipynb) 파일을 .md로 변환"
 categories: md
 tags: [jupyter, md]
 sidebar_main: false

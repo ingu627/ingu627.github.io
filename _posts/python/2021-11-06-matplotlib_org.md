@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "파이썬 matplotlib 라이브러리에 대한 모든 것"
+title: "Python: Matplotlib 라이브러리 사용법"
 excerpt: "figure, label, lim, marker, grid, vline, hline, xlim, ylim, axis, alpha, color, rotation, fill_between, tick_params, subplot, width, align, color, edgecolor, linewidth, histogram, autopct, startangle, shawdow"
 categories: python
 tags : [python, matplotlib, visualization, figure, label, lim, marker, grid, vline, hline, xlim, ylim, axis, alpha, color, rotation, fill_between, tick_params, subplot, width, align, color, edgecolor, linewidth, histogram, autopct, startangle, shawdow]

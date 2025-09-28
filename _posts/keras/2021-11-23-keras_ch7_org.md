@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "[케라스(keras) 이해] 7장. 딥러닝을 위한 고급 도구"
+title: "케라스 7장: 딥러닝을 위한 고급 도구"
 excerpt: "케라스 창시자에게 배우는 딥러닝 - 케라스의 함수형 API, 케라스 콜백과 텐서보드를 사용한 딥러닝 모델 검사와 모니터링"
 categories: keras
 tags: [python, keras, DL, API, 딥러닝, 케라스, 다중 입력 모델, 다중 출력 모델, 콜백, 텐서보드, 리뷰, 정리, 이해, 모델, 케라스 창시자에게 배우는 딥러닝]
@@ -8,7 +8,7 @@ toc: true
 sidebar_main: false
 classes: wide
 
-last_modified_at: 2022-01-11
+last_modified_at: 2025-09-27
 ---
 
 <img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/147629300-4d7acc5e-225a-454a-92cd-4da82f6828f6.png

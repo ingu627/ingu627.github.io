@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "생산성 향상을 위한 VSCode extensions 12개 추천"
+title: "생산성 향상을 위한 VSCode 확장 프로그램 12개 추천"
 excerpt: "Ponicode, Dracula Official, Debugger for Chrome, Bracket Pair Colorizer 2, Code Spell Checker, Code Runner, Live Server 등" 
 categories: tips
 tags: [tip, vscode, extension, Dracula, Debugger, Bracket, Live, Markdown, 확장]

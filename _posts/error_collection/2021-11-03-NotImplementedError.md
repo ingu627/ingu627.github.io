@@ -1,6 +1,6 @@
 ---
 layout: single
-title: '[에러 해결 방법] NotImplementedError: Cannot convert a symbolic Tensor (simple_rnn_3/strided_slice:0) to a numpy array'
+title: '에러 해결: NotImplementedError, Tensor to numpy array'
 categories: error
 tags: [error, NotImplementedError]
 toc: true

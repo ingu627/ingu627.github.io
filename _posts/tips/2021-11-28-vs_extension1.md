@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "빅데이터 분석가를 위한 VSCode extensions 14개 추천"
+title: "빅데이터 분석가를 위한 VSCode 확장 프로그램 14개 추천"
 excerpt : "파이썬, 주피터를 vscode에서 더 전문적이고 생산적으로 활용하는 방법(+자동 완성)"
 categories: tips
 tags: [tip, vscode, extension, 파이썬, 주피터, Tabnine, Pylance, IntelliCode, MagicPython, Jupyter, Settings Sync, GitLens, GitGraph, 자동완성, 확장]

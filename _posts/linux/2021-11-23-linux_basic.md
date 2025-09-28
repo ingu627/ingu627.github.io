@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "Linux 기초 정리: Shell, directory, 네트워크, 서버"
+title: "Linux: 기초 (Shell, Directory, 네트워크, 서버)"
 excerpt: "생활 코딩 강의 내용을 요약 및 정리한 글입니다. - 기초문법, IO Redirection, shell, shell script"
 categories: linux 
 tags: [linux, cloud9, 문법, 쉘, 쉘스크립트, bash, zsh, 네트워크, 서버, daemon, cron, 사용자, 권한, 프로세스]

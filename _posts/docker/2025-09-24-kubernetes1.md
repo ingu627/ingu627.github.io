@@ -1,6 +1,6 @@
 ---
 layout: single
-title: 'Docker Compose · Ingress · Persistent Volume · Managed Kubernetes: 프로덕션 4단계 로드맵'
+title: 'Docker Compose, Ingress, PV, Managed Kubernetes: 프로덕션 로드맵'
 excerpt: '멀티 컨테이너 정의(Docker Compose) → L7 트래픽 게이트웨이(Ingress) → 상태 데이터 영속성(PV/PVC/StorageClass) → 관리형 쿠버네티스(EKS/GKE/AKS) 선택까지 필수 개념과 실전 예제를 단계별로 정리한다.'
 categories: [docker]
 tags: [도커 컴포즈, docker compose, 인그레스, ingress, 퍼시스턴트 볼륨, pv, pvc, storageclass, kubernetes, k8s, eks, gke, aks, 관리형 쿠버네티스]

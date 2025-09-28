@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "[Spark] 아파치 카프카를 이용한 정형 스트리밍 예제"
+title: "스파크: 카프카를 이용한 정형 스트리밍 예제"
 excerpt: "Spark The Definitive Guide 책을 중심으로 스파크를 요약 및 정리해보았습니다. spark 예제를 통해 아파치 카프카를 이용한 정형 스트리밍 예제에 대해 알아봅니다."
 categories: spark
 tags: [아파치, 스파크, spark, 정리, 의미, 란, 이란, 사용법, pyspark, 스트리밍, 정형, 스트림, 카프카, kafka, 싱크, 트리거]

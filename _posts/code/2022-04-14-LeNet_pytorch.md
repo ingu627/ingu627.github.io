@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "Pytorch 기반 LeNet 구현 및 데이터 증식된 CIFAR10 학습해보기"
+title: "LeNet: Pytorch 구현과 CIFAR10 데이터 증식"
 excerpt: "LeNet은 1998년 Yann LeCun의 논문 'Gradient-Based Learning Applied to Document Recognition'에 기재된 가장 기본적인 CNN 구조입니다. 이를 이해하고 파이토치로 구현해보았습니다."
 categories: code
 tags: [lenet, pytorch, 파이토치, cifar10, 코드, 구현, design, 설명, layer, compose, transforms, resize, RandomHorizontalFlip, RandomAffine, ColorJitter, ToTensor, normalize, DataLoader, Dataset, detach, cpu, numpy, clip, iter, next, Conv2d, max_pool2d, parameters, zero_grad, backward, step, item, 딥러닝, cv, 컴퓨티 비전]

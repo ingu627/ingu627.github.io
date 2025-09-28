@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "[에러 해결 방법] ImportError: cannot import name 'get_config' from 'tensorflow.python.eager.context'"
+title: "에러 해결: ImportError, cannot import get_config"
 categories: error
 tags: [error, ImportError]
 toc: true

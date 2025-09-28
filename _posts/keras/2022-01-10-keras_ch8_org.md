@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "[케라스(keras) 이해] 8장. 생성 모델을 위한 딥러닝"
+title: "케라스 8장: 생성 모델을 위한 딥러닝"
 excerpt: "케라스 창시자에게 배우는 딥러닝 - LSTM으로 텍스트 생성하기, 딥드림, 뉴런 스타일 트랜스퍼"
 categories: keras
 tags: [python, keras, DL, API, 딥러닝, 케라스, 리뷰, 정리, 이해, 모델, 케라스 창시자에게 배우는 딥러닝]
@@ -8,7 +8,7 @@ toc: true
 sidebar_main: false
 classes: wide
 
-last_modified_at: 2022-01-27
+last_modified_at: 2025-09-27
 ---
 
 <img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/147629300-4d7acc5e-225a-454a-92cd-4da82f6828f6.png

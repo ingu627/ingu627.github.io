@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "파이썬 seaborn 라이브러리에 대한 모든 것"
+title: "Python: Seaborn 라이브러리 사용법"
 excerpt: "rugplot, kdeplot, distplot, countplot, jointplot, pairplot, heatmap, barplot, boxplot, violinplot, stripplot, swarmplot, catplot"
 categories: python
 tags: [python, seaborn, visualization, rugplot, kdeplot, distplot, countplot, jointplot, pairplot, heatmap, barplot, boxplot, violinplot, stripplot, swarmplot, catplot]

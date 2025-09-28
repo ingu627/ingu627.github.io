@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "[에러 해결 방법] ModuleNotFoundError: No module named 'tensorflow.keras'"
+title: "에러 해결: ModuleNotFoundError, 'tensorflow.keras'"
 categories: error
 tags: [error, ModuleNotFoundError]
 toc: true

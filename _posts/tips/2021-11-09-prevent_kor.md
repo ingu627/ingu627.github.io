@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "파이썬 한글 방지 깨짐 코드 [Jupyter, Colab]"
+title: "파이썬: Jupyter, Colab 한글 깨짐 방지"
 excerpt: "주피터 노트북 환경이나 코랩 환경에서 파이썬 한글이 깨질 때에 대한 해결책입니다."
 categories: tips
 tags: [tip, python, korea, colab, 한글 깨짐, 파이썬, 코랩, 주피터]
