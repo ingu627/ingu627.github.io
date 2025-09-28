@@ -1,7 +1,7 @@
 ---
 layout: single
-title: "Python Pandas: 데이터프레임 필수 연산 & 분석 패턴"
-excerpt: "+ 판다스 문법 + 타이타닉(titanic) 예제 실습, index, dtype, size, shape, unique, count, mean, value_counts, head, tail, drop, update, axis, join, merge, dataframe, group by, pivot, concat, join, on"
+title: "Python Pandas: 데이터 선택·정제·집계·조인 & Titanic 실전 예제"
+excerpt: "Titanic 예제로 Series/DataFrame 구조, 인덱싱·정제·GroupBy·피벗·조인·집계 패턴과 자주 하는 실수 방지 TIP"
 categories: python
 tags: [python, pandas,  index, dtype, size, shape, unique, count, mean, value_counts, head, tail, drop, update, axis, join, merge, dataframe, group by, pivot, concat, join]
 toc: true

@@ -1,7 +1,7 @@
 ---
 layout: single
-title: "Python Matplotlib: 기본 플롯·축 설정·스타일 커스터마이징"
-excerpt: "figure, label, lim, marker, grid, vline, hline, xlim, ylim, axis, alpha, color, rotation, fill_between, tick_params, subplot, width, align, color, edgecolor, linewidth, histogram, autopct, startangle, shawdow"
+title: "Python Matplotlib: Figure·Axes 구조와 축·범례·스타일 실전 튜닝"
+excerpt: "Figure/Axes 개념 이해 후 기본 플롯, 축/범례/폰트/레이아웃 조정 및 겹침·회전·한글 폰트 문제 해결 패턴"
 categories: python
 tags : [python, matplotlib, visualization, figure, label, lim, marker, grid, vline, hline, xlim, ylim, axis, alpha, color, rotation, fill_between, tick_params, subplot, width, align, color, edgecolor, linewidth, histogram, autopct, startangle, shawdow]
 toc: true

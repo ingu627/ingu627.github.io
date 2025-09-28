@@ -1,7 +1,7 @@
 ---
 layout: single
-title: "Python Seaborn: 시각화 스타일·기본 차트 & 커스터마이징"
-excerpt: "rugplot, kdeplot, distplot, countplot, jointplot, pairplot, heatmap, barplot, boxplot, violinplot, stripplot, swarmplot, catplot"
+title: "Python Seaborn: 분포·범주·관계·행렬 플롯 선택 & 테마 활용"
+excerpt: "분포/범주/관계/행렬 플롯 선택 기준과 팔레트·FacetGrid·스타일 설정으로 탐색형 데이터 시각화 흐름 구축"
 categories: python
 tags: [python, seaborn, visualization, rugplot, kdeplot, distplot, countplot, jointplot, pairplot, heatmap, barplot, boxplot, violinplot, stripplot, swarmplot, catplot]
 toc: true
