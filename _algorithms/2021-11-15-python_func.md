@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "파이썬(python) 함수 기능에 대한 모든 것"
-excerpt: "파이썬을 이용하면서 배웠던 것들. 알고리즘 사용한 것들, 모르는 것들, 헷갈리는 것들을 정리하고 있습니다."
+excerpt: "파이썬 내장 함수, 자료구조 메서드, 알고리즘 패턴을 실전 예제와 함께 정리한 완전 가이드. 코딩테스트 필수 함수부터 고급 활용법까지 체계적으로 학습한다."
 tags: [python, 파이썬, 정의, 함수, 클래스, 인스턴스, 객체, self, __init__, args, kwargs, 리스트]
 toc: true
 toc_sticky: true
@@ -14,344 +14,1263 @@ author_profile: true
 last_modified_at: 2025-09-26
 ---
 
-문제 풀기 : 알고리즘 문제에서 주어지는 것들을 구별하는 습관 가지기!!  
-순서는 상관없이 배우는 대로 정리를 해 나가고 있습니다.
+알고리즘 문제를 풀 때는 입력값의 자료형, 제약조건, 예상 출력 형태를 먼저 파악하는 습관이 중요하다. 본 문서는 실무와 코딩테스트에서 자주 사용하는 파이썬 함수들을 예제 중심으로 정리했다.
 {: .notice--danger}
 
-## 파이썬 함수
+## 파이썬 핵심 개념
 
-### class , object, instance
+### class, object, instance
 
-- 클래스(class)는 틀이고, 객체(object)는 이 틀에 만들어진 피조물을 뜻함
-  - **인스턴스(instance)** : 실체
-  - **객체(object)** : 그 실체를 말함
-- **클래스 정의** $\rightarrow$ **인스턴스명 = 클래스()** $\rightarrow$ 어떤 객체의 메서드를 사용할 때는 **객체.메서드**
-- **self**는 그 클래스의 객체를 가리킴
+객체지향 프로그래밍의 핵심 개념을 이해하자.
+
+- **클래스(class)**: 객체를 만들기 위한 설계도 또는 틀
+  - 예: 붕어빵 틀
+- **객체(object)**: 클래스로 만든 실체
+  - 예: 틀로 찍어낸 붕어빵
+- **인스턴스(instance)**: 특정 클래스로 만든 객체
+  - 예: `Person` 클래스로 만든 `홍길동` 객체
+- **self**: 클래스 내부에서 자기 자신(인스턴스)을 가리키는 키워드
+
+**사용 흐름**: 클래스 정의 → 인스턴스 생성 (`객체 = 클래스()`) → 메서드 호출 (`객체.메서드()`)
 
 ![image](https://user-images.githubusercontent.com/78655692/152981730-f6e20f01-6dc4-4422-b708-981e7182231c.png)
 
-- **\_\_init\_\_** : 초기화(initialize) 메서드, 어떤 클래스의 객체가 만들어질 때 자동으로 **호출**되어서 그 객체가 갖게 될 여러 가지 성질을 정해주는 일을 함
+- **\_\_init\_\_**: 생성자 메서드로, 객체 생성 시 자동 호출되어 초기값을 설정한다
 
 ```python
 # 간단한 클래스와 인스턴스 예시
 class Person:
   def __init__(self, name, age):  # 객체 생성 시 자동 호출
-    self.name = name
+    self.name = name              # 인스턴스 변수 초기화
     self.age = age
 
-  def hello(self):  # 인스턴스 메서드
+  def hello(self):                # 인스턴스 메서드
     return f"안녕 나는 {self.name}, 나이는 {self.age}"
 
-p = Person("홍길동", 20)   # 인스턴스 생성
-print(p.hello())            # 객체.메서드
+# 사용 예제
+p = Person("홍길동", 20)          # 인스턴스 생성 (__init__ 자동 호출)
+print(p.hello())                  # 메서드 호출: 안녕 나는 홍길동, 나이는 20
+print(p.name)                     # 속성 접근: 홍길동
 ```
 
 ### inheritance, override, super
 
-- **상속 (inheritance)** : 클래스를 부모와 자식으로 나눈 뒤 부모클래스의 내용을 자식이 그대로 가져다 쓰는 것
-- **오버라이드 (override)** : 같은 이름을 가진 메소드를 덮을 때
-- **super()** : 자식 클래스에서 부모클래스의 내용을 사용하고 싶을 때
-- **class** : 특정 타입의 객체를 생성하기 위한 청사진(설계도)
-- **methods** : 클래스에 속한 함수(인스턴스가 호출할 수 있는 동작)
-- **attributes** : 클래스나 인스턴스가 상태 데이터를 저장하는 변수
-- **object** : 클래스 정의를 통해 실제로 만들어진 구체적 인스턴스(실체)
-- **inheritance** : 기존(부모) 클래스의 속성과 동작을 이어받아 재사용·확장하는 메커니즘
-- **composition** : 다른 객체들을 조합(포함)하여 더 복잡한 객체를 구성하는 방법
+객체지향의 강력한 기능인 상속 관계를 이해하자.
+
+- **상속(inheritance)**: 부모 클래스의 속성과 메서드를 자식 클래스가 물려받는 것
+  - 코드 재사용성 증가, 계층 구조 표현
+- **오버라이드(override)**: 부모 클래스의 메서드를 자식 클래스에서 재정의하는 것
+  - 같은 이름의 메서드를 새로운 동작으로 대체
+- **super()**: 자식 클래스에서 부모 클래스의 메서드를 호출할 때 사용
+  - 부모의 기능을 유지하면서 확장 가능
+
+**추가 개념**:
+- **class**: 객체를 만들기 위한 청사진(설계도)
+- **methods**: 클래스 내부에 정의된 함수 (객체의 동작)
+- **attributes**: 클래스나 인스턴스가 가지는 데이터 (객체의 상태)
+- **object**: 클래스를 통해 만들어진 실제 데이터 (인스턴스)
+- **composition**: 다른 객체를 포함하여 복잡한 기능을 구현하는 방법
 
 ```python
+# 상속 예제
 class Animal:
   def sound(self):
     return "..."
 
-class Dog(Animal):  # 상속
-  def sound(self):  # 오버라이드
+class Dog(Animal):              # Dog는 Animal을 상속
+  def sound(self):              # 메서드 오버라이드
     return "멍멍"
 
-class GuideDog(Dog):
+class GuideDog(Dog):            # GuideDog는 Dog를 상속
   def sound(self):
-    base = super().sound()  # super() 사용
+    base = super().sound()      # 부모(Dog)의 sound() 호출
     return base + " (안내견)"
 
-print(Dog().sound())        # 멍멍
-print(GuideDog().sound())   # 멍멍 (안내견)
+# 실행 결과
+print(Dog().sound())            # 멍멍
+print(GuideDog().sound())       # 멍멍 (안내견)
+
+# 상속 관계: Animal → Dog → GuideDog
+# GuideDog는 Dog의 기능을 확장한 것
 ```
 
 ### input()
 
-- 사용자가 입력한 값을 어떤 변수에 대입하고 싶을 때
-- input은 입력되는 모든 것을 문자열로 취급한다.
+사용자로부터 데이터를 입력받는 기본 함수다.
+
+**핵심 특징**:
+- 모든 입력을 **문자열(str)** 타입으로 받는다
+- 숫자 연산이 필요하면 `int()`, `float()` 등으로 형변환 필수
+- 코딩테스트에서는 `map()`과 `split()`을 함께 자주 사용
 
 ```python
-# 한 줄에서 정수 3개 받기
+# 기본 사용
+name = input()              # 입력: 홍길동
+print(type(name))           # <class 'str'>
+
+# 한 줄에서 정수 여러 개 받기
 # 입력: 10 20 30
 a, b, c = map(int, input().split())
-print(a + b + c)
+print(a + b + c)            # 60
+
+# 리스트로 받기
+# 입력: 1 2 3 4 5
+numbers = list(map(int, input().split()))
+print(numbers)              # [1, 2, 3, 4, 5]
 ```
 
 ### split()
 
-- 공백(스페이스, 탭, 엔터 등)을 기준으로 문자열을 나누어 준다
+문자열을 특정 구분자로 나누어 리스트로 반환하는 메서드다.
+
+**동작 원리**:
+- 인자가 없으면 공백(스페이스, 탭, 엔터)을 기준으로 분리
+- 연속된 공백은 하나로 취급 (자동 정리)
+- 구분자를 지정하면 해당 문자로 정확히 분리
 
 ```python
+# 공백 기준 분리
+s = "red blue green"
+words = s.split()
+print(words)                # ['red', 'blue', 'green']
+
+# 쉼표 기준 분리
 s = "red,blue,green"
 colors = s.split(',')
-print(colors)  # ['red', 'blue', 'green']
+print(colors)               # ['red', 'blue', 'green']
+
+# 콜론 기준 분리
+time = "14:30:00"
+parts = time.split(':')
+print(parts)                # ['14', '30', '00']
+
+# 실전 예제: 좌표 입력
+# 입력: 3,5
+x, y = map(int, input().split(','))
+print(x, y)                 # 3 5
 ```
 
-### 나눗셈
+### 나눗셈 연산자
 
-- **/** : 그냥 나눔
-- **//** : 몫
-- **%** : 나머지
+파이썬의 나눗셈 연산자는 용도에 따라 3가지로 구분된다.
 
-- **divmod(a,b)** : 매개변수로 받은 a를 b로 나눈다. 그리고 그 몫과 나머지를 튜플(tuple) 데이터 타입으로 반환한다.
-- 특수문자 표기는 `\` 앞에 쓰면 됨
+**연산자 종류**:
+- **`/`**: 일반 나눗셈 (실수 결과)
+- **`//`**: 몫만 구하기 (정수 나눗셈, floor division)
+- **`%`**: 나머지 구하기 (modulo 연산)
 
 ```python
 a, b = 17, 5
+
 print(a / b)      # 3.4 (실수 나눗셈)
 print(a // b)     # 3   (몫)
 print(a % b)      # 2   (나머지)
-print(divmod(a,b))  # (3, 2)
+
+# 검증: 17 = 5 * 3 + 2
+print(b * (a // b) + (a % b))  # 17
+
+# 음수 나눗셈 주의
+print(-17 // 5)   # -4 (내림)
+print(-17 % 5)    # 3  (양수 나머지)
+```
+
+**divmod(a, b)**: 몫과 나머지를 동시에 구하는 내장 함수
+
+- 반환값: `(몫, 나머지)` 튜플
+- 두 값이 모두 필요할 때 효율적
+
+```python
+a, b = 17, 5
+quotient, remainder = divmod(a, b)
+print(quotient, remainder)  # 3 2
+
+# 활용: 시간 계산
+total_seconds = 3665
+minutes, seconds = divmod(total_seconds, 60)
+hours, minutes = divmod(minutes, 60)
+print(f"{hours}:{minutes}:{seconds}")  # 1:1:5
+```
+
+**팁**: 특수문자 출력 시 `\` 앞에 붙여 이스케이프 처리
+```python
+print("경로: C:\\Users\\Documents")
+print('작은따옴표 \' 출력')
 ```
 
 ### sys.stdin.readline()
 
-- input 대신 씀
+대량의 입력을 받을 때 `input()`보다 **월등히 빠른** 함수다.
+
+**사용 이유**:
+- `input()`은 프롬프트 출력 등 부가 작업이 있어 느림
+- 수만 줄 이상의 입력이 있을 때 시간 초과 방지
+- 백준 온라인 저지 등 대량 입력 문제에 필수
+
+**주의사항**:
+- 개행 문자(`\n`)가 포함되므로 `rstrip()` 또는 `strip()` 필요
+- 한 줄만 입력받을 때는 `input()`이 더 편리
 
 ```python
 import sys
-line = sys.stdin.readline().rstrip()  # 개행 제거
+
+# 한 줄 입력 (개행 제거)
+line = sys.stdin.readline().rstrip()
+
 # 여러 정수 빠르게 받기
-# arr = list(map(int, sys.stdin.readline().split()))
+arr = list(map(int, sys.stdin.readline().split()))
+
+# 여러 줄 입력 (N개의 줄)
+n = int(sys.stdin.readline())
+lines = [sys.stdin.readline().rstrip() for _ in range(n)]
+
+# 전체 입력 한번에 읽기
+# data = sys.stdin.read().splitlines()
 ```
+
+**성능 비교** (10만 줄 입력):
+- `input()`: 약 2초
+- `sys.stdin.readline()`: 약 0.2초 (10배 빠름)
 
 ### index
 
-- 리스트에 x 값이 있으면 x의 위치 값을 돌려준다.
+리스트에서 특정 값의 **첫 번째 위치**를 찾는 메서드다.
+
+**특징**:
+- 찾는 값이 없으면 `ValueError` 발생
+- 중복된 값이 있어도 가장 앞의 인덱스만 반환
+- 시작/끝 범위 지정 가능: `list.index(x, start, end)`
 
 ```python
-arr = [10, 20, 30, 20]
-print(arr.index(20))  # 1 (첫 번째 위치)
+arr = [10, 20, 30, 20, 40]
+print(arr.index(20))        # 1 (첫 번째 20의 위치)
+
+# 범위 지정 검색
+print(arr.index(20, 2))     # 3 (인덱스 2부터 검색)
+
+# 존재 확인 후 사용 (안전)
+if 50 in arr:
+    idx = arr.index(50)
+else:
+    print("값이 없다")        # 값이 없다
 ```
 
 ### count
 
-- 리스트 안에 x가 몇 개 있는지 조사하여 그 개수를 돌려주는 함수이다.
+리스트에서 특정 값이 **몇 개** 있는지 세는 메서드다.
+
+**특징**:
+- 존재하지 않으면 0 반환
+- 모든 iterable(list, tuple, str)에서 사용 가능
+- O(n) 시간 복잡도 (전체 순회)
 
 ```python
-arr = [1,1,2,3,1,2]
-print(arr.count(1))  # 3
+arr = [1, 1, 2, 3, 1, 2]
+print(arr.count(1))         # 3
+print(arr.count(5))         # 0 (없으면 0)
+
+# 문자열에서도 사용
+text = "banana"
+print(text.count('a'))      # 3
+print(text.count('an'))     # 2 (부분 문자열도 가능)
 ```
 
 ### enumerate
 
-- 인덱스 번호와 컬렉션의 원소를 tuple형태로 반환한다.
-- enumerate는 "열거하다"라는 뜻이다.
+iterable의 각 요소를 **(인덱스, 값)** 튜플로 묶어주는 내장 함수다.
 
+**핵심 개념**:
+- "열거하다(enumerate)"라는 뜻 그대로 순서를 매겨줌
+- 반복문에서 인덱스와 값을 동시에 사용할 때 유용
+- `start` 매개변수로 시작 번호 지정 가능 (기본값 0)
+
+**일반적인 for문과 비교**:
 ```python
-names = ["a","b","c"]
-for idx, name in enumerate(names, start=1):
-  print(idx, name)
+# 일반 방법 (비권장)
+names = ["apple", "banana", "cherry"]
+for i in range(len(names)):
+    print(i, names[i])
+
+# enumerate 사용 (권장)
+for idx, name in enumerate(names):
+    print(idx, name)
+# 0 apple
+# 1 banana
+# 2 cherry
+```
+
+**실전 활용**:
+```python
+# 1부터 시작
+scores = [85, 92, 78]
+for rank, score in enumerate(scores, start=1):
+    print(f"{rank}등: {score}점")
+# 1등: 85점
+# 2등: 92점
+# 3등: 78점
+
+# 특정 인덱스의 값 찾기
+words = ["hello", "world", "python"]
+for i, word in enumerate(words):
+    if word == "python":
+        print(f"'python'은 {i}번 인덱스")  # 'python'은 2번 인덱스
+
+# 리스트로 변환
+pairs = list(enumerate(["a", "b", "c"]))
+print(pairs)  # [(0, 'a'), (1, 'b'), (2, 'c')]
 ```
 
 ### string.printable
 
-- 인쇄 가능한 것으로 간주하는 ASCII 문자의 문자열
+**출력 가능한 모든 ASCII 문자**를 담고 있는 상수 문자열이다.
 
+**구성 요소**:
+- 숫자: `0123456789`
+- 알파벳 소문자: `abcdefghijklmnopqrstuvwxyz`
+- 알파벳 대문자: `ABCDEFGHIJKLMNOPQRSTUVWXYZ`
+- 구두점: `!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~`
+- 공백 문자: 스페이스, 탭(`\t`), 개행(`\n`), 캐리지 리턴(`\r`), 폼 피드(`\f`), 수직 탭(`\v`)
+
+**활용 예시**:
 ```python
 import string
-print(string.printable[:20])  # 앞 일부
+
+# 전체 출력 가능 문자 (100개)
+print(len(string.printable))  # 100
+print(string.printable[:20])  # 0123456789abcdefghij
+
+# 문자가 출력 가능한지 확인
 print('A' in string.printable)  # True
+print('\x00' in string.printable)  # False (NULL 문자)
+
+# 숫자만 추출 (다른 상수들도 있음)
+print(string.digits)          # 0123456789
+print(string.ascii_lowercase) # abcdefghijklmnopqrstuvwxyz
+print(string.ascii_uppercase) # ABCDEFGHIJKLMNOPQRSTUVWXYZ
+print(string.punctuation)     # !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~
+```
+
+**실전 활용**:
+```python
+# 문자열에서 출력 가능한 문자만 필터링
+text = "Hello\x00World\x01!"
+clean = ''.join(c for c in text if c in string.printable)
+print(clean)  # HelloWorld!
 ```
 
 ### zip(*iterable)
 
-- 여러 개의 순회 가능한(iterable) 객체를 인자로 받고, 각 객체가 담고 있는 원소를 터플의 형태로 차례로 접근할 수 있는 반복자(iterator)를 반환한다.
-- 동일한 개수로 이루어진 자료형을 묶어 주는 역할을 하는 함수이다.
-- `*iterable`은 반복 가능(iterable)한 자료형 여러 개를 입력할 수 있다는 의미이다.
+**여러 iterable을 병렬로 묶어주는** 내장 함수다.
 
+**핵심 개념**:
+- 여러 리스트의 **같은 위치** 요소들을 튜플로 묶어줌
+- 길이가 다르면 **가장 짧은 것**에 맞춰 종료
+- `*iterable`: 여러 개의 iterable을 인자로 받을 수 있음
+- 반환값은 zip 객체 → `list()` 또는 `tuple()`로 변환
+
+**기본 사용**:
 ```python
-a = [1,2,3]
-b = ['a','b','c']
-for x, y in zip(a,b):
-  print(x,y)
+a = [1, 2, 3]
+b = ['a', 'b', 'c']
+
+# 병렬 순회
+for x, y in zip(a, b):
+    print(x, y)
+# 1 a
+# 2 b
+# 3 c
+
+# 리스트로 변환
+pairs = list(zip(a, b))
+print(pairs)  # [(1, 'a'), (2, 'b'), (3, 'c')]
+```
+
+**길이가 다를 때**:
+```python
+nums = [1, 2, 3, 4, 5]
+chars = ['a', 'b', 'c']
+
+result = list(zip(nums, chars))
+print(result)  # [(1, 'a'), (2, 'b'), (3, 'c')]
+# 4, 5는 버려짐
+```
+
+**실전 활용**:
+```python
+# 두 리스트를 딕셔너리로 변환
+keys = ['name', 'age', 'city']
+values = ['홍길동', 25, '서울']
+person = dict(zip(keys, values))
+print(person)  # {'name': '홍길동', 'age': 25, 'city': '서울'}
+
+# 행렬 전치 (transpose)
+matrix = [
+    [1, 2, 3],
+    [4, 5, 6]
+]
+transposed = list(zip(*matrix))
+print(transposed)  # [(1, 4), (2, 5), (3, 6)]
+
+# 여러 리스트 동시 순회
+names = ['김', '이', '박']
+ages = [20, 30, 40]
+cities = ['서울', '부산', '대구']
+
+for name, age, city in zip(names, ages, cities):
+    print(f"{name}({age}) - {city}")
+# 김(20) - 서울
+# 이(30) - 부산
+# 박(40) - 대구
+```
+
+**언패킹 활용** (`*` 연산자):
+```python
+pairs = [(1, 'a'), (2, 'b'), (3, 'c')]
+nums, chars = zip(*pairs)  # 언패킹 후 다시 묶기
+print(nums)   # (1, 2, 3)
+print(chars)  # ('a', 'b', 'c')
 ```
 
 ### set
 
-- 집합. 중복되지 않은 원소를 얻고자 할 때
-- 중복을 허용하지 않는다 / 순서가 없다(Unordered)
-- `set()` : 비어있는 집합 만들기
+**중복을 허용하지 않는 집합** 자료구조다.
 
+**핵심 특징**:
+- **중복 불가**: 같은 값이 여러 번 추가되어도 하나만 유지
+- **순서 없음(Unordered)**: 인덱스 접근 불가 (`set[0]` ❌)
+- **빠른 검색**: `in` 연산이 O(1) 평균 시간 (리스트는 O(n))
+- **수학적 집합 연산** 지원: 합집합, 교집합, 차집합 등
+
+**생성 방법**:
 ```python
-arr = [1,2,2,3,3,3]
-uniq = set(arr)
-print(uniq)        # {1,2,3}
-print(2 in uniq)   # True
+# 빈 집합
+s = set()             # {} 는 빈 딕셔너리
+
+# 값이 있는 집합
+s = {1, 2, 3}
+s = set([1, 2, 2, 3]) # 리스트 → 집합 (중복 제거)
+print(s)              # {1, 2, 3}
 ```
+
+**주요 연산**:
+```python
+s = {1, 2, 3}
+
+# 추가 / 제거
+s.add(4)              # {1, 2, 3, 4}
+s.remove(2)           # {1, 3, 4} (없으면 KeyError)
+s.discard(2)          # 에러 없이 제거 (없어도 OK)
+
+# 존재 확인 (빠름!)
+print(2 in s)         # False
+print(3 in s)         # True
+```
+
+**집합 연산** (코딩테스트 필수):
+```python
+a = {1, 2, 3, 4}
+b = {3, 4, 5, 6}
+
+# 합집합 (union)
+print(a | b)          # {1, 2, 3, 4, 5, 6}
+print(a.union(b))     # 동일
+
+# 교집합 (intersection)
+print(a & b)          # {3, 4}
+print(a.intersection(b))
+
+# 차집합 (difference)
+print(a - b)          # {1, 2}
+print(b - a)          # {5, 6}
+
+# 대칭 차집합 (symmetric difference)
+print(a ^ b)          # {1, 2, 5, 6}
+```
+
+**실전 활용**:
+```python
+# 중복 제거
+arr = [1, 2, 2, 3, 3, 3]
+uniq = list(set(arr))
+print(uniq)           # [1, 2, 3] (순서 보장 안됨)
+
+# 순서 유지하며 중복 제거
+seen = set()
+result = []
+for x in arr:
+    if x not in seen:
+        seen.add(x)
+        result.append(x)
+print(result)         # [1, 2, 3]
+
+# 두 리스트의 공통 원소
+list1 = [1, 2, 3, 4]
+list2 = [3, 4, 5, 6]
+common = list(set(list1) & set(list2))
+print(common)         # [3, 4]
+```
+
+**주의사항**:
+- 리스트, 딕셔너리 등 **가변 객체는 원소로 불가**
+- 정렬이 필요하면 `sorted(set_obj)`로 변환
 
 ### f-string
 
-- f-string을 나타 낼 수 있게 문자열 앞에f를 입력하고 중괄호 사이에 {변수 : 소수점자리수} 순서로 작성
+Python 3.6+에서 도입된 **가장 직관적이고 빠른** 문자열 포맷팅 방법이다.
 
+**기본 문법**: `f"문자열 {변수}"`
+- 문자열 앞에 `f` 또는 `F`를 붙임
+- 중괄호 `{}` 안에 변수나 표현식을 직접 작성
+
+**기본 사용**:
 ```python
-name = "홍길동"; score = 91.236
-print(f"{name}: {score:.1f}")  # 홍길동: 91.2
+name = "홍길동"
+age = 25
+score = 91.236
+
+# 기본 출력
+print(f"{name}의 나이는 {age}살")  # 홍길동의 나이는 25살
+
+# 표현식 사용
+print(f"내년 나이: {age + 1}")      # 내년 나이: 26
+
+# 소수점 자리수 지정
+print(f"점수: {score:.1f}")         # 점수: 91.2
+print(f"점수: {score:.2f}")         # 점수: 91.24
+```
+
+**다양한 포맷 지정자**:
+```python
+num = 42
+
+print(f"{num:05d}")    # 00042 (5자리, 0으로 채움)
+print(f"{num:>10}")    # "        42" (오른쪽 정렬, 10자리)
+print(f"{num:<10}")    # "42        " (왼쪽 정렬)
+print(f"{num:^10}")    # "    42    " (가운데 정렬)
+
+# 진법 변환
+print(f"{num:b}")      # 101010 (2진수)
+print(f"{num:o}")      # 52 (8진수)
+print(f"{num:x}")      # 2a (16진수)
+print(f"{num:#x}")     # 0x2a (접두사 포함)
+
+# 천 단위 구분
+big_num = 1234567
+print(f"{big_num:,}")  # 1,234,567
+```
+
+**실전 활용**:
+```python
+# 디버깅: 변수명과 값 동시 출력
+x = 10
+y = 20
+print(f"{x=}, {y=}, {x+y=}")  # x=10, y=20, x+y=30
+
+# 딕셔너리
+person = {"name": "김철수", "age": 30}
+print(f"{person['name']}는 {person['age']}살")
+
+# 리스트
+scores = [85, 92, 78]
+print(f"평균: {sum(scores)/len(scores):.2f}")  # 평균: 85.00
+
+# 여러 줄 문자열
+message = f"""
+이름: {name}
+나이: {age}
+점수: {score:.1f}
+"""
+print(message)
+```
+
+**이전 방식과 비교**:
+```python
+name = "홍길동"
+score = 91.236
+
+# % 포맷팅 (구식)
+print("%s: %.1f" % (name, score))
+
+# str.format() (중간)
+print("{}: {:.1f}".format(name, score))
+
+# f-string (최신, 권장)
+print(f"{name}: {score:.1f}")  # 가장 빠르고 읽기 쉬움
 ```
 
 ### add
 
-- 집합에 요소를 추가할 때
-- 집합에서 차집합을 구할 때
+집합(set)에 요소를 **추가**하는 메서드다.
 
+**기본 사용**:
 ```python
-s = {1,2}
+s = {1, 2}
 s.add(3)
-print(s)           # {1,2,3}
-print(s - {2})     # {1,3}  (차집합)
+print(s)           # {1, 2, 3}
+
+# 중복 추가는 무시됨
+s.add(2)
+print(s)           # {1, 2, 3} (변화 없음)
 ```
 
-### sorted(정렬할 데이터, key 파라미터, reverse 파라미터)
-
-- 첫 번째 매개변수로 들어온 이터러블한 데이터를 새로운 정렬된 리스트로 만들어서 반환해 주는 함수
-
+**집합 연산**:
 ```python
-words = ["bbb","a","cc"]
-print(sorted(words))  # ['a','bbb','cc'] (사전식)
-print(sorted(words, key=len))  # ['a','cc','bbb']
-print(sorted(words, key=len, reverse=True))
+a = {1, 2, 3}
+b = {2, 3, 4}
+
+# 차집합 (a에만 있는 요소)
+print(a - b)       # {1}
+
+# 합집합 (모든 요소)
+print(a | b)       # {1, 2, 3, 4}
+
+# 교집합 (공통 요소)
+print(a & b)       # {2, 3}
+
+# 대칭차집합 (한쪽에만 있는 요소)
+print(a ^ b)       # {1, 4}
 ```
 
-### sorted(iterable)
-
-- 입력값을 정렬한 후 그 결과를 리스트로 돌려주는 함수이다.
-
+**실전 활용**:
 ```python
-nums = {5,1,4}
-print(sorted(nums))  # [1,4,5]
+# 중복 없는 원소 수집
+seen = set()
+for num in [1, 2, 2, 3, 3, 3]:
+    seen.add(num)
+print(seen)        # {1, 2, 3}
+
+# 조건에 맞는 원소 추가
+valid = set()
+for x in range(10):
+    if x % 2 == 0:
+        valid.add(x)
+print(valid)       # {0, 2, 4, 6, 8}
 ```
 
-### list[index] = value
+### sorted(iterable, key=None, reverse=False)
 
-- index 위치에 value 값을 넣어라
+iterable을 정렬하여 **새로운 리스트**로 반환하는 내장 함수다.
 
+**핵심 개념**:
+- 원본을 변경하지 않고 정렬된 **새 리스트** 생성
+- `list.sort()`는 원본을 변경 (in-place)
+- 모든 iterable(리스트, 튜플, 집합, 문자열 등) 가능
+
+**기본 사용**:
 ```python
-arr = [0,0,0]
-arr[1] = 5
-print(arr)  # [0,5,0]
+# 리스트 정렬
+nums = [3, 1, 4, 1, 5]
+sorted_nums = sorted(nums)
+print(sorted_nums)    # [1, 1, 3, 4, 5]
+print(nums)           # [3, 1, 4, 1, 5] (원본 유지)
+
+# 내림차순
+desc = sorted(nums, reverse=True)
+print(desc)           # [5, 4, 3, 1, 1]
+
+# 집합 정렬 (자동으로 리스트 반환)
+s = {5, 1, 4, 2, 3}
+print(sorted(s))      # [1, 2, 3, 4, 5]
+
+# 문자열 정렬 (리스트로 반환)
+print(sorted("dcba")) # ['a', 'b', 'c', 'd']
 ```
 
-### list.append(a)
-
-- 리스트 끝에 a값 추가
-
+**key 매개변수** (핵심!):
 ```python
-arr = [1]
-arr.append(2)
-print(arr)
+# 길이 기준 정렬
+words = ["bbb", "a", "cc"]
+print(sorted(words, key=len))  # ['a', 'cc', 'bbb']
+
+# 절댓값 기준 정렬
+nums = [-5, 2, -3, 1, -1]
+print(sorted(nums, key=abs))   # [1, -1, 2, -3, -5]
+
+# 대소문자 무시 정렬
+names = ["Bob", "alice", "CHARLIE"]
+print(sorted(names, key=str.lower))  # ['alice', 'Bob', 'CHARLIE']
 ```
 
-### list.insert(a, b)
-
-- 리스트 a위치(=index)에 b 값 추가
-
+**다단계 정렬** (튜플 key):
 ```python
-arr = [1,3]
-arr.insert(1,2)
-print(arr)  # [1,2,3]
+# 길이 우선, 같으면 사전순
+words = ["apple", "pie", "banana", "cat"]
+result = sorted(words, key=lambda w: (len(w), w))
+print(result)  # ['cat', 'pie', 'apple', 'banana']
+
+# 튜플 리스트 정렬
+students = [('김', 85), ('이', 90), ('박', 85)]
+
+# 점수 기준
+by_score = sorted(students, key=lambda x: x[1])
+print(by_score)  # [('김', 85), ('박', 85), ('이', 90)]
+
+# 점수 내림차순, 이름 오름차순
+custom = sorted(students, key=lambda x: (-x[1], x[0]))
+print(custom)    # [('이', 90), ('김', 85), ('박', 85)]
 ```
 
-### list.remove(a)
-
-- 리스트에서 a값 제거
-
+**딕셔너리 정렬**:
 ```python
-arr = [1,2,2,3]
-arr.remove(2)  # 첫 번째 2 제거
-print(arr)     # [1,2,3]
+scores = {'kim': 90, 'lee': 85, 'park': 95}
+
+# 키 기준
+print(sorted(scores))  # ['kim', 'lee', 'park']
+
+# 값 기준
+sorted_items = sorted(scores.items(), key=lambda x: x[1])
+print(sorted_items)    # [('lee', 85), ('kim', 90), ('park', 95)]
+
+# 값 기준 딕셔너리 (Python 3.7+)
+sorted_dict = dict(sorted(scores.items(), key=lambda x: x[1]))
+print(sorted_dict)     # {'lee': 85, 'kim': 90, 'park': 95}
 ```
 
-### list.pop()
-
-- 리스트에 있는 마지막 값을 반환한 후 해당 값을 삭제하는 함수
-
+**실전 패턴**:
 ```python
-arr = [1,2,3]
-val = arr.pop()
-print(val, arr)  # 3 [1,2]
+# 2차원 배열 정렬
+points = [(1, 5), (3, 2), (2, 8), (1, 3)]
+
+# x좌표 우선, y좌표 보조
+sorted_points = sorted(points)  # 튜플은 자동 다단계
+print(sorted_points)  # [(1, 3), (1, 5), (2, 8), (3, 2)]
+
+# y좌표 기준 내림차순
+by_y = sorted(points, key=lambda p: -p[1])
+print(by_y)           # [(2, 8), (1, 5), (1, 3), (3, 2)]
+
+# 코딩테스트: 빈도순 정렬
+from collections import Counter
+arr = [1, 1, 2, 2, 2, 3]
+cnt = Counter(arr)
+# 빈도 내림차순, 값 오름차순
+result = sorted(arr, key=lambda x: (-cnt[x], x))
+print(result)  # [2, 2, 2, 1, 1, 3]
 ```
 
-### list.extend(list2)
+**sort() vs sorted() 비교**:
+```python
+nums = [3, 1, 2]
 
-- 리스트와 리스트2을 결합
+# sort(): 원본 변경, 반환값 None
+nums.sort()
+print(nums)  # [1, 2, 3]
+
+# sorted(): 원본 유지, 새 리스트 반환
+nums = [3, 1, 2]
+new = sorted(nums)
+print(nums)  # [3, 1, 2]
+print(new)   # [1, 2, 3]
+```
+
+## 리스트(List) 주요 메서드
+
+리스트는 파이썬에서 가장 많이 사용하는 **가변(mutable) 자료구조**다. 순서가 있고 중복을 허용하며, 다양한 메서드로 데이터를 조작할 수 있다.
+
+### 인덱스 접근 및 수정
+
+**기본 사용**:
+```python
+arr = [10, 20, 30]
+
+# 읽기
+print(arr[0])      # 10 (첫 번째)
+print(arr[-1])     # 30 (마지막)
+
+# 수정
+arr[1] = 25
+print(arr)         # [10, 25, 30]
+
+# 슬라이싱
+print(arr[0:2])    # [10, 25]
+print(arr[::-1])   # [30, 25, 10] (역순)
+```
+
+### append(x) - 끝에 추가
+
+리스트 **끝**에 요소를 추가한다. (O(1) 시간 복잡도)
 
 ```python
-a = [1,2]; b = [3,4]
+arr = [1, 2]
+arr.append(3)
+print(arr)         # [1, 2, 3]
+
+# 여러 개 추가할 때는 반복문
+for i in range(4, 7):
+    arr.append(i)
+print(arr)         # [1, 2, 3, 4, 5, 6]
+```
+
+### insert(index, x) - 특정 위치에 삽입
+
+지정한 인덱스에 요소를 삽입한다. (O(n) 시간 복잡도 - 뒤 요소들 이동)
+
+```python
+arr = [1, 3, 4]
+arr.insert(1, 2)   # 인덱스 1에 2 삽입
+print(arr)         # [1, 2, 3, 4]
+
+# 맨 앞에 삽입
+arr.insert(0, 0)
+print(arr)         # [0, 1, 2, 3, 4]
+```
+
+**주의**: 빈번한 `insert(0, x)`는 느리므로 `collections.deque.appendleft()` 사용 권장
+
+### remove(x) - 값으로 제거
+
+**첫 번째로 나타나는** 값을 제거한다. (O(n) 시간 복잡도)
+
+```python
+arr = [1, 2, 2, 3]
+arr.remove(2)      # 첫 번째 2만 제거
+print(arr)         # [1, 2, 3]
+
+# 존재하지 않으면 ValueError
+# arr.remove(5)    # ValueError
+```
+
+**안전한 사용**:
+```python
+if 2 in arr:
+    arr.remove(2)
+```
+
+### pop(index=-1) - 제거 후 반환
+
+지정한 인덱스의 요소를 **제거하고 반환**한다. (기본값은 마지막)
+
+```python
+arr = [1, 2, 3]
+val = arr.pop()    # 마지막 제거
+print(val, arr)    # 3 [1, 2]
+
+# 특정 위치 제거
+val = arr.pop(0)   # 첫 번째 제거
+print(val, arr)    # 1 [2]
+```
+
+**스택 구현**:
+```python
+stack = []
+stack.append(1)    # push
+stack.append(2)
+print(stack.pop()) # 2 (LIFO)
+```
+
+### extend(iterable) - 리스트 병합
+
+다른 iterable의 **모든 요소**를 끝에 추가한다.
+
+```python
+a = [1, 2]
+b = [3, 4]
 a.extend(b)
-print(a)  # [1,2,3,4]
+print(a)           # [1, 2, 3, 4]
+
+# + 연산자와 차이
+c = [1, 2] + [3, 4]  # 새 리스트 생성
+print(c)             # [1, 2, 3, 4]
 ```
 
-### list.reverse()
+**append vs extend**:
+```python
+arr = [1, 2]
+arr.append([3, 4])   # 리스트 자체를 추가
+print(arr)           # [1, 2, [3, 4]]
 
-- 리스트 요소들를 뒤집음
+arr = [1, 2]
+arr.extend([3, 4])   # 요소들을 풀어서 추가
+print(arr)           # [1, 2, 3, 4]
+```
+
+### reverse() - 역순 정렬
+
+리스트를 **제자리에서(in-place)** 역순으로 뒤집는다.
 
 ```python
-arr = [1,2,3]
+arr = [1, 2, 3]
 arr.reverse()
-print(arr)  # [3,2,1]
+print(arr)         # [3, 2, 1]
+
+# 슬라이싱은 새 리스트 생성
+arr2 = [1, 2, 3]
+rev = arr2[::-1]
+print(arr2, rev)   # [1, 2, 3] [3, 2, 1]
 ```
 
-### ord()
+### clear() - 전체 삭제
 
-- 문자의 아스키 코드값을 리턴하는 함수이다.
+리스트의 모든 요소를 제거한다.
 
 ```python
-print(ord('A'))  # 65
+arr = [1, 2, 3]
+arr.clear()
+print(arr)         # []
+
+# del arr[:] 와 동일
 ```
 
-### chr()
+### copy() - 얕은 복사
 
-- 아스키 코드값 입력으로 받아 그 코드에 해당하는 문자를 출력하는 함수이다.
-- a부터 z까지는 97 ~ 122까지이다. 예를 들어 chr(97)=='a' , chr(122)=='z'
+리스트의 **얕은 복사본**을 생성한다.
 
 ```python
-print(chr(97), chr(122))  # a z
+arr = [1, 2, 3]
+arr2 = arr.copy()
+arr2[0] = 10
+print(arr, arr2)   # [1, 2, 3] [10, 2, 3]
+
+# 2차원은 주의 (중첩 리스트는 참조 유지)
+matrix = [[1, 2], [3, 4]]
+mat2 = matrix.copy()
+mat2[0][0] = 99
+print(matrix)      # [[99, 2], [3, 4]] (영향 있음!)
+
+# 깊은 복사 필요 시
+import copy
+mat3 = copy.deepcopy(matrix)
 ```
 
-### 변수.find(찾을 문자) or 변수.index(찾을 문자)
+### 리스트 메서드 종합 예제
 
-- 변수에 위치한 문자열 중 괄호() 안에 넣은 특정 문자가 처음 위치한 자리의 값 반환
-- find함수는 찾는 값이 없을 때 -1을 출력한다.
-- 문자열을 찾을 수 있는 변수는 문자열만 사용이 가능하다.  리스트, 튜플, 딕셔너리 자료형에서는 find 함수를 사용할 수 없다.
-- index함수는 찾는 문자가 없는 경우에 ValueError 에러가 발생한다.
-- 문자열, 리스트, 튜플 자료형에서 사용 가능하고 딕셔너리 자료형에는 사용할 수 없어 AttributeError 에러가 발생한다.
+```python
+# 코딩테스트 패턴
+arr = []
+arr.append(5)      # [5]
+arr.insert(0, 3)   # [3, 5]
+arr.extend([7, 9]) # [3, 5, 7, 9]
+arr.remove(5)      # [3, 7, 9]
+val = arr.pop(1)   # val=7, arr=[3, 9]
+arr.reverse()      # [9, 3]
+print(arr)         # [9, 3]
+```
 
+### ord(c) - 문자 → ASCII 코드
+
+**문자 하나**를 받아 해당하는 **ASCII 코드값**(정수)을 반환하는 함수다.
+
+**핵심 ASCII 코드**:
+- 숫자 '0'~'9': 48~57
+- 대문자 'A'~'Z': 65~90
+- 소문자 'a'~'z': 97~122
+- 공백 ' ': 32
+
+```python
+print(ord('A'))    # 65
+print(ord('a'))    # 97
+print(ord('0'))    # 48
+print(ord(' '))    # 32
+
+# 대소문자 차이
+print(ord('a') - ord('A'))  # 32
+```
+
+**실전 활용**:
+```python
+# 알파벳 순서 계산
+char = 'C'
+position = ord(char) - ord('A') + 1
+print(f"{char}는 {position}번째 알파벳")  # C는 3번째 알파벳
+
+# 시저 암호 (암호화)
+def caesar_cipher(text, shift):
+    result = []
+    for c in text:
+        if c.isalpha():
+            base = ord('A') if c.isupper() else ord('a')
+            shifted = (ord(c) - base + shift) % 26
+            result.append(chr(base + shifted))
+        else:
+            result.append(c)
+    return ''.join(result)
+
+print(caesar_cipher("ABC xyz", 3))  # DEF abc
+
+# 문자 비교
+print(ord('b') > ord('a'))  # True (98 > 97)
+```
+
+### chr(i) - ASCII 코드 → 문자
+
+**ASCII 코드값**(정수)을 받아 해당하는 **문자**를 반환하는 함수다.
+
+**기본 사용**:
+```python
+print(chr(65))     # A
+print(chr(97))     # a
+print(chr(48))     # 0
+print(chr(32))     # (공백)
+
+# 범위 생성
+lowercase = [chr(i) for i in range(ord('a'), ord('z') + 1)]
+print(lowercase)   # ['a', 'b', ..., 'z']
+```
+
+**실전 활용**:
+```python
+# 알파벳 생성
+alphabet = [chr(i) for i in range(65, 91)]     # A-Z
+print(''.join(alphabet))  # ABCDEFGHIJKLMNOPQRSTUVWXYZ
+
+# 인덱스 → 문자 변환
+index = 2
+char = chr(ord('a') + index)
+print(char)        # c (a=0, b=1, c=2)
+
+# 아스키 아트
+for i in range(5):
+    print(chr(65 + i) * (i + 1))
+# A
+# BB
+# CCC
+# DDDD
+# EEEEE
+```
+
+**ord와 chr 조합 패턴**:
+```python
+# 대소문자 변환 (직접 구현)
+def to_upper(c):
+    if 'a' <= c <= 'z':
+        return chr(ord(c) - 32)
+    return c
+
+def to_lower(c):
+    if 'A' <= c <= 'Z':
+        return chr(ord(c) + 32)
+    return c
+
+print(to_upper('a'))  # A
+print(to_lower('Z'))  # z
+
+# 문자 시프트
+def shift_char(c, n):
+    """문자를 n칸 이동"""
+    if c.isalpha():
+        base = ord('A') if c.isupper() else ord('a')
+        return chr((ord(c) - base + n) % 26 + base)
+    return c
+
+print(shift_char('A', 3))  # D
+print(shift_char('z', 1))  # a (순환)
+```
+
+### str.find(sub) vs str.index(sub)
+
+문자열에서 **부분 문자열의 위치**를 찾는 두 가지 메서드다.
+
+**핵심 차이점**:
+- **find**: 못 찾으면 **-1** 반환 (에러 없음)
+- **index**: 못 찾으면 **ValueError** 발생
+
+| 메서드 | 반환값 (성공) | 반환값 (실패) | 사용 가능 타입 |
+|--------|-------------|--------------|--------------|
+| `find()` | 인덱스 (int) | -1 | 문자열만 |
+| `index()` | 인덱스 (int) | ValueError | 문자열, 리스트, 튜플 |
+
+**기본 사용**:
 ```python
 s = "banana"
-print(s.find('a'))   # 1 (첫 위치)
-print(s.find('z'))   # -1
-print(s.index('b'))  # 0
-# print(s.index('z'))  # ValueError
+
+# find: 안전 (에러 없음)
+print(s.find('a'))     # 1 (첫 번째 'a')
+print(s.find('na'))    # 2 (부분 문자열도 가능)
+print(s.find('z'))     # -1 (없으면 -1)
+
+# index: 에러 발생 가능
+print(s.index('b'))    # 0
+# print(s.index('z'))  # ValueError: substring not found
 ```
 
-### abs
-
-- 어떤 숫자를 입력받았을 때, 그 숫자의 절댓값을 돌려주는 함수이다.
-
+**범위 지정 검색**:
 ```python
-print(abs(-7))  # 7
+s = "hello world hello"
+
+# find(sub, start, end)
+print(s.find('hello'))           # 0 (첫 번째)
+print(s.find('hello', 1))        # 12 (인덱스 1부터 검색)
+print(s.find('o', 5, 10))        # 7 (인덱스 5~10 구간)
+
+# index도 동일한 인자 사용 가능
+print(s.index('world'))          # 6
 ```
 
-### all(x)
- 
-- 반복 가능한(iterable) 자료형 x를 입력 인수로 받으며 이 x의 요소가 모두 참이면 True, 거짓이 하나라도 있으면 False를 돌려준다.
-  - **반복 가능한 자료형**이란 for문으로 그 값을 출력할 수 있는 것을 의미한다. 리스트, 튜플, 문자열, 딕셔너리, 집합 등이 있다.
+**실전 패턴**:
+```python
+# 1. 존재 여부 확인 (find 사용)
+email = "user@example.com"
+if email.find('@') != -1:
+    print("유효한 이메일")
+# 더 파이썬스러운 방법: 'in' 사용
+if '@' in email:
+    print("유효한 이메일")
+
+# 2. 모든 위치 찾기
+text = "apple banana apple cherry apple"
+word = "apple"
+positions = []
+start = 0
+while True:
+    pos = text.find(word, start)
+    if pos == -1:
+        break
+    positions.append(pos)
+    start = pos + 1
+print(positions)  # [0, 13, 27]
+
+# 3. 마지막 등장 위치 (rfind)
+s = "hello world hello"
+print(s.rfind('hello'))   # 12 (뒤에서부터 검색)
+print(s.rindex('hello'))  # 12 (rindex도 있음)
+```
+
+**안전한 사용 패턴**:
+```python
+s = "banana"
+
+# find - 바로 사용 가능
+pos = s.find('z')
+if pos != -1:
+    print(f"찾음: {pos}")
+else:
+    print("없음")
+
+# index - try-except 필요
+try:
+    pos = s.index('z')
+    print(f"찾음: {pos}")
+except ValueError:
+    print("없음")
+```
+
+**리스트/튜플에서의 index**:
+```python
+# 리스트: index 사용 가능, find 불가능
+arr = [10, 20, 30, 20]
+print(arr.index(20))     # 1 (첫 번째 20)
+# arr.find(20)           # AttributeError (없는 메서드)
+
+# 튜플도 동일
+t = (1, 2, 3)
+print(t.index(2))        # 1
+```
+
+**언제 어느 것을 사용할까?**:
+- **find**: 존재 여부만 확인하고 싶을 때, 에러 처리가 번거로울 때
+- **index**: 반드시 있어야 하는 값일 때, 없으면 에러로 처리하고 싶을 때
+- **in 연산자**: 존재 여부만 확인 (가장 파이썬스러움)
+
+### abs(x) - 절댓값
+
+숫자의 **절댓값**(absolute value)을 반환하는 내장 함수다.
+
+**기본 사용**:
+```python
+print(abs(-7))     # 7
+print(abs(7))      # 7
+print(abs(-3.14))  # 3.14
+print(abs(0))      # 0
+```
+
+**실전 활용**:
+```python
+# 두 수의 차이 (거리)
+a, b = 10, 25
+distance = abs(a - b)
+print(distance)    # 15
+
+# 좌표 거리 (맨해튼 거리)
+x1, y1 = 1, 2
+x2, y2 = 4, 6
+manhattan = abs(x2 - x1) + abs(y2 - y1)
+print(manhattan)   # 7
+
+# 오차 허용 비교
+expected = 0.1 + 0.2  # 0.30000000000000004
+actual = 0.3
+if abs(expected - actual) < 1e-9:
+    print("같음")  # 부동소수점 오차 처리
+
+# 가장 가까운 값 찾기
+target = 10
+numbers = [5, 8, 12, 15]
+closest = min(numbers, key=lambda x: abs(x - target))
+print(closest)     # 8 또는 12
+```
+
+**복소수의 절댓값** (크기):
+```python
+z = 3 + 4j
+print(abs(z))      # 5.0 (√(3² + 4²))
+```
+
+### all(iterable) - 모두 참인지 확인
+
+iterable의 **모든 요소가 참**이면 True를 반환하는 함수다.
+
+**동작 원리**:
+- 모든 요소가 True (또는 참으로 평가) → True
+- 하나라도 False (또는 거짓으로 평가) → False
+- **빈 iterable → True** (vacuously true: 공허한 참)
+
+**거짓으로 평가되는 값들**:
+- `False`, `0`, `0.0`, `''` (빈 문자열), `[]` (빈 리스트), `{}` (빈 딕셔너리), `None`
 
 ```python
-print(all([1,2,3]))   # True
-print(all([1,0,3]))   # False (0이 포함)
-print(all([]))        # True (빈 iterable은 vacuously true)
+# 기본 사용
+print(all([True, True, True]))    # True
+print(all([True, False, True]))   # False (하나라도 False)
+print(all([1, 2, 3]))             # True (모두 참)
+print(all([1, 0, 3]))             # False (0은 거짓)
+print(all([]))                    # True (빈 iterable)
+
+# 비어있지 않은 문자열들
+print(all(['a', 'b', 'c']))       # True
+print(all(['a', '', 'c']))        # False (빈 문자열)
+```
+
+**실전 활용**:
+```python
+# 모든 숫자가 양수인지 확인
+numbers = [1, 2, 3, 4, 5]
+if all(n > 0 for n in numbers):
+    print("모두 양수")  # 출력됨
+
+# 모든 문자열이 알파벳인지
+words = ['abc', 'def', 'ghi']
+if all(word.isalpha() for word in words):
+    print("모두 알파벳")  # 출력됨
+
+# 리스트가 정렬되어 있는지
+arr = [1, 2, 3, 4, 5]
+is_sorted = all(arr[i] <= arr[i+1] for i in range(len(arr)-1))
+print(is_sorted)  # True
+
+# 모든 키가 딕셔너리에 있는지
+data = {'name': '홍길동', 'age': 25, 'city': '서울'}
+required_keys = ['name', 'age']
+if all(key in data for key in required_keys):
+    print("필수 키 모두 존재")  # 출력됨
+
+# 2D 배열의 모든 행 길이가 같은지
+matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+first_len = len(matrix[0])
+is_rectangular = all(len(row) == first_len for row in matrix)
+print(is_rectangular)  # True
+```
+
+**빈 iterable 주의**:
+```python
+# 빈 리스트는 True 반환 (논리적 함정 주의!)
+print(all([]))        # True
+print(any([]))        # False (차이점)
+
+# 안전한 검사
+numbers = []
+if numbers and all(n > 0 for n in numbers):
+    print("비어있지 않고 모두 양수")
+else:
+    print("비어있거나 음수 포함")  # 출력됨
 ```
 
 ### any(x)
@@ -363,14 +1282,42 @@ vals = [1,0,3]
 print(all(vals))  # False
 print(any(vals))  # True
 ```
-  - all(x)의 반대이다.
+
+### any(x)
+
+iterable의 요소 중 **하나라도 참**이면 True를 반환하는 함수다.
+
+**동작 원리**:
+- `all()`의 반대 개념
+- 모든 요소가 거짓일 때만 False
+- 빈 iterable은 False 반환
+
+```python
+vals = [1, 0, 3]
+print(all(vals))        # False (0 때문)
+print(any(vals))        # True (1이 있음)
+
+# 빈 리스트 비교
+print(all([]))          # True
+print(any([]))          # False
+
+# 실전 활용
+numbers = [0, 0, 0, 5]
+if any(n > 0 for n in numbers):
+    print("양수가 있다")  # 출력됨
+```
 
 ### dir
 
-- 객체가 자체적으로 가지고 있는 변수나 함수를 보여 준다.
+객체가 가진 모든 속성(변수, 메서드)을 리스트로 반환하는 함수다.
 
 ```python
-print(dir([])[:5])  # 리스트 일부 속성
+print(dir([])[:5])      # 리스트 일부 속성
+# ['__add__', '__class__', '__class_getitem__', '__contains__', '__delattr__']
+
+# 사용 가능한 메서드 확인
+print([m for m in dir("") if not m.startswith('_')])
+# ['capitalize', 'casefold', 'center', ...]
 ```
 
 ### eval(expression)
@@ -384,34 +1331,109 @@ print(eval(expr))  # 9
 
 ### map(function, iterable)
 
-- map은 리스트의 요소를 지정된 함수로 처리해주는 함수
-- 첫 번째 매개변수로는 함수가 오고 두 번째 매개변수로는 반복 가능한 자료형(리스트, 튜플 등)이 온다.
-- map 함수의 반환 값은 map객체 이기 때문에 해당 자료형을 list 혹은 tuple로 형 변환시켜주어야 한다.
+iterable의 각 요소에 함수를 적용하여 map 객체로 반환하는 함수다.
+
+**핵심 개념**:
+- 리스트 순회하며 함수 일괄 적용
+- 반환값은 map 객체 → `list()` 또는 `tuple()`로 변환 필요
+- 여러 iterable 동시 처리 가능
+- 코딩테스트 입력 처리의 필수 패턴
 
 ```python
-nums = ["1","2","3"]
+# 기본 사용: 문자열 → 정수 변환
+nums = ["1", "2", "3"]
 ints = list(map(int, nums))
-print(ints)
+print(ints)                 # [1, 2, 3]
+
+# 입력 처리 핵심 패턴
+# 입력: 10 20 30
+arr = list(map(int, input().split()))
+
+# 여러 iterable 동시 처리
+nums1 = [1, 2, 3]
+nums2 = [10, 20, 30]
+result = list(map(lambda x, y: x + y, nums1, nums2))
+print(result)               # [11, 22, 33]
+
+# 함수 객체 전달
+def square(x):
+    return x * x
+
+squared = list(map(square, [1, 2, 3, 4]))
+print(squared)              # [1, 4, 9, 16]
 ```
   
 ### filter(f, iterable)
 
-- 첫 번째 인수로 함수 이름을, 두 번째 인수로 그 함수에 차례로 들어갈 반복 가능한 자료형을 받는다. 그리고 두 번째 인수인 반복 가능한 자료형 요소가 첫 번째 인수인 함수에 입력되었을 때 반환 값이 참인 것만 묶어서(걸러 내서) 돌려준다.
-- 앞의 함수는 lambda를 사용하면 더욱 간편하게 코드를 작성할 수 있다.
+조건을 만족하는 요소만 걸러내는 함수다.
+
+**동작 원리**:
+- 함수가 True를 반환하는 요소만 선택
+- 반환값은 filter 객체 → 리스트 변환 필요
+- lambda와 함께 자주 사용
+- list comprehension으로 대체 가능
 
 ```python
-nums = [1,2,3,4,5]
-even = list(filter(lambda x: x%2==0, nums))
-print(even)  # [2,4]
+# 짝수만 필터링
+nums = [1, 2, 3, 4, 5, 6]
+even = list(filter(lambda x: x % 2 == 0, nums))
+print(even)                 # [2, 4, 6]
+
+# 조건 함수 정의
+def is_positive(x):
+    return x > 0
+
+numbers = [-2, -1, 0, 1, 2]
+positive = list(filter(is_positive, numbers))
+print(positive)             # [1, 2]
+
+# list comprehension과 비교 (더 파이썬스러움)
+even2 = [x for x in nums if x % 2 == 0]
+print(even2)                # [2, 4, 6]
+
+# 빈 문자열 제거
+words = ["hello", "", "world", "", "python"]
+filtered = list(filter(None, words))  # 참인 값만
+print(filtered)             # ['hello', 'world', 'python']
 ```
 
 ### lambda 매개변수 : 표현식
 
-- 함수표현식
+**익명 함수**(이름 없는 함수)를 한 줄로 정의하는 표현식이다.
+
+**특징**:
+- `def` 없이 간단한 함수 정의
+- 주로 일회용 함수에 사용
+- `map()`, `filter()`, `sorted()`의 key 인자로 활용
+- 한 줄로만 작성 가능 (복잡한 로직은 def 사용)
 
 ```python
-square = lambda x: x*x
-print(square(5))  # 25
+# 기본 사용
+square = lambda x: x * x
+print(square(5))            # 25
+
+# 여러 매개변수
+add = lambda a, b: a + b
+print(add(3, 4))            # 7
+
+# sorted의 key로 활용
+points = [(1, 5), (3, 2), (2, 8)]
+# x좌표 기준 정렬
+sorted_by_x = sorted(points, key=lambda p: p[0])
+print(sorted_by_x)          # [(1, 5), (2, 8), (3, 2)]
+
+# y좌표 기준 내림차순
+sorted_by_y = sorted(points, key=lambda p: -p[1])
+print(sorted_by_y)          # [(2, 8), (1, 5), (3, 2)]
+
+# 조건 표현식과 함께
+absolute = lambda x: x if x >= 0 else -x
+print(absolute(-5))         # 5
+
+# 실전: 문자열 길이 우선, 같으면 사전순
+words = ["apple", "pie", "banana", "cat"]
+result = sorted(words, key=lambda w: (len(w), w))
+print(result)               # ['cat', 'pie', 'apple', 'banana']
 ```
 
 ### len(s)
@@ -424,163 +1446,749 @@ print(len([1,2,3]))  # 3
 
 ### oct(x)
 
-- 정수 형태의 숫자를 8진수 문자열로 바꾸어 돌려주는 함수이다.
-  - all(x)의 반대이다.
+정수를 8진수 문자열로 변환하는 함수다.
+
+**특징**:
+- 반환값은 `'0o'` 접두사가 붙은 문자열
+- 음수도 처리 가능
+- 8진수: 0~7까지의 숫자만 사용
 
 ```python
-vals = [1,0,3]
-print(any(vals))        # True
-print(any([0,0,0]))     # False
-print(any([]))          # False
-```
-- 정수 값을 입력받아 16진수(hexadecimal)로 변환하여 돌려주는 함수이다.
+print(oct(8))           # 0o10
+print(oct(64))          # 0o100
+print(oct(-8))          # -0o10
 
-```python
-print(hex(255))  # 0xff
-```
-
-### open(filename, [mode])
-
-- "파일 이름"과 "읽기 방법"을 입력받아 파일 객체를 돌려주는 함수이다.
-
-```python
-# with open('data.txt','r') as f:
-#     for line in f:
-#         print(line.rstrip())
+# 접두사 제거
+num = 64
+print(oct(num)[2:])     # 100
 ```
 
-### range
+### hex(x)
 
-- 이 함수는 입력받은 숫자에 해당하는 범위 값을 반복 가능한 객체로 만들어 돌려준다.
+정수를 16진수 문자열로 변환하는 함수다.
+
+**특징**:
+- 반환값은 `'0x'` 접두사가 붙은 문자열
+- 16진수: 0~9, a~f 사용
+- 색상 코드, 메모리 주소 표현에 활용
 
 ```python
+print(hex(255))         # 0xff
+print(hex(16))          # 0x10
+print(hex(2023))        # 0x7e7
+
+# RGB 색상 코드 만들기
+r, g, b = 255, 128, 64
+color = f"#{r:02x}{g:02x}{b:02x}"
+print(color)            # #ff8040
+```
+
+### open(filename, mode='r') - 파일 읽기/쓰기
+
+파일을 열어 **파일 객체**를 반환하는 내장 함수다.
+
+**주요 모드**:
+- `'r'`: 읽기 (기본값, 파일이 없으면 에러)
+- `'w'`: 쓰기 (기존 내용 삭제, 없으면 생성)
+- `'a'`: 추가 (기존 내용 끝에 추가)
+- `'r+'`: 읽기/쓰기
+- `'b'`: 바이너리 모드 (`'rb'`, `'wb'` 등과 함께 사용)
+
+**기본 사용** (with 문 권장):
+```python
+# 읽기
+with open('data.txt', 'r', encoding='utf-8') as f:
+    content = f.read()  # 전체 읽기
+    print(content)
+
+# 한 줄씩 읽기
+with open('data.txt', 'r', encoding='utf-8') as f:
+    for line in f:
+        print(line.rstrip())  # 개행 제거
+
+# 모든 줄을 리스트로
+with open('data.txt', 'r', encoding='utf-8') as f:
+    lines = f.readlines()  # ['line1\n', 'line2\n', ...]
+```
+
+**쓰기**:
+```python
+# 새로 쓰기 (덮어쓰기)
+with open('output.txt', 'w', encoding='utf-8') as f:
+    f.write("Hello\n")
+    f.write("World\n")
+
+# 추가하기
+with open('output.txt', 'a', encoding='utf-8') as f:
+    f.write("추가 내용\n")
+
+# 여러 줄 쓰기
+lines = ['첫째 줄\n', '둘째 줄\n', '셋째 줄\n']
+with open('output.txt', 'w', encoding='utf-8') as f:
+    f.writelines(lines)
+```
+
+**코딩테스트 입력 파일 읽기**:
+```python
+# 방법 1: 전체 읽기
+with open('input.txt') as f:
+    data = f.read().splitlines()  # 개행 없이 리스트
+
+# 방법 2: 첫 줄 따로, 나머지 한 줄씩
+with open('input.txt') as f:
+    n = int(f.readline())
+    numbers = [int(f.readline()) for _ in range(n)]
+
+# 방법 3: 모든 줄 한번에
+with open('input.txt') as f:
+    lines = [line.rstrip() for line in f]
+```
+
+**with 문을 사용하는 이유**:
+```python
+# 나쁜 예: 수동으로 닫기 (권장 안함)
+f = open('data.txt', 'r')
+content = f.read()
+f.close()  # 실수로 안 닫으면 메모리 누수
+
+# 좋은 예: with 문 (자동으로 닫힘)
+with open('data.txt', 'r') as f:
+    content = f.read()
+# 이 블록을 벗어나면 자동으로 f.close() 호출
+```
+
+### range(start, stop, step) - 범위 생성
+
+**연속된 정수 범위**를 생성하는 내장 함수다.
+
+**기본 형태**:
+- `range(stop)`: 0부터 stop-1까지
+- `range(start, stop)`: start부터 stop-1까지
+- `range(start, stop, step)`: start부터 stop-1까지 step 간격
+
+```python
+# range(5): 0, 1, 2, 3, 4
+for i in range(5):
+    print(i, end=' ')  # 0 1 2 3 4
+print()
+
+# range(2, 7): 2, 3, 4, 5, 6
+for i in range(2, 7):
+    print(i, end=' ')  # 2 3 4 5 6
+print()
+
+# range(2, 7, 2): 2, 4, 6 (2씩 증가)
 for i in range(2, 7, 2):
-  print(i)  # 2 4 6
+    print(i, end=' ')  # 2 4 6
+print()
+
+# 역순 (step이 음수)
+for i in range(10, 0, -1):
+    print(i, end=' ')  # 10 9 8 7 6 5 4 3 2 1
+print()
 ```
 
-### round(number, ndigits)
-
-- 숫자를 입력받아 반올림해 주는 함수이다.
-
+**실전 활용**:
 ```python
-print(round(3.14159, 2))  # 3.14
+# 리스트 생성
+numbers = list(range(1, 11))
+print(numbers)  # [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# 인덱스로 순회
+arr = ['a', 'b', 'c']
+for i in range(len(arr)):
+    print(f"{i}: {arr[i]}")
+
+# 역순 인덱스
+for i in range(len(arr) - 1, -1, -1):
+    print(arr[i])  # c, b, a
+
+# N번 반복 (값 무시)
+for _ in range(5):
+    print("Hello")
+
+# 2D 배열 초기화
+n, m = 3, 4
+matrix = [[0] * m for _ in range(n)]
+print(matrix)  # [[0,0,0,0], [0,0,0,0], [0,0,0,0]]
 ```
 
-### str(object)
-
-- 문자열 형태로 객체를 변환하여 돌려주는 함수이다.
-
+**주의사항**:
 ```python
-print(str(123) + "4")  # 1234
+# range는 리스트가 아님 (range 객체)
+print(type(range(5)))  # <class 'range'>
+
+# 리스트로 변환 필요
+print(list(range(5)))  # [0, 1, 2, 3, 4]
+
+# 메모리 효율적 (실제 리스트를 생성하지 않음)
+# for i in range(1000000): 는 빠르고 메모리 적게 사용
 ```
 
-### upper()
+### round(number, ndigits=None) - 반올림
 
-- 문자열 대문자로 변경하는 함수
+숫자를 지정한 **소수점 자리수**로 반올림하는 함수다.
 
+**기본 사용**:
 ```python
-print("abC".upper())  # ABC
+print(round(3.14159))      # 3 (정수로)
+print(round(3.14159, 2))   # 3.14 (소수점 2자리)
+print(round(3.14159, 4))   # 3.1416 (반올림)
+print(round(1234.56, -2))  # 1200.0 (음수는 정수 자리)
 ```
 
-### lower()
-
-- 문자열 소문자로 변경하는 함수
-
+**실전 활용**:
 ```python
-print("ABc".lower())  # abc
+# 평균 계산
+scores = [85, 92, 78, 90]
+avg = sum(scores) / len(scores)
+print(round(avg, 1))  # 86.2
+
+# 비율 계산
+correct = 17
+total = 20
+percentage = round((correct / total) * 100, 1)
+print(f"{percentage}%")  # 85.0%
+
+# 가격 반올림
+price = 12345.67
+print(round(price, -3))  # 12000.0 (천 단위)
 ```
 
-### capitalize()
-
-- 주어진 문자열에서 맨 첫 글자를 대문자로 변환해줌.
-
+**주의: 반올림 오류** (은행원 반올림):
 ```python
-print("hello world".capitalize())  # Hello world
+# 0.5는 가장 가까운 짝수로 반올림
+print(round(2.5))   # 2 (2가 짝수)
+print(round(3.5))   # 4 (4가 짝수)
+
+# 정확한 반올림이 필요하면 Decimal 사용
+from decimal import Decimal, ROUND_HALF_UP
+num = Decimal('2.5')
+print(num.quantize(Decimal('1'), rounding=ROUND_HALF_UP))  # 3
 ```
 
-### print()
+### str(object) - 문자열 변환
 
-- 결과물 출력
-- 긴 문자열일 경우 `\`을 사용하여 여러 줄에 작성 가능
-- **end=** : print에서 마지막 변경 (default = enter)
-- **sep=** : 지정된 기호에 따라 문자열을 구분
+객체를 **문자열**로 변환하는 내장 함수다.
 
+**기본 사용**:
 ```python
-print(1,2,3, sep='-')      # 1-2-3
-print("끝", end='!')
+print(str(123))        # '123'
+print(str(3.14))       # '3.14'
+print(str(True))       # 'True'
+print(str([1, 2, 3]))  # '[1, 2, 3]'
+
+# 타입 확인
+num = 123
+text = str(num)
+print(type(num), type(text))  # <class 'int'> <class 'str'>
 ```
 
-### *args
-
-- 여러 개의 인자를 함수로 받고자 할 때
-- arguments의 줄임말 (꼭 이 단어를 쓸 필요는 없다.)
-- 여러 개의 인자로 함수를 호출할 경우, 내부에서는 튜플로 받은 것처럼 인식
-
+**실전 활용**:
 ```python
-def plus(*nums):
-    sum=0
-    for num in nums:
-        sum+=num
-    return sum
+# 숫자 연결
+year = 2024
+month = 3
+day = 15
+date = str(year) + '-' + str(month) + '-' + str(day)
+print(date)  # '2024-3-15'
+# 더 나은 방법: f-string
+date = f"{year}-{month:02d}-{day:02d}"
+print(date)  # '2024-03-15'
 
-print(plus(1+2+3)) # 6
-print(plus(1+2+3+2+1+4)) # 13
+# 리스트 → 문자열
+nums = [1, 2, 3, 4, 5]
+result = ''.join(map(str, nums))
+print(result)  # '12345'
+
+# 자릿수 세기
+num = 12345
+digit_count = len(str(num))
+print(digit_count)  # 5
+
+# 숫자 각 자리 분리
+num = 1234
+digits = [int(d) for d in str(num)]
+print(digits)  # [1, 2, 3, 4]
 ```
 
-### **kwargs
-
-- `(키워드 = 특정 값)` 형태로 함수를 호출
-- keyword argument의 줄임말
-- 딕셔너리 형태로 `{'키워드':'특정 값'}` 함수 내부로 전달
-
+**str() vs repr()**:
 ```python
-def call_member(**infos):
-    for key, val in infos.items():
-        print(f'이름: {key}\n나이: {val}\n')
+# str(): 사용자 친화적
+print(str('hello\n'))   # hello (개행 출력)
 
-call_member(홍길동=23, 미나=27, 나나=22)
-
-# 결과
-
-# 이름: 홍길동
-# 나이: 23
-
-# 이름: 미나
-# 나이: 27
-
-# 이름: 나나
-# 나이: 22
+# repr(): 개발자 친화적 (디버깅용)
+print(repr('hello\n'))  # 'hello\n' (이스케이프 표시)
 ```
 
-### permutations
+## 문자열 메서드
 
-- **permutations**는 리스트와 같은 iterable 객체에서 r개의 데이터를 뽑아 일렬로 나열하는 모든 경우(순열)을 계산해준다.
-- **코드**
+### upper() / lower() / capitalize() - 대소문자 변환
 
-  ```python
-  from itertools import permutations
+문자열의 대소문자를 변경하는 메서드들이다.
 
-  data = ['A', 'B', 'C']
-  result = list(permutations(data, 3))
+**기본 사용**:
+```python
+text = "Hello World"
 
-  print(result)
-  # [('A', 'B', 'C'), ('A', 'C', 'B'), ('B', 'A', 'C'), ('B', 'C', 'A'), ('C', 'A', 'B'), ('C', 'B', 'A')]
-  ```
+# upper(): 모두 대문자로
+print(text.upper())      # HELLO WORLD
 
-### combinations
+# lower(): 모두 소문자로
+print(text.lower())      # hello world
 
-- **combinations**는 리스트와 같은 iterable 객체에서 r개의 데이터를 뽑아 순서를 고려하지 않고 나열하는 모든 경우(조합)을 계산한다.
-- **코드**
+# capitalize(): 첫 글자만 대문자, 나머지 소문자
+print("hello WORLD".capitalize())  # Hello world
 
-  ```python
-  from itertools import combinations
+# title(): 각 단어의 첫 글자를 대문자로
+print(text.title())      # Hello World
+```
 
-  data = ['A', 'B', 'C']
-  result = list(combinations(data, 2))
+**실전 활용**:
+```python
+# 대소문자 무시 비교
+email1 = "USER@EXAMPLE.COM"
+email2 = "user@example.com"
+if email1.lower() == email2.lower():
+    print("같은 이메일")  # 출력됨
 
-  print(result)
-  # [('A', 'B'), ('A', 'C'), ('B', 'C')]
-  ```
+# 사용자 입력 정규화
+user_input = input("Yes/No? ")
+if user_input.lower() in ['yes', 'y']:
+    print("승인")
+
+# 제목 형식 변환
+title = "python programming guide"
+print(title.title())     # Python Programming Guide
+
+# 상수 형식 (대문자 + 언더스코어)
+var_name = "user name"
+constant = var_name.upper().replace(' ', '_')
+print(constant)          # USER_NAME
+```
+
+**대소문자 판별**:
+```python
+text = "Hello123"
+print(text.isupper())    # False
+print(text.islower())    # False
+print("HELLO".isupper()) # True
+print("hello".islower()) # True
+print(text.isalpha())    # False (숫자 포함)
+print("Hello".isalpha()) # True
+```
+
+**swapcase() - 대소문자 반전**:
+```python
+text = "Hello World"
+print(text.swapcase())   # hELLO wORLD
+```
+
+### print(*objects, sep=' ', end='\n', file=sys.stdout)
+
+화면에 값을 **출력**하는 내장 함수다.
+
+**기본 사용**:
+```python
+print("Hello")           # Hello (자동 개행)
+print("안녕", "하세요")   # 안녕 하세요 (공백으로 구분)
+
+# 여러 값 출력
+name = "홍길동"
+age = 25
+print(name, age)         # 홍길동 25
+```
+
+**sep 매개변수** (구분자 지정):
+```python
+print(1, 2, 3)           # 1 2 3 (기본: 공백)
+print(1, 2, 3, sep='-')  # 1-2-3
+print(1, 2, 3, sep='')   # 123
+print("a", "b", "c", sep='\n')  # 줄바꿈으로 구분
+# a
+# b
+# c
+```
+
+**end 매개변수** (끝 문자 지정):
+```python
+# 기본: 개행(\n)
+print("첫째", end=' ')
+print("둘째")             # 첫째 둘째 (같은 줄)
+
+print("로딩", end='...')
+print("완료")             # 로딩...완료
+
+# 진행 표시
+for i in range(5):
+    print(i, end=' ')    # 0 1 2 3 4 (한 줄)
+print()  # 개행
+```
+
+**file 매개변수** (출력 대상 지정):
+```python
+# 파일에 출력
+with open('output.txt', 'w') as f:
+    print("파일에 쓰기", file=f)
+
+# 표준 에러 출력
+import sys
+print("에러 메시지", file=sys.stderr)
+```
+
+**실전 활용**:
+```python
+# 포맷팅과 함께
+name = "김철수"
+score = 95
+print(f"{name}님의 점수: {score}점")
+
+# 여러 줄 출력 (리스트)
+numbers = [1, 2, 3, 4, 5]
+print(*numbers)          # 1 2 3 4 5 (언패킹)
+print(*numbers, sep='\n')  # 각 줄에 하나씩
+
+# 디버깅 (변수명과 값)
+x = 10
+y = 20
+print(f"{x=}, {y=}")     # x=10, y=20
+```
+
+**긴 문자열 출력**:
+```python
+# 백슬래시로 줄 연결
+message = "이것은 매우 긴 문자열입니다. " \
+          "여러 줄로 나누어 작성하지만 " \
+          "하나의 문자열로 출력됩니다."
+print(message)
+
+# 괄호로 자동 연결
+message = ("첫 번째 줄 "
+           "두 번째 줄 "
+           "세 번째 줄")
+print(message)
+```
+
+### *args - 가변 인자
+
+함수에서 **임의 개수의 위치 인자**를 받을 때 사용한다.
+
+**기본 개념**:
+- `*args`: arguments의 줄임말 (이름은 자유롭게 변경 가능)
+- 함수 내부에서는 **튜플**로 처리됨
+- 위치 인자를 개수 제한 없이 받을 수 있음
+
+**기본 사용**:
+```python
+def add(*numbers):
+    """여러 숫자의 합"""
+    return sum(numbers)
+
+print(add(1, 2))         # 3
+print(add(1, 2, 3))      # 6
+print(add(1, 2, 3, 4, 5))  # 15
+
+# 내부에서는 튜플
+def show_args(*args):
+    print(type(args))    # <class 'tuple'>
+    print(args)
+    
+show_args(1, 2, 3)       # (1, 2, 3)
+```
+
+**실전 활용**:
+```python
+# 최댓값 찾기 (내장 max와 유사)
+def maximum(*nums):
+    if not nums:
+        return None
+    result = nums[0]
+    for n in nums:
+        if n > result:
+            result = n
+    return result
+
+print(maximum(3, 7, 2, 9, 1))  # 9
+
+# 문자열 연결
+def concat(*strings):
+    return ''.join(strings)
+
+print(concat('Hello', ' ', 'World'))  # Hello World
+
+# 일반 인자와 혼용
+def greet(greeting, *names):
+    for name in names:
+        print(f"{greeting}, {name}!")
+
+greet("안녕하세요", "김", "이", "박")
+# 안녕하세요, 김!
+# 안녕하세요, 이!
+# 안녕하세요, 박!
+
+# 리스트 언패킹
+numbers = [1, 2, 3, 4, 5]
+print(add(*numbers))     # 15 (언패킹하여 전달)
+```
+
+**주의사항**:
+```python
+# *args는 위치 인자 뒤에 와야 함
+def func(a, b, *args):  # OK
+    pass
+
+# def func(*args, a, b):  # 오류 발생 가능 (a, b가 키워드 전용이 됨)
+
+# *args 뒤에는 키워드 인자만
+def func(a, *args, b=10):  # OK
+    print(a, args, b)
+
+func(1, 2, 3, b=20)     # 1 (2, 3) 20
+```
+
+### **kwargs - 키워드 가변 인자
+
+함수에서 **임의 개수의 키워드 인자**를 받을 때 사용한다.
+
+**기본 개념**:
+- `**kwargs`: keyword arguments의 줄임말
+- 함수 내부에서는 **딕셔너리**로 처리됨
+- `키워드=값` 형태로 인자를 받음
+
+**기본 사용**:
+```python
+def print_info(**kwargs):
+    """키워드 인자를 받아 출력"""
+    print(type(kwargs))  # <class 'dict'>
+    for key, value in kwargs.items():
+        print(f"{key}: {value}")
+
+print_info(name="홍길동", age=25, city="서울")
+# name: 홍길동
+# age: 25
+# city: 서울
+```
+
+**실전 활용**:
+```python
+# 선택적 설정값 받기
+def configure(required, **options):
+    print(f"필수: {required}")
+    for key, val in options.items():
+        print(f"옵션 {key}: {val}")
+
+configure("필수값", debug=True, timeout=30, retry=3)
+# 필수: 필수값
+# 옵션 debug: True
+# 옵션 timeout: 30
+# 옵션 retry: 3
+
+# 딕셔너리 병합
+def merge_dicts(**dicts):
+    result = {}
+    for d in dicts.values():
+        result.update(d)
+    return result
+
+d1 = {'a': 1, 'b': 2}
+d2 = {'c': 3, 'd': 4}
+merged = merge_dicts(first=d1, second=d2)
+print(merged)  # {'a': 1, 'b': 2, 'c': 3, 'd': 4}
+
+# 딕셔너리 언패킹
+user = {'name': '김철수', 'age': 30, 'city': '부산'}
+print_info(**user)
+# name: 김철수
+# age: 30
+# city: 부산
+```
+
+**args와 kwargs 함께 사용**:
+```python
+def flexible_func(a, b, *args, c=10, **kwargs):
+    print(f"위치 인자: a={a}, b={b}")
+    print(f"추가 위치 인자: {args}")
+    print(f"키워드 인자 c={c}")
+    print(f"추가 키워드 인자: {kwargs}")
+
+flexible_func(1, 2, 3, 4, c=20, x=100, y=200)
+# 위치 인자: a=1, b=2
+# 추가 위치 인자: (3, 4)
+# 키워드 인자 c=20
+# 추가 키워드 인자: {'x': 100, 'y': 200}
+
+# 모든 인자를 받는 범용 래퍼
+def log_function_call(func):
+    def wrapper(*args, **kwargs):
+        print(f"함수 {func.__name__} 호출")
+        print(f"위치 인자: {args}")
+        print(f"키워드 인자: {kwargs}")
+        return func(*args, **kwargs)
+    return wrapper
+
+@log_function_call
+def calculate(x, y, operation='add'):
+    if operation == 'add':
+        return x + y
+    return x - y
+
+result = calculate(10, 5, operation='add')
+# 함수 calculate 호출
+# 위치 인자: (10, 5)
+# 키워드 인자: {'operation': 'add'}
+```
+
+### permutations - 순열
+
+`itertools.permutations`는 iterable에서 **r개를 뽑아 순서대로 나열**하는 모든 경우의 수를 생성한다.
+
+**핵심 개념**:
+- **순열(Permutation)**: 순서가 중요 (AB ≠ BA)
+- nPr = n! / (n-r)!
+- 예: [A, B, C]에서 2개 뽑기 → AB, AC, BA, BC, CA, CB (6가지)
+
+**기본 사용**:
+```python
+from itertools import permutations
+
+data = ['A', 'B', 'C']
+
+# 3개 모두 뽑기 (3P3 = 6)
+result = list(permutations(data, 3))
+print(result)
+# [('A', 'B', 'C'), ('A', 'C', 'B'), ('B', 'A', 'C'), 
+#  ('B', 'C', 'A'), ('C', 'A', 'B'), ('C', 'B', 'A')]
+
+# 2개만 뽑기 (3P2 = 6)
+result = list(permutations(data, 2))
+print(result)
+# [('A', 'B'), ('A', 'C'), ('B', 'A'), 
+#  ('B', 'C'), ('C', 'A'), ('C', 'B')]
+
+# r 생략 시 전체
+result = list(permutations(data))
+print(len(result))  # 6 (3! = 3×2×1)
+```
+
+**실전 활용**:
+```python
+# 숫자 배열의 모든 순서
+numbers = [1, 2, 3]
+for perm in permutations(numbers):
+    print(perm)
+# (1, 2, 3), (1, 3, 2), (2, 1, 3), ...
+
+# 비밀번호 조합 생성
+digits = '1234'
+passwords = [''.join(p) for p in permutations(digits, 3)]
+print(passwords[:5])  # ['123', '124', '132', '134', '142']
+
+# 최단 경로 문제 (TSP 완전 탐색)
+cities = ['A', 'B', 'C', 'D']
+for path in permutations(cities):
+    print(' -> '.join(path))
+# A -> B -> C -> D
+# A -> B -> D -> C
+# ...
+
+# 코딩테스트: 숫자 카드로 만들 수 있는 모든 수
+cards = [1, 7, 8, 9]
+three_digit_numbers = [int(''.join(map(str, p))) 
+                       for p in permutations(cards, 3)]
+print(min(three_digit_numbers))  # 178
+print(max(three_digit_numbers))  # 987
+```
+
+### combinations - 조합
+
+`itertools.combinations`는 iterable에서 **r개를 뽑되 순서는 무시**하는 모든 경우의 수를 생성한다.
+
+**핵심 개념**:
+- **조합(Combination)**: 순서 무관 (AB = BA)
+- nCr = n! / (r! × (n-r)!)
+- 예: [A, B, C]에서 2개 뽑기 → AB, AC, BC (3가지)
+
+**기본 사용**:
+```python
+from itertools import combinations
+
+data = ['A', 'B', 'C']
+
+# 2개 뽑기 (3C2 = 3)
+result = list(combinations(data, 2))
+print(result)
+# [('A', 'B'), ('A', 'C'), ('B', 'C')]
+
+# 3개 뽑기 (3C3 = 1)
+result = list(combinations(data, 3))
+print(result)
+# [('A', 'B', 'C')]
+
+# 1개 뽑기 (3C1 = 3)
+result = list(combinations(data, 1))
+print(result)
+# [('A',), ('B',), ('C',)]
+```
+
+**실전 활용**:
+```python
+# 팀 구성 (4명 중 2명 선택)
+members = ['김', '이', '박', '최']
+teams = list(combinations(members, 2))
+print(len(teams))  # 6 (4C2)
+for team in teams:
+    print(team)
+# ('김', '이'), ('김', '박'), ('김', '최'), 
+# ('이', '박'), ('이', '최'), ('박', '최')
+
+# 부분 집합 생성 (모든 크기)
+nums = [1, 2, 3]
+all_subsets = []
+for r in range(len(nums) + 1):
+    all_subsets.extend(combinations(nums, r))
+print(all_subsets)
+# [(), (1,), (2,), (3,), (1, 2), (1, 3), (2, 3), (1, 2, 3)]
+
+# 복권 번호 조합 (1~45 중 6개)
+from itertools import combinations
+lotto_numbers = range(1, 46)
+# count = len(list(combinations(lotto_numbers, 6)))
+# print(count)  # 8,145,060 (45C6)
+
+# 코딩테스트: 두 수의 합
+numbers = [2, 3, 5, 7, 11]
+for a, b in combinations(numbers, 2):
+    if a + b == 10:
+        print(f"{a} + {b} = 10")
+# 3 + 7 = 10
+```
+
+**combinations vs permutations 비교**:
+```python
+from itertools import combinations, permutations
+
+data = ['A', 'B', 'C']
+
+# 순열: 순서 중요 (AB ≠ BA)
+print(list(permutations(data, 2)))
+# [('A', 'B'), ('A', 'C'), ('B', 'A'), ('B', 'C'), ('C', 'A'), ('C', 'B')]
+
+# 조합: 순서 무관 (AB = BA)
+print(list(combinations(data, 2)))
+# [('A', 'B'), ('A', 'C'), ('B', 'C')]
+```
+
+**추가: combinations_with_replacement - 중복 조합**:
+```python
+from itertools import combinations_with_replacement
+
+data = ['A', 'B', 'C']
+result = list(combinations_with_replacement(data, 2))
+print(result)
+# [('A', 'A'), ('A', 'B'), ('A', 'C'), 
+#  ('B', 'B'), ('B', 'C'), ('C', 'C')]
+# 같은 원소를 여러 번 선택 가능
+```
 
 ## 알고리즘 필수 추가 문법/패턴 정리
 
