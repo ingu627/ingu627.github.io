@@ -569,7 +569,7 @@ print('Hello World!')
 ## 이미지
 
 - 문법 : `![이미지가 안 불러졌을때 나타나는 설명문](이미지 주소)`
-예시 : `![북두칠성](https://ingu627.github.io/images/2021-10-29-first/bukdu.jpg)`
+예시 : `![북두칠성](https://ingu627.github.io/images/2021-10-29-first/bukdu.webp)`
 
 - 또는 html 언어를 써도 됩니다.
 - `<img src="그림 주소" width="가로 길이" height="세로 길이" alt="그림 설명" />`

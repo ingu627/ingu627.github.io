@@ -14,7 +14,7 @@ last_modified_at: 2022-01-21
 sidebar_main: false
 
 header:
-    overlay_image: /assets/images/Almond_Blossom_1280.jpg
+    overlay_image: /assets/images/Almond_Blossom_1280.webp
     over_filter: 0.4
     caption: "꽃피는 아몬드 나무"
     actions:
@@ -104,7 +104,7 @@ sidebar_main: false
 ```markdown
 ---
 header:
-    overlay_image: /assets/images/Almond_Blossom_1280.jpg
+    overlay_image: /assets/images/Almond_Blossom_1280.webp
     over_filter: 0.4
     caption: "꽃피는 아몬드 나무"
     actions:
