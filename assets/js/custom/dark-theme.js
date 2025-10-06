@@ -13,7 +13,10 @@ if (darkTheme) {
     if (currentTheme) {
         isDarkMode = currentTheme === 'dark';
     } else {
-        isDarkMode = matchMedia('(prefers-color-scheme: dark)').matches;
+        // Default to 'dirt' theme instead of following system preference
+        isDarkMode = false;
+        // Optional: If you want to still detect system preference, uncomment below
+        // isDarkMode = matchMedia('(prefers-color-scheme: dark)').matches;
     }
 
     setDarkMode(isDarkMode);
