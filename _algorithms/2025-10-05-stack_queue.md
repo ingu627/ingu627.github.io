@@ -20,7 +20,7 @@ last_modified_at: 2025-10-05
 {: .notice--info}
 
 ## 스택(Stack)이란?
-
+ 
 ### 개념
 
 **스택(Stack)**: 후입선출(LIFO, Last In First Out) 원리를 따르는 선형 자료구조
