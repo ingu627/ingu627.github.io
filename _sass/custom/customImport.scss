@@ -1,20 +1,43 @@
-/* font - Optimized for performance with font-display: swap */
-@import url('https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500;600&display=swap');
-// @import url('https://fonts.googleapis.com/css?family=Gowun+Batang&display=swap');
-// @import url('https://fonts.googleapis.com/icon?family=Material+Icons+Sharp&display=swap');
+/* Fonts - Centralized font loading for performance */
 
-// @font-face {
-//     font-family: 'RIDIBatang';
-//     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/RIDIBatang.woff') format('woff');
-//     font-weight: normal;
-//     font-style: normal;
-//     font-display: swap;
-// }
-
+/* Fira Mono - Body font */
 @font-face {
   font-family: 'Fira Mono';
   src: url('https://cdn.jsdelivr.net/npm/@fontsource/fira-mono/files/fira-mono-latin-400-normal.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
-  font-display: swap; /* Prevent FOIT (Flash of Invisible Text) */
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Fira Mono';
+  src: url('https://cdn.jsdelivr.net/npm/@fontsource/fira-mono/files/fira-mono-latin-500-normal.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Fira Mono';
+  src: url('https://cdn.jsdelivr.net/npm/@fontsource/fira-mono/files/fira-mono-latin-700-normal.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* JetBrains Mono - Code font */
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('https://cdn.jsdelivr.net/npm/jetbrains-mono@1.0.6/web/woff2/JetBrainsMono-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('https://cdn.jsdelivr.net/npm/jetbrains-mono@1.0.6/web/woff2/JetBrainsMono-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
 }

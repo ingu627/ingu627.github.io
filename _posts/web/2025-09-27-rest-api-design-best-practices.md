@@ -283,7 +283,7 @@ API를 **계약(Contract)** 으로 다루고 독립 배포 가능한 팀 구조�
 
 ### 5.1 첫 API를 1분 만에 띄우기
 
-<script src="https://gist.github.com/ingu627/024b2253cc89146b5d4ef4b4802c0f0a.js"></script>
+<script async src="https://gist.github.com/ingu627/024b2253cc89146b5d4ef4b4802c0f0a.js"></script>
 
 ```bash
 uvicorn main:app --reload
@@ -293,7 +293,7 @@ uvicorn main:app --reload
 
 ### 5.2 Pydantic으로 계약을 선언
 
-<script src="https://gist.github.com/ingu627/d6f2ce4aedf1cfa7ac10d442cfc8b726.js"></script>
+<script async src="https://gist.github.com/ingu627/d6f2ce4aedf1cfa7ac10d442cfc8b726.js"></script>
 
 - Pydantic 모델로 입력·출력 스키마를 선언하면 타입이 틀릴 때 FastAPI가 422 오류를 자동으로 반환한다.
 - `response_model`을 추가하면 민감 정보를 숨기고 응답 구조를 제한할 수 있다.
