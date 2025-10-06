@@ -30,7 +30,7 @@
         background: lightgray;
         &:after {
             left: 0;
-            content: "brightness_3";
+            content: "";
         }
     }
 
@@ -38,7 +38,7 @@
         background: gray;
         &:after {
             left: 50%;
-            content: "brightness_2";
+            content: "";
         }
     }
 }

@@ -3,6 +3,16 @@
 
 <meta charset="utf-8">
 
+<!-- DNS Prefetch for external resources -->
+<link rel="dns-prefetch" href="//fonts.googleapis.com">
+<link rel="dns-prefetch" href="//fonts.gstatic.com">
+<link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+<link rel="dns-prefetch" href="//www.google-analytics.com">
+
+<!-- Preconnect for faster resource loading -->
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+
 {% include seo.html %}
 
 {% unless site.atom_feed.hide %}
@@ -16,12 +26,17 @@
   document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
 </script>
 
-<!-- For all browsers -->
-<link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
-<!-- darkmode css -->
+<!-- For all browsers - Non-blocking CSS loading -->
+<link rel="preload" href="{{ '/assets/css/main.css' | relative_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}"></noscript>
+
+<!-- darkmode css - Non-blocking -->
 {% if site.dark_theme_toggle == true %}
-<link rel="stylesheet" href="{{ '/assets/css/main_dark.css' }}">
+<link rel="preload" href="{{ '/assets/css/main_dark.css' }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="{{ '/assets/css/main_dark.css' }}"></noscript>
 {% endif %}
+
+<!-- Font Awesome - Non-blocking -->
 <link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
 
