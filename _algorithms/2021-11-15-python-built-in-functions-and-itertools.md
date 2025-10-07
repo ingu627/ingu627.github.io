@@ -2200,6 +2200,8 @@ print(result)
 - 중첩: `[(i, j) for i in range(n) for j in range(m)]`
 - 제너레이터: `(x*x for x in it)` (지연 평가, 메모리 절약)
 
+| 리스트 컴프리헨션에서 if만 쓰면 필터라서 for 뒤에 오고, if-else는 값 선택(삼항 연산)이라 for 앞의 표현식 자리에 온다.
+
 ```python
 nums = [1,2,3,4]
 sq = [x*x for x in nums if x%2]

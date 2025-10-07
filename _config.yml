@@ -27,7 +27,7 @@ description              : "개인 저장공간입니다.<br/>Since 2021.10"
 url                      : "https://ingu627.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : "ingu627/ingu627.github.io" # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
-teaser                   : # path of fallback teaser image, e.g. "/assets/images/500x300.png"
+teaser                   : "/assets/images/abstract_gpt_image_1.webp"  # Default teaser image for posts
 logo                     : # "/assets/images/logo_poeun_by_dalle.png"
 masthead_title           : # overrides the website title displayed in the masthead, use " " for no title
 breadcrumbs              : true # true, false (default)
@@ -44,8 +44,9 @@ comments:
     num_posts            : # 5 (default)
     colorscheme          : # "light" (default), "dark"
   utterances:
-    theme                : "github-light" # "github-light" (default), "github-dark"
+    theme                : "preferred-color-scheme"  # Auto dark/light based on system preference
     issue_term           : "pathname" # "pathname" (default)
+    repo                 : "ingu627/ingu627.github.io"  # Explicit repo for comments
   giscus:
     repo_id              : # Shown during giscus setup at https://giscus.app
     category_name        : # Full text name of the category
@@ -60,11 +61,11 @@ reCaptcha:
   siteKey                :
   secret                 :
 atom_feed:
-  path                   : # blank (default) uses feed.xml
-  hide                   : # true, false (default)
-search                   : # true, false (default)
-search_full_content      : # true, false (default)
-search_provider          : # lunr (default), algolia, google
+  path                   : "/feed.xml"  # Explicit feed path
+  hide                   : false
+search                   : true   # Enable site search
+search_full_content      : true   # Search in full content (not just title/excerpt)
+search_provider          : lunr  # lunr (default), algolia, google
 algolia:
   application_id         : # YOUR_APPLICATION_ID
   index_name             : # YOUR_INDEX_NAME
@@ -74,25 +75,29 @@ google:
   search_engine_id       : # YOUR_SEARCH_ENGINE_ID
   instant_search         : # false (default), true
 # SEO Related
-google_site_verification :
+google_site_verification : "google892bd13e769859f8"  # From google892bd13e769859f8.html
 bing_site_verification   :
 yandex_site_verification :
-naver_site_verification  :
+naver_site_verification  : "naver2f1ddca95d82110afdce071ed9dedab3"  # From naver verification file
 
 # Social Sharing
 twitter:
-  username               :
+  username               :  # Not using Twitter
 facebook:
   username               :
   app_id                 :
   publisher              :
-og_image                 : # Open Graph/Twitter default site image
+og_image                 : "/assets/images/cr_ai_gpt_image_1.webp"  # Open Graph default image for social sharing
 # For specifying social profiles
 # - https://developers.google.com/structured-data/customize/social-profiles
 social:
-  type                   : # Person or Organization (defaults to Person)
-  name                   : # If the user or organization name differs from the site's name
-  links: # An array of links to social media profiles
+  type                   : "Person"
+  name                   : "ingu627"
+  links:
+    - "https://github.com/ingu627"
+    - "https://www.linkedin.com/in/ingu627"
+    - "https://hub.docker.com/u/ingu627"
+    - "mailto:ingu627@gmail.com"
 
 # Analytics
 analytics:
@@ -245,6 +250,7 @@ plugins:
   - jekyll-gist
   - jekyll-feed
   - jekyll-include-cache
+  - jekyll-seo-tag  # Automatic SEO meta tags generation
 
 # mimic GitHub Pages with --safe
 whitelist:
@@ -253,6 +259,7 @@ whitelist:
   - jekyll-gist
   - jekyll-feed
   - jekyll-include-cache
+  - jekyll-seo-tag
 
 
 # Archives
@@ -324,6 +331,36 @@ defaults:
       use_math: true
       show_date: true
       sidebar_main: true
+  
+  # _pages
+  - scope:
+      path: "_pages"
+      type: pages
+    values:
+      layout: single
+      author_profile: true
+  
+  # _portfolio
+  - scope:
+      path: "_portfolio"
+      type: portfolio
+    values:
+      layout: single
+      author_profile: false
+      share: true
+  
+  # _algorithms
+  - scope:
+      path: "_algorithms"
+      type: algorithms
+    values:
+      layout: single
+      author_profile: true
+      share: true
+      toc: true
+      toc_sticky: true
+      comments: true
+      related: true
 
 
 date_format: "%Y-%m-%d"
