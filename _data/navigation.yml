@@ -2,8 +2,8 @@
 main:
   - title: "Portfolio"
     url: /portfolio/
-  - title: "🔍"
-    url: /search/
+  # - title: "🔍"
+  #   url: /search/
   - title: "Algorithms"
     url: /algorithms/
   - title: "Categories"

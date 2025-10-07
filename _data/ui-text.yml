@@ -127,7 +127,7 @@ fr: &DEFAULT_FR
   breadcrumb_home_label      : "Accueil"
   breadcrumb_separator       : "/"
   menu_label                 : "Menu"
-  search_label               :
+  search_label               : "🔍"
   toc_label                  : "Sur cette page"
   ext_link_label             : "Lien direct"
   less_than                  : "moins de"

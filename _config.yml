@@ -61,11 +61,11 @@ reCaptcha:
   siteKey                :
   secret                 :
 atom_feed:
-  path                   : "/feed.xml"  # Explicit feed path
-  hide                   : false
-search                   : true   # Enable site search
-search_full_content      : true   # Search in full content (not just title/excerpt)
-search_provider          : lunr  # lunr (default), algolia, google
+  path                   : # "/feed.xml"  # Explicit feed path
+  hide                   : # false
+search                   : true # true, false (default)
+search_full_content      : true # true, false (default)
+search_provider          : "lunr" # lunr (default), algolia, google
 algolia:
   application_id         : # YOUR_APPLICATION_ID
   index_name             : # YOUR_INDEX_NAME
@@ -331,6 +331,8 @@ defaults:
       use_math: true
       show_date: true
       sidebar_main: true
+      toc_sticky: false
+      
   
   # _pages
   - scope:

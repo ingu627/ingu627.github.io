@@ -42,6 +42,7 @@ last_modified_at: 2025-10-07
 **최대공약수(GCD, Greatest Common Divisor)**: 두 수의 공통 약수 중 가장 큰 수
 
 ```python
+from math import gcd
 # 12와 18의 공약수: 1, 2, 3, 6
 # 최대공약수: 6
 gcd(12, 18) = 6
@@ -326,6 +327,7 @@ result = gcd(12, 18, 24, 30)  # 6
 ### 성능 비교
 
 ```python
+from math import gcd
 import time
 
 a, b = 123456, 789012

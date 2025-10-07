@@ -3,6 +3,46 @@ layout: none
 ---
 
 var store = [
+  {%- for post in site.posts -%}
+    {%- if post.search != false -%}
+      {%- if post.header.teaser -%}
+        {%- capture teaser -%}{{ post.header.teaser }}{%- endcapture -%}
+      {%- else -%}
+        {%- assign teaser = site.teaser -%}
+      {%- endif -%}
+      {
+        "title": {{ post.title | jsonify }},
+        "excerpt":
+          {%- if site.search_full_content == true -%}
+            {{ post.content | newline_to_br |
+              replace:"<br />", " " |
+              replace:"</p>", " " |
+              replace:"</h1>", " " |
+              replace:"</h2>", " " |
+              replace:"</h3>", " " |
+              replace:"</h4>", " " |
+              replace:"</h5>", " " |
+              replace:"</h6>", " "|
+            strip_html | strip_newlines | jsonify }},
+          {%- else -%}
+            {{ post.content | newline_to_br |
+              replace:"<br />", " " |
+              replace:"</p>", " " |
+              replace:"</h1>", " " |
+              replace:"</h2>", " " |
+              replace:"</h3>", " " |
+              replace:"</h4>", " " |
+              replace:"</h5>", " " |
+              replace:"</h6>", " "|
+            strip_html | strip_newlines | truncatewords: 50 | jsonify }},
+          {%- endif -%}
+        "categories": {{ post.categories | jsonify }},
+        "tags": {{ post.tags | jsonify }},
+        "url": {{ post.url | relative_url | jsonify }},
+        "teaser": {{ teaser | relative_url | jsonify }}
+      }{%- unless forloop.last -%},{%- endunless -%}
+    {%- endif -%}
+  {%- endfor -%}
   {%- for c in site.collections -%}
     {%- if forloop.last -%}
       {%- assign l = true -%}
@@ -14,7 +54,7 @@ var store = [
       {%- else -%}
         {%- assign teaser = site.teaser -%}
       {%- endif -%}
-      {
+      ,{
         "title": {{ doc.title | jsonify }},
         "excerpt":
           {%- if site.search_full_content == true -%}
