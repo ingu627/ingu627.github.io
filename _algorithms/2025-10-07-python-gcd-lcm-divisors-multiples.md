@@ -14,7 +14,7 @@ author_profile: true
 last_modified_at: 2025-10-07
 ---
 
-배수·약수·최대공약수(GCD)·최소공배수(LCM)는 코딩테스트에서 가장 기본이 되는 수학 개념이다. 유클리드 호제법과 핵심 공식만 알면 대부분의 문제를 효율적으로 해결할 수 있다.
+배수, 약수, 최대공약수(GCD), 최소공배수(LCM)는 코딩테스트에서 빈번하게 등장하는 기본적인 수학 개념이다. 특히 유클리드 호제법을 이용한 최대공약수 계산과 이를 활용한 최소공배수 계산은 반드시 알아두어야 한다. 이 글에서는 관련 개념을 정리하고, 코딩테스트 실전 문제에 적용하는 법을 다룬다.
 
 **핵심**: GCD는 유클리드 호제법 `math.gcd()`, LCM은 `a * b // gcd(a, b)` 공식만 기억하면 된다!
 {: .notice--info}
@@ -271,15 +271,26 @@ gcd(18, 12)
 
 **왜 이게 작동할까?**
 ```python
-# a = bq + r (a를 b로 나눈 몫 q, 나머지 r)
-# a와 b의 공약수는 r과 b의 공약수와 같다!
-
+# 'a와 b의 공약수'와 'b와 r의 공약수'의 집합이 완전히 같기 때문이다. (여기서 r = a % b)
+#
+# 1. a와 b의 공약수 d가 있다고 가정하자.
+#    a = n*d, b = m*d
+#    r = a - b*q = n*d - m*d*q = (n - m*q)*d
+#    즉, r도 d로 나누어떨어지므로 d는 b와 r의 공약수이다.
+#
+# 2. b와 r의 공약수 d'가 있다고 가정하자.
+#    b = x*d', r = y*d'
+#    a = b*q + r = x*d'*q + y*d' = (x*q + y)*d'
+#    즉, a도 d'로 나누어떨어지므로 d'는 a와 b의 공약수이다.
+#
+# 이 두 가지 사실을 통해 두 집합이 같다는 것을 알 수 있고, 따라서 최대공약수도 같다.
+# gcd(a, b) = gcd(b, a % b)가 성립하는 것이다.
+# 이 과정을 나머지가 0이 될 때까지 반복하면, 그 때의 나누는 수가 바로 최대공약수가 된다.
+#
 # 예: gcd(18, 12)
-# 18 = 12 × 1 + 6
-# 18과 12의 공약수 = 12와 6의 공약수
-# 12 = 6 × 2 + 0
-# 12와 6의 공약수 = 6과 0의 공약수
-# gcd(6, 0) = 6
+# 18 = 12 × 1 + 6  → gcd(18, 12) = gcd(12, 6)
+# 12 = 6 × 2 + 0   → gcd(12, 6) = gcd(6, 0)
+# 나머지가 0이 되었을 때, 나누는 수 6이 최대공약수이다.
 ```
 
 **실전 코드**
@@ -437,16 +448,20 @@ print(lcm(12, 18, 24))  # 72
 # ❌ 나쁜 예: 곱셈 먼저 (오버플로우 위험!)
 from math import gcd
 def lcm_bad(a, b):
-    return (a * b) // gcd(a, b)  # a×b가 너무 클 수 있음
+    return (a * b) // gcd(a, b)  # a*b가 자료형의 최대 범위를 넘을 수 있다.
 
 # ✅ 좋은 예: 나눗셈 먼저
 def lcm_good(a, b):
-    return a // gcd(a, b) * b  # 순서 주의!
+    # a가 gcd(a, b)로 나누어떨어짐이 보장되므로, 나눗셈을 먼저 수행해도 결과는 같다.
+    # 이렇게 하면 중간 계산 결과가 불필요하게 커지는 것을 막을 수 있다.
+    return a // gcd(a, b) * b
 
 # 큰 수 테스트
 a, b = 10**9, 10**9 - 1
+# lcm_bad는 중간에 10^18에 가까운 큰 수가 되어 오버플로우 위험이 있다.
+# (물론 파이썬은 큰 정수를 자동으로 처리하지만, 다른 언어에서는 문제가 되며,
+# 파이썬에서도 불필요하게 큰 수를 다루는 것은 비효율적이다.)
 print(lcm_good(a, b))  # 정상 작동
-# lcm_bad는 중간에 10^18이 되어 오버플로우 위험!
 ```
 
 **시간 복잡도**:
@@ -457,6 +472,11 @@ print(lcm_good(a, b))  # 정상 작동
 
 ## 소인수분해
 
+- **인수(Factor)**: 나누어떨어지게 하는 수
+  - 어떤 숫자를 곱하기 형태로 분해했을 때 사용되는 재료들
+- **소수 (Prime Number)**: 더 이상 쪼갤 수 없는 숫자
+- **소인수분해(Prime Factorization)**: 어떤 숫자를 소인수들의 곱으로만 표현하는 과정
+
 ### 기본 방법
 
 ```python
@@ -465,7 +485,7 @@ def prime_factorization(n):
     factors = {}
     d = 2
     
-    while d * d <= n:
+    while d * d <= n: # 어떤 수의 약수를 찾을 때, 그 수의 제곱근까지만 확인하면 되기 때문
         while n % d == 0:
             factors[d] = factors.get(d, 0) + 1
             n //= d
@@ -507,24 +527,33 @@ print(print_factorization(100))  # 2^2 × 5^2
 
 ### 소인수분해로 약수 구하기
 
+소인수분해 결과를 알면, 모든 약수를 조합을 통해 만들어낼 수 있다.
+예를 들어, $$12 = 2^2 \times 3^1$$의 약수는 $$(2^0, 2^1, 2^2)$$ 중 하나와 $$(3^0, 3^1)$$ 중 하나를 곱하여 만들어진다.
+
 ```python
-def get_divisors_from_factorization(n):
-    """소인수분해 결과로 모든 약수 구하기"""
+from functools import reduce
+from itertools import product
+
+def get_divisors_from_factors(n):
+    """소인수분해 결과로 모든 약수 구하기 (itertools 사용)"""
     factors = prime_factorization(n)
     
-    divisors = [1]
+    # 각 소인수의 거듭제곱 리스트를 만든다.
+    # e.g., {2: 2, 3: 1} -> [[1, 2, 4], [1, 3]]
+    prime_powers = []
     for prime, count in factors.items():
-        new_divisors = []
-        power = 1
-        for _ in range(count):
-            power *= prime
-            for div in divisors:
-                new_divisors.append(div * power)
-        divisors.extend(new_divisors)
+        prime_powers.append([prime**i for i in range(count + 1)])
     
+    # 모든 조합의 곱을 구한다.
+    # e.g., product([1, 2, 4], [1, 3]) -> (1,1), (1,3), (2,1), ...
+    divisors = []
+    for combo in product(*prime_powers):
+        divisors.append(reduce(lambda x, y: x * y, combo, 1))
+        
     return sorted(divisors)
 
-print(get_divisors_from_factorization(12))  # [1, 2, 3, 4, 6, 12]
+print(get_divisors_from_factors(12))  # [1, 2, 3, 4, 6, 12]
+print(get_divisors_from_factors(100)) # [1, 2, 4, 5, 10, 20, 25, 50, 100]
 ```
 
 <br>
@@ -729,23 +758,34 @@ print(add_fractions(1, 2, 1, 3))  # (5, 6) → 5/6
 print(add_fractions(2, 3, 1, 6))  # (5, 6) → 5/6
 ```
 
-### 8. 타일 문제
+### 8. 멀쩡한 사각형 (프로그래머스)
 
-**문제 유형**: 최소 몇 개의 타일로 채울 수 있는가?
+**문제 유형**: W x H 크기의 격자 사각형에서, 대각선이 지나가는 사각형의 개수를 구하는 문제.
+
+**핵심 아이디어**: 대각선이 가로선 또는 세로선과 동시에 만나는 점은 `gcd(W, H) + 1`개 존재한다. 이 점들을 기준으로 사각형이 `gcd(W, H)`개의 동일한 패턴으로 반복된다.
+하나의 패턴(W/gcd x H/gcd)에서 대각선이 지나가는 사각형의 개수는 `(W/gcd) + (H/gcd) - 1`개이다.
+따라서 전체 대각선이 지나가는 사각형의 개수는 `gcd(W, H) * ((W/gcd) + (H/gcd) - 1) = W + H - gcd(W, H)`가 된다.
 
 ```python
 from math import gcd
 
-def solution(w, h):
-    """직사각형을 정사각형으로 나누기"""
-    # 정사각형 한 변의 최대 길이 = gcd(w, h)
-    g = gcd(w, h)
-    return (w // g) + (h // g) - 1
+def get_crossed_squares(w, h):
+    """W x H 사각형에서 대각선이 지나가는 사각형의 개수"""
+    return w + h - gcd(w, h)
 
-# 예: 12×8 직사각형
-# gcd(12, 8) = 4
-# 4×4 정사각형 (12/4) + (8/4) - 1 = 5개 필요
-print(solution(12, 8))  # 5
+def solution(w, h):
+    """프로그래머스 - 멀쩡한 사각형"""
+    # 전체 사각형 개수 - 대각선이 지나가서 사용할 수 없는 사각형 개수
+    total_squares = w * h
+    unusable_squares = w + h - gcd(w, h)
+    return total_squares - unusable_squares
+
+# 테스트
+# 8x12 사각형에서 사용할 수 있는 사각형의 개수
+# gcd(8, 12) = 4
+# 사용할 수 없는 사각형: 8 + 12 - 4 = 16개
+# 전체: 96개. 사용 가능: 96 - 16 = 80개
+print(solution(8, 12))  # 80
 ```
 
 ### 9. 격자점 문제
@@ -1001,11 +1041,37 @@ $$
 \text{약수 개수} = (a_1 + 1)(a_2 + 1) \cdots (a_k + 1)
 $$
 
+```python
+def count_divisors_from_factors(n):
+    """소인수분해로 약수 개수 구하기"""
+    factors = prime_factorization(n)
+    count = 1
+    for c in factors.values():
+        count *= (c + 1)
+    return count
+
+# 12 = 2^2 * 3^1 -> (2+1)*(1+1) = 6
+print(count_divisors_from_factors(12)) # 6
+```
+
 ### 4. 약수의 합 (소인수분해)
 
 $$
 \text{약수 합} = \frac{p_1^{a_1+1} - 1}{p_1 - 1} \times \frac{p_2^{a_2+1} - 1}{p_2 - 1} \times \cdots
 $$
+
+```python
+def sum_divisors_from_factors(n):
+    """소인수분해로 약수 합 구하기"""
+    factors = prime_factorization(n)
+    total_sum = 1
+    for p, a in factors.items():
+        total_sum *= (p**(a + 1) - 1) // (p - 1)
+    return total_sum
+
+# 12 = 2^2 * 3^1 -> ((2^3-1)/(2-1)) * ((3^2-1)/(3-1)) = 7 * 4 = 28
+print(sum_divisors_from_factors(12)) # 28
+```
 
 ### 5. 오일러 파이 함수
 
