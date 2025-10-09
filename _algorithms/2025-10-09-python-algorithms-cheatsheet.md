@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "파이썬 헷갈리는 문법 치트시트: 개념·패턴·실수 예방"
-excerpt: "표현식과 명령문 구분부터 리스트 컴프리헨션, 제너레이터, 가변·불변 객체, 이름표 모델, 불리언 진리값 규칙, is/== 차이, 매개변수 언패킹, walrus 연산자까지 헷갈리기 쉬운 파이썬 문법을 예제와 함께 총정리"
+excerpt: "표현식과 명령문 구분부터 리스트 컴프리헨션, 제너레이터, 가변·불변 객체, 이름표 모델, 불리언 진리값 규칙, 매개변수 언패킹, walrus 연산자까지 헷갈리기 쉬운 파이썬 문법을 예제와 함께 총정리"
 tags: [python, 파이썬, 문법, 치트시트, expression, statement, comprehension, generator, mutable, immutable, walrus]
 toc: true
 toc_sticky: true
