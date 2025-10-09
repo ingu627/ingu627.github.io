@@ -646,6 +646,154 @@ for x in range(10):
 print(valid)       # {0, 2, 4, 6, 8}
 ```
 
+### max(*args, key=None)
+
+iterable 또는 여러 인자 중에서 **최댓값**을 반환하는 내장 함수다.
+
+**핵심 개념**:
+- 숫자, 문자열 등 비교 가능한 모든 객체에 사용 가능
+- `key` 매개변수로 비교 기준 커스터마이징 가능
+- 빈 iterable에 사용 시 `ValueError` 발생
+
+**기본 사용**:
+```python
+# 여러 숫자 중 최댓값
+print(max(1, 5, 3, 9, 2))     # 9
+
+# 리스트에서 최댓값
+nums = [10, 25, 5, 30, 15]
+print(max(nums))              # 30
+
+# 문자열 비교 (사전순)
+print(max('a', 'z', 'k'))     # 'z'
+words = ['apple', 'banana', 'cherry']
+print(max(words))             # 'cherry' (사전순 최대)
+```
+
+**중요**: `max(val1, val2)`에서 두 값이 같으면 첫 번째 인자를 반환한다.
+```python
+a, b = 5, 5
+result = max(a, b)
+print(result is a)  # True (내부적으로 a를 반환)
+```
+
+**key 매개변수 활용** (코딩테스트 필수):
+```python
+# 문자열 길이 기준 최댓값
+words = ['a', 'bbb', 'cc']
+longest = max(words, key=len)
+print(longest)                # 'bbb'
+
+# 절댓값 기준 최댓값
+nums = [-10, 5, -3, 8]
+print(max(nums, key=abs))     # -10 (절댓값이 가장 큼)
+
+# 튜플 리스트에서 특정 요소 기준
+students = [('김', 85), ('이', 92), ('박', 78)]
+top = max(students, key=lambda x: x[1])
+print(top)                    # ('이', 92)
+
+# 딕셔너리 값 기준 최댓값 키 찾기
+scores = {'김': 85, '이': 92, '박': 78}
+best = max(scores, key=lambda k: scores[k])
+print(best)                   # '이'
+# 또는
+best_key = max(scores, key=scores.get)
+print(best_key)               # '이'
+```
+
+**실전 활용**:
+```python
+# 2D 좌표에서 원점과 가장 먼 점 찾기
+points = [(1, 2), (3, 4), (0, 5)]
+farthest = max(points, key=lambda p: p[0]**2 + p[1]**2)
+print(farthest)               # (0, 5)
+
+# 가장 많이 등장한 원소 찾기
+from collections import Counter
+arr = [1, 2, 2, 3, 3, 3]
+most_common = max(set(arr), key=arr.count)
+print(most_common)            # 3
+```
+
+### min(*args, key=None)
+
+iterable 또는 여러 인자 중에서 **최솟값**을 반환하는 내장 함수다.
+
+**핵심 개념**:
+- `max()`와 정확히 반대로 작동
+- 동일한 `key` 매개변수 사용 가능
+- 빈 iterable에 사용 시 `ValueError` 발생
+
+**기본 사용**:
+```python
+# 여러 숫자 중 최솟값
+print(min(1, 5, 3, 9, 2))     # 1
+
+# 리스트에서 최솟값
+nums = [10, 25, 5, 30, 15]
+print(min(nums))              # 5
+
+# 문자열 비교 (사전순)
+print(min('a', 'z', 'k'))     # 'a'
+words = ['apple', 'banana', 'cherry']
+print(min(words))             # 'apple' (사전순 최소)
+```
+
+**중요**: `min(val1, val2)`에서 두 값이 같으면 첫 번째 인자를 반환한다.
+```python
+a, b = 5, 5
+result = min(a, b)
+print(result is a)  # True (내부적으로 a를 반환)
+```
+
+**key 매개변수 활용**:
+```python
+# 문자열 길이 기준 최솟값
+words = ['abc', 'a', 'ab']
+shortest = min(words, key=len)
+print(shortest)               # 'a'
+
+# 절댓값 기준 최솟값
+nums = [-10, 5, -3, 8]
+print(min(nums, key=abs))     # -3 (절댓값이 가장 작음)
+
+# 튜플 리스트에서 특정 요소 기준
+students = [('김', 85), ('이', 92), ('박', 78)]
+lowest = min(students, key=lambda x: x[1])
+print(lowest)                 # ('박', 78)
+
+# 특정 값에 가장 가까운 수 찾기
+target = 15
+nums = [10, 13, 18, 20, 25]
+closest = min(nums, key=lambda x: abs(x - target))
+print(closest)                # 13
+```
+
+**실전 활용**:
+```python
+# 2D 좌표에서 원점과 가장 가까운 점 찾기
+points = [(3, 4), (1, 1), (5, 2)]
+nearest = min(points, key=lambda p: p[0]**2 + p[1]**2)
+print(nearest)                # (1, 1)
+
+# 가장 적게 등장한 원소 찾기
+from collections import Counter
+arr = [1, 1, 1, 2, 2, 3]
+least_common = min(set(arr), key=arr.count)
+print(least_common)           # 3
+
+# 여러 조건 중 최소값 (다단계 비교)
+students = [
+    ('김', 85, 20),
+    ('이', 85, 19),
+    ('박', 90, 21)
+]
+# 점수 오름차순, 나이 오름차순
+youngest_lowest = min(students, key=lambda x: (x[1], x[2]))
+print(youngest_lowest)        # ('이', 85, 19)
+```
+
 ### sorted(iterable, key=None, reverse=False)
 
 iterable을 정렬하여 **새로운 리스트**로 반환하는 내장 함수다.
@@ -1159,6 +1307,349 @@ print(t.index(2))        # 1
 - **find**: 존재 여부만 확인하고 싶을 때, 에러 처리가 번거로울 때
 - **index**: 반드시 있어야 하는 값일 때, 없으면 에러로 처리하고 싶을 때
 - **in 연산자**: 존재 여부만 확인 (가장 파이썬스러움)
+
+### sum(iterable, start=0)
+
+iterable의 모든 요소를 **합산**하여 반환하는 내장 함수다.
+
+**핵심 개념**:
+- 숫자 리스트/튜플의 합을 빠르게 계산
+- `start` 매개변수로 초기값 지정 가능 (기본값 0)
+- 문자열 연결에는 사용 불가 (`''.join()` 사용)
+
+**기본 사용**:
+
+```python
+# 리스트 합
+numbers = [1, 2, 3, 4, 5]
+print(sum(numbers))           # 15
+
+# 튜플 합
+scores = (85, 90, 78, 92)
+print(sum(scores))            # 345
+
+# 초기값 지정
+print(sum([1, 2, 3], 10))     # 16 (10 + 1 + 2 + 3)
+
+# 빈 리스트
+print(sum([]))                # 0
+print(sum([], 100))           # 100
+```
+
+**실전 활용**:
+
+```python
+# 평균 계산
+scores = [85, 90, 78, 92, 88]
+average = sum(scores) / len(scores)
+print(average)                # 86.6
+
+# 조건부 합계
+numbers = [1, -2, 3, -4, 5]
+positive_sum = sum(n for n in numbers if n > 0)
+print(positive_sum)           # 9
+
+# 2D 리스트 전체 합
+matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+total = sum(sum(row) for row in matrix)
+print(total)                  # 45
+
+# 딕셔너리 값 합계
+prices = {'apple': 1000, 'banana': 500, 'orange': 800}
+total_price = sum(prices.values())
+print(total_price)            # 2300
+
+# 특정 조건의 개수 세기 (True=1, False=0)
+numbers = [1, 2, 3, 4, 5, 6]
+even_count = sum(1 for n in numbers if n % 2 == 0)
+print(even_count)             # 3
+```
+
+**주의사항**:
+
+```python
+# ❌ 문자열 연결에 사용 불가
+# sum(['a', 'b', 'c'])  # TypeError
+
+# ✅ join 사용
+print(''.join(['a', 'b', 'c']))  # 'abc'
+
+# ❌ 리스트 연결에도 비효율적
+# sum([[1], [2], [3]], [])  # 동작은 하지만 느림
+
+# ✅ chain이나 extend 사용
+from itertools import chain
+result = list(chain(*[[1], [2], [3]]))
+```
+
+### bin(x), oct(x), hex(x) - 진법 변환
+
+**정수를 다양한 진법의 문자열로 변환**하는 내장 함수들이다.
+
+**기본 사용**:
+
+```python
+num = 10
+
+# 2진법 (binary)
+print(bin(num))      # '0b1010'
+
+# 8진법 (octal)
+print(oct(num))      # '0o12'
+
+# 16진법 (hexadecimal)
+print(hex(num))      # '0xa'
+
+# 접두사 제거
+print(bin(num)[2:])  # '1010'
+print(oct(num)[2:])  # '12'
+print(hex(num)[2:])  # 'a'
+```
+
+**역변환** (문자열 → 정수):
+
+```python
+# int(문자열, 진법)
+print(int('1010', 2))   # 10 (2진수)
+print(int('12', 8))     # 10 (8진수)
+print(int('a', 16))     # 10 (16진수)
+print(int('0b1010', 2)) # 10 (접두사 포함)
+```
+
+**실전 활용**:
+
+```python
+# 2진수로 변환 후 비트 개수
+n = 13  # 1101
+bit_count = bin(n).count('1')
+print(bit_count)        # 3개
+
+# 16진수 색상 코드
+r, g, b = 255, 100, 50
+color = f"#{r:02x}{g:02x}{b:02x}"
+print(color)            # '#ff6432'
+
+# 비트마스킹 확인
+permissions = 0b101  # 읽기(4) + 실행(1)
+can_read = permissions & 0b100
+can_write = permissions & 0b010
+can_execute = permissions & 0b001
+print(f"읽기: {bool(can_read)}, 쓰기: {bool(can_write)}, 실행: {bool(can_execute)}")
+```
+
+### reversed(sequence)
+
+시퀀스를 **역순으로 순회**하는 iterator를 반환하는 내장 함수다.
+
+**핵심 개념**:
+- 원본을 변경하지 않음
+- 메모리 효율적 (iterator 반환)
+- `list.reverse()`는 원본을 직접 변경
+
+**기본 사용**:
+
+```python
+# 리스트 역순
+arr = [1, 2, 3, 4, 5]
+for x in reversed(arr):
+    print(x, end=' ')  # 5 4 3 2 1
+print()
+
+# 리스트로 변환
+print(list(reversed(arr)))  # [5, 4, 3, 2, 1]
+
+# 문자열 역순
+text = "hello"
+print(''.join(reversed(text)))  # "olleh"
+
+# 튜플 역순
+t = (1, 2, 3)
+print(tuple(reversed(t)))       # (3, 2, 1)
+```
+
+**reverse() vs reversed() vs [::-1]**:
+
+```python
+arr = [1, 2, 3]
+
+# 1. list.reverse() - 원본 변경, 반환값 None
+arr.reverse()
+print(arr)              # [3, 2, 1]
+
+# 2. reversed() - 원본 유지, iterator 반환
+arr = [1, 2, 3]
+rev = list(reversed(arr))
+print(arr, rev)         # [1, 2, 3] [3, 2, 1]
+
+# 3. [::-1] - 원본 유지, 새 리스트 반환
+arr = [1, 2, 3]
+rev = arr[::-1]
+print(arr, rev)         # [1, 2, 3] [3, 2, 1]
+```
+
+**실전 활용**:
+
+```python
+# 역순으로 enumerate
+arr = ['a', 'b', 'c']
+for i, val in enumerate(reversed(arr)):
+    print(i, val)
+# 0 c
+# 1 b
+# 2 a
+
+# 문자열 팰린드롬 확인
+def is_palindrome(s):
+    return s == ''.join(reversed(s))
+
+print(is_palindrome("radar"))  # True
+print(is_palindrome("hello"))  # False
+```
+
+### type(object)
+
+객체의 **타입(자료형)**을 반환하는 내장 함수다.
+
+**기본 사용**:
+
+```python
+# 기본 타입 확인
+print(type(10))         # <class 'int'>
+print(type(3.14))       # <class 'float'>
+print(type("hello"))    # <class 'str'>
+print(type([1, 2]))     # <class 'list'>
+print(type((1, 2)))     # <class 'tuple'>
+print(type({1, 2}))     # <class 'set'>
+print(type({'a': 1}))   # <class 'dict'>
+print(type(True))       # <class 'bool'>
+print(type(None))       # <class 'NoneType'>
+```
+
+**타입 비교**:
+
+```python
+x = 10
+
+# 정확한 타입 비교
+if type(x) == int:
+    print("정수입니다")
+
+# 상속 고려한 비교는 isinstance 사용
+if isinstance(x, int):
+    print("정수 또는 정수의 서브클래스")
+```
+
+**실전 활용**:
+
+```python
+# 타입별 처리
+def process(data):
+    if type(data) == list:
+        return sum(data)
+    elif type(data) == str:
+        return len(data)
+    elif type(data) == dict:
+        return len(data.keys())
+    else:
+        return None
+
+print(process([1, 2, 3]))      # 6
+print(process("hello"))        # 5
+print(process({'a': 1, 'b': 2}))  # 2
+
+# 디버깅용
+def debug_types(*args):
+    for i, arg in enumerate(args):
+        print(f"인자 {i}: {type(arg).__name__} = {arg}")
+
+debug_types(10, "hello", [1, 2])
+# 인자 0: int = 10
+# 인자 1: str = hello
+# 인자 2: list = [1, 2]
+```
+
+### isinstance(object, classinfo)
+
+객체가 특정 **클래스의 인스턴스인지** 확인하는 내장 함수다.
+
+**핵심 개념**:
+- 상속 관계를 고려함 (자식 클래스도 True)
+- 여러 타입 동시 확인 가능 (튜플로 전달)
+- `type()` 보다 권장되는 타입 확인 방법
+
+**기본 사용**:
+
+```python
+# 단일 타입 확인
+print(isinstance(10, int))          # True
+print(isinstance(3.14, float))      # True
+print(isinstance("hi", str))        # True
+print(isinstance([1, 2], list))     # True
+
+# 여러 타입 동시 확인
+x = 10
+print(isinstance(x, (int, float)))  # True (둘 중 하나)
+
+data = [1, 2, 3]
+print(isinstance(data, (list, tuple)))  # True
+```
+
+**type() vs isinstance()**:
+
+```python
+# bool은 int의 서브클래스
+x = True
+
+print(type(x) == int)       # False (정확히 int는 아님)
+print(isinstance(x, int))   # True (int의 서브클래스)
+
+# 상속 관계 고려
+class Animal:
+    pass
+
+class Dog(Animal):
+    pass
+
+dog = Dog()
+print(type(dog) == Animal)      # False
+print(isinstance(dog, Animal))  # True (권장)
+```
+
+**실전 활용**:
+
+```python
+# 안전한 타입 체크
+def safe_divide(a, b):
+    if not isinstance(a, (int, float)) or not isinstance(b, (int, float)):
+        raise TypeError("숫자만 입력 가능")
+    if b == 0:
+        raise ValueError("0으로 나눌 수 없음")
+    return a / b
+
+# 유연한 입력 처리
+def process_data(data):
+    if isinstance(data, str):
+        return data.split()
+    elif isinstance(data, (list, tuple)):
+        return list(data)
+    elif isinstance(data, dict):
+        return list(data.values())
+    else:
+        return [data]
+
+print(process_data("a b c"))       # ['a', 'b', 'c']
+print(process_data([1, 2, 3]))     # [1, 2, 3]
+print(process_data({'a': 1, 'b': 2}))  # [1, 2]
+
+# None 체크
+def get_length(data):
+    if isinstance(data, (list, str, tuple)):
+        return len(data)
+    return 0
+
+print(get_length([1, 2, 3]))  # 3
+print(get_length(None))       # 0
+```
 
 ### abs(x) - 절댓값
 
@@ -2200,7 +2691,7 @@ print(result)
 - 중첩: `[(i, j) for i in range(n) for j in range(m)]`
 - 제너레이터: `(x*x for x in it)` (지연 평가, 메모리 절약)
 
-| 리스트 컴프리헨션에서 if만 쓰면 필터라서 for 뒤에 오고, if-else는 값 선택(삼항 연산)이라 for 앞의 표현식 자리에 온다.
+> 리스트 컴프리헨션에서 if만 쓰면 필터라서 for 뒤에 오고, if-else는 값 선택(삼항 연산)이라 for 앞의 표현식 자리에 온다.
 
 ```python
 nums = [1,2,3,4]
