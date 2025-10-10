@@ -2759,15 +2759,46 @@ for k, grp in groupby(data, key=lambda x:x[0]):
 
 ### 5. 수학/숫자 유틸
 
-- `math.gcd`, `math.lcm`, `math.isqrt`, `math.comb`, `math.perm`
-- 모듈러 거듭제곱: `pow(a, b, mod)` O(log b)
-- 음수 %: 파이썬은 결과 0 이상 → 필요 시 `(x % mod + mod) % mod`
+**주요 함수**:
+- `math.gcd(a, b)`: 최대공약수 (Python 3.5+)
+- `math.lcm(*integers)`: 최소공배수 (Python 3.9+, 여러 인자 가능)
+- `math.prod(iterable, *, start=1)`: 모든 요소의 곱 (Python 3.8+)
+- `math.isqrt(n)`: 정수 제곱근 (Python 3.8+)
+- `math.comb(n, k)`: 조합 nCk (Python 3.8+)
+- `math.perm(n, k=None)`: 순열 nPk (Python 3.8+)
+- `pow(a, b, mod)`: 모듈러 거듭제곱 O(log b)
 
+**기본 사용**:
 ```python
 import math
-print(math.gcd(12,18))
-print(pow(2,10,1000))  # 2^10 mod 1000
-print((-3)%5, ( (-3)%5 +5)%5)
+
+# 최대공약수/최소공배수
+print(math.gcd(12, 18))              # 6
+print(math.lcm(12, 18))              # 36
+print(math.lcm(12, 18, 24))          # 72 (여러 인자)
+
+# 곱셈 (sum의 곱 버전)
+numbers = [1, 2, 3, 4, 5]
+print(math.prod(numbers))            # 120 (1*2*3*4*5)
+print(math.prod([2, 3, 4], start=10)) # 240 (10*2*3*4)
+
+# 정수 제곱근
+print(math.isqrt(16))                # 4
+print(math.isqrt(17))                # 4 (내림)
+
+# 조합/순열
+print(math.comb(5, 2))               # 10 (5C2)
+print(math.perm(5, 2))               # 20 (5P2)
+
+# 모듈러 거듭제곱
+print(pow(2, 10, 1000))              # 24 (2^10 mod 1000)
+```
+
+**음수 나머지 처리**:
+```python
+# 파이썬은 나머지 결과가 항상 0 이상 (수학적 modulo)
+print((-3) % 5)                      # 2 (not -3)
+print(((-3) % 5 + 5) % 5)            # 2 (안전한 처리)
 ```
 
 ### 6. 문자열 처리

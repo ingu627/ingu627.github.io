@@ -17,13 +17,15 @@
               <a href="{{ link.url | relative_url }}"{% if link.description %} title="{{ link.description }}"{% endif %}>{{ link.title }}</a>
             </li>
           {%- endfor -%}
+          {% if site.search == true %}
+            <li class="masthead__menu-item masthead__menu-item--icon">
+              <a class="masthead__search-link" href="{{ '/search/' | relative_url }}" title="{{ site.data.ui-text[site.locale].search_label | default: 'Search' }}">
+                <span class="visually-hidden">{{ site.data.ui-text[site.locale].search_label | default: 'Search' }}</span>
+                <i class="fas fa-search" aria-hidden="true"></i>
+              </a>
+            </li>
+          {% endif %}
         </ul>
-        {% if site.search == true %}
-        <button class="search__toggle" type="button">
-          <span class="visually-hidden">{{ site.data.ui-text[site.locale].search_label | default: "Toggle search" }}</span>
-          <i class="fas fa-search"></i>
-        </button>
-        {% endif %}
         {% if site.dark_theme_toggle == true %}
         <input id="toggle_dark_theme" class="mh_toogle" type="checkbox">
         <label for="toggle_dark_theme" class="material-icons-sharp mh_toggle_btn"></label>
