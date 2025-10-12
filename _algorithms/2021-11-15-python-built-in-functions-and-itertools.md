@@ -1764,17 +1764,7 @@ else:
     print("비어있거나 음수 포함")  # 출력됨
 ```
 
-### any(x)
-
-- 반복 가능한(iterable) 자료형 x를 입력 인수로 받으며 이 x의 요소 중 하나라도 참이 있으면 True를 돌려주고, x가 모두 거짓일 때에만 False를 돌려준다.
-
-```python
-vals = [1,0,3]
-print(all(vals))  # False
-print(any(vals))  # True
-```
-
-### any(x)
+### any(iterable)
 
 iterable의 요소 중 **하나라도 참**이면 True를 반환하는 함수다.
 
@@ -1798,27 +1788,112 @@ if any(n > 0 for n in numbers):
     print("양수가 있다")  # 출력됨
 ```
 
-### dir
+### dir(object)
 
-객체가 가진 모든 속성(변수, 메서드)을 리스트로 반환하는 함수다.
+객체가 가진 모든 **속성(변수, 메서드)**을 리스트로 반환하는 내장 함수다.
 
+**핵심 개념**:
+- 특정 객체의 사용 가능한 메서드/속성 목록 확인
+- 디버깅이나 문서 없이 API 탐색 시 유용
+- `__로 시작하는 매직 메서드`도 포함됨
+
+**기본 사용**:
 ```python
+# 빈 리스트의 속성/메서드 확인
 print(dir([])[:5])      # 리스트 일부 속성
 # ['__add__', '__class__', '__class_getitem__', '__contains__', '__delattr__']
 
-# 사용 가능한 메서드 확인
+# 사용 가능한 메서드만 확인 (매직 메서드 제외)
 print([m for m in dir("") if not m.startswith('_')])
 # ['capitalize', 'casefold', 'center', ...]
 ```
 
+**실전 활용**:
+```python
+# 사용자 정의 클래스 탐색
+class MyClass:
+    def method1(self):
+        pass
+    def method2(self):
+        pass
+
+obj = MyClass()
+methods = [m for m in dir(obj) if not m.startswith('_')]
+print(methods)  # ['method1', 'method2']
+
+# 모듈 탐색
+import math
+math_funcs = [f for f in dir(math) if not f.startswith('_')]
+print(math_funcs[:5])  # ['acos', 'acosh', 'asin', 'asinh', 'atan']
+
+# 객체에 특정 메서드가 있는지 확인
+if 'append' in dir([]):
+    print("리스트는 append를 지원한다")
+```
+
 ### eval(expression)
 
-- 실행 가능한 문자열(1+2, 'hi' + 'a' 같은 것)을 입력으로 받아 문자열을 실행한 결괏값을 돌려주는 함수이다.
+**문자열 형태의 파이썬 표현식**을 실행하고 그 결과를 반환하는 내장 함수다.
 
+**핵심 개념**:
+- 문자열 `"1+2"` → 정수 `3` 으로 계산
+- 변수, 함수 호출, 표현식 모두 가능
+- **보안 위험**: 임의 코드 실행 가능하므로 사용자 입력에는 절대 사용 금지
+
+**기본 사용**:
 ```python
+# 수식 계산
 expr = "3*(2+1)"
 print(eval(expr))  # 9
+
+# 문자열 연산
+print(eval("'hi' + 'a'"))  # 'hia'
+
+# 리스트 생성
+result = eval("[1, 2, 3]")
+print(type(result))  # <class 'list'>
+
+# 수학 함수 사용
+import math
+print(eval("math.sqrt(16)"))  # 4.0
 ```
+
+**실전 활용** (제한적):
+```python
+# 계산기 구현 (안전한 환경)
+def calculator(expr):
+    try:
+        return eval(expr)
+    except:
+        return "오류"
+
+print(calculator("2**10"))  # 1024
+
+# 데이터 형식 변환 (JSON 대신 사용 금지)
+data_str = "{'name': 'Kim', 'age': 25}"
+data = eval(data_str)  # 딕셔너리로 변환
+print(data['name'])  # Kim
+```
+
+**주의사항**:
+```python
+# ❌ 위험: 사용자 입력에 eval 사용 금지
+# user_input = input("수식 입력: ")
+# eval(user_input)  # __import__('os').system('rm -rf /') 같은 악성 코드 실행 가능
+
+# ✅ 안전: ast.literal_eval 사용 (리터럴만 평가)
+import ast
+safe_data = ast.literal_eval("{'name': 'Kim'}")
+print(safe_data)  # {'name': 'Kim'}
+
+# ast.literal_eval은 코드 실행 불가
+# ast.literal_eval("__import__('os')")  # ValueError
+```
+
+**대안**:
+- 수식 계산: `eval()` 대신 파싱 라이브러리 사용 (예: `sympy`)
+- 데이터 변환: `json.loads()` 또는 `ast.literal_eval()` 사용
+- 사용자 정의 함수: 직접 파싱하거나 제한된 환경 구성
 
 ### map(function, iterable)
 
@@ -1929,49 +2004,156 @@ print(result)               # ['cat', 'pie', 'apple', 'banana']
 
 ### len(s)
 
-- 입력값 s의 길이(요소의 전체 개수)를 돌려주는 함수이다.
+iterable의 **길이(요소 개수)**를 반환하는 내장 함수다.
 
+**핵심 개념**:
+- 리스트, 튜플, 문자열, 딕셔너리, 집합 등 모든 시퀀스 타입에서 사용 가능
+- 반환값은 항상 정수 (음수 불가)
+- 빈 컬렉션은 0 반환
+
+**기본 사용**:
 ```python
-print(len([1,2,3]))  # 3
+# 리스트 길이
+print(len([1,2,3]))          # 3
+print(len([]))               # 0
+
+# 문자열 길이
+print(len("hello"))          # 5
+print(len(""))               # 0
+
+# 딕셔너리 키 개수
+print(len({'a': 1, 'b': 2})) # 2
+
+# 집합 원소 개수
+print(len({1, 2, 3}))        # 3
+
+# 튜플 길이
+print(len((1, 2, 3)))        # 3
+```
+
+**실전 활용**:
+```python
+# 빈 체크 (Pythonic)
+arr = []
+if not len(arr):  # 또는 if not arr:
+    print("비어있다")
+
+# 2D 배열 크기
+matrix = [[1,2,3], [4,5,6]]
+rows = len(matrix)           # 2
+cols = len(matrix[0])        # 3
+
+# 범위 검사
+words = ["apple", "banana", "cherry"]
+for i in range(len(words)):
+    print(f"{i}: {words[i]}")
+
+# 문자열 자릿수 세기
+num = 12345
+digit_count = len(str(num))
+print(digit_count)           # 5
+
+# 평균 계산
+scores = [85, 90, 78, 92]
+avg = sum(scores) / len(scores)
+print(avg)                   # 86.25
+```
+
+**주의사항**:
+```python
+# 제너레이터는 len() 사용 불가
+gen = (x for x in range(5))
+# len(gen)  # TypeError: object of type 'generator' has no len()
+
+# 리스트로 변환 후 가능
+print(len(list(gen)))        # 5
 ```
 
 ### oct(x)
 
-정수를 8진수 문자열로 변환하는 함수다.
+정수를 **8진수 문자열**로 변환하는 내장 함수다.
 
-**특징**:
+**핵심 개념**:
+- 8진수(Octal): 0~7까지만 사용하는 숫자 체계
 - 반환값은 `'0o'` 접두사가 붙은 문자열
 - 음수도 처리 가능
-- 8진수: 0~7까지의 숫자만 사용
 
+**기본 사용**:
 ```python
-print(oct(8))           # 0o10
-print(oct(64))          # 0o100
-print(oct(-8))          # -0o10
+print(oct(8))           # '0o10' (8 = 1×8¹ + 0×8⁰)
+print(oct(64))          # '0o100' (64 = 1×8²)
+print(oct(-8))          # '-0o10'
 
 # 접두사 제거
 num = 64
-print(oct(num)[2:])     # 100
+print(oct(num)[2:])     # '100'
+```
+
+**실전 활용**:
+```python
+# 파일 권한 표시 (Unix)
+permission = 0o755  # rwxr-xr-x
+print(oct(permission))  # '0o755'
+
+# 8진수 문자열을 정수로 역변환
+octal_str = '755'
+decimal = int(octal_str, 8)
+print(decimal)          # 493
+
+# 여러 진법 출력
+num = 64
+print(f"10진수: {num}")
+print(f"2진수: {bin(num)}")   # 0b1000000
+print(f"8진수: {oct(num)}")   # 0o100
+print(f"16진수: {hex(num)}")  # 0x40
 ```
 
 ### hex(x)
 
-정수를 16진수 문자열로 변환하는 함수다.
+정수를 **16진수 문자열**로 변환하는 내장 함수다.
 
-**특징**:
+**핵심 개념**:
+- 16진수(Hexadecimal): 0~9, a~f 사용 (a=10, b=11, ..., f=15)
 - 반환값은 `'0x'` 접두사가 붙은 문자열
-- 16진수: 0~9, a~f 사용
-- 색상 코드, 메모리 주소 표현에 활용
+- 색상 코드, 메모리 주소 표현에 자주 사용
 
+**기본 사용**:
 ```python
-print(hex(255))         # 0xff
-print(hex(16))          # 0x10
-print(hex(2023))        # 0x7e7
+print(hex(255))         # '0xff' (15×16 + 15)
+print(hex(16))          # '0x10'
+print(hex(2023))        # '0x7e7'
+print(hex(-255))        # '-0xff'
 
-# RGB 색상 코드 만들기
+# 접두사 제거
+num = 255
+print(hex(num)[2:])     # 'ff'
+```
+
+**실전 활용**:
+```python
+# RGB 색상 코드 생성
 r, g, b = 255, 128, 64
 color = f"#{r:02x}{g:02x}{b:02x}"
-print(color)            # #ff8040
+print(color)            # '#ff8040'
+
+# 16진수를 정수로 역변환
+hex_str = 'ff'
+decimal = int(hex_str, 16)
+print(decimal)          # 255
+
+# 접두사 포함된 문자열 변환
+print(int('0xff', 16))  # 255
+print(int('0xFF', 16))  # 255 (대소문자 무관)
+
+# 메모리 주소 표시
+obj = [1, 2, 3]
+address = hex(id(obj))
+print(f"객체 주소: {address}")
+
+# 바이트 데이터 16진수 변환
+data = b'\x48\x65\x6c\x6c\x6f'  # "Hello"
+hex_str = ''.join(f'{b:02x}' for b in data)
+print(hex_str)          # '48656c6c6f'
 ```
 
 ### open(filename, mode='r') - 파일 읽기/쓰기
