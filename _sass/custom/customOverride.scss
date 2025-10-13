@@ -2,18 +2,23 @@
 @import "./notice.scss";
 
 .nav__items a {
-	display: inline-block;
-	padding: 0.45rem 0.75rem;
-	min-height: 2.75rem;
-	line-height: 1.6;
+	display: block;
+	padding: 0.2rem 0.5rem;
+	line-height: 1.35;
 }
 
 .nav__items li {
-	margin-bottom: 0.25rem;
+	margin-bottom: 0.15rem;
 }
 
+.nav__items ul {
+	margin: 0;
+	padding-left: 0.75rem;
+}
+
+
 .nav__sub-title {
-	margin-top: 0.75rem;
+	margin-top: 0.5rem;
 	color: #1f1f1f;
 }
 
@@ -39,4 +44,14 @@
 	.ad-slot .adsbygoogle {
 		min-height: 250px;
 	}
+}
+
+.nav__total-count {
+	font-family: var(--mm-body-font-family, 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif);
+	font-weight: 600;
+}
+
+.nav__total-count-label,
+.nav__total-count-number {
+	font-family: inherit;
 }
