@@ -22,22 +22,30 @@ layout: default
 
     {{ content }}
 
-    {%- assign search_provider = site.search_provider | default: "lunr" -%}
-    {%- case search_provider -%}
-      {%- when "lunr" -%}
-        <input type="text" id="search" class="search-input" placeholder="{{ site.data.ui-text[site.locale].search_placeholder_text | default: 'Enter your search term...' }}" />
-        <div id="results" class="results"></div>
-        {% include_cached search/lunr-search-scripts.html %}
-      {%- when "google" -%}
-        <form onsubmit="return googleCustomSearchExecute();" id="cse-search-box-form-id">
-        <input type="text" id="cse-search-input-box-id" class="search-input" placeholder="{{ site.data.ui-text[site.locale].search_placeholder_text | default: 'Enter your search term...' }}" />
-        </form>
-        <div id="results" class="results">
-          <gcse:searchresults-only></gcse:searchresults-only>
-        </div>
-      {%- when "algolia" -%}
-        <div class="search-searchbar"></div>
-        <div class="search-hits"></div>
-    {%- endcase -%}
+    {% if site.search %}
+      {%- assign search_provider = site.search_provider | default: "lunr" -%}
+      {%- case search_provider -%}
+        {%- when "lunr" -%}
+          <input type="text" id="search" class="search-input" placeholder="{{ site.data.ui-text[site.locale].search_placeholder_text | default: 'Enter your search term...' }}" />
+          <div id="results" class="results"></div>
+           {% comment %} Prevent double-loading Lunr scripts to avoid duplicate event handlers {% endcomment %}
+        {%- when "google" -%}
+          <form onsubmit="return googleCustomSearchExecute();" id="cse-search-box-form-id">
+          <input type="text" id="cse-search-input-box-id" class="search-input" placeholder="{{ site.data.ui-text[site.locale].search_placeholder_text | default: 'Enter your search term...' }}" />
+          </form>
+          <div id="results" class="results">
+            <gcse:searchresults-only></gcse:searchresults-only>
+          </div>
+        {%- when "algolia" -%}
+          <div class="search-searchbar"></div>
+          <div class="search-hits"></div>
+      {%- endcase -%}
+    {% else %}
+      <div class="search__disabled">
+        <p><strong>검색 기능이 현재 비활성화되어 있습니다.</strong></p>
+        <p>대신 아래 링크를 눌러 <code>site:ingu627.github.io</code> 형태의 Google 검색을 이용해 보세요.</p>
+        <p><a class="btn btn--primary" href="https://www.google.com/search?q=site%3Aingu627.github.io" rel="noopener" target="_blank">Google에서 블로그 검색하기</a></p>
+      </div>
+    {% endif %}
   </div>
 </div>

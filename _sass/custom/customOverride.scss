@@ -1,2 +1,42 @@
 @import "./toggle.scss";
 @import "./notice.scss";
+
+.nav__items a {
+	display: inline-block;
+	padding: 0.45rem 0.75rem;
+	min-height: 2.75rem;
+	line-height: 1.6;
+}
+
+.nav__items li {
+	margin-bottom: 0.25rem;
+}
+
+.nav__sub-title {
+	margin-top: 0.75rem;
+	color: #1f1f1f;
+}
+
+.page__meta-readtime,
+.page__meta-date,
+.page__meta .page__meta-item {
+	color: #1f1f1f;
+}
+
+.ad-slot {
+	margin: 1.5rem auto;
+	width: 100%;
+	max-width: 970px;
+}
+
+.ad-slot .adsbygoogle {
+	display: block;
+	min-height: 280px;
+	text-align: center;
+}
+
+@media (max-width: 600px) {
+	.ad-slot .adsbygoogle {
+		min-height: 250px;
+	}
+}

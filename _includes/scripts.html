@@ -6,7 +6,7 @@
   <script src="{{ '/assets/js/main.min.js' | relative_url }}" defer></script>
 {% endif %}
 
-{% if site.search == true or page.layout == "search" %}
+{% if site.search == true %}
   {%- assign search_provider = site.search_provider | default: "lunr" -%}
   {%- case search_provider -%}
     {%- when "lunr" -%}
@@ -26,3 +26,120 @@
     <script src="{{ script | relative_url }}" defer></script>
   {% endfor %}
 {% endif %}
+
+<script>
+  (function () {
+    if (!("serviceWorker" in navigator)) {
+      return;
+    }
+
+    var isLocalhost = ["localhost", "127.0.0.1"].indexOf(window.location.hostname) !== -1;
+    if (window.location.protocol !== "https:" && !isLocalhost) {
+      return;
+    }
+
+    var basePath = "{{ site.baseurl | default: '' }}";
+    var normalizedBasePath = basePath
+      ? basePath.replace(/\/+$/, "") + "/"
+      : "/";
+    var scope = normalizedBasePath || "/";
+
+    var swSourceLines = [
+      "const CACHE_VERSION = 'v1';",
+      "const CACHE_NAME = 'site-cache-' + CACHE_VERSION;",
+      "const BASE_PATH = '" + normalizedBasePath + "';",
+      "const ASSET_PATHS = ['', 'assets/css/main.css', 'assets/js/main.min.js', 'assets/js/lunr/lunr-store.js'];",
+      "function withBase(path) {",
+      "  if (!path) { return BASE_PATH; }",
+      "  var sanitized = path.charAt(0) === '/' ? path.slice(1) : path;",
+      "  if (BASE_PATH === '/') { return '/' + sanitized; }",
+      "  return (BASE_PATH + sanitized).replace(/\\/+/, '/');",
+      "}",
+      "const PRECACHE_URLS = ASSET_PATHS.map(withBase);",
+      "self.addEventListener('install', function(event) {",
+      "  event.waitUntil(caches.open(CACHE_NAME).then(function(cache) {",
+      "    return cache.addAll(PRECACHE_URLS);",
+      "  }));",
+      "  self.skipWaiting();",
+      "});",
+      "self.addEventListener('activate', function(event) {",
+      "  event.waitUntil(",
+      "    caches.keys().then(function(cacheNames) {",
+      "      return Promise.all(cacheNames.filter(function(name) {",
+      "        return name.startsWith('site-cache-') && name !== CACHE_NAME;",
+      "      }).map(function(name) { return caches.delete(name); }));",
+      "    })",
+      "  );",
+      "  self.clients.claim();",
+      "});",
+      "self.addEventListener('fetch', function(event) {",
+      "  if (event.request.method !== 'GET') { return; }",
+      "  var url = new URL(event.request.url);",
+      "  if (url.origin !== self.location.origin) { return; }",
+      "  if (url.pathname.indexOf('/assets/') === 0) {",
+      "    event.respondWith(staleWhileRevalidate(event.request));",
+      "    return;",
+      "  }",
+      "  if (event.request.destination === 'document') {",
+      "    event.respondWith(networkFirst(event.request));",
+      "  }",
+      "});",
+      "function networkFirst(request) {",
+      "  return caches.open(CACHE_NAME).then(function(cache) {",
+      "    return fetch(request).then(function(response) {",
+      "      if (response && response.status === 200) {",
+      "        cache.put(request, response.clone());",
+      "      }",
+      "      return response;",
+      "    }).catch(function() {",
+      "      return cache.match(request);",
+      "    });",
+      "  });",
+      "}",
+      "function staleWhileRevalidate(request) {",
+      "  return caches.open(CACHE_NAME).then(function(cache) {",
+      "    return cache.match(request).then(function(cachedResponse) {",
+      "      var networkFetch = fetch(request).then(function(response) {",
+      "        if (response && response.status === 200) {",
+      "          cache.put(request, response.clone());",
+      "        }",
+      "        return response;",
+      "      }).catch(function() {",
+      "        return cachedResponse;",
+      "      });",
+      "      return cachedResponse || networkFetch;",
+      "    });",
+      "  });",
+      "}",
+    ];
+
+    var swSource = swSourceLines.join('\n');
+
+    function registerSW() {
+      try {
+        var blob = new Blob([swSource], { type: "application/javascript" });
+        var swUrl = URL.createObjectURL(blob);
+        navigator.serviceWorker
+          .register(swUrl, { scope: scope })
+          .then(function () {
+            URL.revokeObjectURL(swUrl);
+          })
+          .catch(function (error) {
+            if (window.console && console.debug) {
+              console.debug("Service worker registration failed", error);
+            }
+          });
+      } catch (error) {
+        if (window.console && console.debug) {
+          console.debug("Service worker setup failed", error);
+        }
+      }
+    }
+
+    if (document.readyState === "complete") {
+      registerSW();
+    } else {
+      window.addEventListener("load", registerSW, { once: true });
+    }
+  })();
+</script>

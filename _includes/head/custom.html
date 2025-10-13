@@ -23,12 +23,74 @@
 <link rel="mask-icon" href="{{site.baseurl}}/assets/favicon.ico">
 
 <!-- google ads -->
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6253756472465876" crossorigin="anonymous"></script>
+<script>
+        (function () {
+                var scripts = [
+                        {
+                                src: "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6253756472465876",
+                                attrs: { async: true, crossorigin: "anonymous" }
+                        },
+                        {
+                                src: "https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js",
+                                attrs: { async: true, "custom-element": "amp-auto-ads" }
+                        },
+                        {
+                                src: "https://fundingchoicesmessages.google.com/i/pub-6253756472465876?ers=1",
+                                attrs: { async: true }
+                        }
+                ];
 
-<!-- end custom head snippets -->
-<script async custom-element="amp-auto-ads"
-        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+                function setAttributes(node, attrs) {
+                        if (!attrs) return;
+                        Object.keys(attrs).forEach(function (key) {
+                                if (key === "async" && attrs[key] === true) {
+                                        node.async = true;
+                                        return;
+                                }
+                                node.setAttribute(key, attrs[key]);
+                        });
+                }
+
+                function loadExternalScripts() {
+                        scripts.forEach(function (definition) {
+                                var existing = document.querySelector('script[src="' + definition.src + '"]');
+                                if (existing) return;
+                                var tag = document.createElement("script");
+                                tag.src = definition.src;
+                                setAttributes(tag, definition.attrs);
+                                document.head.appendChild(tag);
+                        });
+
+                        (function signalGooglefcPresent() {
+                                if (!window.frames.googlefcPresent) {
+                                        if (document.body) {
+                                                var iframe = document.createElement("iframe");
+                                                iframe.style.cssText = "width:0;height:0;border:none;z-index:-1000;left:-1000px;top:-1000px;display:none";
+                                                iframe.name = "googlefcPresent";
+                                                document.body.appendChild(iframe);
+                                        } else {
+                                                setTimeout(signalGooglefcPresent, 0);
+                                        }
+                                }
+                        })();
+                }
+
+                function schedule() {
+                        if ("requestIdleCallback" in window) {
+                                requestIdleCallback(loadExternalScripts, { timeout: 5000 });
+                        } else {
+                                window.addEventListener(
+                                        "load",
+                                        function () {
+                                                setTimeout(loadExternalScripts, 1000);
+                                        },
+                                        { once: true }
+                                );
+                        }
+                }
+
+                schedule();
+        })();
 </script>
 
-<!-- 250927 광고 차단 회복 추가 -->
-<script async src="https://fundingchoicesmessages.google.com/i/pub-6253756472465876?ers=1"></script><script>(function() {function signalGooglefcPresent() {if (!window.frames['googlefcPresent']) {if (document.body) {const iframe = document.createElement('iframe'); iframe.style = 'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;'; iframe.style.display = 'none'; iframe.name = 'googlefcPresent'; document.body.appendChild(iframe);} else {setTimeout(signalGooglefcPresent, 0);}}}signalGooglefcPresent();})();</script>
+<!-- end custom head snippets -->
