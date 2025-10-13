@@ -72,7 +72,7 @@ date: 2021-11-19
 tag: [git, blog, post]
 
 toc: true
-toc_sticky: false
+toc_sticky: true
 toc_label: 짧지만 써보는 목차
 
 last_modified_at: 2021-11-19
