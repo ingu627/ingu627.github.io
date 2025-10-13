@@ -5,7 +5,7 @@ excerpt: "본 글은 Operating System Concepts 10th (운영체제) 책을 보며
 categories: OS
 tags: [OS, 운영체제, 정리, pdf, 임계구역, critical section, race condition, compare_and_swap, atomic, process synchronization, coordination, mutual exclusion, progress, bounded waiting, preemptive, nonpreemptive, peterson, 메모리 장벽, test_and_set, 뮤텍스, mutex lock, busy waiting, spinlock, 세마포어, semaphore,]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-08-24

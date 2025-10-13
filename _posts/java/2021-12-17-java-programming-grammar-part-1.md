@@ -5,7 +5,7 @@ excerpt: "java, 자바, 구조, 변수, 자료형, 제어문, 객체, 클래스,
 categories: java
 tags: [java, 자바, 구조, 변수, 자료형, 제어문, 객체, 클래스, 상속, 오버라이딩, 오버로딩, 인터페이스, 다향성, for-each, if, while, switch]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-04-03

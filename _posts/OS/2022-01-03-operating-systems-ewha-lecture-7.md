@@ -5,7 +5,7 @@ excerpt: "본 글은 (KOCW) 운영체제, 이화여자대학교 반효경 교수
 categories: OS
 tags: [OS, 운영체제, 메모리 관리, 메모리, paging, segmentation, 분할, 페이징, mmu, 주소 바인딩, Overlay, 동적 로딩, page table, 할당, shared page, pdf, 정리]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-06-11

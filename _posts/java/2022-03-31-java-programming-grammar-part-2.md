@@ -5,7 +5,7 @@ excerpt: "OOP는 문제를 여러 개의 객체 단위로 나눠 작업하는 �
 categories: java
 tags: [자바, java, 객체 지향, oop, 캡슐화, 상속, 추상화, 다형성, 객체, void, return, private, public, protected, is a, super, extends, 오버라이딩, 오버로딩]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-04-28

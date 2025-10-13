@@ -5,7 +5,7 @@ excerpt: "GraphLab은 각 정점이 인접한 정점과 에지의 데이터를 �
 categories: paper
 tags : [리뷰, 논문, 정리, 설명, 란, 뜻, mldm, 동기, 비동기, 직렬화, graphlab, pregel, 분산, abstraction, 일관성]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-10-08

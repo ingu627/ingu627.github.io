@@ -5,7 +5,7 @@ excerpt: "맵리듀스는 2004년 구글에서 발표한 빅데이터를 처리�
 categories: paper
 tags : [리뷰, 논문, 정리, 설명, 란, gfs, 구글 파일 시스템, 분산, distributed, mapreduce, 맵리듀스, 개념, 정의, 원리, map, reduce, 마스터, failure, fault tolerance, 하둡, hadoop, paper]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-08-11

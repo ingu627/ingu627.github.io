@@ -6,7 +6,7 @@ Andrew S. Tanenbaum - cha1. Introduction 1.1, 1.2, 1.3, 1.4"
 categories: DS
 tags : [DS, 분산 시스템, 확장성, 투명성, 미들웨어, 컴퓨팅, grid, cluster, cloud, 인터페이스, distributed system, transparency, middleware]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2023-04-25

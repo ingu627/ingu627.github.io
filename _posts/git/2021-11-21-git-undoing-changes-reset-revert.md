@@ -5,7 +5,7 @@ categories: git
 tags: [git, undoing, amend, reset, revert]
 excerpt: "실수 복구 관점으로 정리한 amend·reset·revert 차이와 안전한 롤백 전략, 워킹 디렉터리/스테이징 영역 다루기"
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 date: 2022-01-11

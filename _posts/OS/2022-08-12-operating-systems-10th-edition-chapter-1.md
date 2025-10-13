@@ -5,7 +5,7 @@ excerpt: "본 글은 Operating System Concepts 10th (운영체제) 책을 보며
 categories: OS
 tags: [OS, 운영체제, 정리, pdf, 제어, 리소스, 커널, 미들웨어, 장치 컨트롤러, 버퍼, 레지스터, 인터럽트, interrupt, 인터럽트 핸들러, 메인 메모리, ram, dram, dma, cpu, 프로세서, 코어, 멀티코어, numa, 캐시]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-08-12

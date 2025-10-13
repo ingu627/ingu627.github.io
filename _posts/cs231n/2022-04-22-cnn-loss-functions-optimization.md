@@ -5,7 +5,7 @@ excerpt: "본 글은 2021년 4월에 강의한 스탠포드 대학의 Convolutio
 categories: cs231n
 tags: [이미지, cnn, cs231n, 리뷰, 정리, 요약, 정의, 란, 역전파, backpropagation, 신경망, max, 활성화, 함수, activation, relu, 시그모이드, 연쇄법칙, 미분, 도함수, 딥러닝, 머신러닝, 의미, 설명]
 toc: true 
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-04-24

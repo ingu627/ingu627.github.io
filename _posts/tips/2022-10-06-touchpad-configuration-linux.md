@@ -6,7 +6,7 @@ categories: tips
 tags: [윈도우10, 터치패드, 노트북, 단축키, 드라이버, 다운로드, 다운, touchpad, driver, 데스크톱, 크롬, 창, 정밀]
 
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-10-07

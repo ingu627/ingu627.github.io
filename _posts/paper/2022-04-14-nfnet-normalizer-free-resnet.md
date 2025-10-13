@@ -5,7 +5,7 @@ excerpt: "NFNet은 imagenet 데이터셋에서 배치 정규화없이 ResNet을 
 categories: paper
 tags : [resnet, residual, batch normalization, 배치 정규화, large scale, image recognition, Adaptive Gradient Clipping, Normalizer-Free Network, AGC, 논문, 리뷰, 정리, 후기, design, 설명, layer, 딥러닝, cv, 컴퓨티 비전, paper]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-05-28

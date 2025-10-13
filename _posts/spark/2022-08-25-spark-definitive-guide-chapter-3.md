@@ -5,7 +5,7 @@ excerpt: "Spark The Definitive Guide 책을 중심으로 스파크를 요약 및
 categories: spark
 tags: [아파치, apahce, 스파크, spark, pyspark, python, sql, 예제, 실습, 정리, 란, 스칼라, dataset, parquet, 스트리밍, maxFilesPerTrigger, mllib, StringIndexer, OneHotEncoder, VectorAssembler, 머신러닝, rdd, 의미, 사용법]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-11-29

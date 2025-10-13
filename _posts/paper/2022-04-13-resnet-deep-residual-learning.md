@@ -5,7 +5,7 @@ excerpt: "그 유명한 ResNet은 152층까지 네트워크를 쌓아올리는 �
 categories: paper
 tags : [resnet, residual, 잔차, shortcut connection, skipping, 매핑, identity, mapping, bottleneck, 논문, 리뷰, 정리, 후기, design, 설명, layer, 딥러닝, cv, 컴퓨티 비전, paper]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-04-28

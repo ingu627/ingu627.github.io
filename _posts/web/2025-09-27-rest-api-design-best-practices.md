@@ -5,8 +5,8 @@ excerpt: 'REST 아키텍처의 6대 원칙, URI/HTTP 설계 모범 사례, FastA
 categories: [web]
 tags: [rest, fastapi, http, api, web, 구현, 아키텍처, 정리, 설계]
 toc: true
-toc_sticky: true
-sidebar_main: true
+toc_sticky: false
+sidebar_main: false
 
 date: 2025-09-27
 last_modified_at: 2025-09-27

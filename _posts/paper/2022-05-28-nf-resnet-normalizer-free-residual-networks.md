@@ -5,7 +5,7 @@ excerpt: "배치 정규화는 SOTA 이미지 분류기에서 대다수 사용하
 categories: paper
 tags : [resnet, residual, batch normalization, 배치 정규화, nfresnet, spp, Scaled Weight Standardization, 논문, 리뷰, 정리, 후기, design, 설명, 딥러닝, cv, 컴퓨티 비전, paper]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-05-29

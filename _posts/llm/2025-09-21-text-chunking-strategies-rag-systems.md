@@ -5,8 +5,8 @@ excerpt: "청킹(Chunking)이란 AI가 방대한 문서의 내용을 정확하�
 categories: [llm]
 tags: [llm, rag, 청킹, chunking, embedding, 검색 증강 생성, 텍스트 분할, LangChain, 벡터 검색]
 toc: true
-toc_sticky: true
-sidebar_main: true
+toc_sticky: false
+sidebar_main: false
 
 date: 2025-09-21
 last_modified_at: 2025-09-21

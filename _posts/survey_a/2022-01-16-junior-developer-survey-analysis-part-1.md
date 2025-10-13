@@ -5,7 +5,7 @@ excerpt: "Chapter1_1. 사회과학적 방법 - 총설, 조사연구, 조사연�
 categories: survey_a
 tags: [SPSS, 사회조사분석사 2급, 필기, 필답형, 사회과학적 방법, 조사연구, 연구의 요소, 가설, 정리, pdf, 기출문제, 정리본]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-03-31

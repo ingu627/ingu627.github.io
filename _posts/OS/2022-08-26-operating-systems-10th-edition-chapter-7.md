@@ -5,7 +5,7 @@ excerpt: "본 글은 Operating System Concepts 10th (운영체제) 책을 보며
 categories: OS
 tags: [OS, 운영체제, 정리, pdf, compare and swap, readers-writer, posix, semaphore, mutex, bounded-buffer, wait, signal, synchronization, dispatcher, linux]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-08-26

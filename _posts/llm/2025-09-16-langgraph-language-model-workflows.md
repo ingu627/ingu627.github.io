@@ -5,8 +5,8 @@ excerpt: "LangGraph는 기존 LangChain의 한계를 뛰어넘어 복잡한 AI �
 categories: llm
 tags : [llm, langgraph, 구조, 원리, 예제, langchain, 랭그래프, 노드, 상태, 엣지]
 toc: true
-toc_sticky: true
-sidebar_main: true
+toc_sticky: false
+sidebar_main: false
 
 date: 2025-09-16
 last_modified_at: 2025-09-16

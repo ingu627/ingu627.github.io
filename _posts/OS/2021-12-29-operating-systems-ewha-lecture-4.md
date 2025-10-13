@@ -5,7 +5,7 @@ excerpt: "본 글은 (KOCW) 운영체제, 이화여자대학교 반효경 교수
 categories: OS
 tags: [OS, 운영체제, CPU, 스케줄링, scheduling, cpu, burst time, fcfs, sjf, priority scheduling, round robin, multilevel queue, feedback, read time scheduling, thread, 스레드, pdf, 정리]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-06-19

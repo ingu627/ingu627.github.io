@@ -5,7 +5,7 @@ excerpt: "Titanic 예제로 Series/DataFrame 구조, 인덱싱·정제·GroupBy�
 categories: python
 tags: [python, pandas,  index, dtype, size, shape, unique, count, mean, value_counts, head, tail, drop, update, axis, join, merge, dataframe, group by, pivot, concat, join]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-04-11

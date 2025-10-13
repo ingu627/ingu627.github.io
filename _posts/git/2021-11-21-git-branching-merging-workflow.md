@@ -5,7 +5,7 @@ categories: git
 tags: [git, branch, checkout, merge]
 excerpt: "브랜치 생성·분기·병합(Merge) 전략과 충돌 최소화 워크플로우(branch/checkout/merge) 실전 베스트 프랙티스"
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 date: 2021-11-21

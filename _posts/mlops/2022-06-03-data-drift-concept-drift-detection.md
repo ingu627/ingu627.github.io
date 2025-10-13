@@ -5,7 +5,7 @@ excerpt: "Concept Drift는 시간이 지남에 따라 데이터의 통계적인 
 categories: mlops
 tags: [mlops, concept drift, 컨셉 드리프트, data drift, drift, detection, method, window, error, drift detection method, ddm, early drift detection method, eddm, adaptive windowing, adwin, hddm, hoeffding, bernstein, fhddm, 리뷰, 설명, 정리, 논문]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-06-06

@@ -5,7 +5,7 @@ excerpt: "본 글은 2021년 4월에 강의한 스탠포드 대학의 Convolutio
 categories: cs231n
 tags: [cs231n, 리뷰, 정리, 요약, 정의, 란, 딥러닝, 머신러닝, 파이토치, pytorch, 의미, torch.Tensor, torch.autograd, torch.nn.Module, torch.randn, torch.mm, torch.clamp, torch.t, backward, autograd.grad, no_grad, grad.zero_, torch.autograd.Function, forward, ctx, torch.nn.Linear, model.parameters, optimizer.zero_grad, 설명]
 toc: true 
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-04-27

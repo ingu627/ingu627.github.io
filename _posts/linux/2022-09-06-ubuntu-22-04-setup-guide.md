@@ -6,7 +6,7 @@ categories: tips
 tags: [리눅스, 우분투, 도커, docker, linux, 설치, ubuntu, 다운, 변환, 터미널, 폰트, 한글, 한영, 전환, 한글2020, vscode, deb, 필수, 프로그램, 드라이버, 오류, 해결, plank, intellij, ruby, jekyll, tlp, putty]
 
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-09-07

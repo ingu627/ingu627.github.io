@@ -5,7 +5,7 @@ excerpt: "Figure/Axes 개념 이해 후 기본 플롯, 축/범례/폰트/레이�
 categories: python
 tags : [python, matplotlib, visualization, figure, label, lim, marker, grid, vline, hline, xlim, ylim, axis, alpha, color, rotation, fill_between, tick_params, subplot, width, align, color, edgecolor, linewidth, histogram, autopct, startangle, shawdow]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-04-11

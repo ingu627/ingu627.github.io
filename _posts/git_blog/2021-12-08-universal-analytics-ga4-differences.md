@@ -1,3 +1,20 @@
+
+## Table of Contents
+
+<details>
+
+   <summary>Contents</summary>
+
+1. [last_modified_at: 2022-01-18](#lastmodifiedat-2022-01-18)
+1. [Google Analytics란](#google-analytics)
+   1. [GA의 역사](#ga-)
+   1. [GA4 특징[^3]](#ga4-3)
+1. [결론! => GA4는 최신 버전이다!!](#--ga4--)
+   1. [설정](#)
+   1. [Git Blog 설정](#git-blog-)
+1. [References](#references)
+
+</details>
 ---
 layout: single
 title: "Google Analytics - UA/GA4의 차이"

@@ -5,7 +5,7 @@ excerpt: "GraphX는 그래프 처리를 할때 기존 맵리듀스같은 분산 
 categories: paper
 tags : [리뷰, 논문, 정리, 설명, 란, graphx, 스파크, spark, apache, vertex, edge, 파티셔닝, gas, powergraph, rdd, collection, 컬렉션, 트리플렛, triplets, mrtriplets, coarsen, paper, routing table, bit mask]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-09-30

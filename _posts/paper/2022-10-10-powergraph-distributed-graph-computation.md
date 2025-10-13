@@ -5,7 +5,7 @@ excerpt: "PowerGraph는 Gather, Apply, Scatter 기능을 구현하여 그래프 
 categories: paper
 tags : [리뷰, 논문, 정리, 설명, 란, 뜻, gas, 그래프, 처리, 캐시, vertex, edge, cut, partitioning, powergraph, pregel, graphlab]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-10-21

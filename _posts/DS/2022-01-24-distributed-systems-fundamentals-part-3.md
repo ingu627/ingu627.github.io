@@ -6,7 +6,7 @@ Andrew S. Tanenbaum - cha3. Processes 3.1, 3.2, 3.3, 3.4"
 categories: DS
 tags: [DS]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2023-04-25

@@ -6,7 +6,7 @@ categories: linux
 tags: [linux, cloud9, 문법, 쉘, 쉘스크립트, bash, zsh, 네트워크, 서버, daemon, cron, 사용자, 권한, 프로세스]
 
 toc: true
-toc_sticky: true
+toc_sticky: false
 
 date: 2021-11-23
 last_modified_at: 2025-09-20

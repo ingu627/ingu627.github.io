@@ -5,7 +5,7 @@ excerpt: "본 글은 Operating System Concepts 10th (운영체제) 책을 보며
 categories: OS
 tags: [OS, 운영체제, 정리, pdf, 프로세스, process, 문맥, 컨텍스트, 프로그램 카운터, 힙, 스택, 동적, 상태, pcb, 스레드, 스케줄링, 시스템 콜, 준비, 대기, 실행, 종료]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-09-01

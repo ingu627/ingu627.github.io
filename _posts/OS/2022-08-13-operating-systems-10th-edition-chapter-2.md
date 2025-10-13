@@ -5,7 +5,7 @@ excerpt: "본 글은 Operating System Concepts 10th (운영체제) 책을 보며
 categories: OS
 tags: [OS, 운영체제, 정리, pdf, 서비스, 시스템 콜, 인터페이스, 통신, 오류 탐지, 리소스, 인터프리터, 명령어, 어셈블리, api, rte, 제어, 락, 태스크, 파일 관리, 통신, 메시지 전달, 공유 메모리, 데몬, 링커, 로더, 실행 파일, 메모리, dll, 시스템 콜, 인터프리터, 모놀리식, 리눅스, 구조, 커널, 모듈, lkm]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-08-18

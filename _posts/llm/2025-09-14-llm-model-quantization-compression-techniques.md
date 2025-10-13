@@ -5,8 +5,8 @@ excerpt: "프루닝(Pruning), 양자화(Quantization), 지식 증류(Knowledge D
 categories: llm
 tags : [llm, 경량화, quantization, pruning, 증류, 서비스, 리랭킹, 양자화]
 toc: true
-toc_sticky: true
-sidebar_main: true
+toc_sticky: false
+sidebar_main: false
 
 date: 2025-09-14
 last_modified_at: 205-09-14

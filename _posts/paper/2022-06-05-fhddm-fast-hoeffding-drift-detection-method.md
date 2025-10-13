@@ -5,7 +5,7 @@ excerpt: "FHDDM은 sliding window와 hoeffding을 이용하여 계산량을 줄�
 categories: [paper, mlops]
 tags: [fast, hoeffding, drift detection method, 드리프트, stream, fhddm, window, detector, abrupt, gradual, concept drift, 정리, 리뷰, 논문, sliding window, paper]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-06-16

@@ -6,7 +6,7 @@ categories: tips
 tags: [tip, 리눅스, 도커, docker, linux, hdp, 호튼웍스, hdp, hortonworks, 설치, wsl2, ambari, hadoop, 하둡, sandbox, 사용법]
 
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 data: 2022-08-05

@@ -5,7 +5,7 @@ excerpt: "카프카는 발행 구독 모델을 구현한 분산 메시징 시스
 categories: paper
 tags : [리뷰, 논문, 정리, 설명, 란, 메시징 시스템, 카프카, kafka, os, 컨슈머, 프로듀서, 브로커, 오프셋, 발행, 구독, 분산 시스템, distributed, 오프셋, paper]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-08-29

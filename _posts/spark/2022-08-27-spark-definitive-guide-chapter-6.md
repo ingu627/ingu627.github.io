@@ -5,7 +5,7 @@ excerpt: "Spark The Definitive Guide 책을 중심으로 스파크를 요약 및
 categories: spark
 tags: [스파크, spark, 아파치, apache, 스칼라, scala, 정리, 예제, 실습, dataframe, sql, createOrReplaceTempView, select, selectExpr, withColumn, withColumnRenamed, sample, sortWithinPartitions, repartition, coalesce, 의미]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-08-27

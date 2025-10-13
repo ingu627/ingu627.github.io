@@ -5,7 +5,7 @@ excerpt: "퀘이사(quasar) 클러스터 관리자는 각 워크로드에 대한
 categories: paper
 tags : [리뷰, 논문, 정리, 설명, 란, 뜻, 클라우드, quasar, cloud, 리소스, allocation, assignment, 클러스터, 워크로드, 퀘이사, 하둡, memcached, 프로파일링, qos, 관리, 스파크, 카산드라]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-10-15

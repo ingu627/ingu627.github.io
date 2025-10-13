@@ -5,7 +5,7 @@ excerpt: "Adaptive Windowing (ADWIN)은 윈도우 기반 드리프트 감지 기
 categories: paper
 tags : [컨셉 드리프트, concept drift, detection, adaptive windowing, adwin, exponential histogram, stream, 스트림, 머신 러닝, 기계학습, 모델, 리뷰, 논문, 정리, 설명, 병렬, 윈도우, 란, paper]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-06-25

@@ -6,7 +6,7 @@ categories: tips
 tags: [tip, cuda, install, gpu, ubuntu, nvidia driver, cuda, pytorch, cudnn, 설치, 버전, 확인, 리눅스, linux, 우분투, 가상환경, 삭제, 드라이버, 패키지]
 
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-07-16

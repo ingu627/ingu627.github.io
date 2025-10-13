@@ -5,7 +5,7 @@ excerpt: "Pregel은 대규모 그래프의 분산 처리를 해결하기 위해,
 categories: paper
 tags : [리뷰, 논문, 정리, 설명, 란, pregel, 프리겔, message passing, bsp, superstep, vertex, edge, topology, falut tolerance, aggregator, combiner, pagerank, 구글, 맵리듀스, mapreduce, 그래프, graph processing, large scale]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 date: 2022-09-21

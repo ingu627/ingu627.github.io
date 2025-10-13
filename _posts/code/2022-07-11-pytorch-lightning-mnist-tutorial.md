@@ -5,7 +5,7 @@ excerpt: "Lightning Module·Trainer 구조로 학습 루프/로깅 추상화하�
 categories: code
 tags: [pytorch lightning, wandb, pytorch, mnist, 예제, 코드, init, forward, training_step, validation_step, configure_optimizers, 사용법, 정리, 설명, mlops]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-07-13

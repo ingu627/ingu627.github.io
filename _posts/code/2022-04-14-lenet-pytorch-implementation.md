@@ -5,7 +5,7 @@ excerpt: "LeNet-5 계층(Conv·Subsampling·FC) 흐름을 CIFAR10에 적용하�
 categories: code
 tags: [lenet, pytorch, 파이토치, cifar10, 코드, 구현, design, 설명, layer, compose, transforms, resize, RandomHorizontalFlip, RandomAffine, ColorJitter, ToTensor, normalize, DataLoader, Dataset, detach, cpu, numpy, clip, iter, next, Conv2d, max_pool2d, parameters, zero_grad, backward, step, item, 딥러닝, cv, 컴퓨티 비전]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-04-18

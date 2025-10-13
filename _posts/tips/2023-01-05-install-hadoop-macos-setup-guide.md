@@ -6,7 +6,7 @@ categories: [tips, hadoop]
 tags: [하둡, m1, 맥, hadoop, 스파크, 설치, ssh, 자바, 환경설정, hdfs, yarn, 맵리듀스]
 
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2023-01-06

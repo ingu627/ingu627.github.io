@@ -5,7 +5,7 @@ excerpt: "Chapter3_1. 기술통계 - 대푯값, 산포도, 비대칭도, Chapter
 categories: survey_a
 tags: [SPSS, 사회조사분석사 2급, 필기, 필답형, 대푯값, 확률, 확률분포, 이항분포, 베르누이 시행, 포아송분포, 기하분포, 정규분포, t분포, F분포, 카이제곱분포, 정리, pdf, 기출문제, 정리본]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-03-31

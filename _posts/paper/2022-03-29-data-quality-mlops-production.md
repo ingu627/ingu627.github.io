@@ -5,7 +5,7 @@ excerpt: "이 논문은 데이터 품질의 다양한 측면이 ML development �
 categories: paper
 tags: [mlops, data quality, 데이터 품질, concept shift, ML, 머신 러닝, 자동화, 논문, 리뷰, 정리, 후기, design, 설명, layer]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-04-13

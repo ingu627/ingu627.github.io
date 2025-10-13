@@ -5,7 +5,7 @@ excerpt: "분포/범주/관계/행렬 플롯 선택 기준과 팔레트·FacetGr
 categories: python
 tags: [python, seaborn, visualization, rugplot, kdeplot, distplot, countplot, jointplot, pairplot, heatmap, barplot, boxplot, violinplot, stripplot, swarmplot, catplot]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-04-11

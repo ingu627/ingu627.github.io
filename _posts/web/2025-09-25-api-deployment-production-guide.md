@@ -5,8 +5,8 @@ excerpt: 'REST, GraphQL, gRPC 비교부터 FastAPI 비동기/스트리밍, 보�
 categories: [web]
 tags: [fastapi, api, rest, graphql, grpc, 보안, 문서화, 배포, 운영, REST, GraphQL, gRPC]
 toc: true
-toc_sticky: true
-sidebar_main: true
+toc_sticky: false
+sidebar_main: false
 
 date: 2025-09-25
 last_modified_at: 2025-09-25

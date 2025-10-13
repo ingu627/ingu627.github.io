@@ -5,8 +5,8 @@ excerpt: "실무 적용 및 SQL 코테를 위한 자료입니다."
 categories: SQL
 tags: [서브 쿼리, 실무, 정리, mysql, 문법, 기초, 란, 설명, 코딩테스트, 코테]
 toc: true
-toc_sticky: true
-sidebar_main: true
+toc_sticky: false
+sidebar_main: false
 
 date: 2024-09-08
 last_modified_at: 2024-09-08

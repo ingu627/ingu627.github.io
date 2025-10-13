@@ -5,7 +5,7 @@ categories: git
 tags : [git, 사용법, add, status, commit, remote, upload, push]
 excerpt: "Git 기본 워크플로우(add→commit→push)와 자주 쓰는 필수 명령의 의미·사용 패턴을 단계별로 정리한 입문 가이드"
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 date: 2021-11-21

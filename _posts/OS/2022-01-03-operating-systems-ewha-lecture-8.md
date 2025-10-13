@@ -5,7 +5,7 @@ excerpt: "본 글은 (KOCW) 운영체제, 이화여자대학교 반효경 교수
 categories: OS
 tags: [OS, 운영체제, 메모리, memory, page fault, paging, fifo, lru, lfu, thrashing, pff, clock, replacement, 가상, virtual, swapping, valid, invalid, pdf, 정리]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-04-12

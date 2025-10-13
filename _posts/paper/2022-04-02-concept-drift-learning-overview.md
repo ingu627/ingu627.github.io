@@ -5,7 +5,7 @@ excerpt: "컨셉 드리프트는 시간이 지남에 따라 예기치 않은 방
 categories: paper
 tags : [data quality, concept drift, 모델, mlops, data drift, 논문, 리뷰, 정리, 후기, design, 설명, layer, paper]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-04-13

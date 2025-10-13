@@ -5,8 +5,8 @@ excerpt: "SQLD, 정보처리기사 실기 작업형 대비 또는 실무 적용�
 categories: SQL
 tags: [sql, sqld, certificate, 자격증, 정보처리기사, 실기, 작업형, 실무, 정리, 총정리, 문법, 기초, 란, 개념]
 toc: true
-toc_sticky: true
-sidebar_main: true
+toc_sticky: false
+sidebar_main: false
 
 date: 2021-11-04
 last_modified_at: 2022-08-22

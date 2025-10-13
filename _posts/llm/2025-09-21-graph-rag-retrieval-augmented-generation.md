@@ -5,8 +5,8 @@ excerpt: "기존 RAG의 한계를 넘어선 GraphRAG를 Neo4j로 구현하는 �
 categories: llm
 tags : [GraphRAG, Neo4j, RAG, 지식그래프, AI, LLM]
 toc: true
-toc_sticky: true
-sidebar_main: true
+toc_sticky: false
+sidebar_main: false
 date: 2025-09-21
 last_modified_at: 2025-09-21
 ---

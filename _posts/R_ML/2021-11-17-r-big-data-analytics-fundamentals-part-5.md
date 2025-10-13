@@ -5,7 +5,7 @@ excerpt: "본 글은 빅데이터분석기사 실기 작업형에 대비하여 �
 categories: R_ML
 tags : [R, adsp, 빅데이터 분석기사, 실기, 작업형, 필답형, 자격증, dataq, 정리, pdf, 기출문제, 정리본, 후기, 설명, 2회, 3회]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-03-31

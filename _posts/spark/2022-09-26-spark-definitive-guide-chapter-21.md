@@ -5,7 +5,7 @@ excerpt: "Spark The Definitive Guide 책을 중심으로 스파크를 요약 및
 categories: spark
 tags: [아파치, 스파크, spark, 정리, 의미, 란, 이란, 사용법, 실행, 클러스터, 클라이언트, 드라이버, 익스큐터, 매니저, sparksession, 태스크]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-09-26

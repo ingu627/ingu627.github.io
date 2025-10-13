@@ -5,7 +5,7 @@ excerpt: "본 글은 2022년 5월에 강의한 스탠포드 대학의 Attention 
 categories: cs231n
 tags: [이미지, cnn, cs231n, 리뷰, 정리, 요약, 정의, 란, 딥러닝, seq2seq, 컨텍스트, rnn, 인코더, 디코더, attention, image caption, 어텐션, alignment, softmax, context vector, positional encoding, self attention, masked self attention, query, key, value, 설명, 원리]
 toc: true 
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-06-15

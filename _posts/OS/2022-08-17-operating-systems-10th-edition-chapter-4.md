@@ -5,7 +5,7 @@ excerpt: "본 글은 Operating System Concepts 10th (운영체제) 책을 보며
 categories: OS
 tags: [OS, 운영체제, 정리, pdf, 프로세스, 스레드, lwp, 프로그램 카운터, 병행성, 병렬성, 동시성, 스택, 시그널, 인터리브, 다대일, 일대일, 다대다, 멀티스레드, 비동기, 동기, 암묵적 스레딩, 스레드 풀, fork join, openmp, gcd, fork, exec, 신호, 취소,]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-09-01

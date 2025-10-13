@@ -5,7 +5,7 @@ excerpt: "테스트 자동화·디버깅·라이브 리로드·가독성·문법
 categories: tips
 tags: [tip, vscode, extension, Dracula, Debugger, Bracket, Live, Markdown, 확장]
 toc: True
-toc_sticky: True
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-03-20

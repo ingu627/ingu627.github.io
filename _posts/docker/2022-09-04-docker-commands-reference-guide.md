@@ -5,7 +5,7 @@ excerpt: "윈도우 프롬프트, 리눅스 터미널 등에서 사용되는 도
 categories: docker
 tags : [docker, 도커, 컨테이너, 설치, 사용법, docker, 명령어, 정리, pull, run, start, stop, rm, exec, 옵션]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2023-01-11

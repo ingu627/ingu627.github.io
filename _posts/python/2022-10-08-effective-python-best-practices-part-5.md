@@ -5,7 +5,7 @@ excerpt: "파이썬 코딩의 기술 개정 2판 책에 대한 내용입니다. 
 categories: python
 tags: [파이썬 코딩의 기술, pdf, 정리, 문법, 효율, 사용법, 란, 뜻, 클래스, 함수, class, def, super, mixin, public, private, 인터페이스]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-10-08

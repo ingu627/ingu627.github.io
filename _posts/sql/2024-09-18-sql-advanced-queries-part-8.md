@@ -5,8 +5,8 @@ excerpt: "실무 적용 및 SQL 코테를 위한 자료입니다."
 categories: SQL
 tags: [regexp_like, 표현식, 정리, mysql, 문법, 기초, 란, 설명, 코딩테스트, 코테, 정의]
 toc: true
-toc_sticky: true
-sidebar_main: true
+toc_sticky: false
+sidebar_main: false
 
 date: 2024-09-18
 last_modified_at: 2024-09-18

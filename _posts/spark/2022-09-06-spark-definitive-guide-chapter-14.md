@@ -5,7 +5,7 @@ excerpt: "Spark The Definitive Guide 책을 중심으로 스파크를 요약 및
 categories: spark
 tags: [스파크, spark, 파이썬, 스칼라, scala, 정리, 의미, 실습, 읽기, 쓰기, read, write, sql, 텍스트, 파일, sqlite, jar, postgresql, jdbc, 파티셔닝, 버켓팅]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-09-09

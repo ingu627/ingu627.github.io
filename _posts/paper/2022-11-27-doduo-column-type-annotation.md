@@ -5,7 +5,7 @@ excerpt: "DODUO는 테이블의 전체를 입력으로 받아 테이블의 여�
 categories: paper
 tags : [리뷰, 논문, 정리, 설명, 란, 뜻, pretrained, bert, 주석, 시맨틱, 테이블, transformer, 트랜스포머, 어텐션]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-11-28

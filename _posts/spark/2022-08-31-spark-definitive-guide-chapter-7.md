@@ -5,7 +5,7 @@ excerpt: "Column API와 lit/alias/regex 함수로 문자열 정제, isin/contain
 categories: spark
 tags: [아파치, 스파크, spark, apache, 스칼라, scala, 정리, 실습, lit, equalTo, contains, isin, alias, sql, initcap, trim, lpad, rpad, regexp_extract, regexp_replace, mkString, translate, varargs, 의미]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-11-29

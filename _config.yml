@@ -322,7 +322,7 @@ defaults:
       type: posts
     values:
       layout: single
-      author_profile: true
+      author_profile: false
       read_time: true
       comments: true
       share: true
@@ -330,7 +330,7 @@ defaults:
       mathjax: true
       use_math: true
       show_date: true
-      sidebar_main: true
+      sidebar_main: false
       toc_sticky: false
       
   

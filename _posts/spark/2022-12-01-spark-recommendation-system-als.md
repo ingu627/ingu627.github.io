@@ -5,7 +5,7 @@ excerpt: "Spark The Definitive Guide 책을 중심으로 스파크를 요약 및
 categories: spark
 tags: [아파치, 스파크, spark, 정리, 의미, 란, 이란, 사용법, pyspark, 추천 시스템, recommender system, 협업 필터링, 교차최소제곱, als]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-12-02

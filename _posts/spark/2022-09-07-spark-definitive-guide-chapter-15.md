@@ -5,7 +5,7 @@ excerpt: "Spark The Definitive Guide 책을 중심으로 스파크를 요약 및
 categories: spark
 tags: [스파크, spark, sql, 스칼라, scala, 정리, 의미, 란, 이란, 카탈로그, 테이블, 뷰, 외부 테이블, 메타데이터]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-09-11

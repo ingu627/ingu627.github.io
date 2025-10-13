@@ -5,7 +5,7 @@ excerpt: "Spark The Definitive Guide 책을 중심으로 스파크를 요약 및
 categories: spark
 tags: [스파크, spark, sql, 스칼라, scala, 정리, 의미, 란, 이란, dataset, action, transformation, filter, map, case class, joinWith]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-09-16

@@ -5,8 +5,8 @@ excerpt: "벡터 데이터베이스의 개념, 특징, 주요 종류(Pinecone, M
 categories: llm
 tags : [llm, 청킹, 벡터, 벡터db, 종류, pinecone, milvus, weaviate]
 toc: true
-toc_sticky: true
-sidebar_main: true
+toc_sticky: false
+sidebar_main: false
 
 date: 2025-05-05
 last_modified_at: 2025-09-14

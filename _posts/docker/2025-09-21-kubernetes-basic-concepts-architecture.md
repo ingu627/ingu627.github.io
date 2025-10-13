@@ -5,8 +5,8 @@ excerpt: "개발 환경 불일치 문제를 해결하는 컨테이너 기술부�
 categories: [docker]
 tags : [컨테이너, 도커, 쿠버네티스, 가상화, 데브옵스, 도커 빌드, 파드, yaml, kubectl, 서버 환경, 개발 환경]
 toc: true
-toc_sticky: true
-sidebar_main: true
+toc_sticky: false
+sidebar_main: false
 
 date: 2025-09-21
 last_modified_at: 2025-09-21

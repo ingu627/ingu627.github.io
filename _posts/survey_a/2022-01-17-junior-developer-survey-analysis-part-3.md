@@ -5,7 +5,7 @@ excerpt: "Chapter1_2. 자료수집방법 - 자료수집방법의 종류, Chapter
 categories: survey_a
 tags: [SPSS, 사회조사분석사 2급, 필기, 필답형, 표본추출, 측정, 오차, 신뢰도, 타당도, 측정오차, 척도, 서스톤 척도, 정리, pdf, 기출문제, 정리본]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-03-31

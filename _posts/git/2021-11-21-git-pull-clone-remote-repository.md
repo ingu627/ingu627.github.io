@@ -5,7 +5,7 @@ categories: git
 tags : [git, push, pull, clone, gitignore]
 excerpt: "원격 저장소 연결부터 clone/pull/push 흐름과 .gitignore 구성 전략까지 협업 필수 명령 사용 패턴 정리"
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 date: 2021-11-21

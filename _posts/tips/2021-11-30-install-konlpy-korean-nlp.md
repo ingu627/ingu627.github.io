@@ -5,7 +5,7 @@ excerpt: "KoNLPy 형태소 분석기를 사용하기 위해 JDK·JPype 버전 �
 categories: tips
 tags: [tip, konlpy, nlp, 윈도우10, 설치, jpype, tweepy, 자연어 처리, 환경 변수, 윈도우]
 toc: True
-toc_sticky: True
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-04-17

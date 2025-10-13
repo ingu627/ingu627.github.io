@@ -5,7 +5,7 @@ excerpt: "본 글은 (KOCW) 운영체제, 이화여자대학교 반효경 교수
 categories: OS
 tags: [OS, 운영체제, 동시 작업, 처리 방식, 컴퓨터, 인터럽트, 커널, 프로그램, 개요, 프로세스, 란, 정의, 개념, pdf, 정리]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-08-07

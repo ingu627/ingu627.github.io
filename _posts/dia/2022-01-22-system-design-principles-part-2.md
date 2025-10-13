@@ -5,7 +5,7 @@ excerpt: "Designing Data-Intensive Applications by Martin Kleppmann"
 categories: diapp
 tags: [애플리케이션, 스키마, 맵리듀스, 데이터 모델, 트랜잭션, 일괄 처리]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-03-29

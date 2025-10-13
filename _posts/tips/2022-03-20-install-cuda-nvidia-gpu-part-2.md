@@ -6,7 +6,7 @@ categories: tips
 tags: [tip, cuda, install, gpu, 텐서플로, 설치, 윈도우10, 쿠다, 파이토치, Cudnn, pytorch, window, 아나콘다, tensorflow, 윈도우]
 
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-08-07

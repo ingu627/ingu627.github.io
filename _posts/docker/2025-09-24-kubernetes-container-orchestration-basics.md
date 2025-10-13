@@ -5,8 +5,8 @@ excerpt: '멀티 컨테이너 정의(Docker Compose) → L7 트래픽 게이트�
 categories: [docker]
 tags: [도커 컴포즈, docker compose, 인그레스, ingress, 퍼시스턴트 볼륨, pv, pvc, storageclass, kubernetes, k8s, eks, gke, aks, 관리형 쿠버네티스]
 toc: true
-toc_sticky: true
-sidebar_main: true
+toc_sticky: false
+sidebar_main: false
 date: 2025-09-24
 last_modified_at: 2025-09-24
 ---

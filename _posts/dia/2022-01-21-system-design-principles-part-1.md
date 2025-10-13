@@ -5,7 +5,7 @@ excerpt: "Designing Data-Intensive Applications by Martin Kleppmann"
 categories: diapp
 tags: [애플리케이션, database, cache, scalability, reliability, 애자일]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-03-29

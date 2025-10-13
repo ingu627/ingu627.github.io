@@ -5,7 +5,7 @@ excerpt: "count·sum 등 단일 집계부터 groupBy·window·rollup·cube 선�
 categories: spark
 tags: [아파치, 스파크, spark, 파이썬, 스칼라, scala, 정리, 의미, 실습, 집계, 함수, count, min, max, sum, 왜도, 첨도, 분산, 표본, 공분산, 상관관계]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-09-05

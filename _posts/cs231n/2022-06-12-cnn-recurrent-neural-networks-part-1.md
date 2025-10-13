@@ -5,7 +5,7 @@ excerpt: "본 글은 2022년 4월에 강의한 스탠포드 대학의 Recurrent 
 categories: cs231n
 tags: [이미지, cnn, cs231n, 리뷰, 정리, 요약, 정의, 란, 딥러닝, Recurrent Neural Network, rnn, many to one, many to many, one to many, image captioning, sequence, 시퀀스, seq2seq, video classifcation, 원리, 설명, multilayer]
 toc: true 
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-06-14

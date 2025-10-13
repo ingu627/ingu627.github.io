@@ -5,7 +5,7 @@ excerpt: "그룹 계층 요약은 rollup, 다차원 조합은 cube, 컬럼 값 �
 categories: spark
 tags: [스파크, spark, 파이썬, 스칼라, scala, 정리, 의미, 실습, 그룹화, 롤업, 큐브, rollup, cube, pivot, 피벗]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-09-05

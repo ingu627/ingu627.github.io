@@ -6,7 +6,7 @@ categories: tips
 tag: [git, linux, ubuntu, 윈도우10, WSL2, 리눅스, 우분투, 윈도우, 우분투, 설치, 깃]
 
 toc: true
-toc_sticky: true
+toc_sticky: false
 
 last_modified_at: 2022-03-20
 

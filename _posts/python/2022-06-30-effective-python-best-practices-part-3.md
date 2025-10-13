@@ -5,7 +5,7 @@ excerpt: "파이썬 코딩의 기술 개정 2판 책에 대한 내용입니다. 
 categories: python
 tags: [파이썬 코딩의 기술, 언패킹, assert, raise, 예외, except, try, 타입 애너테이션, 클로저, nonlocal, 위치 인자, args, 제너레이터, 키워드 인자, kwargs, 독스트링, 위치로만 인자, 키워드만 사용하는 인자, 데코레이터, pdf, 정리]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-07-01

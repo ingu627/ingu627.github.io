@@ -5,7 +5,7 @@ excerpt: "저자들은 label이 없는 test 데이터에 대한 배치 정규화
 categories: [paper, mlops]
 tags : [컨셉 드리프트, concept drift, detection, 모델, 리뷰, 논문, 정리, 설명, 란, mlops, covariate drift, model selection, batch normalization, low rank approximation, bayesian inference, joint probability, transfer learning, model drift, 베이지안, model zoo, fine tuning, mde, paper]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 date: 2022-07-30

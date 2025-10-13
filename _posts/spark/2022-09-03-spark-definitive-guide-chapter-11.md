@@ -5,7 +5,7 @@ excerpt: "조인 표현식 작성, join type별 유지 로우 차이, 스몰 테
 categories: spark
 tags: [스파크, spark, 파이썬, 스칼라, scala, 정리, 의미, 실습, 조인, join, inner, outer, left, right, semi, cross]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-09-05

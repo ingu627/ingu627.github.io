@@ -5,7 +5,7 @@ excerpt: "본 글은 2021년 4월에 강의한 스탠포드 대학의 Convolutio
 categories: cs231n
 tags: [이미지, 분류, data driven approach, nn, knn, l1 거리, l2 거리, 하이퍼파라미터, 교차 검증, 모델, 설명, 선형, cnn, cs231n, 리뷰, 정리, 요약, 정의, 란, 딥러닝, 머신러닝, 장점, 단점, 가중치, 편향, 매개변수, 파라미터, 의미]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-04-24

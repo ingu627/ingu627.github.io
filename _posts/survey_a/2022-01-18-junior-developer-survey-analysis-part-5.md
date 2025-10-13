@@ -5,7 +5,7 @@ excerpt: "Chapter3_3. 통계적 추정 - 추정 개요, 점추정, 구간추정,
 categories: survey_a
 tags: [SPSS, 사회조사분석사 2급, 필기, 필답형, 통계적 추정, 신뢰도, 가설검정, 교차분석, 검정, 분석 절차, 카이제곱, 분산분석, 회귀분석, 더미변수, 정리, pdf, 기출문제, 정리본]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-04-12

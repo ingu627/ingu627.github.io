@@ -5,7 +5,7 @@ excerpt: "RDD는 스파크(spark)의 기본 데이터 구조입니다. 스파크
 categories: paper
 tags : [리뷰, 논문, 정리, 설명, 란, rdd, 분산, pdf, spark, resilient distributed data, 스파크, 추상화, 직렬화, 분산, distributed, resilient, db, 데이터베이스, 변환, 액션, coarse grained, fine grained, 스트래글러, 동적, 파티셔닝, lineage, paper]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2025-09-19

@@ -5,7 +5,7 @@ excerpt: "SENet은 Squeeze와 Excitation이라는 연산작업으로 정보의 �
 categories: paper
 tags : [senet, cnn, squeeze, excitation, network, embedding, feature recalibration, local receptive field, SE block, global, 논문, 리뷰, 정리, 후기, design, 설명, layer, 딥러닝, cv, 컴퓨티 비전, paper]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-04-15

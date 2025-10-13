@@ -5,7 +5,7 @@ excerpt: "본 글은 Operating System Concepts 10th (운영체제) 책을 보며
 categories: OS
 tags: [OS, 운영체제, 정리, 의미, 란, 요구 페이징, demand paging, 가상 메모리, 스왑, 공유 메모리, 가용 프레임, zero fill on demand, copy on write]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-09-12

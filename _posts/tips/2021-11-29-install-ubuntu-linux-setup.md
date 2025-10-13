@@ -7,7 +7,7 @@ date: 2022-07-16
 tag: [linux, ubuntu, windows 10, WSL2, 우분투, 리눅스, wsl, 윈도우10, 설치, 오류, 사용법, 정리, 윈도우, 도커, docker]
 
 toc: true
-toc_sticky: true
+toc_sticky: false
 
 last_modified_at: 2022-07-14
 

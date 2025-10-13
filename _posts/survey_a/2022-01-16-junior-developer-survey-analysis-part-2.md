@@ -5,7 +5,7 @@ excerpt: "Chapter1_2. 자료수집방법 - 자료수집방법의 종류, Chapter
 categories: survey_a
 tags: [SPSS, 사회조사분석사 2급, 필기, 필답형, 자료, 관찰법, 면접, 전화조사법, 우편조사법, 온라인조사, 내용분석법, 질문지 설계, 정리, pdf, 기출문제, 정리본]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-03-31

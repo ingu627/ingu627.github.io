@@ -5,7 +5,7 @@ excerpt: "Spark The Definitive Guide 책을 중심으로 스파크를 요약 및
 categories: spark
 tags: [아파치, 스파크, spark, 정리, 의미, 란, 이란, 사용법, pyspark, 스트리밍, 정형, 스트림, awaitTermination, 예제, 기초]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-11-29

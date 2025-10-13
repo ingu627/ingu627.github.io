@@ -5,7 +5,7 @@ excerpt: "본 글은 2022년 5월에 강의한 스탠포드 대학의 Attention 
 categories: cs231n
 tags: [이미지, cnn, cs231n, 리뷰, 정리, 요약, 정의, 란, 딥러닝, 설명, 원리, transformer, 트랜스포머, attention, image caption, self attention, encoder, decoder, multi head, positional encoding, attention is all you need, vision]
 toc: true 
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-06-15

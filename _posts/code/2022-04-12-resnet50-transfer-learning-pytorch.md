@@ -5,7 +5,7 @@ excerpt: "ResNet 잔차 블록 개념과 layer 동결·부분 해제·맞춤 Lin
 categories: code
 tags: [alexnet, pytorch, 파이토치, resnet, 전이학습, fashion mnist, 코드, 구현, design, 설명, layer, transfer, resnet50, Linear, 모델, 학습, 손실함수, 크로스 엔트로피, 다중 클래스, 옵티마이저, 에포크, 모델 저장, 로드, metric, 딥러닝, cv, 컴퓨티 비전]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-04-18

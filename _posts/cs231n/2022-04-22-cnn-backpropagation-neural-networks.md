@@ -5,7 +5,7 @@ excerpt: "본 글은 2021년 4월에 강의한 스탠포드 대학의 Convolutio
 categories: cs231n
 tags: [이미지, cnn, cs231n, 리뷰, 정리, 요약, 정의, 란, 딥러닝, 머신러닝, 활성화 맵, 합성곱, filter, stride, 제로 패딩, local connectivity, 풀링, pooling, max pooling, 의미, 설명]
 toc: true 
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-06-16

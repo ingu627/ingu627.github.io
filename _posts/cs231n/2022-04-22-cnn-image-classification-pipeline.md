@@ -5,7 +5,7 @@ excerpt: "본 글은 2021년 4월에 강의한 스탠포드 대학의 Convolutio
 categories: cs231n
 tags: [이미지, cnn, cs231n, 리뷰, 정리, 요약, 손실, 최적화, 서포트 벡터 머신, svm, 힌지 로스, hinge loss, 규제, 소프트맥스, softmax, 정의, 란, 딥러닝, 머신러닝, 의미, 설명]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-04-24

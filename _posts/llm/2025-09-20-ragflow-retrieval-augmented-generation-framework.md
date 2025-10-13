@@ -5,8 +5,8 @@ excerpt: "검색 증강 생성(Retrieval-Augmented Generation, RAG)은 생성형
 categories: llm
 tags : [llm, rag, 의미 검색, self-rag, graphrag, nlp, advanced-rag, modular-rag, 아키텍처, 정리, agentic, 청킹, 파싱]
 toc: true
-toc_sticky: true
-sidebar_main: true
+toc_sticky: false
+sidebar_main: false
 
 date: 2025-09-20
 last_modified_at: 2025-09-20

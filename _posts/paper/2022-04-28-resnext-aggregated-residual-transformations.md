@@ -5,7 +5,7 @@ excerpt: "ResNeXt는 ResNet 성능을 한 단계 향상시켜 ILSVRC 2016 대회
 categories: paper
 tags : [resnext, residual, vggnet, inception, cardinality, depth, 딥러닝, cv, block, 리뷰, 설명, 란, grouped convolution, flops, 논문, 컴퓨티 비전, 정리, paper]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-04-28

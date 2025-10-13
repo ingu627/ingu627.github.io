@@ -5,7 +5,7 @@ excerpt: "Python·Jupyter·Git 워크플로를 가속하는 VSCode 확장 14개:
 categories: tips
 tags: [tip, vscode, extension, 파이썬, 주피터, Tabnine, Pylance, IntelliCode, MagicPython, Jupyter, Settings Sync, GitLens, GitGraph, 자동완성, 확장]
 toc: True
-toc_sticky: True
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-03-20

@@ -5,7 +5,7 @@ excerpt: "본 글은 Operating System Concepts 10th (운영체제) 책을 보며
 categories: OS
 tags: [OS, 운영체제, 정리, pdf, cpu 버스트, 스케줄링, scheduling, 버스트, 스케줄러, 준비 큐, 선점, 비선점, preemptive, nonpreemptive, 디스패처, fcfs, sjf, 라운드 로빈, rr, 우선순위, 큐, 기아, 노화]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-08-18
