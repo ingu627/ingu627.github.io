@@ -1,6 +1,167 @@
 @import "./toggle.scss";
 @import "./notice.scss";
 
+/*
+ GitHub Gist-inspired palette (light mode defaults). Override these variables
+ before importing this partial to customize colors.
+*/
+$gist-code-bg: #f6f8fa !default;
+$gist-code-border: #d0d7de !default;
+$gist-code-text: #24292e !default;
+$gist-code-line-highlight: #eceff3 !default;
+$gist-token-comment: #6a737d !default;
+$gist-token-keyword: #d73a49 !default;
+$gist-token-operator: $gist-token-keyword !default;
+$gist-token-string: #032f62 !default;
+$gist-token-number: #005cc5 !default;
+$gist-token-function: #6f42c1 !default;
+$gist-token-attribute: #22863a !default;
+$gist-token-constant: #005cc5 !default;
+$gist-inline-bg: rgba(#d0d7de, 0.35) !default;
+$gist-inline-border: rgba(#d0d7de, 0.7) !default;
+
+div.highlighter-rouge,
+figure.highlight {
+	background: $gist-code-bg;
+	color: $gist-code-text;
+	border: 1px solid $gist-code-border;
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+
+	> pre,
+	pre.highlight {
+		background: $gist-code-bg;
+	}
+}
+
+div.highlighter-rouge pre,
+div.highlighter-rouge code,
+figure.highlight pre,
+figure.highlight code {
+	color: inherit;
+	background: transparent;
+}
+
+.highlight {
+	color: $gist-code-text;
+
+	.hll {
+		background-color: $gist-code-line-highlight;
+	}
+
+	.c,
+	.cm,
+	.cp,
+	.c1,
+	.cs,
+	.sd {
+		color: $gist-token-comment;
+		font-style: italic;
+	}
+
+	.k,
+	.kd,
+	.kn,
+	.kp,
+	.kr,
+	.kt,
+	.ow {
+		color: $gist-token-keyword;
+	}
+
+	.o,
+	.p {
+		color: $gist-token-operator;
+	}
+
+	.s,
+	.sb,
+	.sc,
+	.sd,
+	.s1,
+	.s2,
+	.se,
+	.sh,
+	.si,
+	.sr,
+	.ss,
+	.sx {
+		color: $gist-token-string;
+	}
+
+	.m,
+	.mf,
+	.mh,
+	.mi,
+	.mo,
+	.il,
+	.ld {
+		color: $gist-token-number;
+	}
+
+	.nf,
+	.nc,
+	.nd,
+	.ne,
+	.nx,
+	.py {
+		color: $gist-token-function;
+	}
+
+	.n,
+	.nb,
+	.w {
+		color: $gist-code-text;
+	}
+
+	.na,
+	.nt,
+	.gi {
+		color: $gist-token-attribute;
+	}
+
+	.no,
+	.bp,
+	.ni,
+	.nn,
+	.nv,
+	.vc,
+	.vg,
+	.vi,
+	.gu {
+		color: $gist-token-constant;
+	}
+
+	.gd {
+		background: mix($gist-token-keyword, $gist-code-bg, 10%);
+		color: $gist-token-keyword;
+	}
+
+	.err {
+		color: $gist-token-keyword;
+	}
+}
+
+code,
+pre,
+kbd,
+samp {
+	font-family: 'JetBrains Mono', 'Fira Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+code {
+	background: $gist-inline-bg;
+	border: 1px solid $gist-inline-border;
+	color: $gist-code-text;
+	border-radius: 6px;
+	padding: 0.1em 0.4em;
+}
+
+pre code {
+	background: transparent;
+	border: 0;
+	padding: 0;
+}
+
 .nav__items a {
 	display: block;
 	padding: 0.2rem 0.5rem;

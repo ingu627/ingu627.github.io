@@ -4,13 +4,13 @@ title: "코딩테스트 해시(Hash) 대비: dict·set·Counter 패턴"
 excerpt: "파이썬 딕셔너리·집합·Counter 기반 해시 테이블 활용법부터 충돌 처리·시간복잡도·빈출 유형(빈도·중복·조합·매핑)까지 실전 예제 중심 정리"
 tags: [python, 파이썬, hash, 해시, 코딩테스트, 알고리즘, dict, set, Counter, defaultdict, 딕셔너리, 집합, 빈도수, 중복, 시간복잡도]
 toc: true
-toc_sticky: true
+toc_sticky: false
 sidebar_main: false
 
 mathjax: true
 use_math: true
 
-author_profile: true
+author_profile: false
 last_modified_at: 2025-10-05
 ---
 

@@ -10,7 +10,6 @@ sidebar_main: false
 mathjax: true
 use_math: true
 
-author_profile: true
 last_modified_at: 2025-10-12
 ---
 

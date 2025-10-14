@@ -9,6 +9,20 @@
 @import "minimal-mistakes/skins/{{ 'dark' }}";
 @import "minimal-mistakes"; // main partials
 
+$gist-code-bg: #161b22;
+$gist-code-border: #30363d;
+$gist-code-text: #c9d1d9;
+$gist-code-line-highlight: #1f2a37;
+$gist-token-comment: #8b949e;
+$gist-token-keyword: #ff7b72;
+$gist-token-string: #a5d6ff;
+$gist-token-number: #f2cc60;
+$gist-token-function: #d2a8ff;
+$gist-token-attribute: #7ee787;
+$gist-token-constant: #79c0ff;
+$gist-inline-bg: rgba(#7a828e, 0.35);
+$gist-inline-border: rgba(#7a828e, 0.45);
+
 @import "custom/customOverride.scss";
 
 /* Fonts are loaded from customImport.scss and applied via _variables.scss */

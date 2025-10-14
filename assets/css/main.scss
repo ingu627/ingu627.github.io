@@ -10,6 +10,21 @@
 @import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'dirt' }}"; // skin
 @import "minimal-mistakes"; // main partials
 
+$gist-code-bg: #f6f8fa;
+$gist-code-border: #d0d7de;
+$gist-code-text: #24292e;
+$gist-code-line-highlight: #eceff3;
+$gist-token-comment: #6a737d;
+$gist-token-keyword: #d73a49;
+$gist-token-operator: $gist-token-keyword;
+$gist-token-string: #032f62;
+$gist-token-number: #005cc5;
+$gist-token-function: #6f42c1;
+$gist-token-attribute: #22863a;
+$gist-token-constant: #005cc5;
+$gist-inline-bg: rgba(#d0d7de, 0.35);
+$gist-inline-border: rgba(#d0d7de, 0.7);
+
 @import "custom/customOverride.scss";
 
 /* Fonts are loaded from customImport.scss and applied via _variables.scss */

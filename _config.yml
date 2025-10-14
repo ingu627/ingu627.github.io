@@ -64,7 +64,7 @@ atom_feed:
   path                   : # "/feed.xml"  # Explicit feed path
   hide                   : # false
 search                   : true # true, false (default)
-search_full_content      : false # true, false (default)
+search_full_content      : true # true, false (default)
 search_provider          : "lunr" # lunr (default), algolia, google
 algolia:
   application_id         : # YOUR_APPLICATION_ID
@@ -322,7 +322,7 @@ defaults:
       type: posts
     values:
       layout: single
-      author_profile: false
+      author_profile: true
       read_time: true
       comments: true
       share: true
@@ -330,7 +330,7 @@ defaults:
       mathjax: true
       use_math: true
       show_date: true
-      sidebar_main: false
+      sidebar_main: true
       toc_sticky: false
       
   
