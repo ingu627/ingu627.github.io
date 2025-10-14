@@ -3,7 +3,7 @@
 {%- assign sum = site.posts | size -%}
 
 <nav class="nav__list">
-  <input id="ac-toc" name="accordion-toc" type="checkbox" checked />
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
   <label for="ac-toc">{{ site.data.ui-text[site.locale].menu_label }}</label>
   <ul class="nav__items" id="category_tag_menu">
     <li class="nav__total-count">🔥<span class="nav__total-count-label">전체 글 수 </span><span class="nav__total-count-number">{{- sum -}}</span><span class="nav__total-count-label">개</span>🔥</li>

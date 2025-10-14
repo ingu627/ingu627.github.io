@@ -1,34 +1,68 @@
-const defaultTheme = [...document.styleSheets].find(style => /(main.css)$/.test(style.href));
-const darkTheme = [...document.styleSheets].find(style => /(main_dark.css)$/.test(style.href));
+const defaultTheme = document.getElementById('default-theme-style');
+const darkTheme = document.getElementById('dark-theme-style');
 
-let setDarkMode = (isDark) => {
-    darkTheme.disabled = isDark !== true;
-    defaultTheme.disabled = isDark === true;
-    localStorage.setItem('theme', isDark ? 'dark' : 'dirt');
-}
-
-if (darkTheme) {
-    let currentTheme = localStorage.getItem('theme');
-    let isDarkMode = false;
-    if (currentTheme) {
-        isDarkMode = currentTheme === 'dark';
-    } else {
-        // Default to 'dirt' theme instead of following system preference
-        isDarkMode = false;
-        // Optional: If you want to still detect system preference, uncomment below
-        // isDarkMode = matchMedia('(prefers-color-scheme: dark)').matches;
+const applyThemePreference = (isDark) => {
+    if (!defaultTheme || !darkTheme) {
+        return;
     }
 
-    setDarkMode(isDarkMode);
+    darkTheme.disabled = !isDark;
+    defaultTheme.disabled = isDark;
 
-    let toggleThemeBtn = document.getElementById("toggle_dark_theme")
+    try {
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    } catch (error) {
+        /* noop */
+    }
+
+    window.__themePreference = isDark ? 'dark' : 'light';
+};
+
+const onStylesReady = (callback) => {
+    if (!defaultTheme || !darkTheme) {
+        return;
+    }
+
+    const isReady = () =>
+        defaultTheme.rel === 'stylesheet' && darkTheme.rel === 'stylesheet';
+
+    if (isReady()) {
+        callback();
+        return;
+    }
+
+    const waitForLoad = () => {
+        if (isReady()) {
+            darkTheme.removeEventListener('load', waitForLoad);
+            defaultTheme.removeEventListener('load', waitForLoad);
+            callback();
+        }
+    };
+
+    darkTheme.addEventListener('load', waitForLoad);
+    defaultTheme.addEventListener('load', waitForLoad);
+};
+
+onStylesReady(() => {
+    let storedTheme = window.__themePreference;
+
+    if (!storedTheme) {
+        try {
+            storedTheme = localStorage.getItem('theme');
+        } catch (error) {
+            storedTheme = null;
+        }
+    }
+
+    const isDarkMode = storedTheme === 'dark';
+    applyThemePreference(isDarkMode);
+
+    const toggleThemeBtn = document.getElementById('toggle_dark_theme');
+
     if (toggleThemeBtn) {
-        toggleThemeBtn.checked = isDarkMode
+        toggleThemeBtn.checked = isDarkMode;
+        toggleThemeBtn.addEventListener('change', (event) => {
+            applyThemePreference(event.target.checked);
+        });
     }
-
-    let changeTheme = (e) => {
-        setDarkMode(e.target.checked);
-    }
-
-    toggleThemeBtn.addEventListener('click', changeTheme)
-}
+});

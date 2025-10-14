@@ -26,14 +26,24 @@
   document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
 </script>
 
+<script>
+  (function() {
+    try {
+      var storedTheme = localStorage.getItem('theme');
+      window.__themePreference = storedTheme === 'dark' ? 'dark' : 'light';
+    } catch (error) {
+      window.__themePreference = 'light';
+    }
+  })();
+</script>
+
 <!-- For all browsers - Non-blocking CSS loading -->
-<link rel="preload" href="{{ '/assets/css/main.css' | relative_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<link id="default-theme-style" rel="preload" href="{{ '/assets/css/main.css' | relative_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}"></noscript>
 
 <!-- darkmode css - Non-blocking -->
 {% if site.dark_theme_toggle == true %}
-<link rel="preload" href="{{ '/assets/css/main_dark.css' }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="{{ '/assets/css/main_dark.css' }}"></noscript>
+<link id="dark-theme-style" rel="preload" href="{{ '/assets/css/main_dark.css' }}" as="style" onload="this.onload=null;this.rel='stylesheet';if(window.__themePreference!=='dark'){this.disabled=true;}else{var defaultStyle=document.getElementById('default-theme-style');if(defaultStyle){defaultStyle.disabled=true;}}">
 {% endif %}
 
 <!-- Font Awesome - Non-blocking -->
