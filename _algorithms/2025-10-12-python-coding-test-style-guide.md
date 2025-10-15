@@ -6,6 +6,7 @@ tags: [python, 파이썬, 코딩테스트, 알고리즘, 문법, 코드스타일
 toc: true
 toc_sticky: true
 sidebar_main: false
+author_profile: false
 
 mathjax: true
 use_math: true

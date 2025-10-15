@@ -4,27 +4,32 @@ layout: null
 
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  {% for post in site.posts %}
-    <url>
-      <loc>https://ingu627.github.io{{ post.url }}</loc>
-      {% if post.lastmod == null %}
-        <lastmod>{{ post.date | date_to_xmlschema }}</lastmod>
-      {% else %}
-        <lastmod>{{ post.lastmod | date_to_xmlschema }}</lastmod>
-      {% endif %}
+  {% assign sitemap_items = site.pages %}
+  {% for collection in site.collections %}
+    {% if collection.output %}
+      {% assign sitemap_items = sitemap_items | concat: collection.docs %}
+    {% endif %}
+  {% endfor %}
 
-      {% if post.sitemap.changefreq == null %}
-        <changefreq>weekly</changefreq>
-      {% else %}
-        <changefreq>{{ post.sitemap.changefreq }}</changefreq>
-      {% endif %}
+  {% assign sitemap_items = sitemap_items | where_exp: "item", "item.url" %}
+  {% assign sitemap_items = sitemap_items | where_exp: "item", "item.data.sitemap != false" %}
 
-      {% if post.sitemap.priority == null %}
-          <priority>0.5</priority>
-      {% else %}
-        <priority>{{ post.sitemap.priority }}</priority>
-      {% endif %}
+  {% for item in sitemap_items %}
+    {% unless item.url == "/sitemap.xml" %}
+      <url>
+        <loc>{{ item.url | absolute_url }}</loc>
 
-    </url>
+        {% assign lastmod = item.last_modified_at | default: item.date | default: item.data.last_modified_at | default: item.data.updated %}
+        {% if lastmod %}
+          <lastmod>{{ lastmod | date_to_xmlschema }}</lastmod>
+        {% endif %}
+
+        {% assign changefreq = item.data.sitemap.changefreq | default: "weekly" %}
+        <changefreq>{{ changefreq }}</changefreq>
+
+        {% assign priority = item.data.sitemap.priority | default: 0.5 %}
+        <priority>{{ priority }}</priority>
+      </url>
+    {% endunless %}
   {% endfor %}
 </urlset>
