@@ -6,6 +6,7 @@ tags: [python, 파이썬, 정의, 함수, 클래스, 인스턴스, 객체, self,
 toc: true
 toc_sticky: true
 sidebar_main: false
+author_profile: false
 
 mathjax: true
 use_math: true

@@ -6,6 +6,7 @@ tags: [python, 파이썬, hash, 해시, 코딩테스트, 알고리즘, dict, set
 toc: true
 toc_sticky: false
 sidebar_main: false
+author_profile: false
 
 mathjax: true
 use_math: true

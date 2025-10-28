@@ -6,6 +6,7 @@ tags: [python, 파이썬, 문법, 치트시트, expression, statement, comprehen
 toc: true
 toc_sticky: true
 sidebar_main: false
+author_profile: false
 
 mathjax: true
 use_math: true

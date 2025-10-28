@@ -15,7 +15,7 @@ layout: null
   {% assign sitemap_items = sitemap_items | where_exp: "item", "item.data.sitemap != false" %}
 
   {% for item in sitemap_items %}
-    {% unless item.url == "/sitemap.xml" %}
+  {% unless item.url == "/sitemap.xml" or item.url == "/404.html" or item.data.sitemap == false or item.data.sitemap == "false" %}
       <url>
         <loc>{{ item.url | absolute_url }}</loc>
 

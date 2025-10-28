@@ -6,6 +6,7 @@ tags: [python, 파이썬, gcd, lcm, 최대공약수, 최소공배수, 배수, �
 toc: true
 toc_sticky: true
 sidebar_main: false
+author_profile: false
 
 mathjax: true
 use_math: true

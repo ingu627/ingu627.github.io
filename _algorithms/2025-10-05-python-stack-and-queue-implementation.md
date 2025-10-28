@@ -6,6 +6,7 @@ tags: [python, 파이썬, stack, queue, 스택, 큐, 코딩테스트, 알고리�
 toc: true
 toc_sticky: true
 sidebar_main: false
+author_profile: false
 
 mathjax: true
 use_math: true

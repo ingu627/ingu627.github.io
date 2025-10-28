@@ -44,7 +44,7 @@ comments:
     num_posts            : # 5 (default)
     colorscheme          : # "light" (default), "dark"
   utterances:
-    theme                : "preferred-color-scheme"  # Auto dark/light based on system preference
+    theme                : "github-light"  # Light theme for comments
     issue_term           : "pathname" # "pathname" (default)
     repo                 : "ingu627/ingu627.github.io"  # Explicit repo for comments
   giscus:
