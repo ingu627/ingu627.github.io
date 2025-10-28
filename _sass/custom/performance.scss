@@ -1,0 +1,30 @@
+/* Performance optimizations */
+
+/* Reduce layout shifts with aspect ratio boxes for images */
+img {
+  height: auto;
+  max-width: 100%;
+}
+
+/* Optimize animation performance */
+.page__hero--overlay {
+  will-change: auto;
+}
+
+/* Reduce CLS from dynamic content */
+.page__content {
+  min-height: 50vh;
+}
+
+/* Prevent layout shift from ads */
+.google-auto-placed {
+  min-height: 280px;
+}
+
+/* Optimize font rendering */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeSpeed;
+}
+

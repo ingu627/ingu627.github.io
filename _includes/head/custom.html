@@ -4,15 +4,6 @@
 
 <!-- insert favicons. use https://realfavicongenerator.net/  + manifest는 한번 봐야함-->
 <link rel="apple-touch-icon" sizes="180x180" href="{{site.baseurl}}/assets/logo.ico/apple-touch-icon.png">
-<link rel="apple-touch-icon" sizes="57x57" href="{{site.baseurl}}/assets/logo.ico/apple-icon-57x57.png">
-<link rel="apple-touch-icon" sizes="60x60" href="{{site.baseurl}}/assets/logo.ico/apple-icon-60x60.png">
-<link rel="apple-touch-icon" sizes="72x72" href="{{site.baseurl}}/assets/logo.ico/apple-icon-72x72.png">
-<link rel="apple-touch-icon" sizes="76x76" href="{{site.baseurl}}/assets/logo.ico/apple-icon-76x76.png">
-<link rel="apple-touch-icon" sizes="114x114" href="{{site.baseurl}}/assets/logo.ico/apple-icon-114x114.png">
-<link rel="apple-touch-icon" sizes="120x120" href="{{site.baseurl}}/assets/logo.ico/apple-icon-120x120.png">
-<link rel="apple-touch-icon" sizes="144x144" href="{{site.baseurl}}/assets/logo.ico/apple-icon-144x144.png">
-<link rel="apple-touch-icon" sizes="152x152" href="{{site.baseurl}}/assets/logo.ico/apple-icon-152x152.png">
-<link rel="apple-touch-icon" sizes="180x180" href="{{site.baseurl}}/assets/logo.ico/apple-icon-180x180.png">
 <link rel="icon" type="image/png" sizes="192x192"  href="{{site.baseurl}}/assets/logo.ico/android-chrome-192x192.png">
 <link rel="icon" type="image/png" sizes="512x512"  href="{{site.baseurl}}/assets/logo.ico/android-chrome-512x512.png">
 <link rel="icon" type="image/png" sizes="32x32" href="{{site.baseurl}}/assets/logo.ico/favicon-32x32.png">
@@ -20,9 +11,8 @@
 <link rel="manifest" href="{{site.baseurl}}/assets/logo.ico/site.webmanifest">
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
-<link rel="mask-icon" href="{{site.baseurl}}/assets/favicon.ico">
 
-<!-- google ads -->
+<!-- google ads - Deferred loading -->
 <script>
         (function () {
                 var scripts = [
@@ -65,7 +55,7 @@
                                 if (!window.frames.googlefcPresent) {
                                         if (document.body) {
                                                 var iframe = document.createElement("iframe");
-                                                iframe.style.cssText = "width:0;height:0;border:none;z-index:-1000;left:-1000px;top:-1000px;display:none";
+                                                iframe.style.cssText = "width:0;height:0;border:none;z-index:-1000;left:-1000px;top:-1000px;position:absolute";
                                                 iframe.name = "googlefcPresent";
                                                 document.body.appendChild(iframe);
                                         } else {
@@ -75,21 +65,28 @@
                         })();
                 }
 
+                // Delay loading until after page interaction or 3 seconds
+                var loaded = false;
                 function schedule() {
+                        if (loaded) return;
+                        loaded = true;
+                        
                         if ("requestIdleCallback" in window) {
-                                requestIdleCallback(loadExternalScripts, { timeout: 5000 });
+                                requestIdleCallback(loadExternalScripts, { timeout: 3000 });
                         } else {
-                                window.addEventListener(
-                                        "load",
-                                        function () {
-                                                setTimeout(loadExternalScripts, 1000);
-                                        },
-                                        { once: true }
-                                );
+                                setTimeout(loadExternalScripts, 3000);
                         }
                 }
 
-                schedule();
+                // Load on user interaction
+                ['mousedown', 'touchstart', 'keydown', 'scroll'].forEach(function(event) {
+                        window.addEventListener(event, schedule, { once: true, passive: true });
+                });
+                
+                // Fallback: load after 3 seconds
+                window.addEventListener('load', function() {
+                        setTimeout(schedule, 3000);
+                }, { once: true });
         })();
 </script>
 

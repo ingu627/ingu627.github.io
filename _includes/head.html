@@ -8,10 +8,12 @@
 <link rel="dns-prefetch" href="//fonts.gstatic.com">
 <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
 <link rel="dns-prefetch" href="//www.google-analytics.com">
+<link rel="dns-prefetch" href="//pagead2.googlesyndication.com">
 
 <!-- Preconnect for faster resource loading -->
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
 
 {% include seo.html %}
 
@@ -39,18 +41,18 @@
   })();
 </script>
 
-<!-- For all browsers - Non-blocking CSS loading -->
-<link id="default-theme-style" rel="preload" href="{{ '/assets/css/main.css' | relative_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<!-- For all browsers - Critical CSS inline, rest async -->
+<link id="default-theme-style" rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}" media="print" onload="this.media='all';this.onload=null">
 <noscript><link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}"></noscript>
 
-<!-- darkmode css - Non-blocking -->
+<!-- darkmode css - Async load -->
 {% if site.dark_theme_toggle == true %}
-<link id="dark-theme-style" rel="preload" href="{{ '/assets/css/main_dark.css' }}" as="style" onload="this.onload=null;this.rel='stylesheet';if(window.__themePreference!=='dark'){this.disabled=true;}else{var defaultStyle=document.getElementById('default-theme-style');if(defaultStyle){defaultStyle.disabled=true;}}">
+<link id="dark-theme-style" rel="stylesheet" href="{{ '/assets/css/main_dark.css' }}" media="print" onload="if(window.__themePreference==='dark'){this.media='all';var defaultStyle=document.getElementById('default-theme-style');if(defaultStyle){defaultStyle.disabled=true;}}else{this.media='none';}this.onload=null">
 {% endif %}
 
-<!-- Font Awesome - Non-blocking -->
-<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css?display=swap" as="style" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css?display=swap" crossorigin="anonymous"></noscript>
+<!-- Font Awesome - Async with font-display swap -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" media="print" onload="this.media='all';this.onload=null" crossorigin="anonymous">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" crossorigin="anonymous"></noscript>
 
 {% if site.head_scripts %}
   {% for script in site.head_scripts %}
