@@ -19,7 +19,7 @@ after_footer_scripts:
 
 # Site Settings
 locale                   : "ko-KR"
-title                    : "DATA & AI"
+title                    : "DATA &amp; AI"
 title_separator          : "|"
 subtitle                 : ""
 name                     : "ingu627"
