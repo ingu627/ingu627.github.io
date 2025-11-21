@@ -50,7 +50,7 @@
           {%- endif -%}
         {%- endfor -%}
       </ul>
-      <span class="nav__sub-title">DevOps & Infra</span>
+      <span class="nav__sub-title">DevOps &amp; Infra</span>
       <ul>
         {%- assign infra_categories = "linux|docker|git" | split: "|" -%}
         {%- for cat in infra_categories -%}
@@ -110,7 +110,7 @@
           {%- endif -%}
         {%- endfor -%}
       </ul>
-      <span class="nav__sub-title">Troubleshooting & Tips</span>
+      <span class="nav__sub-title">Troubleshooting &amp; Tips</span>
       <ul>
         {%- assign support_categories = "error|tips" | split: "|" -%}
         {%- for cat in support_categories -%}
