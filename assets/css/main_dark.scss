@@ -24,6 +24,7 @@ $gist-inline-bg: rgba(#7a828e, 0.35);
 $gist-inline-border: rgba(#7a828e, 0.45);
 
 @import "custom/customOverride.scss";
+@import "custom/performance.scss";
 
 /* Fonts are loaded from customImport.scss and applied via _variables.scss */
 /* No need to duplicate font-family declarations here */
