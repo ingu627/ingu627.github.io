@@ -234,7 +234,7 @@ kramdown:
 sass:
   sass_dir: _sass
   style: compressed # https://sass-lang.com/documentation/file.SASS_REFERENCE.html#output_style
-  sourcemap: never # Disable sourcemaps for production
+  # sourcemap: never # Disable sourcemaps for production
 
 # Outputting
 permalink: /:categories/:title/
@@ -250,7 +250,7 @@ plugins:
   - jekyll-gist
   - jekyll-feed
   - jekyll-include-cache
-  - jekyll-seo-tag  # Automatic SEO meta tags generation
+  # - jekyll-seo-tag  # Automatic SEO meta tags generation
 
 # mimic GitHub Pages with --safe
 whitelist:
@@ -289,16 +289,16 @@ collections:
     permalink: /algorithms/:title/
 
 # https://github.com/jekyll/jekyll-archives
-jekyll-archives:
-  enabled:
-    - categories
-    - tags
-  layouts:
-    category: archive-taxonomy
-    tag: archive-taxonomy
-  permalinks:
-    category: /categories/:name/
-    tag: /tags/:name/
+# jekyll-archives:
+#   enabled:
+#     - categories
+#     - tags
+#   layouts:
+#     category: archive-taxonomy
+#     tag: archive-taxonomy
+#   permalinks:
+#     category: /categories/:name/
+#     tag: /tags/:name/
 
 
 # HTML Compression - Optimized for production
