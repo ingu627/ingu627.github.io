@@ -10,6 +10,8 @@ sidebar_main: false
 classes: wide
 
 last_modified_at: 2022-03-31
+redirect_from:
+  - /R_ML/solve_bigdata4/
 ---
 
 빅데이터 분석기사 실기 대비용 정리입니다. 기출 데이터는 [GitHub 저장소](https://github.com/ingu627/BigDataAnalysis)에 있으며 전체 코드는 `sujebi_3.R` 파일에 포함되어 있습니다.

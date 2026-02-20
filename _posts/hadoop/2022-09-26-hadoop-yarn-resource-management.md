@@ -10,6 +10,8 @@ author_profile: false
 sidebar_main: false
 
 last_modified_at: 2023-03-03
+redirect_from:
+  - /hadoop/yarn/
 ---
 
 <img align='right' width='150' height='200' src='https://user-images.githubusercontent.com/78655692/192221467-e5b2a1f4-fcec-4c30-87b0-6c27843281ec.png'>

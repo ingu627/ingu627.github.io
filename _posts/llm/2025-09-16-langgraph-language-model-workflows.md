@@ -10,6 +10,8 @@ sidebar_main: false
 
 date: 2025-09-16
 last_modified_at: 2025-09-16
+redirect_from:
+  - /llm/langgraph1/
 ---
 
 LangGraph는 기존 LangChain의 한계를 뛰어넘어 복잡한 AI 워크플로우를 그래프 구조로 설계하고 구현할 수 있게 해주는 혁신적인 프레임워크다. <br> 

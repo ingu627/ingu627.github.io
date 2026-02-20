@@ -10,6 +10,8 @@ sidebar_main: false
 
 date: 2025-09-20
 last_modified_at: 2025-09-20
+redirect_from:
+  - /llm/ragflow/
 ---
 
 검색 증강 생성(Retrieval-Augmented Generation, RAG)은 생성형 언어 모델의 능력을 외부의 검증 가능한 지식 소스와 연결하여 강화하는 아키텍처 패턴이다. <br> 

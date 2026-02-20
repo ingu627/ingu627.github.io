@@ -12,6 +12,8 @@ toc_sticky: false
 last_modified_at: 2022-07-14
 
 sidebar_main: false
+redirect_from:
+  - /tips/install_ubuntu/
 ---
 
 - **Update(20220714)**

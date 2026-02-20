@@ -9,6 +9,8 @@ toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-08-30
+redirect_from:
+  - /markdown/markdown_grammar/
 ---
 
 <!-- markdownlint-disable MD022 MD033 MD046 MD049 -->

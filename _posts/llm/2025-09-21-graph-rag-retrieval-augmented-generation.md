@@ -9,6 +9,8 @@ toc_sticky: false
 sidebar_main: false
 date: 2025-09-21
 last_modified_at: 2025-09-21
+redirect_from:
+  - /llm/graphrag/
 ---
 
 이 가이드는 Neo4j를 활용한 GraphRAG에 대해 비전문가도 쉽게 이해할 수 있도록 설명한다. 복잡한 개념을 간단히 풀어 쓰고, 실제 구현 가능한 예시와 함께 단계별로 안내한다. 기존 RAG 시스템의 한계점부터 GraphRAG의 혁신적인 해결책까지, 모든 것을 차근차근 다뤄보겠다.

@@ -9,6 +9,8 @@ toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-04-28
+redirect_from:
+  - /paper/ResNext/
 ---
 
 ![image](https://user-images.githubusercontent.com/78655692/165512958-0a7ae7ff-cd38-4005-b665-a6dab30039df.png)

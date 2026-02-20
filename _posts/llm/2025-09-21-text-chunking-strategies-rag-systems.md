@@ -10,6 +10,8 @@ sidebar_main: false
 
 date: 2025-09-21
 last_modified_at: 2025-09-21
+redirect_from:
+  - /llm/chunking/
 ---
 
 ## 서론: RAG 시스템의 성패는 청킹에 달려있다

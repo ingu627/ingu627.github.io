@@ -9,6 +9,8 @@ toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-06-25
+redirect_from:
+  - /paper/parallel_adwin/
 ---
 
 ![image](https://user-images.githubusercontent.com/78655692/172111947-570a483a-c49a-4912-af2d-efa6c23f213c.png)

@@ -10,6 +10,8 @@ sidebar_main: false
 
 date: 2025-09-25
 last_modified_at: 2025-10-13
+redirect_from:
+  - /web/api_deployment/
 ---
 
 현대의 API는 단순한 엔드포인트의 집합이 아니다. 높은 성능과 안정성, 뛰어난 개발자 경험(DX), 그리고 견고한 보안까지 모두 갖춘 복합적인 시스템을 요구한다. Python 진영에서 FastAPI는 이러한 현대적 요구사항을 가장 잘 만족시키는 웹 프레임워크로 평가받는다. <br>

@@ -20,6 +20,8 @@ header:
     actions:
         - label: "More info"
         - url: "https://www.vangoghmuseum.nl/en/collection/s0176V1962"
+redirect_from:
+  - /git_blog/how_to_write/
 ---
 
 ## 예시

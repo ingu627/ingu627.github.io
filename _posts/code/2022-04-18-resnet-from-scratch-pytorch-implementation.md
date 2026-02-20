@@ -10,6 +10,8 @@ classes: wide
 sidebar_main: false
 
 last_modified_at: 2022-04-18
+redirect_from:
+  - /code/ResNet_scratch_pytorch/
 ---
 
 {% capture related %}

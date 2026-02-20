@@ -9,6 +9,8 @@ toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-06-16
+redirect_from:
+  - /paper/FHDDM/
 ---
 
 ![image](https://user-images.githubusercontent.com/78655692/172051401-8daa60de-ad59-43c4-9d14-65ec6c206e4d.png)

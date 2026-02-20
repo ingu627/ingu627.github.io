@@ -9,6 +9,8 @@ toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-04-15
+redirect_from:
+  - /paper/SENet/
 ---
 
 ![image](https://user-images.githubusercontent.com/78655692/163437572-a7a7d129-f67a-4944-a370-f528e6534d76.png)

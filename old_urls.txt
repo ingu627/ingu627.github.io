@@ -1,0 +1,436 @@
+R099	_algorithms/2021-11-15-python_func.md	_algorithms/2021-11-15-python-built-in-functions-and-itertools.md
+R100	_algorithms/2025-10-05-coding_hash.md	_algorithms/2025-10-05-python-hash-table-and-dictionary.md
+R100	_algorithms/2025-10-05-stack_queue.md	_algorithms/2025-10-05-python-stack-and-queue-implementation.md
+R100	_posts/DS/2021-12-30-Distributed_Systems1.md	_posts/DS/2021-12-30-distributed-systems-fundamentals-part-1.md
+R100	_posts/DS/2022-01-09-Distributed_Systems2.md	_posts/DS/2022-01-09-distributed-systems-fundamentals-part-2.md
+R100	_posts/DS/2022-01-24-Distributed_Systems3.md	_posts/DS/2022-01-24-distributed-systems-fundamentals-part-3.md
+R100	_posts/OS/2021-11-28-os1_ewha.md	_posts/OS/2021-11-28-operating-systems-ewha-lecture-1.md
+R100	_posts/OS/2021-12-14-os2_ewha.md	_posts/OS/2021-12-14-operating-systems-ewha-lecture-2.md
+R100	_posts/OS/2021-12-21-os3_ewha.md	_posts/OS/2021-12-21-operating-systems-ewha-lecture-3.md
+R100	_posts/OS/2021-12-29-os4_ewha.md	_posts/OS/2021-12-29-operating-systems-ewha-lecture-4.md
+R100	_posts/OS/2021-12-30-os5_ewha.md	_posts/OS/2021-12-30-operating-systems-ewha-lecture-5.md
+R100	_posts/OS/2021-12-31-os6_ewha.md	_posts/OS/2021-12-31-operating-systems-ewha-lecture-6.md
+R100	_posts/OS/2022-01-03-os7_ewha.md	_posts/OS/2022-01-03-operating-systems-ewha-lecture-7.md
+R100	_posts/OS/2022-01-03-os8_ewha.md	_posts/OS/2022-01-03-operating-systems-ewha-lecture-8.md
+R100	_posts/OS/2022-01-04-os9_ewha.md	_posts/OS/2022-01-04-operating-systems-ewha-lecture-9.md
+R100	_posts/OS/2022-01-05-os10_ewha.md	_posts/OS/2022-01-05-operating-systems-ewha-lecture-10.md
+R100	_posts/OS/2022-08-12-os1_10th.md	_posts/OS/2022-08-12-operating-systems-10th-edition-chapter-1.md
+R100	_posts/OS/2022-08-13-os2_10th.md	_posts/OS/2022-08-13-operating-systems-10th-edition-chapter-2.md
+R100	_posts/OS/2022-08-14-os3_10th.md	_posts/OS/2022-08-14-operating-systems-10th-edition-chapter-3.md
+R100	_posts/OS/2022-08-17-os4_10th.md	_posts/OS/2022-08-17-operating-systems-10th-edition-chapter-4.md
+R100	_posts/OS/2022-08-18-os5_10th.md	_posts/OS/2022-08-18-operating-systems-10th-edition-chapter-5.md
+R100	_posts/OS/2022-08-24-os6_10th.md	_posts/OS/2022-08-24-operating-systems-10th-edition-chapter-6.md
+R100	_posts/OS/2022-08-26-os7_10th.md	_posts/OS/2022-08-26-operating-systems-10th-edition-chapter-7.md
+R100	_posts/OS/2022-08-28-os8_10th.md	_posts/OS/2022-08-28-operating-systems-10th-edition-chapter-8.md
+R100	_posts/OS/2022-09-08-os9_10th.md	_posts/OS/2022-09-08-operating-systems-10th-edition-chapter-9.md
+R100	_posts/OS/2022-09-12-os10_10th.md	_posts/OS/2022-09-12-operating-systems-10th-edition-chapter-10.md
+R100	_posts/R_ML/2021-11-05-bigdata_analysis1.md	_posts/R_ML/2021-11-05-r-big-data-analytics-fundamentals-part-1.md
+R100	_posts/R_ML/2021-11-12-bigdata_analysis2.md	_posts/R_ML/2021-11-12-r-big-data-analytics-fundamentals-part-2.md
+R100	_posts/R_ML/2021-11-15-bigdata_analysis3.md	_posts/R_ML/2021-11-15-r-big-data-analytics-fundamentals-part-3.md
+R100	_posts/R_ML/2021-11-16-bigdata_analysis4.md	_posts/R_ML/2021-11-16-r-big-data-analytics-fundamentals-part-4.md
+R100	_posts/R_ML/2021-11-17-bigdata_analysis5.md	_posts/R_ML/2021-11-17-r-big-data-analytics-fundamentals-part-5.md
+R100	_posts/R_ML/2021-11-17-bigdata_analysis6.md	_posts/R_ML/2021-11-17-r-big-data-analytics-fundamentals-part-6.md
+R100	_posts/R_ML/2021-11-25-solve_bigdata.md	_posts/R_ML/2021-11-25-r-machine-learning-big-data-analysis-part-1.md
+R100	_posts/R_ML/2021-11-27-solve_bigdata2.md	_posts/R_ML/2021-11-27-r-machine-learning-big-data-analysis-part-2.md
+R100	_posts/R_ML/2021-11-28-solve_bigdata4.md	_posts/R_ML/2021-11-28-r-machine-learning-big-data-analysis-part-4.md
+R100	_posts/R_ML/2021-12-02-solve_bigdata5.md	_posts/R_ML/2021-12-02-r-machine-learning-big-data-analysis-part-5.md
+R100	_posts/R_ML/2021-12-02-solve_bigdata6.md	_posts/R_ML/2021-12-02-r-machine-learning-big-data-analysis-part-6.md
+R100	_posts/R_ML/2021-12-03-solve_bigdata7.md	_posts/R_ML/2021-12-03-r-machine-learning-big-data-analysis-part-7.md
+R100	_posts/R_ML/2021-12-03-solve_bigdata8.md	_posts/R_ML/2021-12-03-r-machine-learning-big-data-analysis-part-8.md
+R100	_posts/code/2022-03-29-alexnet_pytorch.md	_posts/code/2022-03-29-alexnet-pytorch-implementation.md
+R100	_posts/code/2022-04-12-ResNet50_pytorch.md	_posts/code/2022-04-12-resnet50-transfer-learning-pytorch.md
+R100	_posts/code/2022-04-14-LeNet_pytorch.md	_posts/code/2022-04-14-lenet-pytorch-implementation.md
+R100	_posts/code/2022-04-18-ResNet_scratch_pytorch.md	_posts/code/2022-04-18-resnet-from-scratch-pytorch-implementation.md
+R100	_posts/code/2022-04-28-ResNeXt_scratch_pytorch.md	_posts/code/2022-04-28-resnext-from-scratch-pytorch-implementation.md
+R100	_posts/code/2022-07-11-pytorch_lightning_mnist.md	_posts/code/2022-07-11-pytorch-lightning-mnist-tutorial.md
+R100	_posts/cs231n/2022-04-21-cnn1.md	_posts/cs231n/2022-04-21-cnn-computer-vision-introduction.md
+R100	_posts/cs231n/2022-04-22-cnn4.md	_posts/cs231n/2022-04-22-cnn-backpropagation-neural-networks.md
+R100	_posts/cs231n/2022-04-22-cnn2_2.md	_posts/cs231n/2022-04-22-cnn-image-classification-part-2.md
+R100	_posts/cs231n/2022-04-22-cnn2.md	_posts/cs231n/2022-04-22-cnn-image-classification-pipeline.md
+R100	_posts/cs231n/2022-04-22-cnn3.md	_posts/cs231n/2022-04-22-cnn-loss-functions-optimization.md
+R100	_posts/cs231n/2022-04-23-cnn5.md	_posts/cs231n/2022-04-23-cnn-convolutional-neural-networks.md
+R100	_posts/cs231n/2022-04-23-cnn6.md	_posts/cs231n/2022-04-23-cnn-training-neural-networks-part-1.md
+R100	_posts/cs231n/2022-04-23-cnn6_2.md	_posts/cs231n/2022-04-23-cnn-training-neural-networks-part-1b.md
+R100	_posts/cs231n/2022-04-23-cnn7.md	_posts/cs231n/2022-04-23-cnn-training-neural-networks-part-2.md
+R100	_posts/cs231n/2022-04-24-cnn7_2.md	_posts/cs231n/2022-04-24-cnn-training-neural-networks-part-3.md
+R100	_posts/cs231n/2022-06-12-cnn8.md	_posts/cs231n/2022-06-12-cnn-recurrent-neural-networks-part-1.md
+R100	_posts/cs231n/2022-06-12-cnn10.md	_posts/cs231n/2022-06-12-cnn-visualizing-understanding-part-1.md
+R100	_posts/cs231n/2022-06-12-cnn10_2.md	_posts/cs231n/2022-06-12-cnn-visualizing-understanding-part-2.md
+R100	_posts/cs231n/2022-06-13-cnn8_2.md	_posts/cs231n/2022-06-13-cnn-recurrent-neural-networks-part-2.md
+R100	_posts/cs231n/2022-06-14-cnn9.md	_posts/cs231n/2022-06-14-cnn-detection-segmentation-part-1.md
+R100	_posts/cs231n/2022-06-15-cnn9_2.md	_posts/cs231n/2022-06-15-cnn-detection-segmentation-part-2.md
+R100	_posts/dia/2022-01-21-design1.md	_posts/dia/2022-01-21-system-design-principles-part-1.md
+R100	_posts/dia/2022-01-22-design2.md	_posts/dia/2022-01-22-system-design-principles-part-2.md
+R100	_posts/docker/2022-07-18-docker_overview_venv.md	_posts/docker/2022-07-18-docker-overview-virtual-environment.md
+R100	_posts/docker/2022-09-04-docker_command.md	_posts/docker/2022-09-04-docker-commands-reference-guide.md
+R100	_posts/docker/2025-09-21-kubernetes_basic.md	_posts/docker/2025-09-21-kubernetes-basic-concepts-architecture.md
+R100	_posts/docker/2025-09-24-kubernetes1.md	_posts/docker/2025-09-24-kubernetes-container-orchestration-basics.md
+R100	_posts/error_collection/2021-11-03-Kernel died_attributeError.md	_posts/error_collection/2021-11-03-jupyter-kernel-died-attribute-error.md
+R100	_posts/error_collection/2021-11-03-NonMatchingChecksumError.md	_posts/error_collection/2021-11-03-non-matching-checksum-error-fix.md
+R100	_posts/error_collection/2021-11-03-NotImplementedError.md	_posts/error_collection/2021-11-03-not-implemented-error-fix.md
+R100	_posts/error_collection/2021-11-08-ImportError_get_config.md	_posts/error_collection/2021-11-08-import-error-get-config-fix.md
+R100	_posts/error_collection/2021-11-10-ModuleNotFoundError_tensorflow.keras.md	_posts/error_collection/2021-11-10-module-not-found-tensorflow-keras.md
+R100	_posts/error_collection/2021-11-10-Warning1.md	_posts/error_collection/2021-11-10-python-warning-troubleshooting.md
+R100	_posts/error_collection/2021-11-13-Permission_denied_R.md	_posts/error_collection/2021-11-13-r-permission-denied-error-fix.md
+R100	_posts/error_collection/2021-11-19-unzip.md	_posts/error_collection/2021-11-19-unzip-archive-extraction-error.md
+R100	_posts/error_collection/2021-12-30-venv_inLinux.md	_posts/error_collection/2021-12-30-python-virtual-environment-linux.md
+R100	_posts/error_collection/2022-01-27-tfgradients.md	_posts/error_collection/2022-01-27-tensorflow-gradients-error-fix.md
+R100	_posts/error_collection/2022-02-23-ExecutableNotFound_graphviz.md	_posts/error_collection/2022-02-23-graphviz-executable-not-found-fix.md
+R100	_posts/git/2021-11-21-04_branch.md	_posts/git/2021-11-21-git-branching-merging-workflow.md
+R100	_posts/git/2021-11-21-02_pull_clone.md	_posts/git/2021-11-21-git-pull-clone-remote-repository.md
+R100	_posts/git/2021-11-21-07_undoing.md	_posts/git/2021-11-21-git-undoing-changes-reset-revert.md
+R100	_posts/git/2021-11-21-00_git_intro.md	_posts/git/2021-11-21-git-version-control-introduction.md
+R100	_posts/git_blog/2021-11-19-how_to_write.md	_posts/git_blog/2021-11-19-technical-blog-writing-guide.md
+R100	_posts/git_blog/2021-11-20-jupyter_to_gist.md	_posts/git_blog/2021-11-20-jupyter-notebook-github-gist-integration.md
+R100	_posts/git_blog/2021-11-29-mathjax_in_md.md	_posts/git_blog/2021-11-29-mathjax-latex-markdown-integration.md
+R100	_posts/git_blog/2021-12-08-diff_UA_GA4.md	_posts/git_blog/2021-12-08-universal-analytics-ga4-differences.md
+R100	_posts/hadoop/2022-09-26-yarn.md	_posts/hadoop/2022-09-26-hadoop-yarn-resource-management.md
+R100	_posts/ho_ML/2021-12-16-TDL1.md	_posts/ho_ML/2021-12-16-tensorflow-deep-learning-part-1.md
+R100	_posts/ho_ML/2021-12-28-TDL2.md	_posts/ho_ML/2021-12-28-tensorflow-deep-learning-part-2.md
+R100	_posts/ho_ML/2021-12-29-TDL3.md	_posts/ho_ML/2021-12-29-tensorflow-deep-learning-part-3.md
+R100	_posts/ho_ML/2022-01-06-TDL4.md	_posts/ho_ML/2022-01-06-tensorflow-deep-learning-part-4.md
+R100	_posts/ho_ML/2022-03-28-TDL5.md	_posts/ho_ML/2022-03-28-tensorflow-deep-learning-part-5.md
+R100	_posts/java/2021-12-17-java_gr1.md	_posts/java/2021-12-17-java-programming-grammar-part-1.md
+R100	_posts/java/2022-03-31-java_gr2.md	_posts/java/2022-03-31-java-programming-grammar-part-2.md
+R100	_posts/keras/2021-11-08-keras_ch1_org.md	_posts/keras/2021-11-08-keras-deep-learning-chapter-1-introduction.md
+R100	_posts/keras/2021-11-08-keras_ch2_org.md	_posts/keras/2021-11-08-keras-deep-learning-chapter-2-fundamentals.md
+R100	_posts/keras/2021-11-08-keras_ch3_org.md	_posts/keras/2021-11-08-keras-deep-learning-chapter-3-neural-networks.md
+R100	_posts/keras/2021-11-09-keras_ch4_org.md	_posts/keras/2021-11-09-keras-deep-learning-chapter-4-overfitting-underfitting.md
+R100	_posts/keras/2021-11-09-keras_ch5_org.md	_posts/keras/2021-11-09-keras-deep-learning-chapter-5-computer-vision.md
+R100	_posts/keras/2021-11-15-keras_ch6_org.md	_posts/keras/2021-11-15-keras-deep-learning-chapter-6-text-sequences.md
+R100	_posts/keras/2021-11-23-keras_ch7_org.md	_posts/keras/2021-11-23-keras-deep-learning-chapter-7-advanced-techniques.md
+R100	_posts/keras/2022-01-10-keras_ch8_org.md	_posts/keras/2022-01-10-keras-deep-learning-chapter-8-generative-models.md
+R100	_posts/linux/2021-11-23-linux_basic.md	_posts/linux/2021-11-23-linux-command-line-basics.md
+R100	_posts/linux/2022-09-06-ubuntu2204.md	_posts/linux/2022-09-06-ubuntu-22-04-setup-guide.md
+R100	_posts/llm/2025-05-05-llm1_vectordb.md	_posts/llm/2025-05-05-llm-vector-database-embeddings.md
+R100	_posts/llm/2025-09-14-quantization1.md	_posts/llm/2025-09-14-llm-model-quantization-compression-techniques.md
+R100	_posts/llm/2025-09-16-langgraph1.md	_posts/llm/2025-09-16-langgraph-language-model-workflows.md
+R100	_posts/llm/2025-09-20-ragflow.md	_posts/llm/2025-09-20-ragflow-retrieval-augmented-generation-framework.md
+R100	_posts/llm/2025-09-21-graphrag.md	_posts/llm/2025-09-21-graph-rag-retrieval-augmented-generation.md
+R100	_posts/llm/2025-09-21-chunking.md	_posts/llm/2025-09-21-text-chunking-strategies-rag-systems.md
+R100	_posts/llm/2025-09-26-mcp.md	_posts/llm/2025-09-26-model-context-protocol-llm-integration.md
+R100	_posts/markdown/2021-11-01-markdown_grammar.md	_posts/markdown/2021-11-01-markdown-syntax-grammar-guide.md
+R100	_posts/markdown/2021-11-06-ipynb_to_md.md	_posts/markdown/2021-11-06-jupyter-notebook-to-markdown-conversion.md
+R100	_posts/mlops/2022-06-03-drift_detection.md	_posts/mlops/2022-06-03-data-drift-concept-drift-detection.md
+R100	_posts/mlops/2022-06-05-inequality_for_detection.md	_posts/mlops/2022-06-05-statistical-inequality-drift-detection.md
+R100	_posts/paper/2022-03-29-data_quality_driven_mlops.md	_posts/paper/2022-03-29-data-quality-mlops-production.md
+R100	_posts/paper/2022-04-02-concept_drift.md	_posts/paper/2022-04-02-concept-drift-learning-overview.md
+R100	_posts/paper/2022-04-13-ResNet.md	_posts/paper/2022-04-13-resnet-deep-residual-learning.md
+R100	_posts/paper/2022-04-14-NFNet.md	_posts/paper/2022-04-14-nfnet-normalizer-free-resnet.md
+R100	_posts/paper/2022-04-15-SENet.md	_posts/paper/2022-04-15-senet-squeeze-excitation-networks.md
+R100	_posts/paper/2022-04-28-ResNext.md	_posts/paper/2022-04-28-resnext-aggregated-residual-transformations.md
+R100	_posts/paper/2022-05-28-NFResnet.md	_posts/paper/2022-05-28-nf-resnet-normalizer-free-residual-networks.md
+R100	_posts/paper/2022-06-05-FHDDM.md	_posts/paper/2022-06-05-fhddm-fast-hoeffding-drift-detection-method.md
+R100	_posts/paper/2022-06-06-parallel_adwin.md	_posts/paper/2022-06-06-parallel-adwin-drift-detection.md
+R100	_posts/paper/2022-07-30-MDE_w_BN.md	_posts/paper/2022-07-30-mean-difference-estimation-batch-normalization.md
+R100	_posts/paper/2022-08-06-gfs.md	_posts/paper/2022-08-06-gfs-google-file-system.md
+R100	_posts/paper/2022-08-11-mapreduce.md	_posts/paper/2022-08-11-mapreduce-simplified-data-processing.md
+R100	_posts/paper/2022-08-14-rdd.md	_posts/paper/2022-08-14-spark-rdd-resilient-distributed-dataset.md
+R100	_posts/paper/2022-08-29-kafka.md	_posts/paper/2022-08-29-kafka-distributed-messaging-system.md
+R100	_posts/paper/2022-09-20-pregel.md	_posts/paper/2022-09-20-pregel-large-scale-graph-processing.md
+R100	_posts/paper/2022-09-28-graphx.md	_posts/paper/2022-09-28-graphx-spark-graph-processing.md
+R100	_posts/paper/2022-10-08-graphLab.md	_posts/paper/2022-10-08-graphlab-distributed-graph-computation.md
+R100	_posts/paper/2022-10-10-powergraph.md	_posts/paper/2022-10-10-powergraph-distributed-graph-computation.md
+R100	_posts/paper/2022-10-14-quasar.md	_posts/paper/2022-10-14-quasar-resource-efficient-cluster-management.md
+R100	_posts/paper/2022-11-27-doduo.md	_posts/paper/2022-11-27-doduo-column-type-annotation.md
+R100	_posts/python/2021-11-06-matplotlib_org.md	_posts/python/2021-11-06-matplotlib-data-visualization-guide.md
+R100	_posts/python/2021-11-06-seaborn_org.md	_posts/python/2021-11-06-seaborn-statistical-visualization.md
+R100	_posts/python/2021-11-07-pandas_org.md	_posts/python/2021-11-07-pandas-data-analysis-library.md
+R100	_posts/python/2022-05-27-effective_python1.md	_posts/python/2022-05-27-effective-python-best-practices-part-1.md
+R100	_posts/python/2022-06-01-effective_python2.md	_posts/python/2022-06-01-effective-python-best-practices-part-2.md
+R100	_posts/python/2022-06-30-effective_python3.md	_posts/python/2022-06-30-effective-python-best-practices-part-3.md
+R100	_posts/python/2022-07-26-effective_python4.md	_posts/python/2022-07-26-effective-python-best-practices-part-4.md
+R100	_posts/python/2022-10-08-effective_python5.md	_posts/python/2022-10-08-effective-python-best-practices-part-5.md
+R100	_posts/spark/2022-08-23-spark_db1.md	_posts/spark/2022-08-23-spark-definitive-guide-chapter-1.md
+R100	_posts/spark/2022-08-23-spark_db2.md	_posts/spark/2022-08-23-spark-definitive-guide-chapter-2.md
+R100	_posts/spark/2022-08-25-spark_db3.md	_posts/spark/2022-08-25-spark-definitive-guide-chapter-3.md
+R100	_posts/spark/2022-08-26-spark_db4.md	_posts/spark/2022-08-26-spark-definitive-guide-chapter-4.md
+R100	_posts/spark/2022-08-26-spark_db5.md	_posts/spark/2022-08-26-spark-definitive-guide-chapter-5.md
+R100	_posts/spark/2022-08-27-spark_db6.md	_posts/spark/2022-08-27-spark-definitive-guide-chapter-6.md
+R100	_posts/spark/2022-08-31-spark_db7.md	_posts/spark/2022-08-31-spark-definitive-guide-chapter-7.md
+R100	_posts/spark/2022-09-01-spark_db8.md	_posts/spark/2022-09-01-spark-definitive-guide-chapter-8.md
+R100	_posts/spark/2022-09-01-spark_db9.md	_posts/spark/2022-09-01-spark-definitive-guide-chapter-9.md
+R100	_posts/spark/2022-09-02-spark_db10.md	_posts/spark/2022-09-02-spark-definitive-guide-chapter-10.md
+R100	_posts/spark/2022-09-03-spark_db11.md	_posts/spark/2022-09-03-spark-definitive-guide-chapter-11.md
+R100	_posts/spark/2022-09-04-spark_db12.md	_posts/spark/2022-09-04-spark-definitive-guide-chapter-12.md
+R100	_posts/spark/2022-09-05-spark_db13.md	_posts/spark/2022-09-05-spark-definitive-guide-chapter-13.md
+R100	_posts/spark/2022-09-06-spark_db14.md	_posts/spark/2022-09-06-spark-definitive-guide-chapter-14.md
+R100	_posts/spark/2022-09-07-spark_db15.md	_posts/spark/2022-09-07-spark-definitive-guide-chapter-15.md
+R100	_posts/spark/2022-09-08-spark_db16.md	_posts/spark/2022-09-08-spark-definitive-guide-chapter-16.md
+R097	_posts/spark/2022-09-09-spark_db17.md	_posts/spark/2022-09-09-spark-definitive-guide-chapter-17.md
+R100	_posts/spark/2022-09-16-spark_db18.md	_posts/spark/2022-09-16-spark-definitive-guide-chapter-18.md
+R100	_posts/spark/2022-09-17-spark_db19.md	_posts/spark/2022-09-17-spark-definitive-guide-chapter-19.md
+R100	_posts/spark/2022-09-21-spark_db20.md	_posts/spark/2022-09-21-spark-definitive-guide-chapter-20.md
+R100	_posts/spark/2022-09-23-spark_graph1.md	_posts/spark/2022-09-23-spark-graphx-graph-processing-part-1.md
+R100	_posts/spark/2022-09-24-spark_graph2.md	_posts/spark/2022-09-24-spark-graphx-graph-processing-part-2.md
+R100	_posts/spark/2022-09-26-spark_db21.md	_posts/spark/2022-09-26-spark-definitive-guide-chapter-21.md
+R100	_posts/spark/2022-11-29-spark_streaming1.md	_posts/spark/2022-11-29-spark-structured-streaming-part-1.md
+R100	_posts/spark/2022-11-29-spark_streaming2.md	_posts/spark/2022-11-29-spark-structured-streaming-part-2.md
+R100	_posts/spark/2022-12-01-spark_recommender.md	_posts/spark/2022-12-01-spark-recommendation-system-als.md
+R100	_posts/sql/2021-11-04-sql_pro.md	_posts/sql/2021-11-04-sql-advanced-queries-part-1.md
+R100	_posts/sql/2021-11-04-sql_basic.md	_posts/sql/2021-11-04-sql-structured-query-language-basics.md
+R100	_posts/sql/2024-09-06-sql_pro2.md	_posts/sql/2024-09-06-sql-advanced-queries-part-2.md
+R100	_posts/sql/2024-09-08-sql_pro3.md	_posts/sql/2024-09-08-sql-advanced-queries-part-3.md
+R100	_posts/sql/2024-09-17-sql_pro4.md	_posts/sql/2024-09-17-sql-advanced-queries-part-4.md
+R100	_posts/sql/2024-09-17-sql_pro5.md	_posts/sql/2024-09-17-sql-advanced-queries-part-5.md
+R100	_posts/sql/2024-09-17-sql_pro6.md	_posts/sql/2024-09-17-sql-advanced-queries-part-6.md
+R100	_posts/sql/2024-09-17-sql_pro7.md	_posts/sql/2024-09-17-sql-advanced-queries-part-7.md
+R100	_posts/sql/2024-09-18-sql_pro8.md	_posts/sql/2024-09-18-sql-advanced-queries-part-8.md
+R100	_posts/survey_a/2022-01-16-junior1.md	_posts/survey_a/2022-01-16-junior-developer-survey-analysis-part-1.md
+R100	_posts/survey_a/2022-01-16-junior2.md	_posts/survey_a/2022-01-16-junior-developer-survey-analysis-part-2.md
+R100	_posts/survey_a/2022-01-17-junior3.md	_posts/survey_a/2022-01-17-junior-developer-survey-analysis-part-3.md
+R100	_posts/survey_a/2022-01-17-junior4.md	_posts/survey_a/2022-01-17-junior-developer-survey-analysis-part-4.md
+R100	_posts/survey_a/2022-01-18-junior5.md	_posts/survey_a/2022-01-18-junior-developer-survey-analysis-part-5.md
+R100	_posts/tips/2021-11-09-install_cuda.md	_posts/tips/2021-11-09-install-cuda-nvidia-gpu-part-1.md
+R100	_posts/tips/2021-11-09-prevent_kor.md	_posts/tips/2021-11-09-prevent-korean-encoding-issues.md
+R100	_posts/tips/2021-11-10-install_pytorch.md	_posts/tips/2021-11-10-install-pytorch-deep-learning-framework.md
+R100	_posts/tips/2021-11-10-use_gpu.md	_posts/tips/2021-11-10-use-gpu-deep-learning-training.md
+R100	_posts/tips/2021-11-19-jupyter_shortcuts.md	_posts/tips/2021-11-19-jupyter-notebook-keyboard-shortcuts.md
+R100	_posts/tips/2021-11-28-vs_extension1.md	_posts/tips/2021-11-28-vscode-extensions-productivity-part-1.md
+R100	_posts/tips/2021-11-28-vs_extension2.md	_posts/tips/2021-11-28-vscode-extensions-productivity-part-2.md
+R100	_posts/tips/2021-11-29-install_ubuntu.md	_posts/tips/2021-11-29-install-ubuntu-linux-setup.md
+R100	_posts/tips/2021-11-30-git_in_ubuntu.md	_posts/tips/2021-11-30-git-setup-ubuntu-linux.md
+R100	_posts/tips/2021-11-30-install_konlpy.md	_posts/tips/2021-11-30-install-konlpy-korean-nlp.md
+R100	_posts/tips/2021-12-20-initialize_vscode.md	_posts/tips/2021-12-20-initialize-vscode-development-environment.md
+R100	_posts/tips/2022-03-20-install_cuda2.md	_posts/tips/2022-03-20-install-cuda-nvidia-gpu-part-2.md
+R100	_posts/tips/2022-07-12-install_cuda_linux.md	_posts/tips/2022-07-12-install-cuda-linux-nvidia-gpu.md
+R100	_posts/tips/2022-08-05-install_hdp.md	_posts/tips/2022-08-05-install-hortonworks-data-platform.md
+R100	_posts/tips/2022-09-06-install_docker.md	_posts/tips/2022-09-06-install-docker-container-platform.md
+R100	_posts/tips/2022-10-06-touchpad.md	_posts/tips/2022-10-06-touchpad-configuration-linux.md
+R100	_posts/tips/2023-01-05-install_hadoop_mac.md	_posts/tips/2023-01-05-install-hadoop-macos-setup-guide.md
+R100	_posts/web/2021-11-01-html_basic.md	_posts/web/2021-11-01-html-hypertext-markup-language-basics.md
+R100	_posts/web/2021-11-02-css_basic.md	_posts/web/2021-11-02-css-cascading-style-sheets-basics.md
+R100	_posts/web/2021-11-03-bootstrap_basic.md	_posts/web/2021-11-03-bootstrap-responsive-web-framework.md
+R100	_posts/web/2025-09-25-api_deployment.md	_posts/web/2025-09-25-api-deployment-production-guide.md
+R100	_posts/web/2025-09-27-rest_api.md	_posts/web/2025-09-27-rest-api-design-best-practices.md
+R052	_posts/OS/2022-08-12-os1_10th2.md	_posts/OS/2022-08-12-os1_10th.md
+R100	_posts/OS/2022-08-13-os2_10th1.md	_posts/OS/2022-08-13-os2_10th.md
+R056	_posts/OS/2022-08-14-os3_10th2.md	_posts/OS/2022-08-14-os3_10th.md
+R100	_posts/OS/2022-08-17-os4_10th1.md	_posts/OS/2022-08-17-os4_10th.md
+R067	_posts/OS/2022-08-18-os5_10th1.md	_posts/OS/2022-08-18-os5_10th.md
+R100	_posts/OS/2022-08-24-os6_10th1.md	_posts/OS/2022-08-24-os6_10th.md
+R100	_posts/OS/2022-08-26-os7_10th1.md	_posts/OS/2022-08-26-os7_10th.md
+R100	_posts/OS/2022-08-28-os8_10th1.md	_posts/OS/2022-08-28-os8_10th.md
+R054	_posts/OS/2022-09-08-os9_10th2.md	_posts/OS/2022-09-08-os9_10th.md
+R066	_posts/OS/2022-09-12-os10_10th2.md	_posts/OS/2022-09-12-os10_10th.md
+R064	_posts/keras/2021-11-08-keras_ch3_org_1.md	_posts/keras/2021-11-08-keras_ch3_org.md
+R053	_posts/keras/2021-11-09-keras_ch5_org_1.md	_posts/keras/2021-11-09-keras_ch5_org.md
+R063	_posts/keras/2021-11-15-keras_ch6_org_1.md	_posts/keras/2021-11-15-keras_ch6_org.md
+R099	_posts/keras/2021-11-23-keras_ch7_org_1.md	_posts/keras/2021-11-23-keras_ch7_org.md
+R099	_posts/keras/2022-01-10-keras_ch8_org_1.md	_posts/keras/2022-01-10-keras_ch8_org.md
+R100	_posts/OS/25-09-25-api_deployment.md	_posts/web/2025-09-25-api_deployment.md
+R099	_posts/python/2021-11-15-python_func.md	_algorithms/2021-11-15-python_func.md
+R056	_posts/web/2021-11-03-bootstrap_basic_1.md	_posts/web/2021-11-03-bootstrap_basic.md
+R065	_algorithms/test.md	_algorithms/2025-09-19-test.md
+R061	_posts/paper/2022-08-06-gfs1.md	_posts/paper/2022-08-06-gfs.md
+R057	_posts/paper/2022-08-14-rdd1.md	_posts/paper/2022-08-14-rdd.md
+R098	_posts/sql/2024-09-08-sql_pro4.md	_posts/sql/2024-09-17-sql_pro4.md
+R099	_pages/cv.md	_pages/cv1.md
+R079	_posts/web/2021-11-02-html_basic.md	_posts/web/2021-11-01-html_basic.md
+R100	_posts/docker/2022-07-18-docker_command.md	_posts/docker/2022-07-18-docker_overview_venv.md
+R099	_posts/conceptDrift/2022-06-03-drift_detection.md	_posts/mlops/2022-06-03-drift_detection.md
+R099	_posts/statistics/2022-06-05-inequality_for_detection.md	_posts/mlops/2022-06-05-inequality_for_detection.md
+R060	categories/category-conceptDrift.md	categories/category-mlops.md
+R100	_posts/suvey_a/2022-01-16-junior1.md	_posts/survey_a/2022-01-16-junior1.md
+R100	_posts/suvey_a/2022-01-16-junior2.md	_posts/survey_a/2022-01-16-junior2.md
+R100	_posts/suvey_a/2022-01-17-junior3.md	_posts/survey_a/2022-01-17-junior3.md
+R100	_posts/suvey_a/2022-01-17-junior4.md	_posts/survey_a/2022-01-17-junior4.md
+R100	_posts/suvey_a/2022-01-18-junior5.md	_posts/survey_a/2022-01-18-junior5.md
+R099	_posts/mlops/2022-06-03-drift_detection.md	_posts/conceptDrift/2022-06-03-drift_detection.md
+R060	categories/category-mlops.md	categories/category-conceptDrift.md
+R099	_posts/paper/2022-04-14-NFResNet.md	_posts/paper/2022-04-14-NFNet.md
+R068	categories/category-english_grammar.md	categories/category-eng_gr.md
+R096	_pages/todo.md	_pages/reference.md
+R099	_posts/OS/2021-12-30-os6_ewha.md	_posts/OS/2021-12-30-os5_ewha.md
+R099	_posts/OS/2021-12-31-os7_ewha.md	_posts/OS/2021-12-31-os6_ewha.md
+R099	_posts/OS/2022-01-04-os10_ewha.md	_posts/OS/2022-01-04-os9_ewha.md
+R099	_posts/OS/2022-01-04-os11_ewha.md	_posts/OS/2022-01-05-os10_ewha.md
+R056	_posts/linux/2021-12-01-life_coding_linux4.md	_posts/linux/2021-11-30-life_coding_linux2.md
+R061	_posts/linux/2021-12-01-life_coding_linux5.md	_posts/linux/2021-12-01-life_coding_linux3.md
+R094	_posts/english_grammar/2021-11-01-rax_sinsanghyun.md	_posts/english/2021-11-01-rax_sinsanghyun.md
+R063	_posts/keras/2021-11-22-keras_ch6_org_3.md	_posts/keras/2021-11-22-keras_ch6_org_2.md
+R054	_posts/keras/2021-11-11-keras_ch5_org_4.md	_posts/keras/2021-11-11-keras_ch5_org_2.md
+R100	_posts/OS/2022-01-04-os9_ewha.md	_posts/OS/2022-01-03-os9_ewha.md
+R099	_posts/java/2021-12-17-java_gr.md	_posts/java/2021-12-17-java_gr1.md
+R100	"_posts/books/2021-10-29-\352\261\264\355\210\254\353\245\274 \353\271\210\353\213\244.md"	_posts/books/2021-10-29-good_luck.md
+R100	"_posts/books/2021-10-31-\354\234\240\353\237\254\355\224\274\354\226\270 \353\223\234\353\246\274.md"	_posts/books/2021-10-31-EuropeanDream.md
+R100	"_posts/books/2021-10-31-\355\225\234\353\213\254 \352\263\265\353\266\200 \353\215\260\354\235\264\355\204\260 \353\266\204\354\204\235.md"	_posts/books/2021-10-31-Monthlystudydataanalysis.md
+R100	"_posts/books/2021-10-31-\353\263\265\355\225\231\354\231\225\354\235\230 \354\202\254\355\232\214\355\225\231.md"	_posts/books/2021-10-31-Sociologyof_ReturningStudents.md
+R100	"_posts/books/2021-10-31-\354\213\240\354\235\230 \353\202\230\353\235\274 \354\235\270\352\260\204 \353\202\230\353\235\274 -\354\204\270\352\263\204\354\235\230 \354\242\205\352\265\220.md"	_posts/books/2021-10-31-gh_land_religion.md
+R100	"_posts/books/2021-10-31-\354\213\240.md"	_posts/books/2021-10-31-god.md
+R100	"_posts/books/2021-10-31-\354\213\240\354\235\230 \353\251\230\355\203\210.md"	_posts/books/2021-10-31-gods_mentality.md
+R100	"_posts/books/2021-10-31-\352\260\200\352\263\240 \354\213\266\354\235\200 \352\270\270\354\235\204 \352\260\200\353\235\274.md"	_posts/books/2021-10-31-gotheway_ youwanttogo.md
+R100	"_posts/books/2021-10-31-\353\213\250\353\213\250\355\225\264\354\247\200\353\212\224 \354\227\260\354\212\265.md"	_posts/books/2021-10-31-hardening_practice.md
+R100	"_posts/books/2021-10-31-\354\226\264\353\226\273\352\262\214 \354\202\264 \352\262\203\354\235\270\352\260\200.md"	_posts/books/2021-10-31-howtolive.md
+R100	"_posts/books/2021-10-31-\353\205\270\353\254\264\355\230\204, \353\247\210\354\247\200\353\247\211 \354\235\270\355\204\260\353\267\260.md"	_posts/books/2021-10-31-last_interview.md
+R100	"_posts/books/2021-10-31-\354\202\266\354\235\204 \354\234\204\355\225\234 \354\210\230\354\227\205.md"	_posts/books/2021-10-31-lessonsforlife.md
+R100	"_posts/books/2021-10-31-\354\203\235\352\260\201\354\235\264 \353\247\214\353\223\240 \352\260\220\354\230\245.md"	_posts/books/2021-10-31-prisonofthought.md
+R100	"_posts/books/2021-10-31-\353\213\245\354\271\230\352\263\240 \354\240\225\354\271\230.md"	_posts/books/2021-10-31-shutup_politics.md
+R100	"_posts/books/2021-10-31-\354\225\204\355\224\204\353\213\210\352\271\214 \354\262\255\354\266\230\354\235\264\353\213\244.md"	_posts/books/2021-10-31-sick_young.md
+R100	"_posts/books/2021-10-31-\353\202\230\353\245\274 \354\202\254\353\212\224 \354\210\234\352\260\204.md"	_posts/books/2021-10-31-themoment_ilive.md
+R099	_posts/linux/2021-11-23-linux_basic1.md	_posts/linux/2021-11-23-life_coding_linux1.md
+R099	_posts/linux/2021-11-23-linux_basic2.md	_posts/linux/2021-11-23-life_coding_linux2.md
+R098	_posts/linux/2021-11-30-linux_basic3.md	_posts/linux/2021-11-30-life_coding_linux3.md
+R099	_posts/linux/2021-12-01-linux_basic4.md	_posts/linux/2021-12-01-life_coding_linux4.md
+R084	_posts/linux/2021-12-01-linux_basic5.md	_posts/linux/2021-12-01-life_coding_linux5.md
+R099	_posts/linux/2021-11-29-install_ubuntu.md	_posts/tips/2021-11-29-install_ubuntu.md
+R099	_posts/linux/2021-11-30-git_in_ubuntu.md	_posts/tips/2021-11-30-git_in_ubuntu.md
+R100	_posts/R/2021-11-05-bigdata_analysis1.md	_posts/R_ML/2021-11-05-bigdata_analysis1.md
+R100	_posts/R/2021-11-12-bigdata_analysis2.md	_posts/R_ML/2021-11-12-bigdata_analysis2.md
+R100	_posts/R/2021-11-15-bigdata_analysis3.md	_posts/R_ML/2021-11-15-bigdata_analysis3.md
+R100	_posts/R/2021-11-16-bigdata_analysis4.md	_posts/R_ML/2021-11-16-bigdata_analysis4.md
+R100	_posts/R/2021-11-17-bigdata_analysis5.md	_posts/R_ML/2021-11-17-bigdata_analysis5.md
+R099	_posts/R/2021-11-17-bigdata_analysis6.md	_posts/R_ML/2021-11-17-bigdata_analysis6.md
+R100	_posts/R/2021-11-18-bigdata_analysis7.md	_posts/R_ML/2021-11-18-bigdata_analysis7.md
+R100	_posts/R/2021-11-25-solve_bigdata.md	_posts/R_ML/2021-11-25-solve_bigdata.md
+R100	_posts/R/2021-11-27-solve_bigdata2.md	_posts/R_ML/2021-11-27-solve_bigdata2.md
+R100	_posts/R/2021-11-27-solve_bigdata3.md	_posts/R_ML/2021-11-27-solve_bigdata3.md
+R100	_posts/R/2021-11-28-solve_bigdata4.md	_posts/R_ML/2021-11-28-solve_bigdata4.md
+R097	_posts/R/2021-11-05-R_basic_to_pro_1.md	_posts/R/2021-11-05-bigdata_analysis1.md
+R096	_posts/R/2021-11-12-R_basic_to_pro_2.md	_posts/R/2021-11-12-bigdata_analysis2.md
+R098	_posts/R/2021-11-15-R_basic_to_pro_3.md	_posts/R/2021-11-15-bigdata_analysis3.md
+R098	_posts/R/2021-11-16-R_basic_to_pro_4.md	_posts/R/2021-11-16-bigdata_analysis4.md
+R097	_posts/R/2021-11-17-R_basic_to_pro_5.md	_posts/R/2021-11-17-bigdata_analysis5.md
+R097	_posts/R/2021-11-17-R_basic_to_pro_6.md	_posts/R/2021-11-17-bigdata_analysis6.md
+R097	_posts/R/2021-11-18-R_basic_to_pro_7.md	_posts/R/2021-11-18-bigdata_analysis7.md
+R074	categories/category-R.md	categories/category-R_ML.md
+R099	_posts/linux/2021-11-23-linux_basic3.md	_posts/linux/2021-11-30-linux_basic3.md
+R100	_posts/git/2021-11-21-04_push_error.md	_posts/git/2021-11-21-03_push_error.md
+R100	_posts/git/2021-11-21-05_branch.md	_posts/git/2021-11-21-04_branch.md
+R098	_posts/keras/2021-11-19-keras_ch6_org_3.md	_posts/keras/2021-11-22-keras_ch6_org_3.md
+R090	_posts/tips/2021-11-06-ipynb_to_md.md	_posts/markdown/2021-11-06-ipynb_to_md.md
+R096	_posts/tips/2021-11-20-jupyter_to_gist.md	_posts/git_blog/2021-11-20-jupyter_to_gist.md
+R100	_posts/Chollet_dl/2021-11-08-keras_ch1_org.md	_posts/keras/2021-11-08-keras_ch1_org.md
+R100	_posts/Chollet_dl/2021-11-08-keras_ch2_org.md	_posts/keras/2021-11-08-keras_ch2_org.md
+R100	_posts/Chollet_dl/2021-11-08-keras_ch3_org_1.md	_posts/keras/2021-11-08-keras_ch3_org_1.md
+R100	_posts/Chollet_dl/2021-11-08-keras_ch3_org_2.md	_posts/keras/2021-11-08-keras_ch3_org_2.md
+R100	_posts/Chollet_dl/2021-11-08-keras_ch3_org_3.md	_posts/keras/2021-11-08-keras_ch3_org_3.md
+R100	_posts/Chollet_dl/2021-11-09-keras_ch4_org.md	_posts/keras/2021-11-09-keras_ch4_org.md
+R100	_posts/Chollet_dl/2021-11-09-keras_ch5_org_1.md	_posts/keras/2021-11-09-keras_ch5_org_1.md
+R100	_posts/Chollet_dl/2021-11-10-keras_ch5_org_2.md	_posts/keras/2021-11-10-keras_ch5_org_2.md
+R100	_posts/Chollet_dl/2021-11-10-keras_ch5_org_3.md	_posts/keras/2021-11-10-keras_ch5_org_3.md
+R100	_posts/Chollet_dl/2021-11-11-keras_ch5_org_4.md	_posts/keras/2021-11-11-keras_ch5_org_4.md
+R100	_posts/Chollet_dl/2021-11-12-keras_ch5_org_5.md	_posts/keras/2021-11-12-keras_ch5_org_5.md
+R100	_posts/Chollet_dl/2021-11-15-keras_ch6_org_1.md	_posts/keras/2021-11-15-keras_ch6_org_1.md
+R100	_pages/categories/category-R.md	_pages/categories/R.md
+R100	_pages/categories/category-book.md	_pages/categories/book.md
+R100	_pages/categories/category-englishWord.md	_pages/categories/englishWord.md
+R100	_pages/categories/category-english_grammar.md	_pages/categories/english_grammar.md
+R100	_pages/categories/category-error.md	_pages/categories/error.md
+R100	_pages/categories/category-keras.md	_pages/categories/keras.md
+R100	_pages/categories/category-markdown.md	_pages/categories/markdown.md
+R100	_pages/categories/category-python.md	_pages/categories/python.md
+R100	_pages/categories/category-sql.md	_pages/categories/sql.md
+R100	_pages/categories/category-tips.md	_pages/categories/tips.md
+R100	_pages/categories/category-web.md	_pages/categories/web.md
+R099	_posts/python/2021-11-08-keras_ch1_org.md	_posts/Chollet_dl/2021-11-08-keras_ch1_org.md
+R099	_posts/python/2021-11-08-keras_ch2_org.md	_posts/Chollet_dl/2021-11-08-keras_ch2_org.md
+R099	_posts/python/2021-11-08-keras_ch3_org_1.md	_posts/Chollet_dl/2021-11-08-keras_ch3_org_1.md
+R099	_posts/python/2021-11-08-keras_ch3_org_2.md	_posts/Chollet_dl/2021-11-08-keras_ch3_org_2.md
+R099	_posts/python/2021-11-08-keras_ch3_org_3.md	_posts/Chollet_dl/2021-11-08-keras_ch3_org_3.md
+R099	_posts/python/2021-11-09-keras_ch4_org.md	_posts/Chollet_dl/2021-11-09-keras_ch4_org.md
+R099	_posts/python/2021-11-09-keras_ch5_org_1.md	_posts/Chollet_dl/2021-11-09-keras_ch5_org_1.md
+R099	_posts/python/2021-11-10-keras_ch5_org_2.md	_posts/Chollet_dl/2021-11-10-keras_ch5_org_2.md
+R099	_posts/python/2021-11-10-keras_ch5_org_3.md	_posts/Chollet_dl/2021-11-10-keras_ch5_org_3.md
+R099	_posts/python/2021-11-11-keras_ch5_org_4.md	_posts/Chollet_dl/2021-11-11-keras_ch5_org_4.md
+R099	_posts/python/2021-11-12-keras_ch5_org_5.md	_posts/Chollet_dl/2021-11-12-keras_ch5_org_5.md
+R099	_posts/python/2021-11-15-keras_ch6_org_1.md	_posts/Chollet_dl/2021-11-15-keras_ch6_org_1.md
+R062	_pages/project-archive.md	_pages/portfolio-archive.md
+R060	_pages/project.md	_pages/project-archive.md
+R052	_posts/web/2021-11-03-bootstrap_basic.md	_posts/web/2021-11-03-bootstrap_basic_1.md
+R099	_posts/R/2021-11-05-R_basic_to_pro.md	_posts/R/2021-11-05-R_basic_to_pro_1.md
+R100	_posts/htmlcss/2021-11-02-css_basic.md	_posts/web/2021-11-02-css_basic.md
+R100	_posts/htmlcss/2021-11-02-html_basic.md	_posts/web/2021-11-02-html_basic.md
+R100	_posts/htmlcss/2021-11-03-bootstrap_basic.md	_posts/web/2021-11-03-bootstrap_basic.md
+R099	_posts/python/2021-11-07-keras_ch1_org.md	_posts/python/2021-11-08-keras_ch1_org.md
+R100	_posts/error_collection/2021-11-03-Kernel died_cod1.md	_posts/error_collection/2021-11-03-Kernel died_attributeError.md
+R092	_posts/markdown_gr/2021-11-01-markdown_grammar.md	_posts/markdown/2021-11-01-markdown_grammar.md
+R100	_posts/mysql/2021-11-04-sql_basic.md	_posts/sql/2021-11-04-sql_basic.md
+R100	_posts/mysql/2021-11-04-sql_pro.md	_posts/sql/2021-11-04-sql_pro.md
+R097	_posts/error_collection/2021-11-04-NonMatchingChecksumError.md	_posts/error_collection/2021-11-03-NonMatchingChecksumError.md
+R100	"assets/images/\353\266\201\353\221\220\354\271\240\354\204\261.jpg"	assets/images/bukdu.jpg
+R100	_posts/htmlcss/2021-11-02-html_css.md	_posts/htmlcss/2021-11-02-html_basic.md
+R099	_posts/markdown_gr/2021-11-02-markdown_grammar.md	_posts/markdown_gr/2021-11-01-markdown_grammar.md
+R100	_posts/markdown_gr/2021-11-01-markdown_grammar.md	_posts/markdown_gr/2021-11-02-markdown_grammar.md
+R100	"images/2021-10-29-first/\353\266\201\353\221\220\354\271\240\354\204\261.jpg"	images/2021-10-29-first/bukdu.jpg
+R099	_posts/english_grammar/2011-11-01-rax_sinsanghyun.md	_posts/english_grammar/2021-11-01-rax_sinsanghyun.md
+R092	"_posts/markdown_gr/2021-11-01-\353\247\210\355\201\254\353\213\244\354\232\264 \353\254\270\353\262\225.md"	_posts/markdown_gr/2021-11-01-markdown_grammar.md
+R100	_posts/english/2021-11-01-word_day1.md	_posts/english/2021-11-01-word_day01.md
+R100	_posts/english/2021-11-01-word_day2.md	_posts/english/2021-11-01-word_day02.md
+R100	_posts/english/2021-11-01-word_day3.md	_posts/english/2021-11-01-word_day03.md
+R100	_posts/english/2021-11-01-word_day4.md	_posts/english/2021-11-01-word_day04.md
+R100	_posts/english/2021-11-01-word_day5.md	_posts/english/2021-11-01-word_day05.md
+R100	_posts/english/2021-11-01-word_day6.md	_posts/english/2021-11-01-word_day06.md
+R100	_posts/english/2021-11-01-word_day7.md	_posts/english/2021-11-01-word_day07.md
+R100	_posts/english/2021-11-01-word_day8.md	_posts/english/2021-11-01-word_day08.md
+R100	_posts/english/2021-11-01-word_day9.md	_posts/english/2021-11-01-word_day09.md
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-42.jpg"	images/english/day10_1.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-43.jpg"	images/english/day10_2.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-44.jpg"	images/english/day11_1.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-45.jpg"	images/english/day11_2.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-46.jpg"	images/english/day12_1.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-47.jpg"	images/english/day12_2.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-48.jpg"	images/english/day13_1.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-49.jpg"	images/english/day13_2.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-50.jpg"	images/english/day14_1.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-51.jpg"	images/english/day14_2.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-52.jpg"	images/english/day15_1.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-53.jpg"	images/english/day15_2.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-54.jpg"	images/english/day16_1.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-55.jpg"	images/english/day16_2.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-56.jpg"	images/english/day17_1.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-57.jpg"	images/english/day17_2.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-58.jpg"	images/english/day18_1.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-59.jpg"	images/english/day18_2.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-60.jpg"	images/english/day19_1.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-61.jpg"	images/english/day19_2.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-62.jpg"	images/english/day20_1.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-63.jpg"	images/english/day20_2.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-64.jpg"	images/english/day21_1.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-65.jpg"	images/english/day21_2.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-66.jpg"	images/english/day22_1.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-67.jpg"	images/english/day22_2.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-68.jpg"	images/english/day23_1.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-69.jpg"	images/english/day23_2.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-70.jpg"	images/english/day24_1.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-71.jpg"	images/english/day24_2.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-72.jpg"	images/english/day25_1.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-73.jpg"	images/english/day25_2.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-74.jpg"	images/english/day26_1.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-75.jpg"	images/english/day26_2.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-76.jpg"	images/english/day27_1.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-77.jpg"	images/english/day27_2.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-78.jpg"	images/english/day28_1.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-79.jpg"	images/english/day28_2.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-80.jpg"	images/english/day29_1.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-81.jpg"	images/english/day29_2.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-26.jpg"	images/english/day2_1.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-27.jpg"	images/english/day2_2.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-82.jpg"	images/english/day30_1.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-83.jpg"	images/english/day30_2.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-28.jpg"	images/english/day3_1.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-29.jpg"	images/english/day3_2.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-30.jpg"	images/english/day4_1.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-31.jpg"	images/english/day4_2.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-32.jpg"	images/english/day5_1.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-33.jpg"	images/english/day5_2.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-34.jpg"	images/english/day6_1.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-35.jpg"	images/english/day6_2.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-36.jpg"	images/english/day7_1.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-37.jpg"	images/english/day7_2.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-38.jpg"	images/english/day8_1.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-39.jpg"	images/english/day8_2.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-40.jpg"	images/english/day9_1.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-41.jpg"	images/english/day9_2.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-24.jpg"	images/english/day1_1.jpg
+R100	"images/english/\354\213\240\354\203\201\355\230\204 \354\230\201\353\213\250\354\226\264 & \353\213\250\354\226\264 \354\264\235\354\240\225\353\246\254-25.jpg"	images/english/day1_2.jpg
+R100	"_posts/2021-10-31-\353\213\245\354\271\230\352\263\240 \354\240\225\354\271\230.md"	"_posts/books/2021-10-31-\353\213\245\354\271\230\352\263\240 \354\240\225\354\271\230.md"
+R100	"_posts/2021-10-29-\352\261\264\355\210\254\353\245\274 \353\271\210\353\213\244.md"	"_posts/books/2021-10-29-\352\261\264\355\210\254\353\245\274 \353\271\210\353\213\244.md"
+R100	"_posts/2021-10-31-\353\202\230\353\245\274 \354\202\254\353\212\224 \354\210\234\352\260\204.md"	"_posts/books/2021-10-31-\353\202\230\353\245\274 \354\202\254\353\212\224 \354\210\234\352\260\204.md"
+R100	"_posts/2021-10-31-\354\213\240.md"	"_posts/books/2021-10-31-\354\213\240.md"
+R100	"_posts/2021-10-31-\354\213\240\354\235\230 \353\202\230\353\235\274 \354\235\270\352\260\204 \353\202\230\353\235\274 -\354\204\270\352\263\204\354\235\230 \354\242\205\352\265\220.md"	"_posts/books/2021-10-31-\354\213\240\354\235\230 \353\202\230\353\235\274 \354\235\270\352\260\204 \353\202\230\353\235\274 -\354\204\270\352\263\204\354\235\230 \354\242\205\352\265\220.md"
+R100	"_posts/2021-10-31-\354\213\240\354\235\230 \353\251\230\355\203\210.md"	"_posts/books/2021-10-31-\354\213\240\354\235\230 \353\251\230\355\203\210.md"
+R100	"_posts/2021-10-31-\354\225\204\355\224\204\353\213\210\352\271\214 \354\262\255\354\266\230\354\235\264\353\213\244.md"	"_posts/books/2021-10-31-\354\225\204\355\224\204\353\213\210\352\271\214 \354\262\255\354\266\230\354\235\264\353\213\244.md"
+R100	"_posts/2021-10-31-\354\234\240\353\237\254\355\224\274\354\226\270 \353\223\234\353\246\274.md"	"_posts/books/2021-10-31-\354\234\240\353\237\254\355\224\274\354\226\270 \353\223\234\353\246\274.md"
+R100	_posts/2021.10.29-first.md	_posts/2021-10-29-first.md
+R094	LICENSE.md	LICENSE

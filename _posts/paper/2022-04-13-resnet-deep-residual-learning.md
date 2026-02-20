@@ -9,6 +9,8 @@ toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-04-28
+redirect_from:
+  - /paper/ResNet/
 ---
 
 ![image](https://user-images.githubusercontent.com/78655692/163178626-0d491aa2-1634-4a28-8876-b58c5322a463.png)

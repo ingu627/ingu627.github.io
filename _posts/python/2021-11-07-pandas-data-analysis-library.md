@@ -9,6 +9,8 @@ toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-04-11
+redirect_from:
+  - /python/pandas_org/
 ---
 
 <br>

@@ -10,6 +10,8 @@ sidebar_main: false
 
 date: 2025-05-05
 last_modified_at: 2025-09-14
+redirect_from:
+  - /llm/llm1_vectordb/
 ---
 
 벡터 데이터베이스는 인공지능과 머신러닝 기술의 발전과 함께 급부상한 특수 목적 데이터베이스이다. <br>

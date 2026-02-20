@@ -10,6 +10,8 @@ sidebar_main: false
 
 date: 2022-07-30
 last_modified_at: 2025-09-19
+redirect_from:
+  - /paper/MDE_w_BN/
 ---
 
 ![image](https://user-images.githubusercontent.com/78655692/180959062-2917bf3d-bd4e-4a42-84ef-f70350d5da60.png)

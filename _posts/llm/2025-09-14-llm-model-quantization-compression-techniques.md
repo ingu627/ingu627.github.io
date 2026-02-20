@@ -10,6 +10,8 @@ sidebar_main: false
 
 date: 2025-09-14
 last_modified_at: 205-09-14
+redirect_from:
+  - /llm/quantization1/
 ---
 
 거대 언어 모델(LLM)이 자연어 처리에서 놀라운 성과를 내고 있지만, 크기와 연산량 때문에 실제 사용 시 문제가 많다. 이 문제를 해결하기 위해 모델을 압축하고 효율을 높이는 경량화 기법들을 알아본다.

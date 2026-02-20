@@ -10,6 +10,8 @@ sidebar_main: false
 
 date: 2021-11-04
 last_modified_at: 2022-08-22
+redirect_from:
+  - /sql/sql_basic/
 ---
 
 ## 데이터 언어

@@ -9,6 +9,8 @@ toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-04-18
+redirect_from:
+  - /code/LeNet_pytorch/
 ---
 
 <img align='right' width='400' src='https://user-images.githubusercontent.com/78655692/163406315-98f4f545-6775-432e-90f1-6c15222f4e79.png'>

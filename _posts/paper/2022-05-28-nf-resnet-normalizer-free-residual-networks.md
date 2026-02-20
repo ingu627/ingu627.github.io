@@ -9,6 +9,8 @@ toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-05-29
+redirect_from:
+  - /paper/NFResnet/
 ---
 
 ![image](https://user-images.githubusercontent.com/78655692/170853996-32fc069f-717c-42e7-a991-152e7b18c0db.png)

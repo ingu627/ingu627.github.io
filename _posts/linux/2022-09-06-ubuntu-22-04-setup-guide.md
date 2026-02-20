@@ -10,6 +10,8 @@ toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-09-07
+redirect_from:
+  - /linux/ubuntu2204/
 ---
 
 ubuntu 22.04를 ssd에 설치하고 여러 번 포맷을 하게 되면서, 다시 설치할 때 참고하기 위해 작성했습니다.

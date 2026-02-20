@@ -9,6 +9,8 @@ sidebar_main: false
 
 date: 2021-11-03
 last_modified_at: 2021-11-03
+redirect_from:
+  - /error_collection/Kernel died_attributeError/
 ---
 
 ## 에러 : Kernel died (code: 1). AttributeError: 'SelectIOLoop' object has no attribute 'asyncio_loop

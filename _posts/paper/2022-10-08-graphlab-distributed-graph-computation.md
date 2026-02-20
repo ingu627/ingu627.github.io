@@ -9,6 +9,8 @@ toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-10-08
+redirect_from:
+  - /paper/graphLab/
 ---
 
 ![image](https://user-images.githubusercontent.com/78655692/192312461-00f1591c-38ed-4ced-99eb-b68cad44597a.png)

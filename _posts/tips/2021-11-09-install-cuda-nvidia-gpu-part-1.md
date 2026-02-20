@@ -10,6 +10,8 @@ toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-03-20
+redirect_from:
+  - /tips/install_cuda/
 ---
 ## UPDATE (2021.11.10)
 

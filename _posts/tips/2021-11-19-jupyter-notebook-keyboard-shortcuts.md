@@ -8,6 +8,8 @@ toc : True
 sidebar_main: false
 
 last_modified_at: 2022-03-20
+redirect_from:
+  - /tips/jupyter_shortcuts/
 ---
 
 ## Jupyter 주요 단축키 모음

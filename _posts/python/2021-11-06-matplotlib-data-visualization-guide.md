@@ -9,6 +9,8 @@ toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-04-11
+redirect_from:
+  - /python/matplotlib_org/
 ---
 
 본 글은 [matplotlib.org](https://matplotlib.org/)사이트-의 튜토리얼을 참고해서 작성했습니다.

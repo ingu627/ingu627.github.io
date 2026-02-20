@@ -250,6 +250,7 @@ plugins:
   - jekyll-gist
   - jekyll-feed
   - jekyll-include-cache
+  - jekyll-redirect-from
   # - jekyll-seo-tag  # Automatic SEO meta tags generation
 
 # mimic GitHub Pages with --safe
@@ -260,6 +261,7 @@ whitelist:
   - jekyll-feed
   - jekyll-include-cache
   - jekyll-seo-tag
+  - jekyll-redirect-from
 
 
 # Archives

@@ -10,6 +10,8 @@ sidebar_main: false
 
 data: 2022-08-06
 last_modified_at: 2022-08-08
+redirect_from:
+  - /paper/gfs/
 ---
 
 ![image](https://user-images.githubusercontent.com/78655692/183030397-f7d45214-efa3-4a4e-835d-71f6d52d7c58.png)

@@ -9,6 +9,8 @@ toc_sticky: false
 sidebar_main: false
 date: 2025-09-24
 last_modified_at: 2025-09-24
+redirect_from:
+  - /docker/kubernetes1/
 ---
 
 <br>

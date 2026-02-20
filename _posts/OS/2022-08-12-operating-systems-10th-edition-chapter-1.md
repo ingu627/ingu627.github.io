@@ -9,6 +9,8 @@ toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-08-12
+redirect_from:
+  - /OS/os1_10th/
 ---
 
 <img align='right' width='150' height='200' src='https://user-images.githubusercontent.com/78655692/184343886-e144daea-afbd-43b6-90f9-1638c89a089c.png'>

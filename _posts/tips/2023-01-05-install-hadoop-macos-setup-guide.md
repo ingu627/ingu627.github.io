@@ -10,6 +10,8 @@ toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2023-01-06
+redirect_from:
+  - /tips/install_hadoop_mac/
 ---
 
 <br>

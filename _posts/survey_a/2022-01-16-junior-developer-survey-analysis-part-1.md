@@ -9,6 +9,8 @@ toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-03-31
+redirect_from:
+  - /survey_a/junior1/
 ---
 
 <img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/149654430-fb318851-e483-42ac-ba4a-40b5468c6340.png'>

@@ -9,6 +9,8 @@ toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-03-29
+redirect_from:
+  - /dia/design2/
 ---
 
 <img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/150554021-0a13844c-6b41-470c-870a-a41726ea3c84.png

@@ -8,6 +8,8 @@ toc: true
 sidebar_main: false
 
 last_modified_at: 2021-11-19
+redirect_from:
+  - /error_collection/unzip/
 ---
 
 ## 원인 : cmd로 압축해제하기 (zip, unzip)

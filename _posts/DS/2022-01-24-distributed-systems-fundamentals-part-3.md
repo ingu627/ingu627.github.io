@@ -10,6 +10,8 @@ toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2023-04-25
+redirect_from:
+  - /DS/Distributed_Systems3/
 ---
 
 <img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/147719090-5f0942f1-1647-44ad-8d72-f11e3fe400d7.png

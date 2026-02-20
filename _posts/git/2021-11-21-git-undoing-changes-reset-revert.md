@@ -10,6 +10,8 @@ sidebar_main: false
 
 date: 2022-01-11
 last_modified_at: 2025-09-20
+redirect_from:
+  - /git/07_undoing/
 ---
 
 <br>

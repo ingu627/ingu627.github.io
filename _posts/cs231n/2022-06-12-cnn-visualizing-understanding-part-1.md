@@ -9,6 +9,8 @@ toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-06-16
+redirect_from:
+  - /cs231n/cnn10/
 ---
 
 <img align='right' width='400' src='https://user-images.githubusercontent.com/78655692/172999209-71994ac3-c8a9-4ac2-82b5-84b18c83cdbb.png'>

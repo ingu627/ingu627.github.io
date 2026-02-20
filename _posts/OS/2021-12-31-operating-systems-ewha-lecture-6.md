@@ -9,6 +9,8 @@ toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-06-19
+redirect_from:
+  - /OS/os6_ewha/
 ---
 
 본 글은 (KOCW) 운영체제, 이화여자대학교 반효경 교수님의 강의를 듣고 내용을 요약 및 정리했습니다. <br> 개인 공부에 목적이 있으며, 자세한 사항은 <http://www.kocw.or.kr/home/cview.do?mty=p&kemId=1046323>에 참고하시면 됩니다. <br><br> Chapter 7. <br> - Deadlocks 1 - 40분 <br> - Deadlocks 2 - 37분

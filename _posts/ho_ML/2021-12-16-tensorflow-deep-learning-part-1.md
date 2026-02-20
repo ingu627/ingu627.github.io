@@ -9,6 +9,8 @@ sidebar_main: false
 classes: wide
 
 last_modified_at: 2022-04-17
+redirect_from:
+  - /ho_ML/TDL1/
 ---
 
 <img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/147628941-a1aeb296-324e-4a60-816b-e4cc6666d13e.png

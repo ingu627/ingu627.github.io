@@ -7,6 +7,8 @@ tags: [tip, pytorch, install, 파이토치 설치, conda, pip, 윈도우10, 윈�
 sidebar_main: false
 
 last_modified_at: 2022-03-25
+redirect_from:
+  - /tips/install_pytorch/
 ---
 
 <br>

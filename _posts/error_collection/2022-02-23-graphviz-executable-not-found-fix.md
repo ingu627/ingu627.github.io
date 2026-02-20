@@ -8,6 +8,8 @@ toc: true
 sidebar_main: false
 
 last_modified_at: 2022-02-23
+redirect_from:
+  - /error_collection/ExecutableNotFound_graphviz/
 ---
 
 <br>

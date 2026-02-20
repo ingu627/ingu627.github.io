@@ -8,6 +8,8 @@ toc : True
 sidebar_main: false
 
 last_modified_at: 2022-02-08
+redirect_from:
+  - /tips/use_gpu/
 ---
 
 <br>

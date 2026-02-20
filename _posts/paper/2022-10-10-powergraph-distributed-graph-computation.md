@@ -9,6 +9,8 @@ toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-10-21
+redirect_from:
+  - /paper/powergraph/
 ---
 
 ![image](https://user-images.githubusercontent.com/78655692/194746413-0494aaf8-179e-4244-a388-f3baf1a8f915.png)

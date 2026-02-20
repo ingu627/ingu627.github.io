@@ -9,6 +9,8 @@ toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-04-18
+redirect_from:
+  - /code/ResNet50_pytorch/
 ---
 
 {% capture related %}

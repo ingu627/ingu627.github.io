@@ -11,6 +11,8 @@ sidebar_main: false
 
 data: 2022-08-05
 last_modified_at: 2022-08-21
+redirect_from:
+  - /tips/install_hdp/
 ---
 
 Hortonworks Data Platform(HDP)는 분산 스토리지 및 대규모 멀티 소스 데이터 세트 처리를 위한 오픈소스 프레임워크입니다. 도커 내 hdp를 설치해봅시다. <br><br> 도커 내 HDP 설치 참고 : [

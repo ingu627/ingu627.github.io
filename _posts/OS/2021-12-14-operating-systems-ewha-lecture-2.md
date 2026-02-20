@@ -9,6 +9,8 @@ toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-06-19
+redirect_from:
+  - /OS/os2_ewha/
 ---
 
 본 글은 (KOCW) 운영체제, 이화여자대학교 반효경 교수님의 강의를 듣고 내용을 요약 및 정리했습니다. <br> 개인 공부에 목적이 있으며, 자세한 사항은 [여기](http://www.kocw.or.kr/home/cview.do?mty=p&kemId=1046323)를 참고하시면 됩니다. <br><br> Chapter 1. <br> - 강의소개 - 28분 <br> - Introduction to Operating Systems - 1시간 8분 <br><br> (+) 인프런의 주니온 박사님의 운영체제 공룡책 강의를 듣고 내용을 보충했습니다. 자세한 사항은 [여기](https://www.inflearn.com/course/%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C-%EA%B3%B5%EB%A3%A1%EC%B1%85-%EC%A0%84%EA%B3%B5%EA%B0%95%EC%9D%98)를 참고하시면 됩니다.

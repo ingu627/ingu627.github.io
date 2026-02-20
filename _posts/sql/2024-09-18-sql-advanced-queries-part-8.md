@@ -10,6 +10,8 @@ sidebar_main: false
 
 date: 2024-09-18
 last_modified_at: 2024-09-18
+redirect_from:
+  - /sql/sql_pro8/
 ---
 
 <br>

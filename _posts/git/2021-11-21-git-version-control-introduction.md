@@ -10,6 +10,8 @@ sidebar_main: false
 
 date: 2021-11-21
 last_modified_at: 2025-09-20
+redirect_from:
+  - /git/00_git_intro/
 ---
 
 ## 1. Git 초기 설정

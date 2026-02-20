@@ -9,6 +9,8 @@ toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-04-11
+redirect_from:
+  - /python/seaborn_org/
 ---
 
 본 글은 [seaborn.pydata.org](https://seaborn.pydata.org/)사이트-의 튜토리얼을 참고해서 작성했습니다.

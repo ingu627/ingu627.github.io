@@ -9,6 +9,8 @@ toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-04-13
+redirect_from:
+  - /paper/data_quality_driven_mlops/
 ---
 
 ![image](https://user-images.githubusercontent.com/78655692/163179208-1e53a732-6f83-4bbb-ac80-a46d3561c930.png)

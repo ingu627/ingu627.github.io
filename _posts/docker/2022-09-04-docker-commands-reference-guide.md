@@ -9,6 +9,8 @@ toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2023-01-11
+redirect_from:
+  - /docker/docker_command/
 ---
 
 

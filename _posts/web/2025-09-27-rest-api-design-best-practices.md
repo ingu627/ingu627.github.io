@@ -10,6 +10,8 @@ sidebar_main: false
 
 date: 2025-09-27
 last_modified_at: 2025-10-14
+redirect_from:
+  - /web/rest_api/
 ---
 
 API는 프로그램들이 서로 대화하는 데 사용되는 언어 또는 규칙이다. 그중에서도 REST API는 오늘날 웹에서 가장 널리 쓰이는 대화 방식이다. REST는 완전히 새로운 기술이 아니라, 웹을 성공으로 이끈 기존의 HTTP 통신 규칙을 잘 활용하여 만든 설계 원칙 모음이다.

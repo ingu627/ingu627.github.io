@@ -8,6 +8,8 @@ toc: true
 sidebar_main: false
 
 last_modified_at: 2022-01-27
+redirect_from:
+  - /error_collection/tfgradients/
 ---
 
 <br>

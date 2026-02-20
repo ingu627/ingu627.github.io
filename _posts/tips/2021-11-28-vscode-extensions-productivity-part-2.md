@@ -9,6 +9,8 @@ toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-03-20
+redirect_from:
+  - /tips/vs_extension2/
 ---
 
 <br>

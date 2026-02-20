@@ -8,6 +8,8 @@ sidebar_main: false
 classes: wide
 
 last_modified_at: 2022-04-15
+redirect_from:
+  - /git_blog/mathjax_in_md/
 ---
 
 <img src="https://user-images.githubusercontent.com/78655692/143910921-4b7d1a55-d2b0-49ee-b721-20ce1376df0b.png" width=650 alt="mathjax">

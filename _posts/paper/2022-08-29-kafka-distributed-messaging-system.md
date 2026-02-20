@@ -9,6 +9,8 @@ toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-08-29
+redirect_from:
+  - /paper/kafka/
 ---
 
 ![image](https://user-images.githubusercontent.com/78655692/187076466-dad23432-63ea-4f3f-af9f-8db9e585e03a.png)

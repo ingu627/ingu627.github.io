@@ -8,6 +8,8 @@ toc: True
 sidebar_main: false
 
 last_modified_at: 2021-12-20
+redirect_from:
+  - /tips/initialize_vscode/
 ---
 
 <br>

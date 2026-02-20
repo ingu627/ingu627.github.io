@@ -10,6 +10,8 @@ sidebar_main: false
 
 date: 2021-11-21
 last_modified_at: 2025-09-20
+redirect_from:
+  - /git/04_branch/
 ---
 
 **참고**: 이 포스트의 실습 예제는 `master` 브랜치를 사용합니다. 새로운 프로젝트에서는 `main` 브랜치 사용을 권장합니다.

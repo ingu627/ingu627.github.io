@@ -9,6 +9,8 @@ sidebar_main: false
 
 date: 2021-11-03
 last_modified_at: 2021-11-04
+redirect_from:
+  - /error_collection/NonMatchingChecksumError/
 ---
 
 ## 원인 : NonMatchingChecksumError: Artifact https://drive.google.com/uc?export=download&id=0B7EVK8r0v71pZjFTYXZWM3FlRnM 

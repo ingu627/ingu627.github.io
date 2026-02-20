@@ -9,6 +9,8 @@ sidebar_main: false
 
 date: 2021-11-03
 last_modified_at: 2021-11-03
+redirect_from:
+  - /error_collection/NotImplementedError/
 ---
 ## 원인 : NotImplementedError: Cannot convert a symbolic Tensor (simple_rnn_3/strided_slice:0) to a numpy array
 

@@ -10,6 +10,8 @@ sidebar_main: false
 
 date: 2022-09-21
 last_modified_at: 2025-09-16
+redirect_from:
+  - /paper/pregel/
 ---
 
 

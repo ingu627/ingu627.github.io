@@ -9,6 +9,8 @@ toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-04-28
+redirect_from:
+  - /java/java_gr2/
 ---
 
 기존 글인 [자바(java) 문법 정리](https://ingu627.github.io/java/java_gr1/)로 기초를 정리하였으나, 시간이 지남에 따라 용어들이 헤매기 시작했습니다. <br> 그래서 다시 한번 객체 지향 프로그래밍 (Object Oriented Programming) 위주로 정리해보았습니다.

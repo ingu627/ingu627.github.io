@@ -9,6 +9,8 @@ toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-04-03
+redirect_from:
+  - /java/java_gr1/
 ---
 
 자바 기초 문법을 개인공부를 목적으로 정리한 글입니다.<br> 자바의 정석 책 외의 위키독스의 "점프 투 자바"를 참고하여 작성했습니다. <https://wikidocs.net/book/31> 

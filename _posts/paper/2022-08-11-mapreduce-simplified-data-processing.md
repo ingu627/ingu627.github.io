@@ -9,6 +9,8 @@ toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-08-11
+redirect_from:
+  - /paper/mapreduce/
 ---
 
 ![image](https://user-images.githubusercontent.com/78655692/183697704-2aeab667-34f8-4369-bb93-7f42d326e9a4.png)

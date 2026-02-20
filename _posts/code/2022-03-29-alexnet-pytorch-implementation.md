@@ -9,6 +9,8 @@ toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-07-13
+redirect_from:
+  - /code/alexnet_pytorch/
 ---
 
 {% capture related %}

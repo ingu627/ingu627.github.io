@@ -13,6 +13,8 @@ use_math: true
 
 author_profile: false
 last_modified_at: 2025-10-05
+redirect_from:
+  - /algorithms/stack_queue/
 ---
 
 스택(Stack)과 큐(Queue)는 코딩테스트에서 가장 기본이 되는 선형 자료구조다. LIFO/FIFO 원리를 이해하고 deque를 활용하면 대부분의 문제를 효율적으로 해결할 수 있다.

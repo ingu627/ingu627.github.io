@@ -9,6 +9,8 @@ sidebar_main: false
 classes: wide
 
 last_modified_at: 2025-09-27
+redirect_from:
+  - /R_ML/solve_bigdata2/
 ---
 
 빅데이터 분석기사 실기 대비 차원에서 작성한 글입니다. 기출 데이터는 [GitHub 저장소](https://github.com/ingu627/BigDataAnalysis)에 올려두었습니다. 전체 코드는 `sujebi_1.R` 파일에 포함되어 있습니다.

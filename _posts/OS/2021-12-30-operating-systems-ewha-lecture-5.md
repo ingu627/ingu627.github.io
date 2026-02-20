@@ -9,6 +9,8 @@ toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-06-19
+redirect_from:
+  - /OS/os5_ewha/
 ---
 
 본 글은 (KOCW) 운영체제, 이화여자대학교 반효경 교수님의 강의를 듣고 내용을 요약 및 정리했습니다. <br> 개인 공부에 목적이 있으며, 자세한 사항은 <http://www.kocw.or.kr/home/cview.do?mty=p&kemId=1046323>에 참고하시면 됩니다. <br><br> Chapter 6. <br> - CPU Scheduling 2 / Process Synchronization 1 - 1시간 7분 <br> - Process Synchronization 1 - 28분 <br> - Process Synchronization 2 - 25분 <br> - Process Synchronization 3 - 1시간 2분 <br> - Process Synchronization 4 - 27분

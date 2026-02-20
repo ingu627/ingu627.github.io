@@ -13,6 +13,8 @@ use_math: true
 
 author_profile: false
 last_modified_at: 2025-09-26
+redirect_from:
+  - /algorithms/python_func/
 ---
 
 알고리즘 문제를 풀 때는 입력값의 자료형, 제약조건, 예상 출력 형태를 먼저 파악하는 습관이 중요하다. 본 문서는 실무와 코딩테스트에서 자주 사용하는 파이썬 함수들을 예제 중심으로 정리했다.

@@ -9,6 +9,8 @@ toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-11-28
+redirect_from:
+  - /paper/doduo/
 ---
 
 <img width="750" alt="image" src="https://user-images.githubusercontent.com/78655692/204124980-aad727de-7dc1-4694-92ef-6f1515688b2f.png">

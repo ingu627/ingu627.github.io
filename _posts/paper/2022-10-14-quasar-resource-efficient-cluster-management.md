@@ -9,6 +9,8 @@ toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-10-15
+redirect_from:
+  - /paper/quasar/
 ---
 
 <img width="750" alt="image" src="https://user-images.githubusercontent.com/78655692/195865100-bd2f0c5d-6fd5-43a2-9ac7-dfc594ba6c9a.png">

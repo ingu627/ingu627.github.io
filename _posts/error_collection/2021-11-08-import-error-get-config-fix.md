@@ -8,6 +8,8 @@ toc: true
 sidebar_main: false
 
 last_modified_at: 2021-11-08
+redirect_from:
+  - /error_collection/ImportError_get_config/
 ---
 
 ## 원인 : ImportError: cannot import name 'get_config' from 'tensorflow.python.eager.context'

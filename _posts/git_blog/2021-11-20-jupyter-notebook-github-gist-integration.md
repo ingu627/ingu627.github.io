@@ -8,6 +8,8 @@ toc : True
 sidebar_main: false
 
 last_modified_at: 2022-03-26
+redirect_from:
+  - /git_blog/jupyter_to_gist/
 ---
 
 ## 개요

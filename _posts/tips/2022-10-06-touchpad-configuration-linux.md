@@ -10,6 +10,8 @@ toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-10-07
+redirect_from:
+  - /tips/touchpad/
 ---
 
 

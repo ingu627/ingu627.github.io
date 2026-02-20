@@ -8,6 +8,8 @@ toc: true
 sidebar_main: false
 
 last_modified_at: 2021-11-10
+redirect_from:
+  - /error_collection/ModuleNotFoundError_tensorflow.keras/
 ---
 
 ## 원인 : ModuleNotFoundError: No module named 'tensorflow.keras'

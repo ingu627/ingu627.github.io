@@ -9,6 +9,8 @@ toc_sticky: false
 sidebar_main: false
 
 last_modified_at: 2022-04-13
+redirect_from:
+  - /paper/concept_drift/
 ---
 
 ![image](https://user-images.githubusercontent.com/78655692/163179465-84498a7b-65b6-4389-ab68-e2d64f1aefd9.png)

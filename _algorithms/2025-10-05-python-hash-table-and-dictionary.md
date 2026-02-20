@@ -13,6 +13,8 @@ use_math: true
 
 author_profile: false
 last_modified_at: 2025-10-05
+redirect_from:
+  - /algorithms/coding_hash/
 ---
 
 해시(Hash)는 코딩테스트에서 빈도·존재 여부·매핑 문제를 O(1) 평균 시간에 해결하는 핵심 자료구조다. 리스트의 `in` 연산이 O(n)인 반면, dict/set은 O(1)로 월등히 빠르다. 본 문서는 dict, set, Counter를 중심으로 실전 패턴을 정리했다.
