@@ -4,5 +4,7 @@ layout: collection
 permalink: /portfolio/
 collection: portfolio
 entries_layout: grid
+redirect_from:
+  - /project-archive/
 ---
 

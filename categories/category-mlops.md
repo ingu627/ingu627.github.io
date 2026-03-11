@@ -4,6 +4,8 @@ layout: archive
 permalink: categories/mlops
 author_profile: true
 sidebar_main: true
+redirect_from:
+  - /categories/category-conceptDrift/
 ---
 
 

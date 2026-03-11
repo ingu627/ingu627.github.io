@@ -2,8 +2,8 @@
 layout: single
 title: "논문 리뷰: Fast Hoeffding Drift Detection Method for Evolving Data Streams (FHDDM)"
 excerpt: "FHDDM은 sliding window와 hoeffding을 이용하여 계산량을 줄이고 concept drift를 더 잘 detect하는 기법입니다."
-categories: [paper, mlops]
-tags: [fast, hoeffding, drift detection method, 드리프트, stream, fhddm, window, detector, abrupt, gradual, concept drift, 정리, 리뷰, 논문, sliding window, paper]
+categories: paper
+tags: [fast, hoeffding, drift detection method, 드리프트, stream, fhddm, window, detector, abrupt, gradual, concept drift, 정리, 리뷰, 논문, sliding window, paper, mlops]
 toc: true
 toc_sticky: false
 sidebar_main: false
@@ -11,6 +11,7 @@ sidebar_main: false
 last_modified_at: 2022-06-16
 redirect_from:
   - /paper/FHDDM/
+  - /paper/mlops/fhddm-fast-hoeffding-drift-detection-method/
 ---
 
 ![image](https://user-images.githubusercontent.com/78655692/172051401-8daa60de-ad59-43c4-9d14-65ec6c206e4d.png)

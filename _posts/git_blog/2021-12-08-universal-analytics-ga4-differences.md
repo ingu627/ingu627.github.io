@@ -1,20 +1,3 @@
-
-## Table of Contents
-
-<details>
-
-   <summary>Contents</summary>
-
-1. [last_modified_at: 2022-01-18](#lastmodifiedat-2022-01-18)
-1. [Google Analytics란](#google-analytics)
-   1. [GA의 역사](#ga-)
-   1. [GA4 특징[^3]](#ga4-3)
-1. [결론! => GA4는 최신 버전이다!!](#--ga4--)
-   1. [설정](#)
-   1. [Git Blog 설정](#git-blog-)
-1. [References](#references)
-
-</details>
 ---
 layout: single
 title: "Google Analytics - UA/GA4의 차이"
@@ -25,6 +8,9 @@ toc : True
 sidebar_main: false
 
 last_modified_at: 2022-01-18
+redirect_from:
+  - /git_blog/diff_UA_GA4/
+
 ---
 
 Git Blog에 구글 애널리틱스를 설정할 때, `tracking_id`를 `UA-XXX`로 해야 할지 `G-XXX`로 해야 할지 너무나 헷갈렸습니다. 나름 정리해서 헷갈림을 해소하려고 글을 남깁니다.

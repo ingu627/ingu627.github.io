@@ -2,7 +2,7 @@
 layout: single
 title: "macOS(M1) Hadoop·Spark 단일 노드 설치: JDK·SSH·환경변수·데몬"
 excerpt: "M1 macOS에서 JDK 확인→SSH 무암호 설정→Hadoop/HDFS 포맷→Spark 실행까지 단일 노드 개발 환경 구성 절차"
-categories: [tips, hadoop]
+categories: tips
 tags: [하둡, m1, 맥, hadoop, 스파크, 설치, ssh, 자바, 환경설정, hdfs, yarn, 맵리듀스]
 
 toc: true
@@ -12,6 +12,7 @@ sidebar_main: false
 last_modified_at: 2023-01-06
 redirect_from:
   - /tips/install_hadoop_mac/
+  - /tips/hadoop/install-hadoop-macos-setup-guide/
 ---
 
 <br>

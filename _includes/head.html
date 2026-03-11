@@ -41,9 +41,9 @@
   })();
 </script>
 
-<!-- For all browsers - Critical CSS inline, rest async -->
-<link id="default-theme-style" rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}" media="print" onload="this.media='all';this.onload=null">
-<noscript><link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}"></noscript>
+<!-- For all browsers -->
+<link id="default-theme-style" rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+
 
 <!-- darkmode css - Async load -->
 {% if site.dark_theme_toggle == true %}

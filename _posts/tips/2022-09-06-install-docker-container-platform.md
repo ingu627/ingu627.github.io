@@ -2,7 +2,7 @@
 layout: single
 title: "Windows10·Ubuntu Docker 엔진/데스크톱 설치: 저장소 등록·권한·검증"
 excerpt: "Ubuntu apt 저장소 구성→엔진 설치·도커 그룹 권한·hello-world 실행, Windows는 Docker Desktop·WSL2 통합까지 비교 정리"
-categories: [tips, docker]
+categories: tips
 tags: [리눅스, 우분투, window10, 윈도우, 도커, docker, linux, 설치, ubuntu, 윈도우10, wsl2, docker desktop, 사용법]
 
 toc: true
@@ -12,6 +12,7 @@ sidebar_main: false
 last_modified_at: 2022-09-06
 redirect_from:
   - /tips/install_docker/
+  - /tips/docker/install-docker-container-platform/
 ---
 
 윈도우10 또는 우분투 내에서 도커를 설치하는 과정을 정리할 필요가 있다고 느꼈습니다. <br> 설치에 도움이 되었으면 합니다. <br><br> **참조** 1. <br> [Install Docker Engine on Ubuntu - 공식사이트](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository) <br> 2. [윈도우10에서 리눅스(Linux) 설치하기 (Ubuntu on WSL2) - poeun](https://ingu627.github.io/tips/install_ubuntu/) <br> 3. [Install Docker Desktop on Windows](https://docs.docker.com/desktop/install/windows-install/)

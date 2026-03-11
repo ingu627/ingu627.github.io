@@ -9,7 +9,7 @@ toc_sticky: false
 sidebar_main: false
 
 date: 2025-09-14
-last_modified_at: 205-09-14
+last_modified_at: 2025-09-14
 redirect_from:
   - /llm/quantization1/
 ---
