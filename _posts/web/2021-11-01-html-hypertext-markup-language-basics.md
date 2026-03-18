@@ -12,6 +12,8 @@ date: 2021-11-02
 last_modified_at: 2022-10-01
 redirect_from:
   - /web/html_basic/
+  - /htmlcss/html_basic/
+  - /htmlcss/html_css/
 ---
 
 본 글은 패스트캠퍼스의 "한 번에 끝내는 파이썬 웹 개발 초격차 패키지" 강의를 개인 실습하여 정리했습니다.

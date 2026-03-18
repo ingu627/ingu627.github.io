@@ -12,6 +12,7 @@ date: 2021-11-04
 last_modified_at: 2022-08-22
 redirect_from:
   - /sql/sql_pro/
+  - /mysql/sql_pro/
 ---
 
 <br>

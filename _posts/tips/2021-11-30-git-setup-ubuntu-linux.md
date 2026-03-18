@@ -13,6 +13,7 @@ last_modified_at: 2022-03-20
 sidebar_main: false
 redirect_from:
   - /tips/git_in_ubuntu/
+  - /linux/git_in_ubuntu/
 ---
 
 ## Git이란? 

@@ -11,6 +11,8 @@ classes: wide
 last_modified_at: 2025-09-27
 redirect_from:
   - /keras/keras_ch4_org/
+  - /Chollet_dl/keras_ch4_org/
+  - /python/keras_ch4_org/
 ---
 
 <img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/147629300-4d7acc5e-225a-454a-92cd-4da82f6828f6.png

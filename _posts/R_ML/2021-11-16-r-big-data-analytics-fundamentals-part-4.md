@@ -11,6 +11,8 @@ sidebar_main: false
 last_modified_at: 2022-03-31
 redirect_from:
   - /R_ML/bigdata_analysis4/
+  - /R/R_basic_to_pro_4/
+  - /R/bigdata_analysis4/
 ---
 
 <img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/148633895-2be87d4e-7edb-4391-b583-eb2888b19bbb.png

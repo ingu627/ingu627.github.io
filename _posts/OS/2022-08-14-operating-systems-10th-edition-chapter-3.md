@@ -11,6 +11,7 @@ sidebar_main: false
 last_modified_at: 2022-09-01
 redirect_from:
   - /OS/os3_10th/
+  - /OS/os3_10th2/
 ---
 
 <img align='right' width='150' height='200' src='https://user-images.githubusercontent.com/78655692/184343886-e144daea-afbd-43b6-90f9-1638c89a089c.png'>

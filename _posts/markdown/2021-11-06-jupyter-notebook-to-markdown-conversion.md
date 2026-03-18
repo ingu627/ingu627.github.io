@@ -8,6 +8,7 @@ sidebar_main: false
 last_modified_at: 2021-11-20
 redirect_from:
   - /markdown/ipynb_to_md/
+  - /tips/ipynb_to_md/
 ---
 
 1. ipynb 파일이 존재하는 폴더로 갑니다.  

@@ -11,6 +11,7 @@ sidebar_main: false
 last_modified_at: 2022-08-30
 redirect_from:
   - /markdown/markdown_grammar/
+  - /markdown_gr/markdown_grammar/
 ---
 
 <!-- markdownlint-disable MD022 MD033 MD046 MD049 -->

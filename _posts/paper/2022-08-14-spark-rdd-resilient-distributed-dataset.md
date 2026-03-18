@@ -11,6 +11,7 @@ sidebar_main: false
 last_modified_at: 2025-09-19
 redirect_from:
   - /paper/rdd/
+  - /paper/rdd1/
 ---
 
 ![image](https://user-images.githubusercontent.com/78655692/184124181-6aba782a-17f4-4338-af86-b8236417cff6.png)

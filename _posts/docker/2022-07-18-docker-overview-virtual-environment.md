@@ -11,6 +11,7 @@ sidebar_main: false
 last_modified_at: 2022-07-20
 redirect_from:
   - /docker/docker_overview_venv/
+  - /docker/docker_command/
 ---
 
 <img src='https://user-images.githubusercontent.com/78655692/179643735-e64c6545-9239-4d81-9e63-d7d8f834d456.png' width=650>
