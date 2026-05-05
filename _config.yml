@@ -203,13 +203,9 @@ exclude:
   - tmp
   - /docs # ignore Minimal Mistakes /docs
   - /test # ignore Minimal Mistakes /test
-  - google892bd13e769859f8.html
-  - googlea5e0236769a02c6a.html
-  - naver2f1ddca95d82110afdce071ed9dedab3.html
   - old_urls.txt
   - Rakefile_seo_excerpt_audit.rb
   - PERFORMANCE_OPTIMIZATION.md
-  - ads.txt
 keep_files:
   - .git
   - .svn
