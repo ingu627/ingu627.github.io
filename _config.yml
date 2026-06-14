@@ -319,6 +319,18 @@ defaults:
       use_math: true
       show_date: true
       sidebar_main: true
+  # algorithms
+  - scope:
+      path: ""
+      type: algorithms
+    values:
+      sitemap: false
+  # portfolio
+  - scope:
+      path: ""
+      type: portfolio
+    values:
+      sitemap: false
 
 
 date_format: "%Y-%m-%d"
