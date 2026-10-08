@@ -1,304 +1,222 @@
 ---
 layout: single
-title: '컨테이너, 도커, 쿠버네티스 완벽 정복: 비전문가를 위한 가이드'
-excerpt: "개발 환경 불일치 문제를 해결하는 컨테이너 기술부터 대규모 배포를 자동화하는 쿠버네티스까지, 현대 개발의 핵심 3요소를 쉽고 명확하게 설명한다."
+title: "클라우드 네이티브 컴퓨팅 인프라의 진화: OCI 컨테이너 런타임부터 K8s 오케스트레이션 아키텍처까지"
+excerpt: "Linux 커널 프리미티브(Namespaces, Cgroups)의 프로세스 격리 원리, OCI 이미지 및 런타임(runc, containerd) 계층, 그리고 선언적 상태 수렴(Reconciliation Loop)을 수행하는 쿠버네티스 컨트롤 플레인의 내부 아키텍처를 심층 분석한다."
 categories: [docker]
-tags : [컨테이너, 도커, 쿠버네티스, 가상화, 데브옵스, 도커 빌드, 파드, yaml, kubectl, 서버 환경, 개발 환경]
+tags: [docker, kubernetes, k8s, container, oci, cgroups, namespaces, containerd, cloud-native]
 toc: true
 toc_sticky: true
 sidebar_main: true
 
 date: 2025-09-21
-last_modified_at: 2025-09-21
+last_modified_at: 2026-10-08
 ---
 
-"제 컴퓨터에서는 잘 되는데요?" 이 지긋지긋한 악몽은 이제 끝이다. 이 글은 개발 환경의 차이로 발생하는 문제를 해결하는 컨테이너 기술의 기본 개념부터, 수많은 컨테이너를 효율적으로 관리하는 도커와 쿠버네티스까지, 현대 소프트웨어 개발의 핵심 3요소를 단계별로 정복하는 가이드다.
-{:.notice--info}
-<br>
+현대 소프트웨어 아키텍처가 모놀리스에서 마이크로서비스로, 그리고 대규모 분산 AI 워크로드로 전환되면서 애플리케이션의 패키징과 배포, 운영 인프라는 근본적인 변화를 겪었다.
 
-## 1부: 컨테이너 혁명 — 코드를 화물처럼 운송하기
+과거 가상 머신(VM, Virtual Machine) 기반의 가상화는 하드웨어 수준의 에뮬레이션(Hypervisor)과 게스트 OS(Guest OS) 오버헤드로 인해 리소스 낭비가 심하고 프로비저닝 속도가 느렸다. 이를 대체한 컨테이너(Container) 기술은 운영체제 커널을 공유하면서 프로세스 레벨에서 완벽한 격리와 리소스 통제를 제공하는 **운영체제 수준의 가상화(OS-level Virtualization)**를 실현했다.
 
-<img width="800" height="650" alt="image" src="https://gist.github.com/user-attachments/assets/c1f15a22-6b1e-4f59-8803-4bdc0260d987" />
+이 글에서는 컨테이너를 지탱하는 **Linux 커널 프리미티브(Namespaces, Cgroups, OverlayFS)**의 물리적 동작 원리, **OCI(Open Container Initiative)** 표준과 런타임 계층 구조, 그리고 수천 개의 컨테이너를 선언적으로 오케스트레이션하는 **쿠버네티스(Kubernetes) 컨트롤 플레인의 내부 아키텍처**를 시스템 엔지니어링 관점에서 심층 분석한다.
 
-### 컨테이너란 무엇인가?
+---
 
-- 개발자라면 누구나 "내 컴퓨터에서는 완벽하게 작동하던 애플리케이션이 다른 서버에서는 실패하는" 끔찍한 경험을 해봤을 것이다.[^1] 
-- 이는 라이브러리 버전이나 OS 설정 같은 미세한 환경 차이 때문에 발생한다. 이 문제를 해결하기 위해 등장한 것이 바로 '컨테이너' 기술이다.
-- 컨테이너는 해운업의 '선적 컨테이너'와 같다.[^2] 규격화된 선적 컨테이너 덕분에 내용물이 무엇이든 전 세계 어디서나 동일한 방식으로 운송할 수 있게 된 것처럼,[^2] IT의 컨테이너는 애플리케이션과 실행에 필요한 모든 환경(코드, 라이브러리, 도구 등)을 하나의 표준화된 '상자'에 담는다.[^4] 이 상자는 개발자 노트북, 테스트 서버, 클라우드 등 어디로 옮겨도 항상 동일하게 작동하여 '이식성'을 보장하고 "제 컴퓨터에서는 되는데요" 문제를 근본적으로 해결한다.[^4]
-- 기술적으로 컨테이너는 호스트 OS의 커널을 공유하지만, 각 애플리케이션은 격리된 사용자 공간에서 실행되는 OS 수준 가상화 기술이다.[^9] 이 '커널 공유' 덕분에 컨테이너는 믿을 수 없을 만큼 가볍고 효율적이다.
+## 1. 컨테이너 격리의 실체: Linux 커널 프리미티브
 
-<br>
+흔히 컨테이너를 가벼운 가상 머신으로 오해하지만, 컨테이너는 하이퍼바이저 위에서 독립된 OS를 구동하는 객체가 아니다. 컨테이너는 **호스트 커널의 격리 및 자원 제어 플래그가 적용된 일반 Linux 프로세스**에 불과하다.
 
-### 컨테이너 vs. 가상 머신(VM)
-
-- 컨테이너와 VM은 모두 격리된 환경을 제공하지만, 가상화하는 대상이 다르다. VM은 하드웨어를, 컨테이너는 운영체제를 가상화한다.[^7]
-
-- **가상 머신(VM)**
-  - 하이퍼바이저를 통해 물리 하드웨어를 에뮬레이션한다.[^9]
-  - 각 VM마다 독립된 '게스트 OS'를 통째로 설치해야 하므로 리소스 소모가 크고 무겁다.[^9]
-  - 크기는 기가바이트(GB) 단위이며, 부팅에 수 분이 걸린다.[^13]
-- **컨테이너**
-  - 호스트 OS의 커널을 공유하며, 게스트 OS가 필요 없다.[^8]
-  - 프로세스 수준으로 격리되어 매우 가볍고 빠르다.[^15]
-  - 크기는 메가바이트(MB) 단위이며, 시작하는 데 수 초밖에 걸리지 않는다.[^13]
-
-- 이러한 효율성 덕분에 단일 서버에 훨씬 더 많은 컨테이너를 실행할 수 있어, 인프라 비용을 크게 절감할 수 있다.[^13]
-
-<br>
-
-## 2부: 도커 — 컨테이너 시대의 개막
-
-### 도커란 무엇인가?
-
-- 컨테이너와 유사한 기술은 이전에도 있었지만, 너무 복잡해서 널리 쓰이지 못했다.[^10] 2013년에 등장한 도커(Docker)는 간단한 명령어로 누구나 쉽게 컨테이너를 만들고, 배포하고, 실행할 수 있게 함으로써 컨테이너 기술을 대중화시킨 오픈소스 플랫폼이다.[^1]
-
-- **Dockerfile**: 모든 것의 시작점이다. Dockerfile은 도커 이미지를 빌드하기 위한 단계별 지침이 담긴 간단한 텍스트 파일이다. 요리 레시피나 조립 설명서라고 생각할 수 있다. 이 파일에는 기반이 될 OS, 복사할 코드, 설치할 종속성, 그리고 컨테이너가 시작될 때 실행할 명령 등이 명시된다.[^19]
-- **이미지(Image)**: Dockerfile을 빌드한 결과물이다. 이미지는 애플리케이션과 그 모든 종속성을 포함하는 읽기 전용 템플릿 또는 청사진이다. 이미지는 여러 개의 '레이어(Layer)'로 구성되는데, Dockerfile의 각 명령어는 새로운 레이어를 생성한다. 이 레이어 구조 덕분에 변경되지 않은 레이어는 캐시에서 재사용될 수 있어 빌드 효율성이 매우 높다. 이미지는 도커 허브(Docker Hub)와 같은 공개 레지스트리나 사설 레지스트리에 저장된다.[^5]
-- **컨테이너(Container)**: 이미지의 살아있는, 실행 중인 인스턴스다. 이미지가 레시피라면, 컨테이너는 그 레시피로 구운 케이크다. 사용자는 컨테이너를 생성, 시작, 중지, 이동, 삭제할 수 있다. 각 컨테이너는 격리된 환경이지만, 불변의 이미지를 기반으로 한다. 하나의 이미지로부터 수많은 컨테이너를 실행할 수 있다.[^8]
-
-### 실습: 나만의 Nginx 웹 서버 컨테이너 만들기
-
-- 이제 간단한 Nginx 웹 서버를 컨테이너로 직접 만들어보자.
-- 새 폴더를 하나 만들고, 그 안에 Dockerfile과 index.html이라는 두 개의 파일을 생성한다.
-
-[1] index.html 파일 생성
-
-- 원하는 폴더에 환영 메시지를 담은 index.html 파일을 만든다.
-
-```html
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Welcome to Docker!</title>
-</head>
-<body>
-  <h1>Hello from my first Nginx Container!</h1>
-  <p>This page is being served by Nginx running inside a Docker container.</p>
-</body>
-</html>
+```
+가상 머신(VM) vs. 컨테이너(Container) 커널 아키텍처:
+[가상 머신 (VM)]                        [컨테이너 (Container)]
+┌──────────────────┬──────────────────┐ ┌──────────────────┬──────────────────┐
+│ App A            │ App B            │ │ App A (격리됨)   │ App B (격리됨)   │
+├──────────────────┼──────────────────┤ ├──────────────────┼──────────────────┤
+│ Bins / Libs      │ Bins / Libs      │ │ Bins / Libs      │ Bins / Libs      │
+├──────────────────┼──────────────────┤ └──────────────────┴──────────────────┘
+│ Guest OS         │ Guest OS         │
+├──────────────────┴──────────────────┤
+│ Hypervisor (KVM, ESXi, Xen)         │ ┌─────────────────────────────────────┐
+├─────────────────────────────────────┤ │ Container Runtime (containerd/runc) │
+│ Host OS (Host Kernel)               │ ├─────────────────────────────────────┤
+├─────────────────────────────────────┤ │ Host OS (단일 공유 Linux Kernel)    │
+│ 물리 인프라 (CPU, RAM, NIC)         │ ├─────────────────────────────────────┤
+└─────────────────────────────────────┘ │ 물리 인프라 (CPU, RAM, NIC)         │
+                                        └─────────────────────────────────────┘
 ```
 
-<br>
+컨테이너의 격리성을 완성하는 핵심 커널 메커니즘은 다음 세 가지다.
 
-[2] Dockerfile 생성[^23]
+### 1.1 Namespaces: 시스템 뷰(View)의 격리
 
-- 같은 폴더에 Dockerfile을 만들고 아래 내용을 작성한다.
+네임스페이스는 특정 프로세스가 볼 수 있는 시스템 리소스의 가시성(Visibility)을 제한한다. 프로세스가 `clone()` 시스템 콜을 호출할 때 전달하는 플래그에 따라 독립된 공간이 생성된다.
 
-```dockerfile
-# 1단계: 빌드의 기반이 될 베이스 이미지를 지정한다.
-# 도커 허브의 공식 Nginx 이미지를 사용한다.
-FROM nginx:latest
-
-# 2단계: 우리가 만든 맞춤형 index.html 파일을 이미지 안으로 복사한다.
-# 이 파일은 Nginx의 기본 환영 페이지를 덮어쓰게 된다.
-# 대상 경로는 Nginx가 기본적으로 파일을 서비스하는 위치다.
-COPY ./index.html /usr/share/nginx/html/index.html
+```
+주요 Linux Namespaces 6대 영역:
+┌──────────────┬──────────────────┬────────────────────────────────────────────────────────────┐
+│ Namespace    │ 커널 플래그      │ 격리 대상 및 효과                                          │
+├──────────────┼──────────────────┼────────────────────────────────────────────────────────────┤
+│ PID          │ CLONE_NEWPID     │ 프로세스 트리 격리 (컨테이너 내부에서는 해당 프로세스가 PID 1)│
+│ NET          │ CLONE_NEWNET     │ 네트워크 디바이스, IP 라우팅 테이블, 포트 바인딩 공간 격리 │
+│ MNT (Mount)  │ CLONE_NEWNS      │ 파일 시스템 마운트 포인트 격리 (호스트 루트 FS와 격리)     │
+│ IPC          │ CLONE_NEWIPC     │ 공유 메모리(Shared Memory), 세마포어, 메시지 큐 격리       │
+│ UTS          │ CLONE_NEWUTS     │ 호스트명(Hostname) 및 NIS 도메인 네임 격리                 │
+│ USER         │ CLONE_NEWUSER    │ UID/GID 매핑 격리 (컨테이너 내 root=0이 호스트 일반 유저)   │
+└──────────────┴──────────────────┴────────────────────────────────────────────────────────────┘
 ```
 
-<br>
+### 1.2 Control Groups (Cgroups): 리소스 상한선 강제
 
-[3] 이미지 빌드[^25]
+네임스페이스가 "무엇을 볼 수 있는가"를 제어한다면, Cgroups는 "얼마나 많은 리소스를 사용할 수 있는가"를 물리적으로 강제한다.
 
-- 터미널을 열고 프로젝트 폴더로 이동한 뒤, docker build 명령어를 실행한다.
-- **명령어:** docker build -t my-nginx-server .
-- **설명:**
-  - `docker build`: Dockerfile로부터 이미지를 빌드하는 명령어다. 
-  - `-t my-nginx-server`: -t 플래그는 이미지에 사람이 읽기 쉬운 이름(my-nginx-server)으로 "태그"를 지정한다. 
-  - `.`: 현재 디렉터리에서 Dockerfile을 찾으라는 의미다.
+- **CPU 제한**: CFS(Completely Fair Scheduler) 할당량을 조절한다.
+  - `cpu.cfs_period_us = 100000` (100ms) 기준, `cpu.cfs_quota_us = 200000` (200ms)으로 설정하면 해당 프로세스는 멀티코어에서 최대 2개의 vCPU에 해당하는 연산량만 할당받는다.
+- **메모리 제한 및 OOM Killer**:
+  - `memory.limit_in_bytes`를 초과하여 프로세스가 메모리를 할당하려고 하면, 커널의 OOM(Out of Memory) Killer가 작동하여 해당 프로세스(컨테이너)에 `SIGKILL`을 전송하고 프로세스를 강제 종료한다.
 
-[4] 컨테이너 실행[^25]
+### 1.3 OverlayFS: 계층형 Copy-on-Write 파일 시스템
 
-- 이제 이미지가 준비되었으니, docker run 명령어를 사용해 컨테이너로 실행해 보자.
-- **명령어**: `docker run -d -p 8080:80 --name my-first-container my-nginx-server`
-- **설명**:
-  - `docker run`: 이미지로부터 컨테이너를 생성하고 시작하는 명령어다. 
-  - `-d`: "분리 모드(Detached mode)"를 의미한다. 컨테이너를 백그라운드에서 실행하여 터미널을 계속 사용할 수 있게 한다. 
-  - `-p 8080:80`: "포트 매핑"이다. 이는 매우 중요하다. 이 설정은 여러분의 컴퓨터(호스트)의 8080번 포트를 컨테이너 내부의 80번 포트(Nginx가 기본으로 사용하는 포트)에 연결한다. 이를 통해 브라우저에서 웹 서버에 접속할 수 있다. 
-  - `--name my-first-container`: 실행 중인 컨테이너에 기억하기 쉬운 이름을 부여한다. 
-  - `my-nginx-server`: 실행하고자 하는 이미지의 이름이다.
+컨테이너 이미지는 수 기가바이트에 달하지만, 컨테이너 생성은 수십 밀리초 만에 완료된다. 이는 **Union Mount** 기술인 **OverlayFS**의 계층 구조 덕분이다.
 
-<br>
-
-[5] 확인
-
-- 웹 브라우저에서 http://localhost:8080 으로 접속해 직접 만든 환영 페이지가 뜨는지 확인한다.
-
-<br>
-
-## 3부: 쿠버네티스 — 컨테이너 함대의 지휘자
-
-### 왜 쿠버네티스가 필요한가?
-
-- 컨테이너 하나를 실행하는 것은 간단하다. 하지만 수십, 수백 개의 마이크로서비스로 구성된 실제 애플리케이션은 어떨까? 각 서비스가 자체 컨테이너에서 실행될 때, 이를 수동으로 관리하는 것은 재앙에 가깝다. 다음과 같은 문제들에 직면하게 된다.
-- **배포**: 어떻게 서비스 중단 없이 모든 컨테이너에 업데이트를 적용할 수 있을까? 
-- **확장**: 트래픽이 급증할 때 어떻게 컨테이너 수를 늘리고, 잠잠해지면 다시 줄일 수 있을까? 
-- **네트워킹**: IP 주소가 계속 바뀌는 컨테이너들이 어떻게 서로를 찾아 통신할 수 있을까? 
-- **복원력**: 서버 하나가 다운되면 그 위에서 실행되던 컨테이너들을 어떻게 자동으로 재시작할 수 있을까? 
-- 이러한 복잡성을 해결하기 위해서는 전문적인 도구, 즉 **컨테이너 오케스트레이터(Container Orchestrator)**가 필요하다.
-
-<br>
-
-### 쿠버네티스란 무엇인가?
-
-- **쿠버네티스(Kubernetes, K8s)**는 컨테이너화된 애플리케이션의 배포, 확장, 관리를 자동화하는 오픈소스 플랫폼으로, 사실상의 표준이다.[^32] 
-- 쿠버네티스는 오케스트라의 '지휘자'와 같다. 각 컨테이너(연주자)를 직접 다루는 대신, 전체 시스템이 사용자가 원하는 '바람직한 상태(desired state)'를 유지하도록 지휘한다.[^31]
-- 사용자는 YAML 파일에 "Nginx 복제본 3개를 항상 실행시켜줘"라고 선언하기만 하면, 쿠버네티스는 현재 상태를 지속적으로 모니터링하며 만약 컨테이너 하나가 죽으면 즉시 새로 생성해 3개를 유지한다. 이 '자가 치유(self-healing)' 기능이 쿠버네티스의 핵심이다.[^31]
-
-- **클러스터(Cluster)**: 쿠버네티스가 관리하는 노드(서버)들의 전체 집합.[^33]
-- **노드(Node)**: 컨테이너가 실제로 실행되는 개별 서버 (VM 또는 물리 머신).[^^38]
-- **파드(Pod)**: 쿠버네티스에서 배포할 수 있는 가장 작은 단위. 하나 이상의 컨테이너 그룹으로 구성된다.[^41]
-- **디플로이먼트(Deployment)**: 파드의 복제본 수를 관리하고, 무중단 업데이트를 가능하게 하는 컨트롤러.[^43]
-- **서비스(Service)**: 여러 파드에 대한 안정적인 단일 진입점(고정 IP, DNS)을 제공하고, 요청을 분산하는 로드 밸런서 역할을 한다.[^46]
-
-<br>
-
-### 실습: 쿠버네티스에 Nginx 앱 배포하기
-
-- 앞서 만든 도커 이미지를 쿠버네티스에 배포해보자. (Minikube 등 로컬 클러스터 환경 필요)
-
-[1] deployment.yaml 파일 생성[^43]
-
-- 이 매니페스트는 쿠버네티스에게 무엇을 실행할지 알려준다. 
-- my-nginx-server 이미지로 파드 3개를 실행하라고 정의한다.
-
-```yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: nginx-deployment
-spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: nginx
-  template:
-    metadata:
-      labels:
-        app: nginx
-    spec:
-      containers:
-      - name: nginx
-        image: my-nginx-server
-        imagePullPolicy: IfNotPresent
-        ports:
-        - containerPort: 80
+```
+OverlayFS 4계층 아키텍처:
+┌───────────────────────────────────────────────────────────┐
+│ Merged Directory (컨테이너 프로세스가 바라보는 통합 뷰)   │
+├───────────────────────────────────────────────────────────┤
+│ Upper Directory (읽기/쓰기 가능 계층, Container Layer)    │ <── 변경사항 기록
+├───────────────────────────────────────────────────────────┤
+│ Lower Directory 2 (읽기 전용 이미지 레이어, Layer B)      │
+├───────────────────────────────────────────────────────────┤
+│ Lower Directory 1 (읽기 전용 베이스 OS 레이어, Layer A)   │ <── 불변(Immutable)
+└───────────────────────────────────────────────────────────┘
 ```
 
-> 참고: imagePullPolicy: IfNotPresent는 쿠버네티스가 이미지를 원격 레지스트리에서 가져오기 전에 로컬에 이미지가 있는지 먼저 확인하도록 한다. <br> 
-> 로컬에서 빌드한 이미지를 사용할 때 유용하다.
+- 이미지 레이어들은 불변의 **읽기 전용(Read-only, lowerdir)**으로 수많은 컨테이너 간에 메모리 상에서 공유된다.
+- 컨테이너가 실행되면 얇은 **읽기/쓰기 전용 레이어(upperdir)**가 최상단에 얹힌다.
+- 컨테이너가 기존 파일을 수정할 때만 하위 레이어에서 상위 레이어로 파일을 복사한 뒤 수정하는 **CoW(Copy-on-Write)** 메커니즘이 작동하여 디스크 공간과 I/O를 획기적으로 절약한다.
 
-<br>
+---
 
-[2] service.yaml 파일 생성[^45]
+## 2. OCI 표준과 컨테이너 런타임 스택의 분화
 
-- 외부에서 디플로이먼트에 접근할 수 있도록 NodePort 타입의 서비스를 정의한다.
+초기 Docker는 모놀리식 단일 데몬(`dockerd`)으로 모든 기능을 수행했으나, 표준화 기구인 **OCI(Open Container Initiative)**의 발족과 함께 런타임 계층이 고수준(High-level)과 저수준(Low-level)으로 명확히 분리되었다.
 
-```yaml
-apiVersion: v1
-kind: Service
-metadata:
-  name: nginx-service
-spec:
-  selector:
-    app: nginx # 이 셀렉터는 'app: nginx' 레이블을 가진 파드와 서비스를 연결한다.
-  ports:
-    - protocol: TCP
-      port: 80 # 서비스가 클러스터 내부에서 사용할 포트
-      targetPort: 80 # 트래픽을 전달할 파드 내부의 포트
-  type: NodePort # 각 노드의 IP에 고정된 포트로 서비스를 노출한다.
+```
+현대 컨테이너 런타임 계층 구조:
+[Kubelet] (쿠버네티스 워커 에이전트)
+    │
+    ▼ (gRPC 기반 CRI 프로토콜: Container Runtime Interface)
+[High-Level Runtime] (containerd 또는 CRI-O)
+    │ ── 이미지 다운로드, 압축 해제, OCI 번들(config.json + rootfs) 생성
+    ▼ (명령줄 실행 / 도메인 소켓)
+[Low-Level Runtime] (runc 또는 crun)
+    │ ── Linux 시스템 콜(clone, unshare, setns, pivot_root)을 직접 호출
+    ▼
+[격리된 컨테이너 프로세스]
 ```
 
-<br>
+- **OCI Image Specification**: 불변의 레이어 tarball과 매니페스트(JSON)로 구성된 이미지 패키징 표준.
+- **OCI Runtime Specification (`runc`)**: 로컬 파일 시스템에 풀려 있는 rootfs와 `config.json` 명세서를 바탕으로 Linux 커널 시스템 콜을 직접 호출하여 컨테이너 프로세스를 띄우는 레퍼런스 저수준 런타임.
+- **CRI (Container Runtime Interface)**: Kubelet이 Docker 엔진에 직접 종속되지 않고, 임의의 고수준 런타임(`containerd`, `CRI-O`)을 플러그인 형태로 교체할 수 있도록 정의된 표준 gRPC 인터페이스.
 
-[3] 클러스터에 적용
+---
 
-- kubectl apply 명령어를 사용해 이 매니페스트들을 쿠버네티스 클러스터에 제출한다.
+## 3. 쿠버네티스 아키텍처: 대규모 분산 오케스트레이션
 
-```bash
-kubectl apply -f deployment.yaml
-kubectl apply -f service.yaml
+컨테이너가 수백~수천 개로 늘어나면 장애 발생 시 자동 재기동, 트래픽 로드밸런싱, 무중단 롤링 배포, 노드 간 스케줄링을 자동화할 오케스트레이터가 필요하다.
+
+쿠버네티스는 전체 시스템을 **컨트롤 플레인(Control Plane, 마스터)**과 **데이터 플레인(Data Plane, 워커 노드)**으로 양분한다.
+
+```
+쿠버네티스 클러스터 아키텍처:
+┌────────────────────────────────────────────────────────────────────────┐
+│ Control Plane (마스터 노드)                                            │
+│                                                                        │
+│   ┌────────────────────┐   Raft   ┌────────────────────────────────┐   │
+│   │ kube-apiserver     │ <──────> │ etcd (분산 분산 합의 KV)       │   │
+│   └─────────┬──────────┘          └────────────────────────────────┘   │
+│             │                                                          │
+│   ┌─────────┴──────────┐          ┌────────────────────────────────┐   │
+│   │ kube-scheduler     │          │ kube-controller-manager        │   │
+│   └────────────────────┘          └────────────────────────────────┘   │
+└─────────────┬──────────────────────────────────────────────────────────┘
+              │ (HTTPS / TLS 통신)
+┌─────────────┴──────────────────────────────────────────────────────────┐
+│ Worker Node (데이터 플레인)                                            │
+│                                                                        │
+│   ┌────────────────────┐          ┌────────────────────────────────┐   │
+│   │ kubelet            │ ──(CRI)─>│ containerd / runc              │   │
+│   └────────────────────┘          └────────────────┬───────────────┘   │
+│                                                    ▼                   │
+│   ┌────────────────────┐          ┌────────────────────────────────┐   │
+│   │ kube-proxy         │ ──iptables│ Pod (Container A + B)         │   │
+│   └────────────────────┘          └────────────────────────────────┘   │
+└────────────────────────────────────────────────────────────────────────┘
 ```
 
-<br>
+### 3.1 Control Plane 핵심 컴포넌트
 
-[4] 확인 및 접속
+1. **`kube-apiserver`**:
+   - 클러스터의 모든 컴포넌트와 외부 관리자(kubectl)가 통신하는 유일한 관문이다.
+   - 선언적 YAML에 대한 인증(Authentication), 인가(RBAC Authorization), 어드미션 제어(Admission Webhooks)를 거쳐 etcd에 데이터를 기록한다. 유일하게 etcd와 직접 통신할 수 있는 컴포넌트다.
+2. **`etcd`**:
+   - 클러스터의 모든 Desired State와 런타임 메타데이터를 저장하는 강력한 일관성(Strong Consistency) 기반의 분산 키-값 저장소다. **Raft 합의 알고리즘**을 기반으로 고가용성을 유지한다.
+3. **`kube-scheduler`**:
+   - 아직 노드가 배정되지 않은 신규 파드(Pod)를 감지하고, 노드의 리소스 가용량(CPU/RAM), 태인트와 톨러레이션(Taints & Tolerations), 노드 어피니티(Affinity)를 평가하는 2단계(필터링 $\rightarrow$ 스코어링)를 거쳐 최적의 노드를 바인딩한다.
+4. **`kube-controller-manager`**:
+   - 클러스터의 수많은 컨트롤러(Deployment, ReplicaSet, Node, ServiceAccount)를 단일 프로세스로 실행한다.
 
-- 생성된 리소스들의 상태를 확인한다. 
-  - `kubectl get deployment`: nginx-deployment가 3/3개의 복제본으로 준비된 것을 볼 수 있다. 
-  - `kubectl get pods`: nginx-deployment-xxxxx 형태의 파드 3개가 실행 중인 것을 볼 수 있다. 
-  - `kubectl get service`: nginx-service에 NodePort가 할당된 것을 볼 수 있다 (예: 80:31234/TCP). 31234가 외부에서 접속할 포트다.
+### 3.2 선언적 제어와 상태 수렴 루프 (Reconciliation Loop)
 
-<br>
+쿠버네티스의 모든 동작은 명령형(Imperative: "컨테이너 3개를 실행하라")이 아니라 **선언적(Declarative: "컨테이너의 복제본 수는 항상 3개여야 한다")** 방식에 기반한다.
 
-[5] 애플리케이션 접속
+```
+Reconciliation Loop의 핵심 메커니즘:
+       [Desired State (사용자 선언, etcd)]
+                       │
+                       ▼
+┌──────────────────────────────────────────────┐
+│  Observe (현재 클러스터 상태 관찰)           │
+│        │                                     │
+│        ▼                                     │
+│  Diff (Desired State vs. Current State 비교) │
+│        │                                     │
+│        ▼                                     │
+│  Act (상태 일치를 위해 컨테이너 생성/삭제)    │
+└──────────────────────────────────────────────┘
+                       ▲
+                       │
+       [Current State (실제 런타임 환경)]
+```
 
-- Minikube를 사용 중이라면 minikube service nginx-service 명령을 실행하여 브라우저에서 바로 확인할 수 있다. 
-- 다른 환경에서는 클러스터 노드의 IP 주소와 위에서 확인한 NodePort를 조합하여 브라우저에 입력한다 (예: http://<노드_IP>:<NodePort>). 
-- 이제 여러분의 맞춤형 Nginx 페이지가 확장 가능하고 안정적으로 관리되는 쿠버네티스 배포 환경 위에서 서비스되는 것을 확인할 수 있다.
+어떤 노드가 하드웨어 장애로 다운되어 파드 수가 2개로 줄어들면, ReplicaSet 컨트롤러는 관찰(Observe) 단계에서 차이(Diff)를 감지하고, 즉시 새로운 파드를 다른 가용 노드에 스케줄링하여 선언된 3개 상태로 수렴(Act)시킨다. 이 자체 복구(Self-healing) 메커니즘이 대규모 분산 시스템의 고가용성을 지탱한다.
 
-<br>
+---
 
-## 결론
+## 4. 데이터 플레인(Data Plane)과 네트워킹 프리미티브
 
-- 우리는 "제 컴퓨터에서는 되는데요"라는 근본적인 문제에서 출발하여 강력하고 확장 가능한 솔루션에 이르는 여정을 함께했다. 
-- **컨테이너**는 우리 코드에 일관성과 이식성을 보장하는 표준화된 "상자"를 제공했다. 
-- **도커**는 이 개별 상자들을 쉽게 만들고, 옮기고, 실행할 수 있는 도구를 제공했다. 
-- **쿠버네티스**는 수천 개의 상자로 이루어진 "함대"를 지휘하여 우리 애플리케이션이 복원력 있고, 확장 가능하며, 항상 사용 가능하도록 보장하는 관리 시스템을 제공했다.
-- 이 세 가지 기술은 단순한 도구가 아니라 패러다임의 전환을 의미한다. 이들은 데브옵스 문화, 마이크로서비스 아키텍처, 그리고 클라우드 인프라의 효율적인 사용을 가능하게 하는 현대 소프트웨어 개발의 기반이다.
+### 4.1 Pod: 배포의 최소 기본 단위
 
-<br>
-<br>
+쿠버네티스는 단일 컨테이너를 직접 배포하지 않고, 하나 이상의 컨테이너 묶음인 **파드(Pod)**를 스케줄링 단위로 삼는다.
 
-## References 
+- **Pause 컨테이너 (인프라 컨테이너)**: 파드가 생성될 때 가장 먼저 실행되어 Network와 IPC 네임스페이스를 선점한다.
+- **네트워크 공유**: 동일 파드 내의 모든 컨테이너는 동일한 IP 주소와 포트 공간을 공유하며, `localhost`를 통해 마이크로초 단위의 IPC 통신을 수행한다.
 
-[^1]: [Red Hat — What is a Linux container?](https://www.redhat.com/ko/topics/containers/what-is-a-linux-container)
-[^2]: [AWS — Containers](https://aws.amazon.com/ko/containers/)
-[^3]: [Docker — What is a container](https://www.docker.com/resources/what-container/)
-[^4]: [Google Cloud — What are containers?](https://cloud.google.com/learn/what-are-containers?hl=ko)
-[^5]: [OPENMARU — 하이브리드 클라우드 컨테이너 기술](https://www.openmaru.io/%ED%95%98%EC%9D%B4%EB%B8%8C%EB%A6%AC%EB%93%9C-%ED%81%B4%EB%9D%BC%EC%9A%B0%EB%93%9C%EB%A5%BC-%EC%9C%84%ED%95%9C-%EC%B0%A8%EC%84%B8%EB%8C%80-%EA%B0%80%EC%83%81%ED%99%94-%EA%B8%B0%EC%88%A0-%EC%BB%A8/)
-[^6]: [Red Hat — What is containerization](https://www.redhat.com/ko/topics/cloud-native-apps/what-is-containerization)
-[^7]: [OPENMARU — 컨테이너 기술의 개념 쉽게 이해하기](https://www.openmaru.io/%EC%BB%A8%ED%85%8C%EC%9D%B4%EB%84%88-%EA%B8%B0%EC%88%A0%EC%9D%98-%EA%B0%9C%EB%85%90-%EC%89%BD%EA%B2%8C-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0/)
-[^8]: [AWS — Docker](https://aws.amazon.com/ko/docker/)
-[^9]: [Red Hat — Containers vs VMs](https://www.redhat.com/ko/topics/containers/containers-vs-vms)
-[^10]: [Watch & Learn — 컨테이너 기술과 도커 개념 이해](https://watch-n-learn.tistory.com/4)
-[^11]: [IBM — What are containers](https://www.ibm.com/kr-ko/cloud/learn/containers)
-[^12]: [Google Cloud — Containers vs VMs](https://cloud.google.com/discover/containers-vs-vms?hl=ko)
-[^13]: [IBM — Containerization](https://www.ibm.com/kr-ko/think/topics/containerization)
-[^14]: [Atlassian — Containers vs VMs](https://www.atlassian.com/ko/microservices/cloud-computing/containers-vs-vms)
-[^15]: [태어난김에 개발자 — 컨테이너 vs 가상머신](https://born-dev.tistory.com/39)
-[^16]: [집주변이 최고야 — 컨테이너가 뭐에요?](https://nearhome.tistory.com/83)
-[^17]: [Red Hat — What is container orchestration](https://www.redhat.com/ko/topics/containers/what-is-container-orchestration)
-[^18]: [Kubernetes — 개요](https://kubernetes.io/ko/docs/concepts/overview/)
-[^19]: [Velog — 컨테이너 및 도커 개념정리](https://velog.io/@geunwoobaek/%EC%BB%A8%ED%85%8C%EC%9D%B4%EB%84%88-%EB%B0%8F-%EB%8F%84%EC%BB%A4-%EA%B0%9C%EB%85%90%EC%A0%95%EB%A6%AC)
-[^20]: [CIO — What are containers and why do you need them](https://www.cio.com/article/227835/what-are-containers-and-why-do-you-need-them.html)
-[^21]: [Docker — Get started](https://www.docker.com/get-started/)
-[^22]: [Docker Docs — Getting started overview](https://docs.docker.com/get-started/overview/)
-[^23]: [티스토리 — Dockerfile로 이미지 만들기](https://developer-jinnie.tistory.com/57)
-[^24]: [Docker Docs — Dockerfile reference](https://docs.docker.com/engine/reference/builder/)
-[^25]: [AWS — Docker 개요](https://aws.amazon.com/ko/docker/?nc1=h_ls)
-[^26]: [티스토리 — Nginx 컨테이너 + 이미지 생성](https://bill1224.tistory.com/359)
-[^27]: [Contributor9 — Dockerfile 이해 및 Nginx 구성](https://adjh54.tistory.com/414)
-[^28]: [Docker Docs — docker build](https://docs.docker.com/engine/reference/commandline/build/)
-[^29]: [티스토리 — Dockerfile 작성하고 Docker 실행하기](https://sewcode.tistory.com/2)
-[^30]: [Docker Docs — docker run](https://docs.docker.com/engine/reference/commandline/run/)
-[^31]: [Red Hat — What is Kubernetes](https://www.redhat.com/ko/topics/cloud-native-apps/what-is-kubernetes)
-[^32]: [IBM — Learn Kubernetes](https://www.ibm.com/kr-ko/cloud/learn/kubernetes)
-[^33]: [VMware — Kubernetes 용어](https://www.vmware.com/kr/topics/glossary/content/kubernetes.html)
-[^34]: [Microsoft Azure — AKS](https://azure.microsoft.com/ko-kr/products/kubernetes-service)
-[^35]: [Google Cloud — GKE 소개](https://cloud.google.com/kubernetes-engine/what-is-kubernetes?hl=ko)
-[^36]: [F5 — Kubernetes란?](https://www.f5.com/ko_kr/glossary/kubernetes)
-[^37]: [이랜서 — Kubernetes(쿠버네티스)란?](https://www.elancer.co.kr/blog/detail/835)
-[^38]: [Red Hat — Kubernetes 아키텍처](https://www.redhat.com/ko/topics/containers/kubernetes-architecture)
-[^39]: [Kubernetes — 클러스터 아키텍처](https://kubernetes.io/ko/docs/concepts/architecture/)
-[^40]: [seongjin.me — Kubernetes Cluster Components](https://seongjin.me/kubernetes-cluster-components/)
-[^41]: [Kubernetes — Pods](https://kubernetes.io/ko/docs/concepts/workloads/pods/)
-[^42]: [Red Hat — What is a Kubernetes pod](https://www.redhat.com/ko/topics/containers/what-is-a-kubernetes-pod)
-[^43]: [Kubernetes — Deployments](https://kubernetes.io/ko/docs/concepts/workloads/controllers/deployment/)
-[^44]: [Kubernetes — Stateless app Deployment](https://kubernetes.io/ko/docs/tasks/run-application/run-stateless-application-deployment/)
-[^45]: [Spacelift — Kubernetes Deployment YAML](https://spacelift.io/blog/kubernetes-deployment-yaml)
-[^46]: [Kubernetes — Service](https://kubernetes.io/ko/docs/concepts/services-networking/service/)
-[^47]: [NGINX — Kubernetes glossary](https://www.nginx.com/resources/glossary/kubernetes/)
-[^48]: [Docker Docs — Compose](https://docs.docker.com/compose/)
-[^49]: [Docker — Docker Compose](https://www.docker.com/products/docker-compose/)
-[^50]: [Kubernetes — Ingress](https://kubernetes.io/ko/docs/concepts/services-networking/ingress/)
-[^51]: [Kubernetes — Persistent Volumes](https://kubernetes.io/ko/docs/concepts/storage/persistent-volumes/)
+### 4.2 kubelet과 kube-proxy의 역할
+
+- **`kubelet`**: 각 워커 노드에서 데몬으로 실행되며, API 서버로부터 자신에게 할당된 PodSpec을 수신한다. CRI(Container Runtime Interface)를 호출하여 컨테이너를 생성/삭제하고, CNI(Container Network Interface)를 통해 IP를 부여하며, 정기적으로 헬스체크(Liveness/Readiness Probe)를 수행하여 상태를 보고한다.
+- **`kube-proxy`**: 노드 내부에서 가상 서비스 IP(ClusterIP)로 들어오는 트래픽을 실제 백엔드 파드들의 IP로 라우팅한다. 초기에는 사용자 공간 프록시를 썼으나, 현재는 Linux 커널의 **iptables** 또는 **IPVS (IP Virtual Server)** 모드를 활용하여 패킷 레벨에서 $O(1)$의 고속 로드밸런싱을 수행한다.
+
+---
+
+## 5. 결론: 클라우드 네이티브 엔지니어링 설계 원칙
+
+1. **컨테이너 불변성(Immutability)**: 컨테이너 내부의 파일 시스템 변경에 의존하지 말고, 모든 상태 데이터는 외부 Persistent Volume이나 오브젝트 스토리지로 분리하라.
+2. **리소스 상한선(Requests & Limits)의 엄격한 정의**: Cgroups의 CPU Throttling과 Memory OOM Killer를 이해하고, 모든 파드에 적절한 리소스 요청량(Scheduling 보장)과 상한선(Node 보호)을 정의하라.
+3. **선언적 인프라(IaC) 거버넌스**: 모든 쿠버네티스 리소스는 수동 `kubectl` 명령이 아닌 GitOps(ArgoCD, Flux) 파이프라인을 통해 버전 관리되는 선언적 매니페스트로 통제하라.
+
+---
+
+### References
+
+[^1]: [Namespaces in operation - LWN.net](https://lwn.net/Articles/531114/)
+[^2]: [Open Container Initiative Specifications](https://opencontainers.org/)
+[^3]: [Kubernetes Documentation: Architecture Concepts](https://kubernetes.io/docs/concepts/architecture/)
