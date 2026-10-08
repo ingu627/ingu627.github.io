@@ -28,7 +28,7 @@ url                      : "https://ingu627.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : "ingu627/ingu627.github.io" # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
 teaser                   : # path of fallback teaser image, e.g. "/assets/images/500x300.png"
-logo                     : "/assets/images/261008_logo.png"
+logo                     : # "/assets/images/261008_logo.png"
 masthead_title           : # overrides the website title displayed in the masthead, use " " for no title
 breadcrumbs              : true # true, false (default)
 words_per_minute         : 250
@@ -104,9 +104,9 @@ analytics:
 
 # Site Author
 author:
-  name             : "ingu627 🔅"
-  avatar           : "/assets/images/cr_ai_gpt_image_1.png" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "Circuit rhythms, neural visions: the art of artificial intelligence 64.6 x 65 <br/><br/>개인 저장공간입니다. <br/>Since 2021.10"
+  name             : ""
+  avatar           : "/assets/images/261008_logo.png" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
+  bio              : "개인 저장공간입니다. <br/>Since 2021.10"
   location         : "South Korea"
   links:
     - label: "Email"
