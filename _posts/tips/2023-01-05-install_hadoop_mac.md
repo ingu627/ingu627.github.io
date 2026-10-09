@@ -9,17 +9,19 @@ toc: true
 toc_sticky: true
 sidebar_main: false
 
-last_modified_at: 2023-01-06
+last_modified_at: 2026-10-09
 ---
 
-<br>
+**MacBook Pro (M1)** 로컬 환경에서 하둡(Hadoop)과 스파크(Spark)를 설치하고 의사 분산(Pseudo-distributed) 모드로 구동하는 과정을 정리한다. JDK 설치부터 SSH 설정, HDFS/YARN 기동 확인, Spark 연동까지 4단계로 진행한다.
+
+| 구성 요소 | 버전 |
+|---|---|
+| Java (JDK) | 19.0.1 |
+| Hadoop | 3.3.4 |
+| Spark | 3.3.0 |
+| 환경 | macOS (Apple Silicon arm64) |
 
 <img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/210795225-fbe262fc-2749-4476-a38d-f74477240eb8.png'>
-**노트북 환경** <br> MacBook Pro - M1 <br><br> **하둡, 스파크 버전** <br> 자바(Java): 19.0.1 <br> 하둡(Hadoop): 3.3.4 <br> 스파크(Spark): 3.3.0
-{: .notice--info}
-
-<br>
-<br>
 
 ## 1. 자바(JDK 19) 설치
 
@@ -61,7 +63,7 @@ export PATH=${PATH}:$JAVA_HOME/bin
 - 하둡은 네임(마스터) 노드에서 여러 개의 데이터(워커) 노드와 서버 접속이 가능하게 해야 되기 때문에 ssh 통신에 사용할 키 교환을 수행해야 한다.
 - `ssh localhost` 명령어를 통해 ssh 설치 여부를 확인할 수 있다.
 - 키 수정은 다음과 같다. 
-  - 인증키를 미리 생성해서 ssh에 로그인할 때 비밀번호 대신 사용하는 방식이다. [^1] 
+  - 인증키를 미리 생성해서 ssh에 로그인할 때 비밀번호 대신 사용하는 방식이다.
 
 ```shell
 $ ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
@@ -252,4 +254,5 @@ export SPARK_LOCAL_HOSTNAME=localhost
 
 ## References
 
-[^1]: [맥에서 하둡 설치하기](https://jeongxoo.tistory.com/14)
+- [맥에서 하둡 설치하기 - jeongxoo.log](https://jeongxoo.tistory.com/14)
+- [Hadoop: Setting up a Single Node Cluster (공식 문서)](https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/SingleCluster.html)
