@@ -8,18 +8,14 @@ toc: true
 toc_sticky: true
 sidebar_main: false
 
-last_modified_at: 2022-08-11
+last_modified_at: 2026-10-09
 ---
 
 ![image](https://user-images.githubusercontent.com/78655692/183697704-2aeab667-34f8-4369-bb93-7f42d326e9a4.png)
 
-"MapReduce: Simplified Data Processing on Large Clusters" 논문을 개인 공부 및 리뷰를 위해 쓴 글입니다. <br> 맵리듀스에 입문하시거나 관련 논문을 처음 보는 분을 위해 용어 설명도 덧붙였습니다. <br> 또한, MapReduce의 모든 것을 알기 위해 최대한 요약없이 논문 내용을 담았습니다. <br>
-논문 출처 : [OSDI 04 paper - mapreduce](https://www.usenix.org/legacy/event/osdi04/tech/full_papers/dean/dean_html/)
-{: .notice--info}
+"MapReduce: Simplified Data Processing on Large Clusters" 논문을 개인 공부 및 리뷰를 위해 쓴 글입니다. 맵리듀스에 입문하시거나 관련 논문을 처음 보는 분을 위해 용어 설명도 덧붙였습니다. 또한, MapReduce의 모든 것을 알기 위해 최대한 요약없이 논문 내용을 담았습니다.
 
-<br>
-<br>
-<br>
+논문 출처 : [OSDI 04 paper - mapreduce](https://www.usenix.org/legacy/event/osdi04/tech/full_papers/dean/dean_html/)
 
 ## 1. Introduction
 
@@ -30,9 +26,6 @@ last_modified_at: 2022-08-11
   - map과 reduce 연산이 있는 모델을 사용하면 큰 계산을 쉽게 병렬화(parallelize)할 수 있고 재실행(re-execution)을 fault tolerance를 위한 primary 기법으로 사용할 수 있다.
   - **레코드(record)** : 데이터베이스에서 하나의 단위로 취급되는 자료의 집합. DB table에서 가로 방향으로 한 줄을 나타낸다. [^1]
   - **중간 키(intermdediate key)** : 매퍼(mapper)에 의해 생성된 키-값 쌍 [^2]
-
-<br>
-<br>
 
 ## 2. Programming Model
 
@@ -45,8 +38,6 @@ last_modified_at: 2022-08-11
 - 일반적으로 reduce 호출당 0 또는 1의 출력 값이 생성된다.
 - 중간 값(intermediate value)은 반복기(iterator)를 통해 사용자 reduce 함수에 공급된다.
 - 이렇게 하면 메모리에 넣을 수 없을 정도로 큰 값의 목록을 처리할 수 있다.
-
-<br>
 
 ### 2.1 Example
 
@@ -68,8 +59,6 @@ reduce(String key, Iterator values):
     result += ParseInt(v);
   Emit(AsString(result));
 ```
-
-<br>
 
 ### 2.2 More Examples
 
@@ -93,9 +82,6 @@ reduce(String key, Iterator values):
   - `map` : 각 레코드로부터 키를 추출하고 `<key, record>` 쌍으로 내보낸다.
   - `reduce` : 변경되지 않는 모든 쌍을 내보낸다.
 
-<br>
-<br>
-
 ## 3. Implementation
 
 ### 3.1 Execution Overview
@@ -104,8 +90,6 @@ reduce(String key, Iterator values):
 - reduce 호출은 파티셔닝(partitioning)을 사용하여 중간 키 공간을 R 조각으로 파티션(partition)함으로써 분산된다(distributed).
   - 파티션 수(R)와 파티셔닝은 사용자가 지정한다.
   - **파티셔닝(partitioning)** : 데이터베이스를 여러 부분으로 분할 [^13]
-
-<br>
 
 ![image](https://user-images.githubusercontent.com/78655692/184050804-5cb495f4-b9d8-4ddd-b374-2495b7f97819.png)
 
@@ -125,8 +109,6 @@ reduce(String key, Iterator values):
 4. reduce worker는 정렬된 중간 데이터 위에 반복되며 발견된 각 고유 중간 키에 대해, 키(key)와 해당 중간 값(value) 쌍을 사용자의 reduce 함수에 전달한다.
 5. 모든 map 태스크와 reduce 태스크가 완료되면 마스터가 사용자 프로그램(user program)을 깨운다.
 
-<br>
-
 ### 3.2 Master Data Structures
 
 - 마스터는 여러 데이터 구조를 유지한다.
@@ -135,8 +117,6 @@ reduce(String key, Iterator values):
 - 따라서 마스터는 맵 태스크에 의해 생성된 R 중간 파일 영역의 위치와 크기를 저장한다.
 - map 태스크가 완료되면 이 위치와 크기 정보가 업데이트된다.
 - 이 태스크는 진행 중인 reduce 태스크를 가진 worker에게 전달된다.
-
-<br>
 
 ### 3.3 Fault Tolerance
 
@@ -153,15 +133,11 @@ reduce(String key, Iterator values):
 - 맵리듀스는 대규모 워커 장애(failure)에 대한 복원력(resilient)이 있다.
 - 맵리듀스 마스터는 도달할 수 없는 워커 머신에 의해 수행된 태스크를 단순히 재실행하고 계속 포워드를 하며 결국 맵리듀스 태스크를 완료한다.
 
-<br>
-
 ### Master Failure
 
 - 마스터 연산이 죽는다면, 마지막 체크포인트 상태에서 새로운 복사본을 시작할 수 있다.
 - 하지만, 현재 구현은 마스터가 실패할 경우 맵리듀스 계산을 중단한다.
 - 클라이언트가 원하는 경우 이 상태를 확인하고 맵리듀스 연산을 다시 시도할 수 있다.
-
-<br>
 
 ### Semantics in the Presence of Failures
 
@@ -177,8 +153,6 @@ reduce(String key, Iterator values):
 - 동일한 리듀스 태스크가 여러 컴퓨터에서 실행될 경우 동일한 최종 출력 파일에 대해 여러 개의 이름 변경(rename) 호출이 실행된다.
 - 기본 파일 시스템이 제공하는 원자 이름 변경(atomic rename) 연산에 의존하여 최종 파일 시스템 상태가 리듀스 태스크를 한 번 실행함으로써 생성된 데이터만 포함되도록 보장한다.
 
-<br>
-
 ### 3.4 Locality
  
 - 네트워크 대역폭(bandwidth)은 컴퓨팅 환경에서 상대적으로 부족한 자원이다.
@@ -190,16 +164,12 @@ reduce(String key, Iterator values):
   - **스케줄(schedule)** : 다수의 트랜잭션에 속하는 연산이 수행된 시간 순서 [^12]
 - 큰 맵리듀스 작업을 실행하는 경우 대부분의 입력 데이터가 로컬로 읽히고 네트워크 대역폭을 전혀 사용하지 않는다.
 
-<br>
-
 ### 3.5 Task Granularity
 
 - 위에서 말했듯이, 맵 단계를 M 조각으로, 리듀스 단계를 R 조각으로 세분한다.
 - 각 워커가 다양한 태스크를 수행하도록 한다면 동적 로드 밸런싱(load balancing)이 향상되고 워커가 실패할 경우 복구 속도가 빨라진다.
   - 즉, 완료된 많은 맵 태스크를 다른 모든 워커 머신에 분산시킬 수 있다. 
   - **로드 밸런싱(load balancing)** : 서버가 처리해야 할 업무 혹은 요청(Load)을 여러 대의 서버로 나누어(Balancing) 처리하는 것을 의미한다. [^11]
-
-<br>
 
 ### 3.6 Backup Tasks
 
@@ -209,14 +179,9 @@ reduce(String key, Iterator values):
 - 맵리듀스는 이 메커니즘을 조정하여 일반적으로 연산에 사용되는 계산 자원을 몇 퍼센트 이상 증가시키지 않도록 했다.
 - 이를 통해 대규모 맵리듀스 연산을 완료하는 데 걸리는 시간이 크게 단축되었다.
 
-<br>
-<br>
-
 ## 4. Refinements
 
 - 몇 가지 유용한 확장 기능들이 있다.
-
-<br>
 
 ### 4.1 Partitioning Function
 
@@ -226,14 +191,10 @@ reduce(String key, Iterator values):
   - 이로 인해 파티션이 상당히 균형 있게 조정된다.
   - **해시(hash)** : 다양한 길이를 가진 데이터를 고정된 길이를 가진 데이터로 매핑한 값. 이를 이용해 특정한 배열의 인덱스나 위치나 위치를 입력하고자 하는 데이터의 값을 이용해 저장하거나 찾을 수 있다. [^14]
 
-<br>
-
 ### 4.2 Ordering Guarantees
 
 - 주어진 파티션 내에서 중간 키/값 쌍이 키(key) 순서로 처리됨을 보장한다.
 - 순서 보증(ordering guarantee)을 통해 파티션별로 정렬된 출력 파일을 쉽게 생성할 수 있다.
-
-<br>
 
 ### 4.3 Combiner Function
 
@@ -244,8 +205,6 @@ reduce(String key, Iterator values):
   - 결합 출력은 중간 파일에 기록되며, 중간 파일은 리듀스 연산으로 전송된다.
   - 부분 결합(partial combining)은 특정 클래스의 맵리듀스 작업 속도를 크게 향상시킨다.
 
-<br>
-
 ### 4.4 Input and Output Types
 
 - 맵리듀스 라이브러리는 입력 데이터를 여러 다른 형식으로 읽을 수 있도록(reading) 지원한다.
@@ -253,14 +212,10 @@ reduce(String key, Iterator values):
   - 키 : 파일의 오프셋(offset)
   - 값 : 줄의 내용
 
-<br>
-
 ### 4.5 Side-effects
 
 - 일반적으로 애플리케이션은 임시 파일에 쓰고 파일이 완전히 생성되면 이 파일의 이름을 자동으로 변경(rename)한다.
 - 파일 간 일관성이 요구되는 여러 출력 파일을 생성하는 작업은 **결정적(deterministic)**이어야 한다.
-
-<br>
 
 ### 4.6 Skipping Bad Records
 
@@ -270,13 +225,9 @@ reduce(String key, Iterator values):
 - 사용자 코드가 신호를 생성하면 신호 처리기는 시퀀스 번호가 포함된 "last gasp" UDP 패킷을 맵리듀스 마스터로 보낸다.
 - 마스터가 특정 레코드에서 두 개 이상의 오류를 발견한 경우, 해당 맵 또는 리듀스 태스크의 다음 재실행할 때 레코드를 스킵한다. 
 
-<br>
-
 ### 4.7 Local Execution
 
 - 디버깅, 프로파일링 및 소규모 테스트를 용이하게 하기 위해 로컬 시스템에서 맵리듀스 연산에 대한 모든 작업을 순차적으로(sequentially) 실행하는 맵리듀스 라이브러리의 대체 구현을 개발했다.
-
-<br>
 
 ### 4.8 Status Information
 
@@ -287,8 +238,6 @@ reduce(String key, Iterator values):
 - 이 페이지들은 또한 계산 속도가 예상보다 훨씬 느린 경우를 알아내는 데 사용될 수 있다.
 - 또한 최상위 상태 페이지에는 어떤 워커가 실패했는지, 워커가 실패했을 때 어떤 태스크를 처리했는지(맵, 리듀스 태스크)를 보여준다.
   - 이런 정보는 사용자 코드의 버그를 진단할 때 유용하다.
-
-<br>
 
 ### 4.9 Counters
 
@@ -309,11 +258,6 @@ map(String name, String contents):
 - 마스터는 성공적인 맵 및 리듀스 태스크에서 카운터 값을 집계하여 맵리듀스 작업이 완료되면 사용자 코드로 반환한다.
 - 현재 카운터 값은 사용자가 실시간 계산의 진행 상황을 볼 수 있도록 마스터 상태 페이지에도 표시된다.
 - 마스터는 카운터 값을 집계할 때 이중 계산을 방지하기 위해 동일한 맵 또는 리듀스 태스크의 중복 실행의 영향을 제거한다.
-
-<br>
-<br>
-<br>
-<br>
 
 ## References
 

@@ -9,15 +9,12 @@ toc: true
 toc_sticky: true
 sidebar_main: false
 
-last_modified_at: 2022-07-16
+last_modified_at: 2026-10-09
 ---
 
 
-ubuntu 20.04, nvidia driver 495, cuda 11.3, cudnn 8.2.1, pytorch 버전을 설치하는 방법입니다. <br> 우분투에서 파이썬 가상환경도 만들어봅니다.
-{: .notice--danger}
+ubuntu 20.04, nvidia driver 495, cuda 11.3, cudnn 8.2.1, pytorch 버전을 설치하는 방법입니다. 우분투에서 파이썬 가상환경도 만들어봅니다.
 
-<br>
-<br>
 
 ## 기존 nvidia, cuda 완전 삭제
 
@@ -39,8 +36,6 @@ ubuntu 20.04, nvidia driver 495, cuda 11.3, cudnn 8.2.1, pytorch 버전을 설�
     $ sudo rm -rf /usr/local/cuda*
     ```
 
-<br>
-<br>
 
 ## 설치가능한 드라이버 확인
 
@@ -52,7 +47,6 @@ ubuntu 20.04, nvidia driver 495, cuda 11.3, cudnn 8.2.1, pytorch 버전을 설�
 
 ![image](https://user-images.githubusercontent.com/78655692/178480486-761c2ecf-6e49-420b-9d02-549e7b11d012.png)
 
-<br>
 
 - 이제 설치하고픈 버전을 골라 설치하거나, 자동으로 드라이버를 설치한다. [^2]
 - 본인은 `nvidia-driver-495`로 설치해보겠다.
@@ -67,7 +61,6 @@ ubuntu 20.04, nvidia driver 495, cuda 11.3, cudnn 8.2.1, pytorch 버전을 설�
     $ sudo apt install nvidia-driver-495
     ```
 
-<br>
 
 - nvidia 드라이버 설치가 끝나면 NVIDIA kernel module의 load를 도와주는 `modprobe` 패키지를 설치한다. [^3]
 
@@ -85,7 +78,6 @@ ubuntu 20.04, nvidia driver 495, cuda 11.3, cudnn 8.2.1, pytorch 버전을 설�
     $ sudo reboot
     ```
 
-<br>
 
 - 재부팅 후 설치가 잘 되었는지 확인하기 위해 다음 명령어를 실행해본다.
 - 아래처럼 잘 나오면 설치가 잘 된것이다.
@@ -94,12 +86,9 @@ ubuntu 20.04, nvidia driver 495, cuda 11.3, cudnn 8.2.1, pytorch 버전을 설�
     $ nvidia-smi
     ```
 
-<br>
 
 <img src='https://user-images.githubusercontent.com/78655692/178487504-86beaa95-4493-49bb-b9fc-608e307a8827.png' width=600>
 
-<br>
-<br>
 
 ## cuda 11.3 설치
 
@@ -109,11 +98,9 @@ ubuntu 20.04, nvidia driver 495, cuda 11.3, cudnn 8.2.1, pytorch 버전을 설�
 
 <img src='https://user-images.githubusercontent.com/78655692/178489427-3b4965a6-93f7-4aee-b63d-d75667a3b629.png' width=550>
 
-<br>
 
 <img src='https://user-images.githubusercontent.com/78655692/178489726-78544f83-83f6-4e13-af4e-41546adaed37.png' width=550>
 
-<br>
 
 ```shell
 # runfile(local)
@@ -132,7 +119,6 @@ $ sudo apt-get update
 $ sudo apt-get -y install cuda
 ```
 
-<br>
 
 - Continue 후, accept, 그 다음 Driver 선택을 해제후 Install 한다.
 
@@ -142,13 +128,11 @@ $ sudo apt-get -y install cuda
 
 <img src='https://user-images.githubusercontent.com/78655692/178491105-46851e2a-0398-4d03-a74b-b68e935cfe05.png' width=550>
 
-<br>
 
 - 설치가 잘 진행되었다면 아래 그림처럼 나올 것이다.
 
 ![image](https://user-images.githubusercontent.com/78655692/178491438-7219204f-f98e-4421-af53-989902d61472.png)
 
-<br>
 
 > 만약 gcc가 없어서 문제가 발생한다면, 다음 명령어를 수행한다.
 
@@ -166,7 +150,6 @@ $ sudo apt-get install manpages-dev
 
 <img src='https://user-images.githubusercontent.com/78655692/178491776-83b209b0-372b-4f9b-b488-ac0fde15cbf0.png' width=400>
 
-<br>
 
 - CUDA Toolkit 관련 설정을 환경 변수에 추가하기 위해 다음 명령어를 실행한다. [^4]
 
@@ -177,8 +160,6 @@ $ sudo apt-get install manpages-dev
     $ source /etc/profile
     ```
 
-<br>
-<br>
 
 ## cuDNN 설치
 
@@ -189,19 +170,15 @@ $ sudo apt-get install manpages-dev
 
 ![image](https://user-images.githubusercontent.com/78655692/178493921-0e35f854-fb08-46da-b304-7e51d057ccde.png)
 
-<br>
 
 ![image](https://user-images.githubusercontent.com/78655692/178494017-567dadb0-5f1f-4f78-8500-5218af00875f.png)
 
-<br>
 
 ![image](https://user-images.githubusercontent.com/78655692/178494120-cc6b23e3-66aa-45ad-88fc-55346dbd4b14.png)
 
-<br>
 
 ![image](https://user-images.githubusercontent.com/78655692/178494341-c8c50213-1c03-454f-b6a9-077a44a01934.png)
 
-<br>
 
 - 다운로드 받은 파일을 압축풀어 파일을 복사한다. 
   - 복사 명령어 : `cp [복사할 디렉토리/파일] [복사될 디렉토리/파일]`
@@ -223,7 +200,6 @@ $ sudo apt-get install manpages-dev
     $ sudo ln -sf /usr/local/cuda-11.3/targets/x86_64-linux/lib/libcudnn.so.8.2.1 /usr/local/cuda-11.3/targets/x86_64-linux/lib/libcudnn.so.8
     ```
 
-<br>
 
 - 새로 추가된 라이브러리를 시스템에서 찾을 수 있도록 한다.
 
@@ -231,7 +207,6 @@ $ sudo apt-get install manpages-dev
     $ sudo ldconfig
     ```
 
-<br>
 
 - 다음은 설정이 제대로 되었는지 확인하기 위한 명령어이다.
 
@@ -241,8 +216,6 @@ $ sudo apt-get install manpages-dev
 
     ![image](https://user-images.githubusercontent.com/78655692/178498523-5b1d6c98-052a-4a8f-9e00-5d12477d40df.png)
 
-<br>
-<br>
 
 ## python 가상환경 설치
 
@@ -253,7 +226,6 @@ $ sudo apt-get install manpages-dev
     $ sudo apt-get install python3-venv
     ```
 
-<br>
 
 - 그다음, 원하는 이름으로 가상환경을 생성한다.
 
@@ -263,7 +235,6 @@ $ sudo apt-get install manpages-dev
     $ python3 -m venv tf2.8
     ```
 
-<br>
 
 - 다음은 가상환경를 활성화하는 과정이다.
 - 활성화하면 터미널 앞에 가상환경 이름이 나타날 것이다.
@@ -274,12 +245,9 @@ $ sudo apt-get install manpages-dev
     $ source tf2.8/bin/activate
     ```
 
-<br>
 
 - `deactivate`를 실행하면, 가상환경은 종료된다.
 
-<br>
-<br>
 
 ## pytorch 및 필수 패키지 설치
 
@@ -299,10 +267,6 @@ $ sudo apt-get install manpages-dev
     $ pip install torch==1.11.0+cu113 torchvision==0.12.0+cu113 torchaudio==0.11.0 --extra-index-url https://download.pytorch.org/whl/cu113
     ```
 
-<br>
-<br>
-<br>
-<br>
 
 ## References
 

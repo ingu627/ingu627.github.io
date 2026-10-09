@@ -8,15 +8,18 @@ toc: true
 toc_sticky: true
 sidebar_main: false
 
-last_modified_at: 2022-06-06
+last_modified_at: 2026-10-09
 ---
 
-Concept Drift Detection에 대한 기법들을 공부하면서 자연스레 나온 부등식들을 정리해보았습니다. <br> 대부분의 기계 학습 문제에서 일부 샘플 훈련 세트가 제공되고 전체 모집단에 적용되는 일반 모델을 도출합니다. <br><br>마르코브 부등식 (Markov’s inequality)<br>체비쇼프 부등식 (Chebyshev’s inequality)<br>호에프딩 부등식 (Hoeffding’s inequality)<br>번스타인 부등식 (Bernstein’s inequality)
-{: .notice--info}
+Concept Drift Detection에 대한 기법들을 공부하면서 자연스레 나온 부등식들을 정리해보았습니다. 대부분의 기계 학습 문제에서 일부 샘플 훈련 세트가 제공되고 전체 모집단에 적용되는 일반 모델을 도출합니다.
 
-<br>
-<br>
-<br>
+- 마르코브 부등식 (Markov’s inequality)
+- 체비쇼프 부등식 (Chebyshev’s inequality)
+- 호에프딩 부등식 (Hoeffding’s inequality)
+- 번스타인 부등식 (Bernstein’s inequality)
+
+
+Concept Drift Detection에서 등장하는 확률 부등식들을 정리한 글이다. 이 글은 마르코프, 체비쇼프, 호에프딩, 번스타인 부등식의 정의와 증명, 장단점을 차례로 다룬다.
 
 ## Markov's inequality
 
@@ -24,20 +27,16 @@ Concept Drift Detection에 대한 기법들을 공부하면서 자연스레 나�
   - $P(X\ge a)\le \frac{E(X)}{a}$
   - where, $a>0$
 
-<br>
 
 - **Pros**
   - 확률분포의 가정없이도 확률변수의 기댓값만으로 대략적인 확률을 추정할 수 있다. [^2]
 
-<br>
-<br>
 
 ## Chebyshev's inequality
 
 - $X$가 랜덤 변수일 때,
 - $P(\vert X-\mu \vert \ge a) \le \frac{Var(X)}{a^2}$
 
-<br>
 
 - **Proof**
   - 마르코프 부등식에서 $X$의 값에 $\vert X-\mu \vert$을 대입한다.
@@ -47,22 +46,18 @@ Concept Drift Detection에 대한 기법들을 공부하면서 자연스레 나�
 - 위 증명 과정 중 $a$값을 $k^2\sigma^2$로 변형하면
   - $P(\vert X-\mu\vert \ge k\sigma)=$ $P((X-\mu)^2 \ge k^2\sigma^2)\le \frac{Var(X)}{k^2\sigma^2}=$ $\frac{\sigma^2}{k^2\sigma^2}=$ $\frac{1}{k^2}$
 
-<br>
 
   - 이를 깔끔하게 정리하면,
   - $P(\vert X-\mu\vert \ge k\sigma)\le \frac{1}{k^2}$ 또는 
   - $P(\vert X-\mu\vert \le k\sigma)\ge 1- \frac{1}{k^2}$ 
     - k값에 따라 평균에서 $\sigma$만큼 떨어진 구간에 자료가 위치할 확률을 구할 수 있다. [^2]
 
-<br>
 
 - **Pros**
   - 분산도 알고 있을 때 사용. 즉, 정보가 더 많기 때문에 tight한 bound를 제공한다. [^1]
 - **Cons**
   - 대칭 분포라고 가정하기 때문에, 실제 적용에서는 제약적이다.
 
-<br>
-<br>
 
 ## Hoeffding's inequality
 
@@ -77,12 +72,10 @@ Concept Drift Detection에 대한 기법들을 공부하면서 자연스레 나�
 - 하지만, $n$과 $\epsilon$은 trade-off 관계이다.
   - 따라서, n에 영향을 줄이기에 너무 작거나 크지 않거나 충분히 허용되지 않아야 하는 적절한 $\epsilon$을 선택해야 한다. [^3]
 
-<br>
 
 - $X_i \sim^{iid} Ber(p)$ 이면, 다음 식이 성립된다.
 - $P(\vert \bar X_n - \mu \vert \ge \frac{c}{\sqrt{n}})\le$ $2e^{-{2nc^2}}$
 
-<br>
 
 - **Pros**
   - hoeffding's inequality는 chebyshev inquality보다 더 tight한 bound를 제공한다.
@@ -90,25 +83,18 @@ Concept Drift Detection에 대한 기법들을 공부하면서 자연스레 나�
   - 분산이 작은 분포에 대한 큰 편차 확률을 과대평가하여 너무 보수적(conservative)이다. [^4] 
 
 
-<br>
-<br>
 
 ## Bernstein's inequality
 
 - $X_1,...,X_n$이 독립적인 랜덤 변수이고, $\mu$는 기댓값, $X_i\in [a,b]$에 수렴할 때, 번슈타인 부등식은 다음과 같다.
   - $P(\vert \bar X_i-\mu \vert > \epsilon)$ $\le 2e^{(\frac{-n\epsilon^2}{2\sigma^2+\frac{2}{3}\epsilon (b-a)})}$
 
-<br>
 
 - **Cons**
   - 분산 파라미터 값이 필요하다는 점에서 보수적(conservative)라 할 수 있다. 이는 detection delay가 길어지고 정확도가 떨어질 수 있다.
 
 
 
-<br>
-<br>
-<br>
-<br>
 
 ## References
 

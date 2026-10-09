@@ -9,21 +9,21 @@ toc: true
 toc_sticky: true
 sidebar_main: false
 
-last_modified_at: 2023-04-25
+last_modified_at: 2026-10-09
 ---
 
 <img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/147719090-5f0942f1-1647-44ad-8d72-f11e3fe400d7.png
 '>
-본 글은 Distributed Systems 책의 내용을 개인 공부 목적을 위한 요약 및 정리한 내용입니다. <br> 오타나 오류는 알려주시길 바라며, 도움이 되길 바랍니다. <br> **2023.04.25 Update**
-{: .notice--info}
+본 글은 Distributed Systems 책의 내용을 개인 공부 목적을 위한 요약 및 정리한 내용입니다. 오타나 오류는 알려주시길 바라며, 도움이 되길 바랍니다. **2023.04.25 Update**
 
-**글을 읽으면서 스스로에게 물어보기 <br><br> 1. 왜 만들어 졌을까?(background, def) <br> 2. 왜 필요할까? (why?) <br> 3. 장점과 단점은 무엇인가? (adv, disadv)**
-{: .notice--danger}
+> **글을 읽으면서 스스로에게 물어보기**
+>
+> 1. 왜 만들어 졌을까?(background, def)
+> 2. 왜 필요할까? (why?)
+> 3. 장점과 단점은 무엇인가? (adv, disadv)
 
-<br>
-<br>
-<br>
-<br>
+분산 시스템(Distributed System)은 사용자에게 하나의 일관된 이미지(single system image)로 나타나는 자율 컴퓨팅 구성요소(component)의 집합이다. 이 글은 Distributed Systems 책의 1장 Introduction을 정리하며, 분산 시스템의 정의와 특징, 설계 목표, 그리고 분산 시스템의 유형을 다룬다.
+
 
 
 ## Chapter 1. Introduction
@@ -44,14 +44,12 @@ last_modified_at: 2023-04-25
 - 이런 분산 시스템의 크기는 한 줌의 장치로부터 다양해졌다.
   - **시스템 (system)** : 하나의 공통적인 목적 수행을 위해 조직화된 요소들의 집합체 또는 체계 [^10]
 
-<br>
 
 ### What is a distributed system?
 
 - 분산 시스템(Distributed System)은 사용자에게 하나의 일관된 이미지(single system image)로 나타나는 자율 컴퓨팅 구성요소(component)의 집합이라 할 수 있다.
   - **single system image**란, 사용자에게 분산되어 있는 다수의 컴퓨터와 자원들을 하나의 통합된 시스템으로 보여주는 것을 말한다. 
 
-<br>
 
 ### 특징1. Collection of autonomous computing elements
 
@@ -81,7 +79,6 @@ last_modified_at: 2023-04-25
   3. 멤버가 nonmember에게 쉽게 전달하는지 고려해봐야 한다. 
      - 분산 시스템에서 통신 이슈에 대해 신뢰성 즉, 메시지 유출 가능성을 따져본다.
 
-<br>
 
 ### overlay network
 
@@ -100,8 +97,6 @@ last_modified_at: 2023-04-25
 - 어떤 경우든 오버레이 네트워크는 언제나 연결돼야 하는데,(구체적으로) 두개의 노드 간에는 반드시 서로 메시지를 전송하게 허용하는 통신 통로가 있다. 
 - 잘 알려진 오버레이로는 `peer-to-peer` (P2P) 네트워크가 있다.
 
-<br> 
-<br> 
 
 ### 특징2. Single coherent system
 
@@ -123,19 +118,15 @@ last_modified_at: 2023-04-25
 
 > "one in which the failure of a computer you didn’t even know existed can render your own computer unusable"
 
-<br>
-<br>
 
 ### Middleware and distributed systems
 
 - 분산된 애플리케이션의 발전을 돕기 위해, 분산 시스템은 논리적으로 각각의 컴퓨터의 운영체제 위에 위치한 분리된 계층을 가지며 구성된다.
   - **애플리케이션(application)**: 운영체제 위에서 사용자가 직접 사용하게 되는 소프트웨어 [^6]
 
-<br>
 
 ![image](https://user-images.githubusercontent.com/78655692/150115611-ca99401f-fcc2-43d0-8d53-ac9baa31aeb6.png)
 
-<br>
 
 - 각각의 애플리케이션은 같은 인터페이스를 제공한다.
 - **분산 시스템**은 단일 분산 애플리케이션의 컴포넌트들이 서로 통신할 뿐만 아니라, 서로 다른 애플리케이션 간의 통신을 허용하는 수단을 제공한다.
@@ -153,7 +144,6 @@ last_modified_at: 2023-04-25
 - 어떤 의미에선, 미들웨어를 컴포넌트와 함수들을 공통적으로 사용하는 컨테이너로 볼 수 있다.
 - 미들웨어는 컴포넌트와 애플리케이션들이 각각 실행되지 않게 도와주는 기능들로 사용되는 컨테이너로 볼 수 있다.
 
-<br>
 
 - 이같은 미들웨어 서비스의 예시들은 다음과 같다.
 
@@ -171,8 +161,6 @@ last_modified_at: 2023-04-25
    - 한 프로세스가 모든 프로세스에 의해 수신되거나 다른 프로세스가 수신되지 않도록 보장한다.
    - 이런 보장은 분산 애플리케션 개발을 단순화시며, 미들웨어의 한 부분으로 구현된다.
 
-<br>
-<br>
 
 ## 1.2 Design goals
 
@@ -180,8 +168,6 @@ last_modified_at: 2023-04-25
   - 리소스는 네트워크를 통해 분산되어 있다는 사실을 숨겨야 한다.
   - **open**되어야 하고, **scalable**되어야 한다.
 
-<br>
-<br>
 
 ### Supporting resource sharing
 
@@ -191,15 +177,11 @@ last_modified_at: 2023-04-25
 - 인터넷 연결은 넓게 분산된 사람들이 같이 일할 수 있도록 허용해준다. 
 - 분산 시스템에서 리소스 공유는 파일을 공유하는 P2P네트워크인 `BitTorrent`가 대표적인 예시이다.
 
-<br>
-<br>
 
 ### Making distribution transparent
 
 - 분산 시스템의 중요한 목표는 프로세스와 리소스가 다중 컴퓨터를 통해 물리적으로 분산되어 있다는 사실을 숨겨야 하는 것이다.
 
-<br>
-<br>
 
 ### Types of distribution transparency
 
@@ -221,8 +203,6 @@ last_modified_at: 2023-04-25
   - **Failure Transparency** : 분산 시스템에서 노드나 네트워크 장애가 발생할 때, 사용자가 이를 느끼지 못하게 하여 시스템의 신뢰성을 높이는 것을 말한다. 
     - 예를 들어, 데이터 복제를 이용하여 여러 노드에 데이터를 저장하면, 하나의 노드가 실패해도 데이터가 손실되지 않는다.
 
-<br>
-<br>
 
 ### Degree of distribution transparency
 
@@ -235,8 +215,6 @@ last_modified_at: 2023-04-25
   - **replication (복제)** : 복제된 리소스의 데이터가 같아지도록 데이터를 공유
 - 숨기는 것보다 노출하는게 더 좋을 수도 있는데, 지역 기반 서비스를 사용할 때가 그 예이다.
 
-<br>
-<br>
 
 ## Being open
 
@@ -249,8 +227,6 @@ last_modified_at: 2023-04-25
 - 적절한 사양은 완전(실행하는데 필요한 모든 것이 명시되어야 한다는 것)하고 중립적이다.
 - open distributed system이 되기 위해 다른 목표는 서로 다른 구성 컴포넌트로 시스템을 쉽게 구성할 수 있어야 한다.
 
-<br>
-<br>
 
 ### Separating policy from mechanism
 
@@ -262,8 +238,6 @@ last_modified_at: 2023-04-25
   3. **Sharing**
   4. **Refreshing**
 
-<br>
-<br>
 
 ## Being scalable
 
@@ -275,8 +249,6 @@ last_modified_at: 2023-04-25
   3. **Administrative scalability** : 관리에 따른 확장성
      - 많은 독립적인 관리 조직을 거친다 하더라도 쉽게 관리된다.
 
-<br>
-<br>
 
 ### Size scalability
 
@@ -290,8 +262,6 @@ last_modified_at: 2023-04-25
     2. 저장 용량 (I/O 전송 비율도 포함한다.)
     3. 유저와 중앙 서비스간의 네트워크
 
-<br>
-<br>
 
 ### Geographical scalability
 
@@ -299,8 +269,6 @@ last_modified_at: 2023-04-25
   - 지리적으로 분산된 노드들을 연결하여 하나의 시스템으로 동작하게 만든다. 
 - 지리 확장성을 갖춘 시스템은 물리적으로 떨어진 여러 지역에서 동일한 서비스를 제공할 수 있다.
 
-<br>
-<br>
 
 ### Administrative scalability
 
@@ -312,8 +280,6 @@ last_modified_at: 2023-04-25
   2. 새로운 도메인은 분산시스템으로부터 악성 공격에 대해 방어한다.
      - **도메인 (domain)** : 문자로 표시한 인터넷 주소
      
-<br>
-<br>
 
 ### Scaling techniques
 
@@ -322,7 +288,6 @@ last_modified_at: 2023-04-25
 - 스케일 아웃(scaling out)에 의하면, 확장성을 향상시키기 위한 여러 방법들이 있다.
   - **scaling out**은 여러 대의 노드를 추가하여 시스템의 용량을 증가시키는 방법이며, 이를 통해 시스템의 가용성과 신뢰성을 높일 수 있다.
 
-<br>
 
 ### 1. Hiding communication latencies
 
@@ -331,7 +296,6 @@ last_modified_at: 2023-04-25
 - 두 번째로 지연 시간을 숨기는 것 즉, 데이터를 전송하면서 동시에 데이터를 처리하는 방식으로 통신 지연을 숨긴다. 
   - 이 방법은 비동기적인 I/O, 멀티스레딩, 비동기 콜백 등을 이용하여 구현될 수 있다.
 
-<br>
 
 ### 2. Partitioning and distribution
 
@@ -345,7 +309,6 @@ last_modified_at: 2023-04-25
 
 ![image](https://user-images.githubusercontent.com/78655692/148327254-5ffaa947-7436-418b-96ce-9bdcc6923834.png)
 
-<br>
 
 - 또 다른 예시로는 `World Wide Web`이 있다.
 - Web은 거대한 문서에 기반한 정보 시스템이며, 각 문서는 URL 형태로 고유 네임을 가지고 있다.
@@ -353,7 +316,6 @@ last_modified_at: 2023-04-25
 - 하지만 Web은 몇 백만의 서버를 거쳐 (각각의 서버는 많은 웹 문서를 관리한다.) 물리적으로 `partitioned and distributed`하다.
 - 문서를 관리하는 서버의 네임은 문서의 URL로 인코딩된다.
 
-<br>
 
 ### 3. Replication
 
@@ -367,8 +329,6 @@ last_modified_at: 2023-04-25
   - 두 개의 업데이트가 동시에 진행된다면, 업데이트는 어느곳이든 똑같은 순서로 진행되어야 하는데 전역 순서에서 문제가 생긴다.
 - 그래서 복제는 전역 동기화 메커니즘이 필요하다. 하지만 이런 메커니즘은 상당히 구현하기 힘들다.
 
-<br>
-<br>
 
 ## 1.3 Types of distributed systems
 
@@ -382,12 +342,9 @@ last_modified_at: 2023-04-25
   - **아웃소싱** : 업무의 일부분을 전문기관에 위탁하는 것을 말한다.
 - **클라우드 컴퓨팅**의 핵심은 인프라를 동적으로 구축하고 사용 가능한 서비스에서 필요한 것을 구성할 수 있는 기능을 제공한다.
 
-<br>
 
 - **DSM** (distributed shared-memory multi-computers) 시스템은 프로세스가 다른 컴퓨터의 메모리 위치를 마치 로컬 메모리인 것처럼 지정할 수 있다.
 
-<br>
-<br>
 
 ### Cluster computing
 
@@ -402,8 +359,6 @@ last_modified_at: 2023-04-25
   - 계산 노드는 미들웨어 기능이 확장된 표준 운영 체제을 갖추고 있다.
 - 클러스터 컴퓨팅의 특징으로는 **동질성(homogeneity)**이 있다.
 
-<br>
-<br>
 
 ### Grid computing
 
@@ -414,7 +369,6 @@ last_modified_at: 2023-04-25
   - 이러한 협력은 가상 조직(`virtual organization`)의 형태로 구현된다.
   - 같은 가상 조직의 속한 프로세스는 리소스의 접근 권한을 가진다.
 
-<br>
 
 ![image](https://user-images.githubusercontent.com/78655692/148682490-74f30183-8a22-498d-8e9c-cebd27fa2655.png)
 
@@ -431,19 +385,15 @@ last_modified_at: 2023-04-25
 - `collective layer`는 **다중 리소스**의 접근을 처리하고, 리소스 발견, 할당, 다중 리소스에 관한 태스크의 스케줄링, 데이터 복제 같은 서비스들로 구성된다.
 - `application layer`는 가상 조직에서 작동하고 그리드 컴퓨팅 환경에서 사용하는 애플리케이션들로 구성된다.
 
-<br>
-<br>
 
 ### Cloud computing
 
 - 클라우드 컴퓨팅은 쉽게 사용할 수 있고 가상화 리소스 풀에 액세스할 수 있다.
 - 클라우드 컴퓨팅은 보증이 **SLAs**(service-level agreements) 수단으로 제공되는 pay-per-use 모델에 기반한다.
 
-<br>
 
 ![image](https://user-images.githubusercontent.com/78655692/148691345-a83ac37a-9c27-4f4a-94b7-bb15b4b9edd8.png)
 
-<br>
 
 - **Hardware** : 가장 낮은 계층은 필요한 하드웨어(프로세서, 라우터, 파워, 쿨링 시스템)를 관리하는 수단으로 형성된다.
   - 데이터 센터에서 실행되며, 유저들이 절대로 직접 볼 수 없는 리소스가 들어있다.
@@ -460,14 +410,11 @@ last_modified_at: 2023-04-25
 - **Application** : 실제 애플리케이션들이 이 계층에서 실행된다.
   - office 365 제품들이 그 예이다. 이 애플리케이션들은 다시 한번 공급업체의 클라우드에서 실행된다.
 
-<br>
 
 - **Infrastructure-as-a-Service (IaaS)** : 하드웨어와 인프라 계층
 - **Platform-as-a-Service (PaaS)** : 플랫폼 계층
 - **Software-as-a-Service (SaaS)** : 애플리케이션들 
 
-<br>
-<br>
 
 ### Distributed information systems
 
@@ -476,8 +423,6 @@ last_modified_at: 2023-04-25
     - **클라이언트(client)**: 네트워크를 통하여 서버라는 다른 컴퓨터 시스템 상의 원격 서비스에 접속할 수 있는 응용 프로그램이나 서비스 [^9]
     - 클라이언트(client)는 서비스 요구자, 서버(server)는 서비스 제공자
 
-<br>
-<br>
 
 ### Distributed transaction processing
 
@@ -487,7 +432,6 @@ last_modified_at: 2023-04-25
 
 ![image](https://user-images.githubusercontent.com/78655692/148694039-8ca6171f-2744-4587-a7cf-5a8a6389a3f8.png)
 
-<br>
 
 - `트랜잭션`은 ACID 특성들을 따른다.
   - **Atomic** : 외부 세계에서 트랜잭션은 불가분하게 일어난다.
@@ -501,11 +445,9 @@ last_modified_at: 2023-04-25
   - 커밋된 하위 트랜잭션의 결과는 실행이 취소되어야 한다.
   - 따라서 영속성은 최상위 수준의 트랜잭션에만 적용된다.
 
-<br>
 
 ![image](https://user-images.githubusercontent.com/78655692/150288171-a950bb88-be93-46e2-a34b-a6ae52f96586.png)
 
-<br>
 
 - 중첩 트랜잭션은 분산시스템에서 중요한데, 다중 시스템을 통해 트랜잭션을 분산하는 방식을 제공하기 때문이다.
   - 그들은 원본 트랜잭션의 작업의 논리적 분할을 따른다.
@@ -514,18 +456,14 @@ last_modified_at: 2023-04-25
 
 - **TP monitor** (transaction-processing monitor) : 트랜잭션 프로그래밍 모델을 제공함으로써 애플리케이션을 다중 서버/데이터베이스에 접근할 수 있도록 해준다.
 
-<br>
-<br>
 
 ### Enterprise application integration 
 
 - 애플리케이션이 데이터베이스로부터 분리될수록, 설비가 필요하다는 것은 더욱 분명해졌다.
 
-<br>
 
 ![image](https://user-images.githubusercontent.com/78655692/148694784-263815b6-3b47-4bf2-b228-7431527cc9d1.png)
 
-<br>
 
 - 몇가지 타입의 통신 미들웨어가 존재한다.
 - **RPC**를 사용하면, 애플리케이션 컴포넌트가 효과적으로 요청을 다른 애플리케이션 컴포넌트에게 효과적으로 보내진다.
@@ -536,8 +474,6 @@ last_modified_at: 2023-04-25
   - 애플리케이션은 특정 유형의 메시지에 대한 관심을 나타낼 수 있으며, 그 후, 통신 미들웨어는 메시지들이 애플리케이션에 보내지는 것을 처리할 것이다.
   - 이런 `publish-subscribe` 시스템 형태는 중요해졌고 분산 시스템의 클래스로 확장되었다.
 
-<br>
-<br>
 
 ### Pervasive systems
 
@@ -550,8 +486,6 @@ last_modified_at: 2023-04-25
     - **엑추에이터 (actuator)** : 전기적 신호를 빛, 소리 등 물리적 변화로 바꿔주는 기계 장치 (=작동기)
 - 퍼베이시브 시스템 속의 많은 장치들은 작아지고, 배터리화, 모바일, 무선 연결 등이 특징이다. (Internet of Things라 불리는 그들의 역할)
 
-<br>
-<br>
 
 ### Ubiquitous computing systems
 
@@ -570,8 +504,6 @@ last_modified_at: 2023-04-25
   5. **Intelligence** : The system as a whole can handle a wide range of dynamic actions and interactions.
      - 유비쿼터스 컴퓨팅 시스템은 방법과 기술(인공지능 분야로부터)을 사용한다.
 
-<br>
-<br>
 
 ### Mobile computing systems
 
@@ -584,8 +516,6 @@ last_modified_at: 2023-04-25
     - 위치가 변하는 것은 통신에 지대한 영향을 끼친다.
 
 
-<br>
-<br>
 
 ### Sensor networks
 
@@ -593,11 +523,9 @@ last_modified_at: 2023-04-25
 - 센서 네트워크는 하나 이상의 센싱 장치를 갖춘 수백만의 작은 노드들로 구성된다.
   - 또한 노드는 액츄에이터로 활동한다.
 
-<br>
 
 ![image](https://user-images.githubusercontent.com/78655692/148698298-a9682274-5bc8-4bf6-b050-1280fc121df4.png)
 
-<br>
 
 - 위 그림의 첫번째는 센서들은 협력하진 않지만 그들의 데이터를 오퍼레이터의 위치에 자리한 중앙 데이터베이스에 보낸다.
 - 두번째 극단적인 그림은 쿼리를 관련 센서에 전달하고 각각이 응답을 계산하고, 운영자가 응답을 집계하도록 한다.
@@ -605,10 +533,6 @@ last_modified_at: 2023-04-25
   - 첫번째는 센서들이 모든 측정된 데이터를 네트워크를 통해 보내야 하는데, 이것은 네트워크 리소스와 에너지를 낭비한다.
   - 두번째도 센서들(조금의 데이터를 운영자에게 반환한다)의 집계 능력을 버리므로 낭비이다.
 
-<br>
-<br>
-<br>
-<br>
 
 ## References
 

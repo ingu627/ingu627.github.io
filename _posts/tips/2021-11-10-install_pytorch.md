@@ -6,25 +6,20 @@ categories: tips
 tags: [tip, pytorch, install, 파이토치 설치, conda, pip, 윈도우10, 윈도우, 딥러닝]
 sidebar_main: false
 
-last_modified_at: 2022-03-25
+last_modified_at: 2026-10-09
 ---
 
-<br>
-<br>
+Windows10 환경에서 CUDA 11.0에 맞는 PyTorch를 설치하는 과정을 정리한 글이다. PyTorch 공식 사이트에서 이전 버전 목록을 열어 CUDA 버전에 맞는 설치 명령을 실행하고, 설치 후 GPU가 정상 동작하는지 확인한다.
+
+> 이 글은 2021년 당시 PyTorch 1.7.1(CUDA 11.0) 기준으로 작성된 설치 기록이다. 최신 버전에서는 명령이 다를 수 있다.
 
 ## 설치하기
 
 ## 1. PyTorch 공식 사이트 들어가기 : [https://pytorch.org/](https://pytorch.org/)
 
-<br>
-<br>
-
 ## 2. `Prvious versions of PyTorch1` 클릭
 
 ![image](https://user-images.githubusercontent.com/78655692/141055817-ee4c44d4-2f04-4089-8334-83a1df1ed648.png)
-
-<br>
-<br>
 
 ## 3. CUDA 버전에 맞는 pytorch 설치
 
@@ -32,15 +27,9 @@ last_modified_at: 2022-03-25
 
 `pip install torch==1.7.1+cu110 torchvision==0.8.2+cu110 torchaudio==0.7.2 -f https://download.pytorch.org/whl/torch_stable.html`
 
-<br>
-<br>
-
 ## 4. 실행창에 코드 넣고 enter
 
 ![image](https://user-images.githubusercontent.com/78655692/141056063-5b2a8dd3-7630-486e-af56-85f8cc1e0e58.png)
-
-<br>
-<br>
 
 ## pytorch 실행시 GPU 작동 확인
 

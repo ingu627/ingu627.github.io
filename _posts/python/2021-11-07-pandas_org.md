@@ -8,11 +8,10 @@ toc: true
 toc_sticky: true
 sidebar_main: false
 
-last_modified_at: 2022-04-11
+last_modified_at: 2026-10-09
 ---
 
-<br>
-<br>
+이 글은 파이썬 pandas 라이브러리의 사용법을 정리한다. Series와 DataFrame의 생성·인덱싱·연산부터 concat, merge, groupby, pivot, 결측값 처리까지 타이타닉 데이터 실습과 함께 다룬다.
 
 ## 라이브러리 불러오기
 ```python
@@ -23,9 +22,6 @@ import matplotlib.pyplot as plt
 
 import math
 ```
-
-<br>
-<br>
 
 ## Series
 - pandas의 기본 객체 중 하나
@@ -38,9 +34,6 @@ pd.Series([1, 2, 3])
 ```
 
 ![image](https://user-images.githubusercontent.com/78655692/140644876-c1b15e61-25bb-4ccb-987d-fd74b08e2772.png)
-
-<br>
-<br>
 
 ```python
 pd.Series(['a', 'b', 'c'])
@@ -65,9 +58,6 @@ pd.Series(np.arange(200))
     199    199
     Length: 200, dtype: int32
 
-<br>
-<br>
-
 ## data와 index 함께 명시하기
 
 ```python
@@ -78,9 +68,6 @@ pd.Series([1,2,3], ['a','m','k']) # 첫번째는 data, 두번째는 인덱스 �
     m    2
     k    3
     dtype: int64
-
-<br>
-<br>
 
 ## data, index, data type 함께 명시하기(dtype)
 
@@ -95,9 +82,6 @@ s6
     103    3
     104    4
     dtype: int16
-
-<br>
-<br>
 
 ## 인덱스 활용하기
 
@@ -124,18 +108,12 @@ s
     15    NaN
     dtype: float64
 
-<br>
-<br>
-
 ### index 값 
 ```python
 s6.index 
 ```
 
     Int64Index([100, 101, 102, 103, 104], dtype='int64')
-
-<br>
-<br>
 
 ### values 값
 ```python
@@ -144,12 +122,7 @@ s6.values
 
     array([0, 1, 2, 3, 4], dtype=int16)
 
-<br>
-<br>
-
 ## Series 함수 
-
-<br>
 
 ### size
 - 개수 반환 
@@ -166,9 +139,6 @@ s.size
 
     16
 
-<br>
-<br>
-
 ### shape
 - 튜플형태로 shape반환
 
@@ -180,9 +150,6 @@ s.shape
 
 
     (16,)
-
-<br>
-<br>
 
 ### unique 
 - 유일한 값만 ndarry로 반환 
@@ -196,9 +163,6 @@ s.unique() #unique는 중복x 한개의 문자만 가져옴
 
     array([ 1.,  2.,  3.,  4.,  5.,  7., nan])
 
-<br>
-<br>
-
 ### count
 
 - NaN을 제외한 개수를 반환 
@@ -209,9 +173,6 @@ s.count() #실제 값만 카운트해서 반환
 
     5
 
-<br>
-<br>
-
 ### mean
 
 - NaN을 제외한 평균
@@ -221,9 +182,6 @@ s.mean()
 ```
 
     2.6666666
-
-<br>
-<br>
 
 ### value_counts
 
@@ -244,9 +202,6 @@ s.value_counts()
     4.0    1
     dtype: int64
 
-<br>
-<br>
-
 ### head()
 
 - head : 상위 n개 출력 기본 5개
@@ -264,9 +219,6 @@ s.head(n=7) #기본적으로 상위 5개
     6    2.0
     dtype: float64
 
-<br>
-<br>
-
 ### tail()
 
 - tail : 하위 n개 출력 기본 5개
@@ -281,9 +233,6 @@ s.tail() #기본적으로 하위 5개
     14    7.0
     15    NaN
     dtype: float64
-
-<br>
-<br>
 
 ## 산술연산
 - Series의 경우에도 스칼라와의 연산은 각 원소별로 스칼라와의 연산이 적용
@@ -306,9 +255,6 @@ s
     9     8
     10    9
     dtype: int32
-
-<br>
-<br>
 
 ### 조건식
 ```python
@@ -398,9 +344,6 @@ s
     k    300
     dtype: int64
 
-<br>
-<br>
-
 ### drop()
 
 - drop은 s 자체에는 지워지지 않는다.
@@ -420,9 +363,6 @@ s
     e    104
     dtype: int64
 
-<br>
-<br>
-
 ### update
 
 ```python
@@ -437,9 +377,6 @@ s
     d    103
     e    104
     dtype: int64
-
-<br>
-<br>
 
 ## Slicing
 
@@ -488,9 +425,6 @@ s2['c':'d'] # 문자열로 인덱싱 할때는 마지막 포함한다.
     d    103
     dtype: int32
 
-<br>
-<br>
-
 ## concat
 
     pd.concat(objs,  # Series, DataFrame, Panel object
@@ -512,71 +446,41 @@ s2['c':'d'] # 문자열로 인덱싱 할때는 마지막 포함한다.
 
     copy=True) # 복사
 
-<br>
-<br>
-
 ### axis = 0
 
 - 위 + 아래로 DataFrame 합치기(rbind) 
-
-<br>
-<br>
 
 ### axis = 1
 
 - 왼쪽 + 오른쪽으로 DataFrame 합치기(cbind)
 
-<br>
-<br>
-
 ### join = 'outer'
 
 - 합집합(union)으로 DataFrame 합치기 
-
-<br>
-<br>
 
 ### join = 'inner'
 
 - 교집합(intersection)으로 DataFrame 합치기 
 
-<br>
-<br>
-
 ### join_axes
 
 - axis=1일 경우 특정 DataFrame의 index를 그대로 이용하고자 할 경우
-
-<br>
-<br>
 
 ### ignore_index
 
 - 기존 index를 무시하고 싶을 때 
 
-<br>
-<br>
-
 ### keys
 
 - 계층적 index (hierarchical index) 만들기 
-
-<br>
-<br>
 
 ### names
 
 - index에 이름 부여하기
 
-<br>
-<br>
-
 ### verify_integrity
 
 - index 중복 여부 점검 
-
-<br>
-<br>
 
 ## merge
 
@@ -604,9 +508,6 @@ s2['c':'d'] # 문자열로 인덱싱 할때는 마지막 포함한다.
 
     indicator=False) # 병합된 이후의 DataFrame에 left_only, right_only, both 등의 출처를 알 수 있는 부가 정보 변수 추가
 
-<br>
-<br>
-
 ## DataFrame
 
 - Series가 1차원이라면 DataFrame은 2차원으로 확대된 버젼
@@ -615,16 +516,10 @@ s2['c':'d'] # 문자열로 인덱싱 할때는 마지막 포함한다.
  - row는 각 개별 데이터를, column은 개별 속성을 의미
 - Data Analysis, Machine Learning에서 data 변형을 위해 가장 많이 사용
 
-<br>
-<br>
-
 ## DataFrame 생성하기
 
 - 일반적으로 분석을 위한 데이터는 다른 데이터 소스(database, 외부 파일)을 통해 dataframe을 생성
 - 여기서는 실습을 통해, dummy 데이터를 생성하는 방법을 다룰 예정
-
-<br>
-<br>
 
 ### dictionary로 부터 생성하기
 
@@ -744,9 +639,6 @@ pd.DataFrame(data, index=[0, 1, 2])
 </table>
 </div>
 
-<br>
-<br>
-
 ## Series로 부터 생성하기
 
  - 각 Series의 인덱스 -> column
@@ -831,9 +723,6 @@ train_data = pd.read_csv('F:/data/titanic/train.csv')
 
 # ./ : 현재 폴더를 의미 # sep="," : 각각 데이터를 ,로 구분
 ```
-
-<br>
-<br>
 
 ## head, tail 함수
 
@@ -1126,9 +1015,6 @@ train_data.tail(n=10)
 </table>
 </div>
 
-<br>
-<br>
-
 ### 변수 이름(column name, header)이 없는 파일 불러올 때 이름 부여하기 
 
 : names=['X1','X2', ..], header=None
@@ -1206,9 +1092,6 @@ names=['ID','A','B','C','D'], header=None, index_col='ID')
 </table>
 </div>
 
-<br>
-<br>
-
 ### 유니코드 디코드 에러날때
 
 - cp949써보기 (encoding='cp949') 
@@ -1281,9 +1164,6 @@ skiprows=[1])
 </table>
 </div>
 
-<br>
-<br>
-
 ### nrows = n
 
 - n 개의 행만 불러오기
@@ -1339,9 +1219,6 @@ csv_3 = pd.read_csv('f:/data/test_csv_file.csv', nrows=3); csv_3
   </tbody>
 </table>
 </div>
-
-<br>
-<br>
 
 ### 사용자 정의 결측값 기호 (custom missing value symbols) 
 
@@ -1548,9 +1425,6 @@ df_1.T
 </table>
 </div>
 
-<br>
-<br>
-
 ### axes()
 
 ```python
@@ -1565,9 +1439,6 @@ df_1.axes
     [Index(['r0', 'r1', 'r2'], dtype='object'),
      Index(['c0', 'c1', 'c2', 'c3'], dtype='object')]
 
-<br>
-<br>
-
 ### dtypes(), shape(), size(), values()
 
 ```python
@@ -1581,9 +1452,6 @@ df_1.axes
 
 
 ```
-
-<br>
-<br>
 
 ### reindex() 
 
@@ -1666,9 +1534,6 @@ df_1.reindex(new_idx, fill_value=0)
 </table>
 </div>
 
-<br>
-<br>
-
 ## 시계열 데이터
 
 - DataFrame의 index만들 때, pd.date_range(date,periods, freq)
@@ -1689,9 +1554,6 @@ date_idx
     DatetimeIndex(['2021-08-05', '2021-08-06', '2021-08-07', '2021-08-08',
                    '2021-08-09'],
                   dtype='datetime64[ns]', freq='D')
-
-<br>
-<br>
 
 ## dataframe 데이터 파악하기
 
@@ -1833,9 +1695,6 @@ train_data.describe()
 </table>
 </div>
 
-<br>
-<br>
-
 ### info함수로 각 변수의 데이터 타입 확인
 
  - 타입 변경은 astype함수를 사용
@@ -1865,9 +1724,6 @@ train_data.info()
     dtypes: float64(2), int64(5), object(5)
     memory usage: 83.7+ KB
     
-<br>
-<br>
-
 ### 인덱스(index)
 
  - index 속성
@@ -1885,9 +1741,6 @@ train_data.index
 
 
     RangeIndex(start=0, stop=891, step=1)
-
-<br>
-<br>
 
 ### 컬럼(column)
 
@@ -1908,9 +1761,6 @@ train_data.columns
     Index(['PassengerId', 'Survived', 'Pclass', 'Name', 'Sex', 'Age', 'SibSp',
            'Parch', 'Ticket', 'Fare', 'Cabin', 'Embarked'],
           dtype='object')
-
-<br>
-<br>
 
 ### read_csv 함수 파라미터
 
@@ -2037,9 +1887,6 @@ train_data1
 <p>891 rows × 3 columns</p>
 </div>
 
-<br>
-<br>
-
 ### 하나의 컬럼 선택하기
 
 
@@ -2062,9 +1909,6 @@ train_data['Survived'] # 특정 컬럼만 series로 가져온다.
     889    1
     890    0
     Name: Survived, Length: 891, dtype: int64
-
-<br>
-<br>
 
 ### 복수의 컬럼 선택하기
 
@@ -2264,9 +2108,6 @@ train_data[['Survived']] #이건 데이터 프레임으로 가져온다.
 <p>891 rows × 1 columns</p>
 </div>
 
-<br>
-<br>
-
 ### dataframe slicing
 
   - dataframe의 경우 기본적으로 [] 연산자가 **column 선택**에 사용
@@ -2362,9 +2203,6 @@ train_data[7:10] # 슬라이싱은 row로 적용 # 슬라이싱만 예외
   </tbody>
 </table>
 </div>
-
-<br>
-<br>
 
 ### row 선택하기
 
@@ -2512,9 +2350,6 @@ train_data.loc[[986, 100, 110, 990]]
 </table>
 </div>
 
-<br>
-<br>
-
 ```python
 train_data.iloc[[0, 100, 200, 2]] 
 
@@ -2621,9 +2456,6 @@ train_data.iloc[[0, 100, 200, 2]]
 </table>
 </div>
 
-<br>
-<br>
-
 ### row, column 동시에 선택하기
 
  - loc, iloc 속성을 이용할 때, 콤마를 이용하여 둘 다 명시 가능
@@ -2695,9 +2527,6 @@ train_data.loc[[986, 100, 110, 990], ['Survived', 'Name', 'Sex', 'Age']]
 </table>
 </div>
 
-<br>
-<br>
-
 
 ```python
 train_data.iloc[[101, 100, 200, 102], [1, 4, 5]] # columns 역시 0베이스부터 시작
@@ -2757,9 +2586,6 @@ train_data.iloc[[101, 100, 200, 102], [1, 4, 5]] # columns 역시 0베이스부�
   </tbody>
 </table>
 </div>
-
-<br>
-<br>
 
 
 ```python
@@ -3709,9 +3535,6 @@ train_data.head()
 </table>
 </div>
 
-<br>
-<br>
-
 
 ```python
 train_data['Age_tripple'] = train_data['Age_double'] + train_data['Age']
@@ -3845,9 +3668,6 @@ train_data.head()
   </tbody>
 </table>
 </div>
-
-<br>
-<br>
 
 
 ```python
@@ -3988,9 +3808,6 @@ train_data.head()
   </tbody>
 </table>
 </div>
-
-<br>
-<br>
 
 ### column 삭제하기
 
@@ -4139,9 +3956,6 @@ train_data.head()
   </tbody>
 </table>
 </div>
-
-<br>
-<br>
 
 
 ```python
@@ -4365,9 +4179,6 @@ train_data.drop(['Age_double', 'Age_tripple'], axis=1)
 </table>
 <p>891 rows × 13 columns</p>
 </div>
-
-<br>
-<br>
 
 
 ```python
@@ -4599,9 +4410,6 @@ train_data
 <p>891 rows × 13 columns</p>
 </div>
 
-<br>
-<br>
-
 ### 변수의 상관관계
 
 - 이 두변수간의 흐름이 얼마나 비슷한가를 나타내는 척도 (증가, 감소) 그 폭이 얼마나 비슷하냐   
@@ -4730,9 +4538,6 @@ train_data.head()
 </table>
 </div>
 
-<br>
-<br>
-
 ### 변수(column) 사이의 상관계수(correlation) 
 
  - corr함수를 통해 상관계수 연산 (-1, 1 사이의 결과)
@@ -4850,9 +4655,6 @@ train_data.corr()
   </tbody>
 </table>
 </div>
-
-<br>
-<br>
 
 
 ```python
@@ -5073,9 +4875,6 @@ train_data.isna() # True인 경우 NaN이다.
 <p>891 rows × 12 columns</p>
 </div>
 
-<br>
-<br>
-
 
 ```python
 train_data['Age'].isna()
@@ -5096,9 +4895,6 @@ train_data['Age'].isna()
     889    False
     890    False
     Name: Age, Length: 891, dtype: bool
-
-<br>
-<br>
 
 ### NaN 처리 방법
 
@@ -5324,9 +5120,6 @@ train_data.dropna() # 한개라도 NaN이 있다면 그 row를 지워버린다.
 </div>
 
 
-<br>
-<br>
-
 ```python
 train_data.dropna(subset=['Age', 'Cabin']) # subset : 특정 열의 NaN만 판단
 ```
@@ -5538,9 +5331,6 @@ train_data.dropna(subset=['Age', 'Cabin']) # subset : 특정 열의 NaN만 판�
 </div>
 
 
-<br>
-<br>
-
 ```python
 train_data.dropna(axis=1) # 컬럼 중에 NaN이 있다면 지워버려라
 ```
@@ -5715,9 +5505,6 @@ train_data.dropna(axis=1) # 컬럼 중에 NaN이 있다면 지워버려라
 <p>891 rows × 9 columns</p>
 </div>
 
-<br>
-<br>
-
 ### NaN 값 대체하기
 
 - 평균으로 대체하기
@@ -5750,9 +5537,6 @@ train_data['Age'].fillna(train_data['Age'].mean())
     Name: Age, Length: 891, dtype: float64
 
 
-<br>
-<br>
-
 ```python
 # 생존자 나이 평균
 
@@ -5771,9 +5555,6 @@ print(mean1, mean0)
 
     28.343689655172415 30.62617924528302
     
-<br>
-<br>
-
 ```python
 train_data[train_data['Survived'] == 1]['Age'].fillna(mean1)
 
@@ -5797,9 +5578,6 @@ train_data[train_data['Survived'] == 0]['Age'].fillna(mean0)
     Name: Age, Length: 549, dtype: float64
 
 
-<br>
-<br>
-
 ```python
 train_data.loc[train_data['Survived'] == 1, 'Age'] = train_data[train_data['Survived'] == 1]['Age'].fillna(mean1)
 
@@ -5816,9 +5594,6 @@ train_data = pd.read_csv('E:\kaggle/titanic/train.csv')
 # numpy와 pandas를 쓸때는 최대한 loop를 지양해야 한다.
 ```
 
-<br>
-<br>
-
 ### Pclass 변수 변환하기
 
  - astype 사용하여 간단히 타입만 변환
@@ -5827,9 +5602,6 @@ train_data = pd.read_csv('E:\kaggle/titanic/train.csv')
 ```python
 train_data['Pclass'] = train_data['Pclass'].astype(str)
 ```
-
-<br>
-<br>
 
 ### Age 변수 변환하기
 
@@ -5845,9 +5617,6 @@ def age_categorize(age): #연령대별로 나타내기
 
     return math.floor(age / 10) * 10
 ```
-
-<br>
-<br>
 
 ```python
 train_data['Age'].apply(age_categorize)
@@ -5870,9 +5639,6 @@ train_data['Age'].apply(age_categorize)
     889    20
     890    30
     Name: Age, Length: 891, dtype: int64
-
-<br>
-<br>
 
 ## One-hot encoding
 
@@ -6159,9 +5925,6 @@ pd.get_dummies(train_data, columns=['Pclass', 'Sex', 'Embarked'], drop_first=Fal
 <p>891 rows × 17 columns</p>
 </div>
 
-<br>
-<br>
-
 
 ```python
 pd.get_dummies(train_data, columns=['Pclass', 'Sex', 'Embarked'], drop_first=True)
@@ -6397,9 +6160,6 @@ pd.get_dummies(train_data, columns=['Pclass', 'Sex', 'Embarked'], drop_first=Tru
 <p>891 rows × 14 columns</p>
 </div>
 
-<br>
-<br>
-
 ## group by
 
   + 아래의 세 단계를 적용하여 데이터를 그룹화(groupping) (SQL의 group by 와 개념적으로는 동일, 사용법은 유사)
@@ -6409,9 +6169,6 @@ pd.get_dummies(train_data, columns=['Pclass', 'Sex', 'Embarked'], drop_first=Tru
     - operation 적용
 
     - 데이터 병합
-
-<br>
-<br>
 
 
 ```python
@@ -6537,9 +6294,6 @@ df.head()
 </table>
 </div>
 
-<br>
-<br>
-
 ### GroupBy groups 속성
 
  - 각 그룹과 그룹에 속한 index를 dict 형태로 표현
@@ -6581,9 +6335,6 @@ gender_group.groups
 
 
     {'female': [1, 2, 3, 8, 9, 10, 11, 14, 15, 18, 19, 22, 24, 25, 28, 31, 32, 38, 39, 40, 41, 43, 44, 47, 49, 52, 53, 56, 58, 61, 66, 68, 71, 79, 82, 84, 85, 88, 98, 100, 106, 109, 111, 113, 114, 119, 123, 128, 132, 133, 136, 140, 141, 142, 147, 151, 156, 161, 166, 167, 172, 177, 180, 184, 186, 190, 192, 194, 195, 198, 199, 205, 208, 211, 215, 216, 218, 229, 230, 233, 235, 237, 240, 241, 246, 247, 251, 254, 255, 256, 257, 258, 259, 264, 268, 269, 272, 274, 275, 276, ...], 'male': [0, 4, 5, 6, 7, 12, 13, 16, 17, 20, 21, 23, 26, 27, 29, 30, 33, 34, 35, 36, 37, 42, 45, 46, 48, 50, 51, 54, 55, 57, 59, 60, 62, 63, 64, 65, 67, 69, 70, 72, 73, 74, 75, 76, 77, 78, 80, 81, 83, 86, 87, 89, 90, 91, 92, 93, 94, 95, 96, 97, 99, 101, 102, 103, 104, 105, 107, 108, 110, 112, 115, 116, 117, 118, 120, 121, 122, 124, 125, 126, 127, 129, 130, 131, 134, 135, 137, 138, 139, 143, 144, 145, 146, 148, 149, 150, 152, 153, 154, 155, ...]}
-
-<br>
-<br>
 
 ## groupping 함수
 
@@ -6697,9 +6448,6 @@ class_group.count()
 </table>
 </div>
 
-<br>
-<br>
-
 
 ```python
 class_group.mean()['Age'] # 클래스별 나이 평균 계산
@@ -6715,9 +6463,6 @@ class_group.mean()['Age'] # 클래스별 나이 평균 계산
     Name: Age, dtype: float64
 
 
-<br>
-<br>
-
 ```python
 class_group.mean()['Survived'] #클래스별 생존자 평균 계산
 ```
@@ -6731,9 +6476,6 @@ class_group.mean()['Survived'] #클래스별 생존자 평균 계산
     3    0.242363
     Name: Survived, dtype: float64
 
-<br>
-<br>
-
 
 ```python
 # class_group.max() #에러가 난다.
@@ -6742,9 +6484,6 @@ class_group.mean()['Survived'] #클래스별 생존자 평균 계산
 ```
 
 * 성별에 따른 생존율 구해보기
-
-<br>
-<br>
 
 ```python
 df.groupby('Sex').mean()['Survived']
@@ -6757,9 +6496,6 @@ df.groupby('Sex').mean()['Survived']
     female    0.742038
     male      0.188908
     Name: Survived, dtype: float64
-
-<br>
-<br>
 
 ## 복수 columns로 groupping 하기
 
@@ -6821,9 +6557,6 @@ df.groupby(['Pclass', 'Sex']).mean().index
                 (3, 'female'),
                 (3,   'male')],
                names=['Pclass', 'Sex'])
-
-<br>
-<br>
 
 ## index를 이용한 group by
 
@@ -6958,9 +6691,6 @@ df.head()
   </tbody>
 </table>
 </div>
-
-<br>
-<br>
 
 
 ```python
@@ -7173,9 +6903,6 @@ df.set_index(['Pclass', 'Sex']).reset_index()
 <p>891 rows × 12 columns</p>
 </div>
 
-<br>
-<br>
-
 
 ```python
 df.set_index('Age').groupby(level=0).mean() # level은 인덱스를 뜻함
@@ -7324,9 +7051,6 @@ df.set_index('Age').groupby(level=0).mean() # level은 인덱스를 뜻함
 <p>88 rows × 6 columns</p>
 </div>
 
-<br>
-<br>
-
 ## 나이대별로 생존율 구하기
 
 
@@ -7360,9 +7084,6 @@ df.set_index('Age').groupby(age_categorize).mean()['Survived']
      80    1.000000
     Name: Survived, dtype: float64
 
-<br>
-<br>
-
 ## MultiIndex를 이용한 groupping
 
 
@@ -7381,9 +7102,6 @@ df.set_index(['Pclass', 'Sex']).groupby(level=[0, 1]).mean()['Age'] # level은 �
     3       female    21.750000
             male      26.507589
     Name: Age, dtype: float64
-
-<br>
-<br>
 
 ## aggregate(집계) 함수 사용하기
 
@@ -7605,9 +7323,6 @@ df.set_index(['Pclass', 'Sex']).groupby(level=[0, 1]).aggregate([np.mean, np.sum
   </tbody>
 </table>
 </div>
-
-<br>
-<br>
 
 ## transform 함수
 
@@ -8065,9 +7780,6 @@ df
 <p>891 rows × 13 columns</p>
 </div>
 
-<br>
-<br>
-
 
 ```python
 df.groupby(['Pclass', 'Sex']).mean()
@@ -8183,9 +7895,6 @@ df.groupby(['Pclass', 'Sex']).mean()
 </table>
 </div>
 
-
-<br>
-<br>
 
 ```python
 df['Age3'] = df.groupby(['Pclass', 'Sex']).transform(np.mean)['Age']
@@ -8562,9 +8271,6 @@ df
 </table>
 </div>
 
-<br>
-<br>
-
 ### pivot 
 
  - dataframe의 형태를 변경
@@ -8681,9 +8387,6 @@ df.pivot('지역', '요일') # 지역이 index, 요일이 columns
 </table>
 </div>
 
-<br>
-<br>
-
 
 ```python
 df.pivot('요일', '지역')
@@ -8785,9 +8488,6 @@ df.pivot('요일', '지역')
   </tbody>
 </table>
 </div>
-
-<br>
-<br>
 
 ### pivot_table
 
@@ -8898,9 +8598,6 @@ pd.pivot_table(df,index='요일', columns='지역', aggfunc=np.mean)
   </tbody>
 </table>
 </div>
-
-<br>
-<br>
 
 ###  stack & unstack
 
@@ -9237,9 +8934,6 @@ new_df.unstack(1) # 1이면 요일 인덱스를 컬럼레벨로 올려라
 </div>
 
 
-<br>
-<br>
-
 ```python
 new_df.unstack(0).stack(0)
 ```
@@ -9456,9 +9150,6 @@ new_df.unstack(0).stack(1) #-1은 마지막
   </tbody>
 </table>
 </div>
-
-<br>
-<br>
 
 ### concat 함수 사용하여 dataframe 병합하기
 
@@ -9731,9 +9422,6 @@ pd.concat([df1, df2], axis=1)
 </table>
 </div>
 
-<br>
-<br>
-
 ### column 명이 다른 경우 
 
 
@@ -9847,9 +9535,6 @@ pd.concat([df1, df3], axis=1)
   </tbody>
 </table>
 </div>
-
-<br>
-<br>
 
 ### dataframe merge
 
@@ -10023,9 +9708,6 @@ orders.head()
 </table>
 </div>
 
-<br>
-<br>
-
 ### on 
 
  - join 대상이 되는 column 명시
@@ -10146,9 +9828,6 @@ pd.merge(customer, orders, on='customer_id', how='inner') # customer_id를 기�
 </table>
 </div>
 
-
-<br>
-<br>
 
 ```python
 pd.merge(customer, orders, on='customer_id', how='left')
@@ -10816,9 +10495,6 @@ pd.merge(cust1, order1, left_index=True, right_index=True)
 </div>
 
 
-<br>
-<br>
-
 ```python
 # 가장 많이 팔린 아이템은?
 
@@ -10918,9 +10594,6 @@ pd.merge(customer, orders, on='customer_id').groupby(['name', 'item']).sum().loc
     치약    4
     칫솔    2
     Name: quantity, dtype: int64
-
-<br>
-<br>
 
 ### join 함수
 

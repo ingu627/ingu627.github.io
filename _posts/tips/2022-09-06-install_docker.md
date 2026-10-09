@@ -9,14 +9,19 @@ toc: true
 toc_sticky: true
 sidebar_main: false
 
-last_modified_at: 2022-09-06
+last_modified_at: 2026-10-09
 ---
 
-윈도우10 또는 우분투 내에서 도커를 설치하는 과정을 정리할 필요가 있다고 느꼈습니다. <br> 설치에 도움이 되었으면 합니다. <br><br> **참조** 1. <br> [Install Docker Engine on Ubuntu - 공식사이트](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository) <br> 2. [윈도우10에서 리눅스(Linux) 설치하기 (Ubuntu on WSL2) - poeun](https://ingu627.github.io/tips/install_ubuntu/) <br> 3. [Install Docker Desktop on Windows](https://docs.docker.com/desktop/install/windows-install/)
-{: .notice--danger} 
+윈도우10 또는 우분투 내에서 도커를 설치하는 과정을 정리할 필요가 있다고 느꼈습니다. 설치에 도움이 되었으면 합니다.
 
-<br>
-<br>
+**참조**
+
+1. [Install Docker Engine on Ubuntu - 공식사이트](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository)
+2. [윈도우10에서 리눅스(Linux) 설치하기 (Ubuntu on WSL2) - poeun](https://ingu627.github.io/tips/install_ubuntu/)
+3. [Install Docker Desktop on Windows](https://docs.docker.com/desktop/install/windows-install/) 
+
+
+이 글은 우분투 22.04와 윈도우10에서 도커를 설치하는 과정을 정리한다. 각 OS별 설치 단계와 도커 권한 에러 해결 방법을 함께 다룬다.
 
 ## 1. 도커 설치하기 (Ubuntu 22.04)
 
@@ -27,7 +32,6 @@ last_modified_at: 2022-09-06
   - **Ubuntu Bionic 18.04 (LTS)**
 - 위 요구사항에 해당이 된다면 터미널(terminal)을 실행한다.
 
-<br>
 
 ### 1.1 오래된 버전 삭제
 
@@ -35,7 +39,6 @@ last_modified_at: 2022-09-06
 $ sudo apt-get remove docker docker-engine docker.io containerd runc
 ```
 
-<br>
 
 ### 1.2 repository 설정
 
@@ -50,7 +53,6 @@ $ sudo apt-get install \
     lsb-release
 ```
 
-<br>
 
 ### 1.3 도커 공식 GPG 키 추가
 
@@ -59,7 +61,6 @@ $ sudo mkdir -p /etc/apt/keyrings
 $ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 ```
 
-<br>
 
 ### 1.4 도커 repository 등록
 
@@ -69,7 +70,6 @@ $ echo \
   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 ```
 
-<br>
 
 ### 1.5 도커 엔진 설치
 
@@ -80,7 +80,6 @@ $ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plug
 
 - 여기까지 하면 도커 설치는 끝이 난다.
 
-<br>
 
 ### 1.6 내 repository 내 가능한 버전 목록 확인
 
@@ -92,7 +91,6 @@ $ apt-cache madison docker-ce
 
     ![Screenshot from 2022-09-06 19-32-53](https://user-images.githubusercontent.com/78655692/188613643-bc66f127-8d29-4cd6-9e14-b11652dbbe9b.png)
 
-<br>
 
 ### 1.7 appendix
 
@@ -101,8 +99,6 @@ $ apt-cache madison docker-ce
 - 도커를 이용해 파이썬 가상환경 구축을 자세히 알고 싶다면 아래 링크를 참조한다.
   - [도커(docker)를 이용해 파이썬 가상환경 구축을 위한 이미지 배포하기 - poeun](https://ingu627.github.io/docker/docker_overview_venv/)
 
-<br>
-<br>
 
 ## 2. 도커 설치하기 (WINDOW 10)
 
@@ -114,14 +110,12 @@ $ apt-cache madison docker-ce
 ![Screenshot from 2022-09-06 19-43-13](https://user-images.githubusercontent.com/78655692/188615539-4843b1ea-eb24-40d6-ad4d-51283a1a49fa.png) <br> 이미지 출처 [^1]
 
 
-<br>
 
 - 설치가 완료되었으면, **Docker Deesktop**을 설치한다.
   - [Install Docker Desktop on Windows](https://docs.docker.com/desktop/install/windows-install/)
 
 ![ss](https://user-images.githubusercontent.com/78655692/188615378-13cd3547-23e6-4cb0-ad04-630af651e859.png)
 
-<br>
 
 ### [에러 해결] Got permission denied while trying to connect to the Docker daemon socket
 
@@ -134,10 +128,6 @@ $ newgrp docker
 ```
 
 
-<br>
-<br>
-<br>
-<br>
 
 ## References
 

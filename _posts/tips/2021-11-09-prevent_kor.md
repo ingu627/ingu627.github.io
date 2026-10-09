@@ -6,8 +6,10 @@ categories: tips
 tags: [tip, python, korea, colab, 한글 깨짐, 파이썬, 코랩, 주피터]
 sidebar_main: false
 
-last_modified_at: 2022-03-30
+last_modified_at: 2026-10-09
 ---
+
+이 글은 Jupyter·Colab 환경에서 파이썬(matplotlib) 한글이 깨질 때 사용하는 설정 코드를 정리한다. 로컬 환경에서 폰트를 지정하는 코드와 Colab에서 나눔 폰트를 설치하는 방법을 다룬다.
 
 ## 파이썬 한글 방지 깨짐 코드
 
@@ -25,9 +27,6 @@ import warnings
 warnings.filterwarnings("ignore")
 ```
 
-<br>
-<br>
-
 ## Colab에서 사용 시
 
 ```python
@@ -38,13 +37,7 @@ warnings.filterwarnings("ignore")
 
 - 실행 후 (런타임 재시작)
 
-<br>
-
 ```python
 plt.rc('font', family='NanumBarunGothic')
 ```
 
-<br>
-<br>
-<br>
-<br>

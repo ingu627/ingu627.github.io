@@ -9,21 +9,18 @@ toc: true
 toc_sticky: true
 
 date: 2021-11-23
-last_modified_at: 2025-09-20
+last_modified_at: 2026-10-09
 
 sidebar_main: false
 ---
 
 <img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/149885926-86d336ea-fe65-4bb1-96f8-c556918fbb5a.png' alt='Linux 로고'>
 
-본 글은 "생활 코딩 - Linux" 강의 내용을 요약 및 정리한 글입니다. <br> 리눅스의 기초를 잡기 위해 개인공부 목적으로 정리했으며, 자세한 사항은 [생활코딩 - Linux](https://www.inflearn.com/course/%EC%83%9D%ED%99%9C%EC%BD%94%EB%94%A9-%EB%A6%AC%EB%88%85%EC%8A%A4-%EA%B0%95%EC%A2%8C#curriculum)로 참고하시길 바랍니다.
-{: .notice--info}
+본 글은 "생활 코딩 - Linux" 강의 내용을 요약 및 정리한 글입니다. 리눅스의 기초를 잡기 위해 개인공부 목적으로 정리했으며, 자세한 사항은 [생활코딩 - Linux](https://www.inflearn.com/course/%EC%83%9D%ED%99%9C%EC%BD%94%EB%94%A9-%EB%A6%AC%EB%88%85%EC%8A%A4-%EA%B0%95%EC%A2%8C#curriculum)로 참고하시길 바랍니다.
 
-<br>
 
 ## 리눅스 기초 
 
-<br>
 
 ### ls
 
@@ -32,14 +29,12 @@ sidebar_main: false
 - `ls -a` : 현재 디렉토리에 있는 파일 + 숨김 파일(`.파일명`) 다 보여줌
 - `ls -al` : -a와 -l 합친 함수
 
-<br>
 
 ### pwd 
 
 - 현재 위치하고 있는 디렉토리를 알려주는 명령어
   - `directory` : 파일을 잘 정리정돈하기 위한 수납 공간
 
-<br>
 
 ### mkdir
 
@@ -52,13 +47,11 @@ sidebar_main: false
 
 ![image](https://user-images.githubusercontent.com/78655692/142976212-add56922-2b1d-44e5-aff8-9f9d8d9eccb1.png)
 
-<br>
 
 ### touch
 
 - `touch 새로생성할파일`
 
-<br>
 
 ### cd
 
@@ -71,7 +64,6 @@ sidebar_main: false
 - `최상위 디렉토리` : 루트(root) 디렉토리라고 하고 `/`이다.
   - `cd /`는 최상위 디렉토리로 이동한다는 의미
 
-<br>
 
 ### rm
 
@@ -79,7 +71,6 @@ sidebar_main: false
 - 파일 제거 (remove)
 - `rm -r 디렉토리명` : 재귀적 디렉토리 제거 (재귀적 : 그 안쪽에서부터 순차적으로)
 
-<br>
 
 ### --help
 
@@ -87,7 +78,6 @@ sidebar_main: false
 - 예시 `ls --help`
 - 간단한 매뉴얼
 
-<br>
 
 ### man 
 
@@ -96,13 +86,11 @@ sidebar_main: false
 - `/sort`라 치면 sort를 찾아준다. 
 - `q`를 누르면 화면 밖으로 빠져나감
 
-<br>
 
 ### cp 
 
 - `cp 원본파일 복사할디렉토리` : 원본파일을 해당 디렉토리로 복사한다. (cp : copy)
 
-<br>
 
 ### mv
 
@@ -111,7 +99,6 @@ sidebar_main: false
 - 파일명 바꾸고 싶을 때도 mv 사용
   - 예시 `mv rename.txt rename2.txt`
 
-<br>
 
 ### sudo 
 
@@ -121,7 +108,6 @@ sidebar_main: false
 
 ![image](https://user-images.githubusercontent.com/78655692/142977414-1280c4e0-91b3-46f2-b80d-0d306f7b416b.png)
 
-<br>
 
 ### nano 
 
@@ -161,7 +147,6 @@ sidebar_main: false
 |`Alt+]`|현재 괄호에 match되는 괄호 찾기	|
 |`Ctrl+-`|줄 번호와 열을 입력한 후 그곳으로 이동|
 
-<br>
 
 ### Package manager
 
@@ -187,7 +172,6 @@ sidebar_main: false
 - `sudo apt-get upgrade htop` : htop 업그레이드 실행
 - `sudo apt-get remove htop` : htop 제거
 
-<br>
 
 ### wget 
 
@@ -199,13 +183,11 @@ sidebar_main: false
 
 ![image](https://user-images.githubusercontent.com/78655692/142983505-5ae35d6a-1df0-44ce-a29e-08fcb59aa189.png)
 
-<br>
 
 ## IO Redirection
 
 ![image](https://user-images.githubusercontent.com/78655692/143034784-7a084841-cba7-479c-8661-585952a3f6e1.png)
 
-<br>
 
 ### output 
 
@@ -219,7 +201,6 @@ sidebar_main: false
 - `>` : 보통 숫자 1이 생략되어 있는데 이를 표준출력이라고 함
 - `2>` : 오류가 난 결과를 파일에 저장하고 싶을 때 사용
 
-<br>
 
 ### input 
 
@@ -234,14 +215,12 @@ sidebar_main: false
   - `head`는 기본 10줄만 출력을 하는데 옵션으로 마이너스 (-n1) 하면 한 줄만 출력을 해준다.
 - `head -n1 < one.txt > two.txt`이 코드에는 표준 입력에 대한 리다이렉션과 표준 출력에 대한 리다이렉션이 모두 포함되어 있다. 먼저 'one.txt'에 있는 내용이 리다이렉션되어서 head 프로세스에 입력되고 그 처리 결과를 'two.txt'에다가 출력을 한다.
 
-<br>
 
 ### append 
 
 - `>>` : redirection한 결과를 추가, 즉 뒤에다가 덧붙이는 뜻
 - `<<` : 여기에 방향이 바뀌면 입력이란 뜻인데 여러 개의 입력을 하나로 합친다.
 
-<br>
 
 ## 쉘과 쉘스크립트
 
@@ -255,7 +234,6 @@ sidebar_main: false
   - 그러면 Kernel(커널)이라고 하는 프로그램은 하드웨어를 제어해서 어떠한 처리를 수행할 수 있도록 명령한다.
   - 하드웨어가 동작하여 그 처리결과를 Kernel(커널)에게 알려주면 Kernel(커널)이 다시 Shell(셸)에게 알려주는 것을 통해서 우리가 입력하여 실행된 결과를 확인해볼 수가 있다.
 
-<br>
 
 ### bash vs zsh
 
@@ -268,7 +246,6 @@ sidebar_main: false
 - `zsh`는 탭(tab)을 누르면 실행이 된다.
 - `pwd`를 누르면 현재 경로를 보여 주는데 zsh에서는 경로의 앞글자만 쓰고 tab을 누르면 자동완성 시켜준다.
 
-<br>
 
 ### Shell Script 
 
@@ -299,14 +276,12 @@ sidebar_main: false
 - Linux 시스템의 모든 것은 루트 디렉토리로 알려진 `/` 디렉토리 아래에 있다.
 - Linux에는 드라이브 문자가 없다.
 
-<br>
 
 ### `/root`
 
 - root home directory
 - 루트 사용자의 홈 디렉토리이다. /home/root에 있는 대신 /root에 있다.
 
-<br>
 
 ### `/bin` 
 
@@ -316,7 +291,6 @@ sidebar_main: false
   - 사용자들이 사용하는 명령들이 위치하고 있다.
 - Firefox와 같은 응용 프로그램은 /usr/bin에 저장되고 bash 셸과 같은 중요한 시스템 프로그램과 유틸리티는 /bin에 저장된다.
 
-<br>
 
 ### `/sbin`
 
@@ -324,21 +298,18 @@ sidebar_main: false
 - 시스템 프로그램
 - root 사용자가 쓰는 프로그램들은 sbin에 있다.
 
-<br>
 
 ### `/etc`
 
 - Configuration Files
 - 일반적으로 텍스트 편집기에서 손으로 편집할 수 있는 구성 파일이 있다.
 
-<br>
 
 ### `/lib`
 
 - Essential Shared Libraries
 - /bin 및 /sbin 폴더의 필수 바이너리에 필요한 라이브러리가 포함되어 있다.
 
-<br>
 
 ### `/home`
 
@@ -348,7 +319,6 @@ sidebar_main: false
 
 ![image](https://user-images.githubusercontent.com/78655692/144047937-4bfdea67-7903-4f77-a6da-891553d1859a.png)
 
-<br>
 
 ### `/var`
 
@@ -356,21 +326,18 @@ sidebar_main: false
 - 내용이 바뀔 수 있는 파일들이 있다.
 - 로그 파일 및 정상 작동 중에 일반적으로 /usr에 기록되는 기타 모든 내용은 /var 디렉토리에 기록된다.
 
-<br>
 
 ### `/tmp`
 
 - Temporary Files
 - 여기에 있는 파일들은 reboot되면 없어진다.
 
-<br>
 
 ### `/opt`
 
 - Optional add-on Applications
 - 선택적 소프트웨어 패키지에 대한 하위 디렉토리가 있다.
 
-<br>
 
 ### `/usr`
 
@@ -379,13 +346,11 @@ sidebar_main: false
 - 예를 들어, 비필수 응용 프로그램은 /bin 디렉토리 대신 /usr/bin 디렉토리에 있고, 비필수 시스템 관리 바이너리는 /sbin 디렉토리 대신 /usr/sbin 디렉토리에 있다. 
 - 각각의 라이브러리는 /usr/lib 디렉토리에 있다.
 
-<br>
 
 ## 파일 찾는 법 - locate와 find
 
 - [https://www.tecmint.com/35-practical-examples-of-linux-find-command/](https://www.tecmint.com/35-practical-examples-of-linux-find-command/) 참고
 
-<br>
 
 ### locate
 
@@ -395,7 +360,6 @@ sidebar_main: false
 - locate가 사용하는 데이터베이스를 `mlocate`를 이용한다.
   - `sudo updatedb` 이 명령을 수행
 
-<br>
 
 ### find
 
@@ -405,7 +369,6 @@ sidebar_main: false
 - `find .` : 현재 디렉토리부터 하위디렉토리까지 찾겠다. 
 - `find ~` : 자신의 홈 디렉토리부터 찾겠다.
 
-<br>
 
 ### whereis
 
@@ -420,7 +383,6 @@ sidebar_main: false
     - 리눅스에서 사용하는 명령어들도 결국 일종의 실행파일인데 명령어 입력 시 환경변수에 잡혀있는 PATH를 따라가서 해당 파일이 실행되는 원리로 명령어가 작동된다는 것
     - 결국 mkdir, ls 등의 명령어도 결국 저 PATH 경로에 저장되어 있다는 얘기이다.
 
-<br>
 
 ## 컴퓨터의 구조 
 
@@ -434,13 +396,11 @@ sidebar_main: false
 - `CPU` : 프로그램 실행과 데이터 처리를 담당하는 핵심 요소이다.
 - `memory` : 프로그램 코드와 데이터를 저장하는 장치
 
-<br>
 
 ## 프로세스 모니터링 (ps, top, htop)
 
 - 현재 시스템의 프로세스를 보여주는 것을 실행.
 
-<br>
 
 ### ps
 
@@ -456,7 +416,6 @@ sidebar_main: false
 
 ![image](https://user-images.githubusercontent.com/78655692/144151213-741762fd-0c37-4b8a-9004-173b9d3eb3f5.png)
 
-<br>
 
 ### top
 
@@ -464,7 +423,6 @@ sidebar_main: false
 
 ![image](https://user-images.githubusercontent.com/78655692/144151320-326df3a7-69e2-4cfb-b4b9-08e8dc9a4043.png)
 
-<br>
 
 ### htop
 
@@ -474,7 +432,6 @@ sidebar_main: false
 
 ![image](https://user-images.githubusercontent.com/78655692/144151398-18c516f4-83a2-48d5-a282-fbfb8666c2a8.png)
 
-<br>
 
 ## 백그라운드
 
@@ -496,7 +453,6 @@ sidebar_main: false
 
 ![image](https://user-images.githubusercontent.com/78655692/144155681-9caf1a43-857f-4ac3-907b-a73f0e289d91.png)
 
-<br>
 
 ## 데몬 (daemon)
 
@@ -505,7 +461,6 @@ sidebar_main: false
 - **데몬**의 특성은 항상 실행되고 있다는 것을 의미
 - ls, rm, mkdir은 필요할 때만 켰다 킨다. 그러나 server는 데몬을 의미.
 
-<br>
 
 ### service와 자동실행
 
@@ -521,7 +476,6 @@ sidebar_main: false
 
 ![image](https://user-images.githubusercontent.com/78655692/144159849-f1cf8143-66bf-4b8c-9468-533131e4476a.png)
 
-<br>
 
 - `sudo service apache2 start`를 입력하면 apache2 웹서버가 시작된다.
 
@@ -535,7 +489,6 @@ sidebar_main: false
 
 ![image](https://user-images.githubusercontent.com/78655692/144165110-45e9e9c4-4d75-4eca-b6df-0f8bf52c60f5.png)
 
-<br>
 
 ## cron
 
@@ -554,7 +507,6 @@ sidebar_main: false
 - `mon` : 달 주기
 - `dow` : 요일
 
-<br>
 
 - `date` : 현재 시간을 알려줌 
 
@@ -574,7 +526,6 @@ sidebar_main: false
 - `*/1 * * * * date >> date.log 2>&1` : 표준에러가 나면 표준출력으로 나타내어 date.log에 추가
   - `2>&1` : 표준에러를 표준출력으로 해줌
 
-<br>
 
 ## 쉘을 시작할 때 실행
 
@@ -597,7 +548,6 @@ sidebar_main: false
 
 ## 사용자
 
-<br>
 
 ### 다중사용자
 
@@ -608,7 +558,6 @@ sidebar_main: false
   - `gid` : group의 id
 - `who` : 누가 접속했는지 알려줌
 
-<br>
 
 ### 관리자와 일반 사용자
 
@@ -635,7 +584,6 @@ sidebar_main: false
 
 - `~` : 현재 사용자의 홈 디렉토리
 
-<br>
 
 ### 사용자의 추가
 
@@ -651,7 +599,6 @@ sidebar_main: false
 - `exit` : 빠져나오기
 - `sudo usermod -a -G sudo duru` : duru에게 sudo 권한 주기
 
-<br>
 
 ## 권한 (permission)
 
@@ -677,7 +624,6 @@ sidebar_main: false
   - `w` : 쓰기
   - `x` : 실행
 
-<br>
 
 ### chmod
 
@@ -714,7 +660,6 @@ sidebar_main: false
 |1|	              1(x)|	--x|	execute only|
 |0|	0|	---|	none|
 
-<br>
 
 ![image](https://user-images.githubusercontent.com/78655692/144347253-e2a259e3-c27c-479d-8122-c54dfc016f3e.png)
 
@@ -732,7 +677,6 @@ sidebar_main: false
 
 - `chmod a=rwx perm.txt`를 하면 모든 권한자에게 rwx를 부여한다.
 
-<br>
 
 ### execute
 
@@ -746,7 +690,6 @@ sidebar_main: false
 - `#!/bin/bash` 이 코드가 있다면 운영체제는 `./hi-machine.sh`를 실행시켰을 때 제일 먼저 `hi-machine.sh`이 현재 사용자에게 실행가능한지 본다.
 - others에게도 실행 권한을 주기 위해선 `chmod o+x hi-machine.sh`를 한다.
 
-<br>
 
 ## 그룹 (group)
 
@@ -754,7 +697,6 @@ sidebar_main: false
 
 ![KakaoTalk_20211202_132405230](https://user-images.githubusercontent.com/78655692/144357487-30227af2-13af-42f2-988b-30704af3cb57.jpg)
 
-<br>
 
 ## 인터넷
 
@@ -767,7 +709,6 @@ sidebar_main: false
 
 - `curl ipinfo.io/ip`를 치면 IP를 알려준다. (온라인 입장에서 결과적인 IP가 뭔지 알려준다.)
 
-<br>
 
 ### apache
 
@@ -781,7 +722,6 @@ sidebar_main: false
   - `sudo apt-get install apache2`
 - `sudo service apache2 start`를 통해 웹 서버를 켜 준다.
 
-<br>
 
 - `elinks`는 쉘에서 웹브라우징을 할 수 있게 도와주는 프로그램
   - elinks 설치 : `sudo apt-get install elinks`
@@ -810,7 +750,6 @@ CustomLog ${APACHE_LOG_DIR}/access.log combined
 - 이것이 로그를 찾는 것이다. 대부분의 서버 프로그램이 가지는 동작이다.
 - 서버의 로그가 어디에 있을까에 대해 알아야한다.
 
-<br>
 
 ## SSH
 
@@ -821,7 +760,6 @@ CustomLog ${APACHE_LOG_DIR}/access.log combined
 - 다른 컴퓨터임에도 불구하고 원격으로 다른 컴퓨터에 접속할 수 있다.
 - 이 컴퓨터로 명령을 내리면 ssh로 접속한 컴퓨터를 대상으로 실행되게 된다.
 
-<br>
 
 ## References 
 

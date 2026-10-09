@@ -8,17 +8,12 @@ toc: true
 toc_sticky: true
 sidebar_main: false
 
-last_modified_at: 2022-07-13
+last_modified_at: 2026-10-09
 ---
 
 <img align='right' width='350' src='https://user-images.githubusercontent.com/78655692/162920296-ea7abcc7-f497-4351-8152-838c140a1ba2.png'>
-본 글은 "ImageNet Classification with Deep Convolutional Neural Networks" 논문을 파악하고, 이를 파이토치로 구현해보는 내용입니다.<br>하나하나 분해해봅시다.  <br><br> 논문 : [AlexNet](https://proceedings.neurips.cc/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf) <br> 코드 : [kaggle - Fashion MNIST with AlexNet in Pytorch](https://www.kaggle.com/code/tiiktak/fashion-mnist-with-alexnet-in-pytorch-92-accuracy/notebook) <br> 블로그 글 코드 : [alexnet_pytorch.ipynb](https://github.com/data-science-DL/pytorch/blob/master/deeplearning_ajou/alexnet_pytorch.ipynb)<br> 파이토치 튜토리얼 : [pytorch.org](https://pytorch.org/docs/stable/index.html)
-{: .notice--info}
+본 글은 "ImageNet Classification with Deep Convolutional Neural Networks" 논문을 파악하고, 이를 파이토치로 구현해보는 내용입니다. 하나하나 분해해봅시다. 논문 : [AlexNet](https://proceedings.neurips.cc/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf) 코드 : [kaggle - Fashion MNIST with AlexNet in Pytorch](https://www.kaggle.com/code/tiiktak/fashion-mnist-with-alexnet-in-pytorch-92-accuracy/notebook) 블로그 글 코드 : [alexnet_pytorch.ipynb](https://github.com/data-science-DL/pytorch/blob/master/deeplearning_ajou/alexnet_pytorch.ipynb) 파이토치 튜토리얼 : [pytorch.org](https://pytorch.org/docs/stable/index.html)
 
-<br>
-<br>
-<br>
-<br>
 
 ## AlexNet 이란?
 
@@ -30,18 +25,14 @@ last_modified_at: 2022-07-13
   3. 정규화는 **LRN(local response normalization)** 사용
      - **LRN** : 뉴런의 출력값을 보다 경쟁적으로 만드는 정규화 기법
 
-<br>
 
 ## AlexNet 구조
 
 ![image](https://user-images.githubusercontent.com/78655692/160421851-7f682d11-e4d9-4117-9c58-d1022d476658.png)
 
-<br>
 
 ![image](https://user-images.githubusercontent.com/78655692/160422169-afaeee33-f486-461d-b974-3f16731a8d34.png)
 
-<br>
-<br>
 
 ## 파이토치로 구현해보기
 
@@ -71,8 +62,6 @@ last_modified_at: 2022-07-13
   - feature : PIL image format
   - label : integer
 
-<br>
-<br>
 
 ### 라이브러리 불러오기
 
@@ -93,8 +82,6 @@ from torch.utils.data import Dataset, DataLoader
 # DataLoader : Dataset 을 샘플에 쉽게 접근할 수 있도록 순회 가능한 객체(iterable)로 감싼다.
 ```
 
-<br>
-<br>
 
 ### 에포크, 배치 크기, 디바이스 정의
 
@@ -114,8 +101,6 @@ print(device)
 # cuda
 ```
 
-<br>
-<br>
 
 ### 데이터셋 준비
 
@@ -140,8 +125,6 @@ validation_data = datasets.FashionMNIST(
 )
 ```
 
-<br>
-<br>
 
 ### 데이터로더 (DataLoader)
 
@@ -154,8 +137,6 @@ training_loader = DataLoader(training_data, batch_size=64, shuffle=True)
 validation_loader = DataLoader(validation_data, batch_size=64, shuffle=True)
 ```
 
-<br>
-<br>
 
 ### 이미지 보기
 
@@ -179,8 +160,6 @@ matplotlib_imshow(img_grid)
 print(class_names[labels[0]])
 ```
 
-<br>
-<br>
 
 ### 알렉스넷(AlexNet) 모델 구현
 
@@ -256,8 +235,6 @@ class fashion_mnist_alexnet(nn.Module):
         
 ```
 
-<br>
-<br>
 
 ### 모델 생성
 
@@ -267,7 +244,6 @@ criterion = F.nll_loss # nll_loss : negative log likelihood loss
 optimizer = optim.Adam(model.parameters()) # model(신경망) 파라미터를 optimizer에 전달해줄 때 nn.Module의 parameters() 메소드를 사용
 ```
 
-<br>
 
 - **모델의 Summary()**
 
@@ -280,8 +256,6 @@ summary_(model, (1,227,227), batch_size)
 
 ![image](https://user-images.githubusercontent.com/78655692/160539431-ceb2788f-139e-4249-9665-87c46ad30e41.png)
 
-<br>
-<br>
 
 ### train 정의
 
@@ -303,8 +277,6 @@ def train(model, device, train_loader, optimizer, epoch):
                 100. * batch_idx / len(train_loader), loss.item()))
 ```
 
-<br>
-<br>
 
 ### test 정의
 
@@ -327,8 +299,6 @@ def test(model, device, test_loader):
         print('='*50)
 ```
 
-<br>
-<br>
 
 ### 학습 시작하기
 
@@ -344,10 +314,6 @@ for epoch in range(1, epochs+1):
 
 
 
-<br>
-<br>
-<br>
-<br>
 
 ## References
 

@@ -8,16 +8,18 @@ toc: true
 toc_sticky: true
 sidebar_main: false
 
-last_modified_at: 2022-07-13
+last_modified_at: 2026-10-09
 ---
 
 <img align='right' width='250' src='https://user-images.githubusercontent.com/78655692/178315781-684e139b-9095-45a4-ba26-41d4acacfc2b.png'>
-본 글은 Pytorch Lightning + Wandb을 활용하여 mnist 예제 살펴보는 내용입니다. <br> 개인 공부를 목적으로 썼습니다. <br><br>  참고 : <br> [pytorchlightning 공식 사이트](https://www.pytorchlightning.ai/) <br> [wandb - pytorch-lighning](https://wandb.ai/quickstart/pytorch-lightning) <br> [Use Pytorch Lightning with Weights & Biases](https://wandb.ai/cayush/pytorchlightning/reports/Use-Pytorch-Lightning-with-Weights-Biases--Vmlldzo2NjQ1Mw)
-{: .notice--info}
+본 글은 Pytorch Lightning + Wandb을 활용하여 mnist 예제 살펴보는 내용입니다. 개인 공부를 목적으로 썼습니다.
 
-<br>
-<br>
-<br>
+참고 :
+
+- [pytorchlightning 공식 사이트](https://www.pytorchlightning.ai/)
+- [wandb - pytorch-lighning](https://wandb.ai/quickstart/pytorch-lightning)
+- [Use Pytorch Lightning with Weights & Biases](https://wandb.ai/cayush/pytorchlightning/reports/Use-Pytorch-Lightning-with-Weights-Biases--Vmlldzo2NjQ1Mw)
+
 
 ## Introduction
 
@@ -30,8 +32,6 @@ last_modified_at: 2022-07-13
   3. 다른 사람이 작성한 코드를 쉽게 볼 수 있도록 공통된 스타일을 갖도록 하고,
   4. 모델의 개별적인 부분은 유연하게 커스터마징하여 실험할 수 있게 해주는 라이브러리이다.
 
-<br>
-<br>
 
 ## Pytorch Lightning
 
@@ -41,14 +41,11 @@ last_modified_at: 2022-07-13
   - `__init__`, `forward`, `configure_optimizers`, `training_step`, `validation_step` 등을 구현한다. 
 - **Trainer**는 모델읠 학습을 담당하는 클래스이다. 모델의 학습 epoch나 batch 상태들과 모델을 저장해 로그를 생성하는 부분들을 담당한다.
 
-<br>
 
 <img src='https://user-images.githubusercontent.com/78655692/178400817-4c991d13-4e47-4545-a739-b5b6237a23dd.png' width=650> <br> 이미지출처 [^3]
 
 - 사용자는 파란색 부분만 건드리면 된다. 나머지는 pytorch-lightning이 알아서 해준다.
 
-<br>
-<br>
 
 ### init
 
@@ -85,7 +82,6 @@ last_modified_at: 2022-07-13
                 nn.Linear(64, 28 * 28))
     ```
 
-<br>
 
 ### forward
 
@@ -98,7 +94,6 @@ last_modified_at: 2022-07-13
             return embedding
     ```
 
-<br>
 
 ### training_step
 
@@ -122,7 +117,6 @@ last_modified_at: 2022-07-13
             return loss
     ```
 
-<br>
 
 ### validation_step
 
@@ -140,7 +134,6 @@ last_modified_at: 2022-07-13
                 self.log('val_loss', loss)
     ```
 
-<br>
 
 ### configure_optimizers
 
@@ -152,7 +145,6 @@ last_modified_at: 2022-07-13
             return optimizer
     ```
 
-<br>
 
 ### data & model & training
 
@@ -178,8 +170,6 @@ last_modified_at: 2022-07-13
     trainer.fit(model, train_loader, val_loader)
     ```
 
-<br>
-<br>
 
 ## Wandb
 
@@ -207,8 +197,6 @@ last_modified_at: 2022-07-13
     ...
     ```
 
-<br>
-<br>
 
 ## 전체 코드
 
@@ -280,8 +268,6 @@ last_modified_at: 2022-07-13
     trainer.fit(model, train_loader, val_loader)
     ```
 
-<br>
-<br>
 
 ## 결과
 
@@ -292,11 +278,6 @@ last_modified_at: 2022-07-13
 
 
 
-
-<br>
-<br>
-<br>
-<br>
 
 ## References
 

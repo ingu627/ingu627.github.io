@@ -8,19 +8,21 @@ toc: true
 toc_sticky: true
 sidebar_main: false
 
-last_modified_at: 2023-01-11
+last_modified_at: 2026-10-09
 ---
 
 
 <img align='right' width='300' height='150' src='https://user-images.githubusercontent.com/78655692/179643735-e64c6545-9239-4d81-9e63-d7d8f834d456.png
 '>
-도커를 사용하면서 명령어를 정리해야겠다는 생각을 했습니다.<br><br> **환경** <br> OS : Ubuntu 22.04 <br> Docker version : 20.10.17 (중요하지 않습니다.) <br> 이미지 사용 : ingu627/hadoop:spark3.3.0
-{: .notice--info}
+도커를 사용하면서 명령어를 정리해야겠다는 생각을 했습니다.
+
+**환경**
+
+- OS : Ubuntu 22.04
+- Docker version : 20.10.17 (중요하지 않습니다.)
+- 이미지 사용 : ingu627/hadoop:spark3.3.0
 
 
-<br>
-<br>
-<br>
 
 ## 0. 명령어 전체 개요
 
@@ -31,7 +33,6 @@ last_modified_at: 2023-01-11
   - 예시 : [docker hub - ingu627](https://hub.docker.com/u/ingu627)
 - **컨테이너(container)** : 프로세스와 비슷한 개념이다. 
 
-<br>
 
 ## 1. 도커 이미지 가져오기
 
@@ -46,8 +47,6 @@ $ docker pull ingu627/hadoop:spark3.3.0
 
     ![Screenshot from 2022-09-04 20-37-45](https://user-images.githubusercontent.com/78655692/188311366-452fde22-0c2e-45e7-a722-818abe6f1251.png)
 
-<br>
-<br>
 
 ## 2. 도커 컨테이너 확인
 
@@ -61,8 +60,6 @@ $ docker pull ingu627/hadoop:spark3.3.0
 
     ![Screenshot from 2022-09-04 20-39-27](https://user-images.githubusercontent.com/78655692/188311430-0e5d18c4-9f6d-48c4-829c-95339a8bd1c4.png)
 
-<br>
-<br>
 
 ## 3. 컨테이너 생성 및 시작
 
@@ -94,14 +91,11 @@ $ docker run [옵션] 이미지명:태그명 [명령어] [파라미터]
     - 해당 설치는 다음 링크를 참고한다. 
     - [도커(docker)를 이용해 파이썬 가상환경 구축을 위한 이미지 배포하기](https://ingu627.github.io/docker/docker_overview_venv/#%EC%B6%94%EA%B0%80--docker%EC%99%80-vs-code-%EC%97%B0%EB%8F%99)
 
-<br>
 
 ```shell
 $ docker run -it -d -h spark -p 8080:8080 --privileged=true --name spark ingu627/hadoop:spark /sbin/init
 ```
 
-<br>
-<br>
 
 ## 4. 컨테이너 시작
 
@@ -116,7 +110,6 @@ $ docker start spark
 
     ![Screenshot from 2022-09-04 21-00-00](https://user-images.githubusercontent.com/78655692/188312283-39e9b7a9-f7a1-4403-955a-f130d0a5609c.png)
 
-<br>
 
 ### 4.1 VSCODE 연결하기
 
@@ -126,15 +119,12 @@ $ docker start spark
 
     ![Screenshot from 2022-09-04 21-02-59](https://user-images.githubusercontent.com/78655692/188312440-9c804af7-276d-42ab-ad80-1d41f831aeec.png)
 
-<br>
-<br>
 
 ### 4.2 실행중인 컨테이너에 접속하기
 
 - **exec** : 실행중인 컨테이너에서 명령어를 실행시켜 준다.
   - `docker exec [option] [컨테이너 id] [명령어]` [^5]
 
-<br>
 
 - **옵션**
   - **-\-it** : 컨테이너를 종료하지 않은 채, 터미널의 입력을 계속해서 컨테이너로 전달하기 위해서 사용한다. (세션 연결)
@@ -155,8 +145,6 @@ $ docker exec -it spark \bin\bash
 $ docker stop spark
 ```
 
-<br>
-<br>
 
 ## 6. 컨테이너 삭제
 
@@ -171,11 +159,6 @@ $ docker rm [옵션] [컨테이너 id]
   - **-v, -\-volume** : 할당한 불륨을 삭제
 
 
-
-<br>
-<br>
-<br>
-<br>
 
 ## References
 

@@ -8,18 +8,14 @@ toc: true
 toc_sticky: true
 sidebar_main: false
 
-last_modified_at: 2022-10-21
+last_modified_at: 2026-10-09
 ---
 
 ![image](https://user-images.githubusercontent.com/78655692/194746413-0494aaf8-179e-4244-a388-f3baf1a8f915.png)
 
-"PowerGraph: Distributed Graph-Parallel Computation on Natural Graphs" 논문을 개인 공부 및 리뷰를 위해 쓴 글입니다. <br><br>
-논문 출처 pdf : [PowerGraph paper](https://www.usenix.org/conference/osdi12/technical-sessions/presentation/gonzalez)
-{: .notice--info}
+"PowerGraph: Distributed Graph-Parallel Computation on Natural Graphs" 논문을 개인 공부 및 리뷰를 위해 쓴 글입니다.
 
-<br>
-<br>
-<br>
+논문 출처 pdf : [PowerGraph paper](https://www.usenix.org/conference/osdi12/technical-sessions/presentation/gonzalez)
 
 ## 1. Introduction
 
@@ -30,14 +26,11 @@ last_modified_at: 2022-10-21
 - **PowerGraph**는 멱법칙 그래프 계산의 문제를 해결하기 위해 버텍스 프로그램의 구조를 활용하고, 버텍스 대신 에지에 대한 계산을 명시적으로 도입한다.
 - 결과적으로 PowerGraph는 훨씬 더 큰 병렬 처리를 제공하고 네트워크 통신 및 저장 비용을 줄이며 분산 그래프 배치에 대해 효과적인 접근 방식을 제공한다.
 
-<br>
-<br>
 
 ## 2. Graph-Parallel Abstractions
 
 - 그래프 병렬 추상화는 **희소(sparse) 그래프** $G=\{V,E\}$와 버텍스 $v\in V$에서 병렬로 실행되고 이웃 인스턴스 $Q(u)$와 상호작용할 수 있는 **버텍스 프로그램** $Q$로 구성된다.
 
-<br>
 
 ### 2.1 Characterization
 
@@ -49,14 +42,11 @@ last_modified_at: 2022-10-21
 - 마지막으로 **분산(scatter)** 단계는 central 버텍스의 새로운 값을 사용하여 인접한 에지의 데이터를 업데이트한다.
   - $(D_{(u,v)})\leftarrow s(D_u^{new},D_{(u,v)},D_v)$
 
-<br>
 
 - **Pregel** 추상화에서 Gather 단계는 메시지 컴바이너(combiner)를 사용하여 구현되고, Apply 및 Scatter 단계는 버텍스 프로그램에서 표현된다.
 - **GraphLab**은 전체 이웃을 버텍스 프로그램에 노출하고 사용자가 프로그램 내에서 Gather 및 Apply 단계를 정의할 수 있도록 한다.
 - **GraphLab** 추상화는 버텍스 또는 에지 데이터에 대한 변경 사항이 인접한 버텍스에 자동으로 표시되도록 하여 Gather/Scatter 단계의 통신 측면을 암시적으로 정의한다.
 
-<br>
-<br>
 
 ## 3. Challenges of Natural Graphs
 
@@ -69,7 +59,6 @@ last_modified_at: 2022-10-21
 
 ![image](https://user-images.githubusercontent.com/78655692/194817355-4cacbd6a-3a08-4e07-b207-563ec79ab1d7.png)
 
-<br>
 
 - **Work Balance**
   - 멱법칙 차수 분포는 버텍스를 대칭적으로 처리하는 그래프 병렬 추상화에서 상당한 작업 불균형을 초래할 수 있다.
@@ -80,15 +69,12 @@ last_modified_at: 2022-10-21
 - **Storage**
   - 그래프 병렬 추상화는 각 버텍스에 대한 인접 정보를 로컬에 저장해야 하므로 각 버텍스에는 해당 차수의 선형 메모리가 필요하다.
 
-<br>
-<br>
 
 ## 4. PowerGraph Abstraction
 
 - PowerGraph는 멱법칙 그래프에서 계산의 문제를 해결하기 위해 GAS 분해를 직접 이용하여 에지에 걸쳐 버텍스 프로그램을 팩토링(factoring, 인수분해)하여 차수 의존성을 제거한다.
 - PowerGraph는 고도로 병렬화된 대량 동기 Pregel 계산 모델과 계산 효율적인 비동기 GraphLab 계산 모델을 모두 지원한다. 
 
-<br>
 
 ### 4.1 GAS Vertex-Programs
 
@@ -104,19 +90,16 @@ last_modified_at: 2022-10-21
 - 결과는 가환(commutative) 및 연관(associative) 합계 연산을 사용하여 결합된다.
 - Gather 단계의 최종 결과 $a_u$는 Apply 단계로 전달되고 PowerGraph에 의해 캐시된다.
 
-<br>
 
 - Gather 단계가 완료된 후, Apply 기능은 최종 어큐뮬레이터를 사용하여 그래프에 원자적으로 다시 기록되는 새 버텍스 값 $D_u$를 계산한다.
 - Scatter 단계 동안 Scatter 함수는 $u$에 인접한 에지에서 병렬로 호출되어 데이터 그래프에서 다시 기록되는 새 에지 값 $D_{(u,v)}$를 생성한다.
 - Scatter 함수는 인접한 버텍스에 대해 캐시된 어큐뮬레이터 $a_v$를 동적으로 업데이트하는 데 사용되는 optional 값 $\Delta a$를 반환한다.
 
-<br>
 
 - Fig 3 에서 PowerGraph 추상화를 사용하여 PageRank, Greedy Graph Coloring, Single Source Shortest Path(SSSP) 알고리즘을 구현한다.
 
 ![image](https://user-images.githubusercontent.com/78655692/194833499-5ef20d46-dbba-45ad-b23a-6b0477dfd124.png)
 
-<br>
 
 ### 4.2 Delta Caching
 
@@ -124,8 +107,6 @@ last_modified_at: 2022-10-21
 - Scatter 함수는 sum 함수를 사용하여 이웃 버텍스 $v$의 캐시된 어큐뮬레이터 $a_v$에 원자적으로 추가되는 추가 $\Delta a$를 선택적으로 반환할 수 있다.
 - $\Delta a$가 반환되지 않으면 이웃의 캐시된 $a_v$가 지워져 버텍스 $v$에서 버텍스 프로그램의 후속 실행에 대한 완전한 Gather가 강제 실행된다.
 
-<br>
-<br>
 
 ## 5. Distributed Graph Placement
 
@@ -136,7 +117,6 @@ last_modified_at: 2022-10-21
 - 하지만, balanced 에지 컷을 구성하는 도구는 멱법칙 그래프에서 성능이 좋지 않다.
 - 그래프를 파티셔닝하기 어려운 경우 GraphLab과 Pregel 모두 해시 버텍스 배치에 의존한다.
 
-<br>
 
 ![image](https://user-images.githubusercontent.com/78655692/194844290-20f1a658-913d-407a-86cb-ab7fb2f9f720.png)
 
@@ -145,7 +125,6 @@ last_modified_at: 2022-10-21
 - 예를 들어 Fig 4(a)에서 4개의 버텍스 그래프의 3방향 에지 컷을 구성하여 5개의 고스트 버텍스와 모든 에지 데이터가 복제되도록 한다.
   - 컷 에지와 관련된 버텍스 및 에지 데이터에 대한 모든 변경 사항은 네트워크에서 동기화되어야 한다.
 
-<br>
 
 ### 5.1 Balanced p-way Vertex-Cut
 
@@ -160,7 +139,6 @@ last_modified_at: 2022-10-21
 - 각 버텍스에 걸쳐 있는 머신의 수를 제한하여 스토리지 및 네트워크 오버헤드를 최소화한다.
 - Balanced p-way 버텍스 컷은 각 모서리 $e\in E$를 머신 $A(e)\in \{1,...,p\}$에 할당함으로써 이런 목표를 공식화한다.
 
-<br>
 
 - 목표는 그래프의 평균 복제본 수를 최소화하고 결과적으로 PowerGraph 엔진의 총 스토리지 및 통신 요구 사항을 최소화한다.
 - 여러 복제본이 있는 각 버텍스 $v$에 대해 복제본 중 하나가 버텍스 데이터의 마스터 버전을 유지 관리하는 마스터로 무작위로 지정된다.
@@ -168,7 +146,6 @@ last_modified_at: 2022-10-21
   - Fig 4(b)에서 2개의 미러만을 생성하는 그래프의 3방향 버텍스 컷을 구성한다.
   - 버텍스 데이터에 대한 모든 변경 사항(ex. Apply 기능)은 마스터에 적용되어야 하며 이는 모든 미러에 즉시 복제된다.
 
-<br>
 
 - 버텍스 컷은 멱법칙 그래프의 에지 컷과 관련된 주요 문제를 해결한다.
 - **침투 이론(Percolation theory)**은 멱법칙 그래프가 좋은 버텍스 컷을 가지고 있다고 제안한다.
@@ -176,13 +153,6 @@ last_modified_at: 2022-10-21
 - 또한 균형 제약 조건은 에지가 머신에 균일하게 분포되도록 하기 때문에 매우 높은 차수의 버텍스가 있는 경우에도 자연스럽게 개선된 작업 균형을 달성한다.
 - 버텍스 컷을 구성하는 가장 간단한 방법은 에지를 머신에 무작위로 할당하는 것이다.
 - 임의(해시) 에지 배치는 완전히 데이터 병렬이며 큰 그래프에서 거의 완벽한 균형을 달성하며 스트리밍 설정에 적용할 수 있다.
-
-
-
-<br>
-<br>
-<br>
-<br>
 
 ## References
 

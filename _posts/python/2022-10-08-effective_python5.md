@@ -8,21 +8,16 @@ toc: true
 toc_sticky: true
 sidebar_main: false
 
-last_modified_at: 2022-10-08
+last_modified_at: 2026-10-09
 ---
 
 <img align='right' width='150' height='150' src='https://user-images.githubusercontent.com/78655692/170685528-4060a9d3-172e-45d8-897b-3a8eb539970c.png'>
-요즘 파이썬을 사용하면서 자연스레 좀 더 효율적으로 코드를 짜고 싶은 마음이 커졌습니다. 그래서 이 책을 공부하기 시작했습니다. <br> 이 글은 개인 공부를 목적으로 작성되었습니다. <br> 혹시 오타나 글의 수정사항이 있어 알려주시면 감사하겠습니다.
-{: .notice--info}
+요즘 파이썬을 사용하면서 자연스레 좀 더 효율적으로 코드를 짜고 싶은 마음이 커졌습니다. 그래서 이 책을 공부하기 시작했습니다. 이 글은 개인 공부를 목적으로 작성되었습니다. 혹시 오타나 글의 수정사항이 있어 알려주시면 감사하겠습니다.
 
-<br>
-<br>
-<br>
 
 - 객체지향 언어로서 파이썬은 상속(inheritance), 다형성(polymorphism), 캡슐화(encapsulation) 등과 같은 모든 기능을 제공한다.
 - 클래스와 상속을 사용하는 방법을 알아두면 유지 보수하기 쉬운 코드를 작성할 수 있다.
 
-<br>
 
 ## Better way 37: 내장 타입을 여러 단계로 내포시키기보다는 클래스를 합성하라
 
@@ -55,13 +50,11 @@ last_modified_at: 2022-10-08
     print(book.average_grade('포은')) # 90.0
     ```
 
-<br>
 
 - 파이썬 내장 딕셔너리와 튜플은 사용하기 편하므로 내부에 계속 딕셔너리, 리스트, 튜플 계층을 추가해가면서 코드를 사용하기 쉽다.
 - 하지만 내포 단계가 두 단계 이상이 되면 더 이상 딕셔너리, 리스트 튜플 계층을 추가하지 말아야 한다.
 - 코드에서 값을 관리하는 부분이 점점 복잡해지고 있음을 깨달은 즉시 해당 기능을 클래스로 분리해야 한다.
 
-<br>
 
 ### 클래스를 활용해 리팩터링하기
 
@@ -78,7 +71,6 @@ last_modified_at: 2022-10-08
     average_grade = total / total_weight # 89.5
     ```
 
-<br>
 
 - 하지만 원소가 세 개 이상인 튜플을 사용한다면 다른 접근 방법을 생각해봐야 한다.
   - **collection** 내장 모듈에 있는 **namedtuple**을 사용하면 작은 불변 데이터 클래스를 쉽게 선택할 수 있다.
@@ -94,7 +86,6 @@ last_modified_at: 2022-10-08
 - 필드에 접근할 때는 애트리뷰트 이름을 쓸 수 있다.
 - 이름이 붙은 애트리뷰트를 사용할 수 있으므로 요구 사항이 바뀌는 경우에 `namedtuple`을 클래스로 변경하기도 쉽다.
 
-<br>
 
 - 이제 일련의 점수를 포함하는 단일 과목을 표현하는 클래스를 작성할 수 있다.
 - **코드**
@@ -115,7 +106,6 @@ last_modified_at: 2022-10-08
             return total / total_weight
     ```
 
-<br>
 
 - 다음으로 한 학생이 수강하는 과목들을 표현하는 클래스를 작성할 수 있다.
 - **코드**
@@ -139,7 +129,6 @@ last_modified_at: 2022-10-08
             return total / count
     ```
 
-<br>
 
 - 마지막으로 모든 학생을 저장하는 컨테이너를 만들 수 있다.
   - 이때 이름을 사용해 동적으로 학생을 저장한다.
@@ -154,7 +143,6 @@ last_modified_at: 2022-10-08
             return self._students[name]
     ```
 
-<br>
 
 - 코드는 길어졌지만 클래스를 사용하는 예제 코드도 더 읽기 쉽고 확장성이 좋아졌다.
 - **코드**
@@ -172,8 +160,6 @@ last_modified_at: 2022-10-08
     print(poeun.average_grade()) # 119.27083333333334
     ```
 
-<br>
-<br>
 
 ## Better way 38: 간단한 인터페이스의 경우 클래스 대신 함수를 받아라
 
@@ -188,7 +174,6 @@ last_modified_at: 2022-10-08
     print(names) # ['플라톤', '소크라테스', '아르키메데스', '아리스토텔레스']
     ```
 
-<br>
 
 - 함수는 클래스보다 정의하거나 기술하기가 더 쉬우므로 훅으로 사용하기에는 함수가 이상적이다.
 - 또한, 파이썬은 함수를 **일급 시민 객체**로 취급하기 때문에 함수를 훅으로 사용할 수 있다.
@@ -205,7 +190,6 @@ last_modified_at: 2022-10-08
         return 0
     ```
 
-<br>
 
 - 원본 딕셔너리와 변경할 내용이 주어진 경우, log_missing 함수는 로그를 두 번 남길 수 있다.
 - **코드**
@@ -232,7 +216,6 @@ last_modified_at: 2022-10-08
     # 이후 {'초록': 12, '파랑': 20, '빨강': 5, '주황': 9}
     ```
 
-<br>
 
 - 다음 코드는 이런 클로저가 있는 도우미 함수를 디폴트 값 훅으로 사용한다.
 - **코드**
@@ -253,7 +236,6 @@ last_modified_at: 2022-10-08
         return result, added_count
     ```
 
-<br>
 
 - 인터페이스에서 간단한 함수를 인자로 받으면 클로저 안에 상태를 감추는 기능 계층을 쉽게 추가할 수 있다.
 - **코드**
@@ -263,7 +245,6 @@ last_modified_at: 2022-10-08
     assert count == 2
     ```
 
-<br>
 
 - 파이썬에서는 클래스에 `__call__` 특별 메서드를 정의할 수 있다.
 - `__call__`을 사용하면 객체를 함수처럼 호출할 수 있다.
@@ -286,7 +267,6 @@ last_modified_at: 2022-10-08
     assert callable(counter)
     ```
 
-<br>
 
 - 다음 코드는 CountMissing 인스턴스를 defaultdict의 디폴트 값 훅으로 사용해서 존재하지 않는 키에 접근한 횟수를 추적한다.
 - **코드**
@@ -299,8 +279,6 @@ last_modified_at: 2022-10-08
     assert counter.added == 2
     ```
 
-<br>
-<br>
 
 ## Better way 39: 객체를 제너릭하게 구성하려면 @classmethod를 통한 다형성을 활용하라
 
@@ -323,7 +301,6 @@ last_modified_at: 2022-10-08
             raise NotImplementedError
     ```
 
-<br>
 
 - 이 InputData의 구체적인 하위 클래스를 만들면서 디스크에서 파일을 읽게 할 수 있다.
 - PathInputData와 같이 원하면 얼마든지 InputData의 하위 클래스를 만들 수 있다.
@@ -347,7 +324,6 @@ last_modified_at: 2022-10-08
                 yield cls(os.path.join(data_dir, name))
     ```
 
-<br>
 
 - 이 입력 데이터를 소비하는 공통 방법을 제공하는 맵리듀스 워커(worker)로 쓸 수 있는 추상 인터페이스를 정의한다.
   - create_workers가 `__init__` 메서드를 직접 호출하지 않고 cls()를 호출함으로써 다른 방법으로 GenericWorker 객체를 만들 수 있다.
@@ -373,7 +349,6 @@ last_modified_at: 2022-10-08
             return workers
     ```
 
-<br>
 
 - 다음 코드는 원하는 맵리듀스 기능을 구현하는 Worker의 구체적인 하위 클래스다.
 - **코드**
@@ -388,7 +363,6 @@ last_modified_at: 2022-10-08
             self.result += other.result
     ```
 
-<br>
 
 - 다음 코드는 디렉터리의 목록을 얻어서 그 안에 들어 있는 파일마다 PathInputData 인스턴스를 만든다.
   - 도우미 함수를 활용해 객체를 직접 만들고 연결한다.
@@ -402,7 +376,6 @@ last_modified_at: 2022-10-08
             yield PathInputData(os.path.join(data_dir, name))
     ```
 
-<br>
 
 - 다음으로 방금 generate_inputs를 통해 만든 InputData 인스턴스들을 사용하는 LineCountWorker 인스턴스를 만든다.
 - **코드**
@@ -415,7 +388,6 @@ last_modified_at: 2022-10-08
         return workers
     ```
 
-<br>
 
 - 이 Worker 인스턴스의 map 단계를 여러 스레드에 공급해서 실행할 수 있다.
 - 그 후 reduce를 반복적으로 호출해서 결과를 최종 값으로 합칠 수 있다.
@@ -435,7 +407,6 @@ last_modified_at: 2022-10-08
         return first.result
     ```
 
-<br>
 
 - mapreduce 함수가 create_workers를 호출하게 변경해서 mapreduce를 완전한 제너릭 함수로 만들 수 있다.
 - **코드**
@@ -446,7 +417,6 @@ last_modified_at: 2022-10-08
         return execute(workers)
     ```
 
-<br>
 
 - 몇 가지 입력 파일을 대상으로 이 함수를 실행해본다.
 - **코드**
@@ -466,8 +436,6 @@ last_modified_at: 2022-10-08
     print(f'총 {result} 줄이 있습니다.')
     ```
 
-<br>
-<br>
 
 ## Better way 40: super로 부모 클래스를 초기화하라
 
@@ -489,7 +457,6 @@ last_modified_at: 2022-10-08
             MyBaseClass.__init__(self, 5)
     ```
 
-<br>
 
 - 다중 상속을 사용하는 경우 생기는 문제 중 하나는 모든 하위 클래스에서 `__init__` 호출의 순서가 정해져 있지 않다는 것이다.
 - **super**를 사용하면 다이아몬드 계층의 공통 상위 클래스를 단 한번만 호출하도록 보장한다.
@@ -516,8 +483,6 @@ last_modified_at: 2022-10-08
     print('7 * (5 + 9) = 98 형태로 나와야 함', foo.value)
     ```
 
-<br>
-<br>
 
 ## Better way 41: 기능을 합성할 때는 믹스인 클래스를 사용하라
 
@@ -525,8 +490,6 @@ last_modified_at: 2022-10-08
   - **믹스인**은 자식 클래스가 사용할 메서드 몇 개만 정의하는 클래스다.
   - 믹스인 클래스에는 자체 애트리뷰트 정의가 없으므로 믹스인 클래스의 `__init__` 메서드를 호출할 필요도 없다.
 
-<br>
-<br>
 
 ## Better way 42: 비공개 이튜리뷰트보다는 공개 애트리뷰트를 사용하라
 
@@ -550,8 +513,6 @@ last_modified_at: 2022-10-08
 - 애트리뷰트 이름 앞에 밑줄을 두 개 (`__`) 붙이면 비공개 필드가 된다.
   - 비공개 필드를 포함하는 클래스 안에 있는 메서드에서는 해당 필드에 직접 접근할 수 있다.
 
-<br>
-<br>
 
 ## Better way 43: 커스텀 컨테이너 타입은 collections.abc를 상속하라
 
@@ -562,10 +523,6 @@ last_modified_at: 2022-10-08
 
 
 
-<br>
-<br>
-<br>
-<br>
 
 ## References
 

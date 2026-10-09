@@ -8,24 +8,16 @@ toc: true
 toc_sticky: true
 sidebar_main: false
 
-last_modified_at: 2022-03-31
+last_modified_at: 2026-10-09
 ---
 
 <img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/148633895-2be87d4e-7edb-4391-b583-eb2888b19bbb.png
 '>
-본 글은 빅데이터분석기사 실기 작업형에 대비하여 요약 및 실습한 것을 작성한 글입니다. <br>기출문제의 데이터는 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis){: target="_blank"}에 데이터 셋을 남겨놨습니다.<br> 또한 해당 전체 코드는 `/concept/R_basic_to_pro_1.R` 파일에 담겨져 있습니다. 
-{: .notice--info}
+본 글은 빅데이터분석기사 실기 작업형에 대비하여 요약 및 실습한 것을 작성한 글입니다. 기출문제의 데이터는 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis){: target="_blank"}에 데이터 셋을 남겨놨습니다. 또한 해당 전체 코드는 `/concept/R_basic_to_pro_1.R` 파일에 담겨져 있습니다. 
 
-2021.12.31 : 제 3회 빅데이터 분석기사 실기를 합격했습니다. <br> [빅데이터 분석기사(R)](https://ingu627.github.io/categories/R_ML) 시리즈를 보시고 도움이 되길 바랍니다.
-{: .notice--danger}
+> 2021.12.31 : 제 3회 빅데이터 분석기사 실기를 합격했습니다. [빅데이터 분석기사(R)](https://ingu627.github.io/categories/R_ML) 시리즈를 보시고 도움이 되길 바랍니다.
 
-혹시 해당 글을 pdf로 받고 싶으신 분은 이메일과 함께 댓글로 남겨주세요~
-{: .notice--success}
-
-<br>
-<br>
-<br>
-<br>
+> 혹시 해당 글을 pdf로 받고 싶으신 분은 이메일과 함께 댓글로 남겨주세요~
 
 ## 기본 단축키 
 
@@ -35,8 +27,6 @@ last_modified_at: 2022-03-31
 - `help(함수명, 데이터 세트)` : 함수명, 데이터 세트 등에 대한 설명을 해 주는 기능
 - `ctrl + shift + m` : `%>%` 생성 
 
-<br>
-<br>
 
 ## 산술 연산자(Arithmetic Operator)
 
@@ -51,8 +41,6 @@ last_modified_at: 2022-03-31
 |^ | 지수 계산 |
 |** | 지수 계산|
 
-<br>
-<br>
 
 ## 관계 연산자(Relation Operator)
 
@@ -67,8 +55,6 @@ last_modified_at: 2022-03-31
 |== |같냐 |
 |!= |같지 아니 하느냐 |
 
-<br>
-<br>
 
 ## 논리 연산자(Logic Operator)
 
@@ -77,8 +63,6 @@ last_modified_at: 2022-03-31
 |& |모두 참이어야 참.<br/> 아님 거짓 |
 |\| |하나만 참이여도 참.<br/> 모두 아닐 경우 거짓 |
 
-<br>
-<br>
 
 ## 대입 연산자(Assignment Operator)
 
@@ -88,8 +72,6 @@ last_modified_at: 2022-03-31
 |<-, <<- |왼쪽 변수에 오른쪽 값을 대입 |
 |->, ->>|오른쪽 변수에 왼쪽 값을 대입 |
 
-<br>
-<br>
 
 ## 변수 형태 이해하기
 
@@ -106,8 +88,6 @@ last_modified_at: 2022-03-31
 |Posixct | 시간 변수|
 |Tseries | 시계열 변수|
 
-<br>
-<br>
 
 ## 데이터의 값
 
@@ -116,8 +96,6 @@ last_modified_at: 2022-03-31
 - `NAN` : Not a Number의 약자. 수학적으로 계산할 수 없는 값
 - `INF` : INFinite의 약자. 무한대
 
-<br>
-<br>
 
 ### 변수 생성
 
@@ -129,8 +107,6 @@ print(a)
 # [1] 2
 ```
 
-<br>
-<br>
 
 ### == 또는 !=
 
@@ -145,8 +121,6 @@ a != 2
 # [1] FALSE
 ```
 
-<br>
-<br>
 
 ## 벡터(Vector)
 
@@ -160,8 +134,6 @@ x1
 # [1] 1 2 3 4
 ```
 
-<br>
-<br>
 
 ### seq()
 
@@ -178,8 +150,6 @@ x2
 # [1] 1 3 5 7 9
 ```
 
-<br>
-<br>
 
 ### rep()
 
@@ -198,8 +168,6 @@ y3
 # [1]   1   1 100 100
 ```
 
-<br>
-<br>
 
 ### 벡터의 인덱싱
 
@@ -210,8 +178,6 @@ y3
 |벡터명[조건문] | 지정한 조건문을 만족하는 요소 반환|
 |벡터명[a:b] | 벡터의 a번째 요소부터 b번째 요소까지 요소 반환|
 
-<br>
-<br>
 
 ### 벡터 함수 
 
@@ -236,8 +202,6 @@ y3
 |intersect(x,y)|교집합|
 |setdiff(x,y)|차집합(방향 고려 필요)|
 
-<br>
-<br>
 
 ## 리스트(List)
 
@@ -254,8 +218,6 @@ a$y
 # [1] 1 2
 ```
 
-<br>
-<br>
 
 ## 행렬 
 - **matrix()**: matrix(data = 데이터 , nrow = 행의 수, ncol = 열의 수, byrow = 행/열 기준, dimnames = 행과 열의 이름 리스트)
@@ -299,8 +261,6 @@ MATRIX_C
 |rownames(x) | x 행렬의 행 이름 출력 |
 |colnames(x) | x 행렬의 열 이름 출력 |
 
-<br>
-<br>
 
 ### data.frame()
 - dataframe의 생성
@@ -328,8 +288,6 @@ head(DATA_SET, 3)
 
 + head() : 데이터의 상단 부분을 지정해주는 행만큼 출력해주는 함수
 
-<br>
-<br>
 
 ### length()
 - 1차원 벡터일 경우
@@ -340,8 +298,6 @@ length(c(1:10))
 # [1] 10
 ```
 
-<br>
-<br>
 
 ### dim() 
 - 2차원 행렬, 데이터프레임인 경우
@@ -355,8 +311,6 @@ dim(DATA_SET)
 # [1] 10  4
 ```
 
-<br>
-<br>
 
 ## 배열 문법
 - 3차원 이상
@@ -365,8 +319,6 @@ dim(DATA_SET)
   - **dim** : 배열의 차원을 c()로 묶어서 지정
   - **dimnames** : 배열의 차원 이름 지정
 
-<br>
-<br>
 
 ## 괄호의 활용
 - `()` : 실행 함수와 같이 쓰임. ()안에는 분석하고자 하는 원소값들이 입력되어야 한다.
@@ -379,8 +331,6 @@ a
 # [1] 1 2 3 4 5
 ```
 
-<br>
-<br>
 
 ### 1차원 데이터의 경우
 
@@ -418,8 +368,6 @@ a[c(1,2,4,5)]
 # [1] 1 2 4 5
 ```
 
-<br>
-<br>
 
 ### 2차원 데이터의 경우
 
@@ -454,8 +402,6 @@ DATA_SET[c(1,2,3),-2]
 # 3  3  5 1
 ```
 
-<br>
-<br>
 
 ## 팩터(factor)
 
@@ -468,15 +414,11 @@ DATA_SET[c(1,2,3),-2]
     - TRUE : 순서형
     - FALSE : 명목형 (default)
 
-<br>
-<br>
 
 ## 데이터 결합 (rbind(), cbind(), merge())
 
 ![image](https://user-images.githubusercontent.com/78655692/140970588-0c2b2ef9-75e3-4b45-b8a4-744fa189a4b3.png)
 
-<br>
-<br>
 
 ## 시간(날짜)형태
 ### as.Date()
@@ -493,8 +435,6 @@ str(DATE_C)
 # Date[1:1], format: "2021-11-05"
 ```
 
-<br>
-<br>
 
 - `str()` : 저장된 데이터 타입 확인
 ### as.POSIXct()
@@ -509,8 +449,6 @@ DATE_P
 # [1] "2021-11-05 23:13:23 KST"
 ```
 
-<br>
-<br>
 
 ### format()
 - 날짜정보를 추출해 새로운 변수로 만듦
@@ -525,8 +463,6 @@ format(DATE_P, '%Y')
 # [1] "2021"
 ```
 
-<br>
-<br>
 
 ### as()
 - 변수 x를 ~로 취급하겠다.
@@ -548,8 +484,6 @@ summary(x1)
 
 - `summary()` : 요약통계 한번에 보는 함수
 
-<br>
-<br>
 
 ## 데이터 타입 확인
 - **is()** : 논리문으로써 변수 x가 ~인지 판단하여라
@@ -568,8 +502,6 @@ is.character(y)
 # [1] TRUE
 ```
 
-<br>
-<br>
 
 ### sample()
 
@@ -585,8 +517,6 @@ S1
 # [1] 39 11 35 20 37 27
 ```
 
-<br>
-<br>
 
 ### set.seed()
 
@@ -599,8 +529,6 @@ S2
 # [1]  8 31 15  9 42 45
 ```
 
-<br>
-<br>
 
 ## 조건문
 ### if ~ else
@@ -609,15 +537,11 @@ S2
 - if ~라면 이거 선택. 아니라면(=else) 이거 선택
 - `%in%` : ~에 속해 있는지 확인
 
-<br>
-<br>
 
 ### if ~ else if ~ else
 
 <script src="https://gist.github.com/ingu627/b7d5c72ccad88d81201edbe62cea76fe.js"></script>
 
-<br>
-<br>
 
 ### ifelse 문법
 
@@ -633,8 +557,6 @@ if(7 %in% A){
 # [1] "FALSE"
 ```
 
-<br>
-<br>
 
 ## switch 문 
 
@@ -649,8 +571,6 @@ switch(course,
 # [1] "dinner"
 ```
 
-<br>
-<br>
 
 ## 반복문 
 
@@ -668,8 +588,6 @@ for (i in 1:4){
 # [1] 4
 ```
 
-<br>
-<br>
 
 ### while 문 
 - 조건문 참일 때 블록 안의 명령어들을 수행
@@ -686,8 +604,6 @@ while (i<=4){
 # [1] 4
 ```
 
-<br>
-<br>
 
 ### repeat 문 
 
@@ -704,8 +620,6 @@ repeat {
 # [1] 2
 ```
 
-<br>
-<br>
 
 ### break 문 
 - 반복문을 중간에 탈추하기 위해 사용하는 명령어
@@ -722,8 +636,6 @@ for (i in 1:5){
 # [1] 3
 ```
 
-<br>
-<br>
 
 ### next 문 
 
@@ -743,8 +655,6 @@ for (i in 1:5){
 # [1] 5
 ```
 
-<br>
-<br>
 
 ## function() 
 
@@ -759,8 +669,6 @@ Plus_One(3)
 # [1] 4
 ```
 
-<br>
-<br>
 
 ### package(패키지) 설치하기
 - `install.packages("설치할 패키지명")`
@@ -784,8 +692,6 @@ install.packages('ggplot2')
 library(ggplot2)
 ```
 
-<br>
-<br>
 
 ## ggplot 패키지
 
@@ -802,8 +708,6 @@ library(ggplot2)
 - `geom_line` : 선을 그리는 함수
 - `geom_boxplot` : 박스 그래프를 그리는 함수
 
-<br>
-<br>
 
 ### geom_boxplot 예시
 
@@ -829,8 +733,6 @@ ggplot(data=airquality, # 그래프에 필요한 객체인 airquality 대입
 
 ![image](https://user-images.githubusercontent.com/78655692/141499918-c0a24422-60c9-4a8d-a77e-6ab1603bc5af.png)
 
-<br>
-<br>
 
 ## References
 

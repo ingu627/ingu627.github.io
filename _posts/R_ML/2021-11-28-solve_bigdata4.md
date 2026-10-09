@@ -9,21 +9,18 @@ toc: true
 sidebar_main: false
 classes: wide
 
-last_modified_at: 2022-03-31
+last_modified_at: 2026-10-09
 ---
 
-빅데이터 분석기사 실기 대비 차원에서 쓴 글입니다. <br> 기출문제의 데이터는 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis)에 데이터 셋을 남겨놨습니다.<br> 또한 해당 전체 코드는 `sujebi_3.R` 파일에 담겨져 있습니다.
-{: .notice--info}
+빅데이터 분석기사 실기 대비 차원에서 쓴 글입니다. 기출문제의 데이터는 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis)에 데이터 셋을 남겨놨습니다. 또한 해당 전체 코드는 `sujebi_3.R` 파일에 담겨져 있습니다.
 
-**1. help() 쓰기 <br> 2. library : caret, ModelMetrics, car, randomForest, e1071 <br> 3. 데이터 구조 파악 -> 결측값 처리 -> 전처리 -> 모델 평가 -> 모델 예측 -> 파일 저장**
-{: .notice--danger}
+1. help() 쓰기
+2. library : caret, ModelMetrics, car, randomForest, e1071
+3. 데이터 구조 파악 -> 결측값 처리 -> 전처리 -> 모델 평가 -> 모델 예측 -> 파일 저장
 
 혹시 해당 글을 pdf로 받고 싶으신 분은 이메일과 함께 댓글로 남겨주세요~
-{: .notice--success}
 
-<br>
-<br>
-<br>
+이 글은 빅데이터분석기사 실기 제2유형(작업형) 문제풀이 기록이다. 백화점 고객 데이터, Telco Customer Churn, mtcars 세 가지 예시 문제를 R 코드로 풀이한 과정을 정리한다.
 
 ## 1. 백화점 고객의 1년 데이터 (dataq.or.kr 예시 문제)
 
@@ -91,9 +88,6 @@ head(result)
 write.csv(result, '0000.csv', row.names=FALSE)
 ```
 
-<br>
-<br>
-
 ## 2. WA_Fn-UseC_-Telco-Customer-Churn
 
 - 주어진 데이터는 각 고객이 가입한 서비스와 계정 정보, 인구에 대한 통계 정보들이다. 주어진 훈련 데이터를 이용하여 모델을 훈련한 후 테스트 데이터로 고객의 이탈 여부를 예측하고 csv 포맷으로 제출하시오.(단, 이탈:"Yes", 유지:"No")
@@ -157,9 +151,6 @@ auc(y_test$Churn, pred1) # 0.6890504
 write.csv(pred, 'y_test.csv', row.names=FALSE)
 ```
 
-<br>
-<br>
-
 ## 3. mtcars
 
 - 다음은 mtcars 데이터 세트로 32개 자동차들의 디자인과 성능 비교한 데이터이다. 훈련 데이터와 평가 데이터를 7:3으로 분할한 후 연비(mpg)를 예측하는 최적 모델을 만들고 RMSE로 평가 결과를 구하시오.
@@ -198,9 +189,6 @@ library(ModelMetrics)
 rmse_lm = rmse(scaled_x_test$mpg, pred_lm)
 print(rmse_lm) # 0.189796
 ```
-
-<br>
-<br>
 
 ## References
 

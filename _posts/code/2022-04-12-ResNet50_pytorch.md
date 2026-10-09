@@ -8,27 +8,26 @@ toc: true
 toc_sticky: true
 sidebar_main: false
 
-last_modified_at: 2022-04-18
+last_modified_at: 2026-10-09
 ---
 
 <img align='right' width='250' src='https://user-images.githubusercontent.com/78655692/162919635-d03d7e8f-c492-493b-8c4d-d2f0f88ae67e.png'>
-본 글은 Pytorch 기반 ResNet 전이 학습을 이용해 구현해보는 내용입니다.<br>하나하나 분해해봅시다.  <br><br> 논문 : [Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385)<br>코드 : [Pre-trained networks, Transfer learning and Ensembles](https://colab.research.google.com/github/kjamithash/Pytorch_DeepLearning_Experiments/blob/master/FashionMNIST_ResNet_TransferLearning.ipynb) <br> 블로그 글 코드 : [ResNet_with_PyTorch.ipynb](https://github.com/data-science-DL/pytorch/blob/master/deeplearning_ajou/ResNet_with_PyTorch.ipynb)<br> 파이토치 튜토리얼 : [pytorch.org](https://pytorch.org/docs/stable/index.html)
-{: .notice--info}
+본 글은 Pytorch 기반 ResNet 전이 학습을 이용해 구현해보는 내용입니다. 하나하나 분해해봅시다.
+
+- 논문 : [Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385)
+- 코드 : [Pre-trained networks, Transfer learning and Ensembles](https://colab.research.google.com/github/kjamithash/Pytorch_DeepLearning_Experiments/blob/master/FashionMNIST_ResNet_TransferLearning.ipynb)
+- 블로그 글 코드 : [ResNet_with_PyTorch.ipynb](https://github.com/data-science-DL/pytorch/blob/master/deeplearning_ajou/ResNet_with_PyTorch.ipynb)
+- 파이토치 튜토리얼 : [pytorch.org](https://pytorch.org/docs/stable/index.html)
 
 
 
 
-<br>
-<br>
-<br>
-<br>
 
 ## ResNet
 
 - ResNet은 Resdiual Learning를 이용해 152 layer까지 가질 수 있게 되었다. 이 모델은 ILSVRC 2015년에 우승했다.
 - ResNet를 전이학습해 Fashion_MNIST를 학습해본다.
 
-<br>
 
 ### 라이브러리 불러오기
 
@@ -52,8 +51,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 ```
 
-<br>
-<br>
 
 ### 사전훈련된 네트워크 불러오기
 
@@ -86,8 +83,6 @@ class MnistResNet(nn.Module): # MnistResNet은 nn.Module 상속
 my_resnet = MnistResNet()
 ```
 
-<br>
-<br>
 
 ### 정의한 네트워크 테스트
 
@@ -103,8 +98,6 @@ print(my_resnet)
 
 ![image](https://user-images.githubusercontent.com/78655692/162910028-478bd3ea-9861-4d49-b529-8a3305205890.png)
 
-<br>
-<br>
 
 ### device 정의
 
@@ -115,8 +108,6 @@ else:
     device = torch.device("cpu")
 ```
 
-<br>
-<br>
 
 ### Dataloaders 함수 정의
 
@@ -151,8 +142,6 @@ def get_data_loaders(train_batch_size, val_batch_size):
     return train_loader, val_loader
 ```
 
-<br>
-<br>
 
 ### Metric 계산을 위한 함수 정의
 
@@ -173,8 +162,6 @@ def print_scores(p, r, f1, a, batch_size):
         print(f"\t{name.rjust(14, ' ')}: {sum(scores)/batch_size:.4f}")
 ```
 
-<br>
-<br>
 
 ### 정의된 내용을 바탕으로 실제 학습하기
 
@@ -267,8 +254,6 @@ print(f"Training time: {time.time()-start_ts}s")
 
 ```
 
-<br>
-<br>
 
 ### 모델 저장하기
 
@@ -288,7 +273,3 @@ model.load_state_dict(model_state_dict)
 
 
 
-<br>
-<br>
-<br>
-<br>

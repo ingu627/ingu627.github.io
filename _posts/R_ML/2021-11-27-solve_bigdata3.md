@@ -8,18 +8,14 @@ toc: true
 sidebar_main: false
 classes: wide
 
-last_modified_at: 2022-03-31
+last_modified_at: 2026-10-09
 ---
 
-빅데이터 분석기사 실기 대비 차원에서 쓴 글입니다. <br> 기출문제의 데이터는 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis)에 데이터 셋을 남겨놨습니다.<br> 또한 해당 전체 코드는 `sujebi_2.R` 파일에 담겨져 있습니다.
-{: .notice--info}
+빅데이터 분석기사 실기 대비 차원에서 쓴 글입니다. 기출문제의 데이터는 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis)에 데이터 셋을 남겨놨습니다. 또한 해당 전체 코드는 `sujebi_2.R` 파일에 담겨져 있습니다.
 
-2021.12.31 : 제 3회 빅데이터 분석기사 실기를 합격했습니다. <br> [빅데이터 분석기사(R)](https://ingu627.github.io/categories/R_ML) 시리즈를 보시고 도움이 되길 바랍니다.
-{: .notice--danger}
+> 2021.12.31 : 제 3회 빅데이터 분석기사 실기를 합격했습니다. [빅데이터 분석기사(R)](https://ingu627.github.io/categories/R_ML) 시리즈를 보시고 도움이 되길 바랍니다.
 
-혹시 해당 글을 pdf로 받고 싶으신 분은 이메일과 함께 댓글로 남겨주세요~
-{: .notice--success}
-
+> 혹시 해당 글을 pdf로 받고 싶으신 분은 이메일과 함께 댓글로 남겨주세요~
 
 ## 11. airquality
 
@@ -37,9 +33,6 @@ result=ds$Ozone
 print(result)
 ```
 
-<br>
-<br>
-
 ## 12. iris
 
 - Sepal.Length의 mean값과 Sepal.Width의 mean 값의 합계를 구하시오.
@@ -49,9 +42,6 @@ data(iris)
 result = mean(iris$Sepal.Length, na.rm = TRUE) + mean(iris$Sepal.Width, na.rm = TRUE)
 print(result) # 8.900667
 ```
-
-<br>
-<br>
 
 ## 13. mtcars
 
@@ -70,9 +60,6 @@ result = nrow(ds) / nrow(mtcars) * 100
 print(result) # 34.375
 ```
 
-<br>
-<br>
-
 ## 14. mtcars
 
 - 변속 기어(gear) 수가 4이고 수동(am==1) 변속기인 데이터에서 자동차 연비(mpg)의 mean 값과 전체 마력(hp)의 표준편차의 합계를 구하시오.
@@ -88,9 +75,6 @@ ds = mtcars %>%
 result = mean(ds$mpg) + sd(ds$hp)
 print(result) # 50.44959
 ```
-
-<br>
-<br>
 
 ## 15. Boston
 
@@ -110,9 +94,6 @@ result=mean(ds$medv)
 print(result) # 25.11084
 ```
 
-<br>
-<br>
-
 ## 16. iris
 
 - iris 데이터 세트에서 Species가 virginica인 항목에서 Sepal.Length가 6보다 크면 1, 아니면 0으로 파생 컬럼 Len을 생성 후 Len 컬럼의 sum 값을 구하시오
@@ -126,9 +107,6 @@ ds = iris %>% filter(Species == 'virginica') %>%
 result = sum(ds$Len)
 print(result) # 41
 ```
-
-<br>
-<br>
 
 ## 17. airquality
 
@@ -158,9 +136,6 @@ result = sum(ds$Ozone)
 print(result) # 5279.784
 ```
 
-<br>
-<br>
-
 ## 18. marvel
 
 > 데이터 참고 : [https://www.kaggle.com/fivethirtyeight/fivethirtyeight-comic-characters-dataset?select=marvel-wikia-data.csv](https://www.kaggle.com/fivethirtyeight/fivethirtyeight-comic-characters-dataset?select=marvel-wikia-data.csv)
@@ -187,9 +162,6 @@ ds2 = ds1 %>%
 result = mean(ds2$APPEARANCES, na.rm = TRUE)
 print(result) # 7.773512
 ```
-
-<br>
-<br>
 
 ## 19. ChickWeight
 
@@ -219,9 +191,6 @@ result = abs(after_mean - before_mean)
 print(result) # 9.120367
 ```
 
-<br>
-<br>
-
 ## 20. FIFA Ranking
 
 - 총점수(total_points)가 상위 3위인 국가(country_abrv)를 선택하고 이 국가들 총점수(total_points)항목의 평균을 구하시오.
@@ -249,9 +218,6 @@ f_mean = fifa %>%
     summarise(mean = mean(total_points, na.rm = TRUE))
 print(f_mean$mean) # 348.098
 ```
-
-<br>
-<br>
 
 ## 21. sales_train
 
@@ -286,10 +252,6 @@ top3_sd = top3_sd$sd
 
 print(abs(total_sd - top3_sd)) # 1101.796
 ```
-
-<br>
-<br>
-
 
 ## References
 

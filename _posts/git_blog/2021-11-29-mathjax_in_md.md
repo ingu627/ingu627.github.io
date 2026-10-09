@@ -7,7 +7,7 @@ tags: [git, blog, markdown, 마크다운, mathjax, 문법, 깃블로그, github 
 sidebar_main: false
 classes: wide
 
-last_modified_at: 2022-04-15
+last_modified_at: 2026-10-09
 ---
 
 <img src="https://user-images.githubusercontent.com/78655692/143910921-4b7d1a55-d2b0-49ee-b721-20ce1376df0b.png" width=650 alt="mathjax">
@@ -17,8 +17,6 @@ last_modified_at: 2022-04-15
 - MathML, LaTeX 및 ASCIIMathML 마크 업을 사용하여 웹 브라우저에 수학 표기법을 표시하는 크로스 브라우저 JavaScript 라이브러리이다.
 - 웹 사이트에서 수학식 표시가 가능하다.
 
-<br>
-<br>
 
 ## 웹에서 Mathjax 설치하기 
 
@@ -29,8 +27,6 @@ last_modified_at: 2022-04-15
 
 ![image](https://user-images.githubusercontent.com/78655692/143913025-dfb7c5f4-dce6-458f-a1ae-0d7a51b942d1.png)
 
-<br>
-<br>
 
 ## 쓰는 방법
 
@@ -43,35 +39,26 @@ last_modified_at: 2022-04-15
 
 $$x^2+3*x+5=0 는 이차함수이다.$$
 
-<br>
-<br>
 
 ### `\\(   \\)` 사용하기
 
 - `\\(` 와 `\\)` 로 수식을 감싸 줘도 똑같다.
 - \\(a+b=c\\) => `\\(a+b=c\\)`
 
-<br>
-<br>
 
 ## 그 외 수식은 pdf 파일에 있으니 참고하면 된다. ($\alpha$나 $\beta$ 같은 것들)
 
 - [TeXRefCard.v1.5.pdf](https://drive.google.com/file/d/1GWa-Syt3nvB_fGDiUHXpNWFSABmDscdx/view?usp=sharing)
 
-<br>
 
 - [위키백과:TeX 문법](https://ko.wikipedia.org/wiki/%EC%9C%84%ED%82%A4%EB%B0%B1%EA%B3%BC:TeX_%EB%AC%B8%EB%B2%95)
 
-<br>
 
 - [MathJax에서 유용한 TEX 명령어](https://www.onemathematicalcat.org/MathJaxDocumentation/MathJaxKorean/TeXSyntax_ko.html)
 
-<br>
 
 - [Symbols and Functions in KaTeX](https://utensil-site.github.io/available-in-katex/)
 
-<br>
-<br>
 
 ![mathjax1](https://user-images.githubusercontent.com/78655692/150060659-3d9b1865-ef1c-413e-a38a-50a9ae2a26d3.jpg)
 
@@ -87,8 +74,6 @@ $$x^2+3*x+5=0 는 이차함수이다.$$
 
 ![mathjax7](https://user-images.githubusercontent.com/78655692/150061365-399a608c-09f1-41b4-b2f2-1c9f88f2aca7.jpg)
 
-<br>
-<br>
 
 - *1.* 여러 개 쓸 때 : $x_{i,j}^{next}$
    - `$x_{i,j}^{next}$`
@@ -135,10 +120,6 @@ $$x^2+3*x+5=0 는 이차함수이다.$$
   - ${\color{Blue}x^2}+{\color{Red}2x}-{\color{Green}1}$ = `${\color{Blue}x^2}+{\color{Red}2x}-{\color{Green}1}$`
 
 
-<br>
-<br>
-<br>
-<br>
 
 ## References
 

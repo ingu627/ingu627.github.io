@@ -9,19 +9,18 @@ toc: true
 classes: wide
 sidebar_main: false
 
-last_modified_at: 2022-04-28
+last_modified_at: 2026-10-09
 ---
 
 <img align='right' width='250' src='https://user-images.githubusercontent.com/78655692/165755215-c33df78b-b30d-4f9b-926a-bef008ff5b93.png'>
-본 글은 Pytorch 기반 ResNeXt50 구조 처음부터 구현해보는 내용입니다.<br>하나하나 자세히 분해해봅시다.  <br><br>논문 : [Aggregated Residual Transformations for Deep Neural Networks](https://arxiv.org/abs/1611.05431) <br> 코드 : [pytorch-cifar100/models/resnext.py - weiaicunzai](https://github.com/weiaicunzai/pytorch-cifar100/blob/master/models/resnext.py) <br> 블로그 글 코드 : [poeun - resnext.ipynb](https://github.com/data-science-DL/pytorch/blob/master/code_implementation/resnext.ipynb) <br> 파이토치 torchvision/models/resnet.py : [resnet.py](https://github.com/pytorch/vision/blob/main/torchvision/models/resnet.py)
-{: .notice--info}
+본 글은 Pytorch 기반 ResNeXt50 구조 처음부터 구현해보는 내용입니다. 하나하나 자세히 분해해봅시다.
 
-[[논문 리뷰] Aggregated Residual Transformations for Deep Neural Networks](https://ingu627.github.io/paper/ResNext/) 글을 먼저 올렸다. 이를 바탕으로 구현해본다. <br>
-설명은 코드 부분에 자세히 적었다. <br> 수정 필요
-{: .notice--danger}
+- 논문 : [Aggregated Residual Transformations for Deep Neural Networks](https://arxiv.org/abs/1611.05431)
+- 코드 : [pytorch-cifar100/models/resnext.py - weiaicunzai](https://github.com/weiaicunzai/pytorch-cifar100/blob/master/models/resnext.py)
+- 블로그 글 코드 : [poeun - resnext.ipynb](https://github.com/data-science-DL/pytorch/blob/master/code_implementation/resnext.ipynb)
+- 파이토치 torchvision/models/resnet.py : [resnet.py](https://github.com/pytorch/vision/blob/main/torchvision/models/resnet.py)
 
-<br>
-<br>
+[[논문 리뷰] Aggregated Residual Transformations for Deep Neural Networks](https://ingu627.github.io/paper/ResNext/) 글을 먼저 올렸다. 이를 바탕으로 구현해본다. 설명은 코드 부분에 자세히 적었다. 수정 필요
 
 
 ## ResNextBottleNeck 클래스 정의하기
@@ -68,9 +67,6 @@ class ResNextBottleNeck(nn.Module):
     def forward(self, x):
         return F.relu(self.split_transform(x) + self.shortcut(x))
 ```
-
-<br>
-<br>
 
 ## ResNeXt 클래스 정의하기
 
@@ -123,9 +119,6 @@ class ResNext(nn.Module):
         return nn.Sequential(*layers)
 ```
 
-<br>
-<br>
-
 ## ResNeXt50, 101, 152 정의하기
 
 ```python
@@ -139,10 +132,3 @@ def resnext101():
 def resnext152():
     return ResNext(ResNextBottleNeck, [3, 4, 36, 3])
 ```
-
-
-
-<br>
-<br>
-<br>
-<br>

@@ -7,7 +7,7 @@ tags: [git, blog, jupyter_notebook, 주피터, 파일, gist, 블로그, 업로�
 toc : True
 sidebar_main: false
 
-last_modified_at: 2022-03-26
+last_modified_at: 2026-10-09
 ---
 
 ## 개요

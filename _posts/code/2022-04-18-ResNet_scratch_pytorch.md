@@ -9,19 +9,19 @@ toc: true
 classes: wide
 sidebar_main: false
 
-last_modified_at: 2022-04-18
+last_modified_at: 2026-10-09
 ---
 
 <img align='right' width='250' src='https://user-images.githubusercontent.com/78655692/162919635-d03d7e8f-c492-493b-8c4d-d2f0f88ae67e.png'>
-본 글은 Pytorch 기반 ResNet 모델 처음부터 구현해보는 내용입니다.<br>하나하나 자세히 분해해봅시다.  <br><br>논문 : [Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385) <br> 코드 : [Pytorch ResNet implementation from Scratch](https://www.youtube.com/watch?v=DkNIBBBvcPs) <br> 블로그 글 코드 : [poeun - resnet.ipynb](https://github.com/data-science-DL/pytorch/blob/master/code_implementation/resnet.ipynb) <br> 파이토치 torchvision/models/resnet.py : [resnet.py](https://github.com/pytorch/vision/blob/main/torchvision/models/resnet.py)
-{: .notice--info}
+본 글은 Pytorch 기반 ResNet 모델 처음부터 구현해보는 내용입니다. 하나하나 자세히 분해해봅시다.
 
-[[논문 리뷰] Deep Residual Learning for Image Recognition](https://ingu627.github.io/paper/ResNet/) 글을 먼저 올렸다. 이를 바탕으로 구현해본다. <br>
-설명은 코드 부분에 자세히 적었다.
-{: .notice--danger}
+- 논문 : [Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385)
+- 코드 : [Pytorch ResNet implementation from Scratch](https://www.youtube.com/watch?v=DkNIBBBvcPs)
+- 블로그 글 코드 : [poeun - resnet.ipynb](https://github.com/data-science-DL/pytorch/blob/master/code_implementation/resnet.ipynb)
+- 파이토치 torchvision/models/resnet.py : [resnet.py](https://github.com/pytorch/vision/blob/main/torchvision/models/resnet.py)
 
-<br>
-<br>
+[[논문 리뷰] Deep Residual Learning for Image Recognition](https://ingu627.github.io/paper/ResNet/) 글을 먼저 올렸다. 이를 바탕으로 구현해본다. 설명은 코드 부분에 자세히 적었다.
+
 
 
 ## A "bottleneck" Block 정의하기
@@ -32,7 +32,6 @@ last_modified_at: 2022-04-18
 
 <img src='https://user-images.githubusercontent.com/78655692/163796906-22b600a1-06dd-4575-aee1-56449681206a.jpg' width=650>
 
-<br>
 
 ```python
 import torch
@@ -83,15 +82,12 @@ class block(nn.Module):
          
 ```
 
-<br>
-<br>
 
 ## ResNet 클래스 정의하기
 
 - 다음은 ResNet 클래스를 정의하는 단계이다.
 - 크게 초기화 단계, forward 단계, block 단위 형성인 _make_layer단계로 구현한다.
 
-<br>
 
 ![IMG_0151-1](https://user-images.githubusercontent.com/78655692/163798851-390d9944-0884-4759-84c4-3fe5878288d9.jpg)
 
@@ -156,8 +152,6 @@ class ResNet(nn.Module): # resnet50 : [3, 4, 6, 3]
         
 ```
 
-<br>
-<br>
 
 ## ResNet50, 101, 152 정의하기
 
@@ -175,7 +169,3 @@ def ResNet152(img_channels=3, num_classes=1000):
 
 
 
-<br>
-<br>
-<br>
-<br>

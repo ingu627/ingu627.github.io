@@ -8,10 +8,12 @@ toc: True
 toc_sticky: True
 sidebar_main: false
 
-last_modified_at: 2022-03-20
+last_modified_at: 2026-10-09
 ---
 
-<br>
+> 이 글은 2021년 당시 작성된 VSCode 확장 프로그램 설치/사용 기록이다. 최신 버전에서는 명령이 다를 수 있다.
+
+VSCode는 확장 프로그램(extension)을 설치해 생산성을 높일 수 있다. 이 글은 Ponicode, Dracula Official, Code Runner, Live Server, Markdown All in One 등 저자가 추천하는 12개 확장 프로그램과 폰트 설정을 정리한다.
 
 ## 0. Font 설정
 
@@ -32,9 +34,6 @@ last_modified_at: 2022-03-20
 - `Ponicode`는 테스트 파일을 작성하여 단위 테스트의 반복적인 부분을 처리한다.
 - 또한 테스트 시나리오에 대한 관련 입력을 생성하고 제안해준다.
 
-<br>
-<br>
-<br>
 
 ## 2. Dracula Official
 
@@ -44,9 +43,6 @@ last_modified_at: 2022-03-20
 
 - 테마이다. 여러가지를 써봤지만 이 테마가 색깔도 아기자기하고 내게 가장 맞았다. 그리고 코드를 작성할 때 집중력을 높여준다.
 
-<br>
-<br>
-<br>
 
 ## 3. Debugger for Chrome
 
@@ -54,9 +50,6 @@ last_modified_at: 2022-03-20
 
 ![debugger](https://user-images.githubusercontent.com/78655692/143773391-2b0e4121-2916-4f20-8de2-24af6426d488.gif)
 
-<br>
-<br>
-<br>
 
 ## ~~4. Bracket Pair Colorizer 2~~
 
@@ -84,9 +77,6 @@ last_modified_at: 2022-03-20
 }
 ```
 
-<br>
-<br>
-<br>
 
 ## 4. Prettier
 
@@ -94,9 +84,6 @@ last_modified_at: 2022-03-20
 
 - 코드를 자체 규칙으로 이쁘게 만들어 준다. 
 
-<br>
-<br>
-<br>
 
 ## 5. Code Spell Checker
 
@@ -104,9 +91,6 @@ last_modified_at: 2022-03-20
 
 ![spell](https://user-images.githubusercontent.com/78655692/143773766-2bdfa30c-c7fe-47c0-a2f3-0c0c1b88e900.gif)
 
-<br>
-<br>
-<br>
 
 - camelCase 코드와 잘 작동하는 기본 맞춤법 검사기이다.
 - 이 맞춤법 검사기의 목표는 잘못된 긍정의 수를 낮게 유지하면서 일반적인 맞춤법 오류를 잡아내는 데 도움이 된다.
@@ -131,9 +115,6 @@ last_modified_at: 2022-03-20
 - 또는 에디터 타이틀 메뉴에서 Stop Code Run 버튼 클릭
 - 또는 출력 채널을 마우스 오른쪽 버튼으로 클릭한 다음 컨텍스트 메뉴에서 코드 실행 중지를 클릭한다.
 
-<br>
-<br>
-<br>
 
 ## 7. Color Picker
 
@@ -141,9 +122,6 @@ last_modified_at: 2022-03-20
 
 ![picker](https://user-images.githubusercontent.com/78655692/143774128-9fca5027-7b9f-4591-8625-83dadf5190d4.gif)
 
-<br>
-<br>
-<br>
 
 ## 8. Live Server
 
@@ -151,9 +129,6 @@ last_modified_at: 2022-03-20
 
 ![server](https://user-images.githubusercontent.com/78655692/143774272-9be36ed1-5e81-44d2-bcfd-86157fc9409f.gif)
 
-<br>
-<br>
-<br>
 
 ## 9. Live Share
 
@@ -161,9 +136,6 @@ last_modified_at: 2022-03-20
 
 - 코드를 공동으로 수정, 작업할 수 있다. 팀플이나 협업한다면 굉장히 좋은 도구 중 하나이다. (거의 필수가 아닐까 싶다.)
 
-<br>
-<br>
-<br>
 
 ## 10. Material Icon Theme
 
@@ -171,9 +143,6 @@ last_modified_at: 2022-03-20
 
 ![icon](https://user-images.githubusercontent.com/78655692/143774559-9dc16674-244e-4eb7-9514-0b3e272d52f9.gif)
 
-<br>
-<br>
-<br>
 
 ## 11. Markdown Preview Enhanced
 
@@ -183,9 +152,6 @@ last_modified_at: 2022-03-20
 
 - 마크다운을 vscode에서 실시간으로 보여준다. 블로그 작업할 때 매우 유용하다.
 
-<br>
-<br>
-<br>
 
 ## 12. Markdown All in One
 

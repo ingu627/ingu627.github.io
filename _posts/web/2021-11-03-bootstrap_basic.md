@@ -8,15 +8,13 @@ toc: true
 sidebar_main: false
 
 date: 2021-11-03
-last_modified_at: 2025-09-20
+last_modified_at: 2026-10-09
 ---
 
-본 글은 패스트캠퍼스의 "한 번에 끝내는 파이썬 웹 개발 초격차 패키지" 강의를 개인 실습하여 따라 한 것입니다. <br>
-기타 완성용 파일을 원하시는 분은 [https://github.com/ParkYoungWoong/bootstrap5-github-landing](https://github.com/ParkYoungWoong/bootstrap5-github-landing) 링크로 가주시면 됩니다. 
-{: .notice--info}
+본 글은 패스트캠퍼스의 "한 번에 끝내는 파이썬 웹 개발 초격차 패키지" 강의를 개인 실습하여 따라 한 것입니다. 기타 완성용 파일을 원하시는 분은 [https://github.com/ParkYoungWoong/bootstrap5-github-landing](https://github.com/ParkYoungWoong/bootstrap5-github-landing) 링크로 가주시면 됩니다.
 
-<br>
-<br>
+
+부트스트랩의 레이아웃과 폼, 컴포넌트, 유틸리티를 실습하고 github 예제에 적용해본다. 이 글은 부트스트랩 기초 문법과 예제 프로젝트 구현 과정을 정리한다.
 
 ## 부트스트랩
 
@@ -32,7 +30,6 @@ last_modified_at: 2025-09-20
 - `display:` : 요소가 화면에 보여지는 특성
 - `cursor: pointer;` : 눌러보는 커서로 바꿈
 
-<br>
 
 ## 프로젝트 생성
 
@@ -44,7 +41,6 @@ last_modified_at: 2025-09-20
 - 부트스트랩을 도입하면 이미 구현이 되어져 있는 UI를 프로젝트에 가져올 수 있다.
 - Layout - Containers
 
-<br>
 
 ## Layout - Columns
 
@@ -61,7 +57,6 @@ last_modified_at: 2025-09-20
 
 ![image](https://user-images.githubusercontent.com/78655692/140315174-94b0440e-4a84-4a33-af25-d32487a7b756.png)
 
-<br>
 
 ## Forms
 
@@ -74,13 +69,11 @@ last_modified_at: 2025-09-20
 - `value` : 미리 입력된 값
 - `disabled` : 비활성화 처리
 
-<br>
 
 ### sass (scss) : css 전처리기
 
 - css가 처리되기 전에 처리할 수 있는 또 다른 스타일 작업할 수 있는 도구
 
-<br>
 
 ## Components
 
@@ -88,14 +81,12 @@ last_modified_at: 2025-09-20
 - Offcanvas : 숨겨져 있는 네비게이션을 쓸 때 사용
 - toggle : 껐다 켰다를 반복함
 
-<br>
 
 ## Utilities
 
 - `d-none` == `display: none`
 - 어디까지나 유틸은 편리성을 위한 작성된 것.
 
-<br>
 
 ## github 예제로 실습 
 
@@ -113,7 +104,6 @@ last_modified_at: 2025-09-20
   - `sans-serif` : 고딕체
 - `font-weight` : 글꼴의 가중치(두께)
 
-<br>
 
 ## Header
 
@@ -126,7 +116,6 @@ last_modified_at: 2025-09-20
 - `me-2` : margin end(=right) (bootstrap)
 - `text-light`가 li 태그에 있는데 a태그에 이미 색깔이 부여되어 있으므로 적용 X -> 바로 a태그에 붙여준다.
 
-<br>
 
 ### CSS를 건드리지 않아도 부트스트랩으로 테마 적용할 수 있다.
 
@@ -134,27 +123,23 @@ last_modified_at: 2025-09-20
 
 - `flex-grow` : 증가 너비의 비율
 
-<br>
 
 ![image](https://user-images.githubusercontent.com/78655692/141642363-3ee2b630-bfb9-48a0-8a71-2ad62d70a036.png)
 
 
 - `d-flex` : 수평으로 맞춰줌
 
-<br>
 
 ![image](https://user-images.githubusercontent.com/78655692/141642471-54d02816-c196-4c30-a35f-f59e56c030ce.png)
 
 - `flex-shrink-0` : 감소 너비의 비율 (default = 1)
 
-<br>
 
 ![image](https://user-images.githubusercontent.com/78655692/141642573-8c42c4b9-48cc-461b-99e3-b371dda5da83.png)
 
 - `text-decoration-none` : 텍스트에 줄을 넣는 속성인데 제거하겠다. 
 - `me-2` : 오른쪽 여백 2 추가
 
-<br>
 
 ![image](https://user-images.githubusercontent.com/78655692/141642729-9d188e88-c939-4aba-ade5-1f7a2584870d.png)
 
@@ -162,7 +147,6 @@ last_modified_at: 2025-09-20
 
 - `rgba()` : red, green, blue, alpha
 
-<br>
 
 ## Hero Contents
 
@@ -173,7 +157,6 @@ last_modified_at: 2025-09-20
 - `form` : 양식
 - `input`은 크기가 옆으로 늘어난다. 그에 반해 `button`은 딱 글자 크기만큼만!
 
-<br>
 
 ![image](https://user-images.githubusercontent.com/78655692/141644525-b6633dfa-a516-4436-8e39-35d1e81f7993.png)
 
@@ -184,13 +167,11 @@ last_modified_at: 2025-09-20
 - `letter-spacing` : 글자와 글자 사이의 간격을 의미 (-는 서로 좁혀진다.)
 - `<p class="text-white-50">` : 50%의 색이 빠져있는 화이트 (html)
 
-<br>
 
 ![image](https://user-images.githubusercontent.com/78655692/141644575-06c27fbd-370b-4960-a170-bc67ca577689.png)
 
 - `<div class="col-7">` : 12개의 column 중에 7칸 차지 (row 안에서)
 
-<br>
 
 ![image](https://user-images.githubusercontent.com/78655692/141644630-b2afea26-7c62-4d57-a5a1-3f27200b9986.png)
 
@@ -198,7 +179,6 @@ last_modified_at: 2025-09-20
 
 - `<div class="d-grid">` : 최대한 늘어날 수 있게
 
-<br>
 
 ![image](https://user-images.githubusercontent.com/78655692/141644961-5504d875-147f-4a17-98d2-eaa5db95b63b.png)
 
@@ -209,7 +189,6 @@ last_modified_at: 2025-09-20
 - `transform: translate();` : 요소의 위치를 변환시켜주는 함수 (이동)
 - `overflow: hidden;` : 컨테이너 영역 안에 만큼만 보이게 (넘친 건 숨긴다.)
 
-<br>
 
 ![image](https://user-images.githubusercontent.com/78655692/141645168-e499f8a4-4047-419f-99cc-1ebcd9668d6e.png)
 
@@ -219,7 +198,6 @@ last_modified_at: 2025-09-20
 
 - `glow` : 번짐 효과
 
-<br>
 
 ![image](https://user-images.githubusercontent.com/78655692/141645489-d259d264-7424-4de2-a989-4dc9126a11a4.png)
 
@@ -239,7 +217,6 @@ last_modified_at: 2025-09-20
 - `border-radius:` : 모서리를 둥글게 깎아 준다. 
 - css에서 부모요소는 위쪽에 작성한다.
 
-<br>
 
 ![image](https://user-images.githubusercontent.com/78655692/141646962-333fa385-7b36-4812-929d-a6a58f5b9eef.png)
 
@@ -247,7 +224,6 @@ last_modified_at: 2025-09-20
 
 <script src="https://gist.github.com/ingu627/7ab7e83d662eb5b0cb7bf74faf4059ad.js"></script>
 
-<br>
 
 ## Features
 
@@ -259,7 +235,6 @@ last_modified_at: 2025-09-20
 
 - `<div class="col-3">` : col이 3칸을 차지 (기본적으로 row는 12칸 차지)
 
-<br>
 
 ![image](https://user-images.githubusercontent.com/78655692/141679708-b8c22501-6ffa-451d-9b5e-80bd2c7907e5.png)
 
@@ -276,7 +251,6 @@ last_modified_at: 2025-09-20
 
 <script src="https://gist.github.com/ingu627/cfebe72d19cce05e626d076adabf025c.js"></script>
 
-<br>
 
 ## Google Maps
 
@@ -292,7 +266,6 @@ last_modified_at: 2025-09-20
 - `const`로 변수를 만듦 (하나의 객체 데이터 할당)
 - `new` : 생성자 함수
 
-<br>
 
 ## Footer
 
@@ -309,7 +282,6 @@ last_modified_at: 2025-09-20
 - `transform: scale(-1,1);` : 이미지의 크기를 x, y축으로 지정. -1은 x축기준으로 반전 효과 
 - `opacity` : 투명도
 
-<br>
 
 ![image](https://user-images.githubusercontent.com/78655692/141681854-3f8e27b5-3d03-4c11-953a-cdba8caea1a3.png)
 
@@ -324,7 +296,6 @@ last_modified_at: 2025-09-20
 - `transition` : 몇 초에 걸쳐서 자연스럽게 변화할 것인가 (css) (전후 상태)
 - `d-flex` : 수평 정렬 (html)
 
-<br>
 
 ![image](https://user-images.githubusercontent.com/78655692/141682207-c0b0c62b-e458-4a45-92bf-df25350f9559.png)
 
@@ -343,7 +314,6 @@ last_modified_at: 2025-09-20
 - `href` : 클릭하면 링크따라 이동 
 - `margin: 0;` : 마진 초기화 
 
-<br>
 
 ## 반응형 - @media
 
@@ -363,7 +333,6 @@ last_modified_at: 2025-09-20
 - `min-width` : ~이상 일 때
 - `all` : 모든
 
-<br>
 
 ## 반응형 - Offcavnas
 
@@ -373,7 +342,6 @@ last_modified_at: 2025-09-20
 - `flex-grow: 1;` : 차지하는 영역이 최대한 늘어남
 - `ms-2` : 외부여백이 2만큼 증가 
 
-<br>
 
 ![image](https://user-images.githubusercontent.com/78655692/141683895-2059ffc3-6f50-4e6f-ac4a-14e4dcb49381.png)
 
@@ -381,15 +349,12 @@ last_modified_at: 2025-09-20
 - `col-lg-7` : 뷰포트가 Large Size 보다 크면 컬럼을 7개 사용한다.
   - `<div class="col-lg-7 col-12">` : 뷰포트가 large size보다 크지 않을 때 12개를 쓴다.
 
-<br>
 
 ## 최종 완성본
 
 - [https://github.com/ingu627/bootstrap5-github-landing](https://github.com/ingu627/bootstrap5-github-landing)
 
 
-<br>
-<br>
 
 ## Reference
 

@@ -8,31 +8,22 @@ toc: true
 toc_sticky: true
 sidebar_main: false
 
-last_modified_at: 2022-03-31
+last_modified_at: 2026-10-09
 ---
 
 <img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/148633895-2be87d4e-7edb-4391-b583-eb2888b19bbb.png
 '>
-본 글은 빅데이터분석기사 실기 작업형에 대비하여 요약 및 실습한 것을 작성한 글입니다. <br>기출문제의 데이터는 출처는 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis){: target="_blank"}에 데이터 셋을 남겨놨습니다.<br> 또한 해당 전체 코드는 `/concept/R_basic_to_pro_6.R` 파일에 담겨져 있습니다.
-{: .notice--info}
+본 글은 빅데이터분석기사 실기 작업형에 대비하여 요약 및 실습한 것을 작성한 글입니다. 기출문제의 데이터는 출처는 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis){: target="_blank"}에 데이터 셋을 남겨놨습니다. 또한 해당 전체 코드는 `/concept/R_basic_to_pro_6.R` 파일에 담겨져 있습니다.
 
-2021.12.31 : 제 3회 빅데이터 분석기사 실기를 합격했습니다. <br> [빅데이터 분석기사(R)](https://ingu627.github.io/categories/R_ML) 시리즈를 보시고 도움이 되길 바랍니다.
-{: .notice--danger}
+> 2021.12.31 : 제 3회 빅데이터 분석기사 실기를 합격했습니다. [빅데이터 분석기사(R)](https://ingu627.github.io/categories/R_ML) 시리즈를 보시고 도움이 되길 바랍니다.
 
-혹시 해당 글을 pdf로 받고 싶으신 분은 이메일과 함께 댓글로 남겨주세요~
-{: .notice--success}
+> 혹시 해당 글을 pdf로 받고 싶으신 분은 이메일과 함께 댓글로 남겨주세요~
 
-<br>
-<br>
-<br>
-<br>
 
 ## 앙상블
 
 - **앙상블**은 여러 가지 동일한 종류 또는 서로 상이한 모형들의 예측/분류 결과를 종합하여 최종적인 의사결정에 활용하는 기법이다. 
 
-<br>
-<br>
 
 ## 배깅(Bagging)
 
@@ -48,8 +39,6 @@ last_modified_at: 2022-03-31
 |mfinal|반복수 또는 트리의 수 (default = 100)|
 |control | 의사결정나무 옵션|
 
-<br>
-<br>
 
 ### 분석 함수 결과 
 
@@ -63,8 +52,6 @@ last_modified_at: 2022-03-31
 |samples|각 의사결정나무 부트스트랩 데이터의 레코드 번호|
 |importance|변수의 상대적인 중요도를 나타내며, 지니 지수의 이익(gain) 도는 불확실성의 감소량을 고려한 측도|
 
-<br>
-<br>
 
 ### 1. 데이터 탐색
 
@@ -93,8 +80,6 @@ summary(PimaIndiansDiabetes2)
 #  NA's   :374      NA's   :11
 ```
 
-<br>
-<br>
 
 ### 2. 데이터 전처리
 
@@ -118,8 +103,6 @@ summary(PimaIndiansDiabetes2)
 #  Max.   :846.00   Max.   :67.10   Max.   :2.4200   Max.   :81.00
 ```
 
-<br>
-<br>
 
 ### 3. 분석 모형 구축 
 
@@ -144,8 +127,6 @@ md.bagging = bagging(
 # Call: bagging.data.frame(formula = diabetes ~ ., data = train, nbagg = 25)
 ```
 
-<br>
-<br>
 
 ### 4. 분석 모형 평가 
 
@@ -186,8 +167,6 @@ confusionMatrix(
 #        'Positive' Class : pos
 ```
 
-<br>
-<br>
 
 ## 부스팅
 
@@ -195,8 +174,6 @@ confusionMatrix(
 
 - **부스팅**(Boosting)은 예측력이 약한 모형들을 결합하여 강한 예측 모형을 만드는 방법이다. 
 
-<br>
-<br>
 
 ## XGBoost
 
@@ -210,7 +187,7 @@ confusionMatrix(
 |params|파라미터 리스트|
 |data|xgb.DMatrix 객체|
 |nrounds|최대 부스팅 반복 횟수|
-|early_stopping_rounds|early stopping 횟수 지정<br>지정된 회수 이상 성능 향상이 없을 경우 중지|
+|early_stopping_rounds|early stopping 횟수 지정 지정된 회수 이상 성능 향상이 없을 경우 중지|
 |watchlist|모형의 성능을 평가하기 위하여 사용하는 xgb.DMatrix 이름|
 
 - xgb.train 함수는 독립변수가 **수치형 데이터**만 사용이 가능하며, 명목형인 경우에는 **One Hot Encoding**을 수행하여 수치형으로 변환한 후 사용한다.
@@ -219,8 +196,8 @@ confusionMatrix(
 |주요 파라미터 | 설명 |
 |---|---|
 |booster|부스터 방법 설정 (default:gbree)|
-|eta|학습률(learning rate) (default:0.3)<br>작을수록 과대 적합에 강건|
-|gamma|information Gain에 패널티를 부여하는 숫자<br>클수록 트리의 깊이가 줄어서 보수적인 알고리즘|
+|eta|학습률(learning rate) (default:0.3) 작을수록 과대 적합에 강건|
+|gamma|information Gain에 패널티를 부여하는 숫자 클수록 트리의 깊이가 줄어서 보수적인 알고리즘|
 |max_depth|한 트리의 최대 깊이 (default:6)|
 |subsample|훈련 데이터의 샘플 비율 (default:1)|
 |colsample_bytree|개별 트리 구성할 때 컬럼의 subsample 비율 (default:1:)|
@@ -234,8 +211,6 @@ confusionMatrix(
 |data|Martix 객체, dgCMatrix 객체 또는 파일명|
 |info|xgb.DMatrix에 저장될 추가적인 정보들의 리스트|
 
-<br>
-<br>
 
 ### 분석 모형 구축
 
@@ -307,8 +282,6 @@ md.xgb = xgb.train(
 # [11]    val1-auc:0.894318
 ```
 
-<br>
-<br>
 
 ### 분석 모형 평가
 
@@ -360,8 +333,6 @@ confusionMatrix(
 #        'Positive' Class : pos
 ```
 
-<br>
-<br>
 
 ## 랜덤 포레스트
 
@@ -378,8 +349,6 @@ confusionMatrix(
 |ntree|사용할 트리의 수|
 |mtry|각 분할에서 랜덤으로 뽑인 변수의 수|
 
-<br>
-<br>
 
 ### 1. 분석 모형 구축
 
@@ -407,8 +376,6 @@ print(md.rf)
 # pos  42  43   0.4941176
 ```
 
-<br>
-<br>
 
 ### 2. 중요도 확인
 
@@ -425,8 +392,6 @@ importance(md.rf)
 # age             15.948628
 ```
 
-<br>
-<br>
 
 ### 3. 혼동 행렬 및 예측 
 
@@ -467,8 +432,6 @@ confusionMatrix(
 #        'Positive' Class : pos
 ```
 
-<br>
-<br>
 
 ## 군집 분석
 
@@ -478,8 +441,6 @@ confusionMatrix(
   - `d(i,j)=(개체 i와 j에서 다른 값을 가지는 변수의 수)/ (총 변수의 수)`
 - **순서형 변수 거리**는 순위 상관 계수(Rank Correlation Coefficient)를 이용하여 거리를 측정한다.
 
-<br>
-<br>
 
 ### 군집 분석 함수
 
@@ -494,8 +455,6 @@ confusionMatrix(
 - 거리 측정 방법의 `method`에는 "euclidean", "maximum", "manhattan", "'canberra", binary", "minkowski"가 있다.
 - 계층적 군집 분석의 `method`는 hclust 함수를 적용하며 "single", "complete", "average", "median", "ward.D"을 사용한다.
 
-<br>
-<br>
 
 ### 1. 데이터 탐색
 
@@ -526,8 +485,6 @@ summary(USArrests)
 #  Max.   :17.400   Max.   :337.0   Max.   :91.00   Max.   :46.00
 ```
 
-<br>
-<br>
 
 ### 2. 유클리디안 거리 측정
 
@@ -546,8 +503,6 @@ US.dist_euclidean
 # ...
 ```
 
-<br>
-<br>
 
 ### 3. 분석 모형 구축 - 계층적 군집 분석
 
@@ -558,8 +513,6 @@ plot(US.single)
 
 ![image](https://user-images.githubusercontent.com/78655692/142362743-03621758-0305-4846-9c6a-f3fd459848d0.png)
 
-<br>
-<br>
 
 ## 4. 군집 분석을 통한 그룹 확인 
 
@@ -597,16 +550,12 @@ group
 #              3              3              4              4              3
 ```
 
-<br>
-<br>
 
 ## 비계층적 군집 분석 - k평균 군집 분석 
 
 - **k-평균**(k-means)는 k개만큼 원하는 군집 수를 초깃값으로 지정하고, 각 개체를 가까운 초깃값에 할당하여 군집을 형성하고 각 군집의 평균을 재계산하여 초깃값을 갱신한다. 갱신 과정을 반복하여 k개의 최종군집을 형성한다.
 - `kmeans(data, centers)` 
 
-<br>
-<br>
 
 ### 1. 분석 모형 구축
 
@@ -635,8 +584,6 @@ fit.km$centers
 # 3 -0.4059428
 ```
 
-<br>
-<br>
 
 ### 2. 분석 모형 활용
 
@@ -649,8 +596,6 @@ points(
 
 ![image](https://user-images.githubusercontent.com/78655692/142364885-d55766e8-4c7c-454c-ac8d-b7b5c71635e2.png)
 
-<br>
-<br>
 
 ## 연관성 분석 
 
@@ -668,8 +613,6 @@ points(
 |appearance|특정 연관규칙 결과를 찾을 수 있음|
 |control|결과 보여주기 등의 알고리즘의 성능을 조정할 수 있음|
 
-<br>
-<br>
 
 ### 1. 데이터 세트 준비
 
@@ -709,8 +652,6 @@ summary(Groceries)
 # 3  liver loaf sausage meat and sausage
 ```
 
-<br>
-<br>
 
 ### 2. apriori 함수를 통한 연관 규칙 생성 
 
@@ -744,8 +685,6 @@ apr = apriori(
 # > 
 ```
 
-<br>
-<br>
 
 ### 3. inspect 함수를 통해 연관 규칙 확인 
 
@@ -776,8 +715,6 @@ inspect(sort(apr, by='lift')[1:10])
 # [10] 0.3581731  0.04229792 2.567516 149
 ```
 
-<br>
-<br>
 
 ## References
 

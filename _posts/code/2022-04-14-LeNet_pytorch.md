@@ -8,15 +8,16 @@ toc: true
 toc_sticky: true
 sidebar_main: false
 
-last_modified_at: 2022-04-18
+last_modified_at: 2026-10-09
 ---
 
 <img align='right' width='400' src='https://user-images.githubusercontent.com/78655692/163406315-98f4f545-6775-432e-90f1-6c15222f4e79.png'>
-본 글은 Pytorch 기반 LeNet 직접 구현하여 CIFAR10 학습해보는 내용입니다.<br>하나하나 자세히 분해해봅시다.  <br><br>코드 : [udemy - PyTorch for Deep Learning and Computer Vision](https://www.udemy.com/course/pytorch-for-deep-learning-and-computer-vision/) <br> 블로그 글 코드 : [CIFAR 10_agumentation.ipynb](https://github.com/data-science-DL/pytorch/blob/master/Pytorch%20for%20deeplearning%20and%20computer%20vision/section5/CIFAR%2010_agumentation.ipynb)<br> 파이토치 튜토리얼 : [pytorch.org](https://pytorch.org/docs/stable/index.html)
-{: .notice--info}
+본 글은 Pytorch 기반 LeNet 직접 구현하여 CIFAR10 학습해보는 내용입니다. 하나하나 자세히 분해해봅시다.
 
-<br>
-<br>
+- 코드 : [udemy - PyTorch for Deep Learning and Computer Vision](https://www.udemy.com/course/pytorch-for-deep-learning-and-computer-vision/)
+- 블로그 글 코드 : [CIFAR 10_agumentation.ipynb](https://github.com/data-science-DL/pytorch/blob/master/Pytorch%20for%20deeplearning%20and%20computer%20vision/section5/CIFAR%2010_agumentation.ipynb)
+- 파이토치 튜토리얼 : [pytorch.org](https://pytorch.org/docs/stable/index.html)
+
 
 ## Introduction
 
@@ -24,21 +25,17 @@ last_modified_at: 2022-04-18
 
 - **LeNet-5**은 input, 3개의 convolution layer, 2개의 subsampling layer, 1개의 fully-connected layer, output 으로 되어있다.
 
-<br>
 
 ![image](https://user-images.githubusercontent.com/78655692/163408187-36ca6276-2ae9-4a9a-8b3b-d8b99e3ae626.png) <br>이미지출처[^2]
 
 - **CIFAR10 Dataset**은 10개 클래스 범주의 60000x32x32 컬러 이미지로 구성되며, 클래스당 6000개의 이미지로 구성되어 있다.
   - 50000개의 training image와 10000개의 test image가 있다.
 
-<br>
-<br>
 
 ## LeNet using CIFAR10 in Pytorch
 
 - 이제 파이토치로 코드를 구현해본다.
 
-<br>
 
 ### 라이브러리 불러오기
 
@@ -51,7 +48,6 @@ from torch import nn
 from torchvision import datasets, transforms
 ```
 
-<br>
 
 ### GPU 설정하기
 
@@ -60,7 +56,6 @@ device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 print(device)
 ```
 
-<br>
 
 ### 데이터 증식하기
 
@@ -90,8 +85,6 @@ transform = transforms.Compose([transforms.Resize((32,32)),
                                 transforms.Normalize((0.5,),(0.5,))])
 ```
 
-<br>
-<br>
 
 ### CIFAR10 데이터 불러오기
 
@@ -122,8 +115,6 @@ validation_loader = torch.utils.data.DataLoader(
   shuffle=False)
 ```
 
-<br>
-<br>
 
 ### 이미지 변환 및 클래스 지정하기
 
@@ -134,11 +125,9 @@ validation_loader = torch.utils.data.DataLoader(
   - 이때 저장공간을 공유하기 때문에 하나를 변경하면 다른 하나도 변경된다. [^4]
 - **cpu().detach().numpy() 순서로!** 
 
-<br>
 
 - `numpy.clip(min, max)` : array 내의 요소들에 대해서 min 값보다 작은 값들을 min 값으로 바꿔주고, max값보다 큰 값들을 max 값으로 바꿔주는 함수 [^5]
 
-<br>
 
 - `iter()` : iter() 함수로 만든 iterator 객체는 한 번에 하나씩 그 객츼의 요소를 순서대로 액세스 할 수 있는 객체로 만들어줌 [^6]
 - `next()` : iterator 객체는 그 순서대로 next() 함수를 통해 가져올 수 있다.
@@ -171,8 +160,6 @@ for idx in np.arange(20):
 ![image](https://user-images.githubusercontent.com/78655692/163418585-c81b38b5-3110-4870-9da2-7a9e92afbac3.png)
 
 
-<br>
-<br>
 
 ### LeNet 구조 정의
 
@@ -211,8 +198,6 @@ model
 
 ![image](https://user-images.githubusercontent.com/78655692/163420040-41138789-5766-4682-b1b0-c02d29247b87.png)
 
-<br>
-<br>
 
 ### 손실 및 옵티마이저 정의
 
@@ -224,8 +209,6 @@ criterion = nn.CrossEntropyLoss() # 입력과 타겟 사이의 손실 계산을 
 optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
 ```
 
-<br>
-<br>
 
 ### 학습하기
 
@@ -234,7 +217,6 @@ optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
   - 모든 변수는 그레이디언트가 누적된 `.grad` 함수를 갖게 된다.
 - `opt.step()` : 파라미터의 그레이디언트를 기반으로 한 단계를 수행
 
-<br>
 
 - `torch.max(input)` : 입력 텐서에 있는 모든 요소의 최대값 반환
 - `loss.item()` 손실이 갖고 있는 스칼라 값을 가져온다.
@@ -294,8 +276,6 @@ for e in range(epochs):
         
 ```
 
-<br>
-<br>
 
 ### 결과 출력
 
@@ -317,10 +297,6 @@ plt.legend()
 
 
 
-<br>
-<br>
-<br>
-<br>
 
 ## References
 

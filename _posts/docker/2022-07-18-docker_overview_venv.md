@@ -8,13 +8,10 @@ toc: true
 toc_sticky: true
 sidebar_main: false
 
-last_modified_at: 2022-07-20
+last_modified_at: 2026-10-09
 ---
 
 <img src='https://user-images.githubusercontent.com/78655692/179643735-e64c6545-9239-4d81-9e63-d7d8f834d456.png' width=650>
-
-<br>
-<br>
 
 ## Docker
 
@@ -27,9 +24,6 @@ last_modified_at: 2022-07-20
 - **컨테이너(container)**는 이미지의 실행가능한 인스턴스이다. 
   - 컨테이는 호스트 시스템의 다른 모든 프로세스와 격리된 시스템의 샌드박스 프로세스이다.
 - **도커 허브(docker hub)**는 컨테이너 이미지를 저장하고, 검색하고, 추출하기 위한 리포지토리를 제공한다.
-
-<br>
-<br>
 
 ## 기본 도커 명령어
 
@@ -45,8 +39,6 @@ last_modified_at: 2022-07-20
     $ docker build . -t [account]/[repository]:[tag] 
     ```
 
-<br>
-
 ### pull
 
 - `pull` 명령어는 docker hub로부터 우분투 도커 이미지를 가져온다.
@@ -54,8 +46,6 @@ last_modified_at: 2022-07-20
     ```shell
     $ docker pull ubuntu:20.04
     ```
-
-<br>
 
 ### push
 
@@ -66,8 +56,6 @@ last_modified_at: 2022-07-20
     $ docker push account/repository:tag
     ```
 
-<br>
-
 ### commit
 
 - `commit` 명령어는 종료된 도커 컨테이너 상태 그대로 이미지를 생성해준다. [^3]
@@ -76,9 +64,6 @@ last_modified_at: 2022-07-20
   $ docker commit [container ID] [Image name]
   ```
 
-<br>
-<br>
-
 ## 도커허브로 이미지 배포하기
 
 - 도커허브로 이미지 배포하기까지의 단계는 다음과 같다.
@@ -86,8 +71,6 @@ last_modified_at: 2022-07-20
   1. Dockerfile을 작성한다.
   2. 이를 바탕으로 이미지를 생성한다.
   3. 이미지를 도커 허브로 푸시한다.
-
-<br>
 
 - **Dockerfile**은 간단하게 다음과 같이 작성해보았다.
   - `FROM` : 어느 이미지에서부터 시작할 것인지를 정의한다.
@@ -103,14 +86,10 @@ RUN apt-get install git -y
 RUN rm -rf /var/lib/apt/lists/*
 ```
 
-<br>
-
 <img src='https://user-images.githubusercontent.com/78655692/179677177-fcc4776c-8322-4cab-a46f-a0c6eeda3a6e.png' width=600>
 
 - [docker hub](https://hub.docker.com/)에 들어가 `Create Repository`를 클릭한다.
 - 1번은 계정(account)이고, 2번은 저장소 이름(repository)이다. 작성한 후 `Create`를 누르면 해당 저장소가 생성된다.
-
-<br>
 
 - 해당 저장소로 dockerfile 내용을 토대로 이미지를 빌드한다.
   - tag를 지정안하면 default 값으로 latest로 된다.
@@ -118,8 +97,6 @@ RUN rm -rf /var/lib/apt/lists/*
     ```shell
     $ docker build . -t ingu627/venv:0.1
     ```
-
-<br>
 
 - docker hub에 이미지를 업로드하기 전에 도커에 로그인부터 해야 한다.
 - 해당 명령어로 로그인을 한다.
@@ -129,8 +106,6 @@ RUN rm -rf /var/lib/apt/lists/*
     ```
 
 
-<br>
-
 - `docker images` 명령어를 실행해 이미지가 잘 만들어졌는지 확인한다.
 - 그 후, 다음 명령어를 통해 해당 저장소로 푸시한다.
 
@@ -138,15 +113,11 @@ RUN rm -rf /var/lib/apt/lists/*
     $ docker push ingu627/venv:0.1
     ```
 
-<br>
-
 - docker hub로 잘 업로드되었다면, 해당 이미지를 로컬로 불러올 수 있다. 이때 pull 명령어를 쓴다.
 
     ```shell
     $ docker pull ingu627/venv:0.1
     ```
-
-<br>
 
 - 그 다음, 해당 이미지를 run 명령어로 실행하여 컨테이너를 생성한다.
   - `-d` : 백그라운드 모드로 실행
@@ -165,18 +136,11 @@ RUN rm -rf /var/lib/apt/lists/*
     $ docker ps
     ```
 
-<br>
-
 - 처음에 `#`만 나온다면, `/bin/bash`를 통해 해당 터미널을 들어간다.
 
     ![image](https://user-images.githubusercontent.com/78655692/179680446-acc3cd20-7569-4acf-8a74-edc537ce5348.png)
 
-<br>
-
 - 그 안에서 기존 파이썬 가상환경 만들때처럼 똑같이 하면 된다.
-
-<br>
-<br>
 
 ## 결론
 
@@ -188,9 +152,6 @@ RUN rm -rf /var/lib/apt/lists/*
     ```
 
 - 해당 이미지 정보 : anaconda, cuda 11.3, cudnn 8.2.1, git, pytorch, ubuntu 20.04 등 설치
-
-<br>
-<br>
 
 ## 추가 : docker와 vs code 연동
 
@@ -219,8 +180,6 @@ RUN rm -rf /var/lib/apt/lists/*
   $ sudo apt-get install -y nvidia-docker2 
   ```
 
-<br>
-
 <img src='https://user-images.githubusercontent.com/78655692/179695593-67e68132-1430-497e-a36c-3e2551004db8.png' width=600>
 
 - 도커 이미지 안에 `tf2.8` 이름의 가상환경이 내장돼 있다.
@@ -230,11 +189,6 @@ RUN rm -rf /var/lib/apt/lists/*
 - 즉, 도커 이미지를 바로 pull해서 사용하면 된다.
 
 
-
-<br>
-<br>
-<br>
-<br>
 
 ## References
 

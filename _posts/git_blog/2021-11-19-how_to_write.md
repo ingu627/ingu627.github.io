@@ -9,7 +9,7 @@ toc: true
 toc_sticky: true
 toc_label: 짧지만 써보는 목차
 
-last_modified_at: 2022-01-21
+last_modified_at: 2026-10-09
 
 sidebar_main: false
 
@@ -26,8 +26,6 @@ header:
 
 <script src="https://gist.github.com/ingu627/93a69be54393c57f58eedc9b33024876.js"></script>
 
-<br>
-<br>
 
 ## Front-matter
 
@@ -37,8 +35,6 @@ header:
 - **YAML**(YAML Front Matter)은 오픈 소스 프로젝트에서 많이 사용하는 구조화된 데이터 형식이다.
 - YFM은 이 YAML을 사용해서 글의 제목, 날짜, 카테고리, 태그, 레이아웃 등을 정의할 수 있다.
 
-<br>
-<br>
 
 ### 환경설정 및 기본 값
 
@@ -58,9 +54,7 @@ header:
 |classes: wide| 페이지를 넓게 쓰고자 할때|
 
 **sidebar_main: false**는 기본문법에서 수정된 버전입니다.
-{: .notice--danger}
 
-<br>
 
 ```markdown
 ---
@@ -83,8 +77,6 @@ sidebar_main: false
 ---
 ```
 
-<br>
-<br>
 
 ### header
 
@@ -97,7 +89,6 @@ sidebar_main: false
 |caption|그림에 대한 설명을 넣음
 |actions|실행부분 삽입
 
-<br>
 
 - 위 글에 설정한 예시이다.
 
@@ -116,10 +107,6 @@ header:
 
 
 
-<br>
-<br>
-<br>
-<br>
 
 ## References
 

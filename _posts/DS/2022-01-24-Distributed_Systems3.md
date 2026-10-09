@@ -9,21 +9,19 @@ toc: true
 toc_sticky: true
 sidebar_main: false
 
-last_modified_at: 2023-04-25
+last_modified_at: 2026-10-09
 ---
 
 <img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/147719090-5f0942f1-1647-44ad-8d72-f11e3fe400d7.png
 '>
-본 글은 Distributed Systems 책의 내용을 개인 공부 목적을 위한 요약 및 정리한 내용입니다. <br> 오타나 오류는 알려주시길 바라며, 도움이 되길 바랍니다. <br><br> **2022.02.02 Update** <br> **2023.04.25 Update**
-{: .notice--info}
+본 글은 Distributed Systems 책의 내용을 개인 공부 목적을 위한 요약 및 정리한 내용입니다. 오타나 오류는 알려주시길 바라며, 도움이 되길 바랍니다. **2022.02.02 Update** **2023.04.25 Update**
 
-**글을 읽으면서 스스로에게 물어보기 <br><br> 1. 왜 만들어 졌을까?(background, def) <br> 2. 왜 필요할까? (why?) <br> 3. 장점과 단점은 무엇인가? (adv, disadv)**
-{: .notice--danger}
+**글을 읽으면서 스스로에게 물어보기**
 
-<br>
-<br>
-<br>
-<br>
+1. 왜 만들어 졌을까?(background, def)
+2. 왜 필요할까? (why?)
+3. 장점과 단점은 무엇인가? (adv, disadv)
+
 
 ## Chapter 3. PROCESSES
 
@@ -35,8 +33,6 @@ last_modified_at: 2023-04-25
 - 특히 광역 분산 시스템에서 중요한 문제는 다른 시스템 간에 프로세스를 이동하는 것이다.
 - 프로세스 이동 또는 코드 이동은 확장성을 달성하는 데 도와줄 뿐 아니라, 동적으로 클라이언트와 서버를 구성할 수 있게 해준다.
 
-<br>
-<br>
 
 ## 3.1 Threads
 
@@ -46,8 +42,6 @@ last_modified_at: 2023-04-25
   - **스레드 (thread)** : 스레드는 프로세스와는 달리, 부모 프로세스 전체의 복사본을 만들지 않고, 필요한 코드 덩어리 만을 생성하여 동시에 수행 [^1]
     - 스레드는 하나의 프로세서 내에서 동시에 진행되는 작업들을 말한다. (but, 작업 공간 X) [^5]
 
-<br>
-<br>
 
 ### Introduction to threads
 
@@ -73,8 +67,6 @@ last_modified_at: 2023-04-25
   1. 멀티스레드 애플리케이션의 성능은 단일 스레드 애플리케이션보다 나빠지는 걸 거의 볼 수 없다. (실제로, 멀티스레딩이 더 좋은 성능을 보인다.)
   2. 스레드는 프로세스 방식대로 자동으로 서로를 보호하지 않기 때문에, 다중 프로세스 애플리케이션의 개발은 더 지적인 노력이 필요하다.
 
-<br>
-<br>
 
 ### Thread usage in nondistributed systems
 
@@ -87,14 +79,11 @@ last_modified_at: 2023-04-25
 
 ![image](https://user-images.githubusercontent.com/78655692/150777100-1e51ec70-97d1-4cf5-bc68-6446a407956f.png)
 
-<br>
 
 - 왜냐하면 IPC는 커널 중재를 필요로 하기 때문이다, 프로세스는 일반적으로 첫번째로 유저 모드에서 커널 모드로 바뀌어 질 것이다.
 - 이것은 MMU의 메모리 맵을 바꿔야함을 요구한다. (TLB도 마찬가지)
 - 부품 간 통신은 전적으로 공유 데이터를 사용함으로써 처리된다.
 
-<br>
-<br>
 
 ### Thread implementation
 
@@ -116,23 +105,18 @@ last_modified_at: 2023-04-25
 - 지불할 가격은 모든 스레드 동작은 시스템 호출을 필요로 하는 커널에 의해 수행되어야 한다.  
 - 스레드 컨텍스트 전환은 프로세스 컨텍스트 전환만큼 비싸졌다.
 
-<br>
 
 - 스레드를 사용하는 것이 애플리케이션내에서 **동시** 실행을 구현하는 방식이라는 건 중요하다.  
 - 실제로, 애플리케이션은 동시 프로세스의 집합으로 구성되어, 공동으로 프로세스 간 시설을 사용한다. 
   - 이런 접근의 좋은 예시는 들어오는 요청을 처리하기 위한 약간의 프로세스로 시작하는 아파치 웹 서버의 구조이다.
   - 각 프로세스는 서버의 단일 스레드 인스턴스를 형성하지만, 다른 인스턴스와 통신할 수 있다. 
 
-<br>
-<br>
 
 ### Threads in distributed systems
 
 - 스레드의 중요한 특성으로, 스레드는 블록 시스템 호출을 허용하는 데 스레드가 실행되고 있는 전체 프로세스를 차단하지 않고 편리한 수단을 제공한다.  
 - 이런 특성은 스레드가 분산시스템에서 동시에 다수의 논리적 연결을 유지하는 형태로 쉽게 통신을 전달할 때 사용하기 좋다.  
 
-<br>
-<br>
 
 ### Multithreaded clients
 
@@ -140,8 +124,6 @@ last_modified_at: 2023-04-25
 - 브라우저를 멀티스레드 클라이언트로 개발하면 문제가 상당히 단순해진다.
 - 다른 중요한 이득으로 몇몇 연결들이 동시에 개방하는 멀티스레드 웹 브라우저를 사용에 있다.
 
-<br>
-<br>
 
 ### Multithreaded servers
 
@@ -151,7 +133,6 @@ last_modified_at: 2023-04-25
 
 <img src='https://user-images.githubusercontent.com/78655692/151277316-e29cf852-df78-4783-831a-722e45ad6599.png' width=400> [^6]
 
-<br>
 
 - 요청을 검수하면, 서버는 worker thread를 고르고, 이것에게 요청을 처리한다.
 - 워커는 로컬 파일 시스템에 있는 블록 읽기를 수행함으로써 진행되고, 이는 스레드가 데이터가 디스크로부터 불러와야 중단된다.
@@ -159,7 +140,6 @@ last_modified_at: 2023-04-25
 
 ![image](https://user-images.githubusercontent.com/78655692/151277468-3e64f629-3f5b-4067-b660-bea52f7e73c1.png)
 
-<br>
 
 - 파일 서버를 단일 스레드로 동작한다고 본다면?
   - 파일 서버의 메인 루프는 요청을 받고, 검수하고, 수행되어 완성되고 다른 것을 받는다.
@@ -173,13 +153,10 @@ last_modified_at: 2023-04-25
 - **parallelism** $\approx$ **performance**
 - **blocking system** $\approx$ **programming** 
 
-<br>
 
 - 다중 프로세스를 쓸 때는 공유 데이터에 사고를 예방 가능하다.
   - 프로세스가 통신이 많아지면, 스레드에 비해 성능 하락한다.
 
-<br>
-<br>
 
 ## 3.2 Virtualization
 
@@ -187,8 +164,6 @@ last_modified_at: 2023-04-25
 - 스레드와 프로세스 사이를 빠르게 전환함으로써, 병렬의 환상이 생성된다.
 - 단일 CPU와 더 많이 있어 보이는 "척" 하는 분리는 다른 리소스들로 확장되었다. (이것을 **resource virtualization**라 한다.)
 
-<br>
-<br>
 
 ### Principle of virtualization
 
@@ -197,8 +172,6 @@ last_modified_at: 2023-04-25
 
 ![image](https://user-images.githubusercontent.com/78655692/151499349-f69ad3e8-6534-4402-9f0d-2217f2ca226f.png)
 
-<br>
-<br>
 
 ### Virtualization nad distributed systems
 
@@ -210,10 +183,6 @@ last_modified_at: 2023-04-25
 
 
 
-<br>
-<br>
-<br>
-<br>
 
 ## References
 

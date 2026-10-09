@@ -8,17 +8,11 @@ toc: true
 toc_sticky: true
 sidebar_main: false
 
-last_modified_at: 2022-06-02
+last_modified_at: 2026-10-09
 ---
 
 <img align='right' width='150' height='150' src='https://user-images.githubusercontent.com/78655692/170685528-4060a9d3-172e-45d8-897b-3a8eb539970c.png'>
-요즘 파이썬을 사용하면서 자연스레 좀 더 효율적으로 코드를 짜고 싶은 마음이 커졌습니다. 그래서 이 책을 공부하기 시작했습니다. <br> 이 글은 개인 공부를 목적으로 작성되었습니다. <br> 혹시 오타나 글의 수정사항이 있어 알려주시면 감사하겠습니다.
-{: .notice--info}
-
-<br>
-<br>
-<br>
-<br>
+요즘 파이썬을 사용하면서 자연스레 좀 더 효율적으로 코드를 짜고 싶은 마음이 커졌습니다. 그래서 이 책을 공부하기 시작했습니다. 이 글은 개인 공부를 목적으로 작성되었습니다. 혹시 오타나 글의 수정사항이 있어 알려주시면 감사하겠습니다.
 
 ## Better way 11: 시퀀스를 슬라이싱하는 방법을 익혀라
 
@@ -57,9 +51,6 @@ last_modified_at: 2022-06-02
   # ['a', 'b', 'g', 'z', 'd', 'e', 'f']
   ```
 
-<br>
-<br>
-
 ## Better way 12: 스트라이드와 슬라이스를 한 식에 함께 사용하지 말라
 
 - `리스트[시작:끝:증가값]`으로 일정한 간격을 두고 슬라이싱할 수 있다.
@@ -88,9 +79,6 @@ last_modified_at: 2022-06-02
     # ['a', 'c']
     ```
 
-<br>
-<br>
-
 ## Better way 13: 슬라이싱보다는 나머지를 모두 잡아내는 언패킹을 사용하라 
 
 - 파이썬은 **별표 식(starred epression)**을 사용해 모든 값을 담는 언패킹을 할 수 있게 지원한다.
@@ -111,9 +99,6 @@ last_modified_at: 2022-06-02
 - 하지만 별표 식이 포함된 언패킹 대입을 처리하려면 필수인 부분이 적어도 하나는 있어야 한다.
 - 또한, 한 수준의 언패킹 패턴에 별표 식을 두 개 이상 쓸 수 없다.
 - 하지만, 여러 계층으로 이뤄진 구조를 언패킹할 때는 서로 다른 부분에 포함되는 한, 별표 식을 여러개 사용해도 된다.
-
-<br>
-<br>
 
 ## Better way 14: 복잡한 기준을 사용해 정렬할 때는 key 파라미터를 사용하라
 
@@ -139,9 +124,6 @@ last_modified_at: 2022-06-02
     # [[50, 'apple'], [30, 'banana'], [400, 'melon']]
     ```
 
-<br>
-<br>
-
 ## Better way 15: 딕셔너리 삽입 순서에 의존할 때는 조심하라
 
 - 파이썬 3.6부터는 딕셔너리가 삽입 순서를 보존하도록 동작이 개선됐다.
@@ -159,8 +141,6 @@ last_modified_at: 2022-06-02
   print(baby_names) # {'cat': 'kitten'}
   ```
 
-<br>
-
 - 키워드 인자의 순서는 함수를 호출할 때 사용한 인자 순서와 일치한다.
 
   ```python
@@ -172,9 +152,6 @@ last_modified_at: 2022-06-02
   # goose = gosling
   # kangaroo = joey
   ```
-
-<br>
-<br>
 
 ## Better way 16: in을 사용하고 딕셔너리 키가 없을 때 KeyError를 처리하기보다는 get을 사용하라
 
@@ -200,8 +177,6 @@ last_modified_at: 2022-06-02
   # {'품퍼니켈': 2, '사워도우': 1, '밀': 1}
   ```
 
-<br>
-
 - 다음은 존재하지 않는 키에 접근할 때 발생시키는 KeyError 예외를 활용하는 방법이다.
 
   ```python
@@ -223,8 +198,6 @@ last_modified_at: 2022-06-02
   # {'품퍼니켈': 2, '사워도우': 1, '밀': 1}
   ```
 
-<br>
-
 - 다음은 dict 내장 타입의 get 메서드를 활용한 방법이다. (추천)
 
   ```python
@@ -241,9 +214,6 @@ last_modified_at: 2022-06-02
   counters
   # {'품퍼니켈': 2, '사워도우': 1, '밀': 1}
   ```
-
-<br>
-<br>
 
 ## Better way 17: 내부 상태에서 원소가 없는 경우를 처리할 때는 setdefault보다 defaultdict를 사용하라
 
@@ -263,8 +233,6 @@ last_modified_at: 2022-06-02
   # {'미국': {'로스엔젤로스', '뉴욕'}, '일본': {'하코네'}, '프랑스': {'칸'}}
   ```
 
-<br>
-
 - collections 내장 모듈에 있는 **defaultdict 클래스**는 키가 없을 때 자동으로 디폴트 값을 저장해준다.
 
   ```python
@@ -283,9 +251,6 @@ last_modified_at: 2022-06-02
   print(visits.data)
   # defaultdict(<class 'set'>, {'영국': {'런던', '바스'}})
   ```
-
-<br>
-<br>
 
 ## Better way 18: __missing__을 사용해 키에 따라 다른 디폴트 값을 생성하는 방법을 알아두라
 
@@ -308,8 +273,6 @@ last_modified_at: 2022-06-02
   handle.seek(0)
   image_data = handle.read()
   ```
-
-<br>
 
 - dict 타입의 하위 클래스를 만들고 __missing__ 특별 메서드를 구현하면 키가 없는 경우를 처리하는 로직을 커스텀화할 수 있다. 
 
@@ -335,12 +298,6 @@ last_modified_at: 2022-06-02
 
 
 
-
-  
-<br>
-<br>
-<br>
-<br>
 
 ## references
 

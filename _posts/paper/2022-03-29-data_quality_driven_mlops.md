@@ -8,17 +8,13 @@ toc: true
 toc_sticky: true
 sidebar_main: false
 
-last_modified_at: 2022-04-13
+last_modified_at: 2026-10-09
 ---
 
 ![image](https://user-images.githubusercontent.com/78655692/163179208-1e53a732-6f83-4bbb-ac80-a46d3561c930.png)
 
-"A Data Quality-Driven View of MLOps" 논문을 개인 공부 및 리뷰를 위해 쓴 글입니다. <br>
-논문 링크 : <https://arxiv.org/abs/2102.07750>
-{: .notice--info}
+"A Data Quality-Driven View of MLOps" 논문을 개인 공부 및 리뷰를 위해 쓴 글입니다. 논문 링크 : <https://arxiv.org/abs/2102.07750>
 
-<br>
-<br>
 
 ## 1. Introduction
 
@@ -29,7 +25,6 @@ last_modified_at: 2022-04-13
 - ML 모델을 향상 시키는 주요 방법으로 data cleaning, integration, label acquisition 같이 데이터셋의 품질을 높이는 것이다.
 - 따라서, MLOps를 이해하고, 측정하고, 향상시키기 위해, **data quality**는 MLOps에서 매우 중요한 역할을 한다.
 
-<br>
 
 - 기타 Data Quality 관련해서 지금까지 많은 연구자들이 연구해 온 것들
   - data acquistion with weak supervision (Snorkel)
@@ -39,7 +34,6 @@ last_modified_at: 2022-04-13
   - interaction (Northstar)
   - fine-grained monitoring and improvement (Overton)
 
-<br>
 
 ### Data Quality에 대한 4가지 측면
 
@@ -50,25 +44,20 @@ last_modified_at: 2022-04-13
 |일관성(consistency)|데이터 집합에서 정의된 의미 규칙 위반의 정도|
 |적시성(timeliness)|작업을 위한 데이터가 최신인 정도|
 
-<br>
 
 <img src='https://user-images.githubusercontent.com/78655692/161371544-3f459267-cc30-40c6-9845-083b7bfbfb9a.png' width=700>
 
 
-<br>
 
 ### 전체 개요
 
 ![image](https://user-images.githubusercontent.com/78655692/160606677-c3663f3f-8317-45f0-9d2d-56a5cc0ae774.png)
 
-<br>
-<br>
 
 ## 2. Machine Learning Preliminaries
 
 - 이 논문에서는 머신 러닝에 관한 선수 지식을 소개한다. 기본 사항은 여기서는 생략하겠다.
 
-<br>
 
 ### Concept Shift
 
@@ -78,11 +67,9 @@ last_modified_at: 2022-04-13
 - 반면 $p(Y\mid X)$가 온전히 유지한다면, 이를 **virtual drift**라고 한다.
   - $X$ feature에 걸쳐 posterior probability distribution이 근사한다고 가정할때, **virtual drift**는 ML 모델을 훈련할 때 어떠한 영향이 없다.
 
-<br>
 
 ![image](https://user-images.githubusercontent.com/78655692/161371447-7a288d5a-4527-4b50-a759-d03ae087d281.png)
 
-<br>
 
 ### 추가 : 어떻게 방지해야 하나? [^1]
 
@@ -95,15 +82,12 @@ last_modified_at: 2022-04-13
 5. **Feature dropping** : 한 번에 하나의 기능을 사용하여 여러 모델을 제작하고 AUC-ROC 응답이 기대에 미치지 못할 경우 해당 기능을 폐기한다.
 
 
-<br>
-<br>
 
 ## 3. MLOps Task 1: Effective ML Quality Optimization
 
 - MLOps의 핵심 작업 중 하나로 모델의 품질을 개선하는 방법을 찾는 것이다. 새로운 아키텍처나 모델을 찾는 것 외에도, 학습 데이터의 양질을 높이는 것도 중요하다.
   - data cleaning, noisy나 dirty한 샘플을 고치거나 제거하는 것이 이에 해당.
 
-<br>
 
 ### MLOps Challenge 
 
@@ -111,7 +95,6 @@ last_modified_at: 2022-04-13
   - 이는 MLOps에서 sub-optimal 개선 사항일 수 있다.
 - 이러한 작업은 인간에 의한 semi-automatically하게 수행되기 때문에, 자동화 도구의 지침에 따라, MLOps 관점에서 성공적인 cleaning 전략은 인간의 노력을 최소화하는 것이다.
 
-<br>
 
 ### A Data Quality View
 
@@ -119,15 +102,12 @@ last_modified_at: 2022-04-13
   - ActiveClean이 이 문제를 연구했다.
   - sequential information maximization에 기반한 principled cleaning algorithm과 함께 이러한 noise propagation process를 모델링하고 분석하는 CPClean이 도입했다.
 
-<br>
-<br>
 
 ## 4. MLOps Task 2: Preventing Unrealistic Expectations
 
 - DevOps에서, 새로운 프로젝트는 일반적으로 성공 가능성을 평가하고 이해하기 위한 타당성 조사를 통해 시작된다. 목적은 비현실적인 기대를 가진 사용자들이 실패할 수 밖에 없는 솔루션을 개발하는 데 많은 비용과 시간을 들이는 것을 막는 데에 있다.
   - 하지만 MLOps에서는 이런 실현 가능성 조사는 거의 없다.
 
-<br>
 
 ### MLOps Challenge
 
@@ -138,7 +118,6 @@ last_modified_at: 2022-04-13
   1. BER estimator에 대한 수십 년간의 이론적 연구를 활용하는 방법
   2. 어떤 타협과 최적화를 수행해야 하는지를 이해
 
-<br>
 
 ### Non-Zero Bayes Error and Data Quality Issues
 
@@ -150,7 +129,6 @@ last_modified_at: 2022-04-13
 
 ![image](https://user-images.githubusercontent.com/78655692/160673572-e2711f74-e41b-47b9-99d5-f100fe8e4fc3.png)
 
-<br>
 
 ### A Data Quality View
 
@@ -158,8 +136,6 @@ last_modified_at: 2022-04-13
   1. **연산 요구 사항** : 정확성 측면에서 합리적인 추정치를 제공하기 위해 대량의 데이터가 필요하며, 이로 인해 높은 계산 비용 발생
   2. **하이퍼 파라미터의 선택** : 타당성 연구를 하기 전에 데이터의 정보가 알려져 있지 않기 때문에 실제 추정치는 하이퍼 파라미터에 민감하지 않아야 한다.
 
-<br>
-<br>
 
 
 ## 5. MLOps Task 3: Rigorous Model Testing Against Overfitting
@@ -169,14 +145,12 @@ last_modified_at: 2022-04-13
   - 따라서, 시스템의 견고성이 확보되어 갱신중에서도 예기치 않은 코드의 실패를 방지.
 - 하지만 MLOps의 경우, 동일한 테스트 케이스를 반복적으로 재사용하는 기존의 방법은 심각한 과적합(overfitting) 위험을 초래하여 테스트 결과를 손상시킬 수 있다.
 
-<br>
 
 ### MLOps Challenge
 
 - 새로운 ML 모델의 최종 테스트 단계는 1) 테스트 세트당 한번 만 실행되거나, 2) 개발자에 의해 완전히 obfuscated 한다.
   - 하지만, 현실에서 비현실적인 경우가 많다.
 
-<br>
 
 ### A Data Quality View
 
@@ -187,15 +161,12 @@ last_modified_at: 2022-04-13
    - 개발자에 대한 피드백과 함께 동일한 테스트 세트를 여러 번 재사용하게 한다.
    - 한정된 데이터 집합의 일반화 특성에 대해 최소한의 신뢰도를 요구하면 실제로 재사용할 수 있는 횟수가 제한
 
-<br>
 
 ### Limitations
 
 - 첫번째로, 개발자가 숨겨진 테스트 세트에 과적합하는 것을 목표로 할 때의 한계
 - 두번째로, concept shift를 처리할 능력이 부족하다는 한계
 
-<br>
-<br>
 
 ## 6. MLOps Task 4: Efficient Continuous Quality Testing
 
@@ -203,14 +174,12 @@ last_modified_at: 2022-04-13
 - 많은 MLOps 실무자들이 직면한 과제 중 하나는 모델이 실제 가동 중일 때 데이터 배포의 변화에 대처해야 한다는 것이다.
   - 새로운 실가동 데이터가 알 수 없는 분포에서 오는 경우, 학습된 모델 성능이 더 이상 향상되지 않을 수 있다.
 
-<br>
 
 ### MLOps Challenge
 
 - 라벨이 부착되지 않은 production 데이터 스트림이 주어질 경우 가장 성능이 좋은 모델을 선택하는 것이 과제이다.
 - MLOps 관점에서, 이러한 구별을 하기 위해 필요한 라벨의 양을 최소한으로 억제하는 것이 목표이다.
 
-<br>
 
 ### A Data Quality View
 
@@ -220,10 +189,6 @@ last_modified_at: 2022-04-13
 - 따라서, 필요한 최소한의 라벨링 노력으로 현재 가장 적합한 모델을 선택
 - 그리고, 불완전한 테스트 데이터에 의존하는 문제를 해결해야 한다.
 
-<br>
-<br>
-<br>
-<br>
 
 ## References
 

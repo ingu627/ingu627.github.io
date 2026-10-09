@@ -8,18 +8,26 @@ toc: true
 toc_sticky: true
 sidebar_main: false
 
-last_modified_at: 2022-11-29
+last_modified_at: 2026-10-09
 ---
 
 <img align='right' width='150' height='200' src='https://user-images.githubusercontent.com/78655692/186088421-fe905f9e-d40f-43b2-ac6e-094e9c342473.png'>
-[Spark The Definitive Guide - BIG DATA PROCESSING MADE SIMPLE] 책을 중심으로 스파크를 개인 공부를 위해 요약 및 정리해보았습니다. <br> 다소 복잡한 설치 과정은 도커에 미리 이미지를 업로해 놓았습니다. 즉, 도커 이미지를 pull하면 바로 스파크를 사용할 수 있습니다. <br><br> 도커 설치 및 활용하는 방법 : [[Spark] 빅데이터와 아파치 스파크란 - 1.2 스파크 실행하기](https://ingu627.github.io/spark/spark_db1/#12-%EC%8A%A4%ED%8C%8C%ED%81%AC-%EC%8B%A4%ED%96%89%ED%95%98%EA%B8%B0) <br> 도커 이미지 링크 : [https://hub.docker.com/r/ingu627/hadoop](https://hub.docker.com/r/ingu627/hadoop) <br> 예제를 위한 데이터 링크 : [FVBros/Spark-The-Definitive-Guide](https://github.com/ingu627/BigData/tree/master/spark/data) <br> 예제에 대한 실행 언어는 파이썬 기반인 pyspark를 이용했습니다.
-{: .notice--info}
-**기본 실행 방법** <br> 1. 예제에 사용 될 데이터들은 도커 이미지 생성 후 `spark-3.3.0` 안의 하위 폴더 `data`를 생성 후, 이 폴더에 추가합니다. <br> 1.1 데이터와 도커 설치 및 활용하는 방법은 위에 링크를 남겼습니다. <br> 2. 터미널에서 `pyspark`을 입력해 프로그램을 시작합니다. <br> 글에서 사용되는 파일 경로는 다를 수 있습니다.
-{: .notice--danger}
+[Spark The Definitive Guide - BIG DATA PROCESSING MADE SIMPLE] 책을 중심으로 스파크를 개인 공부를 위해 요약 및 정리해보았습니다. 다소 복잡한 설치 과정은 도커에 미리 이미지를 업로해 놓았습니다. 즉, 도커 이미지를 pull하면 바로 스파크를 사용할 수 있습니다.
 
-<br>
-<br>
-<br>
+- 도커 설치 및 활용하는 방법 : [[Spark] 빅데이터와 아파치 스파크란 - 1.2 스파크 실행하기](https://ingu627.github.io/spark/spark_db1/#12-%EC%8A%A4%ED%8C%8C%ED%81%AC-%EC%8B%A4%ED%96%89%ED%95%98%EA%B8%B0)
+- 도커 이미지 링크 : [https://hub.docker.com/r/ingu627/hadoop](https://hub.docker.com/r/ingu627/hadoop)
+- 예제를 위한 데이터 링크 : [FVBros/Spark-The-Definitive-Guide](https://github.com/ingu627/BigData/tree/master/spark/data)
+
+예제에 대한 실행 언어는 파이썬 기반인 pyspark를 이용했습니다.
+
+> **기본 실행 방법**
+> 1. 예제에 사용 될 데이터들은 도커 이미지 생성 후 `spark-3.3.0` 안의 하위 폴더 `data`를 생성 후, 이 폴더에 추가합니다.
+> 1.1 데이터와 도커 설치 및 활용하는 방법은 위에 링크를 남겼습니다.
+> 2. 터미널에서 `pyspark`을 입력해 프로그램을 시작합니다.
+> 글에서 사용되는 파일 경로는 다를 수 있습니다.
+
+이 글은 아파치 카프카를 이용한 정형 스트리밍 예제를 다룬다. 정형 스트리밍의 소스와 싱크, 카프카에서 메시지를 읽고 쓰는 방법, 테스트용 소스와 싱크, 그리고 출력 모드와 트리거를 정리한다.
+
 
 ## 1. 입력과 출력
 
@@ -28,7 +36,6 @@ last_modified_at: 2022-11-29
 - 이번 글에서는 소스, 싱크 그리고 출력 모드가 정형 스트리밍에서 어떻게 동작하는지, 언제, 어디서, 어떻게 데이터가 유입되고 외부로 나가는지 살펴본다.
 - 정형 스트리밍에서는 아파치 카프카, 파일 그리고 테스트 및 디버깅용 소스와 싱크를 지원한다.
 
-<br>
 
 ### 1.1 데이터를 읽고 쓰는 장소(소스와 싱크)
 
@@ -37,7 +44,6 @@ last_modified_at: 2022-11-29
 - 가장 간단한 소스는 실제에서 파일 소스로, 파케이, 텍스트, JSON, CSV 파일 등을 자주 사용한다.
 - 스트리밍에서 파일 소스/싱크와 정적 파일 소스를 사용할 때 유일한 차이점은 트리거(Trigger) 시 읽을 파일 수를 결정할 수 있다는 것이다.
 
-<br>
 
 ### 카프카 소스와 싱크
 
@@ -55,8 +61,6 @@ last_modified_at: 2022-11-29
 - 데이터를 쓰는 동작을 **발행(publish)**이라 하며, 읽는 동작을 **구독(subscribe)**이라 한다.
 - 스파크는 카프카에 저장된 스트림을 배치와 스트리밍 방식으로 읽어 DataFrame을 생성할 수 있다.
 
-<br>
-<br>
 
 ## 2. 카프카 소스에서 메시지 읽기
 
@@ -71,7 +75,6 @@ last_modified_at: 2022-11-29
   - **failOnDataLoss** : 데이터 유실이 일어났을 때 쿼리를 중단할 것인지 지정한다. (default : True)
   - **maxOffsetPerTrigger** : 특정 트리거 시점에 읽을 오프셋의 전체 개수이다.
 
-<br>
 
 - 카프카에서 메시지를 읽으려면 정형 스트리밍에서 다음 코드를 사용한다.
 
@@ -95,7 +98,6 @@ last_modified_at: 2022-11-29
         .load()
     ```
 
-<br>
 
 - 카프카 소스의 각 로우는 다음과 같은 스키마를 가진다.
   - 키 : binary
@@ -105,8 +107,6 @@ last_modified_at: 2022-11-29
   - 오프셋 : long
   - 타임스탬프 : long 
 
-<br>
-<br>
 
 ## 3. 카프카 싱크에 메시지 쓰기
 
@@ -128,8 +128,6 @@ last_modified_at: 2022-11-29
         .start()
     ```
 
-<br>
-<br>
 
 ## 4. 테스트용 소스와 싱크 
 
@@ -154,7 +152,6 @@ last_modified_at: 2022-11-29
     nc -lk 9999
     ```
 
-<br>
 
 ### 4.2 콘솔 싱크
 
@@ -167,7 +164,6 @@ last_modified_at: 2022-11-29
         .start()
     ```
 
-<br>
 
 ### 4.3 메모리 싱크
 
@@ -180,8 +176,6 @@ last_modified_at: 2022-11-29
         .queryName("my_device_table")
     ```
 
-<br>
-<br>
 
 ## 5. 데이터 출력 방법 (출력 모드)
 
@@ -195,8 +189,6 @@ last_modified_at: 2022-11-29
 - **update 모드**
   - 이전 출력 결과에서 변경된 로우만 싱크로 출력한다. 나머지는 complete 모드와 유사하다.
 
-<br>
-<br>
 
 ## 6. 데이터 출력 시점 (트리거)
 
@@ -220,11 +212,6 @@ last_modified_at: 2022-11-29
 
 
 
-
-<br>
-<br>
-<br>
-<br>
 
 ## References 
 

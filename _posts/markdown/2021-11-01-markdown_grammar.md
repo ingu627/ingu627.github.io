@@ -8,14 +8,12 @@ toc: true
 toc_sticky: true
 sidebar_main: false
 
-last_modified_at: 2022-08-30
+last_modified_at: 2026-10-09
 ---
 
-저도 다 외우지 못합니다. <br>적용할 때마다 그때그때 보기 위해서 모두 정리해보았습니다. <br>보고 적용합시다! 🔥🔥
-{: .notice--info}
+저도 다 외우지 못합니다. 적용할 때마다 그때그때 보기 위해서 모두 정리해보았습니다. 보고 적용합시다! 🔥🔥
 
-<br>
-<br>
+이 글은 마크다운(markdown) 문법과 사용법을 정리한다. 목차, 글꼴, 색상, 표, 코드 블럭, 각주, 이미지, 링크, 수식 등 자주 쓰는 문법을 예제와 함께 다룬다.
 
 ## MarkDown (md) 
 
@@ -27,15 +25,9 @@ last_modified_at: 2022-08-30
 - 다양한 협업 툴에서 활용 (Notion, Slack...)
 - 다양한 Markdown용 Editor (Typora...)
 
-<br>
-<br>
-
 ## 목차 만들기 
 - (table of contents)
 - `[toc] + enter`
-
-<br>
-<br>
 
 ## 크기 지정
 - \# 을 활용하여 크기를 설정하면 됩니다.
@@ -60,9 +52,6 @@ last_modified_at: 2022-08-30
 ### tip! 
 - \#를 5개 이상 쓴다는 것? -> 잘못된 분류!!
 ```
-
-<br>
-<br>
 
 ## 글꼴
 
@@ -89,21 +78,12 @@ _italic_
 <u>우리를 움직이게 하는 건 동기</u>
 `<u>우리를 움직이게 하는 건 동기</u>`
 
-<br>
-<br>
-
 ## 줄바꿈
 텍스트 뒤에 `space bar`를 두번 치고 enter를 누른 뒤 다음 텍스트를 씁니다.
-
-<br>
-<br>
 
 ## 띄어쓰기(enter)
 - 텍스트 뒤에 `<br>` 을 치시면 됩니다. 
 - `<br/>` 로 치시면 한칸 더 띄어집니다.
-
-<br>
-<br>
 
 ## 글자 색깔
 - html의 부분에 `color:`를 이용하여 색깔을 바꿔주세요.
@@ -122,16 +102,9 @@ _italic_
 <span style="color:purple">보라 글씨</span>
 ```
 
-<br>
-
 ### RGB 색상표
 
-<br>
-
 ![image](https://user-images.githubusercontent.com/78655692/149109308-2f5dcb0b-bc09-4edc-b6a1-bc0a63485df8.png)
-
-<br>
-<br>
 
 ## 형관펜
 
@@ -151,9 +124,6 @@ _italic_
 <span style="background-color:purple">보라 글씨</span> 
 ```
 
-<br>
-<br>
-
 ## 글자 크기 조정
 
 - html의 `style`부분에 `font-size:`를 이용하여 색깔을 바꿔주세요.
@@ -168,23 +138,15 @@ _italic_
 <span style="font-size:50%">폰트사이즈 50</span>  
 ```
 
-<br>
-<br>
-
 ## 위의 3가지 속성을 다 쓰고 싶다면
 
 - `style=" ;  ; "` 형태로 `;`를 쓰면 됩니다.
-
-<br>
 
 <b><span style="color:white; background-color:red; font-size:150%">글자는 흰색, 배경은 빨강, 사이즈는 150, 굵기는 b태그로 설정</span></b>  
 
 ```html
 <b><span style="color:white; background-color:red; font-size:150%">글자는 흰색, 배경은 빨강, 사이즈는 150, 굵기는 b태그로 설정</span></b>
 ```
-
-<br>
-<br>
 
 ## 별표 (이미지)
 
@@ -207,8 +169,6 @@ _italic_
 <img width="55" alt="star1" src="https://user-images.githubusercontent.com/78655692/151471925-e5f35751-d4b9-416b-b41d-a059267a09e3.png">
 ```
 
-<br>
-
 - **별 둘**
 
 <img width="41" alt="star2" src="https://user-images.githubusercontent.com/78655692/151471960-29c5febe-c509-4c6d-99f4-a2203eb193c5.png">
@@ -223,8 +183,6 @@ _italic_
 <img width="81" alt="star2" src="https://user-images.githubusercontent.com/78655692/151471960-29c5febe-c509-4c6d-99f4-a2203eb193c5.png">
 ```
 
-<br>
-
 - **별 셋**
 
 <img width="46" alt="star3" src="https://user-images.githubusercontent.com/78655692/151471989-9e21d7a8-a7b6-44b0-b598-2bb204b56b00.png">
@@ -238,8 +196,6 @@ _italic_
 ```html
 <img width="91" alt="star3" src="https://user-images.githubusercontent.com/78655692/151471989-9e21d7a8-a7b6-44b0-b598-2bb204b56b00.png">
 ```
-
-<br>
 
 - **예시**
 
@@ -263,9 +219,6 @@ systems software and hardware.
 
 
 
-<br>
-<br>
-
 ## 인용문 : 만약 인용구를 넣고 싶다면?
 > `>` + space를 누르면 인용구를 만들 수 있습니다.
 
@@ -277,9 +230,6 @@ systems software and hardware.
 >>>> 안녕하세요
 
 더 넣고 싶을 땐 추가로 `>`를 넣습니다.
-
-<br>
-<br>
 
 ## 문자 박스(notice)
 
@@ -312,9 +262,6 @@ systems software and hardware.
 **이것은 문자박스입니다.**<br>공지사항입니다. 공부를 해봅시다
 {: .notice--danger}
 
-<br>
-<br>
-
 ## 문자 정렬
 
 ### 왼쪽 정렬 (Default)
@@ -322,9 +269,6 @@ systems software and hardware.
 
 안녕하세요
 {: .text-left}
-
-<br>
-<br>
 
 ### 가운데 정렬
 - `{: .text-center}` : 글자 쓰고 엔터 누름
@@ -335,23 +279,14 @@ systems software and hardware.
 - `<center>가운데</center>`
 <center> 안녕하세요 </center> 
 
-<br>
-<br>
-
 ### 오른쪽 정렬
 - `{: .text-right}`
 
 안녕하세요
 {: .text-right}
 
-<br>
-<br>
-
 ## 줄을 바꿀 때
 띄어쓰기(스페이스)를 2번 누릅니다.
-
-<br>
-<br>
 
 ## 구분선
 
@@ -361,15 +296,9 @@ systems software and hardware.
 ***
 ---
 
-<br>
-<br>
-
 ## 체크박스
 - [ ] 체크가 안 되었다. `[ ]`
 - [x] 체크가 되었다. `[x]`
-
-<br>
-<br>
 
 ## 목록
 
@@ -384,9 +313,6 @@ systems software and hardware.
 2. 순서가 없는 목록과 동일하게 enter를 누르면 다음 목록이 만들어 집니다.
    1. tab 키를 눌러서 하위 목록을 생성할 수 있고
    2. 나가고 싶으면 shift + tab을 눌러서 밖으로 나올 수 있습니다.
-
-<br>
-<br>
 
 ## 코드 블럭
 
@@ -420,18 +346,12 @@ print('Hello World!')
 - \`(백틱)로 감싸주면 배경색을 회색으로 바꿔줍니다.
 `백틱 사용하기`
 
-<br>
-<br>
-
 ### 코드 블럭 (tab 2번)
 - tab을 두번 누르면 위의 백틱(`)을 사용한 것과 같습니다.
 
 안녕하세요 활용 (보통 코드 결과에 활용)
 
     안녕하세요
-
-<br>
-<br>
 
 ## 표 (table)
 
@@ -467,9 +387,6 @@ print('Hello World!')
 |  2   | 김길동 | 120  |
 |  3   | 박길동 | 140  |
 
-<br>
-<br>
-
 ## 접기/펼치기 (토글바)
 
 - 태그에 `open`에 대한 매개변수를 추가하여 `details`의 토글/드롭다운의 기본 동작을 열린 상태로 설정할 수 있다.
@@ -479,14 +396,10 @@ print('Hello World!')
   <summary>이 블로그의 닉네임은?</summary>
   poeun. 열린상태로 보여준다.
 </details>
-<br>
 <details>
   <summary>블로그를 더욱 알고 싶다면?</summary>
   github.com/ingu627 로 이동한다.
 </details>
-
-<br>
-<br>
 
 ### 전체 코드 
 
@@ -503,9 +416,6 @@ print('Hello World!')
 </details>
 ```
 
-<br>
-<br>
-
 ## 각주, 미주
 
 - 문장 끝에 `[^1]`을 넣으면 위쪽에 작은 숫자가 뜰 것입니다.[^1]
@@ -516,9 +426,6 @@ print('Hello World!')
 
 [^1]: 참고 문헌은 이것입니다. <https://sergeswin.com/1013/> (각주, 미주에서)
 
-<br>
-<br>
-
 ### html 사용할 때
 
 - 각주 : `<sup>[1](#footnote_1)</sup>`
@@ -527,9 +434,6 @@ print('Hello World!')
 - ex.
 
 각주와 미주는 다음의 글을 참고했습니다.<sup>[1](#footnote_1)</sup>
-
-<br>
-<br>
 
 ## 유튜브 동영상 넣기
 
@@ -541,12 +445,7 @@ print('Hello World!')
 
 `<iframe width="896" height="504" src="https://www.youtube.com/embed/1xWmteIE3Y8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
 
-<br>
-
 <iframe width="896" height="504" src="https://www.youtube.com/embed/1xWmteIE3Y8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-<br>
-<br>
 
 ### 2. minimal-mistake 테마 사용시
 
@@ -558,9 +457,6 @@ print('Hello World!')
 ![image](https://user-images.githubusercontent.com/78655692/143901643-c64f72d8-c6e7-426a-a723-8319dc927bde.png)
 
 {% include video id="1xWmteIE3Y8&t=2300s" provider="youtube" %}
-
-<br>
-<br>
 
 ## 이미지
 
@@ -576,9 +472,6 @@ print('Hello World!')
 
 ![image](https://user-images.githubusercontent.com/78655692/149096925-170a1dbe-807d-40d9-b7d2-185dc3d05b38.png)
 
-<br>
-<br>
-
 ## 이미지를 md 파일에 복사하기
 
 - 제가 가장 많이 하는 방법은 github.com 의 issue나 gist.github.com 을 이용하는 것입니다.
@@ -589,16 +482,10 @@ print('Hello World!')
 
 로 나옵니다. 이것을 그대로 md파일에 복사넣기 하면 이미지가 생성됩니다.
 
-<br>
-<br>
-
 ## 이미지에 링크를 걸고 싶을땐
   `[![이미지설명](이미지 파일 저장 경로)](이미지 주소 링크)`
 
 [![image](https://user-images.githubusercontent.com/78655692/149096925-170a1dbe-807d-40d9-b7d2-185dc3d05b38.png)](https://www.youtube.com/watch?v=22_1CRL35Qk)
-
-<br>
-<br>
 
 ## 텍스트와 이미지 어울림
 
@@ -608,16 +495,11 @@ print('Hello World!')
 
 매트릭스 시리즈의 네 번째 작품. 매트릭스 트릴로지의 최종편이었던 3편 레볼루션이 2003년 개봉된 이후 무려 18년 만에 돌아오는 키아누 리브스 주연의 매트릭스 신작이다.2019년 8월 20일, 워너 브라더스가 CNN을 통해 공개한 제작 계획에 따르면, 이전까지 시리즈의 감독을 맡았던 워쇼스키 자매중 언니 라나 워쇼스키가 각본과 연출 그리고 제작을 맡았으며, 이 시리즈의 주인공을 맡은 키아누 리브스와 캐리앤 모스의 출연이 확정되었다. 2019년 12월 12일, 워너 브라더스가 개봉일을 2021년 5월 21일로 정식 발표했다. 제작발표 이후 워낙 매트릭스 시리즈의 인기와 명성이 높다보니, 2021년 최고의 기대작 중 하나로 손꼽히고 있다.
 
-<br>
-
 ```html
 <img align='right' width='150' height='100' src='https://user-images.githubusercontent.com/78655692/144441367-4855a172-e479-411d-9ec9-8a258ed26a51.png'>
 
 매트릭스 시리즈의 네 번째 작품. 매트릭스 트릴로지의 최종편이었던 3편 레볼루션이 2003년 개봉된 이후 무려 18년 만에 돌아오는 키아누 리브스 주연의 매트릭스 신작이다.2019년 8월 20일, 워너 브라더스가 CNN을 통해 공개한 제작 계획에 따르면, 이전까지 시리즈의 감독을 맡았던 워쇼스키 자매중 언니 라나 워쇼스키가 각본과 연출 그리고 제작을 맡았으며, 이 시리즈의 주인공을 맡은 키아누 리브스와 캐리앤 모스의 출연이 확정되었다. 2019년 12월 12일, 워너 브라더스가 개봉일을 2021년 5월 21일로 정식 발표했다. 제작발표 이후 워낙 매트릭스 시리즈의 인기와 명성이 높다보니, 2021년 최고의 기대작 중 하나로 손꼽히고 있다.
 ```
-
-<br>
-<br>
 
 ## 링크
 
@@ -628,9 +510,6 @@ print('Hello World!')
 
 <https://ingu627.github.io>
 
-<br>
-<br>
-
 ### 일반 링크
 
 - `['글'](링크를 넣어주세요)`
@@ -640,24 +519,15 @@ print('Hello World!')
 또는 html로 써도 됩니다<br>
 `<a href="naver.com">링크이름</a>`
 
-<br>
-<br>
-
 ### 새창으로 링크
 - `['글'](링크를 넣어주세요){: target="_blank"}`
 
 ['네이버'](https://www.naver.com){: target="_blank"}
 
-<br>
-<br>
-
 ### 새창으로 버튼 링크
 - `['글'](링크를 넣어주세요){: .btn.btn-default target="_blank"}`
 
 ['네이버'](https://www.naver.com){: .btn.btn-default target="_blank"}
-
-<br>
-<br>
 
 ## 수식
 
@@ -672,8 +542,6 @@ $a+b+c+d=e$ <br>
 \\(a^2+b^2=c^2\\) => `$a^2 + b^2 = c^2$` <br>
 \\(3x^2_1 + 3x_2 = 10\\) => `$3x^2_1 + 3x_2 = 10$` 
 
-<br>
-
 - \$\$ 달러 2개는 항상 중앙에 쓰도록 해줍니다.
   - $$a+b=c$$
   - `$$a+b=c$$`
@@ -683,9 +551,6 @@ $a+b+c+d=e$ <br>
 - \\(min_a\\) => `\\(min_a\\)` 
 - \\(min_b\\) => `\\(min_b\\)`
 
-<br>
-<br>
-
 ### tip!
 만약 특수문자 그대로 사용하고 싶다면 앞에 \(역슬래시)를 추가해주면 됩니다.
 \$
@@ -694,9 +559,6 @@ $a+b+c+d=e$ <br>
 ```markdown
 $y=3x$ #수직을 $로 감싸주기
 ```
-
-<br>
-<br>
 
 ## 그래프로 표시하기
 
@@ -712,9 +574,6 @@ graph LR
 ```
 
 - (mermaid)
-
-<br>
-<br>
 
 ## References
 

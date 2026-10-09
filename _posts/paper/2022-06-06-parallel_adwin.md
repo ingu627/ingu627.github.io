@@ -8,18 +8,15 @@ toc: true
 toc_sticky: true
 sidebar_main: false
 
-last_modified_at: 2022-06-25
+last_modified_at: 2026-10-09
 ---
 
 ![image](https://user-images.githubusercontent.com/78655692/172111947-570a483a-c49a-4912-af2d-efa6c23f213c.png)
 
-"Scalable Detection of Concept Drifts on Data Streams with Parallel Adaptive Windowing" 논문을 개인 공부 및 리뷰를 위해 쓴 글입니다. <br>
-논문 출처 : Grulich, Philipp M., et al. "Scalable Detection of Concept Drifts on Data Streams with Parallel Adaptive Windowing." EDBT. 2018.
-{: .notice--info}
+"Scalable Detection of Concept Drifts on Data Streams with Parallel Adaptive Windowing" 논문을 개인 공부 및 리뷰를 위해 쓴 글입니다.
 
-<br>
-<br>
-<br>
+논문 출처 : Grulich, Philipp M., et al. "Scalable Detection of Concept Drifts on Data Streams with Parallel Adaptive Windowing." EDBT. 2018.
+
 
 ## 1. Introduction
 
@@ -33,14 +30,12 @@ last_modified_at: 2022-06-25
   1. 모델이 아직 가장 최근의 데이터를 다루지 않는다. (가장 최근의 데이터가 컨셉 드리프트일지라도)
   2. 모델에 반영된 데이터가 컨셉 드리프트여서 모델의 성능 하락을 일으킨다.
 
-<br>
 
 - 저자들은 ADaptive WINdowing (ADWIN)의 예시를 통해 확장적인(scalability) 한계를 연구한다.
 - **ADaptive WINdowing (ADWIN)** : 조정할 수 있는 크기의 전역(global) 윈도우(window)를 유지하는데, 이것은 모델 계산의 기초가 되는 데이터이다.
 - ADWIN은 칼만 필터(Kalman FIlter)와 나이브 베이즈(Naive Bayes), k-평균 군집(k-means clustering)을 결합했다.
 - 그리고, ADWIN은 배깅(bagging)과 공간 절약 알고리즘의 변형 버전(space saving algorithm)을 이용했다.
 
-<br>
 
 - 다음은 저자들의 contribution 부분이다.
 
@@ -48,8 +43,6 @@ last_modified_at: 2022-06-25
 2. 병목 현상을 극복하기 위해 ADWIN을 병렬화하고 현실 세계에서 확장가능한 concept drift adaptation을 제공한다.
 3. 지연 시간(latency)과 처리량(throughput)을 평가했다.
 
-<br>
-<br>
 
 ## 2. Concept Drift Detection With Adaptive Windowing
 
@@ -68,7 +61,6 @@ last_modified_at: 2022-06-25
 
 ![image](https://user-images.githubusercontent.com/78655692/172120746-8d7e3cc7-7758-49e6-bfab-6f9d174a258c.png)
 
-<br>
 
 ### 2.2 Exponential Histograms
 
@@ -77,7 +69,6 @@ last_modified_at: 2022-06-25
 
 ![image](https://user-images.githubusercontent.com/78655692/172122072-51a342cb-b32a-4412-bcea-318c62bcf8ba.png)
 
-<br>
 
 - 지수 히스토그램은 입력 튜플을 버킷(bucket)에 할당한다. (Fig 2에서 1단계)
 - 최근 데이터의 버킷은 그저 몇개의 튜플을 포함한다.
@@ -87,27 +78,22 @@ last_modified_at: 2022-06-25
 - 즉, 버킷의 수와 각 메모리 소비는 adaptive window가 증가할 때 대수적으로(logarithmically) 증가한다.
 - cut check 절차는 이제 버킷을 비교하면 된다.
 
-<br>
 
 - 다음 그림은 exponential histogram을 포함한 ADWIN 알고리즘의 overview이다.
 
 ![image](https://user-images.githubusercontent.com/78655692/172123866-378f3f70-5b9e-4747-bd5c-eae5594c3673.png)
 
-<br>
 
 ### 2.3 Initial Performance Analysis
 
 ![image](https://user-images.githubusercontent.com/78655692/172124674-cefedbe9-f13f-457d-8509-073fd844e5f1.png)
 
-<br>
-<br>
 
 ## 3. Parallel Adaptive Windowing
 
 - 본 논문에서는 몇 가지 접근법을 이용하여 ADIWN을 병렬화하여 처리량(throughput)을 향상시키는 방법을 소개한다.
   - 2.3의 Fig 3에서 보았듯이, 병목현상을 확인하기 위해 cut detection을 병렬화하는 것에 집중해본다.
 
-<br>
 
 ### 3.1 Single-Node Parallelization
 
@@ -122,8 +108,6 @@ last_modified_at: 2022-06-25
 - **3.1.3**
   - Adwin이 cut을 감지하는 경우 여러 cut check 절차를 병렬로 수행하는 방법을 논의한다.
 
-<br>
-<br>
 
 ### 3.1.1 Cut-Check Decoupling
 
@@ -134,7 +118,6 @@ last_modified_at: 2022-06-25
 - 원래 ADWIN은 이 두가지 태스크를 연속적으로 수행한다.
 - 하지만, 이것은 처리량의 한계가 있는데, cut detection은 입력 스트림의 처리를 블록하기 때문이다.
 
-<br>
 
 ![image](https://user-images.githubusercontent.com/78655692/175768557-800a9675-f54b-4249-b271-e2e6a7bd46b9.png)
 
@@ -148,12 +131,9 @@ last_modified_at: 2022-06-25
   - 마지막으로 redo 로그를 사용하여 누락된 입력 튜플을 기본 히스토그램에 다시 추가한다. 
 - 위 과정을 연속적으로 반복한다.
 
-<br>
 
 - optimistic ADWIN은 기본 히스토그램에 새 튜플 삽입과 컷에 대한 알림 사이에 대기시간(latency)을 도입한다.
 
-<br>
-<br>
 
 ### 3.1.2 Intra-Cut-Check Parallelization
 
@@ -167,8 +147,6 @@ last_modified_at: 2022-06-25
   - 각 반복 단계의 컷 체크는 이전 반복 단계의 컷 체크와 독립적이기 때문에 두 개의 스레드가 히스토그램에서 동시에 반복될 수 있다.
 - 하프컷 애드윈은 두 스레드가 히스토그램의 중간에 도달하거나 컷을 발견하면 컷 체크 절차를 종료한다.
 
-<br>
-<br>
 
 ### 3.1.3 Inter-Cut-Check Parallelization
 
@@ -178,9 +156,5 @@ last_modified_at: 2022-06-25
 - 이는 각각 Half-Cut Adwin을 적용할 수 있는 n - 1 병렬 절단 검사 절차로 확장된다.
 
 
-<br>
-<br>
-<br>
-<br>
 
 

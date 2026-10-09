@@ -8,17 +8,11 @@ toc: true
 toc_sticky: true
 sidebar_main: false
 
-last_modified_at: 2022-08-21
+last_modified_at: 2026-10-09
 ---
 
 <img align='right' width='150' height='150' src='https://user-images.githubusercontent.com/78655692/170685528-4060a9d3-172e-45d8-897b-3a8eb539970c.png'>
-요즘 파이썬을 사용하면서 자연스레 좀 더 효율적으로 코드를 짜고 싶은 마음이 커졌습니다. 그래서 이 책을 공부하기 시작했습니다. <br> 이 글은 개인 공부를 목적으로 작성되었습니다. <br> 혹시 오타나 글의 수정사항이 있어 알려주시면 감사하겠습니다.
-{: .notice--info}
-
-<br>
-<br>
-<br>
-<br>
+요즘 파이썬을 사용하면서 자연스레 좀 더 효율적으로 코드를 짜고 싶은 마음이 커졌습니다. 그래서 이 책을 공부하기 시작했습니다. 이 글은 개인 공부를 목적으로 작성되었습니다. 혹시 오타나 글의 수정사항이 있어 알려주시면 감사하겠습니다.
 
 ## Better way 1: 사용 중인 파이썬의 버전을 알아두라
 
@@ -28,8 +22,6 @@ last_modified_at: 2022-08-21
     !python --version # 파이썬 코드 안에서
     # Python 3.9.12
     ```
-
-<br>
 
 - sys의 값을 검사하여 파이썬 버전 알기
 
@@ -42,9 +34,6 @@ last_modified_at: 2022-08-21
     # 3.9.12 (main, Apr  4 2022, 05:22:27) [MSC v.1916 64 bit (AMD64)]
     ```
 
-<br>
-<br>
-
 ## Better way 2: PEP 8 스타일 가이드를 따르라
 
 - **PEP 8** : 파이썬 개선 제안(Python Enhancement Proposal) #8으로, 파이썬 코드를 어떤 형식으로 작성할지 알려주는 스타일 가이드
@@ -55,8 +44,6 @@ last_modified_at: 2022-08-21
 
 - **공백** : 탭, 스페이스, 새줄 등의 문자를 모두 합한 말
 - 일반적인 내용이여서 공백 규약은 생략한다.
-
-<br>
 
 ### 명명 규약
 
@@ -72,8 +59,6 @@ last_modified_at: 2022-08-21
   - **인스턴스(instance)** : 클래스를 실체화한 것이다. [^6]
 - 클래스 메서드는 클래스를 가리키는 첫 번째 인자의 이름으로 반드시 cls를 사용해야 한다.
 
-<br>
-
 ### 식과 문
 
 - 한 줄짜리 if 문이나 한 줄짜리 for, while 루프, 한 줄짜리 except 복합문을 사용하지 않는다. 명확성을 위해 각 부분을 여러 줄에 나눠 배치한다.
@@ -87,9 +72,6 @@ last_modified_at: 2022-08-21
     + 3)
     # 8
     ```
-
-<br>
-<br>
 
 ## Better way 3: bytes와 str의 차이를 알아두라
 
@@ -116,9 +98,6 @@ last_modified_at: 2022-08-21
     # TypeError: can't concat str to bytes
     ```
 
-<br>
-<br>
-
 ## Better way 4: C 스타일 형식 문자열을 str.format과 쓰기보다는 f-문자열을 통한 인터폴레이션을 사용하라. 
 
 - **형식화(formatting)** : 미리 정의된 문자열에 데이터 값을 끼워 넣어서 사람이 보기 좋은 문자열로 저장하는 과정
@@ -137,8 +116,6 @@ last_modified_at: 2022-08-21
     # 홍길동은 5명이다.
     ```
 
-<br>
-
 ### 인터폴레이션을 통한 형식 문자열
 
 - 파이썬 3.6부터 인터폴레이션(interpolation)을 통한 형식 문자열(**f-문자열**)이 도입됐다.
@@ -151,15 +128,9 @@ last_modified_at: 2022-08-21
     # 홍길동은 5명이다.
     ```
 
-<br>
-<br>
-
 ## Better way 5: 복잡한 식을 쓰는 대신 도우미 함수를 작성하라.
 
 - 한마디로, def(함수 정의), if/else 를 사용하라는 뜻이다.
-
-<br>
-<br>
 
 ## Better way 6: 인덱스를 사용하는 대신 대입을 사용해 데이터를 언패킹하라
 
@@ -187,8 +158,6 @@ last_modified_at: 2022-08-21
     print(a[1]) # ('마우스', 1)
     ```
 
-<br>
-
 - 파이썬에는 **언패킹(unpacking)(풀기)**가 있는데, 언패킹 구문을 사용하면 한 문장 안에서 여러 값을 대입할 수 있다.
 - 리스트, 시퀀스, 이터러블(iterable) 안에 여러 계층으로 이터러블이 들어간 경우 다양한 패터을 언패킹 구문에 사용할 수 있다.
 
@@ -197,9 +166,6 @@ notebook, mouse, headset = a
 print(notebook)
 # ('노트북', 0)
 ```
-
-<br>
-<br>
 
 ## Better way 7: range보다는 enumerate를 사용하라
 
@@ -219,8 +185,6 @@ print(notebook)
         print(i, end='')
     # 안녕하세요
     ```
-
-<br>
 
 - **enumerate**는 이터레이터를 지연 계산 제너레이터(lazy generator)로 감싼다.
   - **느긋한 계산법(Lazy evaluation)** : 계산의 결과값이 필요할 때까지 계산을 늦추는 기법이다. [^5]
@@ -244,9 +208,6 @@ print(notebook)
     # 3 딸기
     ```
 
-<br>
-<br>
-
 ## Better way 8: 여러 이터레이터에 대해 나란히 루프를 수행하려면 zip을 사용하라
 
 - **zip** : 둘 이상의 이터레이터를 지연 계산 제너레이터를 사용해 묶어준다.
@@ -264,8 +225,6 @@ print(notebook)
     # ('5', 'E')
     ```
 
-<br>
-
 - 가장 짧은 이터레이터에 맞춰 길이에 제한하지 않고 길이가 서로 다른 이터레이터에 대해 루프를 수행하려면 itertools 내장 모듈의 **zip_longest** 함수를 사용한다.
 
     ```python
@@ -281,16 +240,10 @@ print(notebook)
     # (None, 'E')    
     ```
 
-<br>
-<br>
-
 ## Better way 9: for나 while 루프 뒤에 else 블록을 사용하지 말라
 
 - 파이썬은 for나 while 루프에 속한 블록 바로 뒤에 else 블록을 허용하는 특별한 문법을 제공한다.
 - 루프 뒤에 오는 else 블록은 루프가 반복되는 도중에 break를 만나지 않은 경우에만 실행된다.
-
-<br>
-<br>
 
 ## Better way 10: 대입식을 사용해 반복을 피하라
 
@@ -310,8 +263,6 @@ print(notebook)
     # 리스트 개수는 4입니다.
     ```
 
-    <br>
-
     ```python
     # 왈러스 이용 
     flavor_list = ['바닐라', '초콜릿', '민트', '딸기']
@@ -320,8 +271,6 @@ print(notebook)
         print(f"리스트 개수는 {n}입니다.")
     # 리스트 개수는 4입니다.
     ```
-
-    <br>
 
 - 대입식은 리스트 안에서 사용할 때도 가능하다.
 
@@ -332,16 +281,8 @@ print(notebook)
     # [2, 4, 8]
     ```
 
-    <br>
-
 - 대입식이 더 큰 식의 일부분으로 쓰일 때는 괄호로 둘러싸야 한다.
 - 파이썬에서는 switch/case 문이나 do/while 루프를 쓸 수 없지만, 대입식을 사용하면 이런 기능을 더 깔끔하게 흉내낼 수 있다.
-
-
-<br>
-<br>
-<br>
-<br>
 
 ## References
 

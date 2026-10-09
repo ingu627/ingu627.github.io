@@ -8,17 +8,14 @@ toc: true
 sidebar_main: false
 classes: wide
 
-last_modified_at: 2022-03-31
+last_modified_at: 2026-10-09
 ---
 
-빅데이터 분석기사 실기 대비 차원에서 쓴 글입니다. <br> 기출문제의 데이터는 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis)에 데이터 셋을 남겨놨습니다.<br> 또한 해당 전체 코드는 `sujebi_1.R` 파일에 담겨져 있습니다.
-{: .notice--info}
+빅데이터 분석기사 실기 대비 차원에서 쓴 글입니다. 기출문제의 데이터는 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis)에 데이터 셋을 남겨놨습니다. 또한 해당 전체 코드는 `sujebi_1.R` 파일에 담겨져 있습니다.
 
-2021.12.31 : 제 3회 빅데이터 분석기사 실기를 합격했습니다. <br> [빅데이터 분석기사(R)](https://ingu627.github.io/categories/R_ML) 시리즈를 보시고 도움이 되길 바랍니다.
-{: .notice--danger}
+> 2021.12.31 : 제 3회 빅데이터 분석기사 실기를 합격했습니다. [빅데이터 분석기사(R)](https://ingu627.github.io/categories/R_ML) 시리즈를 보시고 도움이 되길 바랍니다.
 
 혹시 해당 글을 pdf로 받고 싶으신 분은 이메일과 함께 댓글로 남겨주세요~
-{: .notice--success}
 
 ## 1. airquality
 
@@ -44,8 +41,6 @@ after_sd # 29.3704
 print(abs(before_sd - after_sd)) # 3.90557
 ```
 
-<br>
-<br>
 
 ## 2. Hitters
 
@@ -69,8 +64,6 @@ result = sum(ds2)
 print(result) # 21671.86
 ```
 
-<br>
-<br>
 
 ## 3. diamonds
 
@@ -95,8 +88,6 @@ ds_train = ds %>% arrange(desc(price)) %>%
 mean(ds_train$price) # 18663.33
 ```
 
-<br>
-<br>
 
 ## 4. airquality
 
@@ -118,8 +109,6 @@ result = abs(before_sd - after_sd)
 print(result) # 10.36634
 ```
 
-<br>
-<br>
 
 ## 5. music
 
@@ -150,8 +139,6 @@ result = mean(ds) + sd(ds)
 print(result) # 124.3836
 ```
 
-<br>
-<br>
 
 ## 6. telco-customer-churn
 
@@ -178,8 +165,6 @@ result = mean(ds$TotalCharges, na.rm = TRUE)
 print(result) # 1663.995
 ```
 
-<br>
-<br>
 
 ## 7. cats
 
@@ -206,8 +191,6 @@ result = mean(ds$Hwt)
 print(result) # 13.94375
 ```
 
-<br>
-<br>
 
 ## 8. orings
 
@@ -225,8 +208,6 @@ result = cor(ds$temp, ds$damage, method="pearson")
 print(result) # -0.5790513
 ```
 
-<br>
-<br>
 
 ## 9. mtcars
 
@@ -251,8 +232,6 @@ result = abs(am1_mean - am2_mean)
 print(result) # 7.07
 ```
 
-<br>
-<br>
 
 ## 10. diamonds
 
@@ -277,8 +256,6 @@ result = max(ds1$price)
 print(result) # 2745
 ```
 
-<br>
-<br>
 
 ## References
 

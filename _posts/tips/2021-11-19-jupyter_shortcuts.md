@@ -7,7 +7,7 @@ tags: [tip, shortcuts, 단축키, 주피터]
 toc : True
 sidebar_main: false
 
-last_modified_at: 2022-03-20
+last_modified_at: 2026-10-09
 ---
 
 ## Jupyter 주요 단축키 모음

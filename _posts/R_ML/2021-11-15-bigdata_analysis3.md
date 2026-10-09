@@ -8,24 +8,16 @@ toc: true
 toc_sticky: true
 sidebar_main: false
 
-last_modified_at: 2022-03-31
+last_modified_at: 2026-10-09
 ---
 
 <img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/148633895-2be87d4e-7edb-4391-b583-eb2888b19bbb.png
 '>
-본 글은 빅데이터분석기사 실기 작업형에 대비하여 요약 및 실습한 것을 작성한 글입니다. <br>기출문제의 데이터는 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis){: target="_blank"}에 데이터 셋을 남겨놨습니다.<br> 또한 해당 전체 코드는 `/concept/R_basic_to_pro_3.R` 파일에 담겨져 있습니다.
-{: .notice--info}
+본 글은 빅데이터분석기사 실기 작업형에 대비하여 요약 및 실습한 것을 작성한 글입니다. 기출문제의 데이터는 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis){: target="_blank"}에 데이터 셋을 남겨놨습니다. 또한 해당 전체 코드는 `/concept/R_basic_to_pro_3.R` 파일에 담겨져 있습니다.
 
-2021.12.31 : 제 3회 빅데이터 분석기사 실기를 합격했습니다. <br> [빅데이터 분석기사(R)](https://ingu627.github.io/categories/R_ML) 시리즈를 보시고 도움이 되길 바랍니다.
-{: .notice--danger}
+> 2021.12.31 : 제 3회 빅데이터 분석기사 실기를 합격했습니다. [빅데이터 분석기사(R)](https://ingu627.github.io/categories/R_ML) 시리즈를 보시고 도움이 되길 바랍니다.
 
 혹시 해당 글을 pdf로 받고 싶으신 분은 이메일과 함께 댓글로 남겨주세요~
-{: .notice--success}
-
-<br>
-<br>
-<br>
-<br>
 
 ## 데이터 정제
 
@@ -68,15 +60,11 @@ colSums(is.na(pima2))
 #        0
 ```
 
-<br>
-<br>
 
 ## 단순 대치법
 
 - 결측값을 그럴듯한 값으로 대체하는 통계적 기법
 
-<br>
-<br>
 
 ### 완전 분석법
 
@@ -115,8 +103,6 @@ dim(pima4)
 - `is.na` 함수를 이용하여 결측값이 있는 특정 행을 삭제할 수 있으며 `na.omit`함수를 이용하여 결측값이 있는 전체 행을 삭제할 수도 있다.
   - `na.omit(데이터명)`
 
-<br>
-<br>
 
 ### 평균 대치법
 
@@ -139,23 +125,17 @@ table(is.na(pima2$pressure))
 #   768
 ```
 
-<br>
-<br>
 
 ## 이상값 
 
 - 관측된 데이터의 범위에서 많이 벗어난 아주 작은 값이나 아주 큰 값
 - 이상값은 통계적 기법의 ESD, 기하평균, 사분위수 등을 활용해 확인한다.
 
-<br>
-<br>
 
 ### ESD
 
 - `u-3a < X < u+3a`
 
-<br>
-<br>
 
 ### 사분위수 활용 
 
@@ -165,22 +145,18 @@ table(is.na(pima2$pressure))
 
 |구성요소|설명|
 |---|---|
-|최솟값|최솟값<br>$stat[1] 이용하여 확인|
-|제 1사분위(Q1)|자료들의 하위 25%의 위치<br>$stats[2]|제 2사분위(Q2) (중위수)| 자료들의 50%의 위치로 중위수(Median)를 의미<br> $stats[2] 이용하여 확인|
-|제 3사분위(Q3) | 자료들의 하위 75%를 의미<br> $stats[4] 이용하여 확인|
-|최댓값|최댓값<br>$stats[5] 이용하여 확인|
+|최솟값|최솟값 $stat[1] 이용하여 확인|
+|제 1사분위(Q1)|자료들의 하위 25%의 위치 $stats[2]|제 2사분위(Q2) (중위수)| 자료들의 50%의 위치로 중위수(Median)를 의미  $stats[2] 이용하여 확인|
+|제 3사분위(Q3) | 자료들의 하위 75%를 의미  $stats[4] 이용하여 확인|
+|최댓값|최댓값 $stats[5] 이용하여 확인|
 
 - `quantile()` : 0%       25%       50%       75%      100% 로 보여준다.
 
-<br>
-<br>
 
 ### IQR 함수를 이용한 이상값 검출
 
 - `IQR(x, na.rm, ...)` 
 
-<br>
-<br>
 
 ## 데이터 변환 
 
@@ -192,8 +168,6 @@ table(is.na(pima2$pressure))
 |as.logical()|논리형으로 변환|
 |as.integer()|정수형으로 변환|
 
-<br>
-<br>
 
 ## 자료구조 변환 
 
@@ -205,8 +179,6 @@ table(is.na(pima2$pressure))
 |as.vector()|데이터를 벡터로 변환|
 |as.factor()|데이터를 요인으로 변환|
 
-<br>
-<br>
 
 ## 데이터의 범위 변환
 
@@ -220,8 +192,6 @@ table(is.na(pima2$pressure))
     - x의 표준편차로 나누어서 정규화 수행
   - **X의 scale 적용 값** : `(X-center)/scale` 
 
-<br>
-<br>
 
 ### 최소-최대 정규화
 
@@ -247,8 +217,6 @@ data_minmax
 # [1] 8
 ```
 
-<br>
-<br>
 
 ### 표준화
 
@@ -271,8 +239,6 @@ data_minmax
 # [1] 3.162278
 ```
 
-<br>
-<br>
 
 ### preProcess()
 
@@ -320,8 +286,6 @@ summary(scaled_df_train)
 #  virginica :30
 ```
 
-<br>
-<br>
 
 ## 표본 추출 및 집약처리 
 
@@ -376,7 +340,7 @@ ds_test = iris[-idx,]
 |y|분할 대상 데이터(벡터) **기준**|
 |k|겹(fold)으로 분할하는 개수(정수)|
 |list|결과를 리스트로 반활할지 여부|
-|returnTrain|list = TRUE일 경우에 같이 사용 (default: TRUE)<br>TRUE: 훈련 데이터의 위치 반환<br>FALSE: 평가 데이터의 위치 반환 (default: FALSE)|
+|returnTrain|list = TRUE일 경우에 같이 사용 (default: TRUE) TRUE: 훈련 데이터의 위치 반환 FALSE: 평가 데이터의 위치 반환 (default: FALSE)|
 
 ```R
 library(caret)
@@ -401,8 +365,6 @@ $Fold1
 # [39] 119 120 121 126 129 130 133 137 139 142 147
 ```
 
-<br>
-<br>
 
 ## 기초 통계량 추출
 
@@ -411,7 +373,7 @@ $Fold1
 |주요 파라미터|설명|
 |---|---|
 |x | 평균을 구하려는 값|
-|trim | 평균을 구하려는 값에서 양 극단의 일정 부분을 뺄 때 사용.<br>trim=0.10의 의미는 x 양쪽에서 각각 0.10인 10%를 제외한 평균|
+|trim | 평균을 구하려는 값에서 양 극단의 일정 부분을 뺄 때 사용. trim=0.10의 의미는 x 양쪽에서 각각 0.10인 10%를 제외한 평균|
 |na.rm|결측값을 제거할지 지정하는 논리(TRUE, FALSE) 값 (default: FALSE) |
 
 - `median(x, na.rm = FALSE)` : 데이터의 중위수를 출력하는 함수
@@ -419,15 +381,11 @@ $Fold1
 - `sd()` : 표준편차
 - `row_number(x)` : 데이터값의 순위 index를 출력하는 함수
 
-<br>
-<br>
 
 ## 분석 모형 선택
 
 - **데이터 탐색**은 수집한 데이터를 분석하기 전에 그래프나 통계적인 방법을 이용하여 다양한 각도에서 데이터의 특징을 파악하고 자료를 직관적으로 바라보는 분석방법
 
-<br>
-<br>
 
 ## 범주형 데이터
 
@@ -455,8 +413,6 @@ pie(
 
 ![image](https://user-images.githubusercontent.com/78655692/141939286-47584e54-3bd5-4d4b-a744-fdcc271ce004.png)
 
-<br>
-<br>
 
 ## 수치형 데이터
 
@@ -495,8 +451,6 @@ str(mtcars)
 - `hist()` : 데이터에 대한 분포 시각화(수치)
 - `boxplot()` : 데이터에 대한 분포 시각화(수치)
 
-<br>
-<br>
 
 ## 다차원 데이터 탐색 
 
@@ -507,8 +461,6 @@ str(mtcars)
 - `addmargins(x, margin)` : 빈도수와 비율 탐색
 - `barplot()` 으로 시각화
 
-<br>
-<br>
 
 ### 2. 수치형 - 수치형 데이터
 
@@ -521,8 +473,6 @@ str(mtcars)
     - 두 변수가 순서적 데이터일 때 
 - `plot()` : 산점도를 통해 시각화
 
-<br>
-<br>
 
 ### 3. 범주형 - 수치형 데이터
 
@@ -536,8 +486,6 @@ str(mtcars)
 
 - `boxplot()` : 그룹 간의 시각화
 
-<br>
-<br>
 
 ## 상관 분석 
 
@@ -546,8 +494,6 @@ str(mtcars)
 - `corrplot()` : 상관 계수 시각화 함수
 - `cor.test(x, y, method)` : 상관 계수 검정 
 
-<br>
-<br>
 
 ### 변수 선택 
 
@@ -702,8 +648,6 @@ formula(m2)
 
 - `lm(hp~., data=mtcars)` 에서 `.`의 의미는 모든 독립변수를 넣겠다를 의미.
 
-<br>
-<br>
 
 ### 더미 변수(Dummy Variable) 생성 
 
@@ -727,8 +671,6 @@ transform(
 # 3     하     0     1
 ```
 
-<br>
-<br>
 
 ## References
 

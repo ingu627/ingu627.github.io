@@ -8,11 +8,14 @@ toc: True
 toc_sticky: True
 sidebar_main: false
 
-last_modified_at: 2022-03-20
+last_modified_at: 2026-10-09
 ---
 
 많은 글들이 extension을 추천했지만 이글은 딥러닝 코드를 vscode에서 할 때 생산적으로 활용할 수 있는 extension들을 추천하고자 썼습니다.
-{: .notice--danger}
+
+> 이 글은 2021년 당시 VSCode 기준으로 작성된 extension 추천 기록이다. 최신 버전에서는 확장의 동작이나 사용법이 다를 수 있다.
+
+이 글은 딥러닝 파이썬 코드를 VSCode에서 작성할 때 생산성을 높여주는 extension 14개를 추천한다. 자동 완성·언어 지원(Tabnine, Pylance, python snippets, IntelliCode, MagicPython), Jupyter, Git 관련(GitLens, Git Graph, Git Extension Pack), 그리고 편의 기능(Better Comments, Rainbow CSV, PyTorch Snippets) 등을 소개한다.
 
 ## 1. Tabnine
 
@@ -23,10 +26,6 @@ last_modified_at: 2022-03-20
 - Tabnine은 더 빠른 코딩을 도와줄 올인원 AI 도우미이다. 현재까지 2백만 개 이상의 설치가 있는 이 플러그인은 머신 러닝으로 구동되며 프로젝트의 기존 패턴과 함께 작동한다. 예측 코드 자동 완성에서 Tabnine은 플러그인을 다운로드하고 사용하는 다른 모든 사람의 지식을 결합하여 사용한다.
 - 대학생은 `Tabnine pro`를 1년동안 무료로 사용할 수 있다. 자세한 내용은 홈페이지를 참고하면 된다.
 
-<br>
-<br>
-<br>
-
 ## 2. Pylance
 
 ![image](https://user-images.githubusercontent.com/78655692/143767482-c095f3fb-6920-4c1a-9e86-2922e5c174d2.png)
@@ -36,14 +35,8 @@ last_modified_at: 2022-03-20
 - Python을 위한 빠르고 기능이 풍부한 언어 지원 Pylance는 Visual Studio Code에서 Python과 함께 작동하여 뛰어난 언어 지원을 제공하는 확장이다. 내부적으로 Pylance는 Microsoft의 정적 유형 검사 도구인 Pyright를 기반으로 한다. Pylance는 Pyright를 사용하여 풍부한 유형 정보로 Python IntelliSense 경험을 강화하여 더 나은 코드를 더 빠르게 작성할 수 있도록 지원한다.
 - settings에 들어가서 `Python > Analysis: Type Checking Mode`를 basic으로 변경해 준다.
 
-<br>
-
 - **(2022.02.08) 만약 이전에 다른 언어로 세팅되어 있다면, settings.json에 들어가 "python.languageServer": "Default" or "Pylance"을 설정해 준다.**
   - settings.json은 `사용자\AppData\Roaming\Code\User\settings.json`에 위치해 있다.
-
-<br>
-<br>
-<br>
 
 ## 3. python snippets
 
@@ -52,10 +45,6 @@ last_modified_at: 2022-03-20
 ![python_snippets](https://user-images.githubusercontent.com/78655692/143767760-1a3b4040-0ca5-474a-9e65-518ce2d7f6f5.gif)
 
 - python snippets는 파이썬 언어의 함수들을 효율적으로 쓸 수 있게 도와준다.
-
-<br>
-<br>
-<br>
 
 ## 4. Python Extension Pack
 
@@ -71,10 +60,6 @@ last_modified_at: 2022-03-20
 - `Visual Studio IntelliCode`
 - `Python Indent`
 
-<br>
-<br>
-<br>
-
 ## 5. Visual Studio IntelliCode
 
 ![image](https://user-images.githubusercontent.com/78655692/143767934-6c0f0fb9-5721-447e-b4dc-97d7a91f3972.png)
@@ -86,10 +71,6 @@ last_modified_at: 2022-03-20
 
 ![image](https://user-images.githubusercontent.com/78655692/143768026-8fa8a240-5b4a-4c0b-9d90-c914fb18af99.png)
 
-<br>
-<br>
-<br>
-
 ## 6. Visual Studio IntelliCode API Usage Examples
 
 ![image](https://user-images.githubusercontent.com/78655692/143768051-27ab622a-c777-45ca-a964-044c68db786e.png)
@@ -97,10 +78,6 @@ last_modified_at: 2022-03-20
 ![examples](https://user-images.githubusercontent.com/78655692/143768095-a674da80-cf66-4999-b6cf-285998ac2ff4.gif)
 
 - example을 보여 준다.
-
-<br>
-<br>
-<br>
 
 ## 7. MagicPython
 
@@ -110,19 +87,11 @@ last_modified_at: 2022-03-20
 
 - MagicPython은 GitHub에서 Python을 강조 표시하는 데 사용된다. 유형 주석, f-문자열 및 정규식을 포함하여 모든 Python 3 구문 기능을 올바르게 강조 표시해 준다.
 
-<br>
-<br>
-<br>
-
 ## 8. Jupyter
 
 ![image](https://user-images.githubusercontent.com/78655692/143768813-0d93b404-1f8e-419e-a7bc-c935d79bb481.png)
 
 ![image](https://user-images.githubusercontent.com/78655692/143768837-c3a18aaa-8542-4d6c-94d3-590d975513b5.png)
-
-<br>
-<br>
-<br>
 
 ## 9. Settings Sync
 
@@ -137,13 +106,7 @@ last_modified_at: 2022-03-20
 - `Shift + Alt + D`를 누르면 업로드 된 설정을 다운로드한다.
 - 자세한 사용법은 <https://developer-carmel.tistory.com/4> 참고
 
-<br>
-
 - vscode에서 자체적으로 동기화를 지원하기 시작했다. 설치 안해도 될 것 같다. (2021.12.20)
-
-<br>
-<br>
-<br>
 
 ## 9. GitLens
 
@@ -154,10 +117,6 @@ last_modified_at: 2022-03-20
 - GitLens는 소스 코드에서 마우스로 클릭해서 라인을 볼 때 해당 라인에 커밋 시 작성한 코멘트를 볼 수 있게 해준다.
 - Git 주석 및 코드 렌즈를 통해 코드 작성자를 한 눈에 시각화하고, Git 리포지토리를 원활하게 탐색 및 탐색하고, 강력한 비교 명령을 통해 귀중한 통찰력을 얻는 데 도움을 준다.
 
-<br>
-<br>
-<br>
-
 ## 10. Git Graph
 
 ![image](https://user-images.githubusercontent.com/78655692/143768669-c4afcbc2-e957-479e-9d63-46a786003096.png)
@@ -165,10 +124,6 @@ last_modified_at: 2022-03-20
 ![gitGraph](https://user-images.githubusercontent.com/78655692/143768685-f9d64f88-0628-412f-9139-05587ba45af5.gif)
 
 - 저장소의 Git 그래프를 보고 그래프에서 Git 작업을 쉽게 수행할 수 있게 도와준다.
-
-<br>
-<br>
-<br>
 
 ## 11. Git Extension Pack
 
@@ -182,10 +137,6 @@ last_modified_at: 2022-03-20
 - `GitLens`
 - `gitignore`
 
-<br>
-<br>
-<br>
-
 ## 12. Better Comments
 
 ![image](https://user-images.githubusercontent.com/78655692/143768903-7653cb41-ccd8-44cb-847d-112aa37fa355.png)
@@ -193,10 +144,6 @@ last_modified_at: 2022-03-20
 ![image](https://user-images.githubusercontent.com/78655692/143768924-faefbce4-54f3-4256-9e4c-f577b768d490.png)
 
 - 주석에 색깔을 더해주는 프로그램이다. 코드를 작성할 때 의외로 많이 쓰게 된다. 
-
-<br>
-<br>
-<br>
 
 ## 13. Rainbow CSV
 
@@ -206,18 +153,11 @@ last_modified_at: 2022-03-20
 
 ![image](https://user-images.githubusercontent.com/78655692/146767366-aeee43ac-ab34-4bbc-9f56-476064025640.png)
 
-
-<br>
-<br>
-<br> 
-
 ## 14. PyTorch Snippets
 
 ![image](https://user-images.githubusercontent.com/78655692/152934058-d82ad55a-c214-46e0-af22-e4a643cdbfa1.png)
 
 - **PyTorch Snippets**은 vscode에서 Pytorch안 torchvision을 사용할 때 빠른 작업을 할 수있도록 제공한다.
-
-<br>
 
 - 코드창에 pytorch를 치고 tab을 누르면 아래 그림처럼 나온다.
 
