@@ -31,7 +31,7 @@ last_modified_at: 2025-09-21
 ```
 - 6키는 무조건: `layout: single`, `title`, `excerpt`, `categories`, `sidebar_main`, `last_modified_at`.
 - `toc: true`가 기본. `tags`는 인라인 배열, 소문자 기술명 + 한글 태그(정리/설명/란/리뷰/정의/기초) 섞기.
-- 카테고리는 기존 목록에서만 선택: llm, web, tips, sql, docker, paper, code, python, OS, DS, cs231n, keras, spark, R_ML, mlops, error, git, git_blog, hadoop, linux, java, md, azure.
+- 카테고리는 기존 목록에서만 선택: agent, llm, web, tips, sql, docker, paper, code, python, OS, DS, cs231n, keras, spark, R_ML, mlops, error, git, git_blog, hadoop, linux, java, md, azure.
 
 ## 장르 고르기 (전체 분포 기준)
 | 장르 | 언제 | 예시 |

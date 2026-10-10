@@ -14,12 +14,14 @@
         <!--span 태그로 카테고리들을 크게 분류 ex) C/C++/C -->
         <span class="nav__sub-title">AI</span>
         <ul>
-          {% assign ai_categories = "llm|paper|code|mlops|graph" | split: "|" %}
+          {% assign ai_categories = "agent|llm|paper|code|mlops|graph" | split: "|" %}
           {% for cat in ai_categories %}
             {% assign cat_posts = site.categories[cat] %}
             {% if cat_posts %}
               {% assign cat_label = cat %}
               {% case cat %}
+              {% when "agent" %}
+                {% assign cat_label = "AI Agent" %}
               {% when "llm" %}
                 {% assign cat_label = "LLM" %}
               {% when "paper" %}
