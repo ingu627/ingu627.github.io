@@ -36,10 +36,10 @@
           {% endfor %}
         </ul>
 
-        <span class="nav__sub-title">Cloud</span>
+        <span class="nav__sub-title">Cloud & DevOps</span>
         <ul>
-          {% assign cloud_categories = "azure|k8s|cloud" | split: "|" %}
-          {% for cat in cloud_categories %}
+          {% assign cloud_infra_categories = "azure|k8s|cloud|docker|linux|git" | split: "|" %}
+          {% for cat in cloud_infra_categories %}
             {% assign cat_posts = site.categories[cat] %}
             {% if cat_posts %}
               {% assign cat_label = cat %}
@@ -50,6 +50,12 @@
                 {% assign cat_label = "쿠버네티스(Kubernetes)" %}
               {% when "cloud" %}
                 {% assign cat_label = "클라우드(Cloud)" %}
+              {% when "docker" %}
+                {% assign cat_label = "도커(Docker)" %}
+              {% when "linux" %}
+                {% assign cat_label = "리눅스(Linux)" %}
+              {% when "git" %}
+                {% assign cat_label = "깃(GIT)" %}
               {% endcase %}
               <li><a href="/categories/{{ cat }}" class="">{{ cat_label }} ({{ cat_posts | size }})</a></li>
             {% endif %}
@@ -58,7 +64,7 @@
 
         <span class="nav__sub-title">Data Engineering</span>
         <ul>
-          {% assign data_categories = "SQL|hadoop|spark" | split: "|" %}
+          {% assign data_categories = "spark|SQL|hadoop" | split: "|" %}
           {% for cat in data_categories %}
             {% assign cat_posts = site.categories[cat] %}
             {% if cat_posts %}
@@ -70,26 +76,6 @@
                 {% assign cat_label = "하둡(Hadoop)" %}
               {% when "spark" %}
                 {% assign cat_label = "스파크(Spark)" %}
-              {% endcase %}
-              <li><a href="/categories/{{ cat }}" class="">{{ cat_label }} ({{ cat_posts | size }})</a></li>
-            {% endif %}
-          {% endfor %}
-        </ul>
-
-        <span class="nav__sub-title">DevOps & Infra</span>
-        <ul>
-          {% assign infra_categories = "linux|docker|git" | split: "|" %}
-          {% for cat in infra_categories %}
-            {% assign cat_posts = site.categories[cat] %}
-            {% if cat_posts %}
-              {% assign cat_label = cat %}
-              {% case cat %}
-              {% when "linux" %}
-                {% assign cat_label = "리눅스(Linux)" %}
-              {% when "docker" %}
-                {% assign cat_label = "도커(Docker)" %}
-              {% when "git" %}
-                {% assign cat_label = "깃(GIT)" %}
               {% endcase %}
               <li><a href="/categories/{{ cat }}" class="">{{ cat_label }} ({{ cat_posts | size }})</a></li>
             {% endif %}
@@ -119,7 +105,7 @@
 
         <span class="nav__sub-title">Programming</span>
         <ul>
-          {% assign prog_categories = "python|java|algorithm|web" | split: "|" %}
+          {% assign prog_categories = "python|web|java" | split: "|" %}
           {% for cat in prog_categories %}
             {% assign cat_posts = site.categories[cat] %}
             {% if cat_posts %}
@@ -127,30 +113,32 @@
               {% case cat %}
               {% when "python" %}
                 {% assign cat_label = "파이썬(PYTHON)" %}
+              {% when "web" %}
+                {% assign cat_label = "웹(WEB / API)" %}
               {% when "java" %}
                 {% assign cat_label = "자바(JAVA)" %}
-              {% when "algorithm" %}
-                {% assign cat_label = "알고리즘(Algorithm)" %}
-              {% when "web" %}
-                {% assign cat_label = "웹(WEB)" %}
               {% endcase %}
               <li><a href="/categories/{{ cat }}" class="">{{ cat_label }} ({{ cat_posts | size }})</a></li>
             {% endif %}
           {% endfor %}
         </ul>
 
-        <span class="nav__sub-title">Troubleshooting & Tips</span>
+        <span class="nav__sub-title">Tips & Tools</span>
         <ul>
-          {% assign support_categories = "error|tips" | split: "|" %}
+          {% assign support_categories = "tips|error|git_blog|md" | split: "|" %}
           {% for cat in support_categories %}
             {% assign cat_posts = site.categories[cat] %}
             {% if cat_posts %}
               {% assign cat_label = cat %}
               {% case cat %}
+              {% when "tips" %}
+                {% assign cat_label = "기타 팁들(Tips)" %}
               {% when "error" %}
                 {% assign cat_label = "에러 해결 방법" %}
-              {% when "tips" %}
-                {% assign cat_label = "기타 팁들(설치, 방법,...)" %}
+              {% when "git_blog" %}
+                {% assign cat_label = "깃 블로그(Github Pages)" %}
+              {% when "md" %}
+                {% assign cat_label = "마크다운(Markdown)" %}
               {% endcase %}
               <li><a href="/categories/{{ cat }}" class="">{{ cat_label }} ({{ cat_posts | size }})</a></li>
             {% endif %}
@@ -174,25 +162,6 @@
             {% endif %}
           {% endfor %}
         </ul>
-
-        <span class="nav__sub-title">GIT BLOG</span>
-        <ul>
-          {% assign blog_categories = "md|git_blog" | split: "|" %}
-          {% for cat in blog_categories %}
-            {% assign cat_posts = site.categories[cat] %}
-            {% if cat_posts %}
-              {% assign cat_label = cat %}
-              {% case cat %}
-              {% when "md" %}
-                {% assign cat_label = "마크다운(Markdown)" %}
-              {% when "git_blog" %}
-                {% assign cat_label = "git 블로그(Github Pages)" %}
-              {% endcase %}
-              <li><a href="/categories/{{ cat }}" class="">{{ cat_label }} ({{ cat_posts | size }})</a></li>
-            {% endif %}
-          {% endfor %}
-        </ul>
-        
       </li>
   </ul>
 </nav>
