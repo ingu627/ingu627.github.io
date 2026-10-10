@@ -7,7 +7,7 @@ tags: [mcp, model-context-protocol, security, tool-poisoning, oauth, ai-agent, z
 toc: true
 toc_sticky: true
 sidebar_main: true
-date: 2026-10-10
+date: 2026-09-12
 last_modified_at: 2026-10-10
 ---
 

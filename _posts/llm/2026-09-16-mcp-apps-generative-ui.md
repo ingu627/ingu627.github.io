@@ -7,7 +7,7 @@ tags: [mcp, mcp-apps, generative-ui, a2ui, mcp-ui, ui, agent, 정리]
 toc: true
 toc_sticky: true
 sidebar_main: true
-date: 2026-10-10
+date: 2026-09-16
 last_modified_at: 2026-10-10
 ---
 
