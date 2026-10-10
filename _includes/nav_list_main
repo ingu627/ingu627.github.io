@@ -36,6 +36,22 @@
           {% endfor %}
         </ul>
 
+        <span class="nav__sub-title">Cloud</span>
+        <ul>
+          {% assign cloud_categories = "azure" | split: "|" %}
+          {% for cat in cloud_categories %}
+            {% assign cat_posts = site.categories[cat] %}
+            {% if cat_posts %}
+              {% assign cat_label = cat %}
+              {% case cat %}
+              {% when "azure" %}
+                {% assign cat_label = "Azure" %}
+              {% endcase %}
+              <li><a href="/categories/{{ cat }}" class="">{{ cat_label }} ({{ cat_posts | size }})</a></li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+
         <span class="nav__sub-title">Data Engineering</span>
         <ul>
           {% assign data_categories = "SQL|hadoop|spark" | split: "|" %}

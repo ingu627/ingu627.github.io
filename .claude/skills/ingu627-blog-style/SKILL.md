@@ -31,7 +31,7 @@ last_modified_at: 2025-09-21
 ```
 - 6키는 무조건: `layout: single`, `title`, `excerpt`, `categories`, `sidebar_main`, `last_modified_at`.
 - `toc: true`가 기본. `tags`는 인라인 배열, 소문자 기술명 + 한글 태그(정리/설명/란/리뷰/정의/기초) 섞기.
-- 카테고리는 기존 목록에서만 선택: llm, web, tips, sql, docker, paper, code, python, OS, DS, cs231n, keras, spark, R_ML, mlops, error, git, git_blog, hadoop, linux, java, md.
+- 카테고리는 기존 목록에서만 선택: llm, web, tips, sql, docker, paper, code, python, OS, DS, cs231n, keras, spark, R_ML, mlops, error, git, git_blog, hadoop, linux, java, md, azure.
 
 ## 장르 고르기 (전체 분포 기준)
 | 장르 | 언제 | 예시 |
@@ -47,21 +47,36 @@ last_modified_at: 2025-09-21
 - `##` 큰 섹션 4~8개, 각 섹션 아래 `###` 하위절. 평균 h2 6개 × h3 7개.
 - 학습노트는 원본의 챕터 구조와 번호를 그대로 보존: `## 1. Introduction`.
 - concept 글: 비유로 시작하는 서론 → `## 파트 1: 주제 — 왜 ~인가` → `### 1.1`, `### 1.2` → 파트 반복.
-- 섹션 사이 빈 줄 + `<br>` 한 줄.
-- 연재 시리즈는 제목 끝에 (1) (2) (3) 넘버링.
+- 섹션 사이는 빈 줄로만 구분한다 (단독 `<br>` 태그 금지).
+- 연재 시리즈 제목에 (1)(2)(3) 넘버링을 붙이지 않는다 (2026-10 확정). 시리즈 연결은 본문 리드의 "1부/2부" 언급과 편 링크로 표현한다.
 
 ## 시그니처 동작 (본문 패턴)
 - 용어 첫 등장: **한글 (English)** 병기 → 필요하면 바로 아래 하위 불릿으로 정의.
 - 계층 불릿: 상위 불릿 = 서술, 하위 불릿 = **용어**: 풀이.
-- 목차/출처 안내는 본문 첫머리에 수동 나열 + `{: .notice--info}` 박스:
-  ```
-  논문 출처 : [NSDI 12 paper](https://...)
-  {: .notice--info}
-  ```
+- 출처·환경 안내는 리드 문단이나 목록으로 처리한다. `{: .notice--info}` 박스는 **신규 글에 쓰지 않는다** (2021–22 전량 리팩터링으로 제거됨).
 - 인용은 각주 `[^N]` (2025 스타일). 구글은 본문 inline 정의.
-- 대표 이미지는 본문 첫 줄 right-align: `<img align='right' width='250' src='...'>`.
+- 대표 이미지는 본문 첫 줄 right-align: `<img align='right' width='250' src='...'>` (기존 글 관례). 신규 글은 본문 폭 전체 마크다운 이미지 `![설명](/assets/images/<카테고리>/파일.png)`를 쓴다.
 - 긴 코드는 gist 임베드(`<script src="https://gist.github.com/ingu627/....js"></script>`), 짧은 코드는 ``` 블록. 평균 코드블록 1~2개 — 글 대부분은 설명이 주체.
 - 수식은 필요할 때만($$, 전체의 13%). mathjax 플래그는 필요시에만.
+
+## 이미지 처리 (repo 저장 + 커밋 전 압축)
+- 신규 글 이미지는 repo 안 `assets/images/<카테고리>/`에 저장한다. (기존 글의 `user-images.githubusercontent.com` 링크는 그대로 둔다)
+- **커밋 전 반드시 압축**한다. 목표: 장당 ≤ 150KB, 글당 2~3장. GitHub Pages는 Fastly CDN이라 지연을 좌우하는 변수는 호스팅 위치가 아니라 **용량**이다.
+- 다이어그램(플랫 컬러) → 팔레트 256색 양자화로 PNG 유지, 실측 −60%:
+```bash
+python3 - <<'PY'
+from PIL import Image
+import glob
+for f in glob.glob("assets/images/<카테고리>/*.png"):
+    img = Image.open(f).convert("RGB")
+    img.quantize(colors=256, method=Image.MEDIANCUT, dither=Image.FLOYDSTEINBERG).save(f, optimize=True)
+PY
+```
+- 사진·그라데이션 많은 이미지 → WebP: `cwebp -q 85 in.png -o out.webp` (참조도 .webp로). pngquant가 설치된 환경이면 `pngquant --quality=70-90 --skip-if-larger -f`도 동일 목적.
+- 다이어그램 제작: HTML/CSS를 Chromium 스크린샷(폭 1200~1500px)으로 렌더 → 위 압축 적용. 플랫 컬러일수록 압축 효율이 좋다.
+- 삽입 크기: 렌더 폭 1200~1600px(Retina 2x 기준). 한 페이지에 이미지 20장 이상 넣지 않는다.
+- Git LFS 금지 — GitHub Pages 빌드가 LFS 파일을 해석하지 못한다.
+- 파일명: 소문자-하이픈 (`azure-vnet-topology.png`).
 
 ## 제목·excerpt 패턴
 - 학습노트: `[강의/책 이름] 강의N 주제 리뷰`, `주제 - 소주제 (N)`
@@ -79,6 +94,7 @@ last_modified_at: 2025-09-21
 1. 장르 정했나? → 제목/구조가 그 장르 패턴과 일치?
 2. 프론트매터 6키 + toc/tags 완비?
 3. 처음 나오는 영어 용어 병기했나?
-4. 섹션 2단 개요(## + ###) 유지? 섹션 사이 `<br>`?
+4. 섹션 2단 개요(## + ###) 유지? 단독 `<br>` 미사용(빈 줄 구분)?
 5. 학습자 시점 문장 한 줄(왜 이 글을 썼는지) 들어갔나?
-6. 참고 자료 출처를 notice--info 박스나 각주로 남겼나?
+6. 참고 자료 출처를 References 섹션이나 인라인 링크로 남겼나?
+7. 이미지: repo 내 저장 + 커밋 전 압축(장당 ≤150KB) 했나?
