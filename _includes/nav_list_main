@@ -38,7 +38,7 @@
 
         <span class="nav__sub-title">Cloud</span>
         <ul>
-          {% assign cloud_categories = "azure" | split: "|" %}
+          {% assign cloud_categories = "azure|k8s|cloud" | split: "|" %}
           {% for cat in cloud_categories %}
             {% assign cat_posts = site.categories[cat] %}
             {% if cat_posts %}
@@ -46,6 +46,10 @@
               {% case cat %}
               {% when "azure" %}
                 {% assign cat_label = "Azure" %}
+              {% when "k8s" %}
+                {% assign cat_label = "쿠버네티스(Kubernetes)" %}
+              {% when "cloud" %}
+                {% assign cat_label = "클라우드(Cloud)" %}
               {% endcase %}
               <li><a href="/categories/{{ cat }}" class="">{{ cat_label }} ({{ cat_posts | size }})</a></li>
             {% endif %}

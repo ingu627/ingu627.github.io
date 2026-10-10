@@ -2,11 +2,12 @@
 layout: single
 title: "쿠버네티스 프로덕션 네트워킹과 스토리지 아키텍처: Ingress, CSI·StorageClass 및 관리형 클러스터(EKS·GKE) 엔지니어링"
 excerpt: "Docker Compose 로컬 멀티 컨테이너 명세부터, K8s L7 Ingress Controller(Nginx/Envoy) 트래픽 라우팅, CSI(Container Storage Interface) 기반 PV/PVC 동적 프로비저닝, 그리고 관리형 쿠버네티스(EKS, GKE)의 컨트롤 플레인 운영 트레이드오프를 심층 분석한다."
-categories: [docker]
+categories: [k8s]
 tags: [kubernetes, k8s, docker-compose, ingress, persistent-volume, storageclass, csi, eks, gke]
 toc: true
 toc_sticky: true
 sidebar_main: true
+redirect_from: /docker/kubernetes1/
 
 date: 2025-09-24
 last_modified_at: 2026-10-08

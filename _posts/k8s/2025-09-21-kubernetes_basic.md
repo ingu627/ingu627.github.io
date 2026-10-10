@@ -2,11 +2,12 @@
 layout: single
 title: "클라우드 네이티브 컴퓨팅 인프라의 진화: OCI 컨테이너 런타임부터 K8s 오케스트레이션 아키텍처까지"
 excerpt: "Linux 커널 프리미티브(Namespaces, Cgroups)의 프로세스 격리 원리, OCI 이미지 및 런타임(runc, containerd) 계층, 그리고 선언적 상태 수렴(Reconciliation Loop)을 수행하는 쿠버네티스 컨트롤 플레인의 내부 아키텍처를 심층 분석한다."
-categories: [docker]
+categories: [k8s]
 tags: [docker, kubernetes, k8s, container, oci, cgroups, namespaces, containerd, cloud-native]
 toc: true
 toc_sticky: true
 sidebar_main: true
+redirect_from: /docker/kubernetes_basic/
 
 date: 2025-09-21
 last_modified_at: 2026-10-08
