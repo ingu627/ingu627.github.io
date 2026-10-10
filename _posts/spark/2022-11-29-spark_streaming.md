@@ -8,11 +8,11 @@ toc: true
 toc_sticky: true
 sidebar_main: false
 
-last_modified_at: 2026-10-10
+last_modified_at: 2026-10-11
 ---
 
 <img align='right' width='150' height='200' src='https://user-images.githubusercontent.com/78655692/186088421-fe905f9e-d40f-43b2-ac6e-094e9c342473.png'>
-[Spark The Definitive Guide - BIG DATA PROCESSING MADE SIMPLE] 책을 중심으로 스파크를 개인 공부를 위해 요약 및 정리해보았습니다. 다소 복잡한 설치 과정은 도커에 미리 이미지를 업로해 놓았습니다. 즉, 도커 이미지를 pull하면 바로 스파크를 사용할 수 있습니다.
+[Spark The Definitive Guide - BIG DATA PROCESSING MADE SIMPLE] 책을 중심으로 스파크를 개인 공부를 위해 요약 및 정리해보았습니다. 다소 복잡한 설치 과정은 도커에 미리 이미지를 업로드해 놓았습니다. 즉, 도커 이미지를 pull하면 바로 스파크를 사용할 수 있습니다.
 
 - 도커 설치 및 활용하는 방법 : [[Spark] 빅데이터와 아파치 스파크란 - 1.2 스파크 실행하기](https://ingu627.github.io/spark/spark_db1/#12-%EC%8A%A4%ED%8C%8C%ED%81%AC-%EC%8B%A4%ED%96%89%ED%95%98%EA%B8%B0)
 - 도커 이미지 링크 : [https://hub.docker.com/r/ingu627/hadoop](https://hub.docker.com/r/ingu627/hadoop)
@@ -36,8 +36,6 @@ last_modified_at: 2026-10-10
   - 카프카(Kafka) 소스 및 싱크 연동 방법과 메시지 읽기/쓰기 옵션
   - 소켓, 콘솔, 메모리 등 테스트용 소스/싱크 활용법과 출력 모드 및 트리거 제어
 
-<br>
-
 ## 1. 스트림 처리
 
 - **스트림 처리(stream processing)**는 신규 데이터를 끊임없이 처리해 결과를 만들어내는 행위이다. 
@@ -50,8 +48,6 @@ last_modified_at: 2026-10-10
   - 선언형 API의 예시로 스파크의 DStream API는 맵(Map), 리듀스(Reduce), 필터(Filter)같은 연산을 기반으로 하는 함수형 API을 제공한다.
   - DStream API는 내부적으로 각 연산자의 데이터 처리량과 연산 관련 상태 정보를 자동으로 추적하고 관련 상태를 저장한다.
 
-<br>
-
 ## 2. 연속형 처리와 마이크로 배치 처리
 
 - **연속형 처리(Continuous processing)** 기반의 시스템에서 각 노드는 다른 노드에서 전송하는 메시지를 끊임없이 수신하고 새로 갱신된 정보를 자신의 하위 노드로 전송한다.
@@ -60,23 +56,22 @@ last_modified_at: 2026-10-10
 <img width="588" alt="image" src="https://user-images.githubusercontent.com/78655692/204439216-358e5e53-65b7-457c-8e60-2ad0f05cc942.png">
 
 - 연속형 처리는 각 노드가 신규 메시지에 즉시 반응하기 때문에 전체 입력량이 적을 때 빠르게 응답하지만 최대 처리량(throughput)은 적다.
+- 스파크 공식 문서 기준으로 기본 마이크로 배치 엔진은 최선의 경우 약 100ms 수준의 종단 간 지연(end-to-end latency)과 exactly-once 보장을 제공하고, 연속형 처리 모드는 지연을 약 1ms 수준까지 낮추는 대신 at-least-once 보장이며 지원되는 질의가 제한된다(연속형 처리는 Spark 2.3부터 지원).[^3]
 
 - **마이크로 배치(micro-batch)** 기반의 시스템은 입력 데이터를 작은 배치로 모으기 위해 대기한다.
   - 그리고 다수의 분산 태스크를 이용해 각 배치를 병렬로 처리한다.
-- 마이크로 배치 시스템은 더 적은 노드로 같은 양의 데이터를 처리할 수 있다.
+- 일반적으로 마이크로 배치 시스템은 같은 양의 데이터를 연속형 처리보다 적은 노드로 처리할 수 있다(배치 단위 병렬화 덕분이다).
 - 또한 워크로드 변화에 대응할 수 있도록 부하 분산 기술을 동적으로 사용할 수 있다.
 
 <img width="608" alt="image" src="https://user-images.githubusercontent.com/78655692/204440097-f3bd02b7-32d1-4dcb-943e-3e8adf843db6.png">
 
-<br>
-
 ## 3. 정형 스트리밍의 기초
 
-- **정형 스티리밍(Structured Streaming)**은 스파크 SQL 엔진 기반의 스트림 처리 프레임워크이다. 
-- 정형 스티리밍은 스파크의 정형 API(DataFrame, Dataset, SQL)를 사용한다.
+- **정형 스트리밍(Structured Streaming)**은 스파크 SQL 엔진 기반의 스트림 처리 프레임워크이다. 
+- 정형 스트리밍은 스파크의 정형 API(DataFrame, Dataset, SQL)를 사용한다.
 - 스트리밍 연산은 배치 연산과 동일하게 표현한다.
 
-- 사용자가 스트림 처리용 코드와 목적지를 정의하면 정형 스트리밍 엔진에서 신규 데이터 대한 증분 및 연속형 쿼리를 실행한다.
+- 사용자가 스트림 처리용 코드와 목적지를 정의하면 정형 스트리밍 엔진에서 신규 데이터에 대한 증분 및 연속형 쿼리를 실행한다.
 - 그리고 카탈리스트 엔진(코드 생성, 쿼리 최적화 등의 기능을 지원)을 사용해 연산에 대한 논리적 명령을 처리한다.
 
 <img width="598" alt="image" src="https://user-images.githubusercontent.com/78655692/204446837-49e3efdd-8c79-41f5-be43-82f494cfaee2.png">
@@ -84,7 +79,9 @@ last_modified_at: 2026-10-10
 - 정형 스트리밍은 스트림 데이터를 계속해서 추가되는 테이블처럼 다루는 것이 핵심 개념이다.
 - 스트리밍 잡(job)은 계속해서 신규 입력 데이터를 확인 및 처리한다.
 
-<br>
+![정형 스트리밍의 데이터 스트림을 무한히 추가되는 테이블(Unbounded Table)로 표현한 도식](/assets/images/spark/official-structured-streaming-stream-as-a-table.webp)
+
+*출처: Structured Streaming Programming Guide, Spark 3.5.6 (https://spark.apache.org/docs/3.5.6/structured-streaming-programming-guide.html)*
 
 ## 4. 정형 스트리밍의 핵심 개념
 
@@ -105,7 +102,7 @@ last_modified_at: 2026-10-10
 ### 4.3 출력 모드
 
 - 출력 모드는 데이터의 출력 방식을 정의한다.
-- 스파크가 지원하는 출력 모드은 다음과 같다.
+- 스파크가 지원하는 출력 모드는 다음과 같다.
 
   1. **append** : 싱크에 신규 레코드만 추가
   2. **update** : 변경 대상 레코드 자체를 갱신
@@ -125,11 +122,9 @@ last_modified_at: 2026-10-10
   - 워터마크는 시간 제한을 설정할 수 있는 스트리밍 시스템의 기능이다.
   - 예로, 늦게 들어온 이벤트를 어디까지 처리할지 시간을 제한할 수 있다.
 
-<br>
-
 ## 5. 정형 스트리밍 예제
 
-- 다음은 정형 스트리밍을 어떻게 사용되는지 예제를 통해 알아본다.
+- 다음은 정형 스트리밍이 어떻게 사용되는지 예제를 통해 알아본다.
 - 예제에서는 인간 행동 인지를 위한 이기종 데이터셋을 사용한다.
 - 데이터는 스마트폰과 스마트워치의 다양한 장치에서 지원하는 최대 빈도로 샘플링한 센서 데이터로 구성되어 있다.
 
@@ -152,7 +147,7 @@ last_modified_at: 2026-10-10
   ```python
   static = spark.read.json('/Users/hyunseokjung/data/spark_guide/activity-data/')
   dataSchema = static.schema
-  dataScehma
+  dataSchema
   ```
 
 - **결과**
@@ -225,8 +220,6 @@ spark.streams.active
 
   <img width="165" alt="image" src="https://user-images.githubusercontent.com/78655692/204505118-b188581f-2bd4-4f9d-9720-cef8d48157e6.png">
 
-<br>
-
 ## 6. 스트림 트랜스포메이션
 
 - 스트리밍 트랜스포메이션은 정적 DataFrame의 트랜스포메이션을 대부분 포함한다.
@@ -236,7 +229,7 @@ spark.streams.active
 
 ### 6.1 선택과 필터링
 
-- 정형 스트르밍은 DataFrame의 모든 함수와 개별 컬럼을 처리하는 선택(Selection)과 필터링(Filtering) 그리고 단순 트랜스포메이션을 지원한다.
+- 정형 스트리밍은 DataFrame의 모든 함수와 개별 컬럼을 처리하는 선택(Selection)과 필터링(Filtering) 그리고 단순 트랜스포메이션을 지원한다.
 - 먼저, 앞서 생성한 `streaming`의 컬럼들은 다음과 같다.
   - `streaming.columns` : ['Arrival_Time', 'Creation_Time', 'Device', 'Index', 'Model', 'User', 'gt', 'x', 'y', 'z']
 - 선택과 필터링을 사용하는 예제는 다음 코드와 같다.
@@ -288,8 +281,6 @@ spark.streams.active
       .start()
   ```
 
-<br>
-
 ## 7. 정형 스트리밍의 입출력 (소스와 싱크)
 
 지금까지 정형 스트리밍의 기본 동작 원리와 정적/스트리밍 DataFrame 간의 트랜스포메이션을 살펴보았다. 실제 엔터프라이즈 환경에서는 데이터가 파일 시스템이나 분산 메시징 큐를 통해 실시간으로 유입되고 다른 외부 저장소로 안전하게 전달되어야 한다. 이제 소스와 싱크가 정형 스트리밍에서 어떻게 동작하며, 대표적인 분산 스트리밍 플랫폼인 아파치 카프카(Apache Kafka)와 어떻게 연동하는지 구체적으로 살펴본다.
@@ -308,7 +299,9 @@ spark.streams.active
 - 발행된 메시지는 내결함성을 보장하는 저장소에 저장된다.
 - 카프카를 분산형 버퍼로 생각할 수 있다.
 
-    ![kafka](https://www.devkuma.com/docs/kafka/kafka-message-system.png) <br> 이미지출처 [^2]
+    ![kafka](https://www.devkuma.com/docs/kafka/kafka-message-system.png)
+
+    이미지출처 [^2]
 
 - 레코드(record)의 스트림은 **토픽(topic)**으로 불리는 카테고리에 저장한다.
   - 카프카의 **레코드**는 키, 값, 타임스탬프로 구성된다. 
@@ -317,8 +310,6 @@ spark.streams.active
 - 데이터를 쓰는 동작을 **발행(publish)**이라 하며, 읽는 동작을 **구독(subscribe)**이라 한다.
 - 스파크는 카프카에 저장된 스트림을 배치와 스트리밍 방식으로 읽어 DataFrame을 생성할 수 있다.
 
-<br>
-
 ## 8. 카프카 소스에서 메시지 읽기
 
 - 메시지를 읽기 위해 먼저 해야 할 일은 다음 옵션 중 하나를 선택하는 것이다.
@@ -326,7 +317,7 @@ spark.streams.active
     - ex.) JSON 문자열(`{"topicA":[0,1]}, "topicB":[2,4]`)
   - **subscribe** : 토픽 목록을 지정해 여러 토픽을 구독하는 옵션이다.
   - **subscribePattern** : 토픽 패턴을 지정해 여러 토픽을 구독하는 옵션이다.
-- 그 다음은 카프카 서비스에 접속할 수 있도록 `kakfa.bootstrap.servers` 값을 지정하는 것이다.
+- 그 다음은 카프카 서비스에 접속할 수 있도록 `kafka.bootstrap.servers` 값을 지정하는 것이다.
 - 그 외 몇 가지 옵션을 더 설정해야 한다.
   - **startingOffsets** 및 **endingOffsets** : 쿼리를 시작할 때 읽을 지점이다. 옵션값으로 earliest는 가장 작은 오프셋부터 읽으며 latest는 가장 큰 오프셋부터 읽는다.
   - **failOnDataLoss** : 데이터 유실이 일어났을 때 쿼리를 중단할 것인지 지정한다. (default : True)
@@ -358,11 +349,9 @@ spark.streams.active
   - 키 : binary
   - 값 : binary
   - 토픽 : string
-  - 패턴 : int
+  - 파티션 : int
   - 오프셋 : long
   - 타임스탬프 : long 
-
-<br>
 
 ## 9. 카프카 싱크에 메시지 쓰기
 
@@ -378,13 +367,11 @@ spark.streams.active
     df1.selectExpr("CAST(key AS STRING)", "CAST(value AS STRING)") \
         .writeStream \
         .format("kafka") \
-        .option("kakfa.bootstrap.servers", "host1:port1, host2:port2") \
+        .option("kafka.bootstrap.servers", "host1:port1, host2:port2") \
         .option("checkpointLocation", "/to/HDFS-compatible/dir") \
         .option("topic", "topic1") \
         .start()
     ```
-
-<br>
 
 ## 10. 테스트용 소스와 싱크
 
@@ -431,11 +418,9 @@ spark.streams.active
         .queryName("my_device_table")
     ```
 
-<br>
-
 ## 11. 데이터 출력 방법 (출력 모드)
 
-- 정형 스트리밍 지원하는 세 가지 출력모드는 다음과 같다.
+- 정형 스트리밍이 지원하는 세 가지 출력 모드는 다음과 같다.
 - **append 모드**
   - 새로운 로우가 결과 테이블에 추가되면 사용자가 명시한 트리거에 맞춰 싱크로 출력된다. 
   - 이벤트 시간과 워터마크를 append 모드와 함께 사용하면 최종 결과만 싱크로 출력한다.
@@ -444,8 +429,6 @@ spark.streams.active
   - 모든 데이터가 계속해서 변경될 수 있는 일부 상태 기반 데이터(stateful data)를 다룰 때 유용하다. 
 - **update 모드**
   - 이전 출력 결과에서 변경된 로우만 싱크로 출력한다. 나머지는 complete 모드와 유사하다.
-
-<br>
 
 ## 12. 데이터 출력 시점 (트리거)
 
@@ -465,11 +448,17 @@ spark.streams.active
         .start()
     ```
 
-<br>
+## 13. 한계와 트레이드오프
+
+- **지연 시간의 하한**: 기본 마이크로 배치 엔진은 트리거 간격마다 배치를 처리하므로 종단 간 지연이 최선의 경우 약 100ms 수준이다. 수 밀리초(ms) 수준의 초저지연이 필요하면 연속형 처리 모드를 선택해야 하지만, 이 모드는 exactly-once 대신 at-least-once 보장이며 지원되는 질의·소스·싱크가 제한된다.[^3]
+- **늦게 도착한 데이터의 처리 범위**: 워터마크는 오래된 집계 상태를 정리해 상태 크기를 억제하는 대신, 임계값을 넘겨 도착한 이벤트는 결과에서 제외된다. 즉 지연 데이터를 어디까지 허용할지와 상태 메모리 사용량은 서로 상충한다.
+- **상태 기반 연산의 제약**: 집계하지 않은 스트림의 정렬처럼 스트리밍 모델에 맞지 않는 트랜스포메이션은 지원되지 않으며, 상태 기반 처리(stateful processing)를 쓰지 않으면 계층적 집계가 불가능하다.
+- **complete 모드의 출력 비용**: complete 출력 모드는 매 트리거마다 갱신된 전체 결과 테이블을 싱크로 다시 출력하므로, 상태가 커질수록 싱크 부하와 출력 비용이 함께 커진다.
+- **체크포인트 의존성**: 장애 복구와 exactly-once 보장은 체크포인트 위치에 의존하므로, 스트리밍 쿼리를 시작할 때 `checkpointLocation`을 반드시 지정해야 한다.
 
 ## 핵심 정리
 
-- **스트림 처리와 마이크로 배치**: 스트림 처리는 신규 데이터를 연속적으로 받아 증분 결과를 산출하며, 스파크 정형 스트리밍은 마이크로 배치 아키텍처를 기반으로 높은 처리량과 동적 부하 분산을 달성한다.
+- **스트림 처리와 마이크로 배치**: 스트림 처리는 신규 데이터를 연속적으로 받아 증분 결과를 산출하며, 스파크 정형 스트리밍은 마이크로 배치 아키텍처를 기반으로 배치 단위 병렬화와 동적 부하 분산으로 처리량을 확보하는 대신, 종단 간 지연이 최선의 경우 약 100ms 수준이다(기본 마이크로 배치 기준).[^3]
 - **테이블로서의 스트림**: 정형 스트리밍은 유입되는 스트림 데이터를 무한히 추가되는 테이블로 간주하고, 카탈리스트 옵티마이저를 통해 배치 연산과 동일한 DataFrame/SQL 선언형 API로 증분 쿼리를 최적화하여 실행한다.
 - **이벤트 시간과 워터마크**: 데이터 유입 시점이 아닌 생성 시점(이벤트 시간)을 기준으로 지연 도착 데이터를 정합성 있게 처리하며, 워터마크를 지정해 상태 메모리를 효율적으로 유지·해제한다.
 - **다양한 소스와 싱크**: 분산 파일 시스템(JSON, Parquet 등), 아파치 카프카, 테스트용 소켓·콘솔·메모리 싱크 등 폭넓은 소스와 싱크를 지원해 상황에 맞는 파이프라인 구성이 가능하다.
@@ -477,9 +466,8 @@ spark.streams.active
 - **출력 모드(append, complete, update)**: 추가된 행만 출력하는 append, 전체 테이블 상태를 다시 쓰는 complete, 갱신된 행만 반영하는 update 모드로 비즈니스 요구사항에 맞춰 결과를 내보낸다.
 - **트리거 제어**: 기본 주기형 트리거(processingTime) 또는 배치형 1회 실행 트리거(once)를 통해 싱크 출력 주기를 상황에 맞게 유연하게 조율한다.
 
-<br>
-
 ## References
 
 [^1]: [SQL, 정규 표현식 패턴 - BELLSTONE](https://itbellstone.tistory.com/88)
 [^2]: [Apache Kafka 개념 소개 - devkuma](https://www.devkuma.com/docs/apache-kafka/intro/)
+[^3]: [Structured Streaming Programming Guide - Apache Spark 3.5.6](https://spark.apache.org/docs/3.5.6/structured-streaming-programming-guide.html)

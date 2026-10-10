@@ -12,7 +12,7 @@ last_modified_at: 2026-10-10
 ---
 
 <img align='right' width='150' height='200' src='https://user-images.githubusercontent.com/78655692/186088421-fe905f9e-d40f-43b2-ac6e-094e9c342473.png'>
-[Spark The Definitive Guide - BIG DATA PROCESSING MADE SIMPLE] 책을 중심으로 스파크를 개인 공부를 위해 요약 및 정리해보았습니다. 다소 복잡한 설치 과정은 도커에 미리 이미지를 업로해 놓았습니다. 즉, 도커 이미지를 pull하면 바로 스파크를 사용할 수 있습니다.
+[Spark The Definitive Guide - BIG DATA PROCESSING MADE SIMPLE] 책을 중심으로 스파크를 개인 공부를 위해 요약 및 정리해보았습니다. 다소 복잡한 설치 과정은 도커에 미리 이미지를 업로드해 놓았습니다. 즉, 도커 이미지를 pull하면 바로 스파크를 사용할 수 있습니다.
 
 - 도커 설치 및 활용하는 방법 : [[Spark] 빅데이터와 아파치 스파크란 - 1.2 스파크 실행하기](https://ingu627.github.io/spark/spark_db1/#12-%EC%8A%A4%ED%8C%8C%ED%81%AC-%EC%8B%A4%ED%96%89%ED%95%98%EA%B8%B0)
 - 도커 이미지 링크 : [https://hub.docker.com/r/ingu627/hadoop](https://hub.docker.com/r/ingu627/hadoop)
@@ -96,6 +96,9 @@ val tripData = spark.read.option("header", "true"
   - 정점과 에지는 별도 명명된 컬럼으로 표현되는 DataFrame이다.
 - 그래프를 정의하기 위해서는 GraphFrame 라이브러리에서 제시하는 컬럼에 대한 명명규칙을 사용해야 한다.
 - 정점 테이블에서는 식별자(`name`)를 id로 정의하고(문자열 타입), 에지 테이블에서는 각 에지의 시작 정점 ID를 `src`로 도착 정점 ID를 `dst`로 표시한다.
+
+![예제 속성 그래프(property graph) — 정점 3·5·7·2에 속성(예: franklin, prof.)이 붙고, 각 에지에도 Advisor·Collaborator·Colleague·PI 같은 관계 속성이 붙는다. 오른쪽은 같은 그래프를 정점 테이블(Id, Property)과 에지 테이블(SrcId, DstId, Property)로 표현한 것이다](/assets/images/spark/official-graphframes-property-graph.webp)
+*출처: Apache Spark 공식 문서 GraphX Programming Guide — Example Property Graph (https://spark.apache.org/docs/latest/graphx-programming-guide.html)*
 
 ```scala
 val stationVertices = bikeStations.withColumnRenamed("name", "id").distinct()

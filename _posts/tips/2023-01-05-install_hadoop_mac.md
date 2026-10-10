@@ -25,21 +25,17 @@ last_modified_at: 2026-10-09
 
 ## 1. 자바(JDK 19) 설치
 
-- **하둡**은 자바 기반의 오브 소스 프레임워크이므로, 자바를 먼저 설치해줘야 한다.
+- **하둡**은 자바 기반의 오픈 소스 프레임워크이므로, 자바를 먼저 설치해줘야 한다.
 - [[ORACLE JAVA 19]](https://www.oracle.com/java/technologies/downloads/#jdk19-mac) 링크로 가 `Arm 64 DMG Installer`를 다운로드한다.
 - **스크린샷**
 
     <img width="1316" alt="image" src="https://user-images.githubusercontent.com/78655692/210787305-4f3255b9-9a52-4a69-b282-642d8db596cd.png">
 
-<br>
-
-- 또는 azul사의 zulu Open JDK도 맥 m1칩용을 제공한다. 둘 중 아무거나 받아도 상관없다.
-- [[AZUL Java 19(STS)]] 링크로 가 macOS arm64버전을 다운로드한다.
+- 또는 Azul의 Zulu OpenJDK도 맥 m1칩용을 제공한다. 둘 중 아무거나 받아도 상관없다.
+- [[AZUL Java 19(STS)]](https://www.azul.com/downloads/?version=java-19-sts&os=macos&architecture=arm-64-bit&package=jdk) 링크로 가 macOS arm64버전을 다운로드한다.
 - **스크린샷**
 
     <img width="1304" alt="image" src="https://user-images.githubusercontent.com/78655692/210792060-85a0a650-7219-408b-b6d8-d73988256a46.png">
-
-<br>
 
 - 그 후 `vi ~/.zshrc` 명령어를 통해 파일을 연 뒤, 아래처럼 java 경로를 export 해준다.
   - 또는 `~/.bashrc`
@@ -55,14 +51,11 @@ export PATH=${PATH}:$JAVA_HOME/bin
 
     <img width="722" alt="image" src="https://user-images.githubusercontent.com/78655692/210792461-fd4e4187-c5aa-45a9-b50d-4175fb495fb1.png">
 
-<br>
-<br>
-
 ## 2. ssh 설정
 
 - 하둡은 네임(마스터) 노드에서 여러 개의 데이터(워커) 노드와 서버 접속이 가능하게 해야 되기 때문에 ssh 통신에 사용할 키 교환을 수행해야 한다.
 - `ssh localhost` 명령어를 통해 ssh 설치 여부를 확인할 수 있다.
-- 키 수정은 다음과 같다. 
+- 키 생성은 다음과 같다. 
   - 인증키를 미리 생성해서 ssh에 로그인할 때 비밀번호 대신 사용하는 방식이다.
 
 ```shell
@@ -70,9 +63,6 @@ $ ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
 $ cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 $ chmod 0600 ~/.ssh/authorized_keys
 ```
-
-<br>
-<br>
 
 ## 3. 하둡 설치
 
@@ -82,12 +72,8 @@ $ chmod 0600 ~/.ssh/authorized_keys
 
     <img width="1320" alt="image" src="https://user-images.githubusercontent.com/78655692/210796070-5453d9ad-0cbc-4a16-834e-3a4f7e3f8b10.png">
 
-<br>
-
 - 보통 `Downloads` 경로에 다운로드 받아지므로 이를 root 경로로 변경해준다.
 - `mv hadoop-3.3.4 ~/hadoop-3.3.4`
-
-<br>
 
 - 자바 경로처럼 하둡도 `~/.zshrc`로 가 경로를 설정해준다.
   - 이는 하둡을 실행하기 전에 자바가 설치된 위치를 하둡에 알려주어야 하기 때문이다.
@@ -99,7 +85,11 @@ export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
 export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
 ```
 
-<br>
+설정 파일을 만들기 전에, 하둡 데몬이 HDFS 안에서 어떤 역할을 맡는지 공식 문서의 도식으로 확인해두자.
+
+![HDFS 아키텍처 - NameNode, DataNode, 블록과 클라이언트의 관계](/assets/images/hadoop/official-hdfs-architecture.webp)
+
+*출처: HDFS Architecture (https://hadoop.apache.org/docs/r3.3.4/hadoop-project-dist/hadoop-hdfs/HdfsDesign.html)*
 
 ### 3.1 그 외 환경설정 
 
@@ -108,8 +98,6 @@ export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
   - **etc/hadoop/hdfs-site.xml** : HDFS 속성
   - **etc/hadoop/mapred-site.xml** : 맵리듀스 속성
   - **etc/hadoop/yarn-site.xml** : YARN 속성
-
-<br>
 
 - **가상 분산(Pseudo-Distributed) 모드**는 모든 하둡 데몬을 로컬 머신에서 실행하는 방법이다. 지금은 이 모드를 사용해본다.
   - 하둡 데몬을 여러 대의 머신으로 구성된 클러스터에서 실행하는 방법은 추후에 쓰겠다.
@@ -126,8 +114,6 @@ export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
 </configuration>
 ```
 
-<br>
-
 - **hdfs-site.xml**
 
 ```shell
@@ -138,8 +124,6 @@ export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
     </property>
 </configuration>
 ```
-
-<br>
 
 - **mapred-site.xml**
 
@@ -156,8 +140,6 @@ export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
 </configuration>
 ```
 
-<br>
-
 - **yarn-site.xml**
 
 ```shell
@@ -169,8 +151,6 @@ export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
 </configuration>
 ```
 
-<br>
-
 ### 3.2 HDFS 파일시스템 포맷하기
 
 - HDFS를 사용하기 전에 먼저 파일시스템을 포맷해줘야 한다.
@@ -178,8 +158,6 @@ export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
 ```shell
 $ bin/hdfs namenode -format
 ```
-
-<br>
 
 ### 3.3 데몬 시작과 중지
 
@@ -191,17 +169,12 @@ $ sbin/mr-jobhistory-daemon.sh start historyserver ## 맵리듀스
 $ sbin/start-yarn.sh ## YARN
 ```
 
-<br>
-
-- `http://locathost:9870` 웹 UI를 통해 데몬 프로세스를 확인할 수 있다.
+- `http://localhost:9870` 웹 UI를 통해 데몬 프로세스를 확인할 수 있다.
 - **결과**
 
   <img width="1323" alt="image" src="https://user-images.githubusercontent.com/78655692/210920628-0753f437-9d08-4fb1-9528-acb6da86328e.png">
 
 - 또한, 자바의 `jps` 명령어를 사용해 데몬 동작 여부를 파악할 수 있다.
-
-
-<br>
 
 - 데몬 중지는 다음과 같다.
 
@@ -211,8 +184,6 @@ $ sbin/mr-jobhistory-daemon.sh stop historyserver ## 맵리듀스
 $ sbin/stop-yarn.sh ## YARN
 ```
 
-<br>
-
 ### 3.4 사용자 디렉토리 생성
 
 - 다음 명령어를 통해 홈 디렉토리를 생성한다.
@@ -221,18 +192,13 @@ $ sbin/stop-yarn.sh ## YARN
 $ hadoop fs -mkdir -p /user/hyunseokjung 
 ```
 
-<br>
-<br>
-
 ## 4. 스파크 설치 
 
-- **스파크(Apahce Spark)**는 빅데이터 처리를 위한 오픈 소스 분산 시스템이다.
+- **스파크(Apache Spark)**는 빅데이터 처리를 위한 오픈 소스 분산 시스템이다.
 - 하둡과 마찬가지로 [[Apache Spark Homepage - Download]](https://spark.apache.org/downloads.html) 링크로 가 최신 버전을 설치해준다.
 - **스크린샷**
 
   <img width="1312" alt="image" src="https://user-images.githubusercontent.com/78655692/210923882-6b59709b-be2b-4a95-9a77-cc0b33508a20.png">
-
-<br>
 
 - 보통 `Downloads` 경로에 다운로드 받아지므로 이를 root 경로로 변경해준다.
 - `mv spark-3.3.0-bin-hadoop3 ~/spark-3.3.0`
@@ -246,13 +212,17 @@ export SPARK_LOCAL_HOSTNAME=localhost
 
 > 그 외 스파크에 대한 자세한 내용은 [Category - SPARK](https://ingu627.github.io/categories/spark) 링크로 가 참조하면 된다.
 
+## 5. 한계와 트레이드오프
 
-<br>
-<br>
-<br>
-<br>
+- 공식 단일 노드 문서는 이 구성을 "간단한 작업을 빠르게 수행"하기 위한 것으로 소개한다. 노드 한 대에 모든 데몬을 올린 구성이므로 내결함성, 노드 수에 따른 확장성, 클러스터 규모의 처리량은 여기서 재현되지 않는다.
+- `dfs.replication`을 1로 두었으므로 블록의 복제본이 하나뿐이다. 디스크가 손상되면 해당 블록은 복구할 수 없다.
+- `fs.defaultFS`를 `hdfs://localhost:9000`으로 고정했으므로 다른 호스트에서는 이 클러스터에 접속할 수 없다.
+- 공식 지원 매트릭스는 Hadoop 3.3 이상에 대해 Java 8과 Java 11(런타임)을 명시한다([Hadoop Java Versions](https://cwiki.apache.org/confluence/display/HADOOP/Hadoop+Java+Versions)). 이 글의 JDK 19 조합은 문서가 보증하는 범위 밖이므로, 버전을 바꿔 설치할 때는 동작 차이를 확인해야 한다.
+- 단일 노드 문서는 GNU/Linux와 Windows를 대상으로 서술한다. macOS(Apple Silicon) 설치는 문서에 명시되지 않은 경로이므로 배포판별 차이는 각자 확인해야 한다.
 
 ## References
 
 - [맥에서 하둡 설치하기 - jeongxoo.log](https://jeongxoo.tistory.com/14)
 - [Hadoop: Setting up a Single Node Cluster (공식 문서)](https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/SingleCluster.html)
+- [HDFS Architecture (공식 문서, Apache License 2.0)](https://hadoop.apache.org/docs/r3.3.4/hadoop-project-dist/hadoop-hdfs/HdfsDesign.html)
+- [Hadoop Java Versions (공식 위키)](https://cwiki.apache.org/confluence/display/HADOOP/Hadoop+Java+Versions)

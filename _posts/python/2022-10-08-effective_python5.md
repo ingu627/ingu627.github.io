@@ -73,7 +73,7 @@ last_modified_at: 2026-10-09
 
 
 - 하지만 원소가 세 개 이상인 튜플을 사용한다면 다른 접근 방법을 생각해봐야 한다.
-  - **collection** 내장 모듈에 있는 **namedtuple**을 사용하면 작은 불변 데이터 클래스를 쉽게 선택할 수 있다.
+  - **collections** 내장 모듈에 있는 **namedtuple**을 사용하면 작은 불변 데이터 클래스를 쉽게 선택할 수 있다.
 - **코드**
 
     ```python
@@ -102,7 +102,7 @@ last_modified_at: 2026-10-09
             total, total_weight = 0, 0
             for grade in self._grades:
                 total += grade.score * grade.weight
-                total_weight = grade.weight
+                total_weight += grade.weight
             return total / total_weight
     ```
 
@@ -198,11 +198,11 @@ last_modified_at: 2026-10-09
     from collections import defaultdict
 
     current = {'초록': 12, '파랑': 3}
-    increments = {
+    increments = [
         ('빨강', 5),
         ('파랑', 17),
         ('주황', 9)
-    }
+    ]
     result = defaultdict(log_missing, current)
     print('이전', dict(result))
     for key, amount in increments:
@@ -431,7 +431,7 @@ last_modified_at: 2026-10-09
             with open(os.path.join(tmpdir, str(i)), 'w') as f:
                 f.write('\n' * random.randint(0, 100))
 
-    config = {'data_dir', tmpdir}
+    config = {'data_dir': tmpdir}
     result = mapreduce(LineCountWorker, PathInputData, config)
     print(f'총 {result} 줄이 있습니다.')
     ```
@@ -447,7 +447,7 @@ last_modified_at: 2026-10-09
     class MyBaseClass:
         def __init__(self, value):
             # 여기서 객체에게 사용자가 제공한 값을 저장한다.
-            # 사용자가 제공하는 값은 문자열로 탕비 변환이 가능해야 하며
+            # 사용자가 제공하는 값은 문자열로 타입 변환이 가능해야 하며
             # 일단 한번 객체 내부에 설정되고 나면
             # 불변 값으로 취급돼야 한다.
             self.value = value
@@ -491,7 +491,7 @@ last_modified_at: 2026-10-09
   - 믹스인 클래스에는 자체 애트리뷰트 정의가 없으므로 믹스인 클래스의 `__init__` 메서드를 호출할 필요도 없다.
 
 
-## Better way 42: 비공개 이튜리뷰트보다는 공개 애트리뷰트를 사용하라
+## Better way 42: 비공개 애트리뷰트보다는 공개 애트리뷰트를 사용하라
 
 - 파이썬에서 클래스의 애트리뷰트에 대한 가시성은 **공개(public)**와 **비공개(private)**, 두 가지밖에 없다.
 - **코드**
@@ -524,7 +524,21 @@ last_modified_at: 2026-10-09
 
 
 
+## 한계와 트레이드오프
+
+- 클래스로 분리하면 코드는 길어진다. 내포 단계가 한두 개뿐인 일회성 데이터라면 굳이 클래스를 만들 필요가 없다.
+- `namedtuple`은 불변(immutable)이라 일단 만들어진 뒤에는 필드 값을 바꿀 수 없다. 값이 바뀌어야 하면 일반 클래스로 바꿔야 한다.
+- `super()`는 MRO(Method Resolution Order)에 의존하므로, 다중 상속에서 상속 순서를 바꾸면 `__init__` 호출 순서와 결과가 달라진다. 상속 구조가 복잡해지면 MRO를 직접 확인해야 한다.
+- 이름 앞 밑줄 두 개(`__`)는 이름 맹글링(name mangling)일 뿐 접근을 강제로 막지 않는다. 서브클래스는 `_클래스명__필드` 형태로 여전히 접근할 수 있다.
+
+
 ## References
+
+- [Python 데이터 모델 — 특수 메서드 이름](https://docs.python.org/3/reference/datamodel.html)
+- [collections — namedtuple](https://docs.python.org/3/library/collections.html#collections.namedtuple)
+- [collections.abc — 컨테이너 ABC](https://docs.python.org/3/library/collections.abc.html)
+- [내장 함수 — super()](https://docs.python.org/3/library/functions.html#super)
+- [Python 자습서 — 클래스](https://docs.python.org/3/tutorial/classes.html)
 
 
 
