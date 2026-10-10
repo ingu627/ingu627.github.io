@@ -14,7 +14,12 @@ last_modified_at: 2026-10-10
 
 사내에 LLM 기반 채팅 서비스를 올리면서 가장 먼저 부딪힌 벽은 모델 성능이나 프롬프트 품질이 아니라 네트워크였다. 임직원이 올리는 문서와 프롬프트에는 사내 기밀이 섞여 있고, 그 데이터가 흘러가는 경로 중 단 하나라도 공용 인터넷 위에 노출되면 그대로 보안 사고로 이어진다. 이 글은 사내 AI 채팅 플랫폼을 폐쇄망 가상 네트워크 위에 올리면서 확정한 네트워크 설계를 기록한 것이며, 구축과 운영을 아우르는 10편 연재의 첫 번째 글이다.
 
-1편에서는 인프라의 뼈대가 되는 계층, 즉 가상 네트워크(VNet)와 서브넷 분리, Private Endpoint를 통한 PaaS 사설 연결, Private DNS Zone을 이용한 이름 해석 재정의까지를 다룬다. 애플리케이션 계층(Container Apps)이나 인증(Entra ID), 게이트웨이(APIM)는 각각 뒤 편에서 따로 정리한다.
+1편에서는 인프라의 뼈대가 되는 계층을 다룬다.
+
+- VNet과 서브넷을 분리해 설계한다.
+- Private Endpoint로 PaaS 리소스를 사설 연결한다.
+- Private DNS Zone으로 이름 해석을 재정의한다.
+- 애플리케이션 계층(Container Apps)·인증(Entra ID)·게이트웨이(APIM)는 각각 뒤 편에서 따로 정리한다.
 
 ---
 
@@ -39,6 +44,8 @@ last_modified_at: 2026-10-10
 
 실용적으로는 두 번째 경로가 현실적이며, 이 글의 전체 설계도 여기에 맞춰져 있다. 데이터는 결국 사내 VNet 안에서 생성되고, 사설 IP로만 관리형 서비스에 도달한다.
 
+그래서 남은 선택지는 하나였다.
+
 ### 1.3 엔터프라이즈 요구사항 체크리스트
 
 설계에 들어가기 전에 만족해야 할 조건을 먼저 고정했다. 이후 섹션은 이 체크리스트를 하나씩 해소하는 과정이다.
@@ -57,13 +64,15 @@ last_modified_at: 2026-10-10
 
 ### 2.1 snet-aca와 snet-pe를 나누는 이유
 
-하나의 서브넷에 애플리케이션과 Private Endpoint를 몰아넣으면 세 가지 문제가 생긴다.
+왜 굳이 전용 서브넷을 두 개로 나눴을까? 하나의 서브넷에 애플리케이션과 Private Endpoint를 몰아넣으면 세 가지 문제가 생긴다.
 
 - **위임(Delegation) 충돌**: Container Apps 환경은 서브넷을 `Microsoft.App/environments`에 위임해야 한다. 위임된 서브넷은 다른 용도로 재사용할 수 없고, NSG·라우팅 정책의 자유도도 제한된다. Private Endpoint를 같은 서브넷에 두면 위임 제약에 함께 묶인다.
 - **IP 고갈**: Container Apps는 리플리카가 늘어날 때마다 서브넷 IP를 소비한다. 반면 Private Endpoint는 개수만큼 고정 IP를 영구 점유한다. 성격이 다른 소비자를 분리하지 않으면 스케일아웃 시점에 IP가 부족해진다.
 - **정책 분리**: Private Endpoint 서브넷은 인바운드가 사설 IP로만 들어오므로 NSG 규칙을 매우 좁게 유지할 수 있다. 애플리케이션 서브넷과 동일한 규칙을 공유하면 불필요하게 넓은 허용이 생긴다.
 
 그래서 `snet-aca`(애플리케이션 전용, 위임)와 `snet-pe`(Private Endpoint 전용, 위임 없음)를 완전히 분리했다.
+
+분리는 선택이 아니라 전제다.
 
 ### 2.2 CIDR 설계
 
@@ -79,6 +88,8 @@ VNet: vnet-hub-prod (10.0.0.0/16)
 - **snet-aca를 /23으로 넉넉히**: Container Apps 환경은 노드와 리플리카 수에 비례해 IP를 소비한다. `/24`로 시작했다가 확장 시점에 서브넷 크기를 바꾸려면 환경을 재생성해야 하므로, 처음부터 `/23`을 할당해 재작업을 피했다.
 - **snet-pe를 /24로**: Private Endpoint는 리소스당 NIC 하나, 고정 IP 하나를 영구 점유한다. 초기에는 `pe-aoai`, `pe-blob`, `pe-keyvault` 3개만 필요하지만 앞으로 늘어날 것을 감안해 `/24`를 잡았다.
 - **비워 둔 대역**: `10.0.2.0/24`는 온프레미스 연결 게이트웨이나 방화벽 삽입을 염두에 두고 예약했다. 나중에 하이브리드 연결을 붙일 때 VNet 주소 공간을 다시 건드리지 않아도 된다.
+
+먼저 전체 토폴로지를 보자.
 
 ![VNet·서브넷·Private Endpoint 토폴로지](/assets/images/azure/azure-vnet-topology.png)
 
@@ -116,7 +127,11 @@ az network vnet subnet create \
   --address-prefixes 10.0.1.0/24
 ```
 
-`snet-pe`에 `--delegations`를 주지 않는다는 점이 중요하다. Private Endpoint는 위임된 서브넷에 배치할 수 없으며, 애플리케이션 위임과 네트워크 정책 설정도 서로 다르다. 필요하면 `--disable-private-endpoint-network-policies true`로 `snet-pe`에서 프라이빗 엔드포인트용 네트워크 정책을 명시적으로 끈다.
+> **주의:** `snet-pe`에 `--delegations`를 주면 안 된다. Private Endpoint는 위임된 서브넷에 배치할 수 없고, 애플리케이션 위임과 네트워크 정책 설정도 서로 다르다.
+
+필요하면 `--disable-private-endpoint-network-policies true`로 `snet-pe`에서 프라이빗 엔드포인트용 네트워크 정책을 명시적으로 끈다.
+
+서브넷이 준비됐으니, 다음은 이 서브넷에 Private Endpoint를 배치할 차례다.
 
 ---
 
@@ -138,7 +153,9 @@ az network vnet subnet create \
 
 ### 3.2 publicNetworkAccess 차단과 연결 승인
 
-Private Endpoint를 만드는 것만으로는 부족하다. **공용 접근을 명시적으로 끄지 않으면 요청은 여전히 공용 IP로도 들어올 수 있다.** 두 가지를 함께 해야 사설 전용이 완성된다.
+Private Endpoint를 만드는 것만으로는 부족하다. **공용 접근을 명시적으로 끄지 않으면 요청은 여전히 공용 IP로도 들어올 수 있다.** 둘을 함께 해야 사설 전용이 완성된다.
+
+둘 중 하나만 하면 절반짜리다.
 
 - `publicNetworkAccess: Disabled`: 리소스 수준에서 공용 엔드포인트 접근을 차단한다. 이 값을 끄지 않으면 DNS가 사설 IP를 가리켜도 공용 경로가 열려 있다.
 - **Connection state(연결 상태)**: Private Endpoint는 생성 시 자동 승인되지 않을 수 있다. 승인되지 않은 연결은 `Pending` 상태로 대기하며, 대상 리소스 소유자가 `Approved`로 바꿔야 실제 트래픽이 흐른다.
@@ -167,7 +184,7 @@ az cognitiveservices account update \
   --public-network-access Disabled
 ```
 
-`--group-id account`는 Azure OpenAI의 서브 리소스 이름이다. 리소스 종류마다 group ID가 다르므로(Blob은 `blob`, Key Vault는 `vault`) 잘못 지정하면 연결이 생성되지 않는다.
+> **주의:** `--group-id`는 Azure OpenAI의 서브 리소스 이름 `account`를 쓴다. 리소스 종류마다 group ID가 다르므로(Blob은 `blob`, Key Vault는 `vault`) 잘못 지정하면 연결이 생성되지 않는다.
 
 ### 3.3 연결이 살아 있는지 확인하는 지점
 
@@ -183,7 +200,11 @@ az cognitiveservices account update \
 
 ### 4.1 privatelink 존이 필요한가
 
-여기서 흔한 착각이 하나 있다. Private Endpoint를 만들면 `aoai-prd-01.openai.azure.com` 같은 공용 FQDN이 자동으로 사설 IP를 가리킬 것이라는 기대다. 실제로는 그렇지 않다. **이름 해석은 DNS가 담당하고, Private Endpoint는 IP 경로만 제공한다.** 둘을 연결해 주는 것이 Private DNS Zone이다.
+여기서 흔한 착각이 하나 있다. Private Endpoint를 만들면 `aoai-prd-01.openai.azure.com` 같은 공용 FQDN이 자동으로 사설 IP를 가리킬 것이라는 기대다. 실제로는 그렇지 않다.
+
+**이름 해석은 DNS가 담당하고, Private Endpoint는 IP 경로만 제공한다.** 둘을 연결해 주는 것이 Private DNS Zone이다.
+
+결국 DNS가 전부였다.
 
 `aoai-prd-01.openai.azure.com`은 공용 DNS에서 공용 IP를 반환하도록 정해져 있다. 이 이름을 사설 IP로 바꾸려면 조회 경로를 사설 존으로 돌려야 한다.
 
@@ -208,13 +229,21 @@ az cognitiveservices account update \
 
 핵심은 **공용 DNS가 이미 CNAME을 `privatelink.*` 도메인으로 넘겨주도록 설계되어 있다**는 점이다. 그래서 사설 존에서 `*.privatelink.*` 부분만 A 레코드로 사설 IP에 묶어 주면, 앞단 질의는 그대로 두고 마지막 단계만 사설로 바뀐다. 도메인 체인을 다시 설계할 필요가 없다.
 
+> 정리하면, 공용 DNS는 `privatelink.*` CNAME까지만 안내하고, 마지막 A 레코드만 사설 존이 사설 IP로 바꿔 끼운다.
+
+해석 흐름을 그림으로 정리하면 다음과 같다.
+
 ![Private DNS 해석 흐름](/assets/images/azure/azure-dns-resolution-flow.png)
 
 위 그림은 클라이언트가 공용 FQDN을 조회할 때 공용 DNS가 CNAME을 반환하고, VNet에 연결된 사설 존이 마지막 A 레코드를 사설 IP로 응답하는 흐름을 나타낸다. VNet Link가 빠지면 이 재정의 단계가 통째로 생략된다.
 
 ### 4.3 존 생성·링크·A 레코드
 
-세 단계를 순서대로 실행한다. ① 존 생성, ② VNet Link, ③ A 레코드 등록.
+세 단계를 순서대로 실행한다.
+
+- **① 존 만들기**: `privatelink.*` 사설 존을 생성한다.
+- **② VNet Link 걸기**: VNet이 이 존을 조회하도록 연결한다.
+- **③ A 레코드 등록**: NIC에 할당된 사설 IP로 이름을 매핑한다.
 
 ```bash
 # ① Azure OpenAI용 Private DNS Zone
@@ -247,13 +276,15 @@ az network private-dns record-set a add-record \
 
 같은 방식으로 `privatelink.blob.core.windows.net`, `privatelink.vaultcore.azure.net` 존을 각각 만들고 VNet Link와 A 레코드를 추가한다.
 
+해석까지 사설로 고정했으니, 이제 실제로 그렇게 동작하는지 검증할 차례다.
+
 ---
 
 ## 5. 검증과 함정
 
 ### 5.1 검증 절차
 
-설계가 끝났으면 "정말 사설 IP로 간다"를 세 각도에서 확인한다. 세 검증은 서로 다른 계층을 보므로, 하나만 통과했다고 전체가 맞다고 볼 수 없다.
+설계가 끝났으면 "정말 사설 IP로 간다"를 세 각도에서 확인한다. 세 검증은 서로 다른 계층을 본다 — 하나만 통과했다고 전체가 맞다고 볼 수 없다.
 
 ```bash
 # ① 이름 해석: 사설 IP가 반환되어야 한다
@@ -286,7 +317,9 @@ curl -v --resolve aoai-prd-01.openai.azure.com:443:10.0.1.4 \
 
 **① DNS Zone에 VNet Link 누락 → 공용 IP로 시도 후 차단**
 
-가장 빈번한 실패다. `publicNetworkAccess: Disabled`는 정상적으로 걸었는데 `nslookup`이 공용 IP를 반환하면, 클라이언트는 공용 IP로 접속을 시도하고 차단된다. 증상은 "연결은 되는데 403/연결 거부"로 나타나며, 원인은 대개 존은 만들었지만 VNet Link가 없거나 다른 VNet에 연결된 경우다. 애플리케이션이 여러 VNet·피어링에 걸쳐 있으면 각 VNet마다 링크가 필요하다.
+세 함정 중 가장 자주 나타나는 것이 이것이다. `publicNetworkAccess: Disabled`는 정상적으로 걸었는데 `nslookup`이 공용 IP를 반환하면, 클라이언트는 공용 IP로 접속을 시도하고 차단된다.
+
+증상은 "연결은 되는데 403/연결 거부"로 나타나며, 원인은 대개 존은 만들었지만 VNet Link가 없거나 다른 VNet에 연결된 경우다. 애플리케이션이 여러 VNet·피어링에 걸쳐 있으면 각 VNet마다 링크가 필요하다.
 
 **② 온프레미스 DNS 포워딩 설정 누락**
 
@@ -296,16 +329,20 @@ VNet 안에서는 `168.63.129.16`(Azure DNS)이 사설 존을 해석하지만, �
 
 Private Endpoint와 DNS 레코드를 새로 만들었는데도 특정 클라이언트가 계속 공용 IP로 접속한다면, 대개 그 클라이언트의 DNS 캐시에 이전 응답이 남아 있는 것이다. 특히 JVM이나 일부 애플리케이션은 DNS 결과를 프로세스 수명 동안 캐시한다. `ipconfig /flushdns`, `resolvectl flush-caches` 같은 플러시를 하거나 재시작이 필요하며, TTL 만료를 기다리는 편이 안전할 때도 있다.
 
+이 세 함정을 피했다면 남은 것은 원칙 정리다.
+
 ---
 
 ## 6. 정리
 
-세 계층을 하나의 원칙으로 묶으면 설계는 다음 네 가지로 요약된다.
+정리하면, 세 계층은 결국 다음 네 가지 원칙으로 수렴한다.
 
-1. **아웃바운드 통제**: 애플리케이션이 나가는 경로는 사설 종단으로만 허용하고, 공용 인터넷으로 나가는 기본 경로를 남기지 않는다.
-2. **사설 종단 일원화**: PaaS는 리소스마다 Private Endpoint를 세워 접근 지점을 사설 IP 하나로 모은다. 예외 경로를 만들지 않는다.
-3. **공용 액세스 전면 차단**: `publicNetworkAccess: Disabled`를 기본값으로 두고, 필요하면 예외를 명시적으로 연다. "일단 열어 두고 나중에 막자"는 순서를 뒤집는다.
-4. **이름까지 사설로**: 경로만 사설이고 이름이 공용을 가리키면 절반짜리 설계다. Private DNS Zone과 VNet Link로 해석 단계까지 사설로 고정한다.
+- **아웃바운드 통제.** 애플리케이션이 나가는 경로는 사설 종단으로만 허용하고, 공용 인터넷으로 나가는 기본 경로를 남기지 않는다.
+- **사설 종단 일원화.** PaaS는 리소스마다 Private Endpoint를 세워 접근 지점을 사설 IP 하나로 모은다. 예외 경로를 만들지 않는다.
+- **공용 액세스 전면 차단.** `publicNetworkAccess: Disabled`를 기본값으로 두고, 필요하면 예외를 명시적으로 연다. "일단 열어 두고 나중에 막자"는 순서를 뒤집는다.
+- **이름까지 사설로.** 경로만 사설이고 이름이 공용을 가리키면 절반짜리 설계다. Private DNS Zone과 VNet Link로 해석 단계까지 사설로 고정한다.
+
+복잡해 보이는 설계도 원칙 네 줄로 끝난다.
 
 다음 편에서는 이 VNet 위에 애플리케이션 계층을 올린다. Container Apps 환경을 internal 모드로 배치하고, 내부 로드 밸런서와 스케일링 규칙을 잡으면서 서브넷 위임이 실제로 어떤 제약을 만드는지 다룰 예정이다.
 
