@@ -1,16 +1,16 @@
 # main links
 main:
+  - title: "About"
+    url: /about/
   - title: "Portfolio"
     url: /portfolio/
-  - title: "🔍"
-    url: /search/
-  - title: "Algorithms"
-    url: /algorithms/
   - title: "Categories"
     url: /categories/
+  - title: "🔍"
+    url: /search/
 
 docs:
   - title: "Quick Click"
     children:
       - title: "Home"
-        url: /`
+        url: /
