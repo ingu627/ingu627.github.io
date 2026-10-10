@@ -3,21 +3,39 @@
    ========================================================================== */
 
 /* Colors */
-$background-color: #252a34 !default;
-$text-color: #eaeaea !default;
-$primary-color: #00adb5 !default;
-$border-color: mix(#fff, $background-color, 20%) !default;
-$code-background-color: mix(#000, $background-color, 15%) !default;
-$code-background-color-dark: mix(#000, $background-color, 20%) !default;
-$form-background-color: mix(#000, $background-color, 15%) !default;
-$footer-background-color: mix(#000, $background-color, 30%) !default;
-$link-color: mix($primary-color, $text-color, 40%) !default;
-$link-color-hover: mix(#fff, $link-color, 25%) !default;
-$link-color-visited: mix(#000, $link-color, 25%) !default;
-$masthead-link-color: $text-color !default;
-$masthead-link-color-hover: mix(#000, $text-color, 20%) !default;
-$navicon-link-color-hover: mix(#000, $background-color, 30%) !default;
+$background-color: #000000 !default;
+$text-color: #ffffff !default;
+$muted-text-color: #a0a0a0 !default;
+$primary-color: #58a6ff !default;
+$border-color: #262626 !default;
+$code-background-color: #121212 !default;
+$code-background-color-dark: #0a0a0a !default;
+$form-background-color: #121212 !default;
+$footer-background-color: #050505 !default;
+$link-color: #58a6ff !default;
+$link-color-hover: #79c0ff !default;
+$link-color-visited: #a5d6ff !default;
+$masthead-link-color: #ffffff !default;
+$masthead-link-color-hover: #e0e0e0 !default;
+$navicon-link-color-hover: #1f1f1f !default;
 
+/* Clean dark syntax highlighting (eliminates greenish #263238) */
+$base00: #121212 !default;
+$base01: #1e1e1e !default;
+$base02: #2d2d2d !default;
+$base03: #6e7681 !default;
+$base04: #8b949e !default;
+$base05: #c9d1d9 !default;
+$base06: #e6edf3 !default;
+$base07: #ffffff !default;
+$base08: #ff7b72 !default;
+$base09: #ffa657 !default;
+$base0a: #f2cc60 !default;
+$base0b: #7ee787 !default;
+$base0c: #79c0ff !default;
+$base0d: #58a6ff !default;
+$base0e: #d2a8ff !default;
+$base0f: #ff7b72 !default;
 .author__urls.social-icons i,
 .author__urls.social-icons .svg-inline--fa,
 .page__footer-follow .social-icons i,
