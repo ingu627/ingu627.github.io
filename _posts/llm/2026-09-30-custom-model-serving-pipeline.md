@@ -246,6 +246,10 @@ spec:
 
 핵심은 **포트 분리와 재시작 정책**이다. 두 노드가 같은 포트를 열면 두 번째 노드가 뜨지 못하고, 재시작 정책이 그룹 전체로 걸리면 Worker의 일시적 실패가 Leader까지 내린다.
 
+![LeaderWorkerSet 구조. LWS 컨트롤러 하나가 리더 StatefulSet을 만들고, 리더마다 워커 StatefulSet이 붙어 group-0, group-1, group-2 … 형태의 그룹을 이룬다. 각 그룹은 리더 Pod 하나와 워커 Pod들로 구성되며, 그룹 수는 replicas로 결정된다.](/assets/images/llm/official-custom-model-serving-pipeline.webp)
+
+*출처: LeaderWorkerSet 공식 문서 — Concepts (https://lws.sigs.k8s.io/docs/concepts/leaderworkerset/)*
+
 ### 4.4 Kubernetes Service 이름이 만드는 vLLM 경고
 
 Kubernetes는 Service 이름을 기반으로 환경변수를 자동 생성한다. 이때 Service 이름이 `vllm-`로 시작하면 `VLLM_*` 환경변수가 만들어지고, vLLM이 이를 자기 설정으로 오인해 경고를 뿜는다[^2].
@@ -488,7 +492,7 @@ Phase 1~3은 "학습 없이 얻을 수 있는 것"을 먼저 확보하는 구간
 - LoRA: Hu et al., 2021 — https://arxiv.org/abs/2106.09685
 - QLoRA: Dettmers et al., 2023 — https://arxiv.org/abs/2305.14314
 - vLLM Multi-LoRA 문서 — https://docs.vllm.ai/en/latest/features/lora/
-- LeaderWorkerSet — https://github.com/kubernetes-sigs/lws
+- LeaderWorkerSet — https://github.com/kubernetes-sigs/lws (개념 문서: https://lws.sigs.k8s.io/docs/concepts/leaderworkerset/)
 - s5cmd — https://github.com/peak/s5cmd
 - Gateway API — https://gateway-api.sigs.k8s.io/
 - MLflow — https://mlflow.org/

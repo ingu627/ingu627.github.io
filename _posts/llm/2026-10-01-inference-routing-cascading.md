@@ -145,6 +145,9 @@ Tier 1은 네트워크 제어만 하고 모델 선택 로직은 넣지 않는다
 
 EPP 내부는 단일 함수가 아니라 계층 파이프라인이다. 데이터 계층이 Pod 목록과 vLLM 메트릭을 모으고, 라우팅/정책 계층이 pool 선택과 우선순위를 처리하고, 흐름 제어 계층이 포화 감지기(saturation detector)로 과부하를 막고, 마지막 스케줄링 계층의 **scorer + picker** 가 실제 Pod를 고른다. scorer에는 `prefix-cache-scorer`(프롬프트 블록을 해싱해 prefix를 들고 있는 Pod를 추정) 외에 부하·큐 깊이 인지 scorer, LoRA affinity 등이 있다. picker는 점수를 종합해 최종 Pod를 정하고, 미지정이면 기본 `max-score-picker` 가 쓴다. 결정은 `x-gateway-destination-endpoint` 헤더와 `dynamic_metadata` 로 함께 전달되며 둘이 일치해야 한다.
 
+![EPP 스케줄링 흐름: 요청의 criticality를 먼저 보고, critical이면 LoRA 적합성 분기로, 아니면 큐·KV 여유 분기로 갈라진다. 각 분기에서 조건을 만족하는 Pod 집합을 좁힌 뒤 대기 큐가 짧은 순, KV 캐시 사용이 낮은 순으로 걸러 최종 목록에서 하나를 고르고, 어느 분기에서도 조건을 만족하지 못하면 요청을 드롭한다.](/assets/images/llm/official-kubernetes-inference-extension-epp.webp)
+*출처: Kubernetes Blog, Introducing Gateway API Inference Extension (https://kubernetes.io/blog/2025/06/05/introducing-gateway-api-inference-extension/)*
+
 여기서 정확히 해 둘 것이 하나 있다. **KV-cache-aware 라우팅에서 라우팅 결정 자체는 추론이 아니다.** prefix 블록 해시와 인덱스 조회라는 기계적 연산이고 모델 forward pass가 없다. 반면 컨텍스트 인지(시맨틱) 라우팅은 인코더·분류 모델을 돌리므로 라우팅 경로에 경량 추론이 생긴다. 어느 쪽이든 선택된 Pod가 수행하는 최종 워크로드는 LLM 추론이다.
 
 L2 구현은 세 갈래로 비교된다.

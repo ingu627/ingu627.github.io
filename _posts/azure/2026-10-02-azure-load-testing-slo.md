@@ -73,6 +73,10 @@ last_modified_at: 2026-10-10
 
 해법은 부하 생성기 자체를 사설망 안에 두는 것이다. Azure Load Testing은 부하 생성 엔진을 가상 네트워크(VNet)에 주입할 수 있다.
 
+![Azure Load Testing이 부하 생성 VM을 고객 가상 네트워크에 주입하는 구조](/assets/images/azure/official-azure-load-testing-vnet-injection.webp)
+
+출처: 가상 네트워크에 부하 테스트 주입 — Microsoft Learn (https://learn.microsoft.com/ko-kr/azure/load-testing/concept-azure-load-testing-vnet-injection)
+
 사설 서브넷에 부하를 발생시키는 컨테이너를 띄우고, 그 안에서 내부 로드 밸런서로 트래픽을 흘린다. 부하를 넣을 수 없으면, 생성기를 안으로 옮기면 된다.
 
 아래 그림은 부하 생성기가 사설망 안에서 내부 로드 밸런서로 요청을 흘리는 경로를 보여준다.

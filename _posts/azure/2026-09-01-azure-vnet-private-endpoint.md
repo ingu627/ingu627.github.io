@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "Azure OpenAI 폐쇄망 네트워크 설계: VNet·Private Endpoint·Private DNS"
-excerpt: "사내 AI 채팅 플랫폼을 공용 인터넷에서 완전히 격리하기 위해 VNet·서브넷을 분리하고, Private Endpoint와 Private DNS Zone으로 Azure OpenAI를 비롯한 PaaS 리소스를 사설 IP로만 연결하는 설계 과정을 정리한다."
+excerpt: "사내 AI 채팅 플랫폼을 공용 인터넷에서 격리하기 위해 VNet·서브넷을 분리하고, Private Endpoint와 Private DNS Zone으로 Azure OpenAI를 비롯한 PaaS 리소스를 사설 IP로만 연결하는 설계 과정을 정리한다."
 categories: [azure]
 tags: [azure, azure-openai, vnet, private-endpoint, private-dns, 네트워크보안]
 toc: true
@@ -20,6 +20,8 @@ last_modified_at: 2026-10-10
 - Private Endpoint로 PaaS 리소스를 사설 연결한다.
 - Private DNS Zone으로 이름 해석을 재정의한다.
 - 애플리케이션 계층(Container Apps)·인증(Entra ID)·게이트웨이(APIM)는 각각 뒤 편에서 따로 정리한다.
+
+본문의 Azure 동작·제약은 Microsoft 공식 문서를 근거로 서술했고, 독립 벤치마크나 제3자 실측치는 인용하지 않았다. 문서가 수치를 명시한 항목은 조건과 함께 적었고, 명시하지 않은 동작은 5장의 검증 절차로 직접 확인해야 한다.
 
 ---
 
@@ -85,7 +87,7 @@ VNet: vnet-hub-prod (10.0.0.0/16)
 └── (예약)     10.0.2.0/24                  ← 온프레미스 게이트웨이/방화벽 확장용
 ```
 
-- **snet-aca를 /23으로 넉넉히**: Container Apps 환경은 노드와 리플리카 수에 비례해 IP를 소비한다. `/24`로 시작했다가 확장 시점에 서브넷 크기를 바꾸려면 환경을 재생성해야 하므로, 처음부터 `/23`을 할당해 재작업을 피했다.
+- **snet-aca를 /23으로 넉넉히**: Microsoft 문서가 명시한 서브넷 최소 크기는 워크로드 프로필 환경 `/27`, Consumption 전용 환경 `/23`이다. Container Apps 환경은 노드와 리플리카 수에 비례해 IP를 소비하므로, 최소 크기에 맞춰 `/24`로 시작했다가 확장 시점에 서브넷 크기를 바꾸려면 환경을 재생성해야 한다. 처음부터 두 기준을 모두 만족하는 `/23`을 할당해 재작업을 피했다.
 - **snet-pe를 /24로**: Private Endpoint는 리소스당 NIC 하나, 고정 IP 하나를 영구 점유한다. 초기에는 `pe-aoai`, `pe-blob`, `pe-keyvault` 3개만 필요하지만 앞으로 늘어날 것을 감안해 `/24`를 잡았다.
 - **비워 둔 대역**: `10.0.2.0/24`는 온프레미스 연결 게이트웨이나 방화벽 삽입을 염두에 두고 예약했다. 나중에 하이브리드 연결을 붙일 때 VNet 주소 공간을 다시 건드리지 않아도 된다.
 
@@ -159,6 +161,12 @@ Private Endpoint를 만드는 것만으로는 부족하다. **공용 접근을 �
 
 - `publicNetworkAccess: Disabled`: 리소스 수준에서 공용 엔드포인트 접근을 차단한다. 이 값을 끄지 않으면 DNS가 사설 IP를 가리켜도 공용 경로가 열려 있다.
 - **Connection state(연결 상태)**: Private Endpoint는 생성 시 자동 승인되지 않을 수 있다. 승인되지 않은 연결은 `Pending` 상태로 대기하며, 대상 리소스 소유자가 `Approved`로 바꿔야 실제 트래픽이 흐른다.
+
+Microsoft 문서는 이 흐름을 소비자와 서비스 공급자 양쪽 관점으로 나눠 설명한다. 아래 그림은 연결 요청이 승인 대기로 접수되고, 승인·거부 판정이 소비자에게 돌아간 뒤 마지막에 DNS 레코드를 사설 IP로 등록하는 순서를 보여준다.
+
+![Private Endpoint 연결 승인과 DNS 레코드 등록 흐름](/assets/images/azure/official-azure-vnet-private-endpoint.webp)
+
+출처: Azure Private Endpoint 개요 — 연결 승인 워크플로 (https://learn.microsoft.com/azure/private-link/private-endpoint-overview), Microsoft Learn 문서 CC BY 4.0
 
 ```bash
 # Private Endpoint 생성 (snet-pe에 NIC 배치)
@@ -329,7 +337,16 @@ VNet 안에서는 `168.63.129.16`(Azure DNS)이 사설 존을 해석하지만, �
 
 Private Endpoint와 DNS 레코드를 새로 만들었는데도 특정 클라이언트가 계속 공용 IP로 접속한다면, 대개 그 클라이언트의 DNS 캐시에 이전 응답이 남아 있는 것이다. 특히 JVM이나 일부 애플리케이션은 DNS 결과를 프로세스 수명 동안 캐시한다. `ipconfig /flushdns`, `resolvectl flush-caches` 같은 플러시를 하거나 재시작이 필요하며, TTL 만료를 기다리는 편이 안전할 때도 있다.
 
-이 세 함정을 피했다면 남은 것은 원칙 정리다.
+이 세 함정을 피했다면, 남은 것은 이 설계가 감수하는 제약이다.
+
+### 5.3 이 설계가 감수하는 제약
+
+사설 전용 구성은 공격면을 줄이는 대신 아래 제약을 남긴다. 모두 Microsoft 문서에 명시된 동작이며 이 설계에도 그대로 적용된다.
+
+- **사설 존이 공용 이름 해석을 덮어쓴다**: 같은 리소스 종류에 Private Endpoint가 없는 공용 전용 리소스가 있으면, 링크된 VNet에서 그 이름은 `NXDOMAIN`으로 응답될 수 있다. 이때는 VNet Link의 `Fallback to Internet` 옵션이나 수동 A 레코드가 필요하다.
+- **네트워크 계층 감사에 빈틈이 있다**: Private Endpoint NIC의 유효 경로와 보안 규칙은 포털에 표시되지 않고, Private Endpoint로 향하는 인바운드 트래픽은 NSG 흐름 로그에 남지 않는다. 1.3의 "접근 이력이 남는다" 요구사항은 서비스 진단 로그로만 충족된다.
+- **정적 IP를 지원하지 않는 리소스가 있다**: AKS, Application Gateway, HDInsight, Recovery Services 자격 증명 모음, 서드파티 Private Link 서비스에는 정적 IP를 지정할 수 없다. 리소스 종류를 늘릴 때는 정적 IP 지원 여부를 먼저 확인해야 한다.
+- **비용이 별도로 발생한다**: Private Endpoint는 시간당 요금과 처리 데이터량 요금이 부과된다.
 
 ---
 
@@ -353,5 +370,8 @@ Private Endpoint와 DNS 레코드를 새로 만들었는데도 특정 클라이�
 - [Azure Private Endpoint 개요](https://learn.microsoft.com/azure/private-link/private-endpoint-overview)
 - [Azure Private Endpoint DNS 구성](https://learn.microsoft.com/azure/private-link/private-endpoint-dns)
 - [Azure Private DNS Zone 개요](https://learn.microsoft.com/azure/dns/private-dns-overview)
-- [Azure OpenAI 네트워크 액세스 관리(가상 네트워크·Private Endpoint)](https://learn.microsoft.com/azure/ai-services/openai/how-to/manage-network-access)
-- [Azure Container Apps의 가상 네트워크 통합](https://learn.microsoft.com/azure/container-apps/vnet-custom-internal)
+- [Azure OpenAI를 가상 네트워크·Private Endpoint로 보호](https://learn.microsoft.com/azure/ai-services/openai/how-to/network)
+- [Azure Container Apps 환경의 네트워킹(서브넷 최소 크기)](https://learn.microsoft.com/azure/container-apps/networking)
+- [Azure Container Apps의 가상 네트워크 통합](https://learn.microsoft.com/azure/container-apps/vnet-custom)
+- [Private DNS Zone VNet Link의 인터넷 대체(Fallback to Internet)](https://learn.microsoft.com/azure/dns/private-dns-fallback)
+- [Azure Private Link 가격](https://azure.microsoft.com/pricing/details/private-link/)

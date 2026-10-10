@@ -218,10 +218,12 @@ patches:
 | 기준 | Helm | Kustomize |
 | :--- | :--- | :--- |
 | 단위 | 템플릿 + values | 패치 오버레이 |
-| 외부 차트 소비 | 매우 강함(Artifact Hub) | 약함(렌더 후 패치) |
+| 외부 차트 소비 | 강함(Artifact Hub) | 약함(렌더 후 패치) |
 | 학습 비용 | Go template·nindent 함정 | 낮음, kubectl 내장 |
 | 조건부 분기 | 풍부하나 복잡 | 제한적 |
 | 권장 조합 | Helm으로 패키징 → Kustomize/Argo CD로 환경 오버레이 | |
+
+표의 우열 표기는 각 도구 공식 문서의 기능 서술을 정리한 것으로, 독립 벤치마크 결과가 아니다. "학습 비용" 같은 항목은 팀의 Go template 숙련도에 따라 달라진다.
 
 ### 3.4 함정
 
@@ -238,7 +240,7 @@ GitOps는 "Git을 단일 진실 공급원으로 두고, 에이전트가 클러�
 
 위 다이어그램은 애플리케이션 저장소에서 CI가 이미지를 빌드·스캔·테스트하고 매니페스트 태그를 커밋하면, CD(Argo CD)가 Git을 읽어 클러스터에 sync하고 다시 라이브 상태와 비교하는 순환 루프를 보여준다. 사람은 Git에 PR을 올릴 뿐 클러스터에 `kubectl apply`를 치지 않는다.
 
-GitOps는 네 가지 원칙으로 요약된다.
+GitOps는 도구 제공 진영이 아니라 CNCF OpenGitOps 워킹그룹이 정리한 네 가지 원칙으로 정의된다.
 
 1. **선언적 기술**: 시스템 전체 상태를 선언적으로 표현한다.
 2. **버전 관리 + 불변 이력**: Git이 유일한 진실 공급원이며, 배포 이력은 커밋 이력이다.
@@ -251,7 +253,7 @@ GitOps는 네 가지 원칙으로 요약된다.
 - **경보만**: 규제 환경에서 변경 자체를 관찰하려면 알림만 보낸다.
 - **무시 대상 등록**: HPA가 조정하는 `replicas`, webhook이 주입하는 사이드카 등은 무시 규칙에 넣는다. 이걸 안 하면 Argo CD가 영원히 `OutOfSync`로 표시된다.
 
-풀(pull) 모델은 클러스터 내 컨트롤러가 Git을 읽으므로 외부에서 클러스터 API 접근이 필요 없다. 푸시(push) 모델(`kubectl apply` in CI)은 자격 증명이 CI에 남고 클러스터가 닫힌 망에 있으면 불가능하다. 폐쇄망·규제 환경일수록 pull이 정답이다.
+풀(pull) 모델은 클러스터 내 컨트롤러가 Git을 읽으므로 외부에서 클러스터 API 접근이 필요 없다. 푸시(push) 모델(`kubectl apply` in CI)은 자격 증명이 CI에 남고, 클러스터가 닫힌 망에 있으면 아예 성립하지 않는다. 그래서 폐쇄망·규제 환경일수록 pull 모델이 더 적합하다.
 
 ---
 
@@ -344,6 +346,10 @@ spec:
 
 Flux는 GitOps 툴킷을 컨트롤러 집합으로 분해한 구조다. `source-controller`(Git/Helm/OOCI 수집), `kustomize-controller`(렌더·적용), `helm-controller`(Helm 릴리스), `notification-controller`(이벤트·알림), `image-reflector/automation`(이미지 태그 자동 반영)이 각각 CRD를 관리한다.
 
+![Flux GitOps Toolkit 컨트롤러 구조 — source·kustomize·helm·notification 컨트롤러가 각각 CRD를 watch하고 클러스터 상태를 수렴시킨다](/assets/images/cloud/official-flux-gitops-toolkit.webp)
+
+출처: GitOps Toolkit Components — Flux (https://fluxcd.io/flux/components/)
+
 ```yaml
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: GitRepository
@@ -367,11 +373,13 @@ spec:
 
 | 항목 | ArgoCD | Flux |
 | :--- | :--- | :--- |
-| UI/가시성 | 강력한 웹 UI·앱 트리 | CLI 중심, Weave GitOps 등 별도 |
+| UI/가시성 | 웹 UI·앱 트리 제공 | CLI 중심, Weave GitOps 등 별도 |
 | 아키텍처 | 중앙 서버 + 단일 Application | 다중 컨트롤러 + 다중 CRD |
 | 멀티테넌시 | AppProject·RBAC | 네임스페이스별 Kustomization |
 | 이미지 자동 갱신 | ArgoCD Image Updater | image-automation 내장 |
 | 적합 | 플랫폼 팀·다수 앱 | 컨트롤러 조합·OOCI 중심 |
+
+두 도구의 비교는 각 프로젝트 공식 문서의 기능 서술을 정리한 것으로, 제3자 벤치마크가 아니라 프로젝트 진영의 자체 설명이다. "적합" 행 역시 절대 기준이 아니며, UI 필요성·멀티테넌시 요구·이미 OCI 저장소를 쓰는지에 따라 선택이 갈린다.
 
 ---
 
@@ -440,7 +448,9 @@ USER nonroot:nonroot
 ENTRYPOINT ["/app"]
 ```
 
-캐시가 깨지는 전형적 원인은 **`COPY . .`을 의존성 설치보다 먼저 두는 것**이다. 소스 한 줄만 바뀌어도 `go mod download` 레이어가 무효화된다. 레이어 순서를 "변경이 적은 것 → 많은 것"으로 배치하고, BuildKit `RUN --mount=type=cache`와 GHA/registry 캐시를 병행한다. 최종 이미지는 distroless로 줄여 공격 표면과 이미지 크기를 동시에 감소시킨다.
+캐시가 깨지는 전형적 원인은 **`COPY . .`을 의존성 설치보다 먼저 두는 것**이다. 소스 한 줄만 바뀌어도 `go mod download` 레이어가 무효화된다. 레이어 순서를 "변경이 적은 것 → 많은 것"으로 배치하고, BuildKit `RUN --mount=type=cache`와 GHA/registry 캐시를 병행한다.
+
+최종 이미지는 distroless로 줄인다. distroless `static-debian12` 베이스는 셸·패키지 관리자·일반 배포판 유틸리티를 담지 않으므로, 같은 바이너리를 `debian`/`alpine` 베이스에 올린 이미지보다 크기가 작고 공격 표면(쉘 탈출에 쓸 실행 파일)도 줄어든다. 대신 트레이드오프가 있다. 컨테이너 안에 셸이 없어 `kubectl exec -it ... sh`로 들어갈 수 없고, 장애 분석은 `kubectl debug`의 임시(ephemeral) 컨테이너에 의존해야 한다. 이미지 크기·공격 표면 감소는 베이스 이미지 구성에서 오는 정성적 이점이며, 절감 폭은 바이너리와 기존 베이스에 따라 달라 직접 측정해 확인하는 편이 좋다.
 
 ### 7.2 레지스트리
 
@@ -457,6 +467,8 @@ ENTRYPOINT ["/app"]
 | Rolling | 보통(재배포) | 1x(서지(surge) 포함) | 낮음 | 일반 무상태 서비스 |
 | Blue-Green | 즉시(트래픽 스위치) | 2x | 중간 | DB 스키마 호환성 이슈 |
 | Canary | 빠름 | 1x + α | 높음(메트릭 기반) | 트래픽 민감·매출 직결 |
+
+표의 리소스 비용은 상시 운영 파드를 1x로 둔 상대값이다. Rolling의 1x는 surge로 잠시 늘어나는 파드까지 포함한 값이고, Blue-Green의 2x는 두 버전을 동시에 유지하는 비용, Canary의 α는 분석·가중치용 추가 파드와 관측(메트릭·로그) 비용이다. "검증 정밀도"는 자동 분석 파이프라인을 붙였을 때를 전제로 한 값이라, analysis 없이 가중치만 올리는 카나리는 정밀도 이점이 거의 없다.
 
 Argo Rollouts는 `Rollout` CRD로 단계적 가중치와 자동 분석(analysis)을 정의한다.
 
@@ -497,7 +509,7 @@ kubectl argo rollouts promote myapp -n prod        # 일시정지 수동 해제
 kubectl argo rollouts abort   myapp -n prod        # 즉시 중단·안정 버전 복귀
 ```
 
-Flagger는 서비스 메시/인그레스와 결합해 트래픽 가중치를 자동 조정하고, 프로메테우스 메트릭 기반으로 실패 시 자동 롤백한다. 핵심 차이는 "누가 단계를 진행하나"이다. Argo Rollouts는 단계 정의 + 수동/자동 promote, Flagger는 메트릭 임계값 기반 완전 자동화에 강하다.
+Flagger는 서비스 메시/인그레스와 결합해 트래픽 가중치를 자동 조정하고, 프로메테우스 메트릭 기반으로 실패 시 자동 롤백한다. 두 도구의 차이는 "누가 단계를 진행하나"에 있다(양쪽 공식 문서 서술 기준). Argo Rollouts는 단계 정의 + 수동/자동 promote, Flagger는 메트릭 임계값 기반 자동 진행에 강하다. 실제로는 어느 쪽이든 `successCondition`·최소 표본 수를 잘못 잡으면 자동 판정이 무의미해지므로, 도구 선택보다 분석 지표 설계가 먼저다.
 
 ### 8.1 실전 함정
 
@@ -535,9 +547,21 @@ Flagger는 서비스 메시/인그레스와 결합해 트래픽 가중치를 자
 
 ## References
 
+도구의 동작·설정 서술은 아래 도구 공식 문서(도구 진영이 직접 쓴 문서)를 근거로 했고, GitOps의 정의·원칙과 선언적 관리 개념은 도구 중립 문서를 근거로 했다. 도구 비교 표의 우열 표기는 벤더 문서의 기능 서술이므로 독립 검증 결과가 아니다.
+
+**도구 중립·독립 문서**
+
+- OpenGitOps (CNCF) — [GitOps Principles (선언적·버전 관리·자동 적용·지속적 조정)](https://opengitops.dev/)
+- Kubernetes — [Declarative Management of Kubernetes Objects Using Configuration Files](https://kubernetes.io/docs/tasks/manage-kubernetes-objects/declarative-config/) (문서 라이선스 CC BY 4.0)
+- Kubernetes — [Debugging with an ephemeral debug container (셸 없는 이미지 진단)](https://kubernetes.io/docs/tasks/debug/debug-application/debug-running-pod/) (문서 라이선스 CC BY 4.0)
+
+**도구 공식 문서(벤더 문서)**
+
 - HashiCorp Terraform — [Backend configuration: S3 (DynamoDB 락·암호화)](https://developer.hashicorp.com/terraform/language/backend/s3)
 - HashiCorp Terraform — [Modules (버전 고정·재사용)](https://developer.hashicorp.com/terraform/language/modules)
 - Argo CD — [Sync Options (prune·selfHeal·ServerSideApply)](https://argo-cd.readthedocs.io/en/stable/user-guide/sync-options/)
-- Flux — [GitOps Toolkit Components (source/kustomize/helm controller)](https://fluxcd.io/flux/components/)
+- Flux — [GitOps Toolkit Components (source/kustomize/helm controller)](https://fluxcd.io/flux/components/) (본문 도식: <https://fluxcd.io/img/diagrams/gitops-toolkit.png>)
 - Helm — [Charts (템플릿·values·의존성)](https://helm.sh/docs/topics/charts/)
 - Argo Rollouts — [Canary Strategy (가중치·analysis)](https://argo-rollouts.readthedocs.io/en/stable/features/canary/)
+- Flagger — [How It Works (메트릭 기반 분석·자동 롤백)](https://docs.flagger.app/usage/how-it-works)
+- GoogleContainerTools/distroless — [distroless 이미지 (셸·패키지 관리자 미포함)](https://github.com/GoogleContainerTools/distroless)

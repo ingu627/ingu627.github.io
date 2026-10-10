@@ -154,6 +154,10 @@ az containerapp ingress traffic set --name aca-webui -g rg-chat-prod \
 
 새 리비전을 `--set-active-revision false`로 만들면 트래픽을 받지 않은 채로 기동된다. 이 상태에서 헬스 프로브와 스모크 테스트를 통과시킨 뒤에야 3번 명령으로 트래픽을 준다.
 
+![ACA 리비전 트래픽 분할: 리비전 1에 80%, 리비전 2에 20%가 분배되는 구조](/assets/images/azure/official-azure-cicd-acr-container-apps.webp)
+
+*출처: Azure Container Apps의 리비전, 가중치 및 레이블 — Microsoft Learn (<https://learn.microsoft.com/ko-kr/azure/container-apps/revisions>)*
+
 ### 3.2 롤백은 트래픽을 되돌리는 일
 
 장애가 감지되면 새 리비전을 지울 필요가 없다. 트래픽 가중치를 이전 리비전으로 돌리면 끝이다. 이전 리비전 이름은 목록에서 확인한다.

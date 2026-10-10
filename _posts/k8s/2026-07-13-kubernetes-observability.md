@@ -249,12 +249,17 @@ inhibit_rules:
 
 컨테이너 로그는 기본적으로 stdout/stderr로 나가고, kubelet이 노드의 `/var/log/pods/...`에 JSON으로 저장한 뒤 로테이션한다(기본 10Mi × 5). **따라서 노드에 남는 로그는 휘발성**이며, 클러스터 밖으로 반출하지 않으면 파드 재생성/노드 교체 시 사라진다.
 
+![노드 수준 로깅 구조 — 파드의 stdout/stderr가 노드의 로그 파일로 남고, 데몬셋 로깅 에이전트가 이를 읽어 로깅 백엔드로 전달한다](/assets/images/k8s/official-kubernetes-observability.webp)
+출처: Kubernetes Documentation — Logging Architecture (https://kubernetes.io/docs/concepts/cluster-administration/logging/)
+
+위 그림은 쿠버네티스 공식 문서의 노드 수준 로깅 구조다. 애플리케이션 컨테이너가 stdout/stderr로 내보낸 로그가 노드의 로그 파일로 남고, 노드 에이전트 파드(이 글의 Fluent Bit 데몬셋)가 그 파일을 읽어 백엔드로 보내는 경로를 보여준다.
+
 ### 5.1 Loki·EFK·관리형 비교
 
 | 방식 | 구성 | 장점 | 단점 |
 | :--- | :--- | :--- | :--- |
-| Loki + Promtail/Alloy | 레이블 인덱스만 저장, 청크는 오브젝트 스토리지 | 저렴, Grafana 통합, LogQL | 전문 검색(full-text)이 약함(최근 버전에서 개선) |
-| EFK/ECK | Fluent Bit → Elasticsearch → Kibana | 강력한 검색/집계 | 비용·운영 부담 큼, JVM 튜닝 필요 |
+| Loki + Promtail/Alloy | 레이블 인덱스만 저장, 청크는 오브젝트 스토리지 | 인덱스가 레이블뿐이라 저장 비용이 낮음, Grafana 통합, LogQL | 역색인 기반 전문 검색(full-text)은 없고 레이블 + 정규식/필터 질의로 조회 |
+| EFK/ECK | Fluent Bit → Elasticsearch → Kibana | 역색인 기반 전문 검색·집계 질의 | 비용·운영 부담 큼, JVM 튜닝 필요 |
 | 관리형 | CloudWatch/Fluent Bit → S3, Cloud Logging | 운영 부담 최소 | 비용 예측 어려움, 락인 |
 
 ### 5.2 구조화 로그와 LogQL
@@ -333,7 +338,7 @@ spec:
 
 ## 7. kubectl 디버깅 워크플로
 
-순서를 고정해 두면 추측을 줄일 수 있다: **get → describe → logs → exec → events**. `describe`를 건너뛰고 로그부터 보는 습관이 가장 흔한 시간 낭비다. 스케줄링 실패·이미지 풀 실패는 애플리케이션 로그에 아무것도 남기지 않는다.
+순서를 고정해 두면 추측을 줄일 수 있다: **get → describe → logs → exec → events**. `describe`를 건너뛰고 로그부터 보는 습관은 흔한 시간 낭비다. 스케줄링 실패·이미지 풀 실패는 애플리케이션 로그에 아무것도 남기지 않는다.
 
 ![증상별 kubectl 디버깅 분기](/assets/images/k8s/k8s-debug-decision-flow.png)
 
@@ -357,7 +362,7 @@ kubectl describe node ip-10-0-3-14
 kubectl logs api-7d9f -n prod -c api --previous --tail=200
 kubectl logs -n prod -l app=api --since=10m --prefix
 
-# 4) 살아 있는 파드 내부 확인 (임시 컨테이너는 distroless에서 유일한 수단)
+# 4) 살아 있는 파드 내부 확인 (임시 컨테이너는 distroless에서 사실상 유일한 수단)
 kubectl exec -it api-7d9f -n prod -c api -- sh
 kubectl debug -it api-7d9f -n prod --image=nicolaka/netshoot --target=api
 
@@ -381,7 +386,7 @@ kubectl get events -n prod --field-selector reason=FailedScheduling
 | CrashLoopBackOff | `logs --previous` | 앱 시작 실패(설정/DB 미도달), OOM, 잘못된 entrypoint | 설정 수정, `initialDelaySeconds`/liveness 조정 |
 | ImagePullBackOff / ErrImagePull | `describe pod` Events | 이미지 태그 오타(`latest` 미존재), private registry 인증 실패 | `imagePullSecrets` 추가, imagePullSecret의 dockerconfig 재생성 |
 | Pending (무한) | `describe pod` → FailedScheduling | requests 과다로 노드에 자리 없음, taint/toleration 불일치, PVC 바인딩 대기 | requests 하향, toleration/affinity 추가, StorageClass 확인 |
-| OOMKilled (139/137) | `describe` Last State | memory limit 초과(누수 또는 limit 과소) | limit 상향 + heap 설정(`-Xmx` ≈ limit×0.75) 정합화 |
+| OOMKilled (139/137) | `describe` Last State | memory limit 초과(누수 또는 limit 과소) | limit 상향 + heap 설정(경험칙으로 `-Xmx` ≈ limit×0.75) 정합화 |
 | Evicted | `describe node` DiskPressure/MemoryPressure | 노드 디스크 압박(로그/이미지), 메모리 부족 | 로그 반출, image GC 임계치 조정, 노드 증설 |
 | 노드 NotReady | `describe node` Conditions, `kubelet` 상태 | kubelet 행(hang), 런타임(containerd) 다운, CNI/디스크 압박, 네트워크 단절 | 노드 드레인 후 교체, kubelet/containerd 재시작 |
 | Terminating에서 안 사라짐 | `describe pod` finalizers | finalizer 미처리, kubelet 미응답 | 원인 오퍼레이터 확인, 최후 수단 `--force --grace-period=0` |

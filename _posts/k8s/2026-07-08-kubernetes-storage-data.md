@@ -208,6 +208,10 @@ CSI(Container Storage Interface)는 kubelet·컨트롤러가 벤더 드라이버
 - **external-provisioner / attacher / resizer / snapshotter**: 사이드카로 붙어 CSI 호출을 쿠버네티스 오브젝트와 연결한다.
 - **토폴로지**: `NodeGetInfo`가 AZ·리전을 보고하면 스케줄러가 반영한다. EBS는 AZ 스코프, EFS는 리전 스코프다.
 
+![CSI 드라이버와 사이드카(external-provisioner/attacher)의 배치](/assets/images/k8s/official-kubernetes-storage-data.webp)
+
+출처: Kubernetes Blog — Dynamically Expand Volume with CSI and Kubernetes (https://kubernetes.io/blog/2018/08/02/dynamically-expand-volume-with-csi-and-kubernetes/). 위 도식은 노드마다 kubelet과 CSI 볼륨 드라이버(node 플러그인)가 위치하고, 컨트롤러 측의 external-provisioner·external-attacher 사이드카가 API 서버·컨트롤러 매니저와 통신하는 구조를 보여준다. 위 구성 요소 목록에서 "무엇이 어디에서 도는가"를 그림으로 대응시킨 것으로, 노드 플러그인이 노드별 DaemonSet으로 배치되고 사이드카가 컨트롤러 Deployment에 붙는다는 점을 확인할 수 있다.
+
 ### 4.1 예제 3: CSI 스냅샷 생성과 복원
 
 스냅샷은 `snapshot.storage.k8s.io/v1` CRD(VolumeSnapshotClass/VolumeSnapshot/VolumeSnapshotContent)와 스냅샷 컨트롤러 설치가 선행돼야 한다.
@@ -384,20 +388,20 @@ DR 전략은 RPO/RTO로 결정한다. **콜드 DR**(백업에서 몇 시간 내 
 
 ## 7. 성능: 로컬 SSD vs 네트워크 스토리지
 
-데이터베이스 성능은 대부분 **fsync 지연(latency)** 과 **IOPS** 에서 결정된다.
+데이터베이스 성능은 대부분 **fsync 지연(latency)** 과 **IOPS** 에서 결정된다. 아래 지연 값은 벤더 스펙 수치가 아니라 µs·ms 자릿수를 비교하기 위한 개략치이고, IOPS·처리량은 AWS EBS 공식 문서가 밝힌 볼륨당 프로비저닝 상한(벤더 스펙)이다[^1][^2]. 실제 달성치는 인스턴스 타입 한계·파일시스템·동시성에 따라 이보다 낮을 수 있으므로, 용량 계획은 자체 워크로드로 측정한 값으로 확정한다.
 
 | 유형 | 지연 | IOPS 특성 | 용도 |
 | :--- | :--- | :--- | :--- |
 | 로컬 NVMe(instance store) | 수십~수백 µs | 수십만 IOPS | 캐시, 임시 처리, 복제 가능한 상태 |
-| 프로비저닝된 블록(EBS gp3) | 수백 µs~수 ms | 기본 3,000 IOPS / 125 MiB/s, 최대 16,000 / 1,000 MiB/s | 일반 DB, 대부분의 영속 볼륨 |
-| 고성능 블록(io2 Block Express) | 수백 µs~1 ms | 최대 256,000 IOPS / 4,000 MiB/s | 대규모 OLTP |
+| 프로비저닝된 블록(EBS gp3) | 수백 µs~수 ms | 기본 3,000 IOPS / 125 MiB/s, 추가 프로비저닝 시 최대 80,000 IOPS / 2,000 MiB/s[^1] | 일반 DB, 대부분의 영속 볼륨 |
+| 고성능 블록(io2 Block Express) | 수백 µs~1 ms | 최대 256,000 IOPS(Nitro 기반 인스턴스) / 4,000 MiB/s[^2] | 대규모 OLTP |
 | 네트워크 파일(EFS/NFS) | 수 ms | 처리량 기반, 메타데이터 연산 느림 | 공유 파일, RWX가 필요한 앱 |
 | 오브젝트(S3) | 수십 ms | 무제한 처리량 | 백업, 미디어, 데이터 레이크 |
 
 실전 규칙:
 
 - WAL과 데이터 파일을 **같은 볼륨에 두면 fsync 경합**이 커진다. 가능하면 `walStorage`를 분리한다.
-- gp3는 IOPS와 처리량을 **독립적으로** 올릴 수 있다. 초당 3,000 IOPS 미달이면 `iops` 파라미터를 조정한다.
+- gp3는 IOPS와 처리량을 **독립적으로** 올릴 수 있다. 기본값(3,000 IOPS / 125 MiB/s)으로 부족하면 `iops`·`throughput` 파라미터로 올린다(각각 최대 80,000 IOPS / 2,000 MiB/s, 추가 비용 발생)[^1].
 - EFS는 `Elastic` 처리량 모드가 무난하지만 `stat`/`fsync`가 느리므로 DB 데이터 디렉터리로는 부적합하다.
 - 노드 로컬 디스크를 쓰더라도 **데이터 복제는 애플리케이션 계층에서** 보장해야 한다(예: 3복제 인스턴스 + anti-affinity).
 - 노드에 동시 붙는 볼륨 수와 인스턴스 제한(EBS는 인스턴스 타입별 볼륨 수·대역폭 한계) 을 사전에 확인한다.
@@ -516,3 +520,7 @@ resource "kubernetes_storage_class_v1" "gp3" {
 - Kubernetes Documentation — [Volume Snapshots (CSI 스냅샷 CRD)](https://kubernetes.io/docs/concepts/storage/volume-snapshots/)
 - Kubernetes Documentation — [StatefulSets (정체성, volumeClaimTemplates)](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/)
 - Velero Documentation — [File System Backup (노드 에이전트 기반 백업/복원)](https://velero.io/docs/v1.14/file-system-backup/)
+- AWS Documentation — [Amazon EBS User Guide (볼륨 타입과 성능 상한)](https://docs.aws.amazon.com/ebs/latest/userguide/ebs-volume-types.html)
+
+[^1]: AWS 공식 문서(벤더 스펙) — [General Purpose SSD (gp3) volumes](https://docs.aws.amazon.com/ebs/latest/userguide/general-purpose.html) — 3,000 IOPS·125 MiB/s가 기본 포함이고, 추가 프로비저닝 시 볼륨당 최대 80,000 IOPS·2,000 MiB/s(단, Outposts는 16,000 IOPS·1,000 MiB/s). 실제 달성치는 인스턴스 타입 대역폭 한계의 영향을 받는다.
+[^2]: AWS 공식 문서(벤더 스펙) — [Provisioned IOPS SSD (io2) Block Express volumes](https://docs.aws.amazon.com/ebs/latest/userguide/provisioned-iops.html) — 최대 256,000 IOPS·4,000 MiB/s는 Nitro 기반 인스턴스 기준이며, 그 외 인스턴스에서는 최대 32,000 IOPS까지 달성한다.

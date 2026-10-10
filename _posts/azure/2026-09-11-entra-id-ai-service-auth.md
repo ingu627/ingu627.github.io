@@ -32,7 +32,7 @@ last_modified_at: 2026-10-10
 
 자체 회원가입과 비밀번호 관리를 유지하는 비용은 눈에 잘 띄지 않는다. 처음엔 폼 하나, 해시 함수 하나면 끝나 보이지만 시간이 지나면 행정 부채로 돌아온다.
 
-- **비밀번호 재설정 문의**: 사용자가 많아질수록 재설정 요청은 선형으로 늘어난다. 인증 로직을 자체 구현했다면 이 문의를 처리할 운영 절차와 담당자까지 같이 떠안는다.
+- **비밀번호 재설정 문의**: 사용자가 늘면 재설정·잠금 해제 요청도 함께 늘어난다. 인증 로직을 자체 구현했다면 이 문의를 처리할 운영 절차와 담당자까지 같이 떠안는다.
 - **퇴사자 계정 방치**: 사내 인사 시스템에서 계정이 사라져도 서비스 DB에는 활성 레코드가 남는다. 회수 시점을 별도 배치로 챙기지 않으면 무기한 열린 문이 된다.
 - **컴플라이언스 요구**: 감사 대응에서 "누가 언제 어떤 모델에 접근했는가"를 계정 단위로 증명해야 하는데, 자체 계정 체계는 이 증적을 인사 시스템과 연결하기 어렵다.
 
@@ -66,7 +66,7 @@ Entra ID 단일 인증으로 전환하면 이 비용 구조가 바뀐다. 계정
 
 - **Application (client) ID**: 토큰의 `aud`(Audience)가 되는 식별자다. 서비스는 이 값을 `MICROSOFT_CLIENT_ID`류 환경 변수로 들고 있다가, 돌아온 토큰의 `aud`가 자기 ID와 일치하는지 확인한다.
 - **Redirect URI**: 인증 후 IdP가 인가 코드를 돌려줄 주소다. Open WebUI 계열 서비스는 `/oauth/<provider>/callback` 규약을 쓰므로 `https://chat.example.com/oauth/microsoft/callback` 형태가 된다. 여기서 도메인은 공개 예시 도메인이다. 운영에서는 HTTPS만 허용하고, 등록된 URI와 정확히 일치할 때만 콜백을 수용한다.
-- **Scope**: `openid profile`을 최소로 요청한다. `openid`는 OIDC 표준 클레임을, `profile`은 이름·사용자 주체(Prefers) 정보를 담는다. 이메일·그룹 같은 추가 클레임이 필요하면 그때 범위를 넓히되, 필요 이상의 디렉터리 권한은 요구하지 않는다.
+- **Scope**: `openid profile`을 최소로 요청한다. `openid`는 `sub`·`iss`·`aud`·`exp` 같은 ID 토큰 필수 클레임을, `profile`은 이름·`preferred_username` 같은 프로필 클레임을 담는다[^1]. 이메일·그룹 같은 추가 클레임이 필요하면 그때 범위를 넓히되, 필요 이상의 디렉터리 권한은 요구하지 않는다.
 - **Client Secret**: 코드 교환(Code Exchange) 단계에서 서비스가 자기 자신임을 증명하는 비밀값이다. 컨테이너 환경에서는 절대 이미지에 굽지 않고 시크릿 저장소에서 주입한다.
 
 ### 2.2 Authorization Code Flow 4단계
@@ -90,7 +90,7 @@ User          Service(Web)              Entra ID
  │<─ 8. 세션 쿠키 발급 ─┤                  │
 ```
 
-1. **인가 요청(Authorize)**: 서비스가 `client_id`, `redirect_uri`, `scope`, `state`를 붙여 IdP authorize 엔드포인트로 사용자를 보낸다. `state`는 CSRF(Cross-Site Request Forgery) 방어를 위한 임의 난수로, 콜백 시 원래 값과 대조한다.
+1. **인가 요청(Authorize)**: 서비스가 `client_id`, `redirect_uri`, `scope`, `state`를 붙여 IdP authorize 엔드포인트로 사용자를 보낸다. `state`는 CSRF(Cross-Site Request Forgery) 방어를 위한 임의 난수로, 콜백 시 원래 값과 대조한다[^2].
 2. **사용자 인증**: 사용자는 IdP 화면에서 로그인하고, 조건부 액세스 정책이 걸려 있으면 MFA까지 수행한다. 서비스는 이 과정을 전혀 관여하지 않는다.
 3. **코드 콜백**: IdP가 등록된 Redirect URI로 `code`를 실어 되돌린다. 이 코드는 일회용이며 수명이 매우 짧다.
 4. **토큰 교환(Token Exchange)**: 서비스가 백채널(Back-channel)에서 `code` + `client_secret`을 IdP 토큰 엔드포인트로 보내 `id_token`과 `access_token`을 받는다.
@@ -99,11 +99,15 @@ User          Service(Web)              Entra ID
 
 ### 2.3 토큰 검증: 서명, aud, iss
 
-서비스가 토큰을 받았다고 해서 곧바로 신뢰하면 안 된다. 검증은 세 축으로 한다.
+서비스가 토큰을 받았다고 해서 곧바로 신뢰하면 안 된다. 검증은 세 축으로 한다. OIDC Core의 ID 토큰 검증 절차도 서명·`iss`·`aud`·`exp`·`nonce`를 같은 순서로 확인하도록 규정한다[^3].
 
 - **서명(Signature)**: IdP가 공개한 JWKS(JSON Web Key Set)로 서명을 검증한다. `OPENID_PROVIDER_URL`에 해당하는 `/.well-known/openid-configuration` 문서가 `jwks_uri`를 알려주며, 키는 주기적으로 갱신된다.
 - **aud(Audience)**: 토큰의 `aud`가 자기 client ID와 일치해야 한다. 다른 앱용 토큰을 재사용하는 것을 막는다.
 - **iss(Issuer)**: 발급자가 자기 테넌트(`https://login.microsoftonline.com/<tenant>/v2.0`)인지 확인한다. `common` 엔드포인트를 쓰면 다중 테넌트가 섞일 수 있으므로, 단일 테넌트 서비스는 테넌트를 명시한다.
+
+![Entra ID Authorization Code Flow 공식 도식: 브라우저·앱·Microsoft Entra 사이의 인가 코드 교환과 id_token 검증(서명·issuer·audience·nonce·expiry) 단계](/assets/images/azure/official-entra-id-ai-service-auth.webp)
+
+*출처: Microsoft identity platform and OpenID Connect protocol (OpenID Connect authorization flow diagram) — Microsoft Learn (<https://learn.microsoft.com/en-us/entra/identity-platform/v2-protocols-oidc>), CC BY 4.0. 8단계 토큰 교환 직후 `id_token`의 서명·issuer·audience·nonce·expiry를 검증하고, 10~11단계에서 서명 키를 JWKS로 받아오는 순서가 표시되어 있다. 다이어그램에는 위 4단계 설명에 없는 PKCE(Proof Key for Code Exchange) 챌린지도 함께 그려져 있다.*
 
 세 검증을 통과한 뒤에야 `roles` 클레임을 읽는다. 검증 없는 클레임 신뢰는 곧 인가 우회다. 검증된 `roles`를 서비스 권한으로 옮기는 일이 다음 절의 주제다.
 
@@ -152,7 +156,7 @@ User          Service(Web)              Entra ID
 
 역할은 사용자 계정이 아니라 그룹에 할당(Enterprise Application → Users and groups)하는 것을 원칙으로 한다. 그러면 인사 이동 시 그룹 멤버십만 바꾸면 되고, 개별 사용자에 붙은 권한이 남아 있지 않다.
 
-한 가지 중요한 전제가 있다. **`roles` 클레임이 토큰에 실리려면 해당 사용자가 앱에 명시적으로 할당되어 있어야 한다.**
+한 가지 중요한 전제가 있다. **`roles` 클레임이 토큰에 실리려면 해당 사용자가 앱에 명시적으로 할당되어 있어야 한다.**[^4]
 
 > **주의:** 그룹에만 넣고 앱에 그룹을 할당하지 않으면, 로그인은 되지만 역할이 비어 인가가 실패한다. 배포 직후 "로그인은 되는데 권한이 없다" 문의의 대부분이 여기서 나온다.
 
@@ -214,6 +218,8 @@ Entra ID를 붙였다고 자체 인증 경로가 자동으로 사라지지는 �
 
 이 서비스는 세션 JWT 만료를 `8h`로 잡았다. 만료를 짧게 하면 탈취된 토큰의 유효 기간이 줄어 보안은 올라가지만, 사용자는 하루에도 몇 번씩 재로그인해야 한다. 사내 업무용 도구에서 8시간은 "출근해서 한 번 로그인하면 퇴근까지 유지"에 해당하는 값으로, 보안과 사용성 사이에서 실용적인 지점이다.
 
+비교 기준이 되는 IdP 쪽 수명은 서비스 세션과 별개다. Microsoft identity platform 문서 기준으로 ID 토큰의 기본 수명은 1시간이고, 토큰 수명 정책으로 10분~1일 범위에서만 조정할 수 있다. Refresh token의 최대 비활성 기간은 기본 90일로, 정책으로 바꿀 수 없는 값으로 문서에 적혀 있다[^5]. 서비스 세션 8시간은 이 값들과 독립적으로 정한 자체 세션 쿠키 만료다.
+
 만료를 더 줄여야 하는 요구(예: 관리자 계정)가 있으면 전체를 낮추기보다 역할별로 차등을 두는 편이 낫다.
 
 ### 5.2 Secure 쿠키: HTTPS 전용 강제
@@ -223,7 +229,7 @@ WEBUI_SESSION_COOKIE_SECURE: true
 WEBUI_AUTH_COOKIE_SECURE: true
 ```
 
-`Secure` 플래그가 붙은 쿠키는 HTTPS 연결에서만 전송된다. 평문 HTTP로 한 번이라도 오가면 쿠키가 그대로 노출되므로, 이 플래그는 선택이 아니라 기본이다. 네트워크가 사설망이더라도 브라우저와 서비스 사이 구간은 TLS로 감싼다.
+`Secure` 플래그가 붙은 쿠키는 HTTPS 연결에서만 전송된다. 평문 HTTP로 한 번이라도 오가면 쿠키가 그대로 노출되므로, 이 플래그는 선택이 아니라 기본이다[^6]. 네트워크가 사설망이더라도 브라우저와 서비스 사이 구간은 TLS로 감싼다.
 
 ### 5.3 API 키 기능 비활성화
 
@@ -262,6 +268,8 @@ SSO의 실질적 이득은 일상 운영에서 드러난다. 세 가지 시나�
 
 인증 이벤트(로그인 성공·실패, MFA 수행, 조건부 액세스 차단)는 모두 Entra ID 로그인 로그에 남는다. 서비스 쪽은 자체 감사 로그로 "누가 어떤 모델과 대화했는가"를 기록하고, 두 로그를 계정 주체(User Principal)로 이어 붙이면 접근 이력 전체가 성립한다. 인증 증적과 사용 증적을 각자 잘하는 시스템에 나눠 맡긴 형태다.
 
+이 구성에도 남는 제약이 있다. 인증이 IdP 한 곳에 종속되므로 Entra ID나 그 경로가 멈추면 신규 로그인은 막히고, 이미 발급된 세션만 만료까지 살아남는다. 또 역할 변경은 그룹 편집 즉시가 아니라 다음 토큰 발급 시점에 반영되므로, 세션 수명 8시간이 곧 권한 회수의 최대 지연이 된다.
+
 이 구성을 관통하는 원칙은 다음 네 가지다.
 
 - **인증은 IdP, 인가는 서비스.** 서비스는 서명된 토큰의 역할 정보만 읽는다.
@@ -273,8 +281,25 @@ SSO의 실질적 이득은 일상 운영에서 드러난다. 세 가지 시나�
 
 ## References
 
-- [Microsoft identity platform and OpenID Connect protocol](https://learn.microsoft.com/en-us/entra/identity-platform/v2-protocols-oidc)
+**표준·독립 자료**
+
+- [RFC 6749 — The OAuth 2.0 Authorization Framework](https://www.rfc-editor.org/rfc/rfc6749)
+- [RFC 9700 — Best Current Practice for OAuth 2.0 Security (BCP 240)](https://www.rfc-editor.org/rfc/rfc9700)
+- [OpenID Connect Core 1.0](https://openid.net/specs/openid-connect-core-1_0.html)
+- [OWASP Session Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html)
+
+**벤더 문서 (Microsoft)**
+
+- [Microsoft identity platform and OpenID Connect protocol](https://learn.microsoft.com/en-us/entra/identity-platform/v2-protocols-oidc) — 본문 도식 출처
 - [Microsoft identity platform and OAuth 2.0 authorization code flow](https://learn.microsoft.com/en-us/entra/identity-platform/v2-oauth2-auth-code-flow)
 - [Add app roles to your application and receive them in the token](https://learn.microsoft.com/en-us/entra/identity-platform/howto-add-app-roles-in-apps)
 - [Register an application with the Microsoft identity platform](https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-register-app)
 - [ID tokens in the Microsoft identity platform](https://learn.microsoft.com/en-us/entra/identity-platform/id-tokens)
+- [Configurable token lifetimes in Microsoft Entra ID](https://learn.microsoft.com/en-us/entra/identity-platform/configurable-token-lifetimes)
+
+[^1]: [OpenID Connect Core 1.0 — Standard Claims (5.4)](https://openid.net/specs/openid-connect-core-1_0.html#StandardClaims)
+[^2]: [RFC 6749 — 10.12. Cross-Site Request Forgery](https://www.rfc-editor.org/rfc/rfc6749#section-10.12) · [RFC 9700 — 4.7. Cross-Site Request Forgery](https://www.rfc-editor.org/rfc/rfc9700#section-4.7)
+[^3]: [OpenID Connect Core 1.0 — ID Token Validation (3.1.3.7)](https://openid.net/specs/openid-connect-core-1_0.html#IDTokenValidation)
+[^4]: [Microsoft Learn — Add app roles to your application and receive them in the token](https://learn.microsoft.com/en-us/entra/identity-platform/howto-add-app-roles-in-apps)
+[^5]: [Microsoft Learn — Configurable token lifetimes (ID 토큰 기본 1시간·최소 10분·최대 1일, refresh token 최대 비활성 기간 90일 — 벤더 문서 기준값)](https://learn.microsoft.com/en-us/entra/identity-platform/configurable-token-lifetimes)
+[^6]: [OWASP Session Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html)

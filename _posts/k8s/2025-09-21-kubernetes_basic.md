@@ -15,7 +15,7 @@ last_modified_at: 2026-10-08
 
 현대 소프트웨어 아키텍처가 모놀리스에서 마이크로서비스로, 그리고 대규모 분산 AI 워크로드로 전환되면서 애플리케이션의 패키징과 배포, 운영 인프라는 근본적인 변화를 겪었다.
 
-과거 가상 머신(VM, Virtual Machine) 기반의 가상화는 하드웨어 수준의 에뮬레이션(Hypervisor)과 게스트 OS(Guest OS) 오버헤드로 인해 리소스 낭비가 심하고 프로비저닝 속도가 느렸다. 이를 대체한 컨테이너(Container) 기술은 운영체제 커널을 공유하면서 프로세스 레벨에서 완벽한 격리와 리소스 통제를 제공하는 **운영체제 수준의 가상화(OS-level Virtualization)**를 실현했다.
+과거 가상 머신(VM, Virtual Machine) 기반의 가상화는 하드웨어 수준의 에뮬레이션(Hypervisor)과 게스트 OS(Guest OS) 계층이 추가되면서 그만큼의 CPU·메모리 오버헤드가 붙고, 게스트 OS 부팅 절차 때문에 프로비저닝 속도가 느렸다. 이를 대체한 컨테이너(Container) 기술은 운영체제 커널을 공유하면서 프로세스 수준의 격리와 리소스 통제를 제공하는 **운영체제 수준의 가상화(OS-level Virtualization)**를 실현했다.
 
 이 글에서는 컨테이너를 지탱하는 **Linux 커널 프리미티브(Namespaces, Cgroups, OverlayFS)**의 물리적 동작 원리, **OCI(Open Container Initiative)** 표준과 런타임 계층 구조, 그리고 수천 개의 컨테이너를 선언적으로 오케스트레이션하는 **쿠버네티스(Kubernetes) 컨트롤 플레인의 내부 아키텍처**를 시스템 엔지니어링 관점에서 심층 분석한다.
 
@@ -48,7 +48,7 @@ last_modified_at: 2026-10-08
 
 ### 1.1 Namespaces: 시스템 뷰(View)의 격리
 
-네임스페이스는 특정 프로세스가 볼 수 있는 시스템 리소스의 가시성(Visibility)을 제한한다. 프로세스가 `clone()` 시스템 콜을 호출할 때 전달하는 플래그에 따라 독립된 공간이 생성된다.
+네임스페이스는 특정 프로세스가 볼 수 있는 시스템 리소스의 가시성(Visibility)을 제한한다[^1]. 프로세스가 `clone()` 시스템 콜을 호출할 때 전달하는 플래그에 따라 독립된 공간이 생성된다.
 
 ```
 주요 Linux Namespaces 6대 영역:
@@ -70,12 +70,13 @@ last_modified_at: 2026-10-08
 
 - **CPU 제한**: CFS(Completely Fair Scheduler) 할당량을 조절한다.
   - `cpu.cfs_period_us = 100000` (100ms) 기준, `cpu.cfs_quota_us = 200000` (200ms)으로 설정하면 해당 프로세스는 멀티코어에서 최대 2개의 vCPU에 해당하는 연산량만 할당받는다.
+  - 상한을 넘겨 실행하려는 프로세스는 종료되지 않고 다음 period까지 대기(Throttling)하므로, 상한을 낮게 잡으면 응답 지연이 늘어난다.
 - **메모리 제한 및 OOM Killer**:
   - `memory.limit_in_bytes`를 초과하여 프로세스가 메모리를 할당하려고 하면, 커널의 OOM(Out of Memory) Killer가 작동하여 해당 프로세스(컨테이너)에 `SIGKILL`을 전송하고 프로세스를 강제 종료한다.
 
 ### 1.3 OverlayFS: 계층형 Copy-on-Write 파일 시스템
 
-컨테이너 이미지는 수 기가바이트에 달하지만, 컨테이너 생성은 수십 밀리초 만에 완료된다. 이는 **Union Mount** 기술인 **OverlayFS**의 계층 구조 덕분이다.
+컨테이너 이미지는 수 기가바이트에 달하지만, 이미지 레이어가 노드에 캐시된 상태라면 컨테이너 생성은 수십 밀리초 수준에서 끝난다. 이는 **Union Mount** 기술인 **OverlayFS**의 계층 구조 덕분이다. 레이어를 처음 내려받아야 한다면 생성 시간은 이미지 크기와 레지스트리 대역폭에 좌우된다.
 
 ```
 OverlayFS 4계층 아키텍처:
@@ -92,13 +93,15 @@ OverlayFS 4계층 아키텍처:
 
 - 이미지 레이어들은 불변의 **읽기 전용(Read-only, lowerdir)**으로 수많은 컨테이너 간에 메모리 상에서 공유된다.
 - 컨테이너가 실행되면 얇은 **읽기/쓰기 전용 레이어(upperdir)**가 최상단에 얹힌다.
-- 컨테이너가 기존 파일을 수정할 때만 하위 레이어에서 상위 레이어로 파일을 복사한 뒤 수정하는 **CoW(Copy-on-Write)** 메커니즘이 작동하여 디스크 공간과 I/O를 획기적으로 절약한다.
+- 컨테이너가 기존 파일을 수정할 때만 하위 레이어에서 상위 레이어로 파일을 복사한 뒤 수정하는 **CoW(Copy-on-Write)** 메커니즘이 작동하여 디스크 사용량과 쓰기 I/O를 줄인다. 다만 컨테이너가 파일을 많이 수정할수록 최상단 쓰기 레이어(upperdir)는 커지고, 이 레이어는 컨테이너가 삭제될 때 함께 사라지므로 영속 데이터는 별도 볼륨으로 빼야 한다.
+
+세 프리미티브는 모두 호스트 커널을 공유하는 프로세스에 적용되는 제약이라, VM과 같은 두꺼운 격리 경계를 만들지는 않는다. 커널 자체의 취약점이나 과도하게 허용된 시스템 콜이 악용되면 격리를 우회할 수 있고, 그래서 쿠버네티스는 seccomp·AppArmor 같은 커널 보안 기능을 함께 적용하도록 안내한다. 격리를 더 강하게 가져가려면 gVisor 같은 샌드박스 런타임을 선택할 수 있지만, 그만큼 노드 자원을 더 소모하고 호환성 제약이 따른다[^4].
 
 ---
 
 ## 2. OCI 표준과 컨테이너 런타임 스택의 분화
 
-초기 Docker는 모놀리식 단일 데몬(`dockerd`)으로 모든 기능을 수행했으나, 표준화 기구인 **OCI(Open Container Initiative)**의 발족과 함께 런타임 계층이 고수준(High-level)과 저수준(Low-level)으로 명확히 분리되었다.
+초기 Docker는 모놀리식 단일 데몬(`dockerd`)으로 모든 기능을 수행했으나, 표준화 기구인 **OCI(Open Container Initiative)**의 발족과 함께 런타임 계층이 고수준(High-level)과 저수준(Low-level)으로 명확히 분리되었다[^2].
 
 ```
 현대 컨테이너 런타임 계층 구조:
@@ -124,7 +127,7 @@ OverlayFS 4계층 아키텍처:
 
 컨테이너가 수백~수천 개로 늘어나면 장애 발생 시 자동 재기동, 트래픽 로드밸런싱, 무중단 롤링 배포, 노드 간 스케줄링을 자동화할 오케스트레이터가 필요하다.
 
-쿠버네티스는 전체 시스템을 **컨트롤 플레인(Control Plane, 마스터)**과 **데이터 플레인(Data Plane, 워커 노드)**으로 양분한다.
+쿠버네티스는 전체 시스템을 **컨트롤 플레인(Control Plane, 마스터)**과 **데이터 플레인(Data Plane, 워커 노드)**으로 양분한다[^3].
 
 ```
 쿠버네티스 클러스터 아키텍처:
@@ -152,6 +155,10 @@ OverlayFS 4계층 아키텍처:
 │   └────────────────────┘          └────────────────────────────────┘   │
 └────────────────────────────────────────────────────────────────────────┘
 ```
+
+![쿠버네티스 클러스터의 컨트롤 플레인과 노드 구성 요소](/assets/images/k8s/official-kubernetes-basic.webp)
+
+*출처: Kubernetes Documentation, Components of Kubernetes (https://kubernetes.io/docs/concepts/overview/components/), CC BY 4.0*
 
 ### 3.1 Control Plane 핵심 컴포넌트
 
@@ -188,7 +195,7 @@ Reconciliation Loop의 핵심 메커니즘:
        [Current State (실제 런타임 환경)]
 ```
 
-어떤 노드가 하드웨어 장애로 다운되어 파드 수가 2개로 줄어들면, ReplicaSet 컨트롤러는 관찰(Observe) 단계에서 차이(Diff)를 감지하고, 즉시 새로운 파드를 다른 가용 노드에 스케줄링하여 선언된 3개 상태로 수렴(Act)시킨다. 이 자체 복구(Self-healing) 메커니즘이 대규모 분산 시스템의 고가용성을 지탱한다.
+어떤 노드가 하드웨어 장애로 다운되어 파드 수가 2개로 줄어들면, ReplicaSet 컨트롤러는 관찰(Observe) 단계에서 차이(Diff)를 감지하고, 대체 파드를 다른 가용 노드에 스케줄링하여 선언된 3개 상태로 수렴(Act)시킨다. 이 자체 복구(Self-healing) 메커니즘이 대규모 분산 시스템의 고가용성을 지탱한다.
 
 ---
 
@@ -199,12 +206,12 @@ Reconciliation Loop의 핵심 메커니즘:
 쿠버네티스는 단일 컨테이너를 직접 배포하지 않고, 하나 이상의 컨테이너 묶음인 **파드(Pod)**를 스케줄링 단위로 삼는다.
 
 - **Pause 컨테이너 (인프라 컨테이너)**: 파드가 생성될 때 가장 먼저 실행되어 Network와 IPC 네임스페이스를 선점한다.
-- **네트워크 공유**: 동일 파드 내의 모든 컨테이너는 동일한 IP 주소와 포트 공간을 공유하며, `localhost`를 통해 마이크로초 단위의 IPC 통신을 수행한다.
+- **네트워크 공유**: 동일 파드 내의 모든 컨테이너는 동일한 IP 주소와 포트 공간을 공유하며, `localhost`(루프백)로 통신한다. 이 경로는 노드 밖으로 나가지 않으므로 서비스 IP(ClusterIP)를 경유하거나 노드 간을 건너는 통신보다 왕복 지연이 작다.
 
 ### 4.2 kubelet과 kube-proxy의 역할
 
 - **`kubelet`**: 각 워커 노드에서 데몬으로 실행되며, API 서버로부터 자신에게 할당된 PodSpec을 수신한다. CRI(Container Runtime Interface)를 호출하여 컨테이너를 생성/삭제하고, CNI(Container Network Interface)를 통해 IP를 부여하며, 정기적으로 헬스체크(Liveness/Readiness Probe)를 수행하여 상태를 보고한다.
-- **`kube-proxy`**: 노드 내부에서 가상 서비스 IP(ClusterIP)로 들어오는 트래픽을 실제 백엔드 파드들의 IP로 라우팅한다. 초기에는 사용자 공간 프록시를 썼으나, 현재는 Linux 커널의 **iptables** 또는 **IPVS (IP Virtual Server)** 모드를 활용하여 패킷 레벨에서 $O(1)$의 고속 로드밸런싱을 수행한다.
+- **`kube-proxy`**: 노드 내부에서 가상 서비스 IP(ClusterIP)로 들어오는 트래픽을 실제 백엔드 파드들의 IP로 라우팅한다. 초기에는 사용자 공간 프록시를 썼으나, 현재는 Linux 커널의 **iptables** 또는 **IPVS (IP Virtual Server)** 모드로 패킷을 커널 공간에서 처리한다. 두 모드의 확장성은 다르다. iptables 모드는 서비스마다, 그리고 엔드포인트 IP마다 규칙을 만들기 때문에 파드와 서비스가 수만 개 규모로 늘면 규칙 수가 그만큼 늘어 갱신에 시간이 걸리고, IPVS 모드는 해시 테이블을 기반으로 동작한다[^5].
 
 ---
 
@@ -221,3 +228,5 @@ Reconciliation Loop의 핵심 메커니즘:
 [^1]: [Namespaces in operation - LWN.net](https://lwn.net/Articles/531114/)
 [^2]: [Open Container Initiative Specifications](https://opencontainers.org/)
 [^3]: [Kubernetes Documentation: Architecture Concepts](https://kubernetes.io/docs/concepts/architecture/)
+[^4]: [Kubernetes Documentation: Linux kernel security constraints for Pods and containers](https://kubernetes.io/docs/concepts/security/linux-kernel-security-constraints/)
+[^5]: [Kubernetes Documentation: Virtual IPs and Service Proxies](https://kubernetes.io/docs/reference/networking/virtual-ips/)

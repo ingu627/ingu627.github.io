@@ -77,6 +77,10 @@ Gateway API의 핵심은 리소스를 셋으로 나눈 것이다. 계층마다 �
 | HTTPRoute | 네임스페이스 | 애플리케이션 팀 | 서비스별 라우팅, Canary, A/B 테스트 | 일 단위 |
 | Service | 네임스페이스 | 애플리케이션 팀 | 백엔드 엔드포인트 | 배포마다 |
 
+![Gateway API의 세 가지 안정 리소스(HTTPRoute·Gateway·GatewayClass)가 클러스터 범위에서 맺는 관계](/assets/images/k8s/official-gateway-api-kind-relationships.webp)
+
+출처: Gateway API — Kubernetes Documentation (https://kubernetes.io/docs/concepts/services-networking/gateway/) · 라이선스: CC BY 4.0
+
 라우팅 변경이 일상 작업인 앱 팀에게는 HTTPRoute만 쥐여 주고, 리스너와 인증서처럼 사고가 나면 파급이 큰 설정은 플랫폼 팀에 남긴다. "누가 인그레스 앞단을 바꿀 수 있는가"라는 질문에 RBAC로 답할 수 있게 되는 것이 Ingress 대비 실질적인 차이다.
 
 ### 2.2 RBAC로 책임을 나눈다

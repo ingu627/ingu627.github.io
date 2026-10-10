@@ -85,6 +85,9 @@ VPC CNI v1.14.0부터 Kubernetes NetworkPolicy를 네이티브로 지원하며, 
 
 파드 생성 요청에 즉시 답하려면 여유 주소가 미리 있어야 한다. ipamd가 그 여유분을 얼마나 잡을지 결정하는 방식이 IP 용량 계획의 출발점이다[^1][^2].
 
+![ipamd의 주소 할당 흐름(공식 문서 도식). 파드의 IP 요청이 IPAMD로 들어오면 데이터스토어에서 여유 IP를 찾고, 실패하면 프리픽스(/28) 추가 → ENI 추가 → ENI 고갈 순서로 확장을 시도한다. 해제된 IP는 쿨다운을 거쳐 회수된다.](/assets/images/k8s/official-vpc-cni-ip-capacity-planning.webp)
+출처: AWS Containers Blog, Amazon VPC CNI plugin increases pods per node limits (https://aws.amazon.com/blogs/containers/amazon-vpc-cni-increases-pods-per-node-limits/)
+
 ### 2.1 워밍 풀을 정하는 세 변수
 
 | 변수 | 기본값 | 의미 |

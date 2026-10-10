@@ -33,7 +33,7 @@ last_modified_at: 2026-10-10
 - **컨테이너 이미지 레이어**: 빌드 시점에 `ENV DATABASE_URL=postgresql://user:pw@...` 같은 지시문을 Dockerfile에 넣으면, 값이 이미지 레이어에 그대로 굳는다. 컨테이너 런타임에서 변수를 지워도 이미지 레이어는 `docker history`로 그대로 읽힌다. 프라이빗 레지스트리(`acr-chatprod`)라 해도 이미지를 당겨 올 수 있는 사람에게는 전부 노출이다.
 - **정적 환경 변수(env)**: 매니페스트나 `az containerapp create --env-vars`에 평문 값을 적으면, 그 값은 ARM 리소스 정의에 남는다. Azure Portal이나 CLI로 리소스 속성을 조회할 수 있는 사람이면 누구나 읽는다. 사내 개발자 전원이 리소스 읽기 권한을 갖는 조직에서는 이게 실질적 유출이다.
 - **파이프라인 로그**: `echo`나 `env`로 배포 변수를 찍는 순간, 러너(runner)의 콘솔 로그에 값이 남는다. 로그는 보통 원본 스크립트보다 접근 권한이 느슨하고 보존 기간도 길다.
-- **노트북·로컬 설정**: `docker-compose.override.yml`, `.env`, 실험용 노트북에 "잠깐" 붙여 둔 값이 커밋된다. 한 번 원격 저장소의 히스토리에 들어간 비밀은 되돌리기보다 회전시키는 편이 항상 빠르다.
+- **노트북·로컬 설정**: `docker-compose.override.yml`, `.env`, 실험용 노트북에 "잠깐" 붙여 둔 값이 커밋된다. 한 번 원격 저장소의 히스토리에 들어간 비밀은 되돌리는 것보다 회전시키는 편이 안전하다.
 
 ### 1.2 원칙: 애플리케이션은 키 값을 몰라야 한다
 
@@ -177,10 +177,10 @@ Dockerfile의 `ENV`, 소스의 상수, 커밋된 `.env`는 가장 흔하고 가�
 
 1. **새 값 발급**: 백엔드에서 새 자격증명을 만든다. PostgreSQL이면 새 비밀번호를 추가 허용하고, 스토리지면 두 번째 계정 키를 생성한다. 이 시점에 구 값도 계속 살아 있어야 한다.
 2. **Key Vault 저장**: 새 값을 같은 시크릿 이름의 **새 버전**으로 넣는다. Key Vault는 버전 이력을 보존하므로 구 버전으로 즉시 되돌릴 수 있다.
-3. **참조 갱신**: 소비자가 버전 없는 참조(`.../secrets/database-url`)를 쓰면 자동으로 최신 버전을 읽는다. 버전이 고정된 참조를 썼다면 새 버전 URL로 바꾸고 컨테이너 앱을 새 리비전으로 배포한다.
-4. **구 값 폐기**: 새 값으로 정상 동작을 확인한 뒤에만 구 자격증명을 무효화한다. 이 순서를 지키면 어느 시점에도 유효한 자격증명이 하나 이상 존재한다.
+3. **참조 갱신**: 버전 없는 참조(`.../secrets/database-url`)를 쓰면 컨테이너 앱이 최신 버전을 자동으로 다시 가져온다. 다만 이 갱신은 즉시가 아니라 최대 30분 안에 이뤄지고, 시크릿을 환경 변수로 참조하는 리비전이 자동으로 재시작된다[^1]. 버전이 고정된 참조는 자동 갱신 대상이 아니므로, 참조 URL을 새 버전으로 바꾸고 새 리비전을 배포해야 한다.
+4. **구 값 폐기**: 새 값이 실제로 적용된 것을 확인한 뒤에만 구 자격증명을 무효화한다. 이 순서를 지키면 어느 시점에도 유효한 자격증명이 하나 이상 존재한다.
 
-3단계에서 컨테이너 앱을 새 리비전으로 배포하는 이유는, Key Vault 참조 시크릿이 리비전 시작 시점에 값을 가져와 컨테이너에 주입되기 때문이다. 즉 2편에서 다룬 리비전(revision) 모델이 로테이션의 배포 단위가 된다.
+여기서 3단계의 최대 30분이 4단계의 대기 시간을 정한다. 버전 없는 참조를 쓴다면 구 값을 폐기하기 전에 최소 갱신 주기만큼(또는 새 리비전을 강제로 만들어 즉시 반영한 뒤) 기다려야 구 값을 들고 있는 인스턴스가 남지 않는다. 버전 고정 참조는 자동 갱신이 없어 참조 갱신과 리비전 배포가 한 세트이므로, 2편에서 다룬 리비전(revision) 모델이 그대로 로테이션의 배포 단위가 된다.
 
 ### 4.2 순서를 어기면 생기는 일
 
@@ -214,26 +214,30 @@ Dockerfile의 `ENV`, 소스의 상수, 커밋된 `.env`는 가장 흔하고 가�
 
 - **범위(scope)**: 역할 할당은 가능한 한 좁게 건다. 구독 전체가 아니라 `kv-chat-prod` 리소스 하나에 건다.
 - **분리 원칙**: 배포 주체(값을 쓰는 쪽)와 실행 주체(값을 읽는 쪽)의 권한을 분리한다. 배포 파이프라인은 시크릿 쓰기 권한이 있어도 되지만, 런타임 관리 ID는 읽기 권한만 가진다.
-- **관리 ID 종류**: 리소스 수명에 묶이는 시스템 할당을 기본으로 두고, 여러 리소스가 하나의 ID를 공유해야 할 때만 사용자 할당(user-assigned)을 쓴다. 공유 ID는 편리하지만 수명 주기가 분리되어 고아(orphan) 권한이 남기 쉽다.
+- **관리 ID 종류**: 리소스 수명에 묶이는 시스템 할당을 기본으로 두되, Microsoft는 여러 시나리오에서 사용자 할당(user-assigned)을 권고한다[^2]. 리소스를 짧은 주기로 만들고 지우거나(Entra ID 객체 생성 한도에 걸릴 수 있다), 여러 리소스가 같은 권한을 쓰거나, 리소스 배포 전에 권한이 준비되어 있어야 하는 경우에는 사용자 할당이 낫다. 반대로 리소스별로 감사 기록을 구분해야 하거나 리소스 삭제와 권한 회수를 함께 묶어야 하면 시스템 할당이 맞다. 공유 ID는 수명 주기가 분리되어 있어, 다 쓰고 나서 지우지 않으면 고아(orphan) 권한이 남는다.
+
+![시스템 할당 관리 ID를 쓰는 가상 머신 4대가 각각 Storage와 Key Vault에 역할 할당을 받는 구조. 사용자 할당 ID를 공유하면 역할 할당 수가 줄어든다](/assets/images/azure/official-managed-identity-system-assigned.webp)
+
+출처: Managed identity best practice recommendations — Microsoft Learn (https://learn.microsoft.com/ko-kr/entra/identity/managed-identities-azure-resources/managed-identity-best-practice-recommendations)
 
 ### 5.2 감사: 누가 언제 무엇을 읽었는가
 
-Key Vault에도 진단 설정(diagnostic settings)을 걸어 로그를 Log Analytics로 흘려보낸다. 남기는 이벤트는 두 가지다.
+Key Vault에도 진단 설정(diagnostic settings)을 걸어 로그를 Log Analytics로 흘려보낸다. 여기서 기록되는 것과 알림으로 구독하는 것은 경로가 다르다.
 
-- **AuditEvent / SecretGet**: 어떤 관리 ID 또는 사용자가 어떤 시크릿을 언제 읽었는지. 평소와 다른 시각, 다른 주체가 값을 조회했다면 그 자체가 침해 신호다.
-- **SecretNearExpiry / SecretNewVersionCreated**: 로테이션 주기와 버전 교체 이력. 회전이 오래 멈춘 시크릿을 찾는 데 쓴다.
+- **진단 로그(AuditEvent)**: Key Vault 진단 로그의 범주는 `AuditEvent` 하나이고, 그 안의 `operationName`으로 값을 읽은 `SecretGet`, 목록을 훑은 `SecretList`, 버전 교체 같은 작업을 구분한다[^3]. 어떤 관리 ID 또는 사용자가 어떤 시크릿을 언제 읽었는지가 남으므로, 평소와 다른 시각·다른 주체의 조회는 그 자체가 침해 신호다.
+- **로테이션 알림(Event Grid)**: 만료 30일 전에 발생하는 `Microsoft.KeyVault.SecretNearExpiry`와 새 버전이 만들어질 때의 `Microsoft.KeyVault.SecretNewVersionCreated`는 진단 로그 범주가 아니라 Event Grid 이벤트다[^4]. 이 이벤트를 구독해 두면 회전이 오래 멈춘 시크릿을 알림으로 받아볼 수 있다.
 
 5편 [LLMOps 옵저버빌리티](https://ingu627.github.io/azure/llm-observability-langfuse/)에서 감사 로그를 표준 출력과 파일로 이중 기록하고 100MB 단위로 로테이션한 것과 같은 이유다. 로그는 사후 분석의 유일한 근거이므로, 남기는 시점부터 검색 가능한 중앙 저장소로 보내야 한다. Key Vault 진단 로그를 컨테이너 앱 로그와 같은 Log Analytics 작업 영역에 모아 두면, KQL 한 줄로 "시크릿 조회 시각과 앱 배포 시각의 상관"을 볼 수 있다.
 
 ### 5.3 자주 걸리는 함정
 
-운영하면서 되풀이되는 실수는 정해져 있다. 미리 알고 있으면 진단 시간을 크게 줄일 수 있다.
+운영하면서 되풀이되는 실수는 정해져 있다. 미리 알고 있으면 진단에 드는 시간을 줄이는 데 도움이 된다.
 
 함정은 매번 같은 자리에서 나온다.
 
 - **방화벽에 막힌 관리 ID**: 컨테이너 앱 환경이 사설망에 묶여 있으면, Key Vault도 사설 엔드포인트(`pe-keyvault`)로 접근해야 한다. Key Vault의 공용 네트워크 액세스를 끄고 사설 엔드포인트만 남기면, 관리 ID 토큰은 정상인데 네트워크에서 막히는 문제가 생긴다. 이때는 Key Vault 진단 로그에 조회 시도 자체가 남지 않는 것으로 구분한다.
-- **역할 할당 전파 지연**: 역할 할당은 즉시 반영되지 않는다. 배포 직후 몇 분간은 정상이던 읽기가 갑자기 권한 오류를 내기도 한다. 자동화 파이프라인에 넣을 때는 할당 후 전파를 기다리는 단계를 두는 편이 안전하다.
-- **버전 고정 참조**: 참조에 버전을 박아 두면 로테이션 이후에도 옛 값을 계속 읽는다. 새 버전을 쓰려면 참조 자체를 갱신해야 하므로, 자동 로테이션을 염두에 둔다면 버전 없는 참조를 기본으로 둔다.
+- **역할 할당 전파 지연**: 역할 할당은 즉시 반영되지 않는다. 배포 직후 몇 분간은 정상이던 읽기가 갑자기 권한 오류를 내기도 한다. 권한이 Entra 그룹이나 역할 멤버십을 거쳐 바뀌는 경우에는 관리 ID 토큰이 리소스 URI 단위로 약 24시간 캐시되어, 반영에 몇 시간이 걸릴 수 있다[^2]. 자동화 파이프라인에 넣을 때는 할당 후 전파를 기다리는 단계를 두는 편이 안전하다.
+- **버전 고정 참조**: 참조에 버전을 박아 두면 자동 갱신 대상이 아니므로 로테이션 이후에도 옛 값을 계속 읽는다[^1]. 새 버전을 쓰려면 참조 자체를 갱신해야 하므로, 자동 로테이션을 염두에 둔다면 버전 없는 참조를 기본으로 둔다.
 - **권한 회수 누락**: 관리 ID를 새로 만들고 옛 ID의 역할 할당을 지우지 않으면 사용하지 않는 주체에 권한이 남는다. 역할 할당을 정기적으로 나열해 실사용 ID와 대조한다.
 
 여기까지가 값이 새지 않게 만드는 최소 장치다.
@@ -257,8 +261,15 @@ Key Vault에도 진단 설정(diagnostic settings)을 걸어 로그를 Log Analy
 
 ## References
 
+아래 자료는 모두 Microsoft가 제공하는 공식 문서(벤더 자체 문서)다. 본문의 동작·제약 설명은 해당 문서를 근거로 했으며, 독립된 제3자 검증 자료는 포함하지 않았다.
+
 - [Azure Key Vault 개요 — Microsoft Learn](https://learn.microsoft.com/ko-kr/azure/key-vault/general/overview)
 - [Azure 리소스용 관리 ID 개요 — Microsoft Learn](https://learn.microsoft.com/ko-kr/entra/identity/managed-identities-azure-resources/overview)
 - [Key Vault 인증의 RBAC와 액세스 정책 비교 — Microsoft Learn](https://learn.microsoft.com/ko-kr/azure/key-vault/general/rbac-access-policy)
 - [Azure Container Apps에서 Key Vault 참조 사용 — Microsoft Learn](https://learn.microsoft.com/ko-kr/azure/container-apps/manage-secrets)
 - [Key Vault 모니터링 및 진단 로그 — Microsoft Learn](https://learn.microsoft.com/ko-kr/azure/key-vault/general/logging)
+
+[^1]: [Azure Container Apps에서 Key Vault 참조 사용 — Microsoft Learn](https://learn.microsoft.com/ko-kr/azure/container-apps/manage-secrets)
+[^2]: [Managed identity best practice recommendations — Microsoft Learn](https://learn.microsoft.com/ko-kr/entra/identity/managed-identities-azure-resources/managed-identity-best-practice-recommendations)
+[^3]: [Key Vault 로깅 — Microsoft Learn](https://learn.microsoft.com/ko-kr/azure/key-vault/general/logging)
+[^4]: [Key Vault Event Grid 이벤트 스키마 — Microsoft Learn](https://learn.microsoft.com/ko-kr/azure/event-grid/event-schema-key-vault)

@@ -76,6 +76,10 @@ LLM 게이트웨이는 이 네 가지를 한 계층에서 흡수한다. 클라�
 - **우선순위·가중치(Priority·Weight)**: 멤버별로 트래픽 비중을 조정한다.
 - **회로 차단기(Circuit Breaker)**: 인스턴스가 429를 연발하면 일정 시간 풀에서 제외하고 트래픽을 남은 멤버로 몰아준다.
 
+![단일 리전에서 여러 모델 인스턴스를 게이트웨이 뒤에 두고 분산하는 구조 — 게이트웨이가 프라이빗 엔드포인트를 거쳐 여러 인스턴스로 트래픽을 나누고, 점선 화살표는 조건부로 쓰이는 분산 경로를 나타낸다](/assets/images/azure/official-azure-apim-llm-gateway.webp)
+
+출처: Use a gateway in front of multiple Azure OpenAI deployments — Microsoft Learn (https://learn.microsoft.com/en-us/azure/architecture/ai-ml/guide/azure-openai-gateway-multi-backend)
+
 ### 2.2 Managed Identity로 인증하기
 
 가장 큰 이득은 여기다. APIM이 시스템 할당 관리 ID(Managed Identity)를 갖고, 그 ID에 대상 Azure OpenAI 리소스의 `Cognitive Services OpenAI User` 역할을 부여하면, 게이트웨이는 키 없이 Entra ID 토큰으로 백엔드에 인증한다.

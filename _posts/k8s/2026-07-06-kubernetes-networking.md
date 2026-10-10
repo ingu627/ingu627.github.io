@@ -53,7 +53,7 @@ CNI(Container Network Interface)는 kubelet이 파드 생성 시 호출하는 �
 | L7 정책 | 내장 Envoy로 HTTP/gRPC 정책 | 기본 L3/L4, L7은 별도 |
 | 관측성 | Hubble(플로우/서비스맵) | Flow log, Prometheus |
 | 라우팅 | VXLAN/Geneve 터널, native | BGP(native), IPIP/VXLAN |
-| 강점 | 대규모, 성능, 보안·관측 통합 | 성숙도, BGP 연동, Windows 지원 |
+| 강점 | 대규모 확장성, 보안·관측 통합 | 성숙도, BGP 연동, Windows 지원 |
 | 주의 | 구형 커널/커스텀 커널 제약 | iptables 모드는 대규모에서 규칙 폭증 |
 
 선택 기준은 대체로 이렇게 정리된다.
@@ -63,6 +63,8 @@ CNI(Container Network Interface)는 kubelet이 파드 생성 시 호출하는 �
 - NetworkPolicy를 HTTP 경로/메서드 단위로 세분화하고 감사(audit)하고 싶다 → Cilium
 - Windows 노드 혼재 → Calico (Windows 데이터플레인 지원 성숙)
 - 툴체인 최소화, 기존 운영 지식 재활용 → Calico(전통 모드)
+
+위 강점 비교는 각 프로젝트가 공개한 문서·벤치마크의 자기 서술이 섞여 있다(벤더 주장). 처리량·지연 우위는 커널 버전, 노드 스펙, 서비스 수, 트래픽 패턴에 따라 순위가 뒤집히므로, 도입 결정 전에는 실제 트래픽 프로파일로 부하 테스트를 돌려 확인하는 편이 안전하다[^1].
 
 Cilium을 kube-proxy 대체 모드로 설치하는 Terraform(HCL) 예시는 다음과 같다.
 
@@ -162,8 +164,9 @@ spec:
 실제 트래픽 전달은 각 노드의 kube-proxy가 담당하며, 모드에 따라 특성이 다르다.
 
 - **iptables 모드(기본)**: `KUBE-SERVICES` 체인에 DNAT 규칙을 생성. 랜덤 확률 기반 분산이라 세션 단위 로드밸런싱이고, 서비스·엔드포인트가 늘면 규칙 수가 O(n)로 늘어 갱신 지연이 발생한다.
-- **IPVS 모드**: 해시 테이블 기반으로 `rr`, `lc`, `sh`, `wrr` 등 알고리즘 선택 가능. 대규모에서 iptables보다 동기화가 빠르지만, 여전히 노드별 프록시이며 iptables 체인도 일부 병행 사용된다.
-- **eBPF 모드(Cilium 등)**: kube-proxy를 아예 제거하고 커널 프로그램으로 처리. DNAT/SNAT가 커널에서 일어나 규칙 폭증 문제가 없고, 소켓 레벨 로드밸런싱으로 지연이 낮다. 대신 커널 버전 요구사항이 엄격하다.
+- **IPVS 모드**: 해시 테이블 기반으로 `rr`, `lc`, `sh`, `wrr` 등 스케줄링 알고리즘을 고른다. iptables 모드보다 규칙 동기화 비용과 네트워크 처리량을 개선하려고 도입된 실험이었지만 Services API의 예외 케이스를 모두 구현하지 못했고, v1.35에서 deprecated로 표시돼 v1.40부터 기본 비활성, v1.43에서 제거될 예정이다[^2]. 신규 클러스터라면 iptables 또는 nftables 모드를 기준으로 검토하는 편이 낫다.
+- **nftables 모드**: Linux 커널 5.13 이상에서 사용 가능하며, iptables API의 후속인 nftables API로 규칙을 설치한다. 문서상 엔드포인트 변경을 더 빠르게 반영하고 커널에서 패킷을 더 효율적으로 처리한다고 설명되지만, 그 차이는 서비스가 수만 개 규모일 때 체감된다[^2].
+- **eBPF 모드(Cilium 등)**: kube-proxy를 아예 제거하고 커널 프로그램으로 처리. DNAT/SNAT가 커널에서 일어나 규칙 폭증 문제가 없고, 소켓 레벨 로드밸런싱으로 일부 경로에서 netfilter 처리를 건너뛴다[^1]. 다만 지연·처리량 이득은 커널 버전과 워크로드에 따라 크게 달라지므로, 프로젝트가 공개한 벤치마크 수치를 그대로 기대치로 삼지 말고 자체 측정으로 확인해야 한다. 대신 커널 버전 요구사항이 엄격하다.
 
 `externalTrafficPolicy: Cluster`(기본)는 트래픽이 들어온 노드에서 다른 노드의 파드로 한 번 더 포워딩되며 소스 IP가 SNAT로 가려진다. `Local`은 소스 IP를 보존하지만 로컬 파드가 없으면 블랙홀이 되므로, 반드시 해당 서비스의 파드가 모든 노드에 분산되도록(예: DaemonSet 또는 topologySpreadConstraints) 설계해야 한다.
 
@@ -224,6 +227,10 @@ spec:
 
 Ingress의 한계(헤더 기반 매칭·트래픽 분할·역할 분리 불가)를 해결한 것이 Gateway API이며, GatewayClass(인프라 제공자) / Gateway(운영자) / HTTPRoute(개발자)로 책임을 분리한다.
 
+![Gateway API 요청 흐름: client → Gateway → HTTPRoute → Service → Pod](/assets/images/k8s/official-kubernetes-networking-gateway-api.webp)
+
+위 도식은 클라이언트 요청이 Gateway에서 종료되고, HTTPRoute의 라우팅 규칙을 거쳐 Service(그 뒤의 파드)로 전달되는 순서를 보여준다. Gateway가 리스너·TLS를, HTTPRoute가 호스트·경로·헤더 매칭을 맡는 경계가 그대로 드러난다. 출처: Kubernetes Documentation — Gateway API (https://kubernetes.io/docs/concepts/services-networking/gateway/)
+
 ```yaml
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
@@ -256,6 +263,8 @@ spec:
         - { name: api-svc, port: 8080, weight: 90 }
         - { name: api-canary, port: 8080, weight: 10 }
 ```
+
+한계도 분명하다. Gateway API는 쿠버네티스가 네이티브로 구현하지 않고 CRD로 배포되므로 클러스터에 별도 설치가 필요하며, 기능은 릴리스 채널(Standard/Experimental)과 컨트롤러 구현별 지원 수준으로 나뉜다. 따라서 위 예시의 헤더 매칭·가중치 라우팅이 선택한 구현체에서 실제로 동작하는지 확인해야 한다[^4]. 기존 Ingress를 옮기는 경우 Ingress kind가 포함되지 않아 일회성 변환이 필요하다.
 
 ---
 
@@ -336,8 +345,10 @@ spec:
 
 서비스 메시는 통신 계층을 애플리케이션 밖으로 끌어내 재시도·타임아웃·서킷 브레이커·트래픽 분할·상호 TLS(mTLS)를 인프라 차원에서 제공한다.
 
-- **Istio**: Envoy 사이드카(또는 ambient 모드의 ztunnel/waypoint), VirtualService/DestinationRule로 세밀한 라우팅. 기능은 가장 풍부하지만 운영 복잡도와 리소스 오버헤드가 크다.
-- **Linkerd**: Rust로 작성된 초경량 마이크로 프록시, 설치·운영이 단순하고 지연 오버헤드가 낮다. 세밀한 L7 정책은 Istio보다 제한적이다.
+- **Istio**: Envoy 사이드카(또는 ambient 모드의 ztunnel/waypoint), VirtualService/DestinationRule로 세밀한 라우팅. 제공 범위가 넓은 대신 운영 복잡도와 리소스 오버헤드가 크다.
+- **Linkerd**: Rust로 작성된 마이크로 프록시를 사이드카로 주입하며 설치·운영이 단순하다. 대신 세밀한 L7 정책·트래픽 분할 범위는 Istio보다 좁다.
+
+두 프로젝트가 공개한 처리량·지연 수치는 각자 구성한 벤치마크 환경의 측정값이며(프로젝트 측 자체 측정), 결과는 프록시 모드(사이드카·ambient), 요청 크기, 동시성, 프로토콜에 따라 달라진다[^3]. 도입 판단은 자체 서비스로 측정한 값으로 내리는 편이 안전하다.
 
 mTLS는 사이드카/노드 프록시가 SPIFFE(Secure Production Identity Framework for Everyone) 기반 워크로드 신원으로 자동 인증서를 발급·회전하며 처리한다. 애플리케이션 코드는 평문 HTTP를 그대로 쓰고, 인증서는 제어 평면(istiod / linkerd identity)이 갱신한다. 도입 판단 기준은 명확하다. mTLS·세밀 트래픽 제어·강한 관측이 필요하고 그 복잡도를 감당할 SRE 여력이 있으면 메시를, 단순 mTLS만 필요하면 CNI 레벨 암호화(Cilium WireGuard/IPsec)나 SPIFFE CSI로 대체하는 편이 비용 효율적이다.
 
@@ -389,7 +400,7 @@ kubectl exec -it netshoot -- ping -M do -s 1422 10.244.1.5
 | `Connection timed out` | NetworkPolicy 드롭 또는 CNI 라우팅 실패 | `hubble observe --verdict DROPPED`, 정책 감사 |
 | `no such host` / DNS 5초 지연 | CoreDNS 장애 또는 `ndots:5`로 인한 순차 조회 | `kubectl -n kube-system logs deploy/coredns`, FQDN 사용·ndots 조정 |
 | TLS 핸드셰이크에서 멈춤 | 경로 MTU 불일치, 큰 패킷 드롭 | CNI MTU 정렬, MSS clamp |
-| 간헐적 502/timeout | conntrack 테이블 포화, iptables 갱신 지연 | `nf_conntrack_max` 상향, IPVS/eBPF 전환 |
+| 간헐적 502/timeout | conntrack 테이블 포화, iptables 갱신 지연 | `nf_conntrack_max` 상향, nftables/eBPF 전환 |
 | NodePort 접속 불가(일부 노드) | `externalTrafficPolicy: Local`인데 로컬 파드 없음 | 파드 분산 또는 정책을 Cluster로 |
 
 ---
@@ -424,7 +435,7 @@ sysctl -w net.netfilter.nf_conntrack_tcp_timeout_established=86400
 - [ ] 모든 워크로드 네임스페이스에 default-deny(Ingress/Egress) 정책이 있고 DNS·메타데이터 예외가 명시되어 있다
 - [ ] CoreDNS 지연 p99와 SERVFAIL/NXDOMAIN 비율을 추적하고, 필요 시 NodeLocal DNSCache를 적용했다
 - [ ] Ingress 컨트롤러·Gateway API의 TLS 인증서 만료 자동 갱신과 롤백 절차가 있다
-- [ ] kube-proxy 모드(iptables/IPVS/eBPF)와 서비스 수 증가에 따른 규칙 폭증 한계를 인지하고 있다
+- [ ] kube-proxy 모드(iptables/nftables/IPVS·지원 종료 예정/eBPF)와 서비스 수 증가에 따른 규칙 폭증 한계를 인지하고 있다
 - [ ] 서비스 메시 도입 시 mTLS 검증(`istioctl authn tls-check`, `linkerd viz edges`)을 배포 파이프라인에 넣었다
 - [ ] netshoot·tcpdump·hubble를 이용한 3계층(DNS/Service/Pod) 진단 런북이 온콜 문서에 있고, 장애 후 개선 항목을 역추적한다
 
@@ -434,7 +445,7 @@ sysctl -w net.netfilter.nf_conntrack_tcp_timeout_established=86400
 
 - **모델은 평탄하다.** 파드마다 전역 라우팅 가능한 고유 IP를 주고, 노드·파드 사이에 NAT가 없다는 3원칙이 모든 상위 추상화의 토대다. 이 원칙이 깨지면 디스커버리·TLS·세션이 함께 무너진다.
 - **CNI가 데이터플레인의 주인이다.** veth 생성·IP 할당·라우팅·정책 집행은 CNI의 책임이며, Cilium(eBPF·Hubble)과 Calico(BGP·성숙도) 중 규모·라우팅·정책 요구로 고른다.
-- **Service는 안정된 계약, 전달은 kube-proxy가 한다.** ClusterIP/NodePort/LoadBalancer/ExternalName의 용도를 구분하고, iptables/IPVS/eBPF 모드의 규칙 증가·소스 IP 보존 특성을 함께 본다.
+- **Service는 안정된 계약, 전달은 kube-proxy가 한다.** ClusterIP/NodePort/LoadBalancer/ExternalName의 용도를 구분하고, iptables/nftables/eBPF 모드(IPVS는 지원 종료 예정)의 규칙 증가·소스 IP 보존 특성을 함께 본다.
 - **진입점은 L7, 정책은 화이트리스트다.** Ingress/Gateway API가 호스트·경로 라우팅을 맡고, NetworkPolicy는 default-deny 후 역추적 허용이 원칙이며 DNS·메타데이터 예외를 반드시 명시한다.
 - **함정은 계층 경계에서 나온다.** MTU 불일치와 conntrack 포화, `Local` 정책 블랙홀은 계층을 DNS→Service→Pod→노드 순으로 좁히는 진단 런북으로만 빠르게 잡힌다.
 
@@ -447,4 +458,15 @@ sysctl -w net.netfilter.nf_conntrack_tcp_timeout_established=86400
 - Kubernetes Documentation — [Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/)
 - Kubernetes Documentation — [DNS for Services and Pods](https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/)
 - Kubernetes Gateway API — [Introduction](https://gateway-api.sigs.k8s.io/)
+- Kubernetes Documentation — [Gateway API](https://kubernetes.io/docs/concepts/services-networking/gateway/) — 본문 Gateway API 도식 출처
 - CNI — [Specification](https://www.cni.dev/docs/spec/)
+
+본문의 프록시 모드·성능 관련 서술은 아래 문서를 근거로 했고, 프로젝트가 자체 측정한 수치는 벤더 주장으로 구분해 표기했다.
+
+[^1]: Cilium Documentation — [Kubernetes Without kube-proxy](https://docs.cilium.io/en/stable/network/kubernetes/kubeproxy-free/) — eBPF 데이터플레인과 소켓 레벨 로드밸런싱 설명. 프로젝트 자체 문서이므로 처리량·지연 서술은 벤더 주장으로 읽어야 한다.
+
+[^2]: Kubernetes Documentation — [Virtual IPs and Service Proxies](https://kubernetes.io/docs/reference/networking/virtual-ips/) — iptables/nftables/IPVS 프록시 모드 비교, IPVS deprecated(v1.35)·기본 비활성(v1.40)·제거 예정(v1.43), nftables 모드의 커널 요구사항(5.13+).
+
+[^3]: Istio Documentation — [Performance and Scalability](https://istio.io/latest/docs/ops/deployment/performance-and-scalability/) — 컨트롤/데이터플레인 리소스·지연 벤치마크(버전·메시 구성 명시). 프로젝트 측 자체 측정치다.
+
+[^4]: Kubernetes Documentation — [Gateway API](https://kubernetes.io/docs/concepts/services-networking/gateway/) — CRD 기반 설치, 릴리스 채널·구현체별 지원 수준(conformance), Ingress kind 미포함에 따른 일회성 변환.

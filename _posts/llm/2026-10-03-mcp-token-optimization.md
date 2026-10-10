@@ -114,6 +114,10 @@ MCP 공식 클라이언트 모범 사례는 이 흐름을 세 단계로 정리�
 
 핵심은 1단계의 응답이 **이름 수준**이라는 점이다. 스키마는 2단계에서, 그것도 선택된 도구 하나만 온다. 컨텍스트에는 항상 "지금 쓰려는 도구 하나"의 스키마만 남는다.
 
+![점진적 발견 좌우 비교. 왼쪽 "All tools loaded upfront"는 도구 정의 전량을 싣고 사용자 요청을 읽기도 전에 약 150,000 토큰을 소비한다. 오른쪽 "Tools discovered on demand"는 Catalog(search_tools) → Inspect(get_tool_details) → Call 세 단계로 필요한 도구만 조회해 약 2,000 토큰만 쓴다.](/assets/images/llm/official-mcp-token-optimization.webp)
+
+*출처: Model Context Protocol, "Client Best Practices" — Progressive Discovery (<https://modelcontextprotocol.io/docs/develop/clients/client-best-practices>)*
+
 ### 3.3 임계값 기반 하이브리드
 
 항상 지연 로딩하는 것이 답은 아니다. 도구가 세 개뿐인 서버에서는 왕복 지연만 늘어난다. MCP 공식 문서는 **컨텍스트 윈도우의 1~5%** 를 임계값으로 제시한다[^4]. 정의 토큰이 이 선을 넘으면 지연 로딩으로 전환하는 하이브리드가 실용적이다.

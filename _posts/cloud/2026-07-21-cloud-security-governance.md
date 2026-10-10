@@ -53,6 +53,10 @@ last_modified_at: 2026-10-10
 3. **명시적 거부(explicit deny) 우선** — 어느 한 정책에 `Deny`가 있으면 다른 모든 `Allow`를 무시하고 즉시 거부한다.
 4. **유효 권한(effective permissions)** — 신원·경계·SCP·세션 정책의 **허용 교집합(intersection)** 이 실제 통과 범위다. 같은 계정에서 리소스 기반 정책의 허용은 합집합(union)처럼 동작하지만, 교차 계정(cross-account) 접근은 호출 계정의 신원 정책 허용과 대상 계정 리소스 정책 허용이 **둘 다** 필요하다.
 
+![AWS IAM 정책 평가 순서: Deny 평가 → Organizations SCP → 리소스 기반 정책 → 권한 경계 → 세션 정책 → 신원 기반 정책](/assets/images/cloud/official-aws-iam-policy-evaluation.webp)
+
+출처: AWS Identity and Access Management 사용 설명서 — 정책 평가 로직 (https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-logic.html). 도식 하단의 `*` 표시는 같은 문서의 각주를 가리킨다.
+
 정책 유형별 성격: SCP와 권한 경계는 **권한을 부여하지 않고 상한만 깎는다**. 관리 계정(management account)과 서비스 연결 역할(service-linked role)에는 SCP가 적용되지 않는다는 점도 설계 시 반드시 반영한다.
 
 ### 2.2 조건 키(Condition Keys)

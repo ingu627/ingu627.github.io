@@ -67,6 +67,10 @@ last_modified_at: 2026-10-10
 
 위 다이어그램은 컨트롤 플레인의 네 컴포넌트(kube-apiserver·etcd·kube-scheduler·kube-controller-manager)와 워커 노드의 런타임 구성(kubelet·containerd·kube-proxy·CNI)이 어떻게 연결되는지 보여준다. 모든 컴포넌트는 kube-apiserver만 거쳐 etcd에 접근하고, kubelet은 apiserver를 watch하다가 자신에게 바인딩된 파드를 런타임으로 넘긴다.
 
+![업스트림 공식 클러스터 아키텍처 도식 — 컨트롤 플레인, 워커 노드, 클라우드 프로바이더 API](/assets/images/k8s/official-kubernetes-architecture.webp)
+
+출처: Cluster Architecture (https://kubernetes.io/docs/concepts/architecture/) — kubernetes.io 문서 콘텐츠는 CC BY 4.0.
+
 ### 3.1 컨트롤 플레인(Control Plane)
 
 | 컴포넌트 | 역할 | 주의점 |

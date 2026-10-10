@@ -269,14 +269,20 @@ time velero restore create --from-backup daily-2026-10-09 --namespace-mappings p
 
 - **RTO(Recovery Time Objective)**: 장애 발생 후 서비스가 복구될 때까지 허용되는 시간.
 - **RPO(Recovery Point Objective)**: 허용되는 데이터 손실 시점(얼마나 과거 데이터까지 잃어도 되는가).
-- 두 값이 곧 예산이다. RTO/RPO를 절반으로 줄이는 비용은 보통 선형이 아니라 계단식으로 증가한다.
+- 두 값이 곧 예산이다. 네 가지 DR 전략은 **비용·복잡도가 커지는 순서대로 RTO/RPO가 짧아지는 관계**로 놓인다. RTO/RPO를 한 단계 낮추는 일은 곧 상시로 켜 두는 예비 용량과 리전 간 복제 트래픽을 한 계단 더 사는 일이다([AWS Well-Architected Reliability Pillar, REL13-BP02](https://docs.aws.amazon.com/pdfs/wellarchitected/latest/reliability-pillar/wellarchitected-reliability-pillar.pdf)).
+
+![재해 발생 시점을 기준으로 RPO는 손실을 감수하는 과거 구간, RTO는 서비스가 정상화되기까지의 시간을 나타낸다](/assets/images/cloud/official-cloud-architecture-dr.webp)
+
+출처: Google Cloud Architecture Center — Architecting disaster recovery for cloud infrastructure outages (https://cloud.google.com/architecture/disaster-recovery)
 
 ### 8.2 4가지 전략
+
+아래 전략 구분과 RTO/RPO 범위는 AWS Well-Architected Reliability Pillar(REL13-BP02)가 전략별로 제시하는 목표치를 범위로 옮긴 대표값이다. 모두 리전 간 복제가 이미 동작하고 DR 리전에 최소 용량이 예열되어 있다는 전제의 목표치이며, 실제 달성치는 데이터 규모·리전 간 복제 지연·리전별 서비스 쿼터에 따라 달라진다.
 
 | 전략 | RTO | RPO | 비용/복잡도 | 설명 |
 | :--- | :--- | :--- | :--- | :--- |
 | 백업·복원(Backup & Restore) | 시간\~일 | 시간 | 낮음 | 백업만 다른 리전에, 인프라는 IaC로 재생성 |
-| 파일럿 라이트(Pilot Light) | 10분\~1시간 | 분\~초 | 중간 | 데이터 복제 + 최소 컴퓨트, 필요 시 확장 |
+| 파일럿 라이트(Pilot Light) | 10분\~1시간 | 분 | 중간 | 데이터 복제 + 최소 컴퓨트, 필요 시 확장 |
 | 웜 스탠바이(Warm Standby) | 분 | 초 | 중상 | 축소판 스택 상시 운영, 트래픽만 전환 |
 | 액티브-액티브(Active-Active) | 초 | 거의 0 | 높음 | 양 리전 동시 서비스, 데이터 충돌 해소 필요 |
 
@@ -284,6 +290,7 @@ time velero restore create --from-backup daily-2026-10-09 --namespace-mappings p
 
 위 다이어그램은 네 가지 DR 전략을 RTO·RPO·비용/복잡도 축에서 비교한 것이다. 백업·복원에서 액티브-액티브로 갈수록 RTO/RPO는 짧아지지만 비용과 운영 복잡도는 계단식으로 올라가므로, 서비스별 목표치에 맞는 전략을 따로 고른다.
 
+- **백업·복원에서 RPO는 백업 주기가 결정한다.** 백업 주기가 24시간이면 최악의 경우 하루치가 사라지고, 자동·연속 백업으로 PITR(point-in-time recovery)을 켜면 경우에 따라 5분 수준까지 낮출 수 있다. 같은 이름의 전략 안에서도 RPO가 두 자릿수 배 차이 난다.
 - 액티브-액티브의 대가는 **쓰기 충돌**이다. 지역별 쓰기 분리(홈 리전), 충돌 해소 규칙(last-write-wins, CRDT), 전역 일관성 요구사항을 먼저 정의한다. 쓰기가 단일 리전이면 그것은 액티브-패시브에 가깝다.
 - 백업은 **3-2-1**(3사본, 2매체, 1오프사이트) + **불변 백업(Object Lock/immutability)** 으로 랜섬웨어·실수 삭제를 방어한다.
 - **복원하지 않은 백업은 백업이 아니다.** 분기별 게임데이(game day)에서 실제 복원을 수행하고 소요 시간을 기록한다.

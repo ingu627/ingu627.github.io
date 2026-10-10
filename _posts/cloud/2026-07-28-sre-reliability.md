@@ -298,6 +298,9 @@ kubectl -n chaos-testing get networkchaos checkout-api-payment-latency -w
 kubectl -n chaos-testing delete networkchaos checkout-api-payment-latency   # 중단 = 즉시 정리
 ```
 
+![신뢰성 관점의 예시 아키텍처 — 클라이언트 → API 게이트웨이 → 마이크로서비스(AKS) → 데이터 서비스로 이어지고, 각 계층의 텔레메트리가 Azure Monitor·Application Insights·Grafana로 모이며, Azure Chaos Studio가 폴트 인젝션·복원력 테스트를 담당한다](/assets/images/cloud/official-sre-reliability.webp)
+출처: Microsoft Learn — Scalable cloud applications and SRE (https://learn.microsoft.com/en-us/azure/architecture/example-scenario/apps/scalable-apps-performance-modeling-site-reliability)
+
 ---
 
 ## 9. 용량 계획과 부하 테스트

@@ -50,7 +50,7 @@ ACA는 컨테이너 앱이라는 단위로 파드를 추상화하고, 리비전(
 - **위임하는 영역**: 컨트롤 플레인 가용성, 노드 OS 패치, 파드 스케줄링, 인그레스 컨트롤러 유지보수, 리버스 프록시 TLS 종료.
 - **직접 결정하는 영역**: 리소스 요청량(vCPU·메모리), 리비전 배포 전략, 스케일 규칙과 임계값, 헬스 프로브, 시크릿 주입 방식, 볼륨 마운트.
 
-> **주의:** 컨테이너 앱당 인그레스 포트는 하나만 노출 가능하고, 영구 스토리지는 Azure Files 기반 SMB/NFS만 지원한다. 벡터 DB처럼 로컬 디스크 I/O에 민감한 워크로드는 볼륨 선택을 신중히 해야 한다.
+> **주의:** 컨테이너 앱당 인그레스 포트는 하나만 노출할 수 있다. 영구 스토리지는 Azure Files만 지원하고, Azure Blob Storage나 Azure NetApp Files의 파일 공유는 컨테이너에 마운트할 수 없다[^1]. Azure Files도 클래식 파일 공유(`Microsoft.Storage/storageAccounts/fileServices/shares`)만 붙일 수 있으며, NFS를 쓸 때는 커스텀 VNet과 NSG의 445·2049 포트 개방이 필요하고 전송 중 암호화(encryption in transit)는 지원되지 않는다[^1]. 벡터 DB처럼 로컬 디스크 I/O에 민감한 워크로드는 볼륨 선택을 신중히 해야 한다.
 
 ### 1.2 서비스 분해 기준
 
@@ -91,6 +91,14 @@ ACA는 컨테이너 앱이라는 단위로 파드를 추상화하고, 리비전(
 | 인프라 리소스 그룹 | 환경 전용으로 자동 관리되는 별도 그룹 |
 
 내부 전용 환경은 기본 FQDN도 사내 DNS로만 해석된다. 사용자는 브라우저에서 `https://chat.example.com` 같은 내부 도메인으로 접속하고, 이 도메인은 앞단의 프라이빗 DNS 존과 게이트웨이를 통해 `10.0.4.53`으로 해석된다. 외부에서 이 IP로 접근할 방법 자체가 없다.
+
+Microsoft 문서는 이렇게 인그레스와 이그레스를 잠그는 경계 구성을 아래처럼 정리한다. 앞단 게이트웨이와 내부 로드 밸런서를 지나 컨테이너에 도달하고, 나가는 트래픽은 방화벽과 라우팅 테이블을 거치는 형태다.
+
+![ACA 환경의 잠금형 네트워크 경계 구성](/assets/images/azure/official-azure-container-apps-production.webp)
+
+출처: Azure Container Apps 환경의 네트워킹 — Microsoft Learn (https://learn.microsoft.com/ko-kr/azure/container-apps/networking)
+
+이 프로젝트는 여기에 프라이빗 DNS 존을 얹어 `chat.example.com`을 ILB 사설 IP로 해석시키는 정도만 더했다.
 
 ### 2.2 환경 DNS로 내부 서비스 이름 붙이기
 
@@ -204,7 +212,7 @@ az keyvault set-policy --name kv-chat-prod \
 
 ## 4. 오토스케일링: http-scaler
 
-오토스케일링은 결국 임계값 하나의 문제로 좁혀진다. ACA의 스케일링은 내부적으로 **KEDA(Kubernetes Event-driven Autoscaling)** 를 사용한다. 트리거 종류만 다를 뿐, 개념은 K8s의 HPA/KEDA와 같다. 이 프로젝트에서는 HTTP 동시 요청 수를 기준으로 스케일하는 `http-scaler`를 사용했다.
+오토스케일링은 결국 임계값 하나의 문제로 좁혀진다. ACA의 스케일링은 내부적으로 **KEDA(Kubernetes Event-driven Autoscaling)** 를 사용한다[^2]. 트리거 종류만 다를 뿐, 개념은 K8s의 HPA/KEDA와 같다[^3]. 이 프로젝트에서는 HTTP 동시 요청 수를 기준으로 스케일하는 `http-scaler`를 사용했다.
 
 아래 그림은 부하가 늘고 줄 때 리플리카 수가 따라 움직이는 과정을 보여준다.
 
@@ -233,13 +241,20 @@ scale:
 
 ### 4.2 스케일 인 쿨다운과 p95 실측
 
-스케일 아웃은 즉시 일어나지만, 스케일 인은 부하가 빠진 뒤 기본적으로 300초가량 기다린 뒤에야 줄어든다. 갑자기 줄였다가 다음 버스트에서 다시 늘리는 진동을 막기 위한 장치다. 이 쿨다운을 지나치게 짧게 잡으면 비용은 조금 줄지만 응답 안정성이 나빠진다.
+스케일 아웃은 즉시 일어나지만, 스케일 인은 부하가 빠진 뒤 바로 줄지 않는다. Microsoft 문서 기준 기본 동작은 스케일 다운 안정화 창(scale down stabilization window) 300초이고, 마지막 리플리카에서 0으로 내려갈 때만 별도의 쿨다운 기간(cool down period) 300초가 적용된다[^4]. 갑자기 줄였다가 다음 버스트에서 다시 늘리는 진동을 막기 위한 장치다. 안정화 창을 지나치게 짧게 잡으면 비용은 조금 줄지만 응답 안정성이 나빠진다. 다만 이 값들은 플랫폼이 정한 기본값이며, 이 프로젝트에서 따로 검증한 수치는 아니다.
 
-임계값은 감이 아니라 실측으로 잡았다. 로드 제너레이터로 동시성을 계단식으로 올리면서 Langfuse에 기록되는 TTFT(Time To First Token)와 게이트웨이 응답 지연을 함께 봤다.
+임계값은 감이 아니라 실측으로 잡았다. 로드 제너레이터로 동시성을 계단식으로 올리면서 Langfuse에 기록되는 TTFT(Time To First Token)와 게이트웨이 응답 지연을 함께 봤다. 측정 조건은 다음과 같다.
 
-동시성 8 부근까지는 p95가 완만하게 증가하다가, 10을 넘어서면서 지연 곡선의 기울기가 꺾였다. 그래서 임계값은 그보다 한 단계 아래인 10으로 두고, 스케일 아웃을 지연이 꺾이기 전에 트리거하도록 설정했다.
+- **대상**: `chat-webui` 이미지 `1.4.2`, 4 vCPU·8GiB, `minReplicas: 1` (§3.1 매니페스트와 동일한 구성)
+- **경로**: Internal 환경 안, 사내 VNet 경유 (인터넷 구간·외부 게이트웨이는 측정 범위에서 제외)
+- **부하**: RAG 챗 요청을 동시성 계단식으로 증가시키며 스케일 아웃이 일어나는 구간까지 유지
+- **지표**: 게이트웨이가 반환한 응답 지연의 p95, Langfuse 스팬의 TTFT, 해당 시점의 리플리카 수
 
-정리하면, 쿨다운은 길게 두고 임계값은 실측 지점보다 한 단계 아래로 잡는다.
+이 조건에서 동시성 8 부근까지는 p95가 완만하게 증가하다가 10을 넘어서면서 곡선의 기울기가 꺾였다. 그래서 임계값은 지연이 꺾이기 전인 10으로 두고 스케일 아웃이 그보다 먼저 트리거되도록 설정했다. `concurrentRequests`의 플랫폼 기본값도 10이지만[^4], 기본값이 같다는 사실이 검증을 대신하지는 않는다.
+
+주목할 점은 **이 곡선이 측정 조건에 종속된다**는 것이다. 위 결과는 4 vCPU 구성과 이 리비전에서 나온 것이므로, 이미지·리소스·검색 파이프라인이 바뀌면 같은 동시성에서도 꺾이는 지점이 달라진다. 임계값을 상수로 굳히지 말고 배포 전 스테이징 환경에서 같은 방식으로 다시 측정해 보정하는 편이 안전하다.
+
+정리하면, 안정화 창은 길게 두고 임계값은 실측으로 확인한 지연 꺾임 지점보다 낮게 잡는다.
 
 결국 실측만이 답이었다.
 
@@ -282,12 +297,12 @@ template:
 
 ### 5.2 Blob으로 오프로드하는 이유
 
-Azure Files는 여러 리플리카가 공유하는 파일 시스템이라 편리하지만, 대용량 객체를 다루는 데는 최적이 아니다. RAG용 원본 문서는 수십 MB를 넘기도 하고, 업로드·다운로드가 빈번하며, 버전 관리와 수명 주기 정책이 필요하다. 이런 객체는 **Azure Blob Storage**로 오프로드했다.
+Azure Files는 여러 리플리카가 공유하는 파일 시스템이라 편리하지만, 파일 공유 단위로 관리되는 스토리지라 대용량 객체에 필요한 버전 관리·수명 주기 정책을 함께 가져가기 어렵다. RAG용 원본 문서는 수십 MB를 넘기도 하고, 업로드·다운로드가 빈번하며, 버전 관리와 수명 주기 정책이 필요하다. 이런 객체는 **Azure Blob Storage**로 오프로드했다.
 
 - **Azure Files**: 소량·고빈도·파일 단위 접근(감사 로그, 설정, 상태). 다중 리플리카 공유가 필요할 때.
 - **Azure Blob**: 대용량·저빈도·객체 단위 접근(RAG 원본 문서, 첨부 파일). 수명 주기 정책과 프라이빗 엔드포인트로 접근을 통제할 때.
 
-Blob 엔드포인트는 프라이빗 엔드포인트(`pe-blob`)로만 접근하도록 VNet에 묶었고, 스토리지 키는 Key Vault 참조로 주입했다. 즉 파일은 Azure Files, 객체는 Blob, 자격 증명은 Key Vault로 역할을 분리한 셈이다.
+Blob은 컨테이너 볼륨으로 마운트할 수 없으므로[^1] 앱 코드에서 SDK로 접근하고, 엔드포인트는 프라이빗 엔드포인트(`pe-blob`)로만 접근하도록 VNet에 묶었다. 스토리지 키는 Key Vault 참조로 주입했다. 즉 파일은 Azure Files, 객체는 Blob, 자격 증명은 Key Vault로 역할을 분리한 셈이다.
 
 > 정리하면, 파일은 Azure Files, 객체는 Blob, 자격 증명은 Key Vault다.
 
@@ -370,3 +385,10 @@ ACA는 클러스터를 직접 만지지 않아도 되는 대신, 리비전·스�
 - [Azure Container Apps에서의 스케일링 규칙 — Microsoft Learn](https://learn.microsoft.com/ko-kr/azure/container-apps/scale-app)
 - [Azure Container Apps에서 스토리지 볼륨 사용 — Microsoft Learn](https://learn.microsoft.com/ko-kr/azure/container-apps/storage-mounts)
 - [Azure Container Apps의 리비전과 트래픽 분할 — Microsoft Learn](https://learn.microsoft.com/ko-kr/azure/container-apps/revisions)
+
+이 글에서 플랫폼 동작에 대해 서술한 부분(스케일 기본값, 스토리지 제약)은 Microsoft 문서에 근거한 벤더 설명이고, §4.2의 지연 곡선만 이 프로젝트에서 직접 측정한 값이다. KEDA와 Kubernetes 문서는 벤더가 아닌 CNCF 프로젝트 문서를 참고했다.
+
+[^1]: [Azure Container Apps에서 스토리지 볼륨 사용 — Microsoft Learn (벤더 문서)](https://learn.microsoft.com/ko-kr/azure/container-apps/storage-mounts)
+[^2]: [Scaling Deployments — KEDA 문서 (CNCF 프로젝트)](https://keda.sh/docs/latest/concepts/scaling-deployments/)
+[^3]: [Horizontal Pod Autoscaling — Kubernetes 문서 (CNCF 프로젝트)](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/)
+[^4]: [Azure Container Apps에서의 스케일링 규칙 — Microsoft Learn (벤더 문서)](https://learn.microsoft.com/ko-kr/azure/container-apps/scale-app)

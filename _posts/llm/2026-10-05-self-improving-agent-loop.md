@@ -126,6 +126,10 @@ last_modified_at: 2026-10-10
 
 숫자는 환경 의존적이다. 참고로 7B 모델 DPO 전체 파인튜닝은 16×A100에서 2~4시간 수준으로 보고된다[^1]. DPO는 별도 리워드 모델 없이 선호 쌍만으로 정책을 직접 최적화하고[^5], GRPO는 critic(가치) 모델을 제거해 메모리를 아끼는 대신 학습률에 민감하다. 권장 로드맵은 초기 GRPO → 데이터 축적 후 DPO → 복잡한 리워드가 필요해지면 RLAIF, 골든셋이 있으면 RFT 병행이다[^1].
 
+![그룹 롤아웃 RL 1회 반복 구조. 정책 샘플링(샘플러 가중치 갱신, 롤아웃+logprob 수집) → 롤아웃 스코어링(리워드·어드밴티지, 어시스턴트 토큰 마스크) → 어댑터 갱신(그래디언트 계산, 옵티마이저 스텝) 순으로 진행되고, 갱신된 샘플러 가중치로 다시 샘플링 단계로 돌아간다. 샘플링과 어댑터 갱신은 서비스가, 스코어링은 사용자 파이썬 드라이버가 맡는다.](/assets/images/llm/official-self-improving-agent-loop.webp)
+
+*출처: What is interactive training (preview) in Microsoft Foundry? (https://learn.microsoft.com/en-us/azure/foundry/fine-tuning/interactive-post-training/overview)*
+
 ### 2.6 5단계: 디플로이(Deploy) — 회귀 검증과 점진 배포
 
 학습이 끝났다고 바로 배포하지 않는다. 순서는 골든셋 평가 → 섀도 테스트 → 카나리 확대다.

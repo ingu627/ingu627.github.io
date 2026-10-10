@@ -159,6 +159,10 @@ engine = create_engine(
 
 해결은 두 갈래다. 첫째, DB의 `max_connections`를 올리고 서버 메모리를 그에 맞춰 키운다. 연결마다 작업 메모리(work_mem 등)가 붙으므로 연결 수를 늘리는 것은 공짜가 아니다. 둘째, 애플리케이션과 DB 사이에 **PgBouncer** 같은 연결 풀러(pooler)를 두고 애플리케이션 연결 수와 DB 연결 수를 분리한다. 이 프로젝트는 리플리카당 상시 연결(15개)을 기준으로 총합을 계산해 DB 상한을 여유 있게 잡고, 순간 초과분(overflow)은 동시에 모든 리플리카에서 터지지 않는다는 전제로 관리했다. 스케일 아웃을 설계할 때는 항상 "최대 리플리카 × 최대 연결"을 먼저 계산해 DB 상한과 비교해야 한다.
 
+![연결 풀링 유무 비교 — 왼쪽은 앱마다 PostgreSQL에 직접 연결해 연결 수가 그대로 늘어나는 구성이고, 오른쪽은 앱과 PostgreSQL 사이에 PgBouncer를 두어 백엔드 커넥션 수를 줄인 구성](/assets/images/azure/official-azure-data-tier-postgres-redis.webp)
+
+출처: Connection pooling strategy using PgBouncer — Microsoft Learn (<https://learn.microsoft.com/en-us/azure/postgresql/connectivity/concepts-connection-pooling-best-practices>)
+
 정리하면, 풀 크기와 DB 상한은 따로 정하는 값이 아니라 리플리카 수를 통해 묶여 있다.
 
 영속 저장소 쪽 정리가 끝났으니, 이제 일시 상태를 컨테이너 밖으로 꺼낼 차례다.

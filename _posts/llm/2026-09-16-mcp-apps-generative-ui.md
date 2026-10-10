@@ -56,11 +56,11 @@ LLM의 기본 출력은 **토큰 스트림(Token Stream)**, 즉 1차원 문자�
 
 ### 2.2 개방형 UI(Open-ended UI): MCP 앱스
 
-반대편은 **원시 HTML을 리소스로 그대로 배송**하는 방식이다. MCP 앱스(MCP Apps)가 여기 속하며, 그 지향은 **"max expressiveness"**, 즉 표현력의 상한이 없다는 데 있다[^2].
+반대편은 **원시 HTML을 리소스로 그대로 배송**하는 방식이다. MCP 앱스(MCP Apps)가 여기 속하며, 그 지향은 **"max expressiveness"**, 즉 호스트의 샌드박스 정책이 허용하는 범위에서 표현 상한이 사실상 사라진다는 데 있다[^2].
 
 - 서버가 마크업·스타일·스크립트를 한 문서로 묶어 보낸다.
 - 클라이언트는 그것을 **샌드박스 처리된 iframe**에서 그대로 실행한다.
-- 상상할 수 있는 어떤 인터랙션도 구현할 수 있다. 대신 **HTML/CSS/JS 전체가 신뢰 경계 안으로 들어온다.**
+- 브라우저와 샌드박스 정책이 허용하는 한도 안에서 임의의 인터랙션을 구현할 수 있다. 그 한도는 호스트 구현마다 다르다. 대신 **HTML/CSS/JS 전체가 신뢰 경계 안으로 들어온다.**
 
 ### 2.3 트레이드오프 비교
 
@@ -68,7 +68,7 @@ LLM의 기본 출력은 **토큰 스트림(Token Stream)**, 즉 1차원 문자�
 
 | 축 | 선언적 UI | 개방형 UI (MCP 앱스) |
 |---|---|---|
-| 표현력 | 호스트 컴포넌트 카탈로그 범위 | 사실상 무제한 |
+| 표현력 | 호스트 컴포넌트 카탈로그 범위로 제한 | 브라우저·샌드박스 한도 내에서 제한 없음 |
 | 보안 부담 | 낮음 (호스트가 그리므로 임의 코드 실행 없음) | 높음 (서드파티 코드 실행) |
 | 이식성 | 높음 (호스트가 스타일·동작을 결정) | 호스트 구현에 따라 렌더 결과가 달라짐 |
 | 룩앤필 일관성 | 호스트 UI와 자연스럽게 동일 | 호스트가 격리·봉합해야 함 |
@@ -84,7 +84,7 @@ LLM의 기본 출력은 **토큰 스트림(Token Stream)**, 즉 1차원 문자�
 
 ### 3.1 공식 MCP 확장 `io.modelcontextprotocol/ui`
 
-**MCP 앱스는 프로토콜 코어에 새로 추가된 메시지가 아니라 공식 MCP 확장(Official MCP Extension)이다.** 확장 식별자는 `io.modelcontextprotocol/ui`이고, 서버가 **채팅 안에서 직접 렌더링되는 인터랙티브 HTML 인터페이스를 반환**할 수 있게 해준다[^2].
+**MCP 앱스는 프로토콜 코어에 새로 추가된 메시지가 아니라 공식 MCP 확장(Official MCP Extension)이다.** 확장 식별자는 `io.modelcontextprotocol/ui`이고, 서버가 **채팅 안에서 직접 렌더링되는 인터랙티브 HTML 인터페이스를 반환**할 수 있게 해준다[^2][^8].
 
 이 지위가 실무에서 중요한 이유는 두 가지다.
 
@@ -153,7 +153,7 @@ MCP 앱스 툴 호출 시퀀스:
 - `structuredContent`에는 뷰가 필요로 하는 **원본 데이터**를 넣는다. 문장 요약을 넣으면 뷰가 쓸 수 없다.
 - 두 페이로드가 서로 다른 사실을 말하면 그건 버그다. 뷰에 3건이 보이는데 `content`가 2건이라고 하면, LLM과 사람이 서로 다른 현실을 보게 된다.
 
-아래는 툴이 UI 리소스를 선언하고 두 페이로드를 반환하는 **형태를 개념적으로 표현한 스케치**다. 실제 SDK의 함수명·필드 배치는 구현체마다 다르므로 규약의 모양만 참고하자.
+아래는 툴이 UI 리소스를 선언하고 두 페이로드를 반환하는 **형태를 개념적으로 표현한 스케치**다. SDK의 함수명은 구현체마다 다르지만, `_meta.ui`의 필드 배치(`resourceUri`는 툴, `csp`·`connectDomains`는 리소스)는 스펙에 정의되어 있으니 그 기준으로 읽자[^8].
 
 ```json
 // 툴 선언 (개념 스케치)
@@ -162,10 +162,26 @@ MCP 앱스 툴 호출 시퀀스:
   "description": "네임스페이스의 배포 목록을 조회한다",
   "_meta": {
     "ui": {
-      "resourceUri": "ui://ops-console/deployments",
-      "csp": { "connect": ["https://telemetry.internal.example"] }
+      "resourceUri": "ui://ops-console/deployments"
     }
   }
+}
+
+// UI 리소스 읽기 결과 (개념 스케치)
+// CSP 화이트리스트는 툴이 아니라 리소스 쪽 _meta.ui에 붙는다
+{
+  "contents": [
+    {
+      "uri": "ui://ops-console/deployments",
+      "mimeType": "text/html;profile=mcp-app",
+      "text": "<!doctype html>…",
+      "_meta": {
+        "ui": {
+          "csp": { "connectDomains": ["https://telemetry.internal.example"] }
+        }
+      }
+    }
+  ]
 }
 
 // 툴 호출 결과 (개념 스케치)
@@ -197,6 +213,8 @@ MCP 앱스 툴 호출 시퀀스:
 | 허용 도메인 | `_meta.ui.csp`로 화이트리스트 |
 
 **"빌드 타임에 모든 에셋을 인라인한다"** 는 규칙이 눈에 띈다[^4]. 프런트엔드 개발자에게는 제약으로 느껴지지만 서버 입장에서는 합리적이다. 외부 CDN에서 스크립트를 가져오는 순간 문서의 실행 내용을 서버가 통제할 수 없게 되고, deny-all 기본값도 무의미해진다. 결과적으로 **MCP 앱은 번들러가 필수인 프런트엔드 산출물**이 된다.
+
+한 가지만 구분해 두자. 이 인라인 규칙은 프로토콜이 강제하는 조항이 아니라 이 구성이 택한 관례다. 스펙은 `_meta.ui.csp`에 등록한 오리진에서 외부 스크립트·리소스를 로드하는 것도 허용하며, `ui.csp`를 생략했을 때의 기본값이 사실상 deny-all이다[^8]. 외부 로딩을 허용하기로 했다면 그 화이트리스트가 실질 방어선이 되고, 목록을 최소로 유지하는 책임도 구현 쪽에 남는다.
 
 ### 4.5 View는 모델이 아니라 브라우저 코드다
 
@@ -363,7 +381,7 @@ MCP 앱스는 **확장(Extension)** 이라는 지위를 가지며, 그 함의는
 
 ### 8.3 대시보드·모니터링 연동
 
-가장 흔한 실수는 **기존 대시보드를 iframe에 통째로 넣으려는 것**이다. CSP가 기본 deny-all이라 외부 도메인을 열어야 하고 격리 계층이 약해지며, 대시보드 인증 토큰이 뷰에 노출되거나 iframe 안에서 로그인 흐름이 깨지고, 무거운 대시보드가 응답 지연을 키운다.
+가장 흔한 실수는 **기존 대시보드를 iframe에 통째로 넣으려는 것**이다. CSP가 기본 deny-all이라 외부 도메인을 열어야 하고 격리 계층이 약해지며, 대시보드 인증 토큰이 뷰에 노출되거나 iframe 안에서 로그인 흐름이 깨지고, 무거운 대시보드는 뷰 로딩·렌더 비용을 대화 응답 경로에 얹어 지연을 키우기 쉽다.
 
 권장 패턴은 **"요약 카드 + 딥링크"** 다.
 
@@ -442,3 +460,4 @@ Kubernetes·Azure 배포 시 운영 노트를 함께 둔다.
 [^5]: "When AI Agents Need Eyes: What MCP Can and Cannot Standardize for Computer Vision" — Seowoo Han, Computer Vision Engineer, B GARAGE · Codex Ambassador. MCP Dev Summit Seoul 2026. MCP 역량(Tools·Resources·Tasks·Apps)과 컴퓨터 비전 라이프사이클 매핑 슬라이드.
 [^6]: 같은 세션 — 공개 Vision MCP 지형과 "MCP가 표준화하지 않는 것" 슬라이드. 조사 기준 시점은 발표 자료에 명시된 2026-08-12이며, 지형은 빠르게 변하므로 인용 시 재확인이 필요하다.
 [^7]: 행사 정보 — MCP Dev Summit Seoul 2026 (Linux Foundation). 행사 페이지: <https://events.linuxfoundation.org/mcp-dev-summit-seoul/>, 스케줄: <https://mcpseoul2026.sched.com/>
+[^8]: 프로토콜 서술 대조용 1차 자료 — MCP Apps 공식 문서 <https://modelcontextprotocol.io/extensions/apps/overview> 및 공식 스펙(리비전 2026-01-26) <https://github.com/modelcontextprotocol/ext-apps/blob/main/specification/2026-01-26/apps.mdx>. `ui://` 스킴, MIME `text/html;profile=mcp-app`, 툴 쪽 `_meta.ui.resourceUri`·`visibility`와 리소스 쪽 `_meta.ui.csp`(`connectDomains`·`resourceDomains`), `ui.csp` 생략 시 기본 CSP(`connect-src 'none'`), 샌드박스 iframe, `postMessage` 기반 JSON-RPC, `ui/initialize`·`ui/resource-teardown`은 여기서 확인할 수 있다. [^2]~[^4]는 발표 슬라이드 기반 서술이므로 규약 자체는 이 1차 자료로 대조했고, 호스트별 지원 범위는 클라이언트마다 달라 공식 문서가 별도 지원 매트릭스를 안내한다.

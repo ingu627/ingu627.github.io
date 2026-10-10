@@ -57,6 +57,10 @@ last_modified_at: 2026-10-10
 - **가용 영역(AZ, Availability Zone)**: 하나의 리전 안에서 전원·냉각·네트워크가 물리적으로 분리된 데이터센터 그룹. AZ 간 지연은 보통 한 자릿수 ms.
 - **엣지 로케이션(PoP)**: CloudFront/Route53/Global Accelerator가 동작하는 캐시 거점. 오리진(origin)까지 가지 않고 사용자 근처에서 응답한다.
 
+![AWS 리전 안에 여러 가용 영역(AZ)이 있고, 각 AZ에 VPC 서브넷이 놓이는 구조](/assets/images/cloud/official-cloud-fundamentals.webp)
+
+*출처: AWS Documentation — Regions and Availability Zones (https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html)*
+
 가용성 설계의 기본형은 **N+1 AZ 배치**다. 최소 2개 AZ, 프로덕션은 3개 AZ에 인스턴스·서브넷·DB를 분산한다. 목표를 숫자로 고정해라.
 
 ### 2.2 가용성 등급과 AZ ID 함정

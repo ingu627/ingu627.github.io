@@ -32,7 +32,7 @@ RAG는 오픈북 시험과 비슷하다. LLM이 답을 지어내는 대신, 먼�
 
 사내 직원 한 명이 300쪽짜리 매뉴얼 PDF를 업로드했다. 파서는 이 문서를 레이아웃 단위로 쪼개고 표를 복원하고 OCR을 돌리느라 CPU 코어를 몇 분간 붙잡는다.
 
-같은 프로세스가 그 시간 동안 다른 사용자의 채팅 요청도 처리하고 있었다면, 그 사용자의 응답은 파싱이 끝날 때까지 큐에 갇힌다. 실제로 이 구조에서는 문서 하나를 올리는 순간 다른 대화의 체감 응답 속도가 눈에 띄게 튀었다. 무거운 작업이 가벼운 작업의 자원을 빼앗는 전형적인 자원 경합(contention)이다.
+같은 프로세스가 그 시간 동안 다른 사용자의 채팅 요청도 처리하고 있었다면, 그 사용자의 응답은 파싱이 끝날 때까지 큐에 갇힌다. 실제로 이렇게 묶어 돌렸을 때는 문서 하나를 올리는 순간 다른 대화의 체감 응답 속도가 눈에 띄게 튀는 일이 반복됐다. 단일 인스턴스에서의 관측이라 벤치마크 수치로 정리한 것은 아니지만, 다른 대화의 지연이 파싱 시간에 묶이는 패턴 자체는 분명했다. 무거운 작업이 가벼운 작업의 자원을 빼앗는 전형적인 자원 경합(contention)이다.
 
 하나의 무거운 작업이 나머지 전부를 멈춘다.
 
@@ -66,13 +66,19 @@ RAG는 오픈북 시험과 비슷하다. LLM이 답을 지어내는 대신, 먼�
 - **Reranker**: 검색으로 모아진 후보 문서들의 순위를 다시 매기는 재순위화 컴포넌트. Azure AI 서비스로 배포한 Cohere 계열 모델을 호출한다.
 - **aca-webui**: 이 컴포넌트들을 조합하는 오케스트레이터. 사용자 질문을 받아 검색·리랭킹·생성 체인을 엮는다.
 
-연결 방식에서 중요한 결정은 두 가지다. 첫째, 벡터 검색은 REST(6333) 대신 **gRPC(6334)** 를 우선 사용한다(`QDRANT_PREFER_GRPC: true`). gRPC는 프로토바이너리(protobuf) 기반 이진 직렬화를 쓰기 때문에, 검색 한 번에 오가는 수많은 벡터와 페이로드를 REST+JSON보다 훨씬 compact하게 주고받는다. 질문당 검색 지연이 수십 밀리초 수준에서 체감될 만큼 차이가 난다. 둘째, Qdrant는 **멀티테넌시(multitenancy)** 모드로 운영한다(`ENABLE_QDRANT_MULTITENANCY_MODE: true`). 사용자·조직별로 컬렉션을 격리해, 한 사용자의 문서가 다른 사용자의 검색 결과에 섞여 나오는 것을 구조적으로 막는다.
+연결 방식에서 중요한 결정은 두 가지다. 첫째, 벡터 검색은 REST(6333) 대신 **gRPC(6334)** 를 우선 사용한다(`QDRANT_PREFER_GRPC: true`). gRPC는 프로토바이너리(protobuf) 기반 이진 직렬화를 쓰므로, 검색 한 번에 오가는 벡터와 페이로드를 REST+JSON보다 작게 주고받는다. [Qdrant 공식 문서](https://qdrant.tech/documentation/interfaces/)도 gRPC와 REST의 선택을 "편의성과 속도의 트레이드오프"로 규정하며, 애플리케이션 성능 최적화가 목적이면 gRPC를 권한다. 대신 이진 프로토콜이라 주고받는 내용을 눈으로 확인하기 어렵고, 디버깅 난이도는 REST보다 높다는 점을 감수해야 한다.
+
+둘째, Qdrant는 **멀티테넌시(multitenancy)** 모드로 운영한다(`ENABLE_QDRANT_MULTITENANCY_MODE: true`). 사용자·조직별로 데이터를 분리해, 한 사용자의 문서가 다른 사용자의 검색 결과에 섞여 나오는 것을 막는다. 다만 이 격리는 공짜가 아니다. [Qdrant 멀티테넌시 가이드](https://qdrant.tech/documentation/guides/multiple-partitions/)에 따르면 테넌트 구분용 페이로드 필드에 테넌트 인덱스(`is_tenant: true`)를 만들어 두어야 필터링이 느려지지 않고, 테넌트마다 컬렉션을 따로 만들면 컬렉션마다 붙는 자원 오버헤드가 그대로 늘어난다.
 
 정리하면, 검색 경로의 핵심은 gRPC 전송과 멀티테넌시 격리 두 축이다.
 
 체감 지연은 결국 전송 계층에서 갈린다.
 
 ### 2.1 검색에서 생성까지의 흐름
+
+![RAG 솔루션의 일반적인 요청 흐름(Application flow)과 데이터 파이프라인(Data pipeline flow)](/assets/images/azure/official-azure-rag-pipeline-microservices.webp)
+
+출처: RAG solution design and evaluation guide, Microsoft Learn (https://learn.microsoft.com/en-us/azure/architecture/ai-ml/guide/rag/rag-solution-design-and-evaluation-guide). 위쪽이 질의 처리(Application flow), 아래쪽이 색인(Data pipeline flow)이며, 이 글의 분리 구조는 같은 두 흐름을 자체 컴포넌트로 나눠 구현한 것이다.
 
 다이어그램의 화살표를 문장으로 다시 따라가 보자. 사용자가 질문을 던지면, 먼저 질문이 임베딩 벡터로 변환된다. 이 벡터로 Qdrant에서 의미상 가까운 문서 조각 상위 후보를 뽑고, 동시에 SearXNG로 웹 검색을 병렬로 돌린다.
 
@@ -200,7 +206,9 @@ RAG 구성 요소를 이렇게 떼어 놓고 나면, 다음 질문이 자연스�
 ## References
 
 - [Qdrant 공식 문서 — Qdrant](https://qdrant.tech/documentation/)
+- [Qdrant Interfaces(gRPC/REST) 문서 — Qdrant](https://qdrant.tech/documentation/interfaces/)
 - [Qdrant Multitenancy 가이드 — Qdrant](https://qdrant.tech/documentation/guides/multiple-partitions/)
+- [RAG solution design and evaluation guide — Microsoft Learn](https://learn.microsoft.com/en-us/azure/architecture/ai-ml/guide/rag/rag-solution-design-and-evaluation-guide)
 - [Docling — IBM Research (GitHub)](https://github.com/docling-project/docling)
 - [SearXNG 공식 문서](https://docs.searxng.org/)
 - [Cohere Rerank 문서 — Cohere](https://docs.cohere.com/docs/rerank-overview)

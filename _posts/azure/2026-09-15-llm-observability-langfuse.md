@@ -179,6 +179,10 @@ ENABLE_AUDIT_LOGS_FILE: "true"   # 파일로 기록
 
 이때 로그는 `ContainerAppConsoleLogs_CL` 테이블에 적재된다. 별도의 사이드카나 에이전트 설치 없이 환경 단위 설정만으로 수집이 시작된다는 점이 관리형 서비스의 장점이다.
 
+![Azure Monitor 데이터 수집·분석 구조](/assets/images/azure/official-llm-observability-langfuse.webp)
+
+출처: Azure Monitor 개요 — Microsoft Learn (https://learn.microsoft.com/en-us/azure/azure-monitor/fundamentals/overview)
+
 ### 4.3 KQL 쿼리 예시
 
 수집된 로그로 실제 운영 질문에 답하는 쿼리 두 개를 정리한다.

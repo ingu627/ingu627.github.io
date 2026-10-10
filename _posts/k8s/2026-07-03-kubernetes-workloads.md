@@ -267,7 +267,11 @@ spec:
 
 ### 8.1 HPA (Horizontal Pod Autoscaler)
 
-파드 개수를 수평 조정한다. **CPU/메모리 기반이면 대상 파드에 requests가 반드시 있어야** 하며, 없으면 지표가 `<unknown>`으로 뜬다. `autoscaling/v2`에서는 커스텀/외부 지표와 `behavior`(스케일 안정화 창, 정책)를 지원한다. 스케일 다운은 진동을 막기 위해 기본적으로 관성이 크다.
+파드 개수를 수평 조정한다. **CPU/메모리 기반이면 대상 파드에 requests가 반드시 있어야** 하며, 없으면 지표가 `<unknown>`으로 뜬다. `autoscaling/v2`에서는 커스텀/외부 지표와 `behavior`(스케일 안정화 창, 정책)를 지원한다. 스케일 다운은 진동을 막기 위해 기본 안정화 창(`stabilizationWindowSeconds`)이 300초(5분)로 관성이 크다.
+
+![HPA가 RC/Deployment의 Scale 값을 조정해 파드 수를 바꾸는 구조](/assets/images/k8s/official-kubernetes-workloads.webp)
+
+*출처: Kubernetes Documentation — Horizontal Pod Autoscaling (https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/)*
 
 ```yaml
 apiVersion: autoscaling/v2
@@ -307,7 +311,7 @@ spec:
 ## 9. 스케줄링 제어: 친화성·테인트·PDB·토폴로지 분산
 
 - **nodeAffinity / nodeSelector**: 특정 노드 레이블로 배치를 제한한다(`required`는 하드, `preferred`는 소프트).
-- **podAntiAffinity**: 같은 앱 파드를 서로 다른 노드/AZ에 흩어 가용성을 높인다. 대규모에서는 스케줄러 부하가 급증하므로 `topologySpreadConstraints`가 더 낫다.
+- **podAntiAffinity**: 같은 앱 파드를 서로 다른 노드/AZ에 흩어 가용성을 높인다. 다만 inter-pod 안티 어피니티는 처리 비용이 커서 대규모 클러스터에서 스케줄링을 상당히 느리게 만들 수 있고, 쿠버네티스 문서는 수백 개 노드를 넘는 클러스터에서는 사용을 권장하지 않는다[^1]. 이 규모에서는 존·노드 편차를 직접 제어하는 `topologySpreadConstraints`로 분산을 표현하는 편이 낫다.
 - **topologySpreadConstraints**: `maxSkew`로 존/노드 간 편차를 직접 제어한다. `whenUnsatisfiable: DoNotSchedule`은 하드, `ScheduleAnyway`는 소프트다.
 - **테인트(Taint) / 톨러레이션(Toleration)**: 노드가 파드를 "밀어내는" 규칙이다. 테인트는 노드에, 톨러레이션은 파드에 붙는다. GPU 노드 분리, 전용 테넌트 격리에 쓴다.
 - **PDB(PodDisruptionBudget)**: 자발적 중단(노드 드레인, CA 축소) 시 최소 가용 수를 보장한다. `minAvailable: 1` + replicas: 1 조합은 드레인을 영구히 막는 함정이다.
@@ -404,3 +408,5 @@ spec:
 - Kubernetes Documentation — [Jobs](https://kubernetes.io/docs/concepts/workloads/controllers/job/)
 - Kubernetes Documentation — [Horizontal Pod Autoscaling](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/)
 - Karpenter — [Karpenter Documentation](https://karpenter.sh/)
+
+[^1]: Kubernetes Documentation — [Assigning Pods to Nodes](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/) — inter-pod affinity/anti-affinity는 상당한 처리량을 요구해 대규모 클러스터의 스케줄링을 크게 느리게 만들 수 있으므로, 수백 개 노드를 넘는 클러스터에서는 사용을 권장하지 않는다.
