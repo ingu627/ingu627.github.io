@@ -6,7 +6,7 @@ author_profile: true
 sidebar_main: false
 ---
 
-안녕하세요! 클라우드 인프라와 AI 플랫폼 엔지니어링을 탐구하고 기록하는 **ingu627**입니다.
+안녕하세요! 클라우드 인프라와 AI 플랫폼 엔지니어링을 탐구하고 기록하는 **정현석(Hyunseok Jung)**입니다.
 
 복잡한 분산 환경에서의 고가용성(High Availability), 확장성(Scalability), 그리고 데이터와 모델이 안정적으로 흐르는 프로덕션 아키텍처를 설계하고 구현하는 데 깊은 관심을 두고 있습니다.
 
