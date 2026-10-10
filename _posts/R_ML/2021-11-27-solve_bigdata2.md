@@ -1,21 +1,47 @@
 ---
 layout: single
-title: "빅데이터분석기사(R) - 제1유형 10문제 풀이 (1)"
-excerpt: "2021년 제 3회 빅데이터분석기사 실기를 위한 문제풀이 내용입니다. - 1~10번"
+title: "빅데이터분석기사(R) - 제1유형 21문제 풀이"
+excerpt: "빅데이터분석기사 실기 제1유형(작업형 1) 대비를 위한 R 기반 21개 실전 기출·연습 문제 풀이 모음입니다. 결측치 처리, 이상값 탐지, 데이터 집계 및 필터링 등 핵심 전처리 기법을 단계별 R 코드로 정리합니다."
 categories: R_ML
 tags : [R, 빅데이터 분석기사, 실기, 작업형, 필답형, 자격증, dataq, 정리, pdf, 기출문제, 정리본, 후기, 설명, 2회, 3회]
 toc: true
+toc_sticky: true
 sidebar_main: false
 classes: wide
 
-last_modified_at: 2026-10-09
+last_modified_at: 2026-10-10
 ---
 
-빅데이터 분석기사 실기 대비 차원에서 쓴 글입니다. 기출문제의 데이터는 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis)에 데이터 셋을 남겨놨습니다. 또한 해당 전체 코드는 `sujebi_1.R` 파일에 담겨져 있습니다.
+빅데이터 분석기사 실기(작업형 제1유형) 대비 차원에서 정리한 21개 실전 문제 풀이 모음입니다. 기출문제 및 실습 데이터는 [GitHub 저장소(BigDataAnalysis)](https://github.com/ingu627/BigDataAnalysis)에 업로드되어 있으며, 전체 R 코드는 `sujebi_1.R`과 `sujebi_2.R`에 수록되어 있습니다.
 
 > 2021.12.31 : 제 3회 빅데이터 분석기사 실기를 합격했습니다. [빅데이터 분석기사(R)](https://ingu627.github.io/categories/R_ML) 시리즈를 보시고 도움이 되길 바랍니다.
 
 혹시 해당 글을 pdf로 받고 싶으신 분은 이메일과 함께 댓글로 남겨주세요~
+
+- **이 글에서 다루는 문제 목차**
+  - [1. airquality - 결측값 처리 전후 표준편차 비교](#1-airquality)
+  - [2. Hitters - IQR 기반 이상값의 합](#2-hitters)
+  - [3. diamonds - 상위 80% 분할 및 price 상위 100개 평균](#3-diamonds)
+  - [4. airquality - 결측값 대체 전후 중앙값 차이](#4-airquality)
+  - [5. music - 분위수 기준 대체 및 평균·표준편차 합](#5-music)
+  - [6. telco-customer-churn - 1.5 표준편차 초과 이상값 제외 평균](#6-telco-customer-churn)
+  - [7. cats - 표준편차 기준 이상값의 평균](#7-cats)
+  - [8. orings - 피어슨 상관계수 산출](#8-orings)
+  - [9. mtcars - 조건별 상위 가중치 데이터 평균 연비 차이](#9-mtcars)
+  - [10. diamonds - 조건 필터링 후 최대 가격 탐색](#10-diamonds)
+  - [11. airquality - 특정 일자 값 필터링](#11-airquality)
+  - [12. iris - 변수별 평균의 합](#12-iris)
+  - [13. mtcars - 기통 조건별 백분율](#13-mtcars)
+  - [14. mtcars - 복합 조건 필터링 및 연비 평균과 표준편차의 합](#14-mtcars)
+  - [15. Boston - 수치 조건 필터링 및 평균값](#15-boston)
+  - [16. iris - 파생 변수 생성 및 합계 집계](#16-iris)
+  - [17. airquality - IQR 구간 필터링 및 합계](#17-airquality)
+  - [18. marvel - IQR 기반 이상값 필터링 및 평균](#18-marvel)
+  - [19. ChickWeight - 상위값 기준 대체 전후 평균 차이](#19-chickweight)
+  - [20. FIFA Ranking - 상위 순위 국가 추출 및 평균 포인트](#20-fifa-ranking)
+  - [21. sales_train - 최다 판매 품목과 전체 상품 간 표준편차 차이](#21-sales_train)
+
+---
 
 ## 1. airquality
 
@@ -256,7 +282,261 @@ result = max(ds1$price)
 print(result) # 2745
 ```
 
+---
+
+앞서 1번부터 10번 문제까지 결측값 처리, 이상값 탐지, 분위수 분할 등 기본적인 전처리 유형을 연습해보았습니다. 이어서 11번부터 21번 문제에서는 조건부 인덱싱, 파생 변수 생성, 집계 함수(`group_by`, `summarise`) 활용 등 보다 다양한 실전 패턴을 다룹니다.
+
+---
+
+## 11. airquality
+
+- 8월 20일의 Ozone 값을 구하시오.
+
+```R
+data(airquality)
+str(airquality)
+
+library(dplyr)
+ds=airquality %>% 
+    filter(Month==8 & Day==20)
+
+result=ds$Ozone
+print(result)
+```
+
+## 12. iris
+
+- Sepal.Length의 mean값과 Sepal.Width의 mean 값의 합계를 구하시오.
+
+```R
+data(iris)
+result = mean(iris$Sepal.Length, na.rm = TRUE) + mean(iris$Sepal.Width, na.rm = TRUE)
+print(result) # 8.900667
+```
+
+## 13. mtcars
+
+- 4기통(cyl)인 자동차의 백분율(%)을 구하시오.
+
+```R
+data(mtcars)
+str(mtcars)
+summary(mtcars)
+
+library(dplyr)
+ds=mtcars %>% 
+    filter(cyl==4)
+
+result = nrow(ds) / nrow(mtcars) * 100
+print(result) # 34.375
+```
+
+## 14. mtcars
+
+- 변속 기어(gear) 수가 4이고 수동(am==1) 변속기인 데이터에서 자동차 연비(mpg)의 mean 값과 전체 마력(hp)의 표준편차의 합계를 구하시오.
+
+```R
+data(mtcars)
+summary(mtcars)
+
+library(dplyr)
+ds = mtcars %>% 
+    filter(gear == 4 & am==1)
+
+result = mean(ds$mpg) + sd(ds$hp)
+print(result) # 50.44959
+```
+
+## 15. Boston
+
+- crim 항목이 1보다 작거나 같은 경우에 medv 항목의 mean 값을 구하시오.
+
+```R
+library(MASS)
+data(Boston)
+
+str(Boston)
+summary(Boston)
+
+library(dplyr)
+ds = Boston %>% 
+    filter(crim <= 1)
+result=mean(ds$medv)
+print(result) # 25.11084
+```
+
+## 16. iris
+
+- iris 데이터 세트에서 Species가 virginica인 항목에서 Sepal.Length가 6보다 크면 1, 아니면 0으로 파생 컬럼 Len을 생성 후 Len 컬럼의 sum 값을 구하시오
+
+```R
+data(iris)
+library(dplyr)
+
+ds = iris %>% filter(Species == 'virginica') %>% 
+    mutate(Len = ifelse(Sepal.Length > 6, 1, 0))
+result = sum(ds$Len)
+print(result) # 41
+```
+
+## 17. airquality
+
+- Ozone의 결측값을 없애고 평균 값을 구한 값으로 대체하고, median 값에서 2 x IQR을 뺀 값과 median 값에서 2 x IQR을 더한 값 사이에 존재하는 Ozone값의 합계를 구하시오.
+
+```R
+data(airquality)
+a_mean = mean(airquality$Ozone, na.rm = TRUE)
+
+airquality$Ozone = ifelse(
+    is.na(airquality$Ozone),
+    a_mean,
+    airquality$Ozone)
+
+a_med = median(airquality$Ozone)
+quantile(airquality$Ozone)
+#        0%       25%       50%       75%      100%
+#   1.00000  21.00000  42.12931  46.00000 168.00000 
+a_under = a_med - 2*IQR(airquality$Ozone)
+a_upper = a_med + 2*IQR(airquality$Ozone)
+
+library(dplyr)
+ds = airquality %>% 
+    filter(Ozone < a_upper & Ozone > a_under)
+
+result = sum(ds$Ozone)
+print(result) # 5279.784
+```
+
+## 18. marvel
+
+> 데이터 참고 : [https://www.kaggle.com/fivethirtyeight/fivethirtyeight-comic-characters-dataset?select=marvel-wikia-data.csv](https://www.kaggle.com/fivethirtyeight/fivethirtyeight-comic-characters-dataset?select=marvel-wikia-data.csv)
+
+- Hair가 "Brown Hair"이고 Eye가 "Brown Eyes"인 데이터를 훈련 데이터로 추출했을 때, APPEARANCES에서 이상값을 제외한 평균을 구하시오. 
+
+```R
+ds = read.csv('sujebi_data/marvel-wikia-data.csv')
+head(ds)
+str(ds)
+summary(ds)
+
+library(dplyr)
+ds1 = ds %>% 
+    filter(HAIR == "Brown Hair" & EYE == "Brown Eyes")
+
+iqr = IQR(ds1$APPEARANCES, na.rm = TRUE)
+q1 = quantile(ds1$APPEARANCES, na.rm = TRUE)[2]
+m_under = q1 - 1.5*iqr
+m_upper = q1 + 1.5*iqr
+
+ds2 = ds1 %>% 
+    filter(APPEARANCES <= m_upper & APPEARANCES >= m_under)
+result = mean(ds2$APPEARANCES, na.rm = TRUE)
+print(result) # 7.773512
+```
+
+## 19. ChickWeight
+
+- 시간(Time)이 10인 데이터를 훈련 데이터로 생성하고 무게(weight)가 상위 30번째 이상 값을 평균으로 변환한 후 변환하기 전, 후의 평균의 차이를 구하시오.
+
+```R
+library(MASS)
+data(ChickWeight)
+str(ChickWeight)
+dim(ChickWeight)
+
+library(dplyr)
+ds = ChickWeight %>% 
+    filter(Time == 10)
+
+before_mean = mean(ds$weight) # 107.8367
+
+ds1 = ds %>% 
+    arrange(desc(weight))
+head(ds1)
+
+stand = ds1$weight[30]
+
+ds1$weight = ifelse(ds1$weight >= stand, before_mean, ds1$weight)
+after_mean = mean(ds1$weight)
+result = abs(after_mean - before_mean)
+print(result) # 9.120367
+```
+
+## 20. FIFA Ranking
+
+- 총점수(total_points)가 상위 3위인 국가(country_abrv)를 선택하고 이 국가들 총점수(total_points)항목의 평균을 구하시오.
+
+> 데이터 참고 : [https://www.kaggle.com/tadhgfitzgerald/fifa-international-soccer-mens-ranking-1993now](https://www.kaggle.com/tadhgfitzgerald/fifa-international-soccer-mens-ranking-1993now)
+
+```R
+fifa=read.csv("sujebi_data/fifa_ranking.csv")
+str(fifa)
+summary(fifa)
+# country_abrv total_points
+library(dplyr)
+
+fifa_point = fifa %>% select(total_points) %>% 
+    arrange(desc(total_points))
+top3_point = fifa_point[3,]
+
+fifa_country = fifa %>% 
+    filter(fifa_point >= top3_point) %>% 
+    select(country_abrv)
+fifa_country = as.vector(fifa_country$country_abrv)  # GER ITA SUI
+
+f_mean = fifa %>% 
+    filter(country_abrv %in% fifa_country) %>% 
+    summarise(mean = mean(total_points, na.rm = TRUE))
+print(f_mean$mean) # 348.098
+```
+
+## 21. sales_train
+
+- 가장 많이 판매된 상품(item_id) 3가지와 전체 상품에 대하여 상품 판매가(item_price) 표준편차 차이를 구하시오.
+
+```R
+sales=read.csv('sujebi_data/sales_train_v2.csv')
+
+head(sales)
+str(sales)
+summary(sales)
+dim(sales)
+
+library(dplyr)
+top3_item = sales %>% group_by(item_id) %>% 
+    summarise(n = n()) %>% 
+    arrange(desc(n)) %>% 
+    head(3)
+top3_item
+
+top3_id = as.vector(top3_item$item_id)
+top3_id
+
+sum(is.na(sales$item_price))
+
+total_sd = sd(sales$item_price)
+
+top3_sd = sales %>% 
+    filter(item_id %in% top3_id) %>% 
+    summarise(sd = sd(item_price))
+top3_sd = top3_sd$sd
+
+print(abs(total_sd - top3_sd)) # 1101.796
+```
+
+---
+
+## 핵심 정리
+
+- **결측값 대체**: `is.na()`와 `ifelse()`를 조합하여 평균(`mean()`) 또는 중앙값(`median()`)으로 결측값을 채우고, 전후 통계량(표준편차, 중앙값 등) 변화를 정확히 계산합니다.
+- **이상값 탐지**: IQR의 n배수(`IQR()`) 혹은 표준편차 배수(`mean ± k * sd`) 기준을 바탕으로 논리 필터링(`filter()`)을 수행합니다.
+- **조건부 데이터 분할**: 인덱싱(`nrow() * ratio`) 및 `slice`/행 선택을 통해 훈련·검증 데이터를 나누고 상위 n개 관측치를 추출합니다.
+- **파생 변수 및 변환**: `mutate()`와 조건문을 활용해 특정 기준 초과 여부를 이진 플래그(0/1)나 그룹화 값으로 변환합니다.
+- **그룹 집계 및 정렬**: `group_by() %>% summarise()`와 `arrange(desc())`를 활용하여 상위 빈도 품목이나 그룹별 통계량을 신속하게 산출합니다.
+
+---
 
 ## References
 
 - [2022 수제비 빅데이터분석기사 실기 (필답형+작업형)](https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=281447264)
+- [BigDataAnalysis GitHub Repository](https://github.com/ingu627/BigDataAnalysis)
