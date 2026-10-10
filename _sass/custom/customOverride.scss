@@ -1,1 +1,86 @@
 @import "./toggle.scss";
+
+/* Modern Typography Kerning */
+body {
+  letter-spacing: -0.025em;
+}
+
+/* Code / Monospace Kerning Reset */
+code, pre, tt, kbd, samp {
+  letter-spacing: normal;
+}
+
+/* Content inline link distinction in monochrome theme */
+.page__content {
+  a:not(.btn):not(.tag):not(.pagination--pager) {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+    text-decoration-color: rgba(120, 120, 120, 0.45);
+    transition: text-decoration-color 0.15s ease, color 0.15s ease;
+
+    &:hover {
+      text-decoration-color: currentColor;
+    }
+  }
+}
+
+/* Recommendation A: 840px Single-Column Layout with Breadcrumb and Related Alignment */
+.layout--single {
+  #main {
+    max-width: 100%;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  /* Hide left sidebar on single post pages */
+  .sidebar {
+    display: none !important;
+  }
+
+  /* Hide right TOC on single post pages */
+  .sidebar__right {
+    display: none !important;
+  }
+
+  /* Breadcrumbs alignment (840px centered, matching article) */
+  .breadcrumbs {
+    width: calc(100% - 3rem) !important;
+    max-width: 840px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+
+    ol {
+      float: none !important;
+      width: 100% !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+  }
+
+  /* Center single-column article with optimal 840px reading width */
+  .page {
+    float: none !important;
+    width: 100% !important;
+    max-width: 840px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-right: 0 !important;
+  }
+
+  .page__inner-wrap {
+    float: none !important;
+    width: 100% !important;
+  }
+
+  /* Center related posts section to match 840px article width */
+  .page__related {
+    float: none !important;
+    width: 100% !important;
+    max-width: 840px !important;
+    margin: 2em auto 0 !important;
+    padding-right: 0 !important;
+  }
+}

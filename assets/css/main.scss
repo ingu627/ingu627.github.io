@@ -7,6 +7,18 @@
 
 @import "custom/customImport.scss";
 
+/* Clean Black & White Monochrome Light Theme */
+$background-color: #ffffff;
+$text-color: #111111;
+$muted-text-color: #666666;
+$primary-color: #111111;
+$border-color: #e5e7eb;
+$footer-background-color: #f9fafb;
+$link-color: #111111;
+$link-color-hover: #555555;
+$masthead-link-color: #111111;
+$masthead-link-color-hover: #555555;
+$navicon-link-color-hover: #333333;
 @import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'sunrise' }}"; // skin
 @import "minimal-mistakes"; // main partials
 
@@ -39,9 +51,6 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-body {
-  font-family: 'Fira Mono';
-}
 
 
 code {
