@@ -17,7 +17,7 @@ sidebar_main: false
 > 이 글은 2022년 당시 WSL2(Windows 10 21H2) 기준으로 작성된 설치/사용 기록이다. 최신 버전에서는 명령이 다를 수 있다.
 
 - **Update(20220714)**
-  - 윈도우 11 또는 윈도우 10의 21H2 버전 이상이어야 WSL2가 설치가 된다.
+  - 윈도우 11 또는 윈도우 10 21H2 이상에서는 `wsl --install` 한 줄로 설치할 수 있다. 아래처럼 수동으로 설치하는 방식은 윈도우 10 1903(빌드 18362) 이상이면 동작한다. ([microsoft docs - 수동 설치 단계](https://docs.microsoft.com/ko-kr/windows/wsl/install-manual))
 - AWS에서 가상의 환경을 작업하던 중, 내 PC에서 구동해 보았으면 싶어서 설치를 진행해 보았다.
 
 ![image](https://user-images.githubusercontent.com/78655692/143879564-f6e63337-035a-48a0-aba0-b0c658b3b4de.png)

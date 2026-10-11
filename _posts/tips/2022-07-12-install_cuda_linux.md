@@ -270,10 +270,10 @@ $ sudo apt-get install manpages-dev
 
 ## 한계 및 주의사항
 
-- 이 글의 설치 조합(nvidia driver 495 / CUDA 11.3 / cuDNN 8.2.1 / PyTorch 1.11.0+cu113)은 작성 시점 기준이며, 이후 버전에서는 패키지 이름과 설치 명령이 달라질 수 있다. [^2] [^4]
-- `apt`로 설치한 드라이버와 NVIDIA runfile 설치를 섞으면 라이브러리 경로가 충돌할 수 있으므로, 한 가지 방법으로 통일하는 편이 안전하다. [^1]
+- 이 글의 설치 조합(nvidia driver 495 / CUDA 11.3 / cuDNN 8.2.1 / PyTorch 1.11.0+cu113)은 작성 시점 기준이며, 이후 버전에서는 패키지 이름과 설치 명령이 달라질 수 있다. [^6] [^7]
+- `apt`로 설치한 드라이버와 NVIDIA runfile 설치를 섞으면 라이브러리 경로가 충돌할 수 있으므로, 한 가지 방법으로 통일하는 편이 안전하다. [^6]
 - cuDNN은 NVIDIA 개발자 계정 로그인이 필요하고, 압축을 푼 `lib64` 파일을 CUDA 디렉터리로 복사해야 하므로 경로를 잘못 지정하면 런타임에 라이브러리 로드 오류가 난다.
-- Ubuntu 자동 업데이트가 그래픽 드라이버를 교체하면 CUDA 버전이 어긋날 수 있으므로, 설치 후에는 `nvidia-smi`로 드라이버·CUDA 버전을 다시 확인한다.
+- Ubuntu 자동 업데이트가 그래픽 드라이버를 교체하면 CUDA 버전이 어긋날 수 있으므로, 설치 후에는 `nvidia-smi`로 드라이버·CUDA 버전을 다시 확인한다. [^6]
 
 ## References
 
@@ -282,6 +282,8 @@ $ sudo apt-get install manpages-dev
 [^3]: [Ubuntu 18.04 CUDA + PyTorch 설치 - Greenmon.dev](https://greenmon.dev/2019/06/21/ubuntu-cuda.html)
 [^4]: [Ubuntu 20.04에 CUDA Toolkit 11.2, cuDNN 8.1.0, Tensorflow 설치하기 - webnautes](https://webnautes.tistory.com/1428)
 [^5]: [[LAB] Ubuntu python3 가상환경 venv 설치하기 - rubying](https://velog.io/@rubying/LAB-Ubuntu-python3-%EA%B0%80%EC%83%81%ED%99%98%EA%B2%BD-venv-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0)
+[^6]: [NVIDIA CUDA Installation Guide for Linux](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html)
+[^7]: [PyTorch - Previous PyTorch Versions](https://pytorch.org/get-started/previous-versions/)
 
 
 

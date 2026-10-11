@@ -170,7 +170,7 @@ VSCode에서 파이썬 및 데이터 분석 확장을 원활하게 활용하려�
 ## 한계 및 실무 주의사항
 
 - **언어 서버와 확장 간 충돌**: `MagicPython`과 같은 구문 강조 확장은 최신 VSCode 내장 Python 시맨틱 하이라이팅(Semantic Highlighting) 또는 `Pylance` 언어 서버와 토큰 파싱 규칙이 충돌하여 색상 표시에 왜곡이 생길 수 있다. 또한 여러 AI 완성 확장(Tabnine, IntelliCode, Copilot)을 동시에 켜둘 경우 인라인 추천 팝업이 중첩되고 지연 시간(latency)이 증가할 수 있다.
-- **메모리 점유 및 인덱싱 오버헤드**: Pylance(Pyright)는 수천 개 이상의 파일이나 대형 파이썬 라이브러리(PyTorch, TensorFlow, Pandas)를 인덱싱할 때 상당한 양의 RAM(1~2GB 이상)을 점유할 수 있다. 대규모 저장소에서는 `.vscode/settings.json`에서 `python.analysis.indexing: false`나 `python.analysis.exclude` 설정을 통해 불필요한 디렉터리 스캔을 제외해야 한다.
+- **메모리 점유 및 인덱싱 오버헤드**: Pylance(Pyright)는 대형 파이썬 라이브러리(PyTorch, TensorFlow, Pandas)를 인덱싱할 때 상당한 양의 RAM을 점유할 수 있다. 대규모 저장소에서는 `.vscode/settings.json`에서 `python.analysis.indexing: false`나 `python.analysis.exclude` 설정을 통해 불필요한 디렉터리 스캔을 제외해야 한다.
 - **Jupyter 커널 및 원격 환경 의존성**: VSCode의 Jupyter 확장은 실행 대상 환경에 `ipykernel` 패키지가 사전에 설치되어 있어야 정상 동작한다. 특히 GPU 서버 환경에서 Remote - SSH 확장을 사용할 경우 에디터 확장이 로컬 머신과 원격 서버(Extension Host)에 나뉘어 설치되므로, 원격 서버의 Python 가상환경 커널을 정확히 선택해야 하며 대용량 셀 출력은 렌더러 메모리 한계로 인해 에디터 응답 지연을 초래할 수 있다.
 - **보안 및 라이선스 정책**: Tabnine과 같은 서드파티 AI 확장은 엔터프라이즈 환경에서 외부 서버로의 코드 전송 정책을 검토해야 하며, 구버전 Shan Khan `Settings Sync`는 보안상 토큰 유출 위험이 있으므로 VSCode 공식 계정 동기화로 전환하는 것이 권장된다.
 
