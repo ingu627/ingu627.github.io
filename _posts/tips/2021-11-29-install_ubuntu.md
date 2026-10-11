@@ -4,12 +4,12 @@ title: "윈도우10에서 리눅스(Linux) 설치하기 (Ubuntu on WSL2)"
 excerpt: "AWS에서 가상의 환경을 작업하던 중, 내 PC에서 구동해 보았으면 싶어서 설치를 진행해 보았습니다. 윈도우10 환경에서 wsl2를 설치해봅니다."
 categories: tips
 date: 2022-07-16
-tag: [linux, ubuntu, windows 10, WSL2, 우분투, 리눅스, wsl, 윈도우10, 설치, 오류, 사용법, 정리, 윈도우, 도커, docker]
+tags: [linux, ubuntu, windows 10, WSL2, 우분투, 리눅스, wsl, 윈도우10, 설치, 오류, 사용법, 정리, 윈도우, 도커, docker]
 
 toc: true
 toc_sticky: true
 
-last_modified_at: 2026-10-09
+last_modified_at: 2026-10-11
 
 sidebar_main: false
 ---
@@ -45,9 +45,9 @@ sidebar_main: false
   - 설정 -> Windows 업데이트 -> 고급 옵션 -> "Window를 업데이트할 때 다른 Microsoft 제품에 대한 업데이트 받기" 활성화
 
 
-## 4. powershell 권리자 실행
+## 4. powershell 관리자 실행
 
-- powershell 검색 -> 권리자 권한으로 실행
+- powershell 검색 -> 관리자 권한으로 실행
 
 ![image](https://user-images.githubusercontent.com/78655692/143835471-233faab1-2dfd-4ac8-bef7-a65db6ebb1df.png)
 
@@ -129,7 +129,7 @@ dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /nores
 ![image](https://user-images.githubusercontent.com/78655692/143837437-b1ceb809-ce61-4d64-9379-b4cd4749759b.png)
 
 - 초기에 `sudo apt update`, `sudo apt upgrade` 명령어 실행한다.
-  - aply 오류가 난다면 `sudo apt-get install alsa-utils` 명령어 실행한다.
+  - alsa 오류가 난다면 `sudo apt-get install alsa-utils` 명령어 실행한다.
 
 
 ## Appendix A

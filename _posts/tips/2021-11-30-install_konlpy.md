@@ -4,11 +4,11 @@ title: "윈도우10 환경에서 konlpy 설치하는 방법"
 excerpt: "KoNLPy는 한국어 정보처리를 위한 파이썬 패키지입니다. NLP (자연어 처리)를 할 때 쓰이지만 운영체제가 윈도우같은 경우는 설치 버전을 좀 맞춰야 합니다."
 categories: tips
 tags: [tip, konlpy, nlp, 윈도우10, 설치, jpype, tweepy, 자연어 처리, 환경 변수, 윈도우]
-toc: True
-toc_sticky: True
+toc: true
+toc_sticky: true
 sidebar_main: false
 
-last_modified_at: 2026-10-09
+last_modified_at: 2026-10-11
 ---
 
 - **KoNLPy**는 한국어 정보처리를 위한 파이썬 패키지이다. NLP (자연어 처리)를 할 때 쓰이지만 운영체제가 윈도우같은 경우는 설치 버전을 좀 맞춰야 한다.
@@ -18,7 +18,7 @@ last_modified_at: 2026-10-09
 ## 1. 자바 설치 (JDK, oracle.com )
 
 - [https://www.oracle.com/java/technologies/downloads/](https://www.oracle.com/java/technologies/downloads/){: target="_blank"} 로 들어가서 자바를 설치한다.
-- 오라클 계정이 필요할 수 있으니 참고바람!
+- 오라클 계정이 필요할 수 있으니 참고하길 바란다.
 
 > 주의사항 : JDK 16 이상으로 설치
 
@@ -29,7 +29,7 @@ last_modified_at: 2026-10-09
 
 ## 2. 환경 변수 설정
 
-- 환경 변수를 설정하는 이유는 JAVA 설치를 컴퓨터가 인식하기 위함이다. `고급 -> 환경 변수 -> 시스템 변수의 새로만들기 -> 변수 : JAVA_HOME / RKQT : 설치 경로 -> 적용 -> 확인
+- 환경 변수를 설정하는 이유는 JAVA 설치를 컴퓨터가 인식하기 위함이다. `고급 -> 환경 변수 -> 시스템 변수의 새로만들기 -> 변수 : JAVA_HOME / 값 : 설치 경로 -> 적용 -> 확인`
 
 ![image](https://user-images.githubusercontent.com/78655692/143981939-418fc97f-f876-4846-8903-42c90ac5a684.png)
 
@@ -68,7 +68,7 @@ last_modified_at: 2026-10-09
 ![image](https://user-images.githubusercontent.com/78655692/143983473-09a8a522-fdfd-4027-8120-cfcb2c9231fb.png)
 
 
-### 5_1. tweepy오류로 3.10.0로 재설치를 한다.
+### 5.1. tweepy 오류로 3.10.0으로 재설치한다.
 
 - `pip uninstall tweepy` 후 `pip install tweepy==3.10.0` 로 설치
 

@@ -8,12 +8,12 @@ toc: true
 toc_sticky: true
 sidebar_main: false
 
-last_modified_at: 2026-10-10
+last_modified_at: 2026-10-11
 ---
 
 ![image](https://user-images.githubusercontent.com/78655692/163179465-84498a7b-65b6-4389-ab68-e2d64f1aefd9.png)
 
-"Learning under Concept Drift: an Overview" 논문을 정리하고 검토한 글이다.
+"Learning under Concept Drift: an Overview" 논문을 정리하고 검토한 글이다[^1].
 논문 링크 : <https://arxiv.org/abs/1010.4784>
 
 머신러닝 시스템이 현실 환경에 배포되면 데이터 분포가 시간에 따라 끊임없이 변화하는 **비정상성(non-stationarity)**에 직면하게 된다. 학습 시점의 데이터 분포와 운영 시점의 데이터 분포가 달라지면서 모델 성능이 급격히 저하되는 병목을 해결하기 위해, 본 서베이 논문은 **컨셉 드리프트(Concept Drift)** 하에서의 점진적 학습 프레임워크와 변화 메커니즘을 통합적으로 정리하고 체계적인 분류 체계(taxonomy)를 제시한다.
@@ -33,11 +33,11 @@ last_modified_at: 2026-10-10
 
 인스턴스 시퀀스는 한 번에 한 인스턴스씩 관찰된다 (단, 동일한 시간 간격으로 관찰될 필요는 없다). 주요 기호 정의는 다음과 같다.
 
-- **$X_t\in \Re^p$**: 시간 $t$에서 관찰되는 p차원 특징 공간의 벡터
+- **$X_t\in \mathbb{R}^p$**: 시간 $t$에서 관찰되는 p차원 특징 공간의 벡터
 - **$y_t$**: 해당 라벨(label)
 - **$X_t$**: 인스턴스(instance)
 - **$(X_t,y_t)$**: 레이블된 인스턴스(labeled instance)
-- **$(X_1,...,X_t)$**: 이력 데이터(historical data)
+- **$(X_1,\dots,X_t)$**: 이력 데이터(historical data)
 - **$X_{t+1}$**: 타겟 인스턴스(target instance)
 - **$S$**: 데이터 소스(source)
 
@@ -45,7 +45,7 @@ last_modified_at: 2026-10-10
 
 점진적 학습(Incremental Learning) 환경에서는 새로운 데이터가 순차적으로 들어올 때마다 모델을 점진적으로 갱신하며 미래 인스턴스를 예측한다.
 
-- **데이터 수집**: 매 $t$시간마다 레이블된 이력 데이터 $X^H=(X1,...,X_t)$를 획득한다.
+- **데이터 수집**: 매 $t$시간마다 레이블된 이력 데이터 $X^H=(X_1,\dots,X_t)$를 획득한다.
 - **예측 목표**: 타겟 인스턴스 $X_{t+1}$이 주어지면, 라벨 $y_{t+1}$을 예측해야 한다.
 - **러너 구축**: 이력 데이터 $X^H$를 기반으로 러너 $L_t$를 구축한다.
 - **예측 수행**: 모델 $L_t$를 적용하여 $X_{t+1}$의 라벨을 예측한다.
@@ -68,12 +68,12 @@ last_modified_at: 2026-10-10
 
 베이지안 결정 이론 관점에서 드리프트는 입력 특징 분포의 변화인지, 결정 경계 자체의 변화인지로 명확히 분해된다.
 
-$X \rightarrow c_i$로 분류하기 위한 최적의 분류는 온전히 클래스에 대한 사전 확률 $P(c_i)$와 클래스 조건부 확률 밀도 함수 $p(X\mid c_i),\ i=1,...,k$로 결정된다.
+$X \rightarrow c_i$로 분류하기 위한 베이즈 최적 결정 규칙은 클래스에 대한 사전 확률 $P(c_i)$와 클래스 조건부 확률 밀도 함수 $p(X\mid c_i),\ i=1,\dots,k$에 의해 결정된다.
 
-- 데이터 소스 정의: $S= {(P(c_k),p(X\mid c_k))}$
+- 데이터 소스 정의: $S= \{ (P(c_k),p(X\mid c_k)) \}_{k=1}^K$
 - 베이지안 의사결정 이론에서 동일한 실수 비용으로 인스턴스 $X$에 대한 분류 결정은 최대 사후 확률(posterior probability)에 기초하며, 클래스 $c_i$의 경우 다음과 같다.
   - $p(c_i\mid X) = \frac{P(c_i)P(X\mid c_i)}{p(X)}$
-  - $p(c\mid X)$는 $p(X\mid c))$에 의존한다.
+  - $p(c_i\mid X)$는 클래스 조건부 밀도 $p(X\mid c_i)$에 의존한다.
 
 확률론적으로 컨셉 드리프트는 다음 3가지 요인에 의해 유발된다.
 
@@ -156,7 +156,7 @@ $X \rightarrow c_i$로 분류하기 위한 최적의 분류는 온전히 클래�
 
 ## 3. Taxonomy of Available Concept Drift Learners
 
-기존의 컨셉 드리프트 학습자들은 변화를 명시적으로 감지하여 재학습을 유발하는 트리거 방식과, 지속적으로 가중치를 갱신하는 진화 방식으로 대별된다.
+기존의 컨셉 드리프트 학습자들은 변화를 명시적으로 감지하여 재학습을 유발하는 트리거 방식과, 지속적으로 가중치를 갱신하는 진화 방식으로 대별된다. 컨셉 드리프트라는 개념은 1986년 Schlimmer와 Granger의 STAGGER 알고리즘[^2]에서 노이즈 환경의 점진적 학습 문제로 처음 공식화된 이후 본격적인 연구가 촉발되었다.
 
 - **트리거 (trigger)**: 모델 변경의 필요성을 나타내는 명시적 신호가 있음을 의미하며, 새 모델을 구성하는 방법에 직접 영향을 미친다.
 - **진화 (evolve)**: 데이터 진행률과 모델 구축 사이의 명시적 연결을 유지하지 않으며, 일반적으로 변화를 직접 감지하지 못한다. 앙상블 가중치(ensemble weights) 또는 프로토타이핑 메커니즘을 유지함으로써 가장 정확한 분류를 구축하는 것을 목표로 한다.
@@ -174,27 +174,34 @@ $X \rightarrow c_i$로 분류하기 위한 최적의 분류는 온전히 클래�
 - SVM, 가우시안 혼합 모델(Gaussian mixture models), 퍼셉트론, kNN 등 여러 모델의 분류 출력을 조합하거나 선택하여 최종 결정을 내린다.
 - 이력 평가는 sudden과 incremental drift에 제한되며, 교차 검증은 gradual drift와 reoccurring context를 효과적으로 고려할 수 있다.
 - 간단한 접근법은 이력 데이터를 블록으로 분할하는 것이다. 블록에는 시간 내에 순차적으로 인스턴스가 포함된다. 이러한 기법은 sudden과 incremental drift에 적합하며, 어느 정도까지는 reoccurring context를 선호한다.
+- **대표 앙상블 기법**: SEA(Streaming Ensemble Algorithm)[^6]는 크기 $K=25$의 고정 크기 분류기 풀을 유지하며 데이터 청크마다 새 분류기를 학습시켜 가장 성능이 낮은 기존 분류기와 교체한다. DWM(Dynamic Weighted Majority)[^7]는 인스턴스마다 예측 오답을 낸 기본 분류기의 가중치에 감쇠 인자 $\beta \in [0, 1)$(기본값 0.5)를 곱해 점진적으로 영향력을 축소하고 필요 시 새로운 분류기를 풀에 추가한다.
+
+### 3.2 Learners with triggers
+
+트리거 기반 방식은 성능 저하나 데이터 분포 변화를 나타내는 명시적 신호를 포착하여 모델 구조 변경이나 학습 윈도우 절단(cut)을 즉각 실행한다.
 
 ### 3.2.1 Change detectors
 
-가장 일반적인 트리거 기술은 변화 감지(change detection)이며, 이는 암묵적으로 급격한 드리프트(sudden drift)와 밀접하게 관련된다.
+가장 일반적인 트리거 기술은 변화 감지(change detection)이며, 이는 급격한 드리프트(sudden drift) 대응에 효과적이다.
 
 - 변화 감지는 원시 데이터, 학습자의 파라미터, 또는 학습자의 오류율 통계에 근거하여 수행된다.
+- **DDM (Drift Detection Method)[^3]**: PAC(Probably Approximately Correct) 학습 이론에 기반하여 인스턴스 수 $t$에 따른 오류율 $p_t$와 표준편차 $s_t = \sqrt{p_t(1-p_t)/t}$를 추적한다. 최소 오차 기준 $p_{\min} + 2s_{\min}$에 도달하면 경고(Warning) 단계로 판단해 새 데이터 버퍼를 축적하기 시작하고, $p_{\min} + 3s_{\min}$(약 99% 신뢰 수준)을 초과하면 드리프트로 판정하여 기존 학습기를 버리고 버퍼 데이터로 새 모델을 훈련한다.
+- **ADWIN (Adaptive Windowing)[^4]**: 가변 크기 윈도우 $W$ 내에서 임의의 두 서브윈도우 $W_0, W_1$ 간의 평균 차이가 통계적 임계치 $\epsilon_{\text{cut}} = \sqrt{\frac{1}{2m}\ln\frac{4|W|}{\delta}}$를 초과할 때(여기서 $m$은 서브윈도우 크기의 조화 평균, $\delta$는 신뢰도), 통계적 유의수준 하에서 드리프트가 발생한 것으로 보고 가장 오래된 데이터를 윈도우에서 순차 제거한다.
 
 ### 3.2.2 Training windows
 
 훈련 윈도우 기법은 최근 데이터의 윈도우 크기를 동적으로 조절하여 드리프트에 적응하는 방식이다.
 
-- 훈련 윈도우(training window) 크기를 결정하기 위해 에러 모니터링과 관련된 휴리스틱을 사용하는 방법이 있다.
+- **휴리스틱 윈도우 제어**: FLORA 계열[^5]은 고정 윈도우의 정보 손실과 반응 지연 한계를 극복하기 위해, 예측 정확도가 유지되면 윈도우 크기를 확대하고 정확도가 급락하면 윈도우를 축소하여 최근 데이터에만 집중하도록 제어한다.
 - 훈련 윈도우는 검색 테이블(lookup table) 원칙을 사용하여 최적 크기로 결정된다.
-
 <img src="https://user-images.githubusercontent.com/78655692/161392034-ed3e6d1a-f20f-434a-b2d0-361fa3b49752.png" width=700>
 
 이처럼 러너 설계 기법들은 시간적 맥락, 지식 전이, 모델 적응성을 다루는 주변 연구 분야들과 긴밀하게 맞닿아 있다.
 
 ## 4. Related Research Areas
 
-컨셉 드리프트 문제는 독립된 단일 영역이 아니라 시간적 맥락, 지식 전이, 동적 적응성을 공유하는 인접 머신러닝 분야들과 유기적으로 연결되어 있다.
+컨셉 드리프트 문제는 독립된 단일 영역이 아니라 시간적 맥락, 지식 전이, 동적 적응성을 공유하는 인접 머신러닝 분야들과 유기적으로 연결되어 있다[^1].
+
 
 ### 4.1 Time context
 
@@ -229,8 +236,24 @@ $X \rightarrow c_i$로 분류하기 위한 최적의 분류는 온전히 클래�
 - **트리거와 진화의 트레이드오프**: 명시적 트리거는 즉각적인 모델 갱신을 가능하게 하지만 오경보에 취약하며, 진화형 앙상블은 안정적이지만 급변하는 경계 추적에 지연이 발생할 수 있다.
 - **MLOps 관점의 파이프라인 통합**: 단순 주기적 재학습을 넘어 스트림 에러율 통계 모니터링, 가변 윈도우, 능동 학습을 연계한 종단간 적응 체계 구축이 필수적이다.
 
-결국 데이터 분포의 변화를 상수로 가정하는 시스템만이 시간의 흐름 속에서도 성능을 온전히 방어한다.
+결국 데이터 분포의 변화를 상수로 가정하는 시스템만이 시간의 흐름 속에서도 예측 정확도 저하를 최소화하고 안정적인 일반화 성능을 유지한다.
+
+### 5.1 한계점 및 트레이드오프 (Limitations & Trade-offs)
+
+서베이 논문에서 지적하는 컨셉 드리프트 대응 기법들의 핵심 한계와 엔지니어링 트레이드오프는 다음과 같다[^1].
+
+1. **미래 소스 가설 의존성**: 미래 시점의 데이터 소스($S_{t+1}$)에 대한 가정(최근 소스 유지 $S_{t+1}=S_t$ 또는 선형 변화 궤적 외삽)이 실제 스트림의 변화 양상과 빗나갈 경우, 적응 메커니즘 자체가 오히려 오차를 가중시킬 수 있다.
+2. **지연된 정답 라벨(Delayed Ground Truth)의 현실적 제약**: DDM, ADWIN 등 지도 학습 오차 기반 감지기는 라벨 $y_{t+1}$이 즉시 관측된다는 가정을 요구한다. 신용 평가나 질병 진단처럼 라벨 피드백에 수개월의 지연이 발생하는 현실 환경에서는 지도형 트리거가 즉각 작동할 수 없으므로, 비지도 특징 분포 모니터링이나 능동 학습(Active Learning)과의 복합 설계가 필수적이다.
+3. **모델 복잡도 대 오경보(False Alarm) 비용**: 복잡한 앙상블 가중치 재조정 및 빈번한 트리거 리셋은 일시적인 무작위 노이즈를 실제 드리프트로 오판(Type I error)하여 불필요한 모델 재학습 부하를 유발한다. 실무 스트림 환경에서는 지나치게 복잡한 적응기보다 적절히 튜닝된 단순 슬라이딩 윈도우가 연산 효율과 강건성 면에서 더 안정적인 성능을 제공할 수 있다.
 
 ## References
+
+[^1]: Indrė Žliobaitė, "Learning under Concept Drift: an Overview", arXiv preprint arXiv:1010.4784, 2010.
+[^2]: J. C. Schlimmer and R. H. Granger, "Incremental Learning from Noisy Data", Machine Learning, 1(3):317–354, 1986.
+[^3]: J. Gama, P. Medas, G. Castillo, and P. Rodrigues, "Learning with Drift Detection", SBIA 2004, LNAI 3171, pp. 286–295, 2004.
+[^4]: A. Bifet and R. Gavaldà, "Learning from Time-Changing Data with Adaptive Windowing", In Proceedings of the 7th SIAM International Conference on Data Mining (SDM), pp. 443–448, 2007.
+[^5]: G. Widmer and M. Kubat, "Learning in the Presence of Concept Drift and Hidden Contexts", Machine Learning, 23(1):69–101, 1996.
+[^6]: W. N. Street and Y. Kim, "A streaming ensemble algorithm (SEA) for large-scale classification", In Proceedings of the 7th ACM SIGKDD, pp. 377–382, 2001.
+[^7]: J. Z. Kolter and M. A. Maloof, "Dynamic weighted majority: An ensemble method for drifting concepts", Journal of Machine Learning Research, 8:2755–2790, 2007.
 
 - Indre Zliobaite, "Learning under Concept Drift: an Overview", arXiv preprint arXiv:1010.4784, 2010.

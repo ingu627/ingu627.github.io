@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "Ubuntu 20.04에서 nvidia driver, cuda, cudnn, pytorch 설치의 모든 것"
-excerpt : "ubuntu 20.04, nvidia driver 495, cuda 11.3, cudnn 8.2.1, pytorch 버전을 설치하는 방법입니다."
+excerpt: "ubuntu 20.04, nvidia driver 495, cuda 11.3, cudnn 8.2.1, pytorch 버전을 설치하는 방법입니다."
 categories: tips
 tags: [tip, cuda, install, gpu, ubuntu, nvidia driver, cuda, pytorch, cudnn, 설치, 버전, 확인, 리눅스, linux, 우분투, 가상환경, 삭제, 드라이버, 패키지]
 
@@ -9,11 +9,11 @@ toc: true
 toc_sticky: true
 sidebar_main: false
 
-last_modified_at: 2026-10-09
+last_modified_at: 2026-10-11
 ---
 
 
-ubuntu 20.04, nvidia driver 495, cuda 11.3, cudnn 8.2.1, pytorch 버전을 설치하는 방법입니다. 우분투에서 파이썬 가상환경도 만들어봅니다.
+ubuntu 20.04에서 nvidia driver 495, cuda 11.3, cudnn 8.2.1, pytorch를 설치하는 방법을 정리한 글이다. 우분투에서 파이썬 가상환경도 만들어본다.
 
 
 ## 기존 nvidia, cuda 완전 삭제
@@ -267,6 +267,13 @@ $ sudo apt-get install manpages-dev
     $ pip install torch==1.11.0+cu113 torchvision==0.12.0+cu113 torchaudio==0.11.0 --extra-index-url https://download.pytorch.org/whl/cu113
     ```
 
+
+## 한계 및 주의사항
+
+- 이 글의 설치 조합(nvidia driver 495 / CUDA 11.3 / cuDNN 8.2.1 / PyTorch 1.11.0+cu113)은 작성 시점 기준이며, 이후 버전에서는 패키지 이름과 설치 명령이 달라질 수 있다. [^2] [^4]
+- `apt`로 설치한 드라이버와 NVIDIA runfile 설치를 섞으면 라이브러리 경로가 충돌할 수 있으므로, 한 가지 방법으로 통일하는 편이 안전하다. [^1]
+- cuDNN은 NVIDIA 개발자 계정 로그인이 필요하고, 압축을 푼 `lib64` 파일을 CUDA 디렉터리로 복사해야 하므로 경로를 잘못 지정하면 런타임에 라이브러리 로드 오류가 난다.
+- Ubuntu 자동 업데이트가 그래픽 드라이버를 교체하면 CUDA 버전이 어긋날 수 있으므로, 설치 후에는 `nvidia-smi`로 드라이버·CUDA 버전을 다시 확인한다.
 
 ## References
 

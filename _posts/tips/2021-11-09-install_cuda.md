@@ -9,17 +9,17 @@ toc: true
 toc_sticky: true
 sidebar_main: false
 
-last_modified_at: 2026-10-09
+last_modified_at: 2026-10-11
 ---
 
 > 이 글은 2021년 당시 CUDA 11.0, cuDNN 8.0, tensorflow_gpu-2.4.0 기준으로 작성된 설치/사용 기록이다. 최신 버전에서는 명령이 다를 수 있다.
 
 ## UPDATE (2021.11.10)
 
-- *재설치할 때는 가상환경과 프로그램 모두 지우고 다시 설치* 
-- CUDA : 11.0, cuDNN : 8.0, tensorflow_gpu-2.4.0, ~~python==3.7~~ - **무조건 python==3.6으로 깔아본다.**
-- **install 성공. GPU 사용 성공**
-- 아래는 10.1을 기준으로 작성했다. CUDA 11을 적용하고 싶으면 10.1에서 11만 바꿔주면 된다.
+- *재설치할 때는 가상환경과 기설치된 바이너리를 정리한 후 다시 설치를 진행한다.* 
+- CUDA : 11.0, cuDNN : 8.0, tensorflow_gpu-2.4.0, ~~python==3.7~~ - **빌드 호환성을 고려해 python==3.6 환경으로 구성한다.**
+- **설치 완료 후 TensorFlow의 GPU 인식을 검증했다.**
+- 본문은 CUDA Toolkit 10.1 기준으로 작성했으나, CUDA 11.0 적용 시에도 호환 표에 맞춰 버전 디렉터리와 환경변수 경로를 동일하게 설정하면 된다.
 
 ![image](https://user-images.githubusercontent.com/78655692/141088104-68bf5092-ea63-436f-9c94-a4d35b26488d.png)
 
@@ -27,6 +27,11 @@ last_modified_at: 2026-10-09
 
 - 참고 : https://www.tensorflow.org/install/gpu
 
+딥러닝 프레임워크(TensorFlow)가 GPU 가속을 활용하려면 호스트(CPU)와 디바이스(GPU) 간 메모리 복사 및 커널 실행 파이프라인을 지원하는 드라이버, 런타임, 가속 라이브러리가 계층별로 설치되어야 한다 [^1].
+
+![CUDA 호스트(CPU)와 디바이스(GPU) 간 처리 흐름: 호스트 메모리에서 GPU 메모리로 데이터 복사, 커널 호출, GPU 코어의 병렬 연산, 결과를 호스트 메모리로 복사하는 단계](/assets/images/tips/official-install_cuda.webp)
+
+*출처: CUDA processing flow (En), Tosaka — Wikimedia Commons (https://commons.wikimedia.org/wiki/File:CUDA_processing_flow_(En).PNG), CC BY 3.0*
 1. Anaconda
 2. NVIDIA DRIVER
 3. Visual Studio
@@ -49,7 +54,7 @@ ANACONDA site link : [https://www.anaconda.com/products/individual](https://www.
 
 ![image](https://user-images.githubusercontent.com/78655692/140858868-6c17da63-8224-4123-bf46-28ffcb772f13.png)
 
-+ **<span style="color:red">텐서플로는 파이썬 3.7 버전의 패키지를 제공하지 않기 때문에 아나콘다 5.3 버전을 설치하면 tensorflow를 설치할 수 없다고 한다. (파이썬 3.6 버전으로 다운그레이드 필요)</span>**
++ **<span style="color:red">TensorFlow 2.x 초기 빌드는 특정 파이썬 버전(3.6)에 의존하므로, 파이썬 3.7이 기본 탑재된 아나콘다 5.3 설치 시 호환 패키지를 찾지 못할 수 있다. 따라서 파이썬 3.6 기반 가상환경을 별도로 생성해야 한다.</span>**
 
 ## 2. NVIDIA DRIVER 설치
 
@@ -167,7 +172,14 @@ print(device_lib.list_local_devices())
 - **설치된 모든 라이브러리 확인** : `pip freeze`
 
 - **cuda 버전 확인** : `nvcc --version` (cmd 창)
-- **GPU util 확인** :`nvida-smi` (cmd 창)
+- **GPU util 확인** : `nvidia-smi` (cmd 창)
+
+## 한계 및 주의사항
+
+- CUDA 11.0 / cuDNN 8.0 / tensorflow_gpu 2.4.0 조합은 작성 시점에 검증된 특정 버전 조합이며, 다른 버전과 섞으면 빌드나 로딩 오류가 날 수 있다. TensorFlow의 버전별 요구 사항 표를 먼저 확인한다. [^1]
+- 2021년 이후 GitHub Actions 무료 러너(GPU 미탑재)나 WSL2 같은 환경에서는 GPU를 사용할 수 없고, Windows 네이티브 TensorFlow GPU 지원은 2.10을 끝으로 종료되어 이후 버전은 WSL2를 요구한다.
+- cuDNN은 NVIDIA 개발자 계정으로 로그인한 뒤 받을 수 있고, 압축을 푼 파일을 CUDA 설치 경로로 복사해야 한다. 이때 버전 디렉터리(예: `CUDA v10.1` → `v11.0`)를 잘못 지정하면 `cudnn64_8.dll`을 찾지 못한다.
+- 환경 변수(PATH, `CUDA_PATH`)를 설정하지 않으면 `nvcc --version`이 인식되지 않는다.
 
 ## References
 
@@ -178,3 +190,5 @@ print(device_lib.list_local_devices())
 - [모두의 근삼이](https://ykarma1996.tistory.com/99)
 - [[Windows 10] Pytorch GPU 사용을 위한 CUDA 환경 만들기](https://data-panic.tistory.com/4)
 - [아나콘다에 Tensorflow,Keras 설치하는 방법 ( 오류해결 )](https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=badzoo&logNo=221450305996)
+
+[^1]: [TensorFlow 공식 문서 - GPU support](https://www.tensorflow.org/install/gpu)

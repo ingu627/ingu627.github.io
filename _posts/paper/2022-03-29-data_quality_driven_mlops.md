@@ -8,14 +8,14 @@ toc: true
 toc_sticky: true
 sidebar_main: false
 
-last_modified_at: 2026-10-10
+last_modified_at: 2026-10-11
 ---
 
 ![image](https://user-images.githubusercontent.com/78655692/163179208-1e53a732-6f83-4bbb-ac80-a46d3561c930.png)
 
-"A Data Quality-Driven View of MLOps" 논문을 공부하며 핵심 내용을 정리하고 리뷰한 글이다.
+"A Data Quality-Driven View of MLOps"[^paper] 논문을 공부하며 핵심 내용을 정리하고 리뷰한 글이다.
 
-머신러닝 시스템의 성능 저하는 모델 아키텍처 결함보다 데이터 파이프라인의 불완전성에서 기인하는 경우가 훨씬 많다. 본 논문은 MLOps의 4대 핵심 과제(품질 최적화, 타당성 검증, 과적합 방지 테스트, 연속 품질 평가)를 데이터 품질의 전파 및 관리 관점에서 재정의하고 실질적인 해결 방향을 제시한다.
+머신러닝 시스템의 성능 저하는 모델 아키텍처 결함보다 데이터 파이프라인의 불완전성에서 기인하는 사례가 빈번하다. 본 논문은 MLOps의 4대 핵심 과제(품질 최적화, 타당성 검증, 과적합 방지 테스트, 연속 품질 평가)를 데이터 품질의 전파 및 관리 관점에서 재정의하고 실질적인 해결 방향을 제시한다.
 
 논문 원문 링크: <https://arxiv.org/abs/2102.07750>
 
@@ -51,7 +51,6 @@ last_modified_at: 2026-10-10
 
 결국 데이터 파이프라인의 품질이 곧 프로덕션 모델의 예측 한계를 규정한다.
 <img src='https://user-images.githubusercontent.com/78655692/161371544-3f459267-cc30-40c6-9845-083b7bfbfb9a.png' width=700>
-
 
 
 ### 전체 개요
@@ -111,7 +110,7 @@ MLOps의 핵심 과제 중 하나는 훈련 데이터의 결함을 개선하여 
 불완전하고 노이즈가 많은 학습 데이터가 모델 학습 과정에서 어떻게 전파되는지 그 인과관계를 수학적으로 모델링해야 한다.
 
 - **ActiveClean**: 손실 함수 기울기를 기반으로 모델 정확도 향상에 가장 기여도가 높은 샘플을 점진적으로 선별·정제
-- **CPClean**: 순차적 정보 최대화(sequential information maximization)를 바탕으로 데이터 노이즈 전파 과정(noise propagation process)을 체계적으로 분석하여 최적의 정제 우선순위를 산출
+- **CPClean**[^cpclean]은 관계형 데이터베이스의 확실한 답변(certain answers) 이론을 머신러닝의 확실한 예측(certain predictions)으로 확장한 프레임워크다. 결측치와 노이즈가 유발하는 후보 데이터셋들을 다중 '가능 세계(possible worlds)'로 모델링하고, 각 가능 세계에 대응하는 모델 앙상블의 예측 엔트로피를 최소화하도록 샘플 정제 우선순위를 계산한다. 일반 분류 모델에 대해 이 최적화는 NP-Hard이지만, k-최근접 이웃(kNN) 분류기를 대리 모델로 채택하여 다항 시간(polynomial time) 내에 순차적 정보 최대화(sequential information maximization) 해를 도출한다.
 
 무차별 정제 대신 모델 영향도에 따른 선택적 정제가 효율성의 핵심이다.
 
@@ -125,7 +124,11 @@ MLOps의 핵심 과제 중 하나는 훈련 데이터의 결함을 개선하여 
 
 주어진 데이터셋에서 고비용의 모델 학습을 전부 거치지 않고도 이론적인 최소 오류율을 사전에 추정할 수 있어야 한다.
 
-이는 축소 불가능한 오류(irreducible error)로 불리는 베이즈 오류율(Bayes Error Rate, BER)의 추정 문제로 귀결된다. 그러나 실무에서 작동 가능한 신뢰도 높은 BER 추정기(estimator)를 구축하는 것은 여전히 까다로운 연구 과제다.
+이는 축소 불가능한 오류(irreducible error)로 불리는 베이즈 오류율(Bayes Error Rate, BER)의 추정 문제로 귀결된다. 확률 분포 $p(X, Y)$가 주어졌을 때 베이즈 오류율은 다음과 같이 정의된다.
+
+$$R_{X,Y}^* = \mathbb{E}_{X} \left[ 1- \max_{y\in\mathcal{Y}} p(y\mid X) \right]$$
+
+베이즈 최적 분류기(Bayes Optimal Classifier) $h_{opt}(x) = \arg\max_{y\in\mathcal{Y}} p(y\mid x)$가 달성 가능한 이론적 최대 정확도는 $1 - R_{X,Y}^*$이며, 데이터셋 자체의 불완전성으로 인해 이 상한선은 100% 미만일 수 있다. 그러나 실무에서 작동 가능한 신뢰도 높은 BER 추정기(estimator)를 구축하는 것은 여전히 까다로운 연구 과제다.
 
 1. **수십 년간 축적된 BER 추정 이론을 실무 파이프라인에 접목하는 방법**
 2. **계산 복잡도와 추정 정확도 사이의 최적 트레이드오프 도출**
@@ -137,7 +140,11 @@ BER이 0이 되지 않는 근본 원인은 데이터 품질의 결함, 특히 �
 - **완전성(completeness) 결여**: 피처 공간이나 라벨 공간의 정의가 불충분하여 클래스 구분에 필요한 핵심 정보가 누락된 경우
 - **정확성(accuracy) 결여**: 라벨링 오류나 센서 노이즈로 인해 입력 대비 레이블의 신뢰도가 떨어지는 경우
 
-수학적 관점에서 0이 아닌 BER은 동일하거나 유사한 입력 피처에 대해 서로 다른 클래스 확률이 겹치는 **중복 사후 확률(overlapping posterior probabilities)** 현상에서 기인한다. 즉, 특정 입력에 대해 유일하고 완벽한 라벨이 존재하지 않는 상태다.
+수학적 관점에서 0이 아닌 BER은 동일하거나 유사한 입력 피처에 대해 서로 다른 클래스 확률이 겹치는 **중복 사후 확률(overlapping posterior probabilities)** 현상에서 기인한다. 즉, 특정 입력에 대해 단일하고 결정론적인 라벨이 존재하지 않는 상태다. 원 논문에서는 ImageNet(ILSVRC2012) 검증 데이터셋의 세 가지 실제 사례(Figure 2)를 통해 이를 설명한다.
+
+1. **피처 부족에 따른 확률 중첩 (ImageNet #6874)**: 골프 카트(n03445924)로 라벨링되어 있으나 트랙터(n04465501)에 속할 사후 확률이 0이 아니며, 추가적인 시각 피처 없이 단일 클래스로 완전히 분리되지 않는다.
+2. **복수 클래스 공존 (ImageNet #4463)**: 단일 이미지 내에 수탉(n01514668)과 공작(n01806143)의 특징이 공존하여 단일 라벨 체계로는 모호성이 해소되지 않는다.
+3. **라벨 노이즈 (ImageNet #32040)**: 실제 파이(pie) 이미지임에도 검증 데이터셋 라벨이 피자(n07873807)로 잘못 지정되어 라벨 정확도가 훼손된 경우다.
 
 ![image](https://user-images.githubusercontent.com/78655692/160673572-e2711f74-e41b-47b9-99d5-f100fe8e4fc3.png)
 
@@ -145,8 +152,10 @@ BER이 0이 되지 않는 근본 원인은 데이터 품질의 결함, 특히 �
 
 실용적인 BER 추정기를 파이프라인에 내재화하기 위해서는 다음 두 가지 공학적 제약을 극복해야 한다.
 
-1. **연산 요구량(computational requirements)**: 신뢰할 수 있는 통계적 추정치를 도출하기 위해 방대한 데이터가 요구되며, 이에 따른 계산 비용이 급증한다.
+1. **연산 요구량(computational requirements)**: 고차원 피처 공간에서 신뢰할 수 있는 통계적 추정치를 도출하려면 방대한 데이터와 계산 비용이 요구된다.
 2. **하이퍼파라미터 민감도(hyperparameter selection)**: 타당성 검증 단계에서는 데이터의 사전 분포 정보가 제한적이므로, 추정 알고리즘이 하이퍼파라미터 변동에 둔감(robust)해야 한다.
+
+저자진이 제안한 **ease.ml/snoopy**[^snoopy]는 비모수(non-parametric) kNN 추정기를 활용하여 사전 튜닝할 하이퍼파라미터가 없으며, PyTorch Hub나 TensorFlow Hub의 사전학습 임베딩 모델로 차원을 효과적으로 축소하여 계산 복잡도를 제어한다.
 
 이론적 오류 한계를 먼저 파악해야 비현실적인 목표 설정을 피할 수 있다.
 
@@ -161,20 +170,25 @@ BER이 0이 되지 않는 근본 원인은 데이터 품질의 결함, 특히 �
 
 이상적인 평가를 위해서는 테스트셋을 단 한 번만 평가에 사용하거나, 개발자로부터 평가 데이터를 완전히 은닉(obfuscated)해야 한다.
 
-그러나 지속적인 모델 개선과 잦은 배포가 일어나는 현실적인 엔지니어링 환경에서 테스트셋을 매번 폐기하거나 완전히 격리하는 것은 불가능에 가깝다.
+그러나 지속적인 모델 개선과 빈번한 배포가 일어나는 프로덕션 환경에서 테스트셋을 매번 폐기하거나 완전히 격리하는 것은 현실적인 제약이 따른다.
 
 ### A Data Quality View
+
 
 프로덕션 레벨에서 신뢰성 있는 지속적 모델 테스트를 구축하기 위해서는 두 가지 통계적 난제를 해결해야 한다.
 
 1. **테스트 결과의 확률적 무작위성**: ML 태스크와 모델의 특성상 단일 테스트 결과는 확률적 노이즈를 포함한다. 이는 통계 이론의 집중 부등식(concentration bound)을 활용해 허용 오차 한계를 수학적으로 제한함으로써 완화한다.
 2. **테스트셋 재사용에 따른 적응적 과적합(adaptive overfitting)**: 개발자가 피드백을 수신하며 동일한 테스트셋을 반복 평가할 경우 일반화 신뢰도가 급감한다. 한정된 데이터셋의 일반화 보장을 유지하면서 안전하게 재사용할 수 있는 유효 테스트 횟수를 통계적으로 통제해야 한다.
 
+저자진이 제안한 **ease.ml/ci**[^ci]는 두 가지 핵심 메커니즘을 통해 모델 CI를 정형화한다.
+
+- **테스트 조건 명세 (Test Condition Specifications)**: 머신러닝 모델 평가는 확률적이므로 $(\epsilon, \delta)$ 통계적 요구조건으로 점수(score)를 평가한다. 신뢰수준 $1-\delta$(예: 99%)에서 추정 점수가 신뢰구간 $\pm\epsilon$(예: 1%) 내에 머물러야 함을 정의한다. `n - o > 0.02 +/- 0.01` 조건문은 신규 모델(n)이 기존 모델(o)보다 최소 2%p 이상 정확도가 높아야 하며 허용 오차는 1%p임을 명시한다.
+- **이진 피드백을 통한 테스트셋 재사용 예산 제어**: 개발자에게 상세 평가 점수를 공개하면 테스트셋 적응적 과적합이 급격히 진행되므로, 커밋마다 이진 합격/불합격(pass/fail) 신호만 노출한다. $H$회 평가 시 피드백 시퀀스는 $2^H$가지로 제한되어 임의 피드백 노출 환경 대비 표본 복잡도를 엄격하게 통제한다.
 ### Limitations
 
 현재 테스트 체계에도 여전히 근본적인 한계점이 존재한다.
 
-- **숨겨진 테스트셋에 대한 의도적 과적합**: 개발자가 은닉된 검증셋의 패턴을 간접 피드백을 통해 역추적하여 과적합을 시도할 경우 이를 완벽히 방어하기 어렵다.
+- **숨겨진 테스트셋에 대한 의도적 과적합**: 개발자가 은닉된 검증셋의 패턴을 간접 피드백을 통해 역추적하여 과적합을 시도할 경우 이를 온전히 방어하기 어렵다.
 - **concept shift 대응력 부재**: 고정된 테스트셋 중심의 평가는 시간 경과에 따라 발생하는 실제 운영 환경의 동적 분포 변화를 포착하지 못한다.
 
 테스트 데이터셋의 재사용 횟수를 수학적으로 통제하지 못하면 CI 검증은 무의미해진다.
@@ -188,7 +202,7 @@ DevOps의 핵심은 시스템 변경에 신속하게 적응하며 견고성을 �
 
 라벨이 주어지지 않은 대규모 프로덕션 데이터 스트림 환경에서 현재 시점에 가장 우수한 모델을 정확히 선택하는 것이 핵심 과제다.
 
-모든 스트리밍 데이터에 인간 작업자가 라벨을 부착하는 것은 천문학적인 비용을 초래하므로, MLOps 관점에서는 모델 간 우열을 가리는 데 필요한 최소한의 라벨링만 선별 수행해야 한다.
+모든 스트리밍 데이터에 인간 작업자가 라벨을 부착하는 것은 높은 라벨링 비용을 초래하므로, MLOps 관점에서는 모델 간 우열을 가리는 데 필요한 최소한의 라벨링만 선별 수행해야 한다.
 
 ### A Data Quality View
 
@@ -196,7 +210,17 @@ Concept shift는 데이터 품질의 4대 축 중 **적시성(timeliness)**과 �
 
 운영 환경에 사전 배포된 여러 후보 모델들은 시간에 따른 데이터 분포 변화를 서로 다른 방식으로 반영하고 있다. 따라서 전체 스트림을 라벨링하는 대신, 모델 간 예측 불일치가 크거나 신뢰도가 떨어지는 핵심 샘플에만 라벨링 리소스를 집중해야 한다. 이를 통해 제한된 라벨링 비용으로도 최적의 모델을 신속하게 식별하고, 불완전한 평가 데이터에 대한 과도한 의존을 탈피할 수 있다.
 
+저자진이 제안한 **ease.ml/ModelPicker**[^picker]는 무라벨 스트리밍 데이터 환경에서 사전학습된 후보 모델들의 순위를 매기기 위해 정보량이 높은 표본만을 선택적으로 샘플링하여 질의하는 온라인 능동 모델 선택(online active model selection) 알고리즘이다. 비-i.i.d. 환경이나 적대적 스트림(adversarial streams)에서도 후회(regret)가 0으로 수렴함을 이론적으로 보장하며, 제한된 라벨링 예산 내에서 실시간 최적 모델을 정확히 선별한다.
+
 결국 운영 환경의 MLOps는 최소 비용의 적응형 라벨링으로 적시성을 방어하는 싸움이다.
+
+## 한계 및 트레이드오프
+
+데이터 품질 관점의 MLOps 프레임워크는 이론적 통계 보장과 체계적 파이프라인 설계를 제시하지만, 실제 프로덕션 적용 시 다음과 같은 트레이드오프와 공학적 한계를 지닌다.
+
+1. **대리 모델 의존성과 연산 복잡도**: CPClean과 ease.ml/snoopy는 지수적인 계산 복잡도를 회피하기 위해 kNN과 같은 단순 대리(proxy) 모델을 채택한다. 복잡한 딥러닝 아키텍처나 비선형 의존성을 갖는 대형 모델군으로 확장할 경우 연산 비용이 급증할 수 있다.
+2. **단일 정확도(Accuracy) 중심 최적화의 한계**: 제안된 프레임워크의 대부분은 모델의 예측 정확도 향상에 초점을 맞추고 있다. 현대 프로덕션 MLOps의 필수 요구사항인 공정성(Fairness), 적대적 견고성(Robustness), 설명가능성(Explainability) 등 다차원 품질 지표를 동시에 제어하는 다목적 최적화는 여전히 미해결 과제다.
+3. **i.i.d. 가정 위배에 대한 취약성**: 베이즈 오류율(BER) 추정 등은 훈련 데이터와 검증 데이터가 동일한 분포(i.i.d.)에서 추출되었다는 가정을 전제한다. 약지도 학습(Snorkel 등)이나 데이터 프로그래밍 기법을 거친 데이터 파이프라인에서는 분포 불일치로 인해 추정 신뢰도가 저하될 수 있다.
 
 ## 핵심 요약 및 시사점
 
@@ -210,4 +234,9 @@ Concept shift는 데이터 품질의 4대 축 중 **적시성(timeliness)**과 �
 결론적으로 견고한 MLOps 플랫폼 구축을 위해서는 알고리즘 개발보다 데이터 품질의 4대 속성(정확성, 완전성, 일관성, 적시성)을 파이프라인 전 단계에서 정량적으로 관리하는 체계가 선행되어야 한다.
 ## References
 
+[^paper]: Cedric Renggli, Luka Rimanic, Nezihe Merve Gürel, Bojan Karlaš, Wentao Wu, Ce Zhang, "A Data Quality-Driven View of MLOps", IEEE Data Engineering Bulletin, Vol. 44, No. 1, pp. 11-23, 2021. arXiv:2102.07750.
 [^1]: [Best Practices for Dealing With Concept Drift](https://neptune.ai/blog/concept-drift-best-practices)
+[^cpclean]: Bojan Karlaš et al., "Nearest Neighbor Classifiers over Incomplete Information: From Certain Answers to Certain Predictions", Proceedings of the VLDB Endowment (PVLDB), Vol. 14, No. 3, pp. 255-267, 2020.
+[^snoopy]: Cedric Renggli et al., "Ease.ml/snoopy: Towards Feasibility Study for Machine Learning Tasks", Proceedings of the VLDB Endowment (PVLDB), Vol. 14, No. 12, pp. 2806-2809, 2021.
+[^ci]: Cedric Renggli et al., "Continuous Integration of Machine Learning Models with ease.ml/ci", Proceedings of Machine Learning and Systems (MLSys), Vol. 1, pp. 289-299, 2019.
+[^picker]: Mohammad Karimi et al., "Online Active Model Selection for Pre-trained Classifiers", International Conference on Machine Learning (ICML), pp. 5153-5163, 2020.

@@ -9,13 +9,13 @@ toc: true
 toc_sticky: true
 sidebar_main: false
 
-data: 2022-08-05
-last_modified_at: 2026-10-09
+date: 2022-08-05
+last_modified_at: 2026-10-11
 ---
 
 > 이 글은 2022년 당시 HDP 2.6.5 버전 기준으로 작성된 설치 기록이다. 최신 버전에서는 명령이 다를 수 있다.
 
-Hortonworks Data Platform(HDP)는 분산 스토리지 및 대규모 멀티 소스 데이터 세트 처리를 위한 오픈소스 프레임워크입니다. 도커 내 hdp를 설치해봅시다.
+Hortonworks Data Platform(HDP)는 분산 스토리지 및 대규모 멀티 소스 데이터 세트 처리를 위한 오픈소스 프레임워크다. 도커 내에 HDP를 설치해본다.
 
 - 도커 내 HDP 설치 참고 : [Cloudera 공식 사이트](https://www.cloudera.com/tutorials/sandbox-deployment-and-install-guide/3.html)
 - HDP 파일 다운로드 : [cloudera - download - hortonworks-sandbox](https://www.cloudera.com/downloads/hortonworks-sandbox.html)
@@ -52,7 +52,7 @@ Hortonworks Data Platform(HDP)는 분산 스토리지 및 대규모 멀티 소�
     <img src='https://user-images.githubusercontent.com/78655692/183077986-8ee935b0-a505-41e0-98b1-2ff31f9a690b.png' width=700>
 
 
-- 2.6.5 버전에 기본 보함된 프로젝트들은 다음과 같다. [^1]
+- 2.6.5 버전에 기본 포함된 프로젝트들은 다음과 같다. [^1]
 
     <img src='https://user-images.githubusercontent.com/78655692/183082732-d00ead14-480d-4bfa-81aa-ae6c2e4bd29f.png' width=700>
 
@@ -102,14 +102,14 @@ Hortonworks Data Platform(HDP)는 분산 스토리지 및 대규모 멀티 소�
 - HDF sandbox를 중지하고 싶다면, 다음 명령어를 실행한다. 
   
     ```shell
-    $ docker stop sandbox-hdf
+    $ docker stop sandbox-hdp
     $ docker stop sandbox-proxy
     ```
 
 - HDF sandbox를 시작하고 싶다면, 다음 명령어를 실행한다. 
 
     ```shell
-    $ docker start sandbox-hdf
+    $ docker start sandbox-hdp
     $ docker start sandbox-proxy
     ```
 
@@ -124,7 +124,7 @@ Hortonworks Data Platform(HDP)는 분산 스토리지 및 대규모 멀티 소�
     <img src='https://user-images.githubusercontent.com/78655692/183083523-ae8400e0-2781-4be1-8cec-8cae005fcdd0.png' width=700>
 
 
-- 다음 화면이 뜬다면, 성공적으로 설치가 된거다.
+- 다음 화면이 뜬다면 설치가 완료된 것이다.
 
     <img src='https://user-images.githubusercontent.com/78655692/183083645-883d4d6d-33b7-440b-b579-d7b8111c64ed.png' width=700>
 
@@ -142,6 +142,13 @@ Hortonworks Data Platform(HDP)는 분산 스토리지 및 대규모 멀티 소�
 
 
 
+
+## 한계 및 주의사항
+
+- HDP 2.6.5 샌드박스는 2018년 Hortonworks와 Cloudera 합병 이후 CDP(Cloudera Data Platform)로 통합되어 더 이상 갱신되지 않는다. 학습·재현 목적 외에는 최신 배포판 사용을 검토해야 한다. [^2]
+- 샌드박스는 컨테이너 2개(2.6.5는 10GB 이상, 3.0.1은 22GB 이상 램)를 요구하므로, WSL2에 할당한 메모리가 부족하면 컨테이너가 시작되지 않는다.
+- Windows의 winnat 포트 예약 문제로 `50070` 같은 포트 바인딩이 막힐 수 있어, `net stop winnat` / `net start winnat`으로 예약을 풀어야 하는 경우가 있다.
+- Ambari(8080) 외의 서비스(Hive 10000, YARN ResourceManager 8088 등)는 hosts 파일 수정과 프록시 포트 매핑에 의존하므로, 프록시 스크립트의 포트를 바꾸면 접속 주소도 함께 바꿔야 한다.
 
 ## References
 
