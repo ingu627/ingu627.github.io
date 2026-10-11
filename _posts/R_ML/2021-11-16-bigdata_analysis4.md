@@ -8,16 +8,16 @@ toc: true
 toc_sticky: true
 sidebar_main: false
 
-last_modified_at: 2026-10-09
+last_modified_at: 2026-10-11
 ---
 
 <img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/148633895-2be87d4e-7edb-4391-b583-eb2888b19bbb.png
 '>
 본 글은 빅데이터분석기사 실기 작업형에 대비하여 요약 및 실습한 것을 작성한 글입니다. 기출문제의 데이터는 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis){: target="_blank"}에 데이터 셋을 남겨놨습니다. 또한 해당 전체 코드는 `/concept/R_basic_to_pro_4.R` 파일에 담겨져 있습니다.
 
-2021.12.31 : 제 3회 빅데이터 분석기사 실기를 합격했습니다. [빅데이터 분석기사(R)](https://ingu627.github.io/categories/R_ML) 시리즈를 보시고 도움이 되길 바랍니다.
+2021.12.31 : 제 3회 빅데이터 분석기사 실기를 합격했다. [빅데이터 분석기사(R)](https://ingu627.github.io/categories/R_ML) 시리즈가 학습에 도움이 되길 바란다.
 
-혹시 해당 글을 pdf로 받고 싶으신 분은 이메일과 함께 댓글로 남겨주세요~
+해당 글을 PDF로 받고 싶다면 이메일과 함께 댓글을 남기면 된다.
 
 ## 분석 모형 구축 
 
@@ -25,7 +25,7 @@ last_modified_at: 2026-10-09
 
 ### 주성분 분석(PCA)
 
-- **주성분 분석**은 서로 상관성이 높은 변수를 상관 관계가 없는 소수의 변수로 변환하는 차원 축소 기법
+- **주성분 분석**은 서로 상관성이 높은 변수를 상관 관계가 없는 소수의 변수로 변환하는 차원 축소 기법이다.[^princomp]
 - 주성분의 선택 방법으로는 주성분의 누적 기여율과 스크리 산점도(Scree Plot)를 주로 사용한다.
   - `주성분 기여율` : 원래 데이터에 대한 주성분의 설명력을 의미
     - 기여율이 1에 가까울수록 원래 데이터에 대한 설명력이 큼
@@ -39,8 +39,8 @@ last_modified_at: 2026-10-09
 |파라미터|설명|
 |---|---|
 |x|데이터(벡터 또는 데이터 프레임)|
-|cor|TRUE: 공분산 행렬 사용<br>FALSE: 상관행렬 사용(default)|
-|scores|TRUE: 각 주성분의 점수를 계산(default)<br>FALSE: 계산 X|
+|cor|TRUE: 상관행렬 사용 / FALSE: 공분산 행렬 사용(기본값)|
+|scores|TRUE: 각 주성분의 점수 계산(기본값) / FALSE: 계산 생략|
 
 ```R
 iris_pca = princomp(iris[,-5])
@@ -105,13 +105,13 @@ biplot(iris_pca, scale=0, main='iris biplot')
 ## 요인 분석
 
 - **요인 분석**은 변수 간의 상관관계를 고려하여 서로 유사한 변수들을 묶어 새로운 잠재요인들을 추출하는 분석 방법
-- 요인 분석은 변수를 축소하거나, 불피요한 변수 제거, 변수 특성 파악, 측정항목 타당성 평가, 요인 점수를 이용한 변수 생성 등의 목적을 가지고 있다.
+- 요인 분석은 변수를 축소하거나, 불필요한 변수 제거, 변수 특성 파악, 측정항목 타당성 평가, 요인 점수를 이용한 변수 생성 등의 목적을 가지고 있다.
 
 ## 2. 정형 데이터 분석
 
 ## 회귀 분석
 
-- **회귀 분석**은 하나 이상의 독립변수들이 종속변수에 미치는 영향을 추정할 수 있는 통계기법
+- **회귀 분석**은 하나 이상의 독립변수들이 종속변수에 미치는 영향을 추정할 수 있는 통계기법이다.[^r-lm]
 - `lm(formula, data)` : formula는 종속변수~독립변수 형식으로 지정
 - `plot(x, which)` : 회귀 분석 모형 그래프 (which=그래프의 종류 지정)
 - `str()` : 데이터 세트 속성 탐색
@@ -337,6 +337,7 @@ summary(full_model)
 
 ### 4. 분석 모형 구축 - 자동화된 변수 선택
 
+- `step()` 함수를 이용하여 AIC를 기준으로 단계적 변수 선택(Stepwise Selection)을 수행한다.[^r-step]
 ```R
 first_model = lm(
     Salary ~ AtBat + Hits + Walks + CWalks + Division + PutOuts,
@@ -370,7 +371,7 @@ fit_model = step(first_model, direction='backward')
 
 ### 5. 분석 모형 구축 - 다중공선성 확인 및 문제 해결
 
-- `car` 패키지의 vif 함수를 이용하여 *다중공선성* 문제가 있는지를 확인한다.
+- `car` 패키지의 vif 함수를 이용하여 다중공선성(Multicollinearity) 문제가 있는지를 확인한다.[^cran-car]
 
 ```R
 # install.packages('car')
@@ -433,12 +434,12 @@ summary(second_model)
 
 - **로지스틱 회귀 분석**은 반응변수가 범주형인 경우 적용되는 회귀 분석 모형이다.
 - 새로운 설명변수의 값이 주어질 때 반응변수의 각 범주에 속할 확률이 얼마인지를 추정하여 추정 확률을 기준치에 따라 분류하는 목적으로 사용된다. 
-- `glm(formula, family, data, ...)` : 일반화 선형모형 함수
+- `glm(formula, family, data, ...)` : 일반화 선형모형(Generalized Linear Models) 함수[^r-glm]
 
 |파라미터 | 설명|
 |---|---|
 |formula|(종속변수~독립변수) 형태로 선택|
-|family|모델에서 사용할 분포<br>이항 로지스틱 회귀 분석의 경우 "binomial" 사용
+|family|모델에서 사용할 분포 (이항 로지스틱 회귀 분석의 경우 "binomial" 사용)|
 |data|분석 대상 데이터|
 
 - `predict` 함수에 `type="response"` 인자로 수행하면 테스트 데이터에 대한 로지스틱 함수 출력값(0 ~ 1)로 반환해준다.
@@ -446,7 +447,7 @@ summary(second_model)
 ## 혼동 행렬
 
 - 분류 모형의 결과를 평가하기 위해서 혼동 행렬(Confusion Matrix)을 이용한 평가지표와 ROC 곡선의 AUC를 주로 이용한다.
-- `confusionMatrix(data, reference)`
+- `caret` 패키지의 `confusionMatrix(data, reference)` 함수를 이용해 교차표와 평가지표를 도출한다.[^cran-caret]
 
 |파라미터 | 설명|
 |---|---|
@@ -604,14 +605,14 @@ pred = predict(
 df_pred = as.data.frame(pred)
 
 df_pred$default = ifelse(
-    df_pred_pred >= 0.5, 
-    df_pred$default = "Yes",
-    df_pred$default = "No"
+    df_pred$pred >= 0.5, 
+    "Yes", 
+    "No"
 )
 df_pred$default = as.factor(df_pred$default)
 ```
 
-- ifelse로 파산 여부를 확인
+- ifelse문으로 파산 여부를 판별한다.
 
 ### 9. 분석 모형 평가 - 혼동 행렬
 
@@ -629,8 +630,22 @@ library(ModelMetrics)
 auc(actual=bankruptcy_test[,1], predicted=df_pred$default)
 ```
 
+## 한계 및 주의사항
+
+- **인메모리 및 단일 스레드 제약**: R은 기본 연산 시 데이터 전체를 RAM에 적재하는 인메모리 구조이며 대부분의 내장 함수가 단일 스레드로 동작한다.[^r-intro] 따라서 대용량 데이터셋에서 `princomp()`나 `lm()`을 반복 수행하면 메모리 부족(`cannot allocate vector`)이나 실행 지연이 발생할 수 있다.
+- **실기 시험 환경 타임아웃 및 자원 한계**: 빅데이터분석기사 실기 클라우드 응시 환경은 세션당 메모리(보통 수 GB 내외) 및 스크립트 실행 시간(일반적으로 1분 내외)에 엄격한 상한이 지정되어 있다. `step()`의 전진·후진 소거법이나 복잡한 그리드 탐색을 지나치게 많은 변수에 적용하면 타임아웃으로 채점 오류가 발생할 수 있으므로, VIF 확인 등 사전 필터링과 단계별 모형 축소가 필수적이다.
+- **다중공선성 및 특이 행렬 처리**: 설명변수 간 상관계수가 지나치게 높거나 완전 다중공선성이 존재하는 경우, `vif()` 계산 시 무한대(`Inf`)가 반환되거나 회귀 계수 행렬 분해(`solve`)가 실패할 수 있으므로 변수 변환 및 이상치·결측값 전처리를 선행해야 한다.
+
 ## References
 
 - [2022 수제비 빅데이터분석기사 실기 (필답형+작업형)](https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=281447264) 
 - [주성분 분석(Principal Component Analysis)](https://untitled-memo-2019.tistory.com/4)
 - [4.3Logistic Regression](https://enook.jbnu.ac.kr/contents/19/#!/p/42)
+
+[^princomp]: [R Documentation: princomp (stats)](https://stat.ethz.ch/R-manual/R-patched/library/stats/html/princomp.html)
+[^r-lm]: [R Documentation: lm (stats)](https://stat.ethz.ch/R-manual/R-patched/library/stats/html/lm.html)
+[^r-step]: [R Documentation: step (stats)](https://stat.ethz.ch/R-manual/R-patched/library/stats/html/step.html)
+[^cran-car]: [CRAN: car (Companion to Applied Regression)](https://cran.r-project.org/package=car)
+[^r-glm]: [R Documentation: glm (stats)](https://stat.ethz.ch/R-manual/R-patched/library/stats/html/glm.html)
+[^cran-caret]: [CRAN: caret (Classification and REgression Training)](https://cran.r-project.org/package=caret)
+[^r-intro]: [An Introduction to R - The Comprehensive R Archive Network (CRAN)](https://cran.r-project.org/doc/manuals/r-release/R-intro.html)

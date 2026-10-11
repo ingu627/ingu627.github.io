@@ -8,12 +8,12 @@ toc: true
 toc_sticky: true
 sidebar_main: false
 
-last_modified_at: 2026-10-09
+last_modified_at: 2026-10-11
 ---
 
 <img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/148633895-2be87d4e-7edb-4391-b583-eb2888b19bbb.png
 '>
-본 글은 빅데이터분석기사 실기 작업형에 대비하여 요약 및 실습한 것을 작성한 글입니다. 기출문제의 데이터는 출처는 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis){: target="_blank"}에 데이터 셋을 남겨놨습니다. 또한 해당 전체 코드는 `/concept/R_basic_to_pro_5.R` 파일에 담겨져 있습니다.
+본 글은 빅데이터분석기사 실기 작업형에 대비하여 요약 및 실습한 것을 작성한 글입니다. 기출문제의 데이터 출처는 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis){: target="_blank"}에 데이터 셋을 남겨놨습니다. 또한 해당 전체 코드는 `/concept/R_basic_to_pro_5.R` 파일에 담겨져 있습니다.
 
 2021.12.31 : 제 3회 빅데이터 분석기사 실기를 합격했습니다. [빅데이터 분석기사(R)](https://ingu627.github.io/categories/R_ML) 시리즈를 보시고 도움이 되길 바랍니다.
 
@@ -21,17 +21,17 @@ last_modified_at: 2026-10-09
 
 ## 의사결정나무
 
-- **의사결정나무**는 데이터들이 가진 속성들로부터 분할 기준 속성을 판별하고, 분할 기준 속성에 따라 트리 형태로 모델링하는 분류 예측 모델이다.
-- **의사결정나무 기법**은 분석의 대상을 분류 함수를 활용하여 의사결정 규칙으로 이루어진 나무 모양으로 그리는 기법이다.
+- **의사결정나무**는 데이터들이 가진 속성들로부터 분할 기준 속성을 판별하고, 분할 기준 속성에 따라 트리 형태로 모델링하는 분류 예측 모델이다. CART 기법을 구현한 `rpart` 패키지[^1] 등이 대표적이다.
+- **의사결정나무 기법**은 분석 대상 데이터를 분류 함수를 활용하여 의사결정 규칙으로 이루어진 나무 모양으로 시각화하고 해석하는 기법이다.
 
 
 ### 의사결정나무 분석 함수 종류
 
 |함수|설명|코드|
 |---|---|---|
-|rpart()|CART 기법 방법을 사용<br>전체 데이터 세트를 가지고 시작하여 모든 예측변수를 사용하여 데이터 세트의 부분집합을 분할해 생성|library(rpart)<br>rpart(formula, data)|
-|tree()|불순도의 측도로 엔트로피 지수를 사용|library(tree)<br>tree(formula, data)|
-|ctree()|분석 결과에서 별도로 가지치기 할 필요가 없음|library(party)<br>ctree(formula, data)|
+|rpart()|CART 기법을 적용하며, 전체 데이터 세트의 모든 예측변수를 탐색하여 최적 부분집합을 순차 분할|library(rpart); rpart(formula, data)|
+|tree()|불순도의 측도로 엔트로피 지수를 사용|library(tree); tree(formula, data)|
+|ctree()|조건부 추론 트리 기반으로 별도의 가지치기가 불필요|library(party); ctree(formula, data)|
 
 
 ### 의사결정나무 예시
@@ -98,6 +98,8 @@ text(md, cex=1)
 ```
 
 ![image](https://user-images.githubusercontent.com/78655692/143397783-49ec836f-fb6a-4f29-b8b1-1d006d71be38.png)
+
+의사결정나무 시각화에는 `rpart.plot` 패키지[^2]의 `prp()` 함수를 사용한다.
 
 ```R
 library(rpart.plot)
@@ -183,21 +185,21 @@ confusionMatrix(tree_pred, iris$Species)
 # Balanced Accuracy              0.9450
 ```
 
-- `confusionMatrix(predicted, actual)`
+- `caret` 패키지[^3]의 `confusionMatrix(predicted, actual)` 함수로 혼동 행렬과 분류 평가 지표를 산출한다.
 
 
 ## 서포트 벡터 머신(SVM)
 
-- **서포트 벡터 머신(SVM; Support Vecotr Machine)**은 데이터를 분리하는 초평면(Hyperplane)중에서 데이터들과 거리가 가장 먼 초평면을 선택하여 분리하는 지도 학습 기반의 이진 선형 분류 모델이다.
-- 최대 마진(Margin : 여유공간)을 가지는 비확률적 선형 판별에 기초한 이진 분류기이다.
+- **서포트 벡터 머신(SVM; Support Vector Machine)**은 데이터를 분리하는 초평면(Hyperplane) 중에서 데이터들과 거리가 가장 먼 초평면을 선택하여 분리하는 지도 학습 기반의 이진 선형 분류 모델이다.
+- 최대 마진(Margin)을 갖는 비확률적 선형 판별에 기초하며, 커널 트릭을 통해 비선형 경계면도 분리할 수 있다. R에서는 `e1071` 패키지[^4]를 주로 활용한다.
 - `svm(formula, data = NULL)`
-- `predict(object(모델), data, type)`
+- `predict(object, data, type)`
 
 |파라미터|설명|
 |---|---|
 |object|svm의 객체|
 |data|예측을 수행할 데이터|
-|type|예측 결과의 유형<br>response(예측값), probabilities(확률)을 가짐|
+|type|예측 결과의 유형 (response: 예측값, probabilities: 확률)|
 
 *분석 모형 구축*
 
@@ -271,9 +273,9 @@ confusionMatrix(pred, iris$Species)
 
 ## K-NN
 
-- **K-NN 알고리즘**은 새로운 데이터 클래스를 해당 데이터와 가장 가까운 k개 데이터들의 클래스로 분류하는 알고리즘이다. 
-- K-NN 알고리즘에서는 유클리디안 거리, 맨하탄 거리, 민코우스키 거리 등을 사용할 수 있으며, 일반적으로 유클리디안 거리를 사용한다.
-- `knn(train, test, cl, k)` 
+- **K-NN 알고리즘**은 새로운 데이터 클래스를 해당 데이터와 가장 가까운 $k$개 데이터들의 클래스로 분류하는 알고리즘이다.
+- K-NN 알고리즘에서는 유클리드 거리(Euclidean Distance), 맨해튼 거리(Manhattan Distance), 민코프스키 거리(Minkowski Distance) 등을 사용할 수 있으며, 일반적으로 유클리드 거리를 사용한다.
+- R에서는 `class` 패키지[^5]의 `knn(train, test, cl, k)` 함수를 사용한다.
 
 |파라미터|설명|
 |---|---|
@@ -414,9 +416,9 @@ confusionMatrix(knn_13, test_y)
 
 ## 인공신경망(ANN) 
 
-- **인공 신경망**(ANN; Artificial Neural Network)은 인간의 뉴런 구조를 모방하여 만든 기계학습 모델이다.
-- 입력값을 받아서 출력값을 만들기 위해 활성화 함수를 사용한다.
-- `nnet(formula, data, size, maxit, decay=5e04, ...)`
+- **인공 신경망**(ANN; Artificial Neural Network)은 생물학적 뉴런 구조를 모방하여 만든 기계학습 모델이다.
+- 입력값을 받아서 출력값을 만들기 위해 활성화 함수를 사용하며, 단일 은닉층 피드포워드 신경망 모델링에는 `nnet` 패키지[^6]를 사용한다.
+- `nnet(formula, data, size, maxit, decay=5e-04, ...)`
 
 |파라미터|설명|
 |---|---|
@@ -424,7 +426,7 @@ confusionMatrix(knn_13, test_y)
 |data|데이터 프레임|
 |size|은닉층의 개수|
 |maxit|반복할 학습 횟수|
-|decay|가중치 감소의 모수 |
+|decay|가중치 감소(Weight Decay) 규제 모수|
 
 
 ### 1. 전처리
@@ -487,10 +489,9 @@ model.nnet = nnet(
 ```
 
 > **해석**  
-> seed 값은 1234로 설정  
-> nnet 함수 생성. 종속변수는 Species이고 독립변수는 Species를 제외하여 수식 설정  
-> 데이터는 train, 은닉층(size)은 2로 설정. 반복할 최대 횟수(maxit)는 200으로 설정. 가중치 감소의 모수를 5e-04로 설정  
-
+> seed 값은 1234로 설정한다.  
+> `nnet` 함수를 생성하며, 종속변수는 Species이고 독립변수는 Species를 제외한 전 변수로 수식을 설정한다.  
+> 데이터는 train, 은닉층 노드 수(size)는 2, 최대 반복 횟수(maxit)는 200, 가중치 감소 모수(decay)는 5e-04로 지정한다.  
 
 ### 3. 요약 정보 추출
 
@@ -514,10 +515,10 @@ summary(model.nnet)
 
 ## 나이브 베이즈 기법
 
-- **나이브 베이즈 분류**는 특성들 사이의 독립을 가정하는 베이즈 정리를 적용한 확률 분류기이다.
+- **나이브 베이즈 분류**는 특성들 사이의 조건부 독립을 가정하는 베이즈 정리를 적용한 확률 분류기이다.
 - 나이브 베이즈 분류는 베이즈 정리와 조건부 확률을 이용한다.
-- **subset** 매개변수를 지정하면 분석 데이터에서 훈련 데이터를 선정할 수 있다.
-- **라플라스** 매개변수는 라플라스 추정기로 중간에 0이 들어가서 모든 확률을 0으로 만들어 버리는 것을 방지하기 위한 인자이다.
+- **subset** 매개변수를 지정하면 분석 데이터에서 훈련 데이터를 분할 선정할 수 있다.
+- **라플라스** 매개변수는 라플라스 추정기(Laplace Smoothing)로, 빈도가 0인 범주로 인해 사후확률이 0이 되는 현상을 방지하기 위한 스무딩 인자이다.
 - `naiveBayes(formula, data, subset, laplace, ...)`
 
 |파라미터|설명|
@@ -627,6 +628,21 @@ confusionMatrix(
 ```
 
 
+## 한계 및 주의사항
+
+- **인메모리 처리 및 단일 스레드 연산 한계**: R은 기본적으로 모든 데이터 객체를 RAM에 적재하는 인메모리(In-Memory) 아키텍처로 동작하며, 기본 실행 엔진이 단일 스레드로 실행된다[^7]. 따라서 대용량 데이터셋 적재 및 반복 연산 시 메모리 부족(OOM)이나 급격한 속도 저하가 발생하기 쉽다.
+- **실기 시험 환경의 자원 및 시간 제약**: 빅데이터분석기사 실기 시험 환경은 1개 코어 수준의 제한된 연산 자원과 엄격한 실행 타임아웃(스크립트당 통상 1분 내외)이 적용된다. 복잡한 파라미터 튜닝, `nnet`의 과도한 반복(`maxit`), 대규모 K-NN 거리 계산은 시간 초과(Timeout)를 유발하므로 시험 환경에서는 간결한 모델과 보수적인 파라미터 설정을 우선해야 한다.
+- **메모리 회수 관리**: 실습 및 시험 진행 중 불필요해진 대형 객체는 `rm()`으로 즉시 메모리에서 해제하고, `gc()`(Garbage Collection)를 호출하여 런타임 메모리를 확보하는 습관이 필수적이다.
+
+
 ## References
 
 - [2022 수제비 빅데이터분석기사 실기 (필답형+작업형)](https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=281447264) 
+
+[^1]: [CRAN - Package rpart: Recursive Partitioning and Regression Trees](https://cran.r-project.org/package=rpart)
+[^2]: [CRAN - Package rpart.plot: Plot 'rpart' Models](https://cran.r-project.org/package=rpart.plot)
+[^3]: [CRAN - Package caret: Classification and Regression Training](https://cran.r-project.org/package=caret)
+[^4]: [CRAN - Package e1071: Misc Functions of the Department of Statistics, Probability Theory Group](https://cran.r-project.org/package=e1071)
+[^5]: [CRAN - Package class: Functions for Classification](https://cran.r-project.org/package=class)
+[^6]: [CRAN - Package nnet: Feed-Forward Neural Networks and Multinomial Log-Linear Models](https://cran.r-project.org/package=nnet)
+[^7]: [CRAN - The Comprehensive R Archive Network Manuals](https://cran.r-project.org/manuals.html)

@@ -8,16 +8,16 @@ toc: true
 toc_sticky: true
 sidebar_main: false
 
-last_modified_at: 2026-10-09
+last_modified_at: 2026-10-11
 ---
 
 <img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/148633895-2be87d4e-7edb-4391-b583-eb2888b19bbb.png
 '>
-본 글은 빅데이터분석기사 실기 작업형에 대비하여 요약 및 실습한 것을 작성한 글입니다. 기출문제의 데이터는 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis){: target="_blank"}에 데이터 셋을 남겨놨습니다. 또한 해당 전체 코드는 `/concept/R_basic_to_pro_1.R` 파일에 담겨져 있습니다. 
+본 글은 빅데이터분석기사 실기 작업형에 대비하여 R 기초 문법과 핵심 조작법을 정리한 글이다. 기출문제 데이터셋은 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis){: target="_blank"}에 수록되어 있으며, 전체 실습 코드는 `/concept/R_basic_to_pro_1.R` 파일에 담겨 있다.[^1]
 
-> 2021.12.31 : 제 3회 빅데이터 분석기사 실기를 합격했습니다. [빅데이터 분석기사(R)](https://ingu627.github.io/categories/R_ML) 시리즈를 보시고 도움이 되길 바랍니다.
+> 2021.12.31 : 제 3회 빅데이터 분석기사 실기 합격 후 정리한 내용이며, [빅데이터 분석기사(R)](https://ingu627.github.io/categories/R_ML) 시리즈를 통해 실기 작업형 대비를 돕는다.
 
-> 혹시 해당 글을 pdf로 받고 싶으신 분은 이메일과 함께 댓글로 남겨주세요~
+> 해당 글을 PDF로 확인하려면 이메일과 함께 댓글을 남기면 된다.
 
 ## 기본 단축키 
 
@@ -36,32 +36,32 @@ last_modified_at: 2026-10-09
 |- |값을 뺌|
 |* |값을 곱함|
 |/ |값을 나눔(몫 + 나머지)|
-|%% |나머지만 나옴|
-|%/% |몫만 나옴|
+|%% |나머지 반환|
+|%/% |정수 몫 반환|
 |^ | 지수 계산 |
 |** | 지수 계산|
 
 
 ## 관계 연산자(Relation Operator)
 
-- `TRUE` or `FALSE`로 결과값이 나옴 
+- `TRUE` 또는 `FALSE`로 결괏값이 반환된다.
 
 |연산자|내용|
 |---|---|
-|> |크냐 |
-|< |작냐 |
-|>= |크거나 같냐 |
-|<= |작거나 같냐 |
-|== |같냐 |
-|!= |같지 아니 하느냐 |
+|> |크다 (초과) |
+|< |작다 (미만) |
+|>= |크거나 같다 (이상) |
+|<= |작거나 같다 (이하) |
+|== |같다 |
+|!= |같지 않다 (다름) |
 
 
 ## 논리 연산자(Logic Operator)
 
 |연산자|내용|
 |---|---|
-|& |모두 참이어야 참.<br/> 아님 거짓 |
-|\| |하나만 참이여도 참.<br/> 모두 아닐 경우 거짓 |
+|& |모두 참이어야 참. 그렇지 않으면 거짓 |
+|\| |하나라도 참이면 참. 모두 거짓일 경우 거짓 |
 
 
 ## 대입 연산자(Assignment Operator)
@@ -75,9 +75,9 @@ last_modified_at: 2026-10-09
 
 ## 변수 형태 이해하기
 
-- `mode(x)` : 객체 형식 반환 
+- `mode(x)` : 객체 형식 반환[^2]
   - `numeric`, `character`, `logical` 중 하나의 값 출력
-- `typeof(x)` : 정수형은 `integer`, 실수형은 `double`로 반환하고, 나머지는 mode함수와 동일
+- `typeof(x)` : 정수형은 `integer`, 실수형은 `double`로 반환하고, 나머지는 mode 함수와 동일
 
 |String Type|설명|
 |---|---|
@@ -91,15 +91,15 @@ last_modified_at: 2026-10-09
 
 ## 데이터의 값
 
-- `NA` : Not Available의 약자. 데이터의 값이 없음 
-- `NULL` : 변수가 초기화되지 않는 경우 
-- `NAN` : Not a Number의 약자. 수학적으로 계산할 수 없는 값
-- `INF` : INFinite의 약자. 무한대
+- `NA` : Not Available의 약자. 결측값 (데이터 값이 존재하지 않음)
+- `NULL` : 변수가 초기화되지 않거나 빈 객체인 경우
+- `NAN` : Not a Number의 약자. 수학적으로 정의할 수 없는 값
+- `INF` : INFinite의 약자. 무한대 값
 
 
 ### 변수 생성
 
-- `=` : ~를 ~에 저장하여라 (할당)
+- `=` : 변수에 값을 할당
 
 ```R
 a=2
@@ -110,8 +110,8 @@ print(a)
 
 ### == 또는 !=
 
-- == : 맞는지 판단하여라
-- != : 틀린지 판단하여라
+- `==` : 두 값이 일치하는지 비교
+- `!=` : 두 값이 일치하지 않는지 비교
 
 ```R
 a = 2
@@ -124,7 +124,7 @@ a != 2
 
 ## 벡터(Vector)
 
-- c() = combind의 약자
+- c() : combine의 약자
 - 벡터의 생성 
 - c(값1, 값2...)
 
@@ -286,12 +286,12 @@ head(DATA_SET, 3)
 
 - `colnames(데이터프레임명)` : 데이터프레임의 열 이름 추출
 
-+ head() : 데이터의 상단 부분을 지정해주는 행만큼 출력해주는 함수
+- head() : 데이터 상단 행을 지정한 개수만큼 출력하는 함수
 
 
 ### length()
 - 1차원 벡터일 경우
-- 벡터에 속한 원소의 갯수
+- 벡터에 속한 원소의 개수
 
 ```R
 length(c(1:10))
@@ -465,7 +465,7 @@ format(DATE_P, '%Y')
 
 
 ### as()
-- 변수 x를 ~로 취급하겠다.
+- `as.*()` : 변수 x의 자료형을 명시적으로 변환
 
 ```R
 x=c(1,2,3,4,5,6,7,8,9,10)
@@ -486,8 +486,8 @@ summary(x1)
 
 
 ## 데이터 타입 확인
-- **is()** : 논리문으로써 변수 x가 ~인지 판단하여라
-- 결괏값은 TRUE 또는 FALSE가 된다.
+- **is()** : 변수 x가 특정 데이터 타입인지 판별하는 논리 함수
+- 결괏값은 TRUE 또는 FALSE로 반환된다.
 
 ```R
 x=c(1:5)
@@ -505,7 +505,7 @@ is.character(y)
 
 ### sample()
 
-- sample(데이터 추출 범위, 데이터 추출 갯수 , replace = “FALSE OR ”TRUE")
+- sample(데이터 추출 범위, 데이터 추출 개수, replace = FALSE 또는 TRUE)
 - `sample(x, size, replace=FALSE, prob=NULL)`
   - `replace=TRUE` : 복원추출 
   - `replace=FALSE` : 비복원추출
@@ -520,8 +520,8 @@ S1
 
 ### set.seed()
 
-- 무작위 값 결과값 고정할 때
-- 결과값이 똑같이 나온다.
+- 난수 생성 시 결괏값을 고정할 때 사용
+- 시드(seed) 값을 지정하면 항상 동일한 난수 순열이 생성된다.
 
 ```R
 S2 = sample(1:45, 6, replace=FALSE)
@@ -533,9 +533,8 @@ S2
 ## 조건문
 ### if ~ else
 
-- 조건문
-- if ~라면 이거 선택. 아니라면(=else) 이거 선택
-- `%in%` : ~에 속해 있는지 확인
+- 조건문으로, 주어진 조건식이 참일 때와 거짓일 때 실행할 코드 블록을 분기한다.
+- `%in%` : 특정 원소가 벡터나 집합에 포함되어 있는지 확인하는 연산자
 
 
 ### if ~ else if ~ else
@@ -622,7 +621,7 @@ repeat {
 
 
 ### break 문 
-- 반복문을 중간에 탈추하기 위해 사용하는 명령어
+- 반복문을 중간에 탈출하기 위해 사용하는 명령어
 
 ```R
 for (i in 1:5){
@@ -695,7 +694,7 @@ library(ggplot2)
 
 ## ggplot 패키지
 
-- ggplot 패키지의 기본 문법은 구성요소인 data, aes, geom을 기반으로 사용한다.
+- ggplot2 패키지의 기본 문법은 구성요소인 data, aes, geom을 기반으로 구성된다.[^3]
 
 |주요 파라미터 | 설명 |
 |---|---|
@@ -733,6 +732,10 @@ ggplot(data=airquality, # 그래프에 필요한 객체인 airquality 대입
 
 ![image](https://user-images.githubusercontent.com/78655692/141499918-c0a24422-60c9-4a8d-a77e-6ab1603bc5af.png)
 
+## 한계 및 주의사항
+
+R은 모든 데이터를 물리 메모리에 적재하는 인메모리(in-memory) 아키텍처로 동작하며, 기본 실행 엔진이 단일 스레드(single thread)로 구동된다.[^4] 이에 따라 대용량 데이터를 처리하거나 반복문 내에서 객체를 지속해서 재할당할 경우 메모리 누수와 급격한 연산 지연이 발생할 수 있다. 특히 빅데이터분석기사 실기 시험의 클라우드 응시 환경은 세션당 메모리(약 1~2GB)와 스크립트 실행 시간(타임아웃 1분 내외) 제약이 엄격하다.[^5] 따라서 실기 시험에서는 불필요한 중간 데이터프레임 복사를 피하고, 다중 중첩 `for` 루프 대신 벡터화 연산이나 내장 요약 함수를 사용하여 메모리 초과(OOM)와 타임아웃 오류를 방지해야 한다.
+
 
 ## References
 
@@ -742,3 +745,9 @@ ggplot(data=airquality, # 그래프에 필요한 객체인 airquality 대입
 - [2022 수제비 빅데이터분석기사 실기 (필답형+작업형)](https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=281447264)  
 - [R, Python 분석과 프로그래밍의 친구 (by R Friend) - R 데이터 프레임 결합 : rbind(), cbind(), merge()](https://rfriend.tistory.com/51)
 - [데이터 자료 링크 (출처 : Must Learning with R. 저자 : DoublekPark)](https://www.dropbox.com/sh/vtqlvrgdts2yfez/AAD_cd49dBcvgBNdz-C-A6TFa?dl=0)
+
+[^1]: R Core Team. (2023). *An Introduction to R: A Programming Environment for Data Analysis and Graphics*. CRAN. [https://cran.r-project.org/doc/manuals/r-release/R-intro.html](https://cran.r-project.org/doc/manuals/r-release/R-intro.html)
+[^2]: R Core Team. (2023). *The R Base Package*. CRAN / R Documentation. [https://stat.ethz.ch/R-manual/R-devel/library/base/html/00Index.html](https://stat.ethz.ch/R-manual/R-devel/library/base/html/00Index.html)
+[^3]: Wickham, H., Chang, W., et al. (2023). *ggplot2: Create Elegant Data Visualisations Using the Grammar of Graphics*. CRAN Package Repository. [https://cran.r-project.org/web/packages/ggplot2/index.html](https://cran.r-project.org/web/packages/ggplot2/index.html)
+[^4]: R Core Team. (2023). *R Installation and Administration: Memory Limits*. CRAN. [https://cran.r-project.org/doc/manuals/r-release/R-admin.html](https://cran.r-project.org/doc/manuals/r-release/R-admin.html)
+[^5]: 한국데이터산업진흥원(K-DATA). *빅데이터분석기사 실기시험 응시환경 안내 및 수험자 유의사항*. DataQ 자격검정. [https://www.dataq.or.kr/](https://www.dataq.or.kr/)

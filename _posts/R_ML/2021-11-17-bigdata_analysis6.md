@@ -8,14 +8,14 @@ toc: true
 toc_sticky: true
 sidebar_main: false
 
-last_modified_at: 2026-10-09
+last_modified_at: 2026-10-11
 ---
 
 <img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/148633895-2be87d4e-7edb-4391-b583-eb2888b19bbb.png
 '>
-본 글은 빅데이터분석기사 실기 작업형에 대비하여 요약 및 실습한 것을 작성한 글입니다. 기출문제의 데이터는 출처는 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis){: target="_blank"}에 데이터 셋을 남겨놨습니다. 또한 해당 전체 코드는 `/concept/R_basic_to_pro_6.R` 파일에 담겨져 있습니다.
+본 글은 빅데이터분석기사 실기 작업형에 대비하여 요약 및 실습 내용을 정리한 글이다. 기출문제 데이터 출처는 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis){: target="_blank"} 저장소에 수록했다. 또한 해당 전체 코드는 `/concept/R_basic_to_pro_6.R` 파일에 정리되어 있다.
 
-> 2021.12.31 : 제 3회 빅데이터 분석기사 실기를 합격했습니다. [빅데이터 분석기사(R)](https://ingu627.github.io/categories/R_ML) 시리즈를 보시고 도움이 되길 바랍니다.
+> 2021.12.31 : 제 3회 빅데이터 분석기사 실기 시험에 합격했다. [빅데이터 분석기사(R)](https://ingu627.github.io/categories/R_ML) 시리즈를 참고하여 시험 대비에 도움이 되길 바란다.
 
 > 혹시 해당 글을 pdf로 받고 싶으신 분은 이메일과 함께 댓글로 남겨주세요~
 
@@ -29,8 +29,8 @@ last_modified_at: 2026-10-09
 
 ![image](https://user-images.githubusercontent.com/78655692/142348954-39333baf-69d3-47ee-b724-7db5f3854cce.png)
 
-- **배깅(Bagging; BootStrap Aggregating)**은 훈련 데이터에서 다수의 부트스트랩 자료를 생성하고, 각 자료를 모델링한 후 결합하여 최종 예측 모형을 만드는 알고리즘이다. 
-- **부트스트랩**은 주어진 자료에서 동일한 크기의 표본을 랜덤 복원 추출로 뽑은 자료를 의미.
+- **배깅(Bagging; BootStrap Aggregating)**은 훈련 데이터에서 다수의 부트스트랩 자료를 생성하고, 각 자료를 모델링한 후 결합하여 최종 예측 모형을 만드는 알고리즘이다.[^1] 
+- **부트스트랩**은 주어진 자료에서 동일한 크기의 표본을 복원 추출(bootstrap sampling)로 생성한 표본 자료를 의미한다.
 - `bagging(formula, data, mfinal, control)`
 
 |파라미터|설명|
@@ -47,10 +47,10 @@ last_modified_at: 2026-10-09
 |formula|분석에 사용된 모형|
 |trees|bagging을 통해 생성된 의사결정나무들을 확인|
 |votes|각 의사결정나무들이 1행 데이터에 대해 1 또는 2열의 분류를 가진다는 것에 대한 투표를 진행한 것|
-|prob|각 행에 대해 1 또는 2열의 특정으로 분류되는 확률|
+|prob|각 행에 대해 1 또는 2열의 특정 클래스로 분류되는 확률|
 |class|bagging 기법을 활용해 각 행의 분류를 예측한 것|
 |samples|각 의사결정나무 부트스트랩 데이터의 레코드 번호|
-|importance|변수의 상대적인 중요도를 나타내며, 지니 지수의 이익(gain) 도는 불확실성의 감소량을 고려한 측도|
+|importance|변수의 상대적인 중요도를 나타내며, 지니 지수의 이익(gain) 또는 불확실성의 감소량을 고려한 측도|
 
 
 ### 1. 데이터 탐색
@@ -177,9 +177,8 @@ confusionMatrix(
 
 ## XGBoost
 
-- **XGBoost**(eXtreme Gradient Boosting)는 병렬 처리가 지원되도록 지원되도록 구현하여 훈련과 분류 속도가 빠른 알고리즘이다. 
-- 부스팅 기법을 사용하는 알고리즘에는 AdaBoost, GBM, LightGBM, XGBoost(xXtreme Gradient Boosting), CatBoost 등이 있다. 
-- `XGBoost` : 병렬 처리가 지원되도록 구현하여 훈련과 분류 속도가 빠른 알고리즘이다.
+- **XGBoost**(eXtreme Gradient Boosting)는 병렬 처리가 가능하도록 구현하여 훈련과 분류 속도를 최적화한 알고리즘이다.[^2] 
+- 부스팅 기법을 사용하는 알고리즘에는 AdaBoost, GBM, LightGBM, XGBoost(eXtreme Gradient Boosting), CatBoost 등이 있다.
 - `xgb.train(params, data, nrounds, early_stopping_rounds, watchlist)` : xgboost 모델의 훈련을 위한 함수
 
 |파라미터|설명|
@@ -187,7 +186,7 @@ confusionMatrix(
 |params|파라미터 리스트|
 |data|xgb.DMatrix 객체|
 |nrounds|최대 부스팅 반복 횟수|
-|early_stopping_rounds|early stopping 횟수 지정 지정된 회수 이상 성능 향상이 없을 경우 중지|
+|early_stopping_rounds|조기 종료(early stopping) 라운드 수 지정. 지정된 횟수 이상 성능 향상이 없을 경우 중지|
 |watchlist|모형의 성능을 평가하기 위하여 사용하는 xgb.DMatrix 이름|
 
 - xgb.train 함수는 독립변수가 **수치형 데이터**만 사용이 가능하며, 명목형인 경우에는 **One Hot Encoding**을 수행하여 수치형으로 변환한 후 사용한다.
@@ -195,32 +194,24 @@ confusionMatrix(
 
 |주요 파라미터 | 설명 |
 |---|---|
-|booster|부스터 방법 설정 (default:gbree)|
+|booster|부스터 방법 설정 (default: gbtree)|
 |eta|학습률(learning rate) (default:0.3) 작을수록 과대 적합에 강건|
 |gamma|information Gain에 패널티를 부여하는 숫자 클수록 트리의 깊이가 줄어서 보수적인 알고리즘|
 |max_depth|한 트리의 최대 깊이 (default:6)|
 |subsample|훈련 데이터의 샘플 비율 (default:1)|
-|colsample_bytree|개별 트리 구성할 때 컬럼의 subsample 비율 (default:1:)|
+|colsample_bytree|개별 트리 구성할 때 컬럼의 subsample 비율 (default: 1)|
 |objective|목적 함수 지정 (default - reg:squarederror)|
-|eval_mteric|모델의 평가 함수 (default는 목적 함수에 따라 할당)|
+|eval_metric|모델의 평가 함수 (default는 목적 함수에 따라 할당)|
 
 - `xgb.DMatrix(data, info,...)`
 
 |파라미터|설명|
 |---|---|
-|data|Martix 객체, dgCMatrix 객체 또는 파일명|
+|data|Matrix 객체, dgCMatrix 객체 또는 파일명|
 |info|xgb.DMatrix에 저장될 추가적인 정보들의 리스트|
 
 
 ### 분석 모형 구축
-
-```R
-# install.packages('xgboost')
-library(xgboost)
-train.label=as.integer(train$diabetes)-1
-mat_train.data=as.matrix(train[, -9])
-mat_test.data=as.matrix(test[, -9])
-```
 
 ```R
 # install.packages('xgboost')
@@ -338,7 +329,7 @@ confusionMatrix(
 
 <img src="https://user-images.githubusercontent.com/78655692/143412154-aa6f9e63-2bc6-4f08-868b-711c5a2c520f.png" width="500" alt="image">
 
-- **랜덤 포레스트**(Random Forest)는 의사결정나무의 특징인 분산이 크다는 점을 고렿여 배깅과 부스팅보다 더 많은 무작위성을 주어 약한 학습기들을 생성한 후 이를 선형 결합하여 최종 학습기를 만드는 방법이다.
+- **랜덤 포레스트**(Random Forest)는 의사결정나무의 특징인 큰 분산을 고려하여 배깅과 부스팅보다 더 많은 무작위성을 부여해 다수의 트리를 생성한 후, 이를 결합하여 최종 예측 모형을 만드는 앙상블 기법이다.[^3]
 - 랜덤 포레스트 패키지는 랜덤 입력에 따른 여러 트리의 집합인 포레스트를 이용한 분류방법이다.
 - `randomForest(formula, data, ntree, mtry)`
 
@@ -347,7 +338,7 @@ confusionMatrix(
 |formula|종속변수~독립변수 형식의 수식|
 |data|데이터 프레임|
 |ntree|사용할 트리의 수|
-|mtry|각 분할에서 랜덤으로 뽑인 변수의 수|
+|mtry|각 분할에서 무작위로 선택할 설명변수 수|
 
 
 ### 1. 분석 모형 구축
@@ -435,7 +426,7 @@ confusionMatrix(
 
 ## 군집 분석
 
-- **군집 분석**은 관측된 여러 개의 변숫값으로부터 유사성에만 기초하여 n개의 군집으로 집단화하고, 형성된 집단의 특성으로부터 관계를 분석하는 다변량 분석기법이다.
+- **군집 분석**은 관측된 여러 개의 변숫값으로부터 유사성에 기초하여 군집으로 집단화하고, 형성된 집단의 특성으로부터 관계를 분석하는 다변량 분석 기법이다.[^4]
 - **연속형 변수 거리**로는 유클리드 거리, 맨하튼 거리, 민코우스키 거리, 표준화 거리, 마할라노비스 거리 등이 있다.
 - **명목형 변수 거리**는 개체 i와 j 간의 거리의 정의이다.
   - `d(i,j)=(개체 i와 j에서 다른 값을 가지는 변수의 수)/ (총 변수의 수)`
@@ -452,7 +443,7 @@ confusionMatrix(
 |agnes(data, metric, method)|cluster 패키지에서 계층적 군집방법을 이용하여 분석|
 |daisy(data, metric)|cluster 패키지에서 데이터 관측치 사이의 거리를 계산|
 
-- 거리 측정 방법의 `method`에는 "euclidean", "maximum", "manhattan", "'canberra", binary", "minkowski"가 있다.
+- 거리 측정 방법의 `method`에는 "euclidean", "maximum", "manhattan", "canberra", "binary", "minkowski"가 있다.
 - 계층적 군집 분석의 `method`는 hclust 함수를 적용하며 "single", "complete", "average", "median", "ward.D"을 사용한다.
 
 
@@ -514,7 +505,7 @@ plot(US.single)
 ![image](https://user-images.githubusercontent.com/78655692/142362743-03621758-0305-4846-9c6a-f3fd459848d0.png)
 
 
-## 4. 군집 분석을 통한 그룹 확인 
+### 4. 군집 분석을 통한 그룹 확인 
 
 - 계층적 군집 분석의 결과는 plot 함수를 통해 덴드로그램으로 시각화할 수 있다.
 - 덴드로그램 결과는 cutree 함수로 그룹화를 하거나 rect.hclust 함수를 이용하여 그룹화할 수 있다.
@@ -553,7 +544,7 @@ group
 
 ## 비계층적 군집 분석 - k평균 군집 분석 
 
-- **k-평균**(k-means)는 k개만큼 원하는 군집 수를 초깃값으로 지정하고, 각 개체를 가까운 초깃값에 할당하여 군집을 형성하고 각 군집의 평균을 재계산하여 초깃값을 갱신한다. 갱신 과정을 반복하여 k개의 최종군집을 형성한다.
+- **k-평균**(k-means)은 k개의 군집 수를 초깃값으로 지정하고, 각 개체를 가장 가까운 군집 중심에 할당한 후 군집 평균을 재계산하여 중심을 갱신하는 과정을 반복하는 비계층적 군집화 알고리즘이다.[^5]
 - `kmeans(data, centers)` 
 
 
@@ -599,9 +590,9 @@ points(
 
 ## 연관성 분석 
 
-- **연관성 분석**(Association Analysis)은 데이터 내부에 존재하는 항목 간의 상호 관계 혹은 종속 관계를 찾아내는 분석기법이다.
+- **연관성 분석**(Association Analysis)은 데이터 내부에 존재하는 항목 간의 상호 관계 혹은 규칙을 찾아내는 분석 기법이다.[^6]
 - R에서 연관 분석을 수행할 수 있는 함수는 arules 패키지에 포함되어 있는 `apriori`함수이다. 
-  - `aprori`함수는 트랜잭션 데이터를 다루고 데이터 세트 내에서 최소 N 번의 트랜잭션이 일어난 아이템 집합들을 찾아 연관 분석을 수행하는 알고리즘이다.
+  - `apriori`함수는 트랜잭션 데이터를 다루고 데이터 세트 내에서 최소 지지도 이상으로 발생한 아이템 집합들을 찾아 연관 규칙을 도출하는 알고리즘이다.
 - `as(data, class)` : 객체들을 리스트로 결합해주는 함수
 - `inspect(x, ...)` : transactions 데이터 확인
 - `apriori(data, parameter, appearance, control)` : 연관성 분석
@@ -609,7 +600,7 @@ points(
 |파라미터|설명|
 |---|---|
 |data|연관 규칙 또는 트랜잭션 또는 아이템 매트릭스 데이터|
-|parameter|최소 지지도(supp), 신뢰도(conf), 최대 아이템 개수(maxien), 최소 아이템 개수(minien) 입력|
+|parameter|최소 지지도(supp), 신뢰도(conf), 최대 아이템 개수(maxlen), 최소 아이템 개수(minlen) 입력|
 |appearance|특정 연관규칙 결과를 찾을 수 있음|
 |control|결과 보여주기 등의 알고리즘의 성능을 조정할 수 있음|
 
@@ -716,6 +707,26 @@ inspect(sort(apr, by='lift')[1:10])
 ```
 
 
+## 한계 및 주의사항
+
+- **인메모리 처리 한계**: R은 모든 객체를 메모리(RAM)에 상주시켜 처리하므로, 대규모 데이터셋에서 부트스트랩 복제본 생성이나 복잡한 거리 행렬 계산 시 메모리 부족(OOM) 오류가 발생할 수 있다.
+- **단일 스레드 기본 동작**: R 인터프리터 및 주요 모델링 함수(`randomForest`, `hclust`, `dist`)는 기본적으로 단일 스레드로 동작하므로, 트리 개수(`ntree`)나 데이터 행 수가 늘어나면 실행 시간이 급격히 증가한다.
+- **시험 환경의 자원 및 시간 제약**: 빅데이터분석기사 실기 시험 환경(클라우드 기반 컨테이너)은 실행 메모리(통상 1~2GB)와 실행 제한 시간(통상 1분 내외 타임아웃)이 엄격하므로, `ntree`, `nrounds`, `mfinal` 등의 파라미터를 과도하게 키우지 말고 적정 범위 내에서 신속하게 수렴하도록 튜닝해야 한다.
+
+
 ## References
 
-- [2022 수제비 빅데이터분석기사 실기 (필답형+작업형)](https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=281447264) 
+- [2022 수제비 빅데이터분석기사 실기 (필답형+작업형)](https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=281447264)
+- [Andrea Peters and Torsten Hothorn, "ipred: Improved Predictors," CRAN Package ipred](https://cran.r-project.org/package=ipred)
+- [Tianqi Chen et al., "xgboost: Extreme Gradient Boosting," CRAN Package xgboost](https://cran.r-project.org/package=xgboost)
+- [Leo Breiman and Adele Cutler, "randomForest: Breiman and Cutler's Random Forests for Classification and Regression," CRAN Package randomForest](https://cran.r-project.org/package=randomForest)
+- [R Core Team, "Distance Matrix Computation (dist) & Hierarchical Clustering (hclust)," R stats package reference manual, CRAN](https://stat.ethz.ch/R-manual/R-patched/library/stats/html/dist.html)
+- [R Core Team, "K-Means Clustering (kmeans)," R stats package reference manual, CRAN](https://stat.ethz.ch/R-manual/R-patched/library/stats/html/kmeans.html)
+- [Michael Hahsler, Christian Buchta, Bettina Gruen, and Kurt Hornik, "arules: Mining Association Rules and Frequent Itemsets," CRAN Package arules](https://cran.r-project.org/package=arules)
+
+[^1]: [Andrea Peters and Torsten Hothorn, "ipred: Improved Predictors," CRAN Package ipred](https://cran.r-project.org/package=ipred)
+[^2]: [Tianqi Chen et al., "xgboost: Extreme Gradient Boosting," CRAN Package xgboost](https://cran.r-project.org/package=xgboost)
+[^3]: [Leo Breiman and Adele Cutler, "randomForest: Breiman and Cutler's Random Forests for Classification and Regression," CRAN Package randomForest](https://cran.r-project.org/package=randomForest)
+[^4]: [R Core Team, "Distance Matrix Computation (dist) & Hierarchical Clustering (hclust)," R stats package reference manual, CRAN](https://stat.ethz.ch/R-manual/R-patched/library/stats/html/dist.html)
+[^5]: [R Core Team, "K-Means Clustering (kmeans)," R stats package reference manual, CRAN](https://stat.ethz.ch/R-manual/R-patched/library/stats/html/kmeans.html)
+[^6]: [Michael Hahsler, Christian Buchta, Bettina Gruen, and Kurt Hornik, "arules: Mining Association Rules and Frequent Itemsets," CRAN Package arules](https://cran.r-project.org/package=arules)

@@ -8,12 +8,12 @@ toc: true
 toc_sticky: true
 sidebar_main: false
 
-last_modified_at: 2026-10-09
+last_modified_at: 2026-10-11
 ---
 
 <img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/148633895-2be87d4e-7edb-4391-b583-eb2888b19bbb.png
 '>
-본 글은 빅데이터분석기사 실기 작업형에 대비하여 요약 및 실습한 것을 작성한 글입니다. 기출문제의 데이터는 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis){: target="_blank"}에 데이터 셋을 남겨놨습니다. 또한 해당 전체 코드는 `/concept/R_basic_to_pro_3.R` 파일에 담겨져 있습니다.
+본 글은 빅데이터분석기사 실기 작업형에 대비하여 요약 및 실습한 내용을 정리한 글이다. 기출문제 데이터는 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis){: target="_blank"}에 정리해 두었다. 또한 전체 실습 코드는 `/concept/R_basic_to_pro_3.R` 파일에 수록되어 있다.
 
 > 2021.12.31 : 제 3회 빅데이터 분석기사 실기를 합격했습니다. [빅데이터 분석기사(R)](https://ingu627.github.io/categories/R_ML) 시리즈를 보시고 도움이 되길 바랍니다.
 
@@ -22,7 +22,7 @@ last_modified_at: 2026-10-09
 ## 데이터 정제
 
 - **결측값(Missing Value)** : 입력이 누락된 값
-  - R에서는 결측값을 NA(not avaiable)로 처리한다.
+  - R에서는 결측값을 NA(not available)[^1]로 처리한다.
 - **결측값 인식 함수**
 
 - 1. `is.na(x)` : 데이터의 각 행(Row)과 변수(Column)별로 결측값이 있을 경우 TRUE, 아니면 FALSE로 출력 (**개별** 데이터의 결측값)
@@ -140,15 +140,16 @@ table(is.na(pima2$pressure))
 ### 사분위수 활용 
 
 - `Q1 - 1.5x(Q3-Q1) < data < Q3 + 1.5x(Q3-Q1)`
-- **제 2사분위(중위수) 기준으로 사분위수 범위(Q3 -Q1 = IQR)의 1.5배를 한 값 이상인 값을 이상값으로 판단한다.**
-- 박스 플롯의 `$stats` 변수를 이용하여 5가지 수치 요약에 대한 확인이 가능하다.
+- **사분위수 범위(IQR = Q3 - Q1)의 1.5배를 벗어나는 값(Q1 - 1.5*IQR 미만 또는 Q3 + 1.5*IQR 초과)을 이상값으로 판단한다.**
+- 박스 플롯의 `$stats` 요소를 이용하여 5가지 수치 요약에 대한 확인이 가능하다.
 
 |구성요소|설명|
 |---|---|
-|최솟값|최솟값 $stat[1] 이용하여 확인|
-|제 1사분위(Q1)|자료들의 하위 25%의 위치 $stats[2]|제 2사분위(Q2) (중위수)| 자료들의 50%의 위치로 중위수(Median)를 의미  $stats[2] 이용하여 확인|
-|제 3사분위(Q3) | 자료들의 하위 75%를 의미  $stats[4] 이용하여 확인|
-|최댓값|최댓값 $stats[5] 이용하여 확인|
+|최솟값|이상치를 제외한 최솟값 ($stats[1] 이용하여 확인)|
+|제 1사분위(Q1)|자료들의 하위 25% 위치 ($stats[2] 이용하여 확인)|
+|제 2사분위(Q2, 중위수)|자료들의 50% 위치인 중위수 ($stats[3] 이용하여 확인)|
+|제 3사분위(Q3)|자료들의 하위 75% 위치 ($stats[4] 이용하여 확인)|
+|최댓값|이상치를 제외한 최댓값 ($stats[5] 이용하여 확인)|
 
 - `quantile()` : 0%       25%       50%       75%      100% 로 보여준다.
 
@@ -184,7 +185,7 @@ table(is.na(pima2$pressure))
 
 ### scale()
 
-- `scale(x, center = TRUE, scale =TRUE)`
+- `scale(x, center = TRUE, scale = TRUE)`[^2]
   - `x` : 수치형 행렬 
   - `center` : 수치형 데이터 입력 시 center에 지정된 값으로 뺄셈 실행 (default : TRUE)
     - x의 평균으로 값을 빼서 정규화 수행
@@ -242,7 +243,7 @@ data_minmax
 
 ### preProcess()
 
-- caret 패키지에서는 preProcess 함수를 통해서 표준화 등의 전처리를 수행할 수 있다.
+- caret 패키지[^3]에서는 preProcess 함수를 통해서 표준화 등의 전처리를 수행할 수 있다.
 
 1. preProcess 함수를 사용해서 변수변환에 필요한 parameter를 설정한다.
 2. predict 함수를 통해서 실제로 값을 변화시킨다.
@@ -289,7 +290,7 @@ summary(scaled_df_train)
 
 ## 표본 추출 및 집약처리 
 
-- `sample(x, size, replace, prob)` : 단순 무작위 추출을 수행하는 함수
+- `sample(x, size, replace, prob)`[^4] : 단순 무작위 추출을 수행하는 함수
 
 > 풀이 : x 범위의 숫자를 size개 추출 (replace 여부에 따라, 각각 확률(prob에 따라))
 
@@ -312,7 +313,7 @@ sample(x=1:10, size=5, replace=FALSE)
 |x|분할할 데이터(벡터) **기준**|
 |times|생성할 분할의 수|
 |p|**훈련 데이터**에서 사용할 데이터의 비율|
-|list|결과를 리스트로 반활할지 여부(TRUE: 리스트 반환, FALSE: 행렬 반환)|
+|list|결과를 리스트로 반환할지 여부(TRUE: 리스트 반환, FALSE: 행렬 반환)|
 
 ```R
 library(caret)
@@ -332,14 +333,14 @@ ds_train = iris[idx,]
 ds_test = iris[-idx,]
 ```
 
-- `createFolds(y, k, list, returnTrain)` : 데이터를 k-겹(k-fold)으로 교차 검증할 대 데이터를 분할하기 위한 함수
+- `createFolds(y, k, list, returnTrain)` : 데이터를 k-겹(k-fold)으로 교차 검증할 때 데이터를 분할하기 위한 함수
   - 훈련 단계에 따라 1개는 평가 데이터, k-1개는 훈련 데이터로 활용한다.
 
 |주요 파라미터|설명|
 |---|---|
 |y|분할 대상 데이터(벡터) **기준**|
 |k|겹(fold)으로 분할하는 개수(정수)|
-|list|결과를 리스트로 반활할지 여부|
+|list|결과를 리스트로 반환할지 여부|
 |returnTrain|list = TRUE일 경우에 같이 사용 (default: TRUE) TRUE: 훈련 데이터의 위치 반환 FALSE: 평가 데이터의 위치 반환 (default: FALSE)|
 
 ```R
@@ -368,7 +369,7 @@ $Fold1
 
 ## 기초 통계량 추출
 
-- `mean(x, trim=0 na.rm = FALSE)` : 데이터의 평균을 출력하는 함수
+- `mean(x, trim = 0, na.rm = FALSE)` : 데이터의 평균을 출력하는 함수
 
 |주요 파라미터|설명|
 |---|---|
@@ -507,7 +508,7 @@ str(mtcars)
 |후진 소거법| 모두 포함된 상태에서 시작하며 가장 적은 영향을 주는 변수부터 하나씩 제거하는 방법|backward|
 |단계적 방법 | 전진 선택과 후진 소거를 함께 사용하는 방법|both|
 
-- `step(object, scope, direction)` : AIC가 작아지는 방향으로 단계적으로 변수를 선택하는 함수
+- `step(object, scope, direction)`[^5] : AIC가 작아지는 방향으로 단계적으로 변수를 선택하는 함수
 - `formula(x)` : step함수를 수행한 뒤 반환 값을 파라미터로 전달받아 포뮬러(종속변수 ~ 독립변수) 형태를 구하는 함수
 
 ```R
@@ -646,7 +647,7 @@ formula(m2)
 # hp ~ disp + wt + carb
 ```
 
-- `lm(hp~., data=mtcars)` 에서 `.`의 의미는 모든 독립변수를 넣겠다를 의미.
+- `lm(hp~., data=mtcars)`에서 `.`의 의미는 모든 독립변수를 모형에 포함함을 의미한다.
 
 
 ### 더미 변수(Dummy Variable) 생성 
@@ -672,7 +673,24 @@ transform(
 ```
 
 
+## 한계 및 주의사항
+
+- **인메모리 처리 한계**: R은 데이터를 기본적으로 메모리(RAM)에 전체 적재하여 처리하므로, 대용량 데이터 전처리 시 불필요한 객체 복제나 결측치 대치 과정에서 메모리 초과(Out of Memory)가 발생할 수 있다.
+- **단일 스레드 기본 동작**: R의 기본 인터프리터(`base`, `stats`) 및 대다수 전처리 함수는 기본적으로 단일 CPU 코어에서 순차 처리되므로, 대규모 표본 추출이나 반복적인 변환 작업 시 연산 시간이 선형적으로 증가한다.
+- **실기 시험 환경의 자원 및 시간 제약**: 빅데이터분석기사 실기 클라우드 환경은 메모리와 실행 제한 시간(통상 1분 내외)이 엄격하게 제한되므로, 무거운 외부 라이브러리나 과도하게 복잡한 전처리 파이프라인 대신 제한 시간 내에 안정적으로 수렴하는 표준 함수를 선택해야 한다.
+
 ## References
 
-- [2022 수제비 빅데이터분석기사 실기 (필답형+작업형)](https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=281447264) 
+- [2022 수제비 빅데이터분석기사 실기 (필답형+작업형)](https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=281447264)
 - [R-caretpreProcess-수치형-데이터-정규화-표준화](https://yogyui.tistory.com/entry/R-caretpreProcess-%EC%88%98%EC%B9%98%ED%98%95-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%A0%95%EA%B7%9C%ED%99%94-%ED%91%9C%EC%A4%80%ED%99%94)
+- [R Core Team, "Not Available / Missing Values (is.na)," R base package reference manual, CRAN](https://stat.ethz.ch/R-manual/R-patched/library/base/html/NA.html)
+- [R Core Team, "Scaling and Centering of Matrix-like Objects (scale)," R base package reference manual, CRAN](https://stat.ethz.ch/R-manual/R-patched/library/base/html/scale.html)
+- [Max Kuhn, "caret: Classification and Regression Training," CRAN Package caret](https://cran.r-project.org/package=caret)
+- [R Core Team, "Random Samples and Permutations (sample)," R base package reference manual, CRAN](https://stat.ethz.ch/R-manual/R-patched/library/base/html/sample.html)
+- [R Core Team, "Choose a Model by AIC in a Stepwise Algorithm (step)," R stats package reference manual, CRAN](https://stat.ethz.ch/R-manual/R-patched/library/stats/html/step.html)
+
+[^1]: [R Core Team, "Not Available / Missing Values (is.na)," R base package reference manual, CRAN](https://stat.ethz.ch/R-manual/R-patched/library/base/html/NA.html)
+[^2]: [R Core Team, "Scaling and Centering of Matrix-like Objects (scale)," R base package reference manual, CRAN](https://stat.ethz.ch/R-manual/R-patched/library/base/html/scale.html)
+[^3]: [Max Kuhn, "caret: Classification and Regression Training," CRAN Package caret](https://cran.r-project.org/package=caret)
+[^4]: [R Core Team, "Random Samples and Permutations (sample)," R base package reference manual, CRAN](https://stat.ethz.ch/R-manual/R-patched/library/base/html/sample.html)
+[^5]: [R Core Team, "Choose a Model by AIC in a Stepwise Algorithm (step)," R stats package reference manual, CRAN](https://stat.ethz.ch/R-manual/R-patched/library/stats/html/step.html)

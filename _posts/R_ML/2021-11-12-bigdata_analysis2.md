@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: false
 
-last_modified_at: 2026-10-09
+last_modified_at: 2026-10-11
 ---
 
 <img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/148633895-2be87d4e-7edb-4391-b583-eb2888b19bbb.png
@@ -24,11 +24,11 @@ last_modified_at: 2026-10-09
 ### 파일 종류 
 
 **1. TXT 파일**
-- `read.table(file, header, sep, fill, what)` : TXT 파일로부터 데이터를 읽는 함수
+- `read.table(file, header, sep, fill, what)` : TXT 파일로부터 데이터를 읽는 함수[^1]
 
 |주요 파라미터 | 설명|
 |---|---|
-| file | 읽어 들일 파일명을 설정함 |
+| file | 읽어 들일 파일명을 설정 |
 |header | 첫 번째 행을 열 이름으로 인식할지 여부를 설정 |
 |sep |구분자 지정 |
 |fill | 비어있는 부분을 NA로 채울지 여부를 결정|
@@ -50,10 +50,10 @@ last_modified_at: 2026-10-09
 
 |주요 파라미터 | 설명|
 |---|---|
-| file | 읽어 들일 파일명을 설정함 |
+| file | 읽어 들일 파일명을 설정 |
 |header | 첫 번째 행을 열 이름으로 인식할지 여부를 설정 |
 
-  - `stringsAsFactors=TRUE` : 불러올 때 문자열을 factor로 변환해줌
+  - `stringsAsFactors=TRUE` : 불러올 때 문자열을 factor형으로 변환한다.
 
 - `write.csv(x, file, append, quote, sep, ...)` : csv파일로 저장할 때 사용하는 함수
 
@@ -65,7 +65,7 @@ last_modified_at: 2026-10-09
 |quote| TRUE면 모든 값과 열 이름에 "로 수식 (default). FALSE면 큰따옴표 생략|
 |sep| 구분자 지정|
 
-- `row.names=FALSE` : 인덱스를 반환 X
+- `row.names=FALSE` : 행 번호(인덱스)를 파일에 기록하지 않는다.
 
 **3. TSV 파일**
 
@@ -73,16 +73,16 @@ last_modified_at: 2026-10-09
 
 **4. EXCEL 파일**
 
-- `read_excel(path)` : 엑셀 파일로부터 데이터를 읽을 때 사용하는 함수
-- `install.packages("readxl")` 설치해야함
-- `path` : 읽어 들일 파일명을 설정함
+- `read_excel(path)` : 엑셀 파일로부터 데이터를 읽을 때 사용하는 함수[^2]
+- `install.packages("readxl")` : 엑셀 파일 로드를 위해 패키지 설치가 필요하다.
+- `path` : 읽어 들일 파일 경로를 설정한다.
 - `write.xlsx(x, file,...)` : 엑셀 파일로 저장할 때 사용하는 함수
 
 
 ## 1. 데이터 전처리 작업
 ## plyr 패키지
 
-- plyr 패키지는 원본 데이터를 분석하기 쉬운 형태로 나눠서 다시 새로운 형태로 만들어 주는 패키지이다.
+- plyr 패키지는 원본 데이터를 분석하기 쉬운 형태로 나눠서 다시 새로운 형태로 만들어 주는 패키지이다.[^3]
 - plyr 패키지의 함수들은 데이터 분할(split), 원하는 방향으로 특정 함수 적용(apply), 그 결과를 재조합(combine)하여 반환한다.
 - plyr 패키지 함수는 ##ply 형태이고, 첫 번째 글자는 입력 데이터의 형태, 두 번째 글자는 출력 데이터의 형태를 의미한다.
 - **(data frame == d), (list == l), (array == a)**
@@ -90,7 +90,7 @@ last_modified_at: 2026-10-09
 
 ## dplyr 패키지 
 
-- 데이터 전처리는 분석에 적합하도록 데이터를 가공하는 작업이다.
+- 데이터 전처리는 분석에 적합하도록 데이터를 가공하는 작업이다.[^4]
 - 데이터 일부를 추출하거나 종류별로 나누거나, 여러 데이터를 합치는 등의 데이터 가공을 통하여 분석 작업을 최적화할 수 있다.
 
 **dplyr 패키지의 주요 함수**
@@ -115,7 +115,7 @@ last_modified_at: 2026-10-09
 
 - `데이터 프레임 이름 %>% select(선택할 변수명, -제외할 변수명)`
   - `ctrl + shift + m` 단축키 : `%>%`
-  - `%>%` : 파이프 연산자라고 읽고, 함수들을 연결하는 기능을 한다. 이 기호를 사용하면 그 앞에 나온 데이터를 계속해서 사용하겠다는 의미.
+  - `%>%` : 파이프 연산자라고 읽고, 함수들을 연결하는 기능을 한다. 선행 연산의 결과를 후행 함수의 첫 번째 인수로 전달한다.
 
 ```R
 library(dplyr)
@@ -196,7 +196,7 @@ iris %>%
 
 ### count()
 
-- `count(데이터프레임명, 변수명)`
+- `count(데이터프레임명, 변수명)` : 데이터의 빈도수를 산출한다.
 
 
 ### arrange()
@@ -298,19 +298,26 @@ bind_cols(x, y)
 
 ### is.na()
 
-- 결측치 여부 확인
+- 결측치 여부 확인 함수다.[^5]
 - 결측치가 있으면 TRUE, 결측치가 없으면 FALSE를 반환한다.
 
 
 ### na.omit()
 
-- 결측치 제거
-- **행** 단위로 어떤 결측치라도 있으면 이 행을 제거하고 남은 데이터를 반환
+- 결측치 제거 함수다.
+- **행** 단위로 어떤 결측치라도 있으면 해당 행을 제거하고 완전한 케이스(complete cases)만 반환한다.
 
 
 ### 결측값을 다른 값으로 대체
 
 - `dataset$var[is.na(dataset$var)] <- new_value`
+
+
+## 한계 및 주의사항
+
+- **인메모리 처리 한계**: R의 기본 데이터 객체(`data.frame`)는 모든 데이터를 물리 메모리(RAM)에 상주시켜 처리하므로, 가용 RAM 용량을 초과하는 대용량 데이터셋 적재 시 메모리 부족(OOM) 오류가 발생한다.
+- **단일 스레드 기본 동작**: base R 및 기본 `dplyr` 연산은 기본적으로 단일 CPU 코어(단일 스레드)에서 순차 실행되므로 수백만 행 이상의 대규모 데이터 병합이나 그룹 집계 시 연산 병목이 발생할 수 있다.
+- **실기 시험 환경의 자원 제약**: 빅데이터분석기사 실기 클라우드 시험 환경은 세션당 메모리(보통 1~2GB 내외)와 실행 시간(최대 1분 내외)에 엄격한 타임아웃 제한이 있으므로, 불필요한 전체 열 로딩을 피하고 `read.csv()` 호출 시 필요한 열만 지정하거나 전처리 중간 객체를 적절히 정리(`rm()`, `gc()`)해야 한다.
 
 
 ## References
@@ -320,3 +327,9 @@ bind_cols(x, y)
 - [Do it! 쉽게 배우는 R 데이터 분석](https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=113509180)  
 - [[R 데이터분석] 조인(join) 을 이용하여 데이터 병합하기](https://jobmanager1.tistory.com/54)
 - [R, Python 분석과 프로그래밍의 친구 (by R Friend)](https://rfriend.tistory.com/34 )
+
+[^1]: [R Core Team, "R Data Import/Export: Importing from other programs", CRAN](https://cran.r-project.org/doc/manuals/r-release/R-data.html)
+[^2]: [Hadley Wickham and Jennifer Bryan, "readxl: Read Excel Files", CRAN](https://cran.r-project.org/package=readxl)
+[^3]: [Hadley Wickham, "plyr: Tools for Splitting, Applying and Combining Data", CRAN](https://cran.r-project.org/package=plyr)
+[^4]: [Hadley Wickham et al., "dplyr: A Grammar of Data Manipulation", CRAN](https://cran.r-project.org/package=dplyr)
+[^5]: [R Core Team, "The R Base Package: 'NA' and 'na.omit'", CRAN Manuals](https://stat.ethz.ch/R-manual/R-devel/library/base/html/NA.html)

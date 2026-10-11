@@ -7,14 +7,14 @@ tags : [R, 빅데이터 분석기사, 실기, 필답형, 자격증, dataq, 정�
 sidebar_main: false
 classes: wide
 
-last_modified_at: 2026-10-09
+last_modified_at: 2026-10-11
 ---
 
-빅데이터 분석기사 실기 대비 차원에서 쓴 글입니다. 기출문제의 데이터는 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis)에 데이터 셋을 남겨놨습니다.
+빅데이터 분석기사 실기 대비 차원에서 정리한 문제풀이다. 기출문제 데이터셋은 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis)에 수록했다.
 
-> **정답보기는 문제 왼쪽의 토글을 클릭합니다. ▶ 이거.**
+> **정답 확인은 문제 왼쪽의 토글(▶)을 클릭한다.**
 
-혹시 해당 글을 pdf로 받고 싶으신 분은 이메일과 함께 댓글로 남겨주세요~
+해당 글을 PDF로 받고자 하는 경우 이메일과 함께 댓글을 남겨두면 된다.
 
 ## 4단원. 빅데이터 결과해석
 
@@ -34,13 +34,13 @@ last_modified_at: 2026-10-09
 
 <details>
     <summary>혼동 행렬을 통한 분류 모형의 평가지표 중에서 실제 분류 범주를 정확하게 예측한 비율로 전체 예측에서 참 긍정(TP)과 참 부정(TN)이 차지하는 비율</summary>
-    정답: 정확도 $(TP+TN)/(TP+FP+TN+FN)$
+    정답: 정확도 $(TP+TN)/(TP+FP+TN+FN)$[^1]
 </details>
 ### 4.
 
 <details>
     <summary>(   )은/는 혼동 행렬을 통한 분류 모형의 평가지표중에서 실제로 '긍정'인 범주 중에서 '긍정'으로 올바르게 예측(TP)한 비율로 Hit Rate로도 지칭한다.괄호( )안에 들어갈 용어를 쓰시오.</summary>
-    정답: 재현율(Recall)(TR rate) or 민감도(Sensitivity)   $TP/(TP+FN)$
+    정답: 재현율(Recall)(TP rate) or 민감도(Sensitivity)   $TP/(TP+FN)$
 </details>
 ### 5.
 
@@ -64,7 +64,7 @@ last_modified_at: 2026-10-09
 
 <details>
     <summary>()은/는 혼동 행렬을 통한 분류 모형의 평가지표 중에서 정밀도와 민감도(재현율)를 하나로 합한 성능평가 지표로 0~1 사이의 범위를 가진다. 괄호()안에 들어갈 용어를 쓰시오.</summary>
-    정답: F1-Score(F-Measure) $2*(Prcision* Recall)/(Precision + Recall)$
+    정답: F1-Score(F-Measure) $2*(Precision* Recall)/(Precision + Recall)$
 </details>
 ### 9.
 
@@ -76,7 +76,7 @@ last_modified_at: 2026-10-09
 
 <details>
     <summary>가로축(x)을 혼동 행렬의 거짓 긍정률(FP Rate)로 두고 세로축(y)을 참 긍정률(TP Rate)로 두어 시각화한 그래프이다. 그래프가 왼쪽 꼭대기에 가깝게 그려질수록 분류 성능이 우수하다. </summary>
-    정답: ROC 곡선
+    정답: ROC 곡선[^2]
 </details>
 ### 11.
 
@@ -112,7 +112,7 @@ last_modified_at: 2026-10-09
 
 <details>
     <summary>주어진 자료에서 단순 랜덤 복원 추출 방법을 활용하여 동일한 크기의 표본을 여러 개 생성하는 샘플링 방법  무작위 복원 추출 방법으로, 전체 데이터에서 중복을 허용하여 데이터 크기만큼 샘플을 추출하고 이를 훈련 데이터(Training Set)로 한다.</summary>
-    정답: 부트스트랩(Bootstrap)
+    정답: 부트스트랩(Bootstrap)[^3]
 </details>
 ### 17.
 
@@ -154,7 +154,7 @@ last_modified_at: 2026-10-09
 
 <details>
     <summary>그래프를 이용하여 정규성 가정을 시각적으로 검정하는 방법이다.   대각선 참조선을 따라서 값들이 분포하게 되면 정규성 가정을 만족한다고 할 수 있다.   한쪽으로 치우치는 모습이라면 정규성 가정에 위배되었다고 볼 수 있다. </summary>
-    정답: Q-Q Plot
+    정답: Q-Q Plot[^4]
 </details>
 ### 24.
 
@@ -178,7 +178,7 @@ last_modified_at: 2026-10-09
 
 <details>
     <summary>과대 적합 방지방안 중 가중치 규제는 개별 가중치 값을 제한하여 복합한 모델을 좀 더 간단하게 하는 방법이다. 가중치 규제 중 ()은/는 기존 비용 함수에 모든 가중치 w들의 절댓값 합계를 추가하여 값이 최소가 되도록하는 방법이다. 괄호 ( )안에 들어갈 용어를 쓰시오.</summary>
-    정답: 라쏘(Lasso) 또는 L1 노름 규제
+    정답: 라쏘(Lasso) 또는 L1 노름 규제[^5]
 </details>
 ### 28.
 
@@ -238,7 +238,7 @@ last_modified_at: 2026-10-09
 
 <details>
     <summary>( )은/는 의사결정나무(Decision Tree)를 개별 모형으로 사용하는 모형 결합 방법으로 모든 독립변수를 비교하여 최선의 독립변수를 선택하는 것이 아니라 독립변수 차원을 랜덤하게 감소시킨 다음 그중에서 독립변수를 선택한다. 괄호 ( ) 안에 들어갈 단어는 무엇인가?</summary>
-    정답: 랜덤 포레스트(random forest)
+    정답: 랜덤 포레스트(random forest)[^6]
 </details>
 ### 38.
 
@@ -261,7 +261,7 @@ last_modified_at: 2026-10-09
 ### 41.
 
 <details>
-    <summary>( )은/는 분류에 따른 변화를 최대, 최소, 전체 분포 등으로 구분하는 방법으로 전체에서 부분 간 관계를 설명하낟. 종류에는 파이 차트, 도넛 차트, 트리맵, 누적 영역 차트가 있다. 괄호 ( )안에 들어갈 용어를 쓰시오.</summary>
+    <summary>( )은/는 분류에 따른 변화를 최대, 최소, 전체 분포 등으로 구분하는 방법으로 전체에서 부분 간 관계를 설명한다. 종류에는 파이 차트, 도넛 차트, 트리맵, 누적 영역 차트가 있다. 괄호 ( )안에 들어갈 용어를 쓰시오.</summary>
     정답: 분포 시각화
 </details>
 ### 42.
@@ -291,14 +291,14 @@ last_modified_at: 2026-10-09
 ### 46.
 
 <details>
-    <summary>( )은/는 특정 시점의 투자금액과 매출금액의 차이를 이자율을 고려하여 계산한 값으로 예상 투자비용의 할인가치를 예쌍 수익의 할인가치에서 공제했을 때, 나온 값을 합한 금액(미래시점의 순이익 규모)이다. 괄호 ( )안에 들어갈 용어를 쓰시오.</summary>
+    <summary>( )은/는 특정 시점의 투자금액과 매출금액의 차이를 이자율을 고려하여 계산한 값으로 예상 투자비용의 할인가치를 예상 수익의 할인가치에서 공제했을 때, 나온 값을 합한 금액(미래시점의 순이익 규모)이다. 괄호 ( )안에 들어갈 용어를 쓰시오.</summary>
     정답: 순 현재가치(NPV)
 </details>
 ### 47.
 
 <details>
     <summary>비즈니스 기여도 평가지표 중 순 현재가치를 "0"으로 만드는 할인율(연 단위 기대수익 규모)은 무엇인가?</summary>
-    정답: 내부 수익률(IPR)
+    정답: 내부 수익률(IRR)
 </details>
 ### 48.
 
@@ -306,6 +306,25 @@ last_modified_at: 2026-10-09
     <summary>누계 투자금액과 매출금액의 합이 같아지는 기간이다. 프로젝트의 시작 시점부터 누적 현금흐름이 흑자로 돌아서는 시점까지의 기간(흑자 전환 시점)이다.</summary>
     정답: 투자 회수 기간(PP)
 </details>
+## 한계 및 주의사항
+
+- **인메모리 연산 한계**: R은 모든 작업 데이터와 모델 객체를 메모리(RAM)에 직접 적재하여 처리하므로, 대용량 데이터셋 평가나 반복적인 리샘플링(부트스트랩, 교차 검증) 수행 시 메모리 부족(OOM) 오류가 발생하기 쉽다.
+- **단일 스레드 기본 동작**: R 런타임 및 주요 통계 패키지(`stats`, `caret` 기본값)는 단일 CPU 코어에서 순차 실행되므로, 대규모 하이퍼파라미터 튜닝이나 앙상블 학습 시 연산 지연이 발생할 수 있다.
+- **실기 시험 환경의 자원 및 타임아웃 제약**: 빅데이터분석기사 실기 클라우드 응시 환경은 메모리와 스크립트 실행 시간(통상 수 분 이내)이 제한되므로, 시험 환경 내에서는 불필요한 객체 정리(`rm()`, `gc()`)와 실행 시간 최적화가 필수적이다.
+
 ## References
 
 - [2022 수제비 빅데이터분석기사 실기 (필답형+작업형)](https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=281447264)
+- [Max Kuhn, "caret: Classification and Regression Training (confusionMatrix)," CRAN Package caret](https://cran.r-project.org/package=caret)
+- [Xavier Robin et al., "pROC: Display and Analyze ROC Curves," CRAN Package pROC](https://cran.r-project.org/package=pROC)
+- [Angelo Canty and Brian Ripley, "boot: Bootstrap Functions," CRAN Package boot](https://cran.r-project.org/package=boot)
+- [R Core Team, "Quantile-Quantile Plots (qqnorm, qqline)," R stats package reference manual, CRAN](https://stat.ethz.ch/R-manual/R-patched/library/stats/html/qqnorm.html)
+- [Jerome Friedman, Trevor Hastie, and Rob Tibshirani, "glmnet: Lasso and Elastic-Net Regularized Generalized Linear Models," CRAN Package glmnet](https://cran.r-project.org/package=glmnet)
+- [Leo Breiman and Adele Cutler, "randomForest: Breiman and Cutler's Random Forests for Classification and Regression," CRAN Package randomForest](https://cran.r-project.org/package=randomForest)
+
+[^1]: [Max Kuhn, "caret: Classification and Regression Training (confusionMatrix)," CRAN Package caret](https://cran.r-project.org/package=caret)
+[^2]: [Xavier Robin et al., "pROC: Display and Analyze ROC Curves," CRAN Package pROC](https://cran.r-project.org/package=pROC)
+[^3]: [Angelo Canty and Brian Ripley, "boot: Bootstrap Functions," CRAN Package boot](https://cran.r-project.org/package=boot)
+[^4]: [R Core Team, "Quantile-Quantile Plots (qqnorm, qqline)," R stats package reference manual, CRAN](https://stat.ethz.ch/R-manual/R-patched/library/stats/html/qqnorm.html)
+[^5]: [Jerome Friedman, Trevor Hastie, and Rob Tibshirani, "glmnet: Lasso and Elastic-Net Regularized Generalized Linear Models," CRAN Package glmnet](https://cran.r-project.org/package=glmnet)
+[^6]: [Leo Breiman and Adele Cutler, "randomForest: Breiman and Cutler's Random Forests for Classification and Regression," CRAN Package randomForest](https://cran.r-project.org/package=randomForest)

@@ -9,10 +9,10 @@ toc_sticky: true
 sidebar_main: false
 classes: wide
 
-last_modified_at: 2026-10-10
+last_modified_at: 2026-10-11
 ---
 
-빅데이터 분석기사 실기(작업형 제1유형) 대비 차원에서 정리한 21개 실전 문제 풀이 모음입니다. 기출문제 및 실습 데이터는 [GitHub 저장소(BigDataAnalysis)](https://github.com/ingu627/BigDataAnalysis)에 업로드되어 있으며, 전체 R 코드는 `sujebi_1.R`과 `sujebi_2.R`에 수록되어 있습니다.
+빅데이터 분석기사 실기(작업형 제1유형) 대비 차원에서 정리한 21개 실전 문제 풀이 모음이다[^1]. 기출문제 및 실습 데이터는 [GitHub 저장소(BigDataAnalysis)](https://github.com/ingu627/BigDataAnalysis)에 업로드되어 있으며, 전체 R 코드는 `sujebi_1.R`과 `sujebi_2.R`에 수록되어 있다.
 
 > 2021.12.31 : 제 3회 빅데이터 분석기사 실기를 합격했습니다. [빅데이터 분석기사(R)](https://ingu627.github.io/categories/R_ML) 시리즈를 보시고 도움이 되길 바랍니다.
 
@@ -45,7 +45,7 @@ last_modified_at: 2026-10-10
 
 ## 1. airquality
 
-- airquality 데이터 세트에서 Solar.R에 결측값이 있는 행을 제거하고, Ozone 항목의 결측값을 중앙값으로 대체한 후 중앙값으로 대체하기 이전과 이후의 Ozone의 표준편차의 차이를 구하시오.
+- airquality 데이터 세트[^2]에서 Solar.R에 결측값이 있는 행을 제거하고, Ozone 항목의 결측값을 중앙값으로 대체한 후 중앙값으로 대체하기 이전과 이후의 Ozone의 표준편차의 차이를 구하시오. 전처리 파이프라인에는 dplyr 패키지[^3]를 활용한다.
 
 ```R
 data(airquality)
@@ -194,7 +194,7 @@ print(result) # 1663.995
 
 ## 7. cats
 
-- 심장의 무게(Hwt)의 이상값의 평균을 구하시오. (단, MASS 패키지의 cats 데이터 세트를 사용하고, 이상값은 평균에서 1.5배 표준편차를 벗어나는 값으로 한다.) (cats 데이터 세트는 MASS 라이브러리에 있음)
+- 심장의 무게(Hwt)의 이상값의 평균을 구하시오. (단, MASS 패키지[^4]의 cats 데이터 세트를 사용하고, 이상값은 평균에서 1.5배 표준편차를 벗어나는 값으로 한다.)
 
 ```R
 # install.packages('MASS')
@@ -284,7 +284,7 @@ print(result) # 2745
 
 ---
 
-앞서 1번부터 10번 문제까지 결측값 처리, 이상값 탐지, 분위수 분할 등 기본적인 전처리 유형을 연습해보았습니다. 이어서 11번부터 21번 문제에서는 조건부 인덱싱, 파생 변수 생성, 집계 함수(`group_by`, `summarise`) 활용 등 보다 다양한 실전 패턴을 다룹니다.
+앞서 1번부터 10번 문제까지 결측값 처리, 이상값 탐지, 분위수 분할 등 기본적인 전처리 유형을 다루었다. 이어서 11번부터 21번 문제에서는 조건부 인덱싱, 파생 변수 생성, 집계 함수(`group_by`, `summarise`) 활용 등 실전 분석 패턴을 다룬다.
 
 ---
 
@@ -367,7 +367,7 @@ print(result) # 25.11084
 
 ## 16. iris
 
-- iris 데이터 세트에서 Species가 virginica인 항목에서 Sepal.Length가 6보다 크면 1, 아니면 0으로 파생 컬럼 Len을 생성 후 Len 컬럼의 sum 값을 구하시오
+- iris 데이터 세트에서 Species가 virginica인 항목에서 Sepal.Length가 6보다 크면 1, 아니면 0으로 파생 컬럼 Len을 생성 후 Len 컬럼의 sum 값을 구하시오.
 
 ```R
 data(iris)
@@ -528,11 +528,18 @@ print(abs(total_sd - top3_sd)) # 1101.796
 
 ## 핵심 정리
 
-- **결측값 대체**: `is.na()`와 `ifelse()`를 조합하여 평균(`mean()`) 또는 중앙값(`median()`)으로 결측값을 채우고, 전후 통계량(표준편차, 중앙값 등) 변화를 정확히 계산합니다.
-- **이상값 탐지**: IQR의 n배수(`IQR()`) 혹은 표준편차 배수(`mean ± k * sd`) 기준을 바탕으로 논리 필터링(`filter()`)을 수행합니다.
-- **조건부 데이터 분할**: 인덱싱(`nrow() * ratio`) 및 `slice`/행 선택을 통해 훈련·검증 데이터를 나누고 상위 n개 관측치를 추출합니다.
-- **파생 변수 및 변환**: `mutate()`와 조건문을 활용해 특정 기준 초과 여부를 이진 플래그(0/1)나 그룹화 값으로 변환합니다.
-- **그룹 집계 및 정렬**: `group_by() %>% summarise()`와 `arrange(desc())`를 활용하여 상위 빈도 품목이나 그룹별 통계량을 신속하게 산출합니다.
+- **결측값 대체**: `is.na()`와 `ifelse()`를 조합하여 평균(`mean()`) 또는 중앙값(`median()`)으로 결측값을 채우고, 전후 통계량(표준편차, 중앙값 등) 변화를 정확히 계산한다.
+- **이상값 탐지**: IQR의 n배수(`IQR()`) 혹은 표준편차 배수(`mean ± k * sd`) 기준을 바탕으로 논리 필터링(`filter()`)을 수행한다.
+- **조건부 데이터 분할**: 인덱싱(`nrow() * ratio`) 및 `slice`/행 선택을 통해 훈련·검증 데이터를 나누고 상위 n개 관측치를 추출한다.
+- **파생 변수 및 변환**: `mutate()`와 조건문을 활용해 특정 기준 초과 여부를 이진 플래그(0/1)나 그룹화 값으로 변환한다.
+- **그룹 집계 및 정렬**: `group_by() %>% summarise()`와 `arrange(desc())`를 활용하여 상위 빈도 품목이나 그룹별 통계량을 산출한다.
+
+---
+## 한계 및 주의사항
+
+- **인메모리 처리 제약**: R은 기본적으로 모든 작업 객체를 RAM에 적재하여 연산하므로, 데이터 크기가 가용 메모리에 근접하면 복사본 생성(Copy-on-Modify) 과정에서 메모리 초과 오류가 발생할 수 있다.
+- **단일 스레드 기본 동작**: R 기본 런타임과 표준 통계 연산은 단일 스레드로 실행되므로, 대규모 정렬 및 반복 작업 시 멀티코어 병렬 처리가 기본적으로 적용되지 않는다.
+- **실기 시험 환경 자원 제약**: 빅데이터분석기사 실기 클라우드 응시 환경은 실행 시간(세션당 제한 시간)과 메모리 할당량이 엄격히 제한되어 있으므로, 불필요한 중간 객체 생성을 피하고 벡터화 연산과 간결한 파이프라인(`%>%`)을 구성해야 한다[^5].
 
 ---
 
@@ -540,3 +547,9 @@ print(abs(total_sd - top3_sd)) # 1101.796
 
 - [2022 수제비 빅데이터분석기사 실기 (필답형+작업형)](https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=281447264)
 - [BigDataAnalysis GitHub Repository](https://github.com/ingu627/BigDataAnalysis)
+
+[^1]: R Core Team, "An Introduction to R: Notes on R: A Programming Environment for Data Analysis and Graphics", R Foundation for Statistical Computing. <https://cran.r-project.org/doc/manuals/r-release/R-intro.html>
+[^2]: R Core Team, "datasets: The R Datasets Package (airquality)", R Documentation. <https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/airquality.html>
+[^3]: Hadley Wickham, Romain François, Lionel Henry, Kirill Müller, "dplyr: A Grammar of Data Manipulation", CRAN Package Reference Manual. <https://cran.r-project.org/package=dplyr>
+[^4]: Brian Ripley, Bill Venables, "MASS: Support Functions and Datasets for Venables and Ripley's MASS", CRAN Package Reference Manual. <https://cran.r-project.org/package=MASS>
+[^5]: 한국데이터산업진흥원(K-DATA), "빅데이터분석기사 실기시험 안내 및 응시 환경 가이드". <https://www.dataq.or.kr>

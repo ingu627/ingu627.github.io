@@ -7,16 +7,14 @@ tags : [R, 빅데이터 분석기사, 실기, 필답형, 자격증, dataq, 정�
 sidebar_main: false
 classes: wide
 
-last_modified_at: 2026-10-09
+last_modified_at: 2026-10-11
 ---
 
-빅데이터 분석기사 실기 대비 차원에서 쓴 글입니다. 기출문제의 데이터는 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis)에 데이터 셋을 남겨놨습니다.
+빅데이터분석기사 실기 대비를 위해 정리한 필답형 문제 풀이다. 1단원 빅데이터 분석 기획 영역의 핵심 개념인 데이터 수집·저장·적재 기술, 분산 파일 시스템, 데이터 전처리 및 거버넌스 기법을 정리한다[^kdata-exam]. 실무 및 실기 데이터 분석 작업은 R 내장 패키지(`base`, `stats`, `graphics`)[^r-intro]와 CRAN의 공식 패키지 생태계[^r-cran]를 바탕으로 수행할 수 있다. 기출 연습용 데이터셋은 [github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis)에 남겨두었다.
 
-> **정답보기는 문제 왼쪽의 토글을 클릭합니다. ▶ 이거.**
+> **정답 확인은 문제 왼쪽의 토글(▶)을 클릭한다.**
 
-혹시 해당 글을 pdf로 받고 싶으신 분은 이메일과 함께 댓글로 남겨주세요~
-
-2021년 제 3회 빅데이터분석기사 실기를 대비해 정리한 필답형 46문제 풀이 중 첫 번째 글이다. 이 글은 1단원 빅데이터 분석 기획에 해당하는 문제와 정답을 담고 있다.
+> PDF 자료가 필요한 경우 댓글로 문의한다.
 
 ## 1단원. 빅데이터 분석 기획
 
@@ -114,7 +112,7 @@ last_modified_at: 2026-10-09
 ### 14.
 
 <details>
-    <summary>W3C에서 개발된. SGML 문서 형식을 가진, 다른 특수한 목적을 갖는 마크업 언어를 만드는 데 사용하는 다목적 마크업 언어는 무엇인가?</summary>
+    <summary>W3C에서 개발된 SGML 문서 형식을 가진, 다른 특수한 목적을 갖는 마크업 언어를 만드는 데 사용하는 다목적 마크업 언어는 무엇인가?</summary>
     정답: XML
 </details>
 
@@ -150,7 +148,7 @@ last_modified_at: 2026-10-09
 
 <details>
     <summary>()은/는 데이터를 정해진 구간 내에 들도록 하는 기법으로 최단 근접 분류와 군집화와 같은 거리 측정 등을 위해 특히 유용하다. 괄호 ()안에 들어갈 변환 기술을 쓰시오.</summary>
-    정답: 정규화
+    정답: 정규화[^r-scale]
 </details>
 
 ### 20.
@@ -198,7 +196,7 @@ last_modified_at: 2026-10-09
 ### 26.
 
 <details>
-    <summary>빅데이터 저장을 위한 분산 파이 시스템 중에서 구글의 대규모 클러스터 서비스 플랫폼의 기반이 되는 파일 시스템으로 파일을 고정된 크기(64MB)의 청크들로 나누고, 청크와 여러 개의 복제폰을 청크 서버에 분산하여 저장하는 시스템은?</summary>
+    <summary>빅데이터 저장을 위한 분산 파일 시스템 중에서 구글의 대규모 클러스터 서비스 플랫폼의 기반이 되는 파일 시스템으로 파일을 고정된 크기(64MB)의 청크들로 나누고, 청크와 여러 개의 복제본을 청크 서버에 분산하여 저장하는 시스템은?</summary>
     정답: 구글 파일 시스템 (GFS; Google File System)
 </details>
 
@@ -206,7 +204,7 @@ last_modified_at: 2026-10-09
 
 <details>
     <summary>수십 테라바이트 또는 페타바이트 이상의 대용량 파일을 분산된 서버에 저장하고, 그 저장된 데이터를 빠르게 처리할 수 있게 하는 분산 파일 시스템은 무엇인가?</summary>
-    정답: 하둡 분산 파일 시스템 (HDFS; Haddop Distributed File System)
+    정답: 하둡 분산 파일 시스템 (HDFS; Hadoop Distributed File System)
 </details>
 
 ### 28.
@@ -226,7 +224,7 @@ last_modified_at: 2026-10-09
 ### 30.
 
 <details>
-    <summary>다음은 NoSQL의 유형에 대한 설명이다. 괄호 ()안에 들어갈 유형을 쓰시오.   시맨틱 웹과 온톨로지 분야에서 활용되는 그래프로 데이터를 표현하는 DB로 Neo4j, AllegroGrpah 등의 제품이 있는 NoSQL의 유형은 ()이다.</summary>
+    <summary>다음은 NoSQL의 유형에 대한 설명이다. 괄호 ()안에 들어갈 유형을 쓰시오.   시맨틱 웹과 온톨로지 분야에서 활용되는 그래프로 데이터를 표현하는 DB로 Neo4j, AllegroGraph 등의 제품이 있는 NoSQL의 유형은 ()이다.</summary>
     정답: Graph Store
 </details>
 
@@ -241,7 +239,7 @@ last_modified_at: 2026-10-09
 
 <details>
     <summary>()은/는 표로 되어 있는 도수 분포를 정보 그림으로 나타낸 것으로 도수분포표를 그래프로 표현한 형태이다.</summary>
-    정답: 히스토그램
+    정답: 히스토그램[^r-hist]
 </details>
 
 ### 33.
@@ -262,7 +260,7 @@ last_modified_at: 2026-10-09
 
 <details>
     <summary>오픈 소스 소프트웨어로 제작된 컬럼 기반 스토리지로 아파치 하둡 환경의 데이터 처리 프레임워크 대부분과 호환이 가능하고 특정 컬럼에 대한 데이터 읽기를 고속화할 수 있는 특징이 있는 하둡 에코 시스템은 무엇인가?</summary>
-    정답: 쿠두 (Kudo)
+    정답: 쿠두 (Kudu)
 </details>
 
 ### 36.
@@ -317,7 +315,7 @@ last_modified_at: 2026-10-09
 ### 43.
 
 <details>
-    <summary>()은/는 하둡 작업을 관리하는 워크플로우 및 코디 네이터 시스템으로 자바 서블릿 컨테이너에서 실행되는 자바 웹 애플리케이션 서버로 맵리듀스나 피그와 같은 특화된 액션들로 구성된 워크플로우를 제어한다. 괄호 ()안에 들어갈 가장 정확한 하둡 에코 시스템은 무엇인가?</summary>
+    <summary>()은/는 하둡 작업을 관리하는 워크플로우 및 코디네이터 시스템으로 자바 서블릿 컨테이너에서 실행되는 자바 웹 애플리케이션 서버로 맵리듀스나 피그와 같은 특화된 액션들로 구성된 워크플로우를 제어한다. 괄호 ()안에 들어갈 가장 정확한 하둡 에코 시스템은 무엇인가?</summary>
     정답: 우지 (Oozie)
 </details>
 
@@ -338,11 +336,30 @@ last_modified_at: 2026-10-09
 ### 46.
 
 <details>
-    <summary>데이터베이스 시스템에서 하나의 논리적 기능을 정상적을 수행하기 위한 작업의 기본 단위를 무엇이라고 하는가?</summary>
+    <summary>데이터베이스 시스템에서 하나의 논리적 기능을 정상적으로 수행하기 위한 작업의 기본 단위를 무엇이라고 하는가?</summary>
     정답: 트랜잭션(Transaction)
 </details>
 
 
+## 한계 및 주의사항
+
+- **인메모리 처리 한계**: R은 데이터를 기본적으로 메모리(RAM)에 적재하여 연산하는 인메모리 아키텍처를 채택하므로[^r-memory], 대규모 데이터셋 처리 시 물리 메모리 부족(OOM) 오류가 발생할 수 있다.
+- **단일 스레드 기본 동작**: R의 기본 인터프리터 및 주요 내장 통계 함수는 기본적으로 단일 스레드로 동작하므로, 대용량 데이터의 전처리나 반복 연산 시 심각한 연산 병목이 발생할 수 있다.
+- **실기 시험 환경의 자원 및 시간 제약**: 빅데이터분석기사 실기 시험 환경은 메모리 할당량과 실행 제한 시간(통상 수 분 이내 타임아웃)이 엄격하게 제한되므로, 불필요한 데이터 객체 복사를 줄이고 벡터화 연산을 활용해 제한 시간 내에 안정적으로 실행되도록 구성해야 한다.
+
 ## References
 
 - [2022 수제비 빅데이터분석기사 실기 (필답형+작업형)](https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=281447264)
+- [한국데이터산업진흥원(K-DATA), 빅데이터분석기사 자격검정 출제기준](https://www.dataq.or.kr/www/sub/a_07.do)
+- [The Comprehensive R Archive Network (CRAN)](https://cran.r-project.org/)
+- [R Core Team, "An Introduction to R", CRAN](https://cran.r-project.org/doc/manuals/r-release/R-intro.html)
+- [R Core Team, "Memory Use in R", R Administration and Installation Manual, CRAN](https://cran.r-project.org/doc/manuals/r-release/R-admin.html)
+- [R Core Team, "scale: Scaling and Centering of Matrix-like Objects", R base package, CRAN](https://stat.ethz.ch/R-manual/R-patched/library/base/html/scale.html)
+- [R Core Team, "hist: Histograms", R graphics package, CRAN](https://stat.ethz.ch/R-manual/R-patched/library/graphics/html/hist.html)
+
+[^kdata-exam]: [한국데이터산업진흥원(K-DATA), 빅데이터분석기사 자격검정 출제기준](https://www.dataq.or.kr/www/sub/a_07.do)
+[^r-intro]: [R Core Team, "An Introduction to R", CRAN](https://cran.r-project.org/doc/manuals/r-release/R-intro.html)
+[^r-cran]: [The Comprehensive R Archive Network (CRAN)](https://cran.r-project.org/)
+[^r-scale]: [R Core Team, "scale: Scaling and Centering of Matrix-like Objects", R base package, CRAN](https://stat.ethz.ch/R-manual/R-patched/library/base/html/scale.html)
+[^r-hist]: [R Core Team, "hist: Histograms", R graphics package, CRAN](https://stat.ethz.ch/R-manual/R-patched/library/graphics/html/hist.html)
+[^r-memory]: [R Core Team, "Memory Use in R", R Administration and Installation Manual, CRAN](https://cran.r-project.org/doc/manuals/r-release/R-admin.html)

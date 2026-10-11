@@ -7,14 +7,14 @@ tags : [R, 빅데이터 분석기사, 실기, 필답형, 자격증, dataq, 정�
 sidebar_main: false
 classes: wide
 
-last_modified_at: 2026-10-09
+last_modified_at: 2026-10-11
 ---
 
-빅데이터 분석기사 실기 대비 차원에서 쓴 글입니다. 기출문제의 데이터는 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis)에 데이터 셋을 남겨놨습니다.
+빅데이터분석기사 실기 대비를 위해 정리한 필답형 문제 풀이다. 2단원 빅데이터 탐색 영역의 핵심 개념인 데이터 정제, 결측값 대치, 이상값 탐지, 변수 선택 및 불균형 데이터 처리 기법을 정리한다[^kdata-exam]. 실무 및 실기 데이터 분석은 R 내장 통계 패키지(`stats`)[^r-stats] 및 CRAN의 공식 패키지 생태계[^r-cran]를 바탕으로 수행할 수 있다. 기출 연습용 데이터셋은 [github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis)에 정리해 두었다.
 
-> **정답보기는 문제 왼쪽의 토글을 클릭합니다. ▶ 이거.**
+> **정답 확인은 문제 왼쪽의 토글(▶)을 클릭한다.**
 
-> 혹시 해당 글을 pdf로 받고 싶으신 분은 이메일과 함께 댓글로 남겨주세요~
+> PDF 자료가 필요한 경우 댓글로 문의한다.
 
 ## 2단원. 빅데이터 탐색
 
@@ -42,7 +42,7 @@ last_modified_at: 2026-10-09
 ### 4.
 
 <details>
-    <summary>괄호 ()안에 들어갈 가장 정확한 용어를 쓰시오. ()은/는 데이터 일관성을 유지를 위한 정제 기법으로 데이터를 정제 규칙을 적용하기 위한 유의미한 최소 단위로 분할하는 작업이다.</summary>
+    <summary>괄호 ()안에 들어갈 가장 정확한 용어를 쓰시오. ()은/는 데이터 일관성 유지를 위한 정제 기법으로 데이터를 정제 규칙을 적용하기 위한 유의미한 최소 단위로 분할하는 작업이다.</summary>
     정답: 파싱(Parsing)
 </details>
 
@@ -155,7 +155,7 @@ last_modified_at: 2026-10-09
 
 <details>
     <summary>관측치 주변의 밀도와 근접한 관측치 주변의 밀도의 상대적인 비교를 통해 이상값을 탐색하는 기법은 무엇인가?</summary>
-    정답: LOF(Local Of Factor)
+    정답: LOF (Local Outlier Factor)
 </details>
 
 ### 21.
@@ -168,7 +168,7 @@ last_modified_at: 2026-10-09
 ### 22.
 
 <details>
-    <summary>데이터의 이상값 제거하기 위해서 상한값과 하한값을 벗어나는 값들을 하한, 상한값으로 바꾸어 활용하는 ()방법도 활용된다. 괄호 ()안에 들어갈 용어는 무엇인가?</summary>
+    <summary>데이터의 이상값을 제거하기 위해 상한값과 하한값을 벗어나는 값들을 하한, 상한값으로 바꾸어 활용하는 ()방법도 활용된다. 괄호 ()안에 들어갈 용어는 무엇인가?</summary>
     정답: 극단 값 조정
 </details>
 
@@ -288,8 +288,17 @@ last_modified_at: 2026-10-09
 
 <details>
     <summary>과대 표집(Over-sampling) 기법 중 소수 클래스에서 중심이 되는 데이터와 주변 데이터 사이에 가상의 직선을 만든 후, 그 위에 데이터를 추가하는 방법은 무엇인가?</summary>
-    정답: SMOTE (Synthetic Minority Over-sampling TEchnique)
+    정답: SMOTE (Synthetic Minority Over-sampling Technique)
 </details>
+
+## 한계 및 주의사항
+
+R은 모든 분석 데이터 객체를 RAM에 적재하여 연산하는 인메모리(in-memory) 아키텍처를 기본 구조로 채택하므로[^r-memory], 물리 메모리 용량을 초과하는 대규모 데이터셋 처리 시 메모리 부족(OOM) 오류가 발생하기 쉽다. 또한 기본 베이스 R 연산 및 다수 통계 함수는 단일 스레드로 동작하여 대용량 행렬 분해나 반복적인 재표본 추출 작업에서 심각한 연산 병목이 유발된다. 특히 빅데이터분석기사 실기 시험 검정 환경은 세션당 메모리 할당량(통상 수 GB 내외)과 실행 제한 시간(타임아웃)이 엄격히 적용되므로, 실기 코드 작성 시 불필요한 객체 복사를 지양하고 벡터화 연산과 선별적 데이터 정제 파이프라인을 구축해야 한다.
+
+[^kdata-exam]: 한국데이터산업진흥원(K-DATA), "빅데이터분석기사 자격검정 출제기준", [dataq.or.kr](https://www.dataq.or.kr/www/sub/a_07.do).
+[^r-stats]: R Core Team, "The R Stats Package", R Reference Manual, [CRAN Package Reference](https://cran.r-project.org/doc/manuals/r-release/R-intro.html).
+[^r-cran]: The Comprehensive R Archive Network, [CRAN Repository](https://cran.r-project.org/).
+[^r-memory]: R Core Team, "Memory Use in R", R Administration and Installation Manual, [CRAN Manuals](https://cran.r-project.org/doc/manuals/r-release/R-admin.html).
 
 ## References
 

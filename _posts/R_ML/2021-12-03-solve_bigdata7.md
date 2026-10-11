@@ -7,14 +7,14 @@ tags : [R, 빅데이터 분석기사, 실기, 필답형, 자격증, dataq, 정�
 sidebar_main: false
 classes: wide
 
-last_modified_at: 2026-10-09
+last_modified_at: 2026-10-11
 ---
 
-빅데이터 분석기사 실기 대비 차원에서 쓴 글입니다. 기출문제의 데이터는 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis)에 데이터 셋을 남겨놨습니다.
+빅데이터 분석기사 실기 대비 차원에서 정리한 문제풀이다. 기출문제 데이터셋은 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis)에 수록했다.
 
-> **정답보기는 문제 왼쪽의 토글을 클릭합니다. ▶ 이거.**
+> **정답 확인은 문제 왼쪽의 토글을 클릭한다. ▶ 이거.**
 
-혹시 해당 글을 pdf로 받고 싶으신 분은 이메일과 함께 댓글로 남겨주세요~
+해당 글을 PDF로 받고 싶다면 이메일과 함께 댓글로 남겨주세요.
 
 
 ## 3단원. 빅데이터 모델링
@@ -30,7 +30,7 @@ last_modified_at: 2026-10-09
 
 <details>
     <summary>하나 이상의 독립변수들이 종속변수에 미치는 영향을 추정할 수 있는 통계 기법을 무엇이라 하는가?</summary>
-    정답: 회귀 분석
+    정답: 회귀 분석[^1]
 </details>
 
 ### 3.
@@ -58,13 +58,13 @@ last_modified_at: 2026-10-09
 
 <details>
     <summary>( ) 알고리즘은 각 독립변수를 이분화하는 과정을 반복하여 이진 트리 형태를 형성함으로써 분류를 수행하는 방법이다.</summary>
-    정답: CART  CART 알고리즘은 지니 지수 또는 분산의 감소량을 이용하여 이분화(Binary Split)를 수행하는 알고리즘이다.
+    정답: CART[^2]  CART 알고리즘은 지니 지수 또는 분산의 감소량을 이용하여 이분화(Binary Split)를 수행하는 알고리즘이다.
 </details>
 
 ### 7.
 
 <details>
-    <summary>의사 결정 규칙을 트리구조로 도표화하여 분류와 예측을 수행하는 분석 방법 데이터들이 가진 속성들로부터 분할 기준 속성을 관별하고, 분할 기준 속성에 따라 트리 형태로 모델링하는 분류 예측 모델</summary>
+    <summary>의사 결정 규칙을 트리구조로 도표화하여 분류와 예측을 수행하는 분석 방법 데이터들이 가진 속성들로부터 분할 기준 속성을 판별하고, 분할 기준 속성에 따라 트리 형태로 모델링하는 분류 예측 모델</summary>
     정답: 의사결정나무  의사결정나무는 판별 분석, 회귀 분석 등과 같은 변수 모형을 분석하기 위해 사전에 이상값을 검색할 때 사용한다.
 </details>
 
@@ -79,7 +79,7 @@ last_modified_at: 2026-10-09
 
 <details>
     <summary>K개 소집단의 중심좌표를 이용하여 각 객체와 중심좌표 간의 거리를 산출하고, 가장 근접한 소집단에 배정한 후 해당 소집단의 중심좌표를 업데이트하는 방식으로 군집화하는 알고리즘은 무엇인가?</summary>
-    정답: K-평균 군집화 알고리즘
+    정답: K-평균 군집화 알고리즘[^3]
 </details>
 
 ### 10.
@@ -93,7 +93,7 @@ last_modified_at: 2026-10-09
 
 <details>
     <summary>의사결정나무의 특징인 분산이 크다는 점을 고려하여 배깅과 부스팅보다 더 많은 무작위성을 주어 약한 학습기들을 생성한 후 이를 선형 결합하여 최종 학습기를 만드는 방법은 무엇인가?</summary>
-    정답: 랜덤 포레스트
+    정답: 랜덤 포레스트[^4]
 </details>
 
 ### 12.
@@ -134,15 +134,15 @@ last_modified_at: 2026-10-09
 ### 17.
 
 <details>
-    <summary>절편만 있는 상수 모형붙 시작해 중요하다고 생각되는 설명변수를 차례로 모형에 추가하는 변수 선택 기법은 무엇인가?</summary>
+    <summary>절편만 있는 상수 모형부터 시작해 중요하다고 생각되는 설명변수를 차례로 모형에 추가하는 변수 선택 기법은 무엇인가?</summary>
     정답: 전진 선택법
 </details>
 
 ### 18.
 
 <details>
-    <summary>의사결정나무의 분석 과정 중 분석의 목적과 자료구조에 따라서 적절한 분리 규칙(Spliting Rule)을 찾아서 나무를 성장시키는 과정으로 적절한 정지 규칙(Stopping Rule)을 만족하면 중단하는 단계는 무엇인가?</summary>
-    정답: 의사결정나무 성장 
+    <summary>의사결정나무의 분석 과정 중 분석의 목적과 자료구조에 따라서 적절한 분리 규칙(Splitting Rule)을 찾아서 나무를 성장시키는 과정으로 적절한 정지 규칙(Stopping Rule)을 만족하면 중단하는 단계는 무엇인가?</summary>
+    정답: 의사결정나무 성장
 </details>
 
 ### 19.
@@ -156,7 +156,7 @@ last_modified_at: 2026-10-09
 
 <details>
     <summary>가지치기를 사용할 때 학습자료를 사용 목표변수가 반드시 범주형이어야 하며, 불순도의 측도로는 엔트로피 지수(Entropy Index) 사용 CART와는 다르게 각 마디에서 다지 분리(Multiple Split)가 가능하며 범주형 입력변수에 대해서는 범주의 수만큼 분리가 일어남</summary>
-    정답: C4.5와 C5.0  C4.5는 ID3 알고리즘의 단점을 보완하고 새로운 기능을 추가한 알고리즘이다. 수치형 속성 처리, 결측치 처리, 속성선택 시 Branch의 수에 대한 가중치 적용, 가지치기(Prunning) 등의 기능을 추가하였다.
+    정답: C4.5와 C5.0  C4.5는 ID3 알고리즘의 단점을 보완하고 새로운 기능을 추가한 알고리즘이다. 수치형 속성 처리, 결측치 처리, 속성선택 시 Branch의 수에 대한 가중치 적용, 가지치기(Pruning) 등의 기능을 추가하였다.
 </details>
 
 ### 21.
@@ -215,14 +215,14 @@ last_modified_at: 2026-10-09
 ### 28.
 
 <details>
-    <summary>()은/는 벡터 공간에서 훈련 데이터가 속한 2개의 그룹을 분류하기 위해 선형 분리자를 찾는 지도 학습 모델이다. ()은/는 기계 학습의 한 분야로 사물 인식, 패턴 인식, 손 글씨 숫자 인식 등 다양한 분야에서 활용 되고 있는 지도 학습 모델이다. </summary>
-    정답: 서포트 벡터 머신(SVM)
+    <summary>()은/는 벡터 공간에서 훈련 데이터가 속한 2개의 그룹을 분류하기 위해 선형 분리자를 찾는 지도 학습 모델이다. ()은/는 기계 학습의 한 분야로 사물 인식, 패턴 인식, 손 글씨 숫자 인식 등 다양한 분야에서 활용되고 있는 지도 학습 모델이다.</summary>
+    정답: 서포트 벡터 머신(SVM)[^5]
 </details>
 
 ### 29.
 
 <details>
-    <summary>서포트 벡터 머신에서 완벽한 분리가 불가능할 때 선형적으로 분류를 위해 허용된 오차를 위한 변수를 무엇이라 하는가?</summary>
+    <summary>서포트 벡터 머신에서 선형 분리가 불가능할 때 분류를 위해 허용된 오차 변수를 무엇이라 하는가?</summary>
     정답: 슬랙 변수
 </details>
 
@@ -264,8 +264,8 @@ last_modified_at: 2026-10-09
 ### 35.
 
 <details>
-    <summary>시계열 모델 중 자신의 과거 값으 사용하여 설명하는 모형으로 백색 잡음의 현재 분기/반기/연간 단위로 다음 지표를 예측하거나 주간/월간 단위로 지표를 리뷰하여 트렌드를 분석하는 기법은 무엇인가?</summary>
-    정답: ARIMA 모델 
+    <summary>시계열 모델 중 자신의 과거 값을 사용하여 설명하는 모형으로 백색 잡음과 결합해 현재 분기/반기/연간 단위로 다음 지표를 예측하거나 트렌드를 분석하는 기법은 무엇인가?</summary>
+    정답: ARIMA 모델[^6]
 </details>
 
 ### 36.
@@ -285,7 +285,7 @@ last_modified_at: 2026-10-09
 ### 38.
 
 <details>
-    <summary>입력층, 은닉층, 출력층으로 구성되며 은닉층에서 재귀적인 신경망을 갖는 알고리즘이다. 음성신호, 연속적 시계열 데이터 분석에 적합핟. 장기 의존성 문제와 기울기 소실문제가 발생하여 학습이 이루어지지 않을 수 있다. </summary>
+    <summary>입력층, 은닉층, 출력층으로 구성되며 은닉층에서 재귀적인 신경망을 갖는 알고리즘이다. 음성신호, 연속적 시계열 데이터 분석에 적합하다. 장기 의존성 문제와 기울기 소실 문제가 발생하여 학습이 이루어지지 않을 수 있다.</summary>
     정답: RNN 알고리즘
 </details>
 
@@ -331,7 +331,25 @@ last_modified_at: 2026-10-09
     정답: 부스팅(Boosting)
 </details>
 
+## 한계 및 주의사항
+
+- **인메모리 연산 한계**: R은 데이터를 기본적으로 메모리(RAM)에 적재하여 처리하므로, 대규모 데이터셋 학습 시 Out of Memory 오류가 발생할 수 있다.
+- **단일 스레드 기본 동작**: R의 기본 인터프리터 및 주요 모델 패키지(`stats`, `rpart`, `e1071`)는 기본적으로 단일 스레드로 동작하므로 교차 검증이나 파라미터 튜닝 시 연산 시간이 선형적으로 증가한다.
+- **시험 환경의 자원 및 시간 제약**: 빅데이터분석기사 실기 클라우드 환경은 메모리와 실행 제한 시간(통상 1분 내외)이 엄격하게 제한되므로, 과도한 하이퍼파라미터 그리드 탐색이나 복잡한 앙상블 모형보다는 제한 시간 내에 안정적으로 수렴하는 모델을 선정해야 한다.
 
 ## References
 
 - [2022 수제비 빅데이터분석기사 실기 (필답형+작업형)](https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=281447264)
+- [R Core Team, "Fitting Linear Models (lm)," R stats package reference manual, CRAN](https://stat.ethz.ch/R-manual/R-patched/library/stats/html/lm.html)
+- [Terry Therneau and Beth Atkinson, "rpart: Recursive Partitioning and Regression Trees," CRAN Package rpart](https://cran.r-project.org/package=rpart)
+- [R Core Team, "K-Means Clustering (kmeans)," R stats package reference manual, CRAN](https://stat.ethz.ch/R-manual/R-patched/library/stats/html/kmeans.html)
+- [Leo Breiman and Adele Cutler, "randomForest: Breiman and Cutler's Random Forests for Classification and Regression," CRAN Package randomForest](https://cran.r-project.org/package=randomForest)
+- [David Meyer et al., "e1071: Misc Functions of the Department of Statistics (svm)," CRAN Package e1071](https://cran.r-project.org/package=e1071)
+- [R Core Team, "ARIMA Modelling of Time Series (arima)," R stats package reference manual, CRAN](https://stat.ethz.ch/R-manual/R-patched/library/stats/html/arima.html)
+
+[^1]: [R Core Team, "Fitting Linear Models (lm)," R stats package reference manual, CRAN](https://stat.ethz.ch/R-manual/R-patched/library/stats/html/lm.html)
+[^2]: [Terry Therneau and Beth Atkinson, "rpart: Recursive Partitioning and Regression Trees," CRAN Package rpart](https://cran.r-project.org/package=rpart)
+[^3]: [R Core Team, "K-Means Clustering (kmeans)," R stats package reference manual, CRAN](https://stat.ethz.ch/R-manual/R-patched/library/stats/html/kmeans.html)
+[^4]: [Leo Breiman and Adele Cutler, "randomForest: Breiman and Cutler's Random Forests for Classification and Regression," CRAN Package randomForest](https://cran.r-project.org/package=randomForest)
+[^5]: [David Meyer et al., "e1071: Misc Functions of the Department of Statistics (svm)," CRAN Package e1071](https://cran.r-project.org/package=e1071)
+[^6]: [R Core Team, "ARIMA Modelling of Time Series (arima)," R stats package reference manual, CRAN](https://stat.ethz.ch/R-manual/R-patched/library/stats/html/arima.html)
