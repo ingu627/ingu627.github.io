@@ -39,8 +39,9 @@ import torch
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 print('Device:', device)
-print('Current cuda device:', torch.cuda.current_device())
 print('Count of using GPUs:', torch.cuda.device_count())
+if torch.cuda.is_available():
+    print('Current cuda device:', torch.cuda.current_device())
 ```
 
 ![image](https://user-images.githubusercontent.com/78655692/141098114-072338e8-470c-4cbe-8427-7d8a8fff090c.png)
