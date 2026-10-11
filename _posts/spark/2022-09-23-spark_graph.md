@@ -320,7 +320,9 @@ degreeRatio.orderBy("degreeRatio").show(10, false)
 - **너비 우선 탐색(Breadth-First Search)**은 그래프상의 연결 관계(에지, edge)를 기준으로 두 개의 노드를 연결하는 방법을 탐색하는 알고리즘이다.
   - BFS를 구현하기 위해 큐(Queue)의 FIFO 특성을 사용한다. 
 
-![image](https://user-images.githubusercontent.com/78655692/192150752-d6e3107f-3603-4813-b9b4-7c281975498a.png) <br> 이미지출처 [^4]
+![image](https://user-images.githubusercontent.com/78655692/192150752-d6e3107f-3603-4813-b9b4-7c281975498a.png)
+
+이미지출처 [^4]
 
 
 - 예제에서는 이 알고리즘을 서로 다른 지점 간 최단 경로를 찾기 위해 사용하지만 SQL 표현식으로 지정된 노드 집합에도 적용할 수 있다.
