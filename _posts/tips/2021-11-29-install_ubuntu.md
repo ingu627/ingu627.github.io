@@ -17,7 +17,7 @@ sidebar_main: false
 > 이 글은 2022년 당시 WSL2(Windows 10 21H2) 기준으로 작성된 설치/사용 기록이다. 최신 버전에서는 명령이 다를 수 있다.
 
 - **Update(20220714)**
-  - 윈도우 11 또는 윈도우 10 21H2 이상에서는 `wsl --install` 한 줄로 설치할 수 있다. 아래처럼 수동으로 설치하는 방식은 윈도우 10 1903(빌드 18362) 이상이면 동작한다. ([microsoft docs - 수동 설치 단계](https://docs.microsoft.com/ko-kr/windows/wsl/install-manual))
+  - 윈도우 11 또는 윈도우 10 21H2 이상에서는 `wsl --install` 한 줄로 설치할 수 있다. 아래처럼 수동으로 설치하는 방식은 윈도우 10 1903(빌드 18362) 이상이면 동작한다. [^2]
 - AWS에서 가상의 환경을 작업하던 중, 내 PC에서 구동해 보았으면 싶어서 설치를 진행해 보았다.
 
 ![image](https://user-images.githubusercontent.com/78655692/143879564-f6e63337-035a-48a0-aba0-b0c658b3b4de.png)
@@ -144,19 +144,15 @@ dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /nores
 ![image](https://user-images.githubusercontent.com/78655692/178905818-d0463e55-4bf6-4305-8a95-17a6eb52add9.png)
 
 
+## 한계 및 주의사항
+
+- WSL2는 가상 머신(Hyper-V VM) 환경에서 독립적인 Linux 커널로 동작하므로, Windows 호스트 드라이브(`/mnt/c/`)에 위치한 프로젝트 파일에 교차 접근할 때 파일 시스템 I/O 성능이 저하된다. 빠른 파일 처리가 필요한 프로젝트 소스와 개발 환경은 WSL Linux 내부 파일 시스템(`~/`)에 보관해야 한다. [^1] [^4]
+- WSL2 가상 하드 디스크(`ext4.vhdx`)는 사용량에 따라 자동으로 커지지만, Linux 내부에서 파일을 지우더라도 Windows 호스트의 가상 디스크 파일 용량은 자동으로 줄어들지 않는다. 용량을 회수하려면 `wsl --shutdown` 후 Windows `diskpart` 유틸리티의 `compact vdisk` 작업을 수행해야 한다. [^3]
+- WSL2는 가상화된 전용 네트워크 어댑터를 통해 별도의 가상 IP 주소를 할당받으므로, Windows 호스트와 포트 포워딩이나 로컬 서버 통신을 구성할 때 WSL 1과 다른 네트워킹 설정(localhost 바인딩 특성)을 고려해야 한다. [^4]
+
 ## References
 
-- [microsoft docs](https://docs.microsoft.com/ko-kr/windows/wsl/install-manual)
-- [Windows 10 에서 Linux 환경 구축하기](https://knackin.tistory.com/1)
-- [[WSL2] 윈도우에서 리눅스 사용하기](https://blog.naver.com/PostView.naver?blogId=skyshin0304&logNo=222079393598&redirect=Dlog&widgetTypeCall=true&directAccess=false)
-- [Wsl 사용시 WslRegisterDistribution Failed With Error: 0x800701bc 해결하기.](https://blog.dalso.org/article/wslregisterdistribution-failed-with-error)
-- [WSL & WSL2 설치와 VSCode 연동하기 - gidskql6671](https://velog.io/@gidskql6671/WSL-WSL2-%EC%84%A4%EC%B9%98-VSCode-%EC%97%B0%EB%8F%99)
-
-
-
-
-
-
-
-
-
+[^1]: [Microsoft Learn - WSL 개발 환경 설정 모범 사례](https://learn.microsoft.com/ko-kr/windows/wsl/setup/environment)
+[^2]: [Microsoft Learn - 이전 버전의 WSL 수동 설치 단계](https://learn.microsoft.com/ko-kr/windows/wsl/install-manual)
+[^3]: [Microsoft Learn - WSL 가상 하드 디스크(VHD) 공간 관리](https://learn.microsoft.com/ko-kr/windows/wsl/disk-space)
+[^4]: [Microsoft Learn - WSL 버전 비교 (WSL 1과 WSL 2)](https://learn.microsoft.com/ko-kr/windows/wsl/compare-versions)

@@ -62,7 +62,7 @@ ubuntu 20.04에서 nvidia driver 495, cuda 11.3, cudnn 8.2.1, pytorch를 설치�
     ```
 
 
-- nvidia 드라이버 설치가 끝나면 NVIDIA kernel module의 load를 도와주는 `modprobe` 패키지를 설치한다. [^3]
+- 필요한 경우 커널 업데이트 시 모듈 자동 재빌드를 지원하는 `dkms`와 사용자 공간 장치 노드 생성 도구인 `nvidia-modprobe`를 추가로 설치한다. [^3]
 
     ```shell
     $ sudo apt-get install dkms nvidia-modprobe
@@ -277,11 +277,11 @@ $ sudo apt-get install manpages-dev
 
 ## References
 
-[^1]: [Ubuntu 18.04 Nvidia driver 완전 삭제 & CUDA 완전 삭제](https://settembre.tistory.com/447)
-[^2]: [[Ubuntu 20.04 LTS]Nvidia드라이버 설치하기 - PixelStudio](https://pstudio411.tistory.com/entry/Ubuntu-2004-Nvidia%EB%93%9C%EB%9D%BC%EC%9D%B4%EB%B2%84-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0)
-[^3]: [Ubuntu 18.04 CUDA + PyTorch 설치 - Greenmon.dev](https://greenmon.dev/2019/06/21/ubuntu-cuda.html)
-[^4]: [Ubuntu 20.04에 CUDA Toolkit 11.2, cuDNN 8.1.0, Tensorflow 설치하기 - webnautes](https://webnautes.tistory.com/1428)
-[^5]: [[LAB] Ubuntu python3 가상환경 venv 설치하기 - rubying](https://velog.io/@rubying/LAB-Ubuntu-python3-%EA%B0%80%EC%83%81%ED%99%98%EA%B2%BD-venv-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0)
+[^1]: [NVIDIA - Removing CUDA Toolkit and Driver](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#removing-cuda-tk-and-driver)
+[^2]: [Ubuntu Server Documentation - NVIDIA Drivers Installation](https://ubuntu.com/server/docs/nvidia-drivers-installation)
+[^3]: [Ubuntu Manpages - nvidia-modprobe: Load NVIDIA kernel module and create character device files](https://manpages.ubuntu.com/manpages/focal/man1/nvidia-modprobe.1.html)
+[^4]: [NVIDIA CUDA Installation Guide for Linux - Environment Setup](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#mandatory-actions)
+[^5]: [Python Documentation - venv: Creation of virtual environments](https://docs.python.org/3/library/venv.html)
 [^6]: [NVIDIA CUDA Installation Guide for Linux](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html)
 [^7]: [PyTorch - Previous PyTorch Versions](https://pytorch.org/get-started/previous-versions/)
 

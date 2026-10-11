@@ -13,9 +13,9 @@ last_modified_at: 2026-10-11
 
 ![image](https://user-images.githubusercontent.com/78655692/183697704-2aeab667-34f8-4369-bb93-7f42d326e9a4.png)
 
-"MapReduce: Simplified Data Processing on Large Clusters" 논문을 개인 공부 및 리뷰를 위해 쓴 글입니다. 맵리듀스에 입문하시거나 관련 논문을 처음 보는 분을 위해 용어 설명도 덧붙였습니다. 또한, MapReduce의 모든 것을 알기 위해 최대한 요약없이 논문 내용을 담았습니다.
+"MapReduce: Simplified Data Processing on Large Clusters" 논문을 분석하고 정리한 리뷰다. 맵리듀스에 입문하거나 분산 시스템을 공부하는 독자를 위해 분산 실행 흐름, 결함 허용 구조, 주요 최적화 기법을 원 논문의 설계 원칙에 따라 체계적으로 정리한다. [^15]
 
-대규모 클러스터 환경에서는 데이터 분산, 병렬 실행, 장비 장애(fault tolerance) 처리의 복잡성이 핵심 병목(Core Bottleneck)으로 작용한다. 맵리듀스(MapReduce)는 계산 모델을 단순한 `Map`과 `Reduce` 두 단계로 추상화하고, 분산 시스템의 복잡한 세부 구현을 런타임 라이브러리 내부로 완전히 감추어 해결한다(Key Insight).
+대규모 클러스터 환경에서는 데이터 분산, 병렬 실행, 장비 장애(fault tolerance) 처리의 복잡성이 핵심 병목(Core Bottleneck)으로 작용한다. 맵리듀스(MapReduce)는 계산 모델을 단순한 `Map`과 `Reduce` 두 단계로 추상화하고, 분산 시스템의 복잡한 세부 구현을 런타임 라이브러리 내부로 은닉하여 해결한다(Key Insight).
 
 논문 출처 : [OSDI 04 paper - mapreduce](https://www.usenix.org/legacy/event/osdi04/tech/full_papers/dean/dean_html/)
 
@@ -300,6 +300,19 @@ map(String name, String contents):
 - 현재 카운터 값은 사용자가 실시간 계산의 진행 상황을 볼 수 있도록 마스터 상태 페이지에도 표시된다.
 - 마스터는 카운터 값을 집계할 때 이중 계산을 방지하기 위해 동일한 맵 또는 리듀스 태스크의 중복 실행의 영향을 제거한다.
 
+## 5. Performance (성능 평가)
+
+원 논문(Dean & Ghemawat 2004)은 약 1800대의 컴퓨터(2GHz Intel Xeon 2소켓, 4GB RAM, 160GB IDE 디스크 2개, 기가비트 이더넷 스위치망)로 구성된 클러스터에서 대규모 벤치마크를 수행하여 처리 성능을 입증했다. [^15]
+
+- **MR_Grep (분산 패턴 검색)**:
+  - $10^{10}$개(100억 개)의 100바이트 레코드(약 1TB 데이터)에서 특정 패턴(발생 빈도 92,337건)을 검색했다.
+  - 입력 데이터는 64MB 단위의 15,000개 청크($M=15000$)로 분할되었으며 리듀서는 1개($R=1$)를 사용했다.
+  - 전체 잡은 기동 및 오버헤드 60초를 포함해 약 150초 만에 완료되었으며, 실제 데이터 스캔 단계에서는 1800대 워커 노드가 합산 30GB/s 이상의 대역폭으로 데이터를 읽어 들였다.
+- **MR_Sort (분산 정렬 및 셔플)**:
+  - 1TB의 비구조화 키-값 쌍($M=15000$, $R=4000$)을 파티셔닝 정렬하는 벤치마크를 수행했다.
+  - 전체 정렬 완료 시간은 891초(약 14.8분)가 소요되었다.
+  - 특히 백업 태스크(Backup Tasks)를 비활성화했을 때 마지막 5개 미완료 태스크의 지연(straggler)으로 인해 전체 실행 시간이 1283초로 44% 지연됨을 실측하여, 이상 노드 복제 실행 메커니즘의 실질적 효과를 검증했다.
+
 ## 한계 및 트레이드오프
 
 - 단일 마스터가 메타데이터를 관리하고 태스크를 스케줄링하므로, 클러스터 규모가 커질수록 마스터가 병목이 될 수 있다.
@@ -335,6 +348,7 @@ MapReduce는 분산 컴퓨팅의 패러다임을 단순화하며 대규모 데�
 [^12]: [트랜잭션 이론 - 코타쿠](https://yeol-study-history.tistory.com/108)
 [^13]: [해시넷 - 파티셔닝](http://wiki.hash.kr/index.php/%ED%8C%8C%ED%8B%B0%EC%85%94%EB%8B%9D)
 [^14]: [해시넷 - 해시](http://wiki.hash.kr/index.php/%ED%95%B4%EC%8B%9C)
+[^15]: [Jeffrey Dean and Sanjay Ghemawat, "MapReduce: Simplified Data Processing on Large Clusters", OSDI 2004 (USENIX)](https://www.usenix.org/legacy/event/osdi04/tech/full_papers/dean/dean_html/)
 
 
 

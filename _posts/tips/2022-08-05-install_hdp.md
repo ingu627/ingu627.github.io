@@ -87,7 +87,7 @@ Hortonworks Data Platform(HDP)는 분산 스토리지 및 대규모 멀티 소�
 
 - 그 후 해당 명령어를 통해 hosts 파일을 수정해준다. [^1]
 - `echo '127.0.0.1 sandbox-hdp.hortonworks.com sandbox-hdf.hortonworks.com' | sudo tee -a /etc/hosts` 
-- 그리고, port conflict가 있다면, 포트를 변경해준다. 단계는 다음과 같다. [^2]
+- 그리고, port conflict가 있다면, 포트를 변경해준다. 단계는 다음과 같다. [^1]
   - `vi sandbox/proxy/proxy-deploy.sh` 명령어를 실행한다.
   - `6001:6001`를 `16001:6001`로 바꿔준다.
 
@@ -145,13 +145,12 @@ Hortonworks Data Platform(HDP)는 분산 스토리지 및 대규모 멀티 소�
 
 ## 한계 및 주의사항
 
-- HDP 2.6.5 샌드박스는 2018년 Hortonworks와 Cloudera 합병 이후 CDP(Cloudera Data Platform)로 통합되어 더 이상 갱신되지 않는다. 학습·재현 목적 외에는 최신 배포판 사용을 검토해야 한다. [^2]
+- HDP 2.6.5 샌드박스는 2018년 Hortonworks와 Cloudera 합병 이후 CDP(Cloudera Data Platform)로 통합되어 더 이상 갱신되지 않는다. 학습·재현 목적 외에는 최신 배포판 사용을 검토해야 한다. [^1]
 - 샌드박스는 컨테이너 2개(2.6.5는 10GB 이상, 3.0.1은 22GB 이상 램)를 요구하므로, WSL2에 할당한 메모리가 부족하면 컨테이너가 시작되지 않는다.
 - Windows의 winnat 포트 예약 문제로 `50070` 같은 포트 바인딩이 막힐 수 있어, `net stop winnat` / `net start winnat`으로 예약을 풀어야 하는 경우가 있다.
 - Ambari(8080) 외의 서비스(Hive 10000, YARN ResourceManager 8088 등)는 hosts 파일 수정과 프록시 포트 매핑에 의존하므로, 프록시 스크립트의 포트를 바꾸면 접속 주소도 함께 바꿔야 한다.
 
 ## References
 
-[^1]: [[Hadoop] 하둡 설치하기 - gnlenfn](https://velog.io/@gnlenfn/Hadoop-%ED%95%98%EB%91%A1-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0)
-[^2]: [cloudera - sandbox-deployment-and-install-guide](https://www.cloudera.com/tutorials/sandbox-deployment-and-install-guide/3.html)
+[^1]: [Cloudera Tutorials - Hortonworks Sandbox Deployment and Install Guide](https://www.cloudera.com/tutorials/sandbox-deployment-and-install-guide/3.html)
 

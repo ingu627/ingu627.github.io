@@ -80,6 +80,13 @@ last_modified_at: 2026-10-11
 ![image](https://user-images.githubusercontent.com/78655692/143983862-c220dafa-79e7-4cd7-990e-c3ee82978731.png)
 
 
+## 한계 및 주의사항
+
+- KoNLPy 공식 문서에 따르면 운영체제(Windows), Python, Java, JPype의 아키텍처(32-bit 또는 64-bit)가 모두 일치해야 한다. 아키텍처 비트 수가 어긋나면 JPype 가상머신 초기화 단계에서 로드 오류가 발생한다. [^1]
+- KoNLPy는 Java 1.7 이상을 요구하며, JPype1 공식 문서는 Java 1.8부터 13 버전까지의 호환성을 검증하고 있으므로 설치 환경의 Java 버전을 확인해야 한다. [^1] [^2]
+- 5개 형태소 분석기 중 `Mecab()` 클래스는 Windows 운영체제에서 공식적으로 지원되지 않는다(Kkma, Komoran, Hannanum, Okt는 지원). [^1]
+
 ## References
 
-- [KoNLPy: 파이썬 한국어 NLP](https://konlpy.org/ko/latest/)
+[^1]: [KoNLPy 공식 문서 - 설치 가이드](https://konlpy.org/ko/latest/install/)
+[^2]: [JPype1 공식 문서 - Troubleshooting Guide](https://jpype.readthedocs.io/en/latest/install.html)

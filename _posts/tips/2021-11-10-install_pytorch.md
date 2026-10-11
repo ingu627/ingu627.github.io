@@ -45,3 +45,14 @@ if torch.cuda.is_available():
 ```
 
 ![image](https://user-images.githubusercontent.com/78655692/141098114-072338e8-470c-4cbe-8427-7d8a8fff090c.png)
+
+## 한계 및 주의사항
+
+- 이 글의 PyTorch 1.7.1 및 CUDA 11.0 설치 조합은 2021년 기준 환경이다. 최신 Python 버전이나 최신 세대 GPU(RTX 30/40 시리즈 등)에서는 지원되는 PyTorch 및 CUDA 조합이 달라지므로, 공식 설치 매트릭스를 확인하여 알맞은 버전을 선택해야 한다. [^1]
+- CPU 전용 환경에서는 `torch.cuda.is_available()`이 False를 반환하므로, GPU 전용 메서드(`current_device()`) 호출 전 반드시 조건부 검사를 거쳐야 런타임 오류를 방지할 수 있다. [^2]
+- `torchvision`, `torchaudio`는 PyTorch 코어 버전과 버전 숫자가 서로 다르므로(예: PyTorch 1.7.1에 torchvision 0.8.2 / torchaudio 0.7.2), 공식 설치 매트릭스에 안내된 호환 조합에 맞춰 함께 설치해야 한다. [^1]
+
+## References
+
+[^1]: [PyTorch Previous Versions](https://pytorch.org/get-started/previous-versions/)
+[^2]: [PyTorch CUDA Semantics](https://pytorch.org/docs/stable/notes/cuda.html)
