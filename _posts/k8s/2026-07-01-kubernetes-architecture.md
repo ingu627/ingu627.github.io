@@ -63,7 +63,7 @@ last_modified_at: 2026-10-10
 
 클러스터는 요청을 해석하는 컨트롤 플레인과 실제 워크로드가 도는 워커 노드로 나뉜다. 두 영역의 컴포넌트와 그 사이를 오가는 흐름을 먼저 한 장으로 잡고 들어가면 이후 개념이 훨씬 수월하다.
 
-![쿠버네티스 클러스터 아키텍처](/assets/images/k8s/k8s-control-plane.png)
+![쿠버네티스 클러스터 아키텍처: 컨트롤 플레인 컴포넌트와 워커 노드 런타임 상호작용 다이어그램](/assets/images/k8s/k8s-control-plane-cognition.webp)
 
 위 다이어그램은 컨트롤 플레인의 네 컴포넌트(kube-apiserver·etcd·kube-scheduler·kube-controller-manager)와 워커 노드의 런타임 구성(kubelet·containerd·kube-proxy·CNI)이 어떻게 연결되는지 보여준다. 모든 컴포넌트는 kube-apiserver만 거쳐 etcd에 접근하고, kubelet은 apiserver를 watch하다가 자신에게 바인딩된 파드를 런타임으로 넘긴다.
 
