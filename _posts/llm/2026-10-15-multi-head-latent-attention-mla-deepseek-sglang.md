@@ -107,7 +107,7 @@ $$\text{MHA 차원}: 2 \times 128 \times 128 = 32,768 \quad \longrightarrow \qua
 
 ### 3.1 접두사 중복률에 따른 처리량 변곡점
 
-독립 벤치마크(DeepSeek-R1-Distill-Llama-70B 및 DeepSeek-V3 기준) 실측 데이터는 다음과 같습니다.
+독립 벤치마크[^3](DeepSeek-R1-Distill-Llama-70B 및 DeepSeek-V3 기준) 실측 데이터는 다음과 같습니다.
 
 | 워크로드 특성 | 접두사 중복률 (Overlap) | vLLM 처리량 (tok/s) | SGLang 처리량 (tok/s) | 승자 및 핵심 원인 |
 |---|---|---|---|---|
@@ -118,7 +118,7 @@ $$\text{MHA 차원}: 2 \times 128 \times 128 = 32,768 \quad \longrightarrow \qua
 
 ### 3.2 SGLang RadixAttention의 구조적 우위 원리
 
-접두사 중복률이 60%를 넘어서는 순간 SGLang이 압도적 성능을 내는 이유는 **기수 트리(Radix Tree)** 기반의 KV 캐시 관리와 **캐시 인지 스케줄링(Cache-aware Scheduling)** 덕분입니다.
+접두사 중복률이 60%를 넘어서는 순간 SGLang의 처리량과 TTFT가 뚜렷하게 개선되는 이유는 **기수 트리(Radix Tree)**[^2] 기반의 KV 캐시 관리와 **캐시 인지 스케줄링(Cache-aware Scheduling)** 덕분입니다.
 
 - **vLLM의 한계**: 고정 크기 블록(16/32 토큰) 단위 해시 체인 방식은 블록 경계가 정확히 일치하지 않으면 캐시가 누락(Fragmented)되며, 트리 분기형 대화 컨텍스트에서 탐색 오버헤드가 증가합니다.
 - **SGLang의 Radix Trie**: 문자열 단위가 아닌 토큰 시퀀스 전체를 가변 길이 기수 트리(Radix Tree)로 관리하여 LRU(Least Recently Used) 기반으로 노드를 정밀하게 보존합니다.
@@ -128,7 +128,7 @@ $$\text{MHA 차원}: 2 \times 128 \times 128 = 32,768 \quad \longrightarrow \qua
 
 ## 4. 프로덕션 배포 아키텍처: L7 프리픽스 라우터와 K8s 배포
 
-MLA 모델을 프로덕션 Kubernetes에 서빙할 때는 **인그레스(Ingress) 계층의 프리픽스 인지 라우팅(Prefix-Aware Routing)**이 결합되어야 합니다.
+MLA 모델을 프로덕션 Kubernetes에 서빙할 때는 **인그레스(Ingress) 계층의 프리픽스 인지 라우팅(Prefix-Aware Routing)**[^4]이 결합되어야 합니다.
 
 ```
                   [클라이언트 / 에이전트 요청]
@@ -189,7 +189,7 @@ spec:
 ## 5. 엔지니어링 결론 및 엔진 선택 기준
 
 1. **에이전트 루프 및 다중 턴 서빙에는 SGLang이 기본 표준**:
-   - 접두사 공유율이 높은 대화형 코딩 에이전트, 복합 툴 호출, RAG 워크플로우에서는 SGLang RadixAttention이 p95 레이턴시와 VRAM 효율에서 압도적 우위를 점합니다.
+   - 접두사 공유율이 높은 대화형 코딩 에이전트, 복합 툴 호출, RAG 워크플로우에서는 SGLang RadixAttention이 p95 레이턴시와 VRAM 효율에서 실측 기준 뚜렷한 우위를 기록합니다 (p95 TTFT 최대 41% 단축, 고동시성 처리량 30 tok/s 이상 유지).
 2. **단일 턴 배치 및 특수 하드웨어에는 vLLM**:
    - 접두사 중복이 없는 독립형 대량 배치 작업, NVIDIA Blackwell(B200) 아키텍처 조기 적용, 혹은 AWS Trainium이나 Google TPU와 같은 비-NVIDIA 가속기 환경에서는 생태계 호환성이 검증된 vLLM을 선택해야 합니다.
 

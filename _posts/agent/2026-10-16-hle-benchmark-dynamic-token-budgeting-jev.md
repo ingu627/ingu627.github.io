@@ -15,7 +15,7 @@ last_modified_at: 2026-10-16
 
 이제 업계의 관심은 "모델이 문제를 풀 수 있는가"라는 이진 판정(Binary Resolution)에서, **"문제를 풀기 위해 테스트 타임 연산(Test-Time Compute)과 추론 토큰(Reasoning Tokens)을 얼마나 소모하는가"**라는 토큰 경제학으로 이동했습니다.
 
-국제 학술지 Nature에 공식 등재된 차세대 최고 난도 벤치마크 **Humanity's Last Exam (HLE)**[^1]의 실측 데이터를 살펴보고, 무분별한 추론 토큰 폭발을 방어하기 위해 TypeSafe AI의 비생성형 System One 모델인 **Jev**[^2]를 결합한 **동적 사고 예산 라우팅(Dynamic Reasoning Budgeting)** 아키텍처를 정리합니다.
+국제 학술지 Nature에 공식 등재된 차세대 최고 난도 벤치마크 **Humanity's Last Exam (HLE)**[^1]의 실측 데이터를 살펴보고, 무분별한 추론 토큰 폭발을 방어하기 위해 TypeSafe AI의 비생성형 System One 모델인 **Jev**[^2][^4]를 결합한 **동적 사고 예산 라우팅(Dynamic Reasoning Budgeting)** 아키텍처를 정리합니다.
 
 ---
 
@@ -198,7 +198,7 @@ async def calculate_dynamic_thinking_budget(user_prompt: str) -> Dict[str, Any]:
 ## 6. 엔지니어링 한계와 트레이드오프
 
 1. **Jev 사전 평가 지연 시간 (70~150ms)**:
-   - 비록 작지만 L1 계층 호출로 인한 고정 오버헤드가 추가됩니다. 따라서 100% 자명한 캐시 히트 쿼리는 Jev 앞단(L0 시맨틱 캐시)에서 먼저 끊어내야 합니다.
+   - 비록 작지만 L1 계층 호출로 인한 고정 오버헤드가 추가됩니다. 따라서 100% 자명한 캐시 히트 쿼리는 Jev 앞단(L0 시맨틱 캐시[^3])에서 먼저 끊어내야 합니다.
 2. **불확실성 과소평가(Under-budgeting) 위험**:
    - 겉보기에는 단순해 보이지만 실제로는 깊은 수학적 증명이 숨어 있는 문제의 경우, Jev가 `depth=1`로 과소평가하여 1,024 토큰만 할당받아 모델이 답을 내지 못할 수 있습니다.
    - **대응책**: 하이브리드 모델이 사고 예산 고갈(`stop_reason: max_tokens`)로 중단된 경우, $N$을 4배로 증액하여 재시도하는 Fallback 정책을 하네스에 내재화해야 합니다.
