@@ -74,18 +74,7 @@ last_modified_at: 2026-10-19
 
 컨텍스트 윈도우 고갈을 방지하기 위해 엔터프라이즈 환경에서는 MCP 서버를 클라이언트에 직접 꽂는 대신, 중간에 **점진적 발견 프록시(Progressive Discovery Proxy)**를 배치해야 합니다[^2].
 
-```
-[Claude Code / Cursor]
-         │ (등록된 도구: discovery_proxy 단 1개, ~500 토큰)
-         ▼
-[Progressive Discovery Proxy]
-         │
-         ├─ 1단계: 사용자 의도 파악 ("Postgres 주문 테이블 조회")
-         ├─ 2단계: 필요한 도구 2개만 동적 로드 (query_sql, get_schema)
-         │
-         ▼ (지연 주입: Lazy Context Injection)
-[실제 엔터프라이즈 MCP 서버 군단 (DB, K8s, Jira, Git...)]
-```
+![엔터프라이즈 점진적 발견 프록시 아키텍처: 코딩 에이전트와 MCP 서버군 간의 동적 지연 주입 파이프라인](/assets/images/llm/mcp-progressive-discovery-proxy-cognition.webp)
 
 ### 4.1 지연 주입(Lazy Injection) 프록시 메커니즘
 

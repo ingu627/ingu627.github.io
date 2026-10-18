@@ -128,17 +128,7 @@ Claude Code는 저장소 루트의 `CLAUDE.md`(팀 아키텍처 규칙, 빌드 �
 
 Claude Code 하네스는 이를 방지하기 위해 엄격한 쓰기 규율을 강제합니다:
 
-```
-[에이전트의 작업 계획] 
-       │ (메모리 업데이트 시도 차단)
-       ▼
-[OS 파일 쓰기 도구 실행 (FileWriteTool)] 
-       │
-       ├─ 실패 ──► 메모리 기록 일절 금지, 에러 복구 루프로 회귀
-       │
-       ▼ 성공 (OS fsync 확인 완료)
-[비로소 메모리 동기화 도구 (MemoryUpdateTool) 실행 허용]
-```
+![Claude Code 회의적 메모리와 OS 파일 쓰기 검증 규율 아키텍처](/assets/images/agent/claude-code-skeptical-memory-cognition.webp)
 
 에이전트는 계획이나 의도를 메모리에 기록할 수 없으며, 오직 **로컬 운영체제가 파일 디스크 쓰기 성공을 시스템 콜 수준에서 반환한 직후**에만 메모리 갱신 도구를 호출할 수 있습니다.
 
