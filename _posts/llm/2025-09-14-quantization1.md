@@ -45,8 +45,7 @@ LLM 추론 파이프라인은 성격이 상이한 두 단계로 나뉜다.
 
 양자화는 고정밀 부동소수점(FP32, FP16, BF16)으로 표현된 텐서를 더 적은 비트의 정수(INT8, INT4)나 저정밀 부동소수점(FP8, FP4)으로 사상하는 기법이다.
 
-<img width="726" height="214" alt="quantization_pipeline" src="https://gist.github.com/user-attachments/assets/2b4e2aba-4375-4ec2-918f-2f89dde9a8ba" />
-[^2]
+![LLM 양자화 파이프라인: 부동소수점 텐서 사상과 오차 제어 아키텍처](/assets/images/llm/quantization-mapping-pipeline-cognition.webp)[^2]
 
 ### 2.1 수학적 정식화와 매핑 함수
 
@@ -101,8 +100,7 @@ FP8은 복잡한 캘리브레이션이나 가중치 재조정 없이도 FP16 대
 
 프루닝은 파라미터 값 자체를 0으로 마스킹하거나 모델 레이어/헤드를 물리적으로 절삭하여 희소성(Sparsity)을 부여하는 기법이다.
 
-<img width="710" height="304" alt="pruning_and_distillation" src="https://gist.github.com/user-attachments/assets/f2394b25-7565-4b40-bcd4-5d3cb9a27bcb" />
-[^2]
+![구조적 vs 비구조적 프루닝 및 지식 증류 메커니즘 비교](/assets/images/llm/pruning-and-distillation-cognition.webp)[^2]
 
 ### 3.1 비구조적 희소성(Unstructured Sparsity)의 하드웨어 한계
 
@@ -152,8 +150,7 @@ $$W = W_0 + \Delta W = W_0 + \frac{\alpha}{r} (B \times A), \quad B \in \mathbb{
 
 ## 5. 프로덕션 서빙 아키텍처와 트레이드오프 매트릭스
 
-<img width="811" height="649" alt="compression_workflow" src="https://gist.github.com/user-attachments/assets/56b6e7b1-ae1e-4cf5-a37d-d6282125b56f" /> 
-[^1]
+![프로덕션 LLM 압축 워크플로우와 서빙 통합 아키텍처](/assets/images/llm/compression-serving-workflow-cognition.webp)[^1]
 
 경량화 기법은 개별적으로 적용되는 단편적 트릭이 아니라, 타깃 인프라와 서비스 지연시간 요구사항에 맞춰 조합되는 엔지니어링 파이프라인이다.
 
