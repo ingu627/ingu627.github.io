@@ -49,6 +49,7 @@
 
 <title>{{ seo_title | default: site.title }}{% if paginator %}{% unless paginator.page == 1 %} {{ title_separator }} {{ site.data.ui-text[site.locale].page | default: "Page" }} {{ paginator.page }}{% endunless %}{% endif %}</title>
 <meta name="description" content="{{ seo_description }}">
+<meta name="robots" content="max-image-preview:large">
 
 {% if author.name and author.name != "" %}
   <meta name="author" content="{{ author.name }}">
@@ -136,6 +137,35 @@
     {% endif %}
   }
 </script>
+
+{% if page.date and page.title %}
+  {%- assign blog_posting_image = page.header.og_image | default: page.header.overlay_image | default: page.header.image | default: site.og_image -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": {{ page.title | markdownify | strip_html | strip_newlines | jsonify }},
+      "description": {{ seo_description | jsonify }},
+      "url": {{ canonical_url | jsonify }},
+      "mainEntityOfPage": {{ canonical_url | jsonify }},
+      "datePublished": {{ page.date | date_to_xmlschema | jsonify }},
+      "dateModified": {% if page.last_modified_at %}{{ page.last_modified_at | date_to_xmlschema | jsonify }}{% else %}{{ page.date | date_to_xmlschema | jsonify }}{% endif %},
+      "author": {
+        "@type": "Person",
+        "name": {{ author.name | default: site.name | jsonify }}
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": {{ site.title | jsonify }},
+        "logo": {
+          "@type": "ImageObject",
+          "url": {{ '/assets/images/og-default.jpg' | absolute_url | jsonify }}
+        }
+      }{% if blog_posting_image %},
+      "image": {{ blog_posting_image | absolute_url | jsonify }}{% endif %}
+    }
+  </script>
+{% endif %}
 
 {% if site.google_site_verification %}
   <meta name="google-site-verification" content="{{ site.google_site_verification }}" />

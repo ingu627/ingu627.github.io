@@ -11,15 +11,6 @@
 <html lang="{{ site.locale | slice: 0,2 | default: "en" }}" class="no-js">
   <head>
     <meta name="google-site-verification" content="Lkh6IHg3Jk6DRFEXBZP0zPlDuY6NpN2pXqFM-1Ow6Ok" />
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-R03EGK2CKN"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-R03EGK2CKN');
-    </script>
     <!--main.scss preload-->
     <link rel="preload" as="style" href="{{ '/assets/css/main.css' | relative_url }}">
 
@@ -47,17 +38,11 @@
     {% include_cached browser-upgrade.html %}
     {% include_cached masthead.html %}
 
-    <amp-auto-ads type="adsense"
-        data-ad-client="ca-pub-6253756472465876">
-    </amp-auto-ads>
-
     <div class="initial-content">
       {{ content }}
     </div>
 
     <!-- google ads -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6253756472465876"
-     crossorigin="anonymous"></script>
     <div align="center" style="margin: 1em 0;"></div>
      <!-- ads(bottom) -->
     <ins class="adsbygoogle"
