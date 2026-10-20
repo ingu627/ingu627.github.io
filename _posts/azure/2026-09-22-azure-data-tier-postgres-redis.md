@@ -161,7 +161,7 @@ engine = create_engine(
 
 ![연결 풀링 유무 비교 — 왼쪽은 앱마다 PostgreSQL에 직접 연결해 연결 수가 그대로 늘어나는 구성이고, 오른쪽은 앱과 PostgreSQL 사이에 PgBouncer를 두어 백엔드 커넥션 수를 줄인 구성](/assets/images/azure/official-azure-data-tier-postgres-redis.webp)
 
-출처: Connection pooling strategy using PgBouncer — Microsoft Learn (<https://learn.microsoft.com/en-us/azure/postgresql/connectivity/concepts-connection-pooling-best-practices>)
+*출처: [Connection pooling strategy using PgBouncer — Microsoft Learn](https://learn.microsoft.com/en-us/azure/postgresql/connectivity/concepts-connection-pooling-best-practices)*
 
 정리하면, 풀 크기와 DB 상한은 따로 정하는 값이 아니라 리플리카 수를 통해 묶여 있다.
 

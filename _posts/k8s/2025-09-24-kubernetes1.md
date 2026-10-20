@@ -97,7 +97,7 @@ L4 Service vs. L7 Ingress 트래픽 라우팅:
 
 ![클라이언트 → Ingress 관리 로드밸런서 → Ingress → 라우팅 규칙 → Service → Pod로 이어지는 단일 진입 경로](/assets/images/k8s/official-kubernetes1.webp)
 
-*출처: Kubernetes Documentation — Ingress Concepts (https://kubernetes.io/docs/concepts/services-networking/ingress/)*
+*출처: [Kubernetes Documentation — Ingress Concepts](https://kubernetes.io/docs/concepts/services-networking/ingress/)*
 
 ### 2.1 Ingress 리소스 vs. Ingress Controller
 

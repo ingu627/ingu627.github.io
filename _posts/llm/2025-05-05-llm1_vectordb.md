@@ -20,7 +20,7 @@ last_modified_at: 2026-10-08
 
 ![벡터 검색 파이프라인: 이미지·오디오·비디오·텍스트 데이터 소스를 임베딩으로 변환하고, 근사 최근접 이웃(ANN) 인덱스에서 검색한 결과를 애플리케이션에 반환하는 흐름](/assets/images/llm/official-vector-search-architecture.webp)
 
-*출처: Vector Search Overview - Azure AI Search, Microsoft Learn (<https://learn.microsoft.com/en-us/azure/search/vector-search-overview>)*
+*출처: [Vector Search Overview - Azure AI Search, Microsoft Learn](https://learn.microsoft.com/en-us/azure/search/vector-search-overview)*
 
 ---
 

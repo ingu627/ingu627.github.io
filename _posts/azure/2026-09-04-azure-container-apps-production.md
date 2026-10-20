@@ -96,7 +96,7 @@ Microsoft 문서는 이렇게 인그레스와 이그레스를 잠그는 경계 �
 
 ![ACA 환경의 잠금형 네트워크 경계 구성](/assets/images/azure/official-azure-container-apps-production.webp)
 
-출처: Azure Container Apps 환경의 네트워킹 — Microsoft Learn (https://learn.microsoft.com/ko-kr/azure/container-apps/networking)
+*출처: [Azure Container Apps 환경의 네트워킹 — Microsoft Learn](https://learn.microsoft.com/ko-kr/azure/container-apps/networking)*
 
 이 프로젝트는 여기에 프라이빗 DNS 존을 얹어 `chat.example.com`을 ILB 사설 IP로 해석시키는 정도만 더했다.
 

@@ -158,7 +158,7 @@ OverlayFS 4계층 아키텍처:
 
 ![쿠버네티스 클러스터의 컨트롤 플레인과 노드 구성 요소](/assets/images/k8s/official-kubernetes-basic.webp)
 
-*출처: Kubernetes Documentation, Components of Kubernetes (https://kubernetes.io/docs/concepts/overview/components/), CC BY 4.0*
+*출처: [Kubernetes Documentation, Components of Kubernetes](https://kubernetes.io/docs/concepts/overview/components/), CC BY 4.0*
 
 ### 3.1 Control Plane 핵심 컴포넌트
 

@@ -156,7 +156,7 @@ az containerapp ingress traffic set --name aca-webui -g rg-chat-prod \
 
 ![ACA 리비전 트래픽 분할: 리비전 1에 80%, 리비전 2에 20%가 분배되는 구조](/assets/images/azure/official-azure-cicd-acr-container-apps.webp)
 
-*출처: Azure Container Apps의 리비전, 가중치 및 레이블 — Microsoft Learn (<https://learn.microsoft.com/ko-kr/azure/container-apps/revisions>)*
+*출처: [Azure Container Apps의 리비전, 가중치 및 레이블 — Microsoft Learn](https://learn.microsoft.com/ko-kr/azure/container-apps/revisions)*
 
 ### 3.2 롤백은 트래픽을 되돌리는 일
 

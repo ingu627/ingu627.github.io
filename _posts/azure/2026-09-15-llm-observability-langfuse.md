@@ -181,7 +181,7 @@ ENABLE_AUDIT_LOGS_FILE: "true"   # 파일로 기록
 
 ![Azure Monitor 데이터 수집·분석 구조](/assets/images/azure/official-llm-observability-langfuse.webp)
 
-출처: Azure Monitor 개요 — Microsoft Learn (https://learn.microsoft.com/en-us/azure/azure-monitor/fundamentals/overview)
+*출처: [Azure Monitor 개요 — Microsoft Learn](https://learn.microsoft.com/en-us/azure/azure-monitor/fundamentals/overview)*
 
 ### 4.3 KQL 쿼리 예시
 

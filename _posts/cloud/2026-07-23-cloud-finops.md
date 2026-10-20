@@ -187,7 +187,7 @@ kubectl -n prod top pod -l app=api --containers
 
 ![VPA 아키텍처 — recommender·updater·admission controller와 대상 워크로드](/assets/images/cloud/official-cloud-finops.webp)
 
-출처: Kubernetes Documentation — Vertical Pod Autoscaling (https://kubernetes.io/docs/concepts/workloads/autoscaling/vertical-pod-autoscale/). 위 도식은 recommender가 Metrics Server 값을 모아 권장값을 VerticalPodAutoscaler CRD에 저장하고, admission controller가 새 파드 생성 시 값을 주입하며, updater가 기존 파드를 축출·재생성하거나 in-place로 갱신하는 구조를 보여준다. `updateMode: "Off"` 는 updater가 개입하지 않는 구간이라 위 예제처럼 권장값만 수집할 때 안전하다.
+*출처: [Kubernetes Documentation — Vertical Pod Autoscaling](https://kubernetes.io/docs/concepts/workloads/autoscaling/vertical-pod-autoscale/), . 위 도식은 recommender가 Metrics Server 값을 모아 권장값을 VerticalPodAutoscaler CRD에 저장하고, admission controller가 새 파드 생성 시 값을 주입하며, updater가 기존 파드를 축출·재생성하거나 in-place로 갱신하는 구조를 보여준다. `updateMode: "Off"` 는 updater가 개입하지 않는 구간이라 위 예제처럼 권장값만 수집할 때 안전하다.*
 
 ### 4.2 bin packing
 

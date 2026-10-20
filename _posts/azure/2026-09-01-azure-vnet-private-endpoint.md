@@ -166,7 +166,7 @@ Microsoft 문서는 이 흐름을 소비자와 서비스 공급자 양쪽 관점
 
 ![Private Endpoint 연결 승인과 DNS 레코드 등록 흐름](/assets/images/azure/official-azure-vnet-private-endpoint.webp)
 
-출처: Azure Private Endpoint 개요 — 연결 승인 워크플로 (https://learn.microsoft.com/azure/private-link/private-endpoint-overview), Microsoft Learn 문서 CC BY 4.0
+*출처: [Azure Private Endpoint 개요 — 연결 승인 워크플로](https://learn.microsoft.com/azure/private-link/private-endpoint-overview), Microsoft Learn 문서 CC BY 4.0*
 
 ```bash
 # Private Endpoint 생성 (snet-pe에 NIC 배치)

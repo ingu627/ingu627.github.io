@@ -78,7 +78,7 @@ RAG는 오픈북 시험과 비슷하다. LLM이 답을 지어내는 대신, 먼�
 
 ![RAG 솔루션의 일반적인 요청 흐름(Application flow)과 데이터 파이프라인(Data pipeline flow)](/assets/images/azure/official-azure-rag-pipeline-microservices.webp)
 
-출처: RAG solution design and evaluation guide, Microsoft Learn (https://learn.microsoft.com/en-us/azure/architecture/ai-ml/guide/rag/rag-solution-design-and-evaluation-guide). 위쪽이 질의 처리(Application flow), 아래쪽이 색인(Data pipeline flow)이며, 이 글의 분리 구조는 같은 두 흐름을 자체 컴포넌트로 나눠 구현한 것이다.
+*출처: [RAG solution design and evaluation guide, Microsoft Learn](https://learn.microsoft.com/en-us/azure/architecture/ai-ml/guide/rag/rag-solution-design-and-evaluation-guide), . 위쪽이 질의 처리(Application flow), 아래쪽이 색인(Data pipeline flow)이며, 이 글의 분리 구조는 같은 두 흐름을 자체 컴포넌트로 나눠 구현한 것이다.*
 
 다이어그램의 화살표를 문장으로 다시 따라가 보자. 사용자가 질문을 던지면, 먼저 질문이 임베딩 벡터로 변환된다. 이 벡터로 Qdrant에서 의미상 가까운 문서 조각 상위 후보를 뽑고, 동시에 SearXNG로 웹 검색을 병렬로 돌린다.
 

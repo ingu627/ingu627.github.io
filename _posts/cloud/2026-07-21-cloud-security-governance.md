@@ -55,7 +55,7 @@ last_modified_at: 2026-10-10
 
 ![AWS IAM 정책 평가 순서: Deny 평가 → Organizations SCP → 리소스 기반 정책 → 권한 경계 → 세션 정책 → 신원 기반 정책](/assets/images/cloud/official-aws-iam-policy-evaluation.webp)
 
-출처: AWS Identity and Access Management 사용 설명서 — 정책 평가 로직 (https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-logic.html). 도식 하단의 `*` 표시는 같은 문서의 각주를 가리킨다.
+*출처: [AWS Identity and Access Management 사용 설명서 — 정책 평가 로직](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-logic.html), . 도식 하단의 `*` 표시는 같은 문서의 각주를 가리킨다.*
 
 정책 유형별 성격: SCP와 권한 경계는 **권한을 부여하지 않고 상한만 깎는다**. 관리 계정(management account)과 서비스 연결 역할(service-linked role)에는 SCP가 적용되지 않는다는 점도 설계 시 반드시 반영한다.
 

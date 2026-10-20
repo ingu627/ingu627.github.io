@@ -78,7 +78,7 @@ LLM 게이트웨이는 이 네 가지를 한 계층에서 흡수한다. 클라�
 
 ![단일 리전에서 여러 모델 인스턴스를 게이트웨이 뒤에 두고 분산하는 구조 — 게이트웨이가 프라이빗 엔드포인트를 거쳐 여러 인스턴스로 트래픽을 나누고, 점선 화살표는 조건부로 쓰이는 분산 경로를 나타낸다](/assets/images/azure/official-azure-apim-llm-gateway.webp)
 
-출처: Use a gateway in front of multiple Azure OpenAI deployments — Microsoft Learn (https://learn.microsoft.com/en-us/azure/architecture/ai-ml/guide/azure-openai-gateway-multi-backend)
+*출처: [Use a gateway in front of multiple Azure OpenAI deployments — Microsoft Learn](https://learn.microsoft.com/en-us/azure/architecture/ai-ml/guide/azure-openai-gateway-multi-backend)*
 
 ### 2.2 Managed Identity로 인증하기
 

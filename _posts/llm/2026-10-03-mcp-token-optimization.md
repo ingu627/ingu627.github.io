@@ -116,7 +116,7 @@ MCP 공식 클라이언트 모범 사례는 이 흐름을 세 단계로 정리�
 
 ![점진적 발견 좌우 비교. 왼쪽 "All tools loaded upfront"는 도구 정의 전량을 싣고 사용자 요청을 읽기도 전에 약 150,000 토큰을 소비한다. 오른쪽 "Tools discovered on demand"는 Catalog(search_tools) → Inspect(get_tool_details) → Call 세 단계로 필요한 도구만 조회해 약 2,000 토큰만 쓴다.](/assets/images/llm/official-mcp-token-optimization.webp)
 
-*출처: Model Context Protocol, "Client Best Practices" — Progressive Discovery (<https://modelcontextprotocol.io/docs/develop/clients/client-best-practices>)*
+*출처: [Model Context Protocol, "Client Best Practices" — Progressive Discovery](https://modelcontextprotocol.io/docs/develop/clients/client-best-practices)*
 
 ### 3.3 임계값 기반 하이브리드
 

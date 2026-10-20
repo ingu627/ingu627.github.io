@@ -248,7 +248,7 @@ spec:
 
 ![LeaderWorkerSet 구조. LWS 컨트롤러 하나가 리더 StatefulSet을 만들고, 리더마다 워커 StatefulSet이 붙어 group-0, group-1, group-2 … 형태의 그룹을 이룬다. 각 그룹은 리더 Pod 하나와 워커 Pod들로 구성되며, 그룹 수는 replicas로 결정된다.](/assets/images/llm/official-custom-model-serving-pipeline.webp)
 
-*출처: LeaderWorkerSet 공식 문서 — Concepts (https://lws.sigs.k8s.io/docs/concepts/leaderworkerset/)*
+*출처: [LeaderWorkerSet 공식 문서 — Concepts](https://lws.sigs.k8s.io/docs/concepts/leaderworkerset/)*
 
 ### 4.4 Kubernetes Service 이름이 만드는 vLLM 경고
 

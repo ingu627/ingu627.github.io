@@ -218,7 +218,7 @@ Dockerfile의 `ENV`, 소스의 상수, 커밋된 `.env`는 가장 흔하고 가�
 
 ![시스템 할당 관리 ID를 쓰는 가상 머신 4대가 각각 Storage와 Key Vault에 역할 할당을 받는 구조. 사용자 할당 ID를 공유하면 역할 할당 수가 줄어든다](/assets/images/azure/official-managed-identity-system-assigned.webp)
 
-출처: Managed identity best practice recommendations — Microsoft Learn (https://learn.microsoft.com/ko-kr/entra/identity/managed-identities-azure-resources/managed-identity-best-practice-recommendations)
+*출처: [Managed identity best practice recommendations — Microsoft Learn](https://learn.microsoft.com/ko-kr/entra/identity/managed-identities-azure-resources/managed-identity-best-practice-recommendations)*
 
 ### 5.2 감사: 누가 언제 무엇을 읽었는가
 

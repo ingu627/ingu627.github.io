@@ -192,7 +192,7 @@ insights:
 ```
 
 ![순차(sequential) 오케스트레이션 패턴. 입력이 Agent 1 → Agent 2 → … → Agent n 파이프라인을 따라 흐르고, 각 에이전트가 모델·지식·도구를 따로 들고 '공통 상태(Common state)'를 공유한다. 단계가 고정된 동안에는 실행이 예측 가능하지만, 단계 간 결합과 공유 상태가 그대로 변경 비용이 된다.](/assets/images/llm/official-mcp-agent-architecture-patterns.webp)
-출처: Microsoft Learn, AI Agent Orchestration Patterns (https://learn.microsoft.com/en-us/azure/architecture/ai-ml/guide/ai-agent-design-patterns)
+*출처: [Microsoft Learn, AI Agent Orchestration Patterns](https://learn.microsoft.com/en-us/azure/architecture/ai-ml/guide/ai-agent-design-patterns)*
 
 당시 잘 동작한 이유는 명확했다. 단계 경계가 뚜렷했고, 단계별로 독립 배포가 가능했으며, 배치 실행이 예측 가능했다. 워크플로가 안정적으로 유지되는 동안에는 좋은 설계였다.
 

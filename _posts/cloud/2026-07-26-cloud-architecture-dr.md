@@ -273,7 +273,7 @@ time velero restore create --from-backup daily-2026-10-09 --namespace-mappings p
 
 ![재해 발생 시점을 기준으로 RPO는 손실을 감수하는 과거 구간, RTO는 서비스가 정상화되기까지의 시간을 나타낸다](/assets/images/cloud/official-cloud-architecture-dr.webp)
 
-출처: Google Cloud Architecture Center — Architecting disaster recovery for cloud infrastructure outages (https://cloud.google.com/architecture/disaster-recovery)
+*출처: [Google Cloud Architecture Center — Architecting disaster recovery for cloud infrastructure outages](https://cloud.google.com/architecture/disaster-recovery)*
 
 ### 8.2 4가지 전략
 

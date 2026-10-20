@@ -271,7 +271,7 @@ spec:
 
 ![HPA가 RC/Deployment의 Scale 값을 조정해 파드 수를 바꾸는 구조](/assets/images/k8s/official-kubernetes-workloads.webp)
 
-*출처: Kubernetes Documentation — Horizontal Pod Autoscaling (https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/)*
+*출처: [Kubernetes Documentation — Horizontal Pod Autoscaling](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/)*
 
 ```yaml
 apiVersion: autoscaling/v2

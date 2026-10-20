@@ -15,7 +15,7 @@ Matplotlib의 기본 폰트 패밀리는 `sans-serif`(기본값 `DejaVu Sans`)�
 
 ![Matplotlib 시각화 구조와 텍스트 아티스트 구성 요소](/assets/images/tips/official-prevent_kor.webp)
 
-*출처: Matplotlib Documentation - Anatomy of a figure (https://matplotlib.org/stable/gallery/showcase/anatomy.html), Matplotlib License*
+*출처: [Matplotlib Documentation - Anatomy of a figure](https://matplotlib.org/stable/gallery/showcase/anatomy.html), Matplotlib License*
 
 ## 파이썬 한글 방지 깨짐 코드
 

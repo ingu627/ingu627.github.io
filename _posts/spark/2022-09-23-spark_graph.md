@@ -98,7 +98,7 @@ val tripData = spark.read.option("header", "true"
 - 정점 테이블에서는 식별자(`name`)를 id로 정의하고(문자열 타입), 에지 테이블에서는 각 에지의 시작 정점 ID를 `src`로 도착 정점 ID를 `dst`로 표시한다.
 
 ![예제 속성 그래프(property graph) — 정점 3·5·7·2에 속성(예: franklin, prof.)이 붙고, 각 에지에도 Advisor·Collaborator·Colleague·PI 같은 관계 속성이 붙는다. 오른쪽은 같은 그래프를 정점 테이블(Id, Property)과 에지 테이블(SrcId, DstId, Property)로 표현한 것이다](/assets/images/spark/official-graphframes-property-graph.webp)
-*출처: Apache Spark 공식 문서 GraphX Programming Guide — Example Property Graph (https://spark.apache.org/docs/latest/graphx-programming-guide.html)*
+*출처: [Apache Spark 공식 문서 GraphX Programming Guide — Example Property Graph](https://spark.apache.org/docs/latest/graphx-programming-guide.html)*
 
 ```scala
 val stationVertices = bikeStations.withColumnRenamed("name", "id").distinct()

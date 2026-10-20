@@ -69,7 +69,7 @@ last_modified_at: 2026-10-10
 
 ![업스트림 공식 클러스터 아키텍처 도식 — 컨트롤 플레인, 워커 노드, 클라우드 프로바이더 API](/assets/images/k8s/official-kubernetes-architecture.webp)
 
-출처: Cluster Architecture (https://kubernetes.io/docs/concepts/architecture/) — kubernetes.io 문서 콘텐츠는 CC BY 4.0.
+*출처: [Cluster Architecture](https://kubernetes.io/docs/concepts/architecture/), kubernetes.io 문서 콘텐츠는 CC BY 4.0.*
 
 ### 3.1 컨트롤 플레인(Control Plane)
 

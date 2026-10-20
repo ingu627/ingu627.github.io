@@ -81,7 +81,7 @@ last_modified_at: 2026-10-11
 
 ![정형 스트리밍의 데이터 스트림을 무한히 추가되는 테이블(Unbounded Table)로 표현한 도식](/assets/images/spark/official-structured-streaming-stream-as-a-table.webp)
 
-*출처: Structured Streaming Programming Guide, Spark 3.5.6 (https://spark.apache.org/docs/3.5.6/structured-streaming-programming-guide.html)*
+*출처: [Structured Streaming Programming Guide, Spark 3.5.6](https://spark.apache.org/docs/3.5.6/structured-streaming-programming-guide.html)*
 
 ## 4. 정형 스트리밍의 핵심 개념
 

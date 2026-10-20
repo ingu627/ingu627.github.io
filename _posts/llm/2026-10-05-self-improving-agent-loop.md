@@ -128,7 +128,7 @@ last_modified_at: 2026-10-10
 
 ![그룹 롤아웃 RL 1회 반복 구조. 정책 샘플링(샘플러 가중치 갱신, 롤아웃+logprob 수집) → 롤아웃 스코어링(리워드·어드밴티지, 어시스턴트 토큰 마스크) → 어댑터 갱신(그래디언트 계산, 옵티마이저 스텝) 순으로 진행되고, 갱신된 샘플러 가중치로 다시 샘플링 단계로 돌아간다. 샘플링과 어댑터 갱신은 서비스가, 스코어링은 사용자 파이썬 드라이버가 맡는다.](/assets/images/llm/official-self-improving-agent-loop.webp)
 
-*출처: What is interactive training (preview) in Microsoft Foundry? (https://learn.microsoft.com/en-us/azure/foundry/fine-tuning/interactive-post-training/overview)*
+*출처: [What is interactive training (preview) in Microsoft Foundry?](https://learn.microsoft.com/en-us/azure/foundry/fine-tuning/interactive-post-training/overview)*
 
 ### 2.6 5단계: 디플로이(Deploy) — 회귀 검증과 점진 배포
 

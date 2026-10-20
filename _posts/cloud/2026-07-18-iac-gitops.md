@@ -348,7 +348,7 @@ Flux는 GitOps 툴킷을 컨트롤러 집합으로 분해한 구조다. `source-
 
 ![Flux GitOps Toolkit 컨트롤러 구조 — source·kustomize·helm·notification 컨트롤러가 각각 CRD를 watch하고 클러스터 상태를 수렴시킨다](/assets/images/cloud/official-flux-gitops-toolkit.webp)
 
-출처: GitOps Toolkit Components — Flux (https://fluxcd.io/flux/components/)
+*출처: [GitOps Toolkit Components — Flux](https://fluxcd.io/flux/components/)*
 
 ```yaml
 apiVersion: source.toolkit.fluxcd.io/v1

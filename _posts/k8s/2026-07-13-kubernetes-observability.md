@@ -250,7 +250,7 @@ inhibit_rules:
 컨테이너 로그는 기본적으로 stdout/stderr로 나가고, kubelet이 노드의 `/var/log/pods/...`에 JSON으로 저장한 뒤 로테이션한다(기본 10Mi × 5). **따라서 노드에 남는 로그는 휘발성**이며, 클러스터 밖으로 반출하지 않으면 파드 재생성/노드 교체 시 사라진다.
 
 ![노드 수준 로깅 구조 — 파드의 stdout/stderr가 노드의 로그 파일로 남고, 데몬셋 로깅 에이전트가 이를 읽어 로깅 백엔드로 전달한다](/assets/images/k8s/official-kubernetes-observability.webp)
-출처: Kubernetes Documentation — Logging Architecture (https://kubernetes.io/docs/concepts/cluster-administration/logging/)
+*출처: [Kubernetes Documentation — Logging Architecture](https://kubernetes.io/docs/concepts/cluster-administration/logging/)*
 
 위 그림은 쿠버네티스 공식 문서의 노드 수준 로깅 구조다. 애플리케이션 컨테이너가 stdout/stderr로 내보낸 로그가 노드의 로그 파일로 남고, 노드 에이전트 파드(이 글의 Fluent Bit 데몬셋)가 그 파일을 읽어 백엔드로 보내는 경로를 보여준다.
 

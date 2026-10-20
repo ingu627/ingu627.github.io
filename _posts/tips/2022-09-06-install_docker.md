@@ -36,7 +36,7 @@ last_modified_at: 2026-10-09
 
 ![도커 아키텍처 - 클라이언트, 도커 호스트(데몬), 레지스트리](assets/images/tips/official-docker-architecture.webp)
 
-*출처: Docker Docs - Docker architecture (https://docs.docker.com/get-started/docker-overview/#docker-architecture)*
+*출처: [Docker Docs - Docker architecture](https://docs.docker.com/get-started/docker-overview/#docker-architecture)*
 
 
 ### 1.1 오래된 버전 삭제

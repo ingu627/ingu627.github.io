@@ -100,7 +100,7 @@ kubelet이나 containerd가 죽어 있으면 결과는 언제나 NotReady다. �
 
 ![Kubernetes 클러스터 구성도 - 컨트롤 플레인의 etcd·kube-scheduler·controller-manager·cloud-controller-manager와, 각 노드 안에서 파드를 실행하는 kubelet·kube-proxy·CRI의 위치를 보여준다](/assets/images/k8s/official-eks-debugging-field-guide.webp)
 
-출처: Cluster Architecture, Kubernetes Documentation (https://kubernetes.io/docs/concepts/architecture/)
+*출처: [Cluster Architecture, Kubernetes Documentation](https://kubernetes.io/docs/concepts/architecture/)*
 
 ```bash
 aws ssm start-session --target <instance-id>

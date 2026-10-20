@@ -210,7 +210,7 @@ CSI(Container Storage Interface)는 kubelet·컨트롤러가 벤더 드라이버
 
 ![CSI 드라이버와 사이드카(external-provisioner/attacher)의 배치](/assets/images/k8s/official-kubernetes-storage-data.webp)
 
-출처: Kubernetes Blog — Dynamically Expand Volume with CSI and Kubernetes (https://kubernetes.io/blog/2018/08/02/dynamically-expand-volume-with-csi-and-kubernetes/). 위 도식은 노드마다 kubelet과 CSI 볼륨 드라이버(node 플러그인)가 위치하고, 컨트롤러 측의 external-provisioner·external-attacher 사이드카가 API 서버·컨트롤러 매니저와 통신하는 구조를 보여준다. 위 구성 요소 목록에서 "무엇이 어디에서 도는가"를 그림으로 대응시킨 것으로, 노드 플러그인이 노드별 DaemonSet으로 배치되고 사이드카가 컨트롤러 Deployment에 붙는다는 점을 확인할 수 있다.
+*출처: [Kubernetes Blog — Dynamically Expand Volume with CSI and Kubernetes](https://kubernetes.io/blog/2018/08/02/dynamically-expand-volume-with-csi-and-kubernetes/), . 위 도식은 노드마다 kubelet과 CSI 볼륨 드라이버(node 플러그인)가 위치하고, 컨트롤러 측의 external-provisioner·external-attacher 사이드카가 API 서버·컨트롤러 매니저와 통신하는 구조를 보여준다. 위 구성 요소 목록에서 "무엇이 어디에서 도는가"를 그림으로 대응시킨 것으로, 노드 플러그인이 노드별 DaemonSet으로 배치되고 사이드카가 컨트롤러 Deployment에 붙는다는 점을 확인할 수 있다.*
 
 ### 4.1 예제 3: CSI 스냅샷 생성과 복원
 

@@ -107,7 +107,7 @@ User          Service(Web)              Entra ID
 
 ![Entra ID Authorization Code Flow 공식 도식: 브라우저·앱·Microsoft Entra 사이의 인가 코드 교환과 id_token 검증(서명·issuer·audience·nonce·expiry) 단계](/assets/images/azure/official-entra-id-ai-service-auth.webp)
 
-*출처: Microsoft identity platform and OpenID Connect protocol (OpenID Connect authorization flow diagram) — Microsoft Learn (<https://learn.microsoft.com/en-us/entra/identity-platform/v2-protocols-oidc>), CC BY 4.0. 8단계 토큰 교환 직후 `id_token`의 서명·issuer·audience·nonce·expiry를 검증하고, 10~11단계에서 서명 키를 JWKS로 받아오는 순서가 표시되어 있다. 다이어그램에는 위 4단계 설명에 없는 PKCE(Proof Key for Code Exchange) 챌린지도 함께 그려져 있다.*
+*출처: [Microsoft identity platform and OpenID Connect protocol (OpenID Connect authorization flow diagram) — Microsoft Learn](https://learn.microsoft.com/en-us/entra/identity-platform/v2-protocols-oidc), CC BY 4.0. 8단계 토큰 교환 직후 `id_token`의 서명·issuer·audience·nonce·expiry를 검증하고, 10~11단계에서 서명 키를 JWKS로 받아오는 순서가 표시되어 있다. 다이어그램에는 위 4단계 설명에 없는 PKCE(Proof Key for Code Exchange) 챌린지도 함께 그려져 있다.*
 
 세 검증을 통과한 뒤에야 `roles` 클레임을 읽는다. 검증 없는 클레임 신뢰는 곧 인가 우회다. 검증된 `roles`를 서비스 권한으로 옮기는 일이 다음 절의 주제다.
 

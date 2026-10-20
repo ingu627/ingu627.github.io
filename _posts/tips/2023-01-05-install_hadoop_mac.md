@@ -89,7 +89,7 @@ export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
 
 ![HDFS 아키텍처 - NameNode, DataNode, 블록과 클라이언트의 관계](/assets/images/hadoop/official-hdfs-architecture.webp)
 
-*출처: HDFS Architecture (https://hadoop.apache.org/docs/r3.3.4/hadoop-project-dist/hadoop-hdfs/HdfsDesign.html)*
+*출처: [HDFS Architecture](https://hadoop.apache.org/docs/r3.3.4/hadoop-project-dist/hadoop-hdfs/HdfsDesign.html)*
 
 ### 3.1 그 외 환경설정 
 
