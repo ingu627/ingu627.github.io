@@ -62,7 +62,7 @@ last_modified_at: 2026-10-16
 
 2026년 하반기 차세대 추론 모델들은 HLE에서 50~60%대의 정답률(Claude Opus 5.5: 61.4%, Claude Fable 5.1: 59.1%, Gemini 4 Argon: 57.1%, GPT-6 Astra: 54.7%)을 달성했다. 
 
-그러나 이 점수를 얻기 위해 모델이 소모하는 **사고 토큰(Thinking Tokens)**의 양은 프로덕션 아키텍트에게 충격적인 수치를 보여줍니다. Artificial Analysis의 계측 데이터에 따르면:
+그러나 이 점수를 얻기 위해 모델이 소모하는 **사고 토큰(Thinking Tokens)**의 양은 프로덕션 아키텍트에게 충격적인 수치를 보여준다. Artificial Analysis의 계측 데이터에 따르면:
 
 ![HLE 시대: Jev 사전 계측 기반 동적 추론 토큰 할당](/assets/images/agent/hle-dynamic-reasoning-budget-jev.webp)
 

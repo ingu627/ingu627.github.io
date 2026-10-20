@@ -103,7 +103,7 @@ $$\text{MHA 차원}: 2 \times 128 \times 128 = 32,768 \quad \longrightarrow \qua
 
 ## 3. Kubernetes 서빙 최적화: vLLM vs SGLang 실측 벤치마크
 
-이러한 MLA 아키텍처 모델(DeepSeek-V3/V4, Kimi K3, GLM-5)을 Kubernetes 환경에 배포할 때, 서빙 엔진(vLLM vs SGLang)의 선택은 워크로드의 **접두사 중복률(Prefix Overlap)**에 따라 극명하게 갈립니다.
+이러한 MLA 아키텍처 모델(DeepSeek-V3/V4, Kimi K3, GLM-5)을 Kubernetes 환경에 배포할 때, 서빙 엔진(vLLM vs SGLang)의 선택은 워크로드의 **접두사 중복률(Prefix Overlap)**에 따라 극명하게 갈린다.
 
 ### 3.1 접두사 중복률에 따른 처리량 변곡점
 
