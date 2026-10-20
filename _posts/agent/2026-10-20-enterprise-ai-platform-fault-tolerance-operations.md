@@ -191,7 +191,7 @@ async def call_worker_with_hedging(payload: Dict[str, Any], timeout_p95: float =
 
 ## 5. 정량적 실측 비교 (The Receipts)
 
-32개 GPU(4개 노드)로 구성된 엔터프라이즈 프로덕션 환경에서, 의도적으로 1개 노드에 NVLink 통신 타임아웃 및 메모리 OOM 장애를 주입(Chaos Engineering Injection)했을 때의 실측 데이터입니다.
+32개 GPU(4개 노드)로 구성된 엔터프라이즈 프로덕션 환경에서, 의도적으로 1개 노드에 NVLink 통신 타임아웃 및 메모리 OOM 장애를 주입(Chaos Mesh 기반 장애 주입 테스트베드[^4])했을 때의 실측 데이터입니다.
 
 | 아키텍처 구성 | 장애 주입 시 성공률 | p50 지연 시간 | p99 지연 시간 | 클러스터 복구 시간 (RTO) |
 |---|---|---|---|---|
