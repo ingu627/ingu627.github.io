@@ -11,9 +11,9 @@ date: 2026-10-10
 last_modified_at: 2026-10-10
 ---
 
-앞선 글에서 비생성형 System One 모델 Jev의 거시적인 아키텍처와 에이전트 선택적 제어(Selective Control) 흐름을 살펴보았습니다. 이번 글에서는 엔지니어가 실제로 코드를 작성하고 시스템을 연동할 때 마주하는 구체적인 인터페이스 계약(API Contract)을 다루어보려 합니다.
+앞선 글에서 비생성형 System One 모델 Jev의 거시적인 아키텍처와 에이전트 선택적 제어(Selective Control) 흐름을 살펴보았다. 이번 글에서는 엔지니어가 실제로 코드를 작성하고 시스템을 연동할 때 마주하는 구체적인 인터페이스 계약(API Contract)을 다루어보고자 한다.
 
-TypeSafe AI의 Jev는 텍스트를 자유 생성하지 않는 대신, 사전에 정의된 엄격한 스키마 규격을 통해 상태(State)를 평가합니다. 공식 API 엔드포인트인 `POST /v1/systemone`과 공식 SDK(`typesafe-sdk`)는 세 가지 핵심 프리미티브인 **Choice**, **Score**, **Noul**을 제공합니다. 공식 문서[^1][^2][^6]에 명시된 관찰 가능한 API 스펙, 신뢰도(Confidence) 계산식, 그리고 질문 엔지니어링 규칙을 바탕으로 실무 설계 원칙을 정리해보았습니다.
+TypeSafe AI의 Jev는 텍스트를 자유 생성하지 않는 대신, 사전에 정의된 엄격한 스키마 규격을 통해 상태(State)를 평가한다. 공식 API 엔드포인트인 `POST /v1/systemone`과 공식 SDK(`typesafe-sdk`)는 세 가지 핵심 프리미티브인 **Choice**, **Score**, **Noul**을 제공한다. 공식 문서[^1][^2][^6]에 명시된 관찰 가능한 API 스펙, 신뢰도(Confidence) 계산식, 그리고 질문 엔지니어링 규칙을 바탕으로 실무 설계 원칙을 정리해보았다.
 
 ---
 
