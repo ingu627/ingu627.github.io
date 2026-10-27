@@ -81,7 +81,7 @@ last_modified_at: 2026-10-10
 
 아래 그림은 부하 생성기가 사설망 안에서 내부 로드 밸런서로 요청을 흘리는 경로를 보여준다.
 
-![Load Testing 구성](/assets/images/azure/azure-load-testing-architecture.png)
+![사설망 VNet 내부 Azure Load Testing 주입 및 마이크로서비스 부하 검증 아키텍처 다이어그램](/assets/images/azure/azure-load-testing-vnet-cognition.webp)
 
 위 그림이 이 구성이다. 부하 생성기는 위임 서브넷과 같은 VNet 안에서 내부 로드 밸런서 `10.0.4.53`으로 요청을 보내고, 그 뒤로 `aca-webui`가 실제 트래픽을 처리한다. 즉 부하 테스트 환경과 프로덕션 서비스가 같은 사설망을 공유하되, 부하 생성 트래픽만 별도로 격리하는 셈이다.
 

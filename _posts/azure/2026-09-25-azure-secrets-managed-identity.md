@@ -60,7 +60,7 @@ last_modified_at: 2026-10-10
 
 ## 2. 구조: Key Vault + Managed Identity
 
-![시크릿 거버넌스 아키텍처](/assets/images/azure/azure-secrets-architecture.png)
+![Key Vault와 관리 ID 기반 시크릿 거버넌스 및 사설 엔드포인트 통신 아키텍처 다이어그램](/assets/images/azure/azure-secrets-managed-identity-cognition.webp)
 
 위 그림은 `aca-webui`가 비밀 값을 직접 들지 않고도 데이터베이스·스토리지·게이트웨이에 접근하는 흐름을 보여준다. 핵심은 `kv-chat-prod`가 비밀의 단일 저장소이고, `aca-webui`의 관리 ID가 그 저장소를 읽을 권한을 가진 주체라는 점이다.
 
