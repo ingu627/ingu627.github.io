@@ -65,7 +65,7 @@ last_modified_at: 2026-10-10
 
 아래 그림은 요청이 이 두 경로로 갈라지는 모습을 보여준다.
 
-![데이터 계층 토폴로지](/assets/images/azure/azure-data-tier-topology.png)
+![Container Apps와 사설 엔드포인트 기반 PostgreSQL 및 Redis 데이터 계층 토폴로지 다이어그램](/assets/images/azure/azure-data-tier-postgres-redis-cognition.webp)
 
 위 그림의 흐름을 문장으로 다시 짚으면 이렇다. 사용자 요청은 `aca-webui`로 들어오고, 이 앱은 세 가지 경로로 저장소를 쓴다. 첫째, 대화방과 이력 같은 영속 데이터는 `pe-psql` 프라이빗 엔드포인트를 통해 `psql-chat-prod`로 간다. 둘째, 세션·웹소켓·캐시는 같은 환경 안의 `aca-redis`로 간다. 셋째, RAG 파이프라인의 임베딩 결과와 검색 캐시도 같은 Redis를 공유한다. PostgreSQL은 `aca-webui`만 직접 연결하고, 나머지 RAG 컴포넌트는 API 계층 너머에서 간접적으로만 접근한다.
 

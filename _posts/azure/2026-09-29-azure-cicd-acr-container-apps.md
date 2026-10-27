@@ -65,7 +65,7 @@ last_modified_at: 2026-10-10
 
 커밋 하나는 어떻게 프로덕션 트래픽이 되는가? 아래 그림이 그 경로를 보여준다.
 
-![배포 파이프라인](/assets/images/azure/azure-cicd-pipeline.png)
+![ACR 클라우드 빌드와 Container Apps 무중단 블루-그린 배포 파이프라인 아키텍처 다이어그램](/assets/images/azure/azure-cicd-acr-container-apps-cognition.webp)
 
 흐름은 이렇다. 개발자가 기능 브랜치를 병합하면 CI가 트리거되고, **Azure Container Registry(이하 ACR)** 의 클라우드 빌드로 이미지를 굽는다. 빌드가 끝나면 이미지는 커밋 SHA(Short SHA)를 태그로 달고 `acr-chatprod`에 푸시된다.
 

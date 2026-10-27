@@ -95,6 +95,8 @@ last_modified_at: 2026-10-16
 3. **L2 프론티어 하이브리드 추론 계층 (Claude Thinking / GPT-6)**:
    - 할당된 $N$ 토큰 예산 내에서만 정밀하게 추론을 수행하여 토큰 폭발을 원천 차단.
 
+![2-Tier 동적 예산 할당 아키텍처: L1 비생성형 Jev 계측과 L2 하이브리드 추론 사고 예산 N 동적 주입 다이어그램](/assets/images/agent/hle-hybrid-reasoning-orchestrator-cognition.webp)
+
 ---
 
 ## 4. 구현 쿡북: TypeSafe Jev 루브릭과 동적 예산 계산기

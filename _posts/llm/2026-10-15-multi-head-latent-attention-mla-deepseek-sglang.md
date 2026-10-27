@@ -130,20 +130,7 @@ $$\text{MHA 차원}: 2 \times 128 \times 128 = 32,768 \quad \longrightarrow \qua
 
 MLA 모델을 프로덕션 Kubernetes에 서빙할 때는 **인그레스(Ingress) 계층의 프리픽스 인지 라우팅(Prefix-Aware Routing)**[^4]이 결합되어야 한다.
 
-```
-                  [클라이언트 / 에이전트 요청]
-                               │
-                               ▼
-            [L7 Ingress Prefix Router (Envoy/Nginx)]
-            - 요청 전방 1K 토큰 SHA-256 해시 추출
-            - 해시 기반 Pod 일관성 세션 바인딩(Session Affinity)
-                               │
-             ┌─────────────────┴─────────────────┐
-             ▼                                   ▼
-    [SGLang Pod #1 (Node A)]            [SGLang Pod #2 (Node B)]
-    - DeepSeek-V4 MLA MoE               - DeepSeek-V4 MLA MoE
-    - RadixAttention (92% 캐시 히트)     - RadixAttention (92% 캐시 히트)
-```
+![L7 Ingress Prefix Router와 SGLang RadixAttention 파드 간 세션 어피니티 바인딩 아키텍처 다이어그램](/assets/images/llm/sglang-k8s-ingress-prefix-routing-cognition.webp)
 
 동일한 에이전트 세션이나 공통 시스템 프롬프트를 공유하는 요청이 서로 다른 파드(Pod)로 분산되면 Radix 캐시가 파편화되므로, 인그레스에서 요청의 상위 1,000 토큰 해시값을 기준으로 동일 파드에 트래픽을 바인딩하는 것이 필수적이다.
 
