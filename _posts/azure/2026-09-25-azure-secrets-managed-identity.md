@@ -165,7 +165,7 @@ Dockerfile의 `ENV`, 소스의 상수, 커밋된 `.env`는 가장 흔하고 가�
 
 ## 4. 로테이션과 피해 범위
 
-![키 로테이션과 피해 범위](/assets/images/azure/azure-secret-rotation.png)
+![Key Vault 3단계 무중단 시크릿 로테이션 및 피해 반경 제로화 아키텍처 다이어그램](/assets/images/azure/azure-secret-rotation-cognition.webp)
 
 위 그림은 자격증명을 교체할 때 "새 값을 먼저 유효하게 만들고, 소비자를 옮긴 뒤, 구 값을 폐기한다"는 순서를 보여준다. 순서를 지키면 무중단으로 교체되고, 반대로 구 값을 먼저 지우면 그 값을 쓰던 모든 인스턴스가 동시에 죽는다.
 

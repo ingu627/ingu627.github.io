@@ -187,7 +187,7 @@ export default function () {
 
 아래 곡선은 동시성이 올라갈 때 p95가 어디서 꺾이는지를 보여준다.
 
-![부하·스케일·지연 곡선](/assets/images/azure/azure-scaling-slo-validation.png)
+![부하 유입에 따른 오토스케일링 및 p95 SLO 지연시간 변곡점 검증 아키텍처 다이어그램](/assets/images/azure/azure-scaling-slo-validation-cognition.webp)
 
 위 곡선에서 읽어야 할 지점은 두 곳이다. 첫째는 **스케일 임계값 도달 지점**이다. 동시 요청이 인스턴스당 10을 넘기 시작하면 http-scaler가 리플리카를 추가하고, 지연 곡선은 일시적으로 평탄해진다.
 

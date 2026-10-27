@@ -117,7 +117,7 @@ az containerapp update --name aca-webui -g rg-chat-prod \
 
 ACA 리비전은 배포마다 만들어지는 불변 스냅샷이다. 이 불변성 덕분에 "옛 버전"을 지우지 않고 살려 둘 수 있고, 트래픽 가중치만 바꿔 되돌릴 수 있다. 아래 그림이 두 리비전이 공존하며 트래픽이 옮겨 가는 모습이다.
 
-![blue-green 리비전](/assets/images/azure/azure-blue-green-revisions.png)
+![Container Apps Blue-Green 리비전과 30초 무중단 트래픽 전환 아키텍처 다이어그램](/assets/images/azure/azure-blue-green-revisions-cognition.webp)
 
 왼쪽의 파란 리비전이 현재 100% 트래픽을 받고 있다. 오른쪽 초록 리비전은 새 코드로 생성됐지만 아직 가중치 0이라 트래픽을 받지 않는다.
 

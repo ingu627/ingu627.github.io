@@ -103,7 +103,7 @@ env:
 
 게다가 PostgreSQL은 연결마다 서버 프로세스를 하나씩 띄우기 때문에, 요청이 올 때마다 연결을 새로 맺고 끊으면 동시 사용자가 몰리는 순간 연결 생성 자체가 병목이 된다. 그래서 애플리케이션과 DB 사이에 **커넥션 풀(connection pool)** 을 두고, 미리 맺어 둔 연결을 재사용한다.
 
-![커넥션 풀 동작](/assets/images/azure/azure-connection-pool.png)
+![PgBouncer 커넥션 풀 동작 구조와 PostgreSQL 연결 고정 아키텍처 다이어그램](/assets/images/azure/azure-connection-pool-cognition.webp)
 
 위 그림처럼 요청이 들어오면 풀에서 유휴 연결을 꺼내 쓰고, 쓰고 나면 닫지 않고 풀에 반납한다. 연결이 부족하면 설정된 상한까지 새로 만들고, 그마저 넘으면 대기한다. 이 그림의 네 숫자가 실제 동작을 결정한다.
 
