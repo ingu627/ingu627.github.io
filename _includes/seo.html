@@ -61,8 +61,6 @@
 <meta name="description" content="{{ seo_description }}">
 {%- if page.noindex -%}
 <meta name="robots" content="noindex, follow">
-{%- elsif paginator and paginator.page > 1 -%}
-<meta name="robots" content="noindex, follow">
 {%- else -%}
 <meta name="robots" content="max-image-preview:large">
 {%- endif -%}
