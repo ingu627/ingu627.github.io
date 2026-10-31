@@ -210,4 +210,4 @@ PD Disaggregation 아키텍처를 도입함으로써, 대용량 입력이 쏟아
 [^2]: DeepSpeed: *Pipeline Parallelism for Deep Learning Optimization* (2021). [https://www.deepspeed.ai](https://www.deepspeed.ai)
 [^3]: Mooncake: *A KVCache-Centric Disaggregated Architecture for LLM Serving* (2024). [arXiv:2407.00079](https://arxiv.org/abs/2407.00079)
 [^4]: TypeSafe AI Official Documentation: *Jev Jaggedness & Question Design Guide* (2026). [https://docs.typesafe.ai](https://docs.typesafe.ai)
-[^5]: ingu627.github.io: *Kubernetes 환경에서 초저지연 LLM 서빙: vLLM vs SGLang 접두사 캐싱 아키텍처와 처리량 심층 비교* (2026). [/llm/k8s-low-latency-llm-serving-vllm-sglang/](/llm/k8s-low-latency-llm-serving-vllm-sglang/)
+[^5]: ingu627.github.io: *Kubernetes 환경에서 초저지연 LLM 서빙: vLLM vs SGLang 접두사 캐싱 아키텍처와 처리량 심층 비교* (2026). [/llm/k8s/k8s-low-latency-llm-serving-vllm-sglang/](/llm/k8s/k8s-low-latency-llm-serving-vllm-sglang/)

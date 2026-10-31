@@ -3,6 +3,7 @@ layout: single
 title: "Kubernetes 환경에서 초저지연 LLM 서빙: vLLM vs SGLang 접두사 캐싱 아키텍처와 처리량 심층 비교"
 excerpt: "멀티턴 대화, 에이전트 루프, 대규모 시스템 프롬프트 워크로드에서 TTFT(Time-to-First-Token)와 서빙 처리량을 결정짓는 핵심 병목은 접두사 캐싱(Prefix Caching)이다. vLLM의 PagedAttention 청크 해시 캐싱과 SGLang의 RadixAttention 트라이 트리 캐싱 메커니즘을 비교하고, K8s 환경에서의 GPU 파드 배치, Prefix-aware 라우팅, 실측 벤치마크, 프로덕션 트레이드오프를 체계적으로 정리한다."
 categories: [llm, k8s]
+redirect_from: /llm/k8s-low-latency-llm-serving-vllm-sglang/
 tags: [llm, kubernetes, k8s, vllm, sglang, prefix-caching, pagedattention, radixattention, ttft, serving, 정리]
 toc: true
 toc_sticky: true

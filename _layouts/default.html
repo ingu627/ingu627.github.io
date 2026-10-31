@@ -43,6 +43,7 @@
 
     <!-- google ads -->
     <div align="center" style="margin: 1em 0;"></div>
+     {% unless page.no_ads %}
      <!-- ads(bottom) -->
     <ins class="adsbygoogle"
      style="display:block; text-align:center"
@@ -53,6 +54,7 @@
     <script>
      (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
+    {% endunless %}
     
     {% if site.search == true %}
       <div class="search-content">

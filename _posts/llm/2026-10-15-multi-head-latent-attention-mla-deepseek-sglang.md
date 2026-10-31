@@ -186,5 +186,5 @@ spec:
 
 [^1]: DeepSeek-AI: *DeepSeek-V3 Technical Report: Multi-Head Latent Attention and DualPipe Architecture* (2025). [arXiv:2412.19437](https://arxiv.org/abs/2412.19437)
 [^2]: LMSYS Organization: *SGLang: Efficient Execution of Structured Language Model Programs with RadixAttention* (2024). [arXiv:2312.07104](https://arxiv.org/abs/2312.07104)
-[^3]: ingu627.github.io: *Kubernetes 환경에서 초저지연 LLM 서빙: vLLM vs SGLang 접두사 캐싱 아키텍처와 처리량 심층 비교* (2026). [/llm/k8s-low-latency-llm-serving-vllm-sglang/](/llm/k8s-low-latency-llm-serving-vllm-sglang/)
+[^3]: ingu627.github.io: *Kubernetes 환경에서 초저지연 LLM 서빙: vLLM vs SGLang 접두사 캐싱 아키텍처와 처리량 심층 비교* (2026). [/llm/k8s/k8s-low-latency-llm-serving-vllm-sglang/](/llm/k8s/k8s-low-latency-llm-serving-vllm-sglang/)
 [^4]: ingu627.github.io: *추론 라우팅과 요청 캐스케이딩: 2-Tier 게이트웨이와 시맨틱 캐싱* (2026). [/llm/inference-routing-cascading/](/llm/inference-routing-cascading/)

@@ -46,6 +46,7 @@ layout: default
         {{ content }}
 
         <!--google ads(between)-->
+      {% unless page.no_ads %}
       <ins class="adsbygoogle"
         style="display:block; text-align:center;"
         data-ad-layout="in-article"
@@ -55,6 +56,7 @@ layout: default
       <script>
           (adsbygoogle = window.adsbygoogle || []).push({});
       </script>
+      {% endunless %}
       
         {% if page.link %}<div><a href="{{ page.link }}" class="btn btn--primary">{{ site.data.ui-text[site.locale].ext_link_label | default: "Direct Link" }}</a></div>{% endif %}
       </section>

@@ -3,6 +3,7 @@ layout: single
 title: "엔터프라이즈 API 아키텍처와 FastAPI 프로덕션 엔지니어링: REST·GraphQL·gRPC 비교부터 무중단 서빙까지"
 excerpt: "REST·GraphQL·gRPC의 직렬화 및 전송 계층 트레이드오프, FastAPI 기반 AI 스트리밍(SSE) 및 비동기 워커 아키텍처, Redis 토큰 버킷 속도 제한, 그리고 Gunicorn/Uvicorn 프로덕션 배포 파이프라인을 심층 분석한다."
 categories: [web]
+redirect_from: /OS/api_deployment/
 tags: [fastapi, api, rest, graphql, grpc, architecture, docker, production, microservices]
 toc: true
 toc_sticky: true
