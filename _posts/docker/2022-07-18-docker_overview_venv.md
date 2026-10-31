@@ -11,11 +11,11 @@ sidebar_main: false
 last_modified_at: 2026-10-09
 ---
 
-<img src='https://user-images.githubusercontent.com/78655692/179643735-e64c6545-9239-4d81-9e63-d7d8f834d456.png' width=650>
+<img src='/assets/images/legacy/f8a88052b9.webp' width=650>
 
 ## Docker
 
-![image](https://user-images.githubusercontent.com/78655692/179672618-f62ebe53-9d24-4f7d-b4c7-a534743e08d5.png) <br> 이미지출처 [^2]
+![image](/assets/images/legacy/3d3668913c.webp) <br> 이미지출처 [^2]
 
 - **도커(Docker)**는 특정 프로그램의 배포 및 관리를 단순하게 해주는 오픈소스 플랫폼으로 리눅스 컨테이너를 기반으로 한다.
   - 서버에서는 도커를 이용해 여러 개의 컨테이너를 실행할 수 있으며 배포 또한 가능하다.
@@ -86,7 +86,7 @@ RUN apt-get install git -y
 RUN rm -rf /var/lib/apt/lists/*
 ```
 
-<img src='https://user-images.githubusercontent.com/78655692/179677177-fcc4776c-8322-4cab-a46f-a0c6eeda3a6e.png' width=600>
+<img src='/assets/images/legacy/b1da578acf.webp' width=600>
 
 - [docker hub](https://hub.docker.com/)에 들어가 `Create Repository`를 클릭한다.
 - 1번은 계정(account)이고, 2번은 저장소 이름(repository)이다. 작성한 후 `Create`를 누르면 해당 저장소가 생성된다.
@@ -138,7 +138,7 @@ RUN rm -rf /var/lib/apt/lists/*
 
 - 처음에 `#`만 나온다면, `/bin/bash`를 통해 해당 터미널을 들어간다.
 
-    ![image](https://user-images.githubusercontent.com/78655692/179680446-acc3cd20-7569-4acf-8a74-edc537ce5348.png)
+    ![image](/assets/images/legacy/bd8621c73b.webp)
 
 - 그 안에서 기존 파이썬 가상환경 만들때처럼 똑같이 하면 된다.
 
@@ -180,7 +180,7 @@ RUN rm -rf /var/lib/apt/lists/*
   $ sudo apt-get install -y nvidia-docker2 
   ```
 
-<img src='https://user-images.githubusercontent.com/78655692/179695593-67e68132-1430-497e-a36c-3e2551004db8.png' width=600>
+<img src='/assets/images/legacy/a82c553d55.webp' width=600>
 
 - 도커 이미지 안에 `tf2.8` 이름의 가상환경이 내장돼 있다.
 - `cd ~`

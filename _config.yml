@@ -16,6 +16,7 @@ minimal_mistakes_skin    : "dirt" # "air", "aqua", "contrast", "dark", "dirt", "
 dark_theme_toggle        : true
 after_footer_scripts:
   - /assets/js/custom/dark-theme.js
+  - /assets/js/custom/lazy-images.js
 
 # Site Settings
 locale                   : "ko-KR"

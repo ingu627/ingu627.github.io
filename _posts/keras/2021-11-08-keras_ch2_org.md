@@ -11,8 +11,7 @@ classes: wide
 last_modified_at: 2026-10-09
 ---
 
-<img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/147629300-4d7acc5e-225a-454a-92cd-4da82f6828f6.png
-'>
+<img align='right' width='200' height='200' src='/assets/images/legacy/be0ceae23f.webp'>
 본 글은 [케라스 창시자에게 배우는 딥러닝] - (박해선 옮김) 책을 개인공부하기 위해 요약, 정리한 내용입니다. 전체 코드는 [https://github.com/ingu627/deep-learning-with-python-notebooks](https://github.com/ingu627/deep-learning-with-python-notebooks)에 기재했습니다.(원본 코드 fork) 뿐만 아니라 책에서 설명이 부족하거나 이해가 안 되는 것들은 외부 자료들을 토대로 메꿔 놓았습니다. 즉, 딥러닝은 이걸로 끝을 내보는 겁니다. 오타나 오류는 알려주시길 바라며, 도움이 되길 바랍니다.
 
 ## 2_1. 신경망과의 첫 만남
@@ -110,7 +109,7 @@ print(test_acc) # 0.9799000024795532
 
 ## 2_2. 신경망을 위한 데이터 표현 
 
-![image](https://user-images.githubusercontent.com/78655692/142875666-e2e24749-6fba-4650-acbb-674bca1da7bc.png) 이미지출처: [^1]
+![image](/assets/images/legacy/d595f54739.webp) 이미지출처: [^1]
 
 ### 텐서
 
@@ -144,7 +143,7 @@ print(x.ndim)
 - **2D 텐서** : <b><span style="color:red">(batch_size, dim)</span></b>
   - 행의 크기가 batch_size, 열의 크기가 dim이다.
 
-![image](https://user-images.githubusercontent.com/78655692/143195653-9297e916-7683-4207-9332-6837c4ecc275.png) 이미지출처: [^2]
+![image](/assets/images/legacy/edbe78964e.webp) 이미지출처: [^2]
 
 ```python
 x = tf.constant([[
@@ -173,13 +172,13 @@ print(x.ndim)
 - <b><span style="color:red">(batch_size, width, height)</span></b> - 비전 분야에서의 3차원 텐서
 - 자연어 처리보다 비전 분야(이미지, 영상 처리)를 하시게 된다면 좀 더 복잡한 텐서를 다루게 된다.
 
-![image](https://user-images.githubusercontent.com/78655692/143198512-4bfa9b7f-0a77-460d-bfcb-ac04c5d11129.png) 이미지출처: [^2]
+![image](/assets/images/legacy/754d970dca.webp) 이미지출처: [^2]
 
 - <b><span style="color:red">(batch_size, length, dim)</span></b> - NLP 분야에서의 3차원 텐서
   - length : 문장 길이
   - dim : 단어 벡터의 차원
 
-![image](https://user-images.githubusercontent.com/78655692/143198696-4106e5a1-92f5-4fc6-bdb5-76b83a8522ee.png) 이미지출처: [^3]
+![image](/assets/images/legacy/20c147a213.webp) 이미지출처: [^3]
 
 ```python
 x = tf.constant([[
@@ -241,7 +240,7 @@ print(x.shape)
 
 - 데이터에서 시간이 중요할 때는 시간 축을 포함하여 3D 텐서로 저장된다. 
 
-<img src='https://user-images.githubusercontent.com/78655692/148701777-89bd49ea-f091-4d61-bb25-42eb7194828d.png' width=400> 이미지출처: [^4]
+<img src='/assets/images/legacy/48d71e491f.webp' width=400> 이미지출처: [^4]
 
 ### 2_2_11. 이미지 데이터
 
@@ -250,7 +249,7 @@ print(x.shape)
   - 256 x 256 크기의 컬러 이미지에 대한 128개의 배치는 (128, 256, 256, 3
   - ) 크기의 텐서에 **저장 가능**
 
-<img src='https://user-images.githubusercontent.com/78655692/148704125-e8a670a0-c0bc-4179-92f0-7ca8adc7ae63.png' width=400> 이미지출처: [^5]
+<img src='/assets/images/legacy/d2b6d77e7b.webp' width=400> 이미지출처: [^5]
 
 ### 2_2_12. 비디오 데이터
 
@@ -302,11 +301,11 @@ output = relu(dot(W, input) + b)
 4. 네트워크의 파라미터에 대한 손실 함수의 그래디언트를 계산한다.(역방향 패스 (backward pass))
 5. 그래디언트의 반대 방향으로 파라미터를 조금 이동시킨다.
 
-<img src='https://user-images.githubusercontent.com/78655692/148704685-15c39fd6-e6cb-4737-8389-e1d42eaca16d.png' width=400> 이미지출처: [^6]
+<img src='/assets/images/legacy/0e19377ed0.webp' width=400> 이미지출처: [^6]
 
 - 위의 그림은 SGD가 1D 손실 함수의 값을 낮추는 과정
 
-<img src='https://user-images.githubusercontent.com/78655692/148704770-fd9c31e5-c860-438a-8938-d728e4687526.png' width=400> 이미지출처: [^7]
+<img src='/assets/images/legacy/48a597462f.webp' width=400> 이미지출처: [^7]
 
 - 위의 그림은 SGD가 2D 손실 함수의 값을 낮추는 과정
 
@@ -314,7 +313,7 @@ output = relu(dot(W, input) + b)
 - 역전파는 최종 손실 값에서부터 시작한다.
 - 손실 값에 각 파라미터가 기여한 정도를 계산하기 위해 연쇄 법칙을 적용하여 최상위 층에서 하위 층까지 거꾸로 진행된다. 
 
-<img src="https://user-images.githubusercontent.com/78655692/140705045-69b7e24f-f246-42ae-917c-9620ef973190.png" width="600" alt="image"/> 이미지출처: [^8]
+<img src="/assets/images/legacy/623611bf76.webp" width="600" alt="image"/> 이미지출처: [^8]
 
 ## 요약
 - **학습**은 훈련 데이터 샘플과 그에 상응하는 타깃이 주어졌을 때 손실 함수를 최소화하는 모델 파라미터의 조합을 찾는 것을 의미

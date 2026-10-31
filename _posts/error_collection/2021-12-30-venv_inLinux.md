@@ -17,7 +17,7 @@ last_modified_at: 2026-10-09
 Package 'python3.8-venv' has no installation candidate
 ```
 
-![image](https://user-images.githubusercontent.com/78655692/147743481-c73e25f9-2639-4382-8cbf-9d78d620fa9d.png)
+![image](/assets/images/legacy/a3962ea2d1.webp)
 
 ## 해결 방법
 
@@ -25,7 +25,7 @@ Package 'python3.8-venv' has no installation candidate
 2. `sudo apt-get upgrade`
 3. `sudo apt-get install python3-venv`
 
-![image](https://user-images.githubusercontent.com/78655692/147743640-f2ef0b0a-c77b-4fec-b7a1-a0bb6e6cd460.png)
+![image](/assets/images/legacy/924fc3878a.webp)
 
 > 파일 위치 확인
 > 탐색기에서 `\\wsl$`로 네트워크 환경으로 접속하기

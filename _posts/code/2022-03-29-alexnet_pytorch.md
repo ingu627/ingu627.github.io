@@ -11,7 +11,7 @@ sidebar_main: false
 last_modified_at: 2026-10-09
 ---
 
-<img align='right' width='350' src='https://user-images.githubusercontent.com/78655692/162920296-ea7abcc7-f497-4351-8152-838c140a1ba2.png'>
+<img align='right' width='350' src='/assets/images/legacy/f4ae66f781.webp'>
 본 글은 "ImageNet Classification with Deep Convolutional Neural Networks" 논문을 파악하고, 이를 파이토치로 구현해보는 내용입니다. 하나하나 분해해봅시다. 논문 : [AlexNet](https://proceedings.neurips.cc/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf) 코드 : [kaggle - Fashion MNIST with AlexNet in Pytorch](https://www.kaggle.com/code/tiiktak/fashion-mnist-with-alexnet-in-pytorch-92-accuracy/notebook) 블로그 글 코드 : [alexnet_pytorch.ipynb](https://github.com/data-science-DL/pytorch/blob/master/deeplearning_ajou/alexnet_pytorch.ipynb) 파이토치 튜토리얼 : [pytorch.org](https://pytorch.org/docs/stable/index.html)
 
 
@@ -28,17 +28,17 @@ last_modified_at: 2026-10-09
 
 ## AlexNet 구조
 
-![image](https://user-images.githubusercontent.com/78655692/160421851-7f682d11-e4d9-4117-9c58-d1022d476658.png)
+![image](/assets/images/legacy/fcfdf30e65.webp)
 
 
-![image](https://user-images.githubusercontent.com/78655692/160422169-afaeee33-f486-461d-b974-3f16731a8d34.png)
+![image](/assets/images/legacy/5533441d27.webp)
 
 
 ## 파이토치로 구현해보기
 
 ### Dataset : Fashion MNIST
 
-<img src='https://user-images.githubusercontent.com/78655692/160522726-db2881df-62f0-4e88-b0c7-51c44c3e09a6.png' width=400> <br>이미지출처 [^1]
+<img src='/assets/images/legacy/63623bd695.webp' width=400> <br>이미지출처 [^1]
 
 - Fashion MNIST 데이터셋 : 운동화, 코트, 가방 등의 작은 이미지 모음 [^2]
   - training set : 60000
@@ -165,7 +165,7 @@ print(class_names[labels[0]])
 
 - 5개의 convolution layer, 3개의 fully-connected layer => 총 8개 [^3]
 
-![png](https://user-images.githubusercontent.com/78655692/160535816-9b598169-5401-43f9-9a1e-0bf9a958148d.png)
+![png](/assets/images/legacy/e928e454ca.webp)
 
 ```python
 class fashion_mnist_alexnet(nn.Module):
@@ -254,7 +254,7 @@ summary_(model, (1,227,227), batch_size)
 # summary_: (model, input_size, batch_size)
 ```
 
-![image](https://user-images.githubusercontent.com/78655692/160539431-ceb2788f-139e-4249-9665-87c46ad30e41.png)
+![image](/assets/images/legacy/c4745c990c.webp)
 
 
 ### train 정의
@@ -310,7 +310,7 @@ for epoch in range(1, epochs+1):
 
 - **결과** : 10 에포크로 90% 정확도 달성
 
-![image](https://user-images.githubusercontent.com/78655692/160552918-08fd07e0-d848-4903-a6b3-22f3cd4cc0e8.png)
+![image](/assets/images/legacy/55208652e9.webp)
 
 
 

@@ -17,19 +17,19 @@ last_modified_at: 2026-10-09
 *1.* `.libPaths()`을 실행해 현재 라이브러리 위치를 파악한다.  
 *2.* `.libPaths("C:/Rlib")`을 입력해 기본 라이브러리를 추가한다. 
 
-![image](https://user-images.githubusercontent.com/78655692/141605977-49101b0a-8932-407d-b7f3-faff14a8d4b4.png)
+![image](/assets/images/legacy/59802619eb.webp)
 
 *3.* `C:\R\R-4.1.1\etc` 파일 위치로 가 `Rprofile.site` 파일을 메모장으로 실행한다.  
 
-![image](https://user-images.githubusercontent.com/78655692/141606000-cb91698b-fa52-46e9-8459-11d90cc37dea.png)
+![image](/assets/images/legacy/1c469d3afe.webp)
 
 *4.* 맨 밑에 `.libPaths("C:/Rlib")`을 추가해주면 영구적으로 기본경로가 저장된다.  
 
-![image](https://user-images.githubusercontent.com/78655692/141606055-4b6b2f05-e645-4425-bc50-8be33bb52d3f.png)
+![image](/assets/images/legacy/6696403a2c.webp)
 
 *5.* 설치가 잘된다.  
 
-![image](https://user-images.githubusercontent.com/78655692/141606078-b3d9487e-9ab8-49c2-82b9-3b9af6a50f59.png)
+![image](/assets/images/legacy/a47f0c4cde.webp)
 
 
 ## References 

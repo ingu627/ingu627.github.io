@@ -11,7 +11,7 @@ sidebar_main: false
 last_modified_at: 2026-10-11
 ---
 
-![image](https://user-images.githubusercontent.com/78655692/163179208-1e53a732-6f83-4bbb-ac80-a46d3561c930.png)
+![image](/assets/images/legacy/b98f0065b4.webp)
 
 "A Data Quality-Driven View of MLOps"[^paper] 논문을 공부하며 핵심 내용을 정리하고 리뷰한 글이다.
 
@@ -50,14 +50,14 @@ last_modified_at: 2026-10-11
 |적시성(timeliness)|작업을 위한 데이터가 최신인 정도|
 
 결국 데이터 파이프라인의 품질이 곧 프로덕션 모델의 예측 한계를 규정한다.
-<img src='https://user-images.githubusercontent.com/78655692/161371544-3f459267-cc30-40c6-9845-083b7bfbfb9a.png' width=700>
+<img src='/assets/images/legacy/f9af960c1b.webp' width=700>
 
 
 ### 전체 개요
 
 데이터 품질의 각 차원은 MLOps 라이프사이클의 여러 단계로 전파되며 모델 성능에 복합적인 영향을 미친다.
 
-![image](https://user-images.githubusercontent.com/78655692/160606677-c3663f3f-8317-45f0-9d2d-56a5cc0ae774.png)
+![image](/assets/images/legacy/84c04ac693.webp)
 
 이러한 품질 문제를 체계적으로 다루기 위해 먼저 통계적 분포 변화를 정의하는 수학적 기초 개념을 짚고 넘어가야 한다.
 
@@ -79,7 +79,7 @@ last_modified_at: 2026-10-11
 
 데이터 분포는 정적이지 않으며, 프로덕션 환경에서는 drift의 유형을 판별하는 것이 급선무다.
 
-![image](https://user-images.githubusercontent.com/78655692/161371447-7a288d5a-4527-4b50-a759-d03ae087d281.png)
+![image](/assets/images/legacy/f5209607b6.webp)
 ### 추가 : 어떻게 방지해야 하나? [^1]
 
 분포 변화에 실시간으로 대응하기 위해 실무에서는 다양한 완화 전략을 채택한다.
@@ -146,7 +146,7 @@ BER이 0이 되지 않는 근본 원인은 데이터 품질의 결함, 특히 �
 2. **복수 클래스 공존 (ImageNet #4463)**: 단일 이미지 내에 수탉(n01514668)과 공작(n01806143)의 특징이 공존하여 단일 라벨 체계로는 모호성이 해소되지 않는다.
 3. **라벨 노이즈 (ImageNet #32040)**: 실제 파이(pie) 이미지임에도 검증 데이터셋 라벨이 피자(n07873807)로 잘못 지정되어 라벨 정확도가 훼손된 경우다.
 
-![image](https://user-images.githubusercontent.com/78655692/160673572-e2711f74-e41b-47b9-99d5-f100fe8e4fc3.png)
+![image](/assets/images/legacy/fe3096b87e.webp)
 
 ### A Data Quality View
 

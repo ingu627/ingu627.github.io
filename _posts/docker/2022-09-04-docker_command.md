@@ -12,8 +12,7 @@ last_modified_at: 2026-10-09
 ---
 
 
-<img align='right' width='300' height='150' src='https://user-images.githubusercontent.com/78655692/179643735-e64c6545-9239-4d81-9e63-d7d8f834d456.png
-'>
+<img align='right' width='300' height='150' src='/assets/images/legacy/f8a88052b9.webp'>
 도커를 사용하면서 명령어를 정리해야겠다는 생각을 했습니다.
 
 **환경**
@@ -26,7 +25,7 @@ last_modified_at: 2026-10-09
 
 ## 0. 명령어 전체 개요
 
-<img src='https://user-images.githubusercontent.com/78655692/188309951-22b9cb91-1dfe-483b-8314-c6458a9bc96b.png' width=650> <br> 이미지출처 [^1]
+<img src='/assets/images/legacy/7fbb3a61a0.webp' width=650> <br> 이미지출처 [^1]
 
 - **이미지(image)** : 컨테이너 실행에 필요한 파일과 설정값등을 포함하고 있는 파일이다.
   - 이미지는 [도커 허브 링크](hub.docker.com/)에 존재한다.
@@ -45,7 +44,7 @@ $ docker pull ingu627/hadoop:spark3.3.0
 
 - **실행결과**
 
-    ![Screenshot from 2022-09-04 20-37-45](https://user-images.githubusercontent.com/78655692/188311366-452fde22-0c2e-45e7-a722-818abe6f1251.png)
+    ![Screenshot from 2022-09-04 20-37-45](/assets/images/legacy/a29cdf2cdc.webp)
 
 
 ## 2. 도커 컨테이너 확인
@@ -58,7 +57,7 @@ $ docker pull ingu627/hadoop:spark3.3.0
 
 - **실행결과**
 
-    ![Screenshot from 2022-09-04 20-39-27](https://user-images.githubusercontent.com/78655692/188311430-0e5d18c4-9f6d-48c4-829c-95339a8bd1c4.png)
+    ![Screenshot from 2022-09-04 20-39-27](/assets/images/legacy/96a7f1c339.webp)
 
 
 ## 3. 컨테이너 생성 및 시작
@@ -108,7 +107,7 @@ $ docker start spark
 
 - **실행결과**
 
-    ![Screenshot from 2022-09-04 21-00-00](https://user-images.githubusercontent.com/78655692/188312283-39e9b7a9-f7a1-4403-955a-f130d0a5609c.png)
+    ![Screenshot from 2022-09-04 21-00-00](/assets/images/legacy/7362d2f03d.webp)
 
 
 ### 4.1 VSCODE 연결하기
@@ -117,7 +116,7 @@ $ docker start spark
 1. vsocde를 실행하여 `ctrl+shift+p`를 누른다.
 2. 검색창에서 `Remote-Containers: Attach to Running Container`를 찾아 클릭한다.
 
-    ![Screenshot from 2022-09-04 21-02-59](https://user-images.githubusercontent.com/78655692/188312440-9c804af7-276d-42ab-ad80-1d41f831aeec.png)
+    ![Screenshot from 2022-09-04 21-02-59](/assets/images/legacy/cb3a4c9176.webp)
 
 
 ### 4.2 실행중인 컨테이너에 접속하기

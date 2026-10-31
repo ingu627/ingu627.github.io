@@ -11,7 +11,7 @@ sidebar_main: false
 last_modified_at: 2026-10-11
 ---
 
-![image](https://user-images.githubusercontent.com/78655692/163179465-84498a7b-65b6-4389-ab68-e2d64f1aefd9.png)
+![image](/assets/images/legacy/8071d6d0c4.webp)
 
 "Learning under Concept Drift: an Overview" 논문을 정리하고 검토한 글이다[^1].
 논문 링크 : <https://arxiv.org/abs/1010.4784>
@@ -52,7 +52,7 @@ last_modified_at: 2026-10-11
 - **이력 통합**: 예측 후 실제 라벨 $y_{t+1}$이 확인되면 $(X_{t+1},y_{t+1})$은 이력 데이터의 일부로 편입된다.
 - **반복 과정**: 다음 테스트 데이터 $X_{t+2}$를 대상으로 동일한 사이클을 반복한다.
 
-<img src="https://user-images.githubusercontent.com/78655692/161387973-b28b58b0-f8ee-401f-82b3-b64bc171ed86.png" width=700>
+<img src="/assets/images/legacy/9120a49e3a.webp" width=700>
 
 매 시점 인스턴스 $X_t$는 특정 소스 $S_t$에 의해 생성된다.
 
@@ -62,7 +62,7 @@ last_modified_at: 2026-10-11
 
 과거 데이터로 미래를 예측하는 점진적 러너의 성패는 드리프트의 원인을 확률적으로 분해하는 데 달려 있다.
 
-<img src="https://user-images.githubusercontent.com/78655692/161388300-5dad5531-cdd7-4139-862c-27e9e3310d82.png" width=700>
+<img src="/assets/images/legacy/7a53c7c2a9.webp" width=700>
 
 ### 1.2 Causes of a concept drift
 
@@ -97,7 +97,7 @@ $X \rightarrow c_i$로 분류하기 위한 베이즈 최적 결정 규칙은 클
 3. **Model adaptivity**: 디자이너는 변화 유형과 미래 가정을 바탕으로 모델을 적응시키는 메커니즘을 선택한다.
 4. **Model selection**: 디자이너는 특정 매개 변수를 선택하기 위한 기준을 필요로 하며, 선택한 학습자를 매 단계마다 선택한다.
 
-<img src="https://user-images.githubusercontent.com/78655692/161389131-c448933f-7fe1-476e-a9fd-f0b43283ce3f.png" width=700>
+<img src="/assets/images/legacy/049d626499.webp" width=700>
 
 ### 2.1 Future assumption
 
@@ -119,7 +119,7 @@ $X \rightarrow c_i$로 분류하기 위한 베이즈 최적 결정 규칙은 클
 - **증분 드리프트 (incremental drift)**: 소스들의 변화가 매우 적기 때문에, 긴 시간 동안 바라만 봐야 인지할 수 있는 현상
 - **재발 컨셉 (reoccurring context)**: active한 concept이 시간이 지나 다시 나타나는 현상
 
-<img src="https://user-images.githubusercontent.com/78655692/161389933-ff670f7e-ae15-4240-bd29-058be9a3a31f.png" width=700>
+<img src="/assets/images/legacy/d28cad3ab2.webp" width=700>
 
 변화의 속도와 주기성은 학습기의 적응 속도 및 메모리 유지 정책을 좌우한다.
 
@@ -133,7 +133,7 @@ $X \rightarrow c_i$로 분류하기 위한 베이즈 최적 결정 규칙은 클
 3. **적응형 훈련 세트 구성**: 훈련 세트와 테스트 세트를 나누듯 훈련 윈도우(training windows)나 인스턴스 선택(instance selection) 기법을 사용
 4. **앙상블 적응**: 다수 모델 간 가중치 재분배 또는 서브 모델 교체를 통한 적응
 
-<img src="https://user-images.githubusercontent.com/78655692/161390121-12f9c6a3-bdaf-499d-986d-f90c252d3d0a.png" width=700>
+<img src="/assets/images/legacy/9f3f97e98f.webp" width=700>
 
 ### 2.4 Model selection
 
@@ -161,7 +161,7 @@ $X \rightarrow c_i$로 분류하기 위한 베이즈 최적 결정 규칙은 클
 - **트리거 (trigger)**: 모델 변경의 필요성을 나타내는 명시적 신호가 있음을 의미하며, 새 모델을 구성하는 방법에 직접 영향을 미친다.
 - **진화 (evolve)**: 데이터 진행률과 모델 구축 사이의 명시적 연결을 유지하지 않으며, 일반적으로 변화를 직접 감지하지 못한다. 앙상블 가중치(ensemble weights) 또는 프로토타이핑 메커니즘을 유지함으로써 가장 정확한 분류를 구축하는 것을 목표로 한다.
 
-<img src="https://user-images.githubusercontent.com/78655692/161390741-fcc97d7e-60ca-4c4b-b49f-94b31613ccdb.png" width=700>
+<img src="/assets/images/legacy/72169ef3dd.webp" width=700>
 
 ### 3.1 Evolving learners
 
@@ -194,7 +194,7 @@ $X \rightarrow c_i$로 분류하기 위한 베이즈 최적 결정 규칙은 클
 
 - **휴리스틱 윈도우 제어**: FLORA 계열[^5]은 고정 윈도우의 정보 손실과 반응 지연 한계를 극복하기 위해, 예측 정확도가 유지되면 윈도우 크기를 확대하고 정확도가 급락하면 윈도우를 축소하여 최근 데이터에만 집중하도록 제어한다.
 - 훈련 윈도우는 검색 테이블(lookup table) 원칙을 사용하여 최적 크기로 결정된다.
-<img src="https://user-images.githubusercontent.com/78655692/161392034-ed3e6d1a-f20f-434a-b2d0-361fa3b49752.png" width=700>
+<img src="/assets/images/legacy/51eb19145e.webp" width=700>
 
 이처럼 러너 설계 기법들은 시간적 맥락, 지식 전이, 모델 적응성을 다루는 주변 연구 분야들과 긴밀하게 맞닿아 있다.
 

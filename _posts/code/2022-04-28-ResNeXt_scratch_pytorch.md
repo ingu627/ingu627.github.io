@@ -12,7 +12,7 @@ sidebar_main: false
 last_modified_at: 2026-10-09
 ---
 
-<img align='right' width='250' src='https://user-images.githubusercontent.com/78655692/165755215-c33df78b-b30d-4f9b-926a-bef008ff5b93.png'>
+<img align='right' width='250' src='/assets/images/legacy/6215747c10.webp'>
 본 글은 Pytorch 기반 ResNeXt50 구조 처음부터 구현해보는 내용입니다. 하나하나 자세히 분해해봅시다.
 
 - 논문 : [Aggregated Residual Transformations for Deep Neural Networks](https://arxiv.org/abs/1611.05431)
@@ -25,7 +25,7 @@ last_modified_at: 2026-10-09
 
 ## ResNextBottleNeck 클래스 정의하기
 
-![image](https://user-images.githubusercontent.com/78655692/165717848-71632b0f-ac53-4b6a-9117-309a63cb0e3b.png)
+![image](/assets/images/legacy/03c593d0b9.webp)
 
 ```python
 cardinality = 32 # path를 결정하는 변환 그룹의 크기
@@ -70,7 +70,7 @@ class ResNextBottleNeck(nn.Module):
 
 ## ResNeXt 클래스 정의하기
 
-<img src='https://user-images.githubusercontent.com/78655692/165744729-90f91c27-8f8a-45f1-b173-1660aa51e843.png' width=500>
+<img src='/assets/images/legacy/384f49be21.webp' width=500>
 
 ```python
 class ResNext(nn.Module):

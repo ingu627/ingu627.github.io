@@ -11,7 +11,7 @@ sidebar_main: false
 last_modified_at: 2026-10-10
 ---
 
-![image](https://user-images.githubusercontent.com/78655692/194746413-0494aaf8-179e-4244-a388-f3baf1a8f915.png)
+![image](/assets/images/legacy/bb0452a971.webp)
 
 "PowerGraph: Distributed Graph-Parallel Computation on Natural Graphs"(OSDI 2012) 논문을 개인 공부 및 리뷰를 위해 정리한 글이다.
 
@@ -66,7 +66,7 @@ last_modified_at: 2026-10-10
 
 Fig 1은 트위터 팔로워 네트워크의 인/아웃 차수(degree) 분포를 시각화한 결과로, 뚜렷한 선형 멱법칙 특성을 보여준다.
 
-![image](https://user-images.githubusercontent.com/78655692/194817355-4cacbd6a-3a08-4e07-b207-563ec79ab1d7.png)
+![image](/assets/images/legacy/144b4f77a5.webp)
 
 이러한 차수 불균형은 분산 시스템의 전반적인 영역에서 심각한 병목을 초래한다.
 
@@ -88,7 +88,7 @@ PowerGraph는 정점 단위로 묶여 있던 연산을 에지 단위로 쪼개�
 
 버텍스 프로그램을 잘 정의된 인터페이스 함수들로 세분화함으로써, 단일 정점의 계산을 여러 머신에 분산할 수 있는 이론적 기반이 마련된다.
 
-![image](https://user-images.githubusercontent.com/78655692/194825045-09b0877e-6998-4d5d-aa1e-ec4d47c34646.png)
+![image](/assets/images/legacy/1aa4bff575.webp)
 
 - **GASVertexProgram 인터페이스**: PowerGraph 추상화의 계산은 **GASVertexProgram** 인터페이스를 구현하는 stateless 버텍스 프로그램으로 인코딩되며, gather, sum, apply, scatter 기능을 명시적으로 모델링한다. (Fig 2)
 - **엔진의 단계적 호출**: 각 기능은 Alg 1의 의미론에 따라 PowerGraph 실행 엔진에 의해 단계별로 호출된다.
@@ -109,7 +109,7 @@ GAS의 각 단계는 다음과 같이 정밀하게 동작한다.
 단일 정점의 계산이 에지 단위의 가벼운 맵-리듀스로 분해된다.
 Fig 3은 PowerGraph 추상화를 활용하여 대표적인 그래프 알고리즘인 PageRank, Greedy Graph Coloring, Single Source Shortest Path(SSSP)를 구현한 모습을 보여준다.
 
-![image](https://user-images.githubusercontent.com/78655692/194833499-5ef20d46-dbba-45ad-b23a-6b0477dfd124.png)
+![image](/assets/images/legacy/3a3e4565a8.webp)
 
 ### 4.2 Delta Caching
 
@@ -131,7 +131,7 @@ Fig 3은 PowerGraph 추상화를 활용하여 대표적인 그래프 알고리�
   - 그러나 멱법칙 그래프에서는 소수의 고차수 정점 때문에 에지 컷 알고리즘이 전혀 힘을 쓰지 못한다.
   - 결국 GraphLab과 Pregel 모두 멱법칙 그래프 앞에서는 지역성을 포기한 단순 무작위 해시 버텍스 배치에 의존할 수밖에 없었다.
 
-![image](https://user-images.githubusercontent.com/78655692/194844290-20f1a658-913d-407a-86cb-ab7fb2f9f720.png)
+![image](/assets/images/legacy/583e0682d2.webp)
 
 - **엣지 컷의 스토리지 및 통신 오버헤드**: 컷팅된 모든 에지는 복제본으로 인해 심각한 스토리지 및 네트워크 오버헤드를 발생시킨다.
   - 분산 프레임워크들은 인접 정보의 로컬 복사본과 함께 버텍스 및 에지 데이터의 **고스트(ghost, 로컬 복사본)**를 유지해야 하기 때문이다.
@@ -144,7 +144,7 @@ Fig 3은 PowerGraph 추상화를 활용하여 대표적인 그래프 알고리�
 
 PowerGraph는 엣지를 자르는 대신 정점을 쪼개는 버텍스 컷(Vertex-Cut)으로 발상을 완전히 전환한다.
 
-![image](https://user-images.githubusercontent.com/78655692/194845518-782f73b2-2a3d-41e0-9364-87ed19981604.png)
+![image](/assets/images/legacy/4c446ab764.webp)
 
 - **버텍스 프로그램의 분산 실행**: 버텍스 프로그램을 에지를 따라 팩토링함으로써 PowerGraph 추상화에서는 단일 버텍스 프로그램이 여러 머신에 걸쳐 분산 실행될 수 있다.
 - **고차수 정점 분할 예시**: Fig 5에서 단일 고차수 버텍스 프로그램은 두 머신으로 분할되어 Gather 및 Scatter 단계가 각 머신에서 병렬로 실행되고, 어큐뮬레이터와 버텍스 데이터만이 네트워크를 통해 교환된다.

@@ -24,7 +24,7 @@ last_modified_at: 2026-10-11
 
 ## 1. 백화점 고객의 1년 데이터 (dataq.or.kr 예시 문제)
 
-![image](https://user-images.githubusercontent.com/78655692/143578663-d53b1ebf-23c6-4647-93cc-9b2c63c0abc9.png)
+![image](/assets/images/legacy/b376131dfb.webp)
 
 백화점 고객 3,500명의 1년 구매 데이터를 바탕으로 고객의 성별(`gender`: 0 또는 1)을 예측하는 이진 분류 문제다. `환불금액`의 결측값(NA)을 0으로 대치한 뒤, `caret`[^1] 패키지의 `preProcess()`를 사용해 수치형 변수를 Min-Max 범위([0, 1])로 정규화한다. 분류 모형으로는 `stats` 패키지의 `glm()`[^2] 함수로 로지스틱 회귀를 적합하고, `step()`[^3] 함수를 이용한 단계적 변수 선택으로 AIC 기준 최적 변수 조합을 탐색한다. `ModelMetrics`[^4] 패키지의 `auc()` 함수로 산출한 훈련 데이터 AUC는 약 0.684이며, 최종 테스트 데이터의 예측 확률값을 `cust_id`와 결합해 CSV 파일로 저장한다.
 

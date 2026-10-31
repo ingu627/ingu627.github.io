@@ -42,17 +42,17 @@ last_modified_at: 2026-10-11
   5. cuDNN
   6. 가상환경
 
-![image](https://user-images.githubusercontent.com/78655692/140860532-9fbbd1ac-e6ac-4f9a-8ea2-8447b1482dbe.png)
+![image](/assets/images/legacy/9ecbd715ec.webp)
 
 
 ## 1. 아나콘다 설치
 
 - [ANACONDA 사이트 링크](https://www.anaconda.com/products/individual)
 
-![image](https://user-images.githubusercontent.com/78655692/159163708-d344c839-6f2d-4c5b-b156-9ae68411a5a4.png)
+![image](/assets/images/legacy/abf94e0588.webp)
 
 
-![image](https://user-images.githubusercontent.com/78655692/159163720-2d519413-7226-48e4-8563-8279f155fc2a.png)
+![image](/assets/images/legacy/1026bfc58d.webp)
 
 
 ## 2. NVIDIA DRIVER 설치
@@ -61,7 +61,7 @@ last_modified_at: 2026-10-11
 
 - [NVIDIA 드라이버 다운로드 링크](https://www.nvidia.com/download/index.aspx?lang=en-us)[^nvidia-driver]
 
-![image](https://user-images.githubusercontent.com/78655692/159163794-5476ca7e-9b52-447f-b956-e8bf96bbf039.png)
+![image](/assets/images/legacy/f6a2a96e5a.webp)
 
 
 ## 3. Visual Studio 설치
@@ -69,7 +69,7 @@ last_modified_at: 2026-10-11
 - [Visual Studio 공식 다운로드 링크](https://visualstudio.microsoft.com/ko/downloads/)[^vs-download]
 - CUDA 컴파일러(nvcc)의 호스트 C++ 빌드 도구로 Visual Studio C++ 컴파일러가 요구된다.
 
-![image](https://user-images.githubusercontent.com/78655692/159163938-2d972336-6318-4e4d-8fce-6838e71b8c3f.png)
+![image](/assets/images/legacy/21413db965.webp)
 
 
 ## 4. CUDA Toolkit 버전 확인
@@ -77,7 +77,7 @@ last_modified_at: 2026-10-11
 - [TensorFlow Windows 테스트 빌드 구성 링크](https://www.tensorflow.org/install/source_windows#tested_build_configurations)[^tf-windows-source]
 - 찾는 버전이 없다면 : [CUDA/Cudnn/Driver/GCC/TensorFlow/Python version compatibility charts 링크](https://transang.me/cuda-cudnn-driver-gcc-tensorflow-python-version-compatibility-charts/)
 
-![image](https://user-images.githubusercontent.com/78655692/159164021-a3dc15ac-53db-410e-a804-b4de5f1bfc24.png)
+![image](/assets/images/legacy/e356a4a4e3.webp)
 
 
 - 여기에는 없지만, 우리가 설치할 버전은 다음과 같다.
@@ -91,10 +91,10 @@ last_modified_at: 2026-10-11
 
 - [NVIDIA CUDA Toolkit Archive 링크](https://developer.nvidia.com/cuda-toolkit-archive)[^cuda-archive]
 
-![image](https://user-images.githubusercontent.com/78655692/159164129-b1a9d4b4-113e-43cd-87df-899da5062b0b.png)
+![image](/assets/images/legacy/a42820e83f.webp)
 
 
-![image](https://user-images.githubusercontent.com/78655692/159164165-66401ef1-76cf-4c35-ab0c-fc18a0efac4d.png)
+![image](/assets/images/legacy/3b51c07459.webp)
 
 
 ## 6. cuDNN 설치
@@ -102,9 +102,9 @@ last_modified_at: 2026-10-11
 - cuDNN은 NVIDIA 개발자 회원가입 및 로그인이 필요하다.
 - [NVIDIA cuDNN 공식 페이지 링크](https://developer.nvidia.com/cudnn)[^cudnn-home]
 
-![image](https://user-images.githubusercontent.com/78655692/159164251-9978e4a5-9fd1-410d-9edb-ffe7ebe0469b.png)
+![image](/assets/images/legacy/865a97fc27.webp)
 
-![image](https://user-images.githubusercontent.com/78655692/159164282-87941eed-fcf5-47c8-bc4f-e3c29c3683b5.png)
+![image](/assets/images/legacy/8ee392de00.webp)
 
 
 - 파일 덮어쓰기 : 다운로드한 파일의 압축을 풀고, 아래 디렉터리에 파일을 복사해 덮어쓴다.
@@ -112,7 +112,7 @@ last_modified_at: 2026-10-11
 
 - `cudnn-11.3-windows-x64-v8.2.1.32` 압축 파일을 해제하면 다음과 같은 폴더가 나타난다.
 
-![image](https://user-images.githubusercontent.com/78655692/159164710-e506de50-99bf-4ab0-aa9e-2feb656b6151.png)
+![image](/assets/images/legacy/ff03c27341.webp)
 
 
 - `C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.3` 여기에 `bin`, `include`, `lib` 폴더를 각각 들어가 안의 파일들을 복사한다.
@@ -122,13 +122,13 @@ last_modified_at: 2026-10-11
 
 - 시스템 환경 변수 편집에서 사용자 변수의 `Path`를 편집하여 CUDA 실행 및 라이브러리 경로를 등록한다.
 
-![image](https://user-images.githubusercontent.com/78655692/141051481-d8806d86-07f7-46f9-aa80-8c77fdd7a097.png)
+![image](/assets/images/legacy/c6fad2c2ab.webp)
 
-![image](https://user-images.githubusercontent.com/78655692/141051518-0487ed1b-f707-4875-ab09-3c3f0fa8f267.png)
+![image](/assets/images/legacy/ed166a8874.webp)
 
-![image](https://user-images.githubusercontent.com/78655692/141051604-add55c2e-3f30-4a6c-a904-15ad77860ea4.png)
+![image](/assets/images/legacy/f96208f07e.webp)
 
-![image](https://user-images.githubusercontent.com/78655692/159165151-22e03f12-c415-40d2-adcb-02b16fdf23f7.png)
+![image](/assets/images/legacy/4b361db554.webp)
 
 
 ## 8. 가상환경 
@@ -137,7 +137,7 @@ last_modified_at: 2026-10-11
 
 - `Anaconda Powershell Prompt (anaconda3)` 실행
 
-![image](https://user-images.githubusercontent.com/78655692/140862457-a782c74a-b5b1-4602-8a8d-6ebcd38d80bf.png)
+![image](/assets/images/legacy/34c217ef4a.webp)
 
 - **conda update** : `conda update -n base conda`
 - **가상 환경 설치** : `conda create -n 가상환경이름 python=3.9`
@@ -178,7 +178,7 @@ from tensorflow.python.client import device_lib
 print(device_lib.list_local_devices())
 ```
 
-![image](https://user-images.githubusercontent.com/78655692/141671882-b12399ab-9387-42ef-9869-c11f2a2fa43d.png)
+![image](/assets/images/legacy/1948f1dcfa.webp)
 
 - **pytorch**
 

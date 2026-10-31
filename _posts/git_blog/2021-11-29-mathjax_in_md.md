@@ -10,7 +10,7 @@ classes: wide
 last_modified_at: 2026-10-09
 ---
 
-<img src="https://user-images.githubusercontent.com/78655692/143910921-4b7d1a55-d2b0-49ee-b721-20ce1376df0b.png" width=650 alt="mathjax">
+<img src="/assets/images/legacy/ca03c71998.webp" width=650 alt="mathjax">
 
 ## Mathjax란
 
@@ -23,9 +23,9 @@ last_modified_at: 2026-10-09
 - 사실 minimal mistakes 테마를 쓰고 있다면 별도의 추가를 할 필요가 없다.
 - `_includes`내에 `mathjax_support.html`이 포함되어 있기 때문에 `_config.yml`에서 `use_math: true` 를 추가해 주면 된다.
 
-![image](https://user-images.githubusercontent.com/78655692/143912853-d285ab04-e93d-49e3-98a5-6ece634980b6.png)
+![image](/assets/images/legacy/2d72db5741.webp)
 
-![image](https://user-images.githubusercontent.com/78655692/143913025-dfb7c5f4-dce6-458f-a1ae-0d7a51b942d1.png)
+![image](/assets/images/legacy/4bcf403858.webp)
 
 
 ## 쓰는 방법
@@ -60,19 +60,19 @@ $$x^2+3*x+5=0 는 이차함수이다.$$
 - [Symbols and Functions in KaTeX](https://utensil-site.github.io/available-in-katex/)
 
 
-![mathjax1](https://user-images.githubusercontent.com/78655692/150060659-3d9b1865-ef1c-413e-a38a-50a9ae2a26d3.jpg)
+![mathjax1](/assets/images/legacy/1e6e2d333a.webp)
 
-![mathjax2](https://user-images.githubusercontent.com/78655692/150060868-0392f798-0bc7-4309-b981-bbbe0d226f66.jpg)
+![mathjax2](/assets/images/legacy/06009a2de1.webp)
 
-![mathjax3](https://user-images.githubusercontent.com/78655692/150061097-9c7e3545-8c25-48d7-af0e-4120732df439.jpg)
+![mathjax3](/assets/images/legacy/619a0f6023.webp)
 
-![mathjax4](https://user-images.githubusercontent.com/78655692/150061124-05feb7ab-cfc5-466c-93ec-d9709e5026ff.jpg)
+![mathjax4](/assets/images/legacy/02e2e24889.webp)
 
-![mathjax5](https://user-images.githubusercontent.com/78655692/150061139-b5cd92fd-1c4c-4580-bc0d-035f23c7a08e.jpg)
+![mathjax5](/assets/images/legacy/04a9fdba4d.webp)
 
-![mathjax6](https://user-images.githubusercontent.com/78655692/150061160-8563f173-0540-49ed-9f8e-68fdc6e3f092.jpg)
+![mathjax6](/assets/images/legacy/045adc3ffd.webp)
 
-![mathjax7](https://user-images.githubusercontent.com/78655692/150061365-399a608c-09f1-41b4-b2f2-1c9f88f2aca7.jpg)
+![mathjax7](/assets/images/legacy/56bed568b1.webp)
 
 
 - *1.* 여러 개 쓸 때 : $x_{i,j}^{next}$

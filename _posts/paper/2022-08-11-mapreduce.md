@@ -11,7 +11,7 @@ sidebar_main: false
 last_modified_at: 2026-10-11
 ---
 
-![image](https://user-images.githubusercontent.com/78655692/183697704-2aeab667-34f8-4369-bb93-7f42d326e9a4.png)
+![image](/assets/images/legacy/6a52427b66.webp)
 
 "MapReduce: Simplified Data Processing on Large Clusters" 논문을 분석하고 정리한 리뷰다. 맵리듀스에 입문하거나 분산 시스템을 공부하는 독자를 위해 분산 실행 흐름, 결함 허용 구조, 주요 최적화 기법을 원 논문의 설계 원칙에 따라 체계적으로 정리한다. [^15]
 
@@ -36,7 +36,7 @@ last_modified_at: 2026-10-11
 
 프로그래밍 모델은 Lisp 등 함수형 언어의 기본 연산에서 영감을 얻었으며, 입력을 중간 키/값 쌍으로 변환하고 동일 키의 값들을 합산하는 두 단계의 사용자 정의 함수로 구성된다.
 
-<img src='https://user-images.githubusercontent.com/78655692/183880867-25eba180-048a-468d-a268-5bfa867df652.png' width=600> 이미지출처 [^3]
+<img src='/assets/images/legacy/869d100ff6.webp' width=600> 이미지출처 [^3]
 
 - 계산(computation)은 입력 키/값 쌍의 세트를 취하며, 출력 키/값 쌍의 세트를 생성한다.
 - 사용자가 작성한 map은 입력 쌍을 가져와서 중간 키/값 쌍 세트를 생성한다.
@@ -105,7 +105,7 @@ MapReduce 모델은 단어 빈도수 집계뿐만 아니라 분산 환경의 다
   - 파티션 수(R)와 파티셔닝은 사용자가 지정한다.
   - **파티셔닝(partitioning)** : 데이터베이스를 여러 부분으로 분할 [^13]
 
-![image](https://user-images.githubusercontent.com/78655692/184050804-5cb495f4-b9d8-4ddd-b374-2495b7f97819.png)
+![image](/assets/images/legacy/de7c27f4a2.webp)
 
 - Figure 1은 MapReduce 연산의 전반적인 흐름을 보여준다.
 1. 맵리듀스 라이브러리는 입력 파일을 M개의 조각(16MB ~ 64MB)으로 분할한다. 그런 다음 클러스터에서 많은 프로그램 복사본(copy)을 시작한다.

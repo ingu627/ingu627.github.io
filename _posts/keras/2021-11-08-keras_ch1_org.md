@@ -11,8 +11,7 @@ classes: wide
 last_modified_at: 2026-10-09
 ---
 
-<img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/147629300-4d7acc5e-225a-454a-92cd-4da82f6828f6.png
-'>
+<img align='right' width='200' height='200' src='/assets/images/legacy/be0ceae23f.webp'>
 본 글은 [케라스 창시자에게 배우는 딥러닝] - (박해선 옮김) 책을 개인공부하기 위해 요약, 정리한 내용입니다. 전체 코드는 [https://github.com/ingu627/deep-learning-with-python-notebooks](https://github.com/ingu627/deep-learning-with-python-notebooks)에 기재했습니다.(원본 코드 fork) 뿐만 아니라 책에서 설명이 부족하거나 이해가 안 되는 것들은 외부 자료들을 토대로 메꿔 놓았습니다. 즉, 딥러닝은 이걸로 끝을 내보는 겁니다. 오타나 오류는 알려주시길 바라며, 도움이 되길 바랍니다.
 
 ## 1_1. 인공 지능과 머신 러닝, 딥러닝
@@ -34,7 +33,7 @@ last_modified_at: 2026-10-09
 - 머신 러닝에서는 데이터와 이 데이터로부터 기대되는 해답을 입력하면 규칙이 출력된다.
   - 이 규칙을 새로운 데이터에 적용하여 창의적인 답을 만들 수 있다.
 
-<img src="https://user-images.githubusercontent.com/78655692/148672305-fb3e2ee5-949c-4d72-92f1-43e04097eb8a.png" width="400" alt="image"> 이미지출처: [^1]
+<img src="/assets/images/legacy/aa0a76847c.webp" width="400" alt="image"> 이미지출처: [^1]
 
 ### 1_1_3. 데이터에서 표현을 학습하기
 
@@ -44,14 +43,14 @@ last_modified_at: 2026-10-09
   - 컬러 이미지 -> RGB 포맷(빨간색-녹색-파란색), HSV 포맷(색상-채도-명도)
 - 모든 머신 러닝 알고리즘은 주어진 작업을 위해 데이터를 더 유용한 표현으로 바꾸는 변환을 자동으로 찾는다.
 
-![image](https://user-images.githubusercontent.com/78655692/148672671-cd8d543e-88ac-4194-8796-4e6a5b7777a0.png) 이미지출처: [^2]
+![image](/assets/images/legacy/dbdbd95a8a.webp) 이미지출처: [^2]
 
 - **학습 (Learning)** : <b><span style="color:red">더 나은 표현을 찾는 자동화된 과정</span></b>
 - **머신 러닝 (Machine Learning)**은 <u>가능성 있는 공간을 사전에 정의하고 피드백 신호의 도움을 받아 입력 데이터에 대한 유용한 변환을 찾는 것이다.</u>
 
 ### 1_1_4. 딥러닝에서 '딥'이란 무엇일까?
 
-<img src="https://user-images.githubusercontent.com/78655692/140679658-02c1c802-0557-4242-b5c1-501f6d104098.png" width="500" height="400" alt="image"/>
+<img src="/assets/images/legacy/aaf4fe0816.webp" width="500" height="400" alt="image"/>
 
 - **딥러닝 (Deep Learning)** : 머신 러닝의 특정한 한 분야로서 연속된 **층 (Layer)**에서 점진적으로 의미 있는 표현을 배우는 데 강점이 있으며, 데이터로부터 표현을 학습하는 새로운 방식 (=층 기반 표현 학습)
   - **딥 (deep)** : 연속된 층으로 표현을 학습한다는 개념
@@ -60,11 +59,11 @@ last_modified_at: 2026-10-09
 - 딥러닝은 기술적으로는 <u>데이터 표현을 학습하기 위한 다단계 처리 방식을 말한다.</u>
 - 딥러닝에서는 기본 층을 겹겹이 쌓아 올려 구성한 신경망이라는 모델을 사용하여 표현 층을 학습한다.
 
-![image](https://user-images.githubusercontent.com/78655692/148672904-a4bb9f66-d10a-4eb3-8b37-ac5dfe541229.png) 이미지출처: [^3]
+![image](/assets/images/legacy/eed8b586f5.webp) 이미지출처: [^3]
 
 - 심층 신경망을 정보가 연속된 필터를 통과하면서 순도 높게 정제되는 다단계 정보 추출 작업이다.
 
-![image](https://user-images.githubusercontent.com/78655692/148672939-f044d555-0acd-4b56-a1a8-0b0cc6343de2.png) 이미지출처: [^4]
+![image](/assets/images/legacy/2881a6f85f.webp) 이미지출처: [^4]
 
 ### 1_1_5. 그림 3개로 딥러닝의 작동 원리 이해하기
 
@@ -72,14 +71,14 @@ last_modified_at: 2026-10-09
   - 어떤 층에서 일어나는 변환은 그 층의 가중치를 **파라미터 (parameter)**로 가지는 함수로 표현된다.
 - **학습**은 <b><span style="color:red">주어진 입력을 정확한 타깃에 매핑하기 위해 신경망의 모든 층에 있는 가중치 값을 찾는 것을 의미.</span></b>
 
-![image](https://user-images.githubusercontent.com/78655692/148672979-41d04c2e-76ad-4835-acff-a0bea5b6db69.png) 이미지출처: [^5]
+![image](/assets/images/legacy/b546c9066d.webp) 이미지출처: [^5]
 
 - 목표 : <u>가중치의 정확한 값을 찾는 것</u>
 - 신경망이 한 샘플에 대해 얼마나 잘 예측했는지 측정하기 위해 손실 함수가 <b><span style="color:red">신경망의 예측과 진짜 타킷의 차이를 점수로 계산</span></b> (**loss function**)
 - 손실 점수를 피드백 신호로 사용하여 현재 샘플의 손실 점수가 감소되는 방향으로 가중치 값을 조금씩 수정
 - 수정 과정은 역전파(backpropagation) 알고리즘을 구현한 옵티마이저(optimizer)가 담당
 
-![image](https://user-images.githubusercontent.com/78655692/148673050-b9bf521b-2681-47a8-863e-813382a05775.png) 이미지출처: [^6]
+![image](/assets/images/legacy/b2d91fdae9.webp) 이미지출처: [^6]
 
 ## 1_2. 딥러닝 이전: 머신 러닝의 간략한 역사
 
@@ -89,7 +88,7 @@ last_modified_at: 2026-10-09
 - **결정 경계 (decision boundary)**는 <u>훈련 데이터를 2개의 범주에 대응하는 영역으로 나누는 직선이나 표면</u>
 - 새로운 데이터 포인트를 분류하려면 결정 경계 어느 쪽에 속하는지를 확인하기만 하면 된다.
 
-<img src='https://user-images.githubusercontent.com/78655692/148673149-e87e3960-0707-4a85-a546-37deff8156e7.png' width=250> 이미지출처: [^7]
+<img src='/assets/images/legacy/9e137eb56a.webp' width=250> 이미지출처: [^7]
 
 - **커널 함수** : 원본 공간에 있는 두 데이터 포인트를 명시적으로 새로운 표현으로 변환하지 않고 타깃 표현 공간에 위치했을 때의 거리를 매핑해 주는 계산 가능 한 연산
   - SVM에서 학습되는 것은 분할 초평면 뿐이다.
@@ -98,7 +97,7 @@ last_modified_at: 2026-10-09
 
 - 결정 트리는 플로차트 같은 구조를 가지며 입력 데이터 포인트를 분류하거나 주어진 입력에 대해 출력 값을 예측한다.
 
-<img src='https://user-images.githubusercontent.com/78655692/148673196-d828fbce-ee98-4753-98f2-8d220dcaa669.png' width=400> 이미지출처: [^8]
+<img src='/assets/images/legacy/24ae9cb156.webp' width=400> 이미지출처: [^8]
 
 ### 랜덤 포레스트 (Random Forest)
 
@@ -112,9 +111,9 @@ last_modified_at: 2026-10-09
 
 ### Training, Validation and Test
 
-![image](https://user-images.githubusercontent.com/78655692/142379924-138ab694-c7e1-4291-9ac8-016ad2132700.png) 이미지출처 : [^9]
+![image](/assets/images/legacy/e1e713018c.webp) 이미지출처 : [^9]
 
-![image](https://user-images.githubusercontent.com/78655692/142379989-22f13744-4120-4775-967a-9390c0dc06fd.png) 이미지출처 : [^10]
+![image](/assets/images/legacy/ca79808328.webp) 이미지출처 : [^10]
   
 - **Training set(훈련 데이터)**은 모델을 학습하는데 사용된다.
 - **Validation set(검정 데이터)**은 training set으로 만들어진 모델의 성능을 측정하기 위해 사용된다. 

@@ -11,7 +11,7 @@ sidebar_main: false
 last_modified_at: 2026-10-09
 ---
 
-<img align='right' width='250' height='150' src='https://user-images.githubusercontent.com/78655692/171929140-bed18224-f05a-4a1c-bf18-a2607b8412e9.png'> 
+<img align='right' width='250' height='150' src='/assets/images/legacy/02c877e5c6.webp'> 
 Concept Drift는 시간이 지남에 따라 데이터의 통계적인 특성이 변하는 것을 말합니다. 이에 학습된 모델은 자연스레 성능이 떨어지기 때문에 drift를 잘 감지해야 합니다. 감지하는 방법들이 무엇이 있는지 살펴봅니다. 이미지출처 [^7] 
 
 
@@ -24,7 +24,7 @@ Concept Drift는 시간이 지남에 따라 데이터의 통계적인 특성이 
 
 ## Types of Concept Drift
 
-<img src='https://user-images.githubusercontent.com/78655692/171870491-1f46f984-3b6e-4eeb-8640-f7b6748e64d1.png' width=600>   이미지출처 [^2]
+<img src='/assets/images/legacy/156aa5d05b.webp' width=600>   이미지출처 [^2]
 
 - change concept drift type : 시간 경과에 따른 데이터의 구성 패턴 변화를 의미한다.
 - 파란색을 s1, 빨간색을 s2라 할 때,
@@ -70,7 +70,7 @@ Concept Drift는 시간이 지남에 따라 데이터의 통계적인 특성이 
 
 ### 2. (EDDM) Early Drift Detection method
 
-<img src='https://user-images.githubusercontent.com/78655692/171878569-2204102d-91de-42a1-a09b-7a350471788e.png' width=600>   이미지 출처 [^3]
+<img src='/assets/images/legacy/43bfd6cfaa.webp' width=600>   이미지 출처 [^3]
 
 - 2개의 연이은(consecutive) 에러의 거리를 측정하는 방법이다.
   - 정확히는 2개 사이의 평균 거리 분포 
@@ -89,7 +89,7 @@ Concept Drift는 시간이 지남에 따라 데이터의 통계적인 특성이 
 
 ## Window-based approaches
 
-![image](https://user-images.githubusercontent.com/78655692/172005456-669d0222-c340-487f-9985-b5250bc4da21.png)   이미지출처 [^9]
+![image](/assets/images/legacy/985b3a2ab8.webp)   이미지출처 [^9]
 
 
 ### 1. (ADWIN) Adaptive WINdowing
@@ -98,7 +98,7 @@ Concept Drift는 시간이 지남에 따라 데이터의 통계적인 특성이 
   - **윈도우(window)** : 시계열 데이터가 있을 때 창같은 고정된 크기를 생성해 다음 시간 데이터를 예측
   - **슬라이딩 윈도우(sliding window)** : 고정 사이즈의 윈도우가 이동하면서 윈도우 내에 있는 데이터를 읽는 방법
 
-    <img src='https://user-images.githubusercontent.com/78655692/171905685-4200eabb-ac74-4b23-ab11-74c9311efe7a.png' width=550>   이미지출처 [^4]
+    <img src='/assets/images/legacy/df0fd790a2.webp' width=550>   이미지출처 [^4]
 
 
 - 이 알고리즘은 뚜렷한(distinct) 평균을 나타내는 $w$의 2개의 하위 윈도우(sub window)를 찾으려고 한다.
@@ -114,7 +114,7 @@ Concept Drift는 시간이 지남에 따라 데이터의 통계적인 특성이 
 - 따라서, $\vert\hat \mu_{w_0} - \hat \mu_{w_1}\vert < \epsilon_{cut}$ 될때까지 $w$의 오래된 부분을 버린다.
 - 만약 찾았고, 해당 기대값이 다르다면, 윈도우의 오래된 부분은 데이터가 실제보다 분포가 다르다는 의미이므로 삭제한다. [^5]
 
-  <img src='https://user-images.githubusercontent.com/78655692/171906953-3a68ef35-44b9-4dcc-a0f0-4ca19d219b74.png' width=550>
+  <img src='/assets/images/legacy/0e8cd940d9.webp' width=550>
 
    
 
@@ -184,7 +184,7 @@ Concept Drift는 시간이 지남에 따라 데이터의 통계적인 특성이 
   - $\epsilon_d=\sqrt{\frac{1}{2n}ln{\frac{1}{\delta}}}$
 
 
-![image](https://user-images.githubusercontent.com/78655692/172021181-5a3ca703-981d-4aaa-959d-77782f4f56b4.png)   이미지 출처 [^11]
+![image](/assets/images/legacy/f64feaf0a5.webp)   이미지 출처 [^11]
 
 - 위 그림을 예시로 설명해본다.
 - $n$=10, $\delta$=0.2라 하면, 위 정의대로 $\epsilon_d$=0.28이 된다.

@@ -11,7 +11,7 @@ sidebar_main: false
 last_modified_at: 2026-10-09
 ---
 
-<img align='right' width='250' src='https://user-images.githubusercontent.com/78655692/162919635-d03d7e8f-c492-493b-8c4d-d2f0f88ae67e.png'>
+<img align='right' width='250' src='/assets/images/legacy/249ec2aebc.webp'>
 본 글은 Pytorch 기반 ResNet 전이 학습을 이용해 구현해보는 내용입니다. 하나하나 분해해봅시다.
 
 - 논문 : [Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385)
@@ -96,7 +96,7 @@ print(my_resnet)
 # 결과
 ```
 
-![image](https://user-images.githubusercontent.com/78655692/162910028-478bd3ea-9861-4d49-b529-8a3305205890.png)
+![image](/assets/images/legacy/595da60696.webp)
 
 
 ### device 정의

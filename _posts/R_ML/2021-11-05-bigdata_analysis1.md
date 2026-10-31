@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "빅데이터분석기사 실기 작업형(1) - R 기본 문법"
-excerpt: "본 글은 빅데이터분석기사 실기 작업형에 대비하여 요약 및 실습한 것을 작성한 글입니다. 기출문제의 데이터는 https://github.com/ingu627/BigDataAnalysis에 데이터 셋을 남겨놨습니다."
+excerpt: "본 글은 빅데이터분석기사 실기 작업형에 대비하여 요약 및 실습한 것을 작성한 글입니다. 기출문제의 데이터는 https://github.com/ingu627/BigDataAnalysis에 데이터 셋을 남겨놨습니다. — 기본 단축키"
 categories: R_ML
 tags: [R, grammar, basic, pro, adsp, 빅데이터 분석기사, 실기, 작업형, 필답형, 자격증, dataq, 정리, pdf, 기출문제, 정리본, 후기, 설명, 2회, 3회]
 toc: true
@@ -11,8 +11,7 @@ sidebar_main: false
 last_modified_at: 2026-10-11
 ---
 
-<img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/148633895-2be87d4e-7edb-4391-b583-eb2888b19bbb.png
-'>
+<img align='right' width='200' height='200' src='/assets/images/legacy/664a3c1e2f.webp'>
 본 글은 빅데이터분석기사 실기 작업형에 대비하여 R 기초 문법과 핵심 조작법을 정리한 글이다. 기출문제 데이터셋은 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis){: target="_blank"}에 수록되어 있으며, 전체 실습 코드는 `/concept/R_basic_to_pro_1.R` 파일에 담겨 있다.[^1]
 
 > 2021.12.31 : 제 3회 빅데이터 분석기사 실기 합격 후 정리한 내용이며, [빅데이터 분석기사(R)](https://ingu627.github.io/categories/R_ML) 시리즈를 통해 실기 작업형 대비를 돕는다.
@@ -417,7 +416,7 @@ DATA_SET[c(1,2,3),-2]
 
 ## 데이터 결합 (rbind(), cbind(), merge())
 
-![image](https://user-images.githubusercontent.com/78655692/140970588-0c2b2ef9-75e3-4b45-b8a4-744fa189a4b3.png)
+![image](/assets/images/legacy/58ddaf7c2d.webp)
 
 
 ## 시간(날짜)형태
@@ -730,7 +729,7 @@ ggplot(data=airquality, # 그래프에 필요한 객체인 airquality 대입
        ) + geom_boxplot() #Boxplot으로 출력
 ```
 
-![image](https://user-images.githubusercontent.com/78655692/141499918-c0a24422-60c9-4a8d-a77e-6ab1603bc5af.png)
+![image](/assets/images/legacy/0610df4362.webp)
 
 ## 한계 및 주의사항
 

@@ -20,7 +20,7 @@ last_modified_at: 2026-10-09
 
 ### 앞서 복습.
 
-![image](https://user-images.githubusercontent.com/78655692/140278709-914156c3-7c51-4d64-b268-95ba3b4c3acd.png)
+![image](/assets/images/legacy/84f8be4586.webp)
 
 <script src="https://gist.github.com/ingu627/d41f5a78b102c075de18876944b56fa7.js"></script>
 
@@ -33,7 +33,7 @@ last_modified_at: 2026-10-09
 
 ## 프로젝트 생성
 
-![](https://user-images.githubusercontent.com/78655692/140280656-15652562-c7d9-4d73-8354-4f1fa620a8b9.png)
+![](/assets/images/legacy/8a9c4881d7.webp)
 
 <script src="https://gist.github.com/ingu627/39e468eafc42544ac926b84756129d76.js"></script>
 
@@ -44,7 +44,7 @@ last_modified_at: 2026-10-09
 
 ## Layout - Columns
 
-![image](https://user-images.githubusercontent.com/78655692/140313418-0debb790-517f-4cae-8f2b-193c72d2e1a6.png)
+![image](/assets/images/legacy/df8990dc1e.webp)
 
 <script src="https://gist.github.com/ingu627/09243f1afd3104f755e3047e9e35e536.js"></script>
 
@@ -55,12 +55,12 @@ last_modified_at: 2026-10-09
   - `class="col-3 col-md-7 box"` : 총 3개의 class를 가지고 있다.
     - `md` 는 medium의 약자. viewport의 가로가 medium이 될 때
 
-![image](https://user-images.githubusercontent.com/78655692/140315174-94b0440e-4a84-4a33-af25-d32487a7b756.png)
+![image](/assets/images/legacy/45bcf1a64f.webp)
 
 
 ## Forms
 
-![image](https://user-images.githubusercontent.com/78655692/140316778-86e7fe9c-e473-483b-8a5a-587a12af286a.png)
+![image](/assets/images/legacy/3f580d57df.webp)
 
 <script src="https://gist.github.com/ingu627/011a2494605e05991c2492e93ab7c49c.js"></script>
 
@@ -119,29 +119,29 @@ last_modified_at: 2026-10-09
 
 ### CSS를 건드리지 않아도 부트스트랩으로 테마 적용할 수 있다.
 
-![image](https://user-images.githubusercontent.com/78655692/141642353-47390834-4d47-4e63-962b-35cb0551c53c.png)
+![image](/assets/images/legacy/9fa9f003bf.webp)
 
 - `flex-grow` : 증가 너비의 비율
 
 
-![image](https://user-images.githubusercontent.com/78655692/141642363-3ee2b630-bfb9-48a0-8a71-2ad62d70a036.png)
+![image](/assets/images/legacy/2e83118035.webp)
 
 
 - `d-flex` : 수평으로 맞춰줌
 
 
-![image](https://user-images.githubusercontent.com/78655692/141642471-54d02816-c196-4c30-a35f-f59e56c030ce.png)
+![image](/assets/images/legacy/3ca824c18e.webp)
 
 - `flex-shrink-0` : 감소 너비의 비율 (default = 1)
 
 
-![image](https://user-images.githubusercontent.com/78655692/141642573-8c42c4b9-48cc-461b-99e3-b371dda5da83.png)
+![image](/assets/images/legacy/589ec97617.webp)
 
 - `text-decoration-none` : 텍스트에 줄을 넣는 속성인데 제거하겠다. 
 - `me-2` : 오른쪽 여백 2 추가
 
 
-![image](https://user-images.githubusercontent.com/78655692/141642729-9d188e88-c939-4aba-ade5-1f7a2584870d.png)
+![image](/assets/images/legacy/1138e29752.webp)
 
 <script src="https://gist.github.com/ingu627/d8075e859dc8d20b226790fcba10bcb5.js"></script>
 
@@ -150,7 +150,7 @@ last_modified_at: 2026-10-09
 
 ## Hero Contents
 
-![image](https://user-images.githubusercontent.com/78655692/141643249-46d9ff5e-8356-47e8-b7ee-c2039fcba0f9.png)
+![image](/assets/images/legacy/a2f0136438.webp)
 
 <script src="https://gist.github.com/ingu627/be2a2640cf1f01b6448bc5e49e9535b6.js"></script>
 
@@ -158,7 +158,7 @@ last_modified_at: 2026-10-09
 - `input`은 크기가 옆으로 늘어난다. 그에 반해 `button`은 딱 글자 크기만큼만!
 
 
-![image](https://user-images.githubusercontent.com/78655692/141644525-b6633dfa-a516-4436-8e39-35d1e81f7993.png)
+![image](/assets/images/legacy/bbcf2ebe56.webp)
 
 <script src="https://gist.github.com/ingu627/bbc3702405b807ee9f13019cb52f53f0.js"></script>
 
@@ -168,19 +168,19 @@ last_modified_at: 2026-10-09
 - `<p class="text-white-50">` : 50%의 색이 빠져있는 화이트 (html)
 
 
-![image](https://user-images.githubusercontent.com/78655692/141644575-06c27fbd-370b-4960-a170-bc67ca577689.png)
+![image](/assets/images/legacy/75d8ed7887.webp)
 
 - `<div class="col-7">` : 12개의 column 중에 7칸 차지 (row 안에서)
 
 
-![image](https://user-images.githubusercontent.com/78655692/141644630-b2afea26-7c62-4d57-a5a1-3f27200b9986.png)
+![image](/assets/images/legacy/19919d1c88.webp)
 
 <script src="https://gist.github.com/ingu627/2b6455bf969b5aaf87c203289682ec7d.js"></script>
 
 - `<div class="d-grid">` : 최대한 늘어날 수 있게
 
 
-![image](https://user-images.githubusercontent.com/78655692/141644961-5504d875-147f-4a17-98d2-eaa5db95b63b.png)
+![image](/assets/images/legacy/4400a76f70.webp)
 
 <script src="https://gist.github.com/ingu627/131ade5c1a11da871366a4418f94314b.js"></script>
 
@@ -190,7 +190,7 @@ last_modified_at: 2026-10-09
 - `overflow: hidden;` : 컨테이너 영역 안에 만큼만 보이게 (넘친 건 숨긴다.)
 
 
-![image](https://user-images.githubusercontent.com/78655692/141645168-e499f8a4-4047-419f-99cc-1ebcd9668d6e.png)
+![image](/assets/images/legacy/c16fb1853c.webp)
 
 <script src="https://gist.github.com/ingu627/b1919db200ff891542cd792aaf2f001b.js"></script>
 
@@ -199,7 +199,7 @@ last_modified_at: 2026-10-09
 - `glow` : 번짐 효과
 
 
-![image](https://user-images.githubusercontent.com/78655692/141645489-d259d264-7424-4de2-a989-4dc9126a11a4.png)
+![image](/assets/images/legacy/3fb12545aa.webp)
 
 <script src="https://gist.github.com/ingu627/fce6f770564dd3056709d3b3cbe708d0.js"></script>
 
@@ -207,7 +207,7 @@ last_modified_at: 2026-10-09
 
 ## youtube
 
-![image](https://user-images.githubusercontent.com/78655692/141646524-1397cfac-8d10-4fd1-958c-352ae60dac2e.png)
+![image](/assets/images/legacy/0b8919db82.webp)
 
 <script src="https://gist.github.com/ingu627/2deb61d1634aae5c2f334deedd941905.js"></script>
 
@@ -218,7 +218,7 @@ last_modified_at: 2026-10-09
 - css에서 부모요소는 위쪽에 작성한다.
 
 
-![image](https://user-images.githubusercontent.com/78655692/141646962-333fa385-7b36-4812-929d-a6a58f5b9eef.png)
+![image](/assets/images/legacy/439983229a.webp)
 
 <script src="https://gist.github.com/ingu627/010cce714a0d210e47fb62ed30e188c0.js"></script>
 
@@ -227,7 +227,7 @@ last_modified_at: 2026-10-09
 
 ## Features
 
-![image](https://user-images.githubusercontent.com/78655692/141679415-1178326c-3cd3-4f48-9d95-4e8ab1c3b7fb.png)
+![image](/assets/images/legacy/77423e6a3f.webp)
 
 <script src="https://gist.github.com/ingu627/26265d0a098ffeef17f4ad481d7b20ab.js"></script>
 
@@ -236,7 +236,7 @@ last_modified_at: 2026-10-09
 - `<div class="col-3">` : col이 3칸을 차지 (기본적으로 row는 12칸 차지)
 
 
-![image](https://user-images.githubusercontent.com/78655692/141679708-b8c22501-6ffa-451d-9b5e-80bd2c7907e5.png)
+![image](/assets/images/legacy/cc9c675c36.webp)
 
 <script src="https://gist.github.com/ingu627/b6eeedcb03665f738c2c020c4df34b24.js"></script>
 
@@ -245,7 +245,7 @@ last_modified_at: 2026-10-09
 - `strong` : 글씨를 두껍게 만들어 준다. 
 - `padding: 30px 60px;` : 패딩은 내부여백을 뜻함. 첫번째 30px은 위아래. 60px은 좌우를 동시에 지정
 
-![image](https://user-images.githubusercontent.com/78655692/141680045-83fc653c-b3d5-4539-a02b-9be164fb1de1.png)
+![image](/assets/images/legacy/bf02f16914.webp)
 
 <script src="https://gist.github.com/ingu627/bcb6a511fe853bd120a13cbf3d94665a.js"></script>
 
@@ -254,7 +254,7 @@ last_modified_at: 2026-10-09
 
 ## Google Maps
 
-![image](https://user-images.githubusercontent.com/78655692/141680920-75ab22af-57f2-498e-aec0-ce2bfd6f574d.png)
+![image](/assets/images/legacy/0e65bc89fb.webp)
 
 <script src="https://gist.github.com/ingu627/544aa99d5f10163b30b6bcfd1a915956.js"></script>
 
@@ -269,7 +269,7 @@ last_modified_at: 2026-10-09
 
 ## Footer
 
-![image](https://user-images.githubusercontent.com/78655692/141681542-e1ec1b58-ce9d-49e9-b65e-d97509f51af3.png)
+![image](/assets/images/legacy/79454a6ef2.webp)
 
 <script src="https://gist.github.com/ingu627/094f11f2098780c751319ad5bc40f3b4.js"></script>
 
@@ -283,7 +283,7 @@ last_modified_at: 2026-10-09
 - `opacity` : 투명도
 
 
-![image](https://user-images.githubusercontent.com/78655692/141681854-3f8e27b5-3d03-4c11-953a-cdba8caea1a3.png)
+![image](/assets/images/legacy/d856a0a36c.webp)
 
 <script src="https://gist.github.com/ingu627/00f27c92fb7734abc2f74fe07c46e907.js"></script>
 
@@ -297,14 +297,14 @@ last_modified_at: 2026-10-09
 - `d-flex` : 수평 정렬 (html)
 
 
-![image](https://user-images.githubusercontent.com/78655692/141682207-c0b0c62b-e458-4a45-92bf-df25350f9559.png)
+![image](/assets/images/legacy/7084ab0236.webp)
 
 `display: flex;`
 `justify-content: center;` 적용 후
 
-![image](https://user-images.githubusercontent.com/78655692/141682222-685f29e8-f45f-431a-8c76-9c6000499d3c.png)
+![image](/assets/images/legacy/82482ef38f.webp)
 
-![image](https://user-images.githubusercontent.com/78655692/141682335-7b31e0ed-e170-467b-812a-993d4f06599e.png)
+![image](/assets/images/legacy/4c5aedfcc3.webp)
 
 <script src="https://gist.github.com/ingu627/5bd7446269b01e871d59d7a52741799c.js"></script>
 
@@ -343,7 +343,7 @@ last_modified_at: 2026-10-09
 - `ms-2` : 외부여백이 2만큼 증가 
 
 
-![image](https://user-images.githubusercontent.com/78655692/141683895-2059ffc3-6f50-4e6f-ac4a-14e4dcb49381.png)
+![image](/assets/images/legacy/3c0277133c.webp)
 
 - `mb-4` : margin-bottom 4를 채워줌 
 - `col-lg-7` : 뷰포트가 Large Size 보다 크면 컬럼을 7개 사용한다.

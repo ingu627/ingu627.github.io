@@ -11,8 +11,7 @@ classes: wide
 last_modified_at: 2026-10-09
 ---
 
-<img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/147629300-4d7acc5e-225a-454a-92cd-4da82f6828f6.png
-'>
+<img align='right' width='200' height='200' src='/assets/images/legacy/be0ceae23f.webp'>
 본 글은 [케라스 창시자에게 배우는 딥러닝] - (박해선 옮김) 책을 개인공부하기 위해 요약, 정리한 내용입니다. 전체 코드는 [https://github.com/ingu627/deep-learning-with-python-notebooks](https://github.com/ingu627/deep-learning-with-python-notebooks)에 기재했습니다.(원본 코드 fork) 뿐만 아니라 책에서 설명이 부족하거나 이해가 안 되는 것들은 외부 자료들을 토대로 메꿔 놓았습니다. 즉, 딥러닝은 이걸로 끝을 내보는 겁니다. 오타나 오류는 알려주시길 바라며, 도움이 되길 바랍니다.
 
 
@@ -86,7 +85,7 @@ last_modified_at: 2026-10-09
 - 남은 데이터에서 훈련하고 테스트 세트로 평가한다.
 - **train_test_split()** 코드가 있다.
 
-![image](https://user-images.githubusercontent.com/78655692/148495437-15d1e4c0-46fd-4f2c-939a-ff24a22feb38.png) 이미지출처: [^1]
+![image](/assets/images/legacy/f10a1c0c25.webp) 이미지출처: [^1]
 
 - 단점 : 데이터가 적을 때는 검증 세트와 테스트 세트의 샘플이 너무 적어 전체 데이터를 통계적으로 대표하지 못할 수 있다.
 
@@ -97,7 +96,7 @@ last_modified_at: 2026-10-09
 - 각 분할 i에 대해 남은 K-1개의 분할로 모델을 훈련하고 분할 i에서 모델을 평가한다.
 - 최종 점수는 얻은 K개의 점수를 평균한다. 
 
-![image](https://user-images.githubusercontent.com/78655692/148495801-5b42bef8-b1d6-4686-ae90-5b5fd3c6117e.png) 이미지출처: [^2]
+![image](/assets/images/legacy/60c7c954f9.webp) 이미지출처: [^2]
  
 
 ### 셔플링을 사용한 반복 K-겹 교차 검증
@@ -198,7 +197,7 @@ last_modified_at: 2026-10-09
 - 케라스에서는 층의 출력 바로 뒤에 Dropout 층을 추가하여 네트워크에 드롭아웃을 적용할 수 있다.
 - `model.add(layers.Dropout(0.5))`
 
-![image](https://user-images.githubusercontent.com/78655692/148497214-0585ef37-460b-41db-8069-0d068ceef3d4.png)
+![image](/assets/images/legacy/269c19b5be.webp)
 
 
 ### 신경망에서 과대적합을 방지하는 방법 

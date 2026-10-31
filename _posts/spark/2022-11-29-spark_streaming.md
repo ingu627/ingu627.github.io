@@ -11,7 +11,7 @@ sidebar_main: false
 last_modified_at: 2026-10-11
 ---
 
-<img align='right' width='150' height='200' src='https://user-images.githubusercontent.com/78655692/186088421-fe905f9e-d40f-43b2-ac6e-094e9c342473.png'>
+<img align='right' width='150' height='200' src='/assets/images/legacy/058f7b9a23.webp'>
 [Spark The Definitive Guide - BIG DATA PROCESSING MADE SIMPLE] 책을 중심으로 스파크를 개인 공부를 위해 요약 및 정리해보았습니다. 다소 복잡한 설치 과정은 도커에 미리 이미지를 업로드해 놓았습니다. 즉, 도커 이미지를 pull하면 바로 스파크를 사용할 수 있습니다.
 
 - 도커 설치 및 활용하는 방법 : [[Spark] 빅데이터와 아파치 스파크란 - 1.2 스파크 실행하기](https://ingu627.github.io/spark/spark_db1/#12-%EC%8A%A4%ED%8C%8C%ED%81%AC-%EC%8B%A4%ED%96%89%ED%95%98%EA%B8%B0)
@@ -53,7 +53,7 @@ last_modified_at: 2026-10-11
 - **연속형 처리(Continuous processing)** 기반의 시스템에서 각 노드는 다른 노드에서 전송하는 메시지를 끊임없이 수신하고 새로 갱신된 정보를 자신의 하위 노드로 전송한다.
   - 연속형 처리는 레코드별로 처리하는 것이 핵심 개념이다.
 
-<img width="588" alt="image" src="https://user-images.githubusercontent.com/78655692/204439216-358e5e53-65b7-457c-8e60-2ad0f05cc942.png">
+<img width="588" alt="image" src="/assets/images/legacy/8b57d5ecf9.webp">
 
 - 연속형 처리는 각 노드가 신규 메시지에 즉시 반응하기 때문에 전체 입력량이 적을 때 빠르게 응답하지만 최대 처리량(throughput)은 적다.
 - 스파크 공식 문서 기준으로 기본 마이크로 배치 엔진은 최선의 경우 약 100ms 수준의 종단 간 지연(end-to-end latency)과 exactly-once 보장을 제공하고, 연속형 처리 모드는 지연을 약 1ms 수준까지 낮추는 대신 at-least-once 보장이며 지원되는 질의가 제한된다(연속형 처리는 Spark 2.3부터 지원).[^3]
@@ -63,7 +63,7 @@ last_modified_at: 2026-10-11
 - 일반적으로 마이크로 배치 시스템은 같은 양의 데이터를 연속형 처리보다 적은 노드로 처리할 수 있다(배치 단위 병렬화 덕분이다).
 - 또한 워크로드 변화에 대응할 수 있도록 부하 분산 기술을 동적으로 사용할 수 있다.
 
-<img width="608" alt="image" src="https://user-images.githubusercontent.com/78655692/204440097-f3bd02b7-32d1-4dcb-943e-3e8adf843db6.png">
+<img width="608" alt="image" src="/assets/images/legacy/eba00685bb.webp">
 
 ## 3. 정형 스트리밍의 기초
 
@@ -74,7 +74,7 @@ last_modified_at: 2026-10-11
 - 사용자가 스트림 처리용 코드와 목적지를 정의하면 정형 스트리밍 엔진에서 신규 데이터에 대한 증분 및 연속형 쿼리를 실행한다.
 - 그리고 카탈리스트 엔진(코드 생성, 쿼리 최적화 등의 기능을 지원)을 사용해 연산에 대한 논리적 명령을 처리한다.
 
-<img width="598" alt="image" src="https://user-images.githubusercontent.com/78655692/204446837-49e3efdd-8c79-41f5-be43-82f494cfaee2.png">
+<img width="598" alt="image" src="/assets/images/legacy/154b0b3731.webp">
 
 - 정형 스트리밍은 스트림 데이터를 계속해서 추가되는 테이블처럼 다루는 것이 핵심 개념이다.
 - 스트리밍 잡(job)은 계속해서 신규 입력 데이터를 확인 및 처리한다.
@@ -152,11 +152,11 @@ last_modified_at: 2026-10-11
 
 - **결과**
 
-  <img width="512" alt="image" src="https://user-images.githubusercontent.com/78655692/204480016-6251c873-82ee-48ca-af24-14236674ab45.png">
+  <img width="512" alt="image" src="/assets/images/legacy/491d7e6c58.webp">
 
 - 예제 데이터는 타임스탬프와 모델, 사용자, 장비 정보, 해당 시점의 사용자 행동 유형(gt)를 가지고 있다.
 
-  <img width="445" alt="image" src="https://user-images.githubusercontent.com/78655692/204481686-a4b26bf5-3568-4cb2-a2e7-fb98b0e11360.png">
+  <img width="445" alt="image" src="/assets/images/legacy/6d72223b2a.webp">
 
 - 이제 데이터셋을 스트리밍 방식으로 처리해본다.
 - 이번 예제에서는 스트림 방식으로 데이터를 처리하는 상황을 가정하기 위해 각 입력 파일을 하나씩 읽는다.
@@ -203,7 +203,7 @@ spark.streams.active
 
 - **결과**
 
-  <img width="445" alt="image" src="https://user-images.githubusercontent.com/78655692/204487988-9405d65f-ecb8-4d76-b6a9-ae82ac62e7f2.png">
+  <img width="445" alt="image" src="/assets/images/legacy/9624fd796e.webp">
 
 - 이제 스트림을 처리하고 있기 때문에 스트리밍 집계 결과가 저장된 메모리 테이블을 조회해 결과를 확인할 수 있다.
 - **awaitTermination()**가 있는 코드말고 다른 주피터 노트북 파일에 다음 코드를 실행하면 결과는 다음과 같다. 
@@ -218,7 +218,7 @@ spark.streams.active
 
 - **결과**
 
-  <img width="165" alt="image" src="https://user-images.githubusercontent.com/78655692/204505118-b188581f-2bd4-4f9d-9720-cef8d48157e6.png">
+  <img width="165" alt="image" src="/assets/images/legacy/bd110783c9.webp">
 
 ## 6. 스트림 트랜스포메이션
 
@@ -251,7 +251,7 @@ spark.streams.active
 
 - 정규 표현식 기본 구문 정리 그림 [^1]
 
-  <img width="777" alt="image" src="https://user-images.githubusercontent.com/78655692/204510084-4e173d48-c506-40c9-bca8-a1576c511121.png">
+  <img width="777" alt="image" src="/assets/images/legacy/89cc19c6d6.webp">
 
 ### 6.2 집계
 

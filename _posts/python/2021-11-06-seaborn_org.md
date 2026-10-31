@@ -71,7 +71,7 @@ plt.title("Iris 데이터 중, 꽃잎의 길이에 대한 Rug Plot ")
 plt.show()
 ```
 
-![seaborn_org_16_0](https://user-images.githubusercontent.com/78655692/140616257-cd742974-75d6-4940-a2c1-380590bebcf7.png)
+![seaborn_org_16_0](/assets/images/legacy/e99bc2dc0b.webp)
 
 ### kdeplot()
 
@@ -83,7 +83,7 @@ plt.title("Iris 데이터 중, 꽃잎의 길이에 대한 Kernel Density Plot")
 plt.show()
 ```
 
-![seaborn_org_17_0](https://user-images.githubusercontent.com/78655692/140616291-a96df7ad-437c-42a5-b531-aa5d08aefa2e.png)
+![seaborn_org_17_0](/assets/images/legacy/4c79417547.webp)
 
 ### distplot()
 
@@ -95,7 +95,7 @@ plt.title("Iris 데이터 중, 꽃잎의 길이에 대한 Dist Plot")
 plt.show()
 ```
 
-![seaborn_org_18_0](https://user-images.githubusercontent.com/78655692/140617273-459f0b0f-d873-43ff-af47-77bfb4c80b12.png)
+![seaborn_org_18_0](/assets/images/legacy/e424c44340.webp)
 
 ### countplot()
 
@@ -110,7 +110,7 @@ plt.title("타이타닉호의 각 클래스별, 승객 수")
 plt.show()
 ```
 
-![seaborn_org_19_0](https://user-images.githubusercontent.com/78655692/140617307-79ee03c6-62ff-4cbb-a7fc-0b555669fbb1.png)
+![seaborn_org_19_0](/assets/images/legacy/20037cf0a5.webp)
 
 ```python
 sns.countplot(x="day", data=tips)
@@ -118,7 +118,7 @@ plt.title("요일별 팁을 준 횟수")
 plt.show()
 ```
 
-![seaborn_org_20_0](https://user-images.githubusercontent.com/78655692/140617319-3fd7f911-c905-4e64-bcea-cf5c4d597b97.png)
+![seaborn_org_20_0](/assets/images/legacy/c4e447d14f.webp)
 
 ## 다차원 데이터
 
@@ -141,7 +141,7 @@ plt.suptitle("꽃받침의 길이와 넓이의 Joint Plot", y=1.02)
 plt.show()
 ```
 
-![seaborn_org_23_0](https://user-images.githubusercontent.com/78655692/140617385-fb10d085-c87b-4369-948d-bfd65235813f.png)
+![seaborn_org_23_0](/assets/images/legacy/f83e0dd520.webp)
 
 ```python
 # kind='kde'이면 커널 밀도 히스토그램을 그린다.
@@ -150,7 +150,7 @@ plt.suptitle("꽃받침의 길이와 넓이의 Joint Plot 과 Kernel Density Plo
 plt.show()
 ```
 
-![seaborn_org_24_0](https://user-images.githubusercontent.com/78655692/140617420-38ca5847-7716-47d6-800f-faa305f1e718.png)
+![seaborn_org_24_0](/assets/images/legacy/d7c7a4f547.webp)
 
 ## 다차원 실수형 데이터
 
@@ -166,7 +166,7 @@ plt.title("Iris Data의 Pair Plot")
 plt.show()
 ```
 
-![seaborn_org_26_0](https://user-images.githubusercontent.com/78655692/140617461-d9c76332-dac0-4f88-a00f-ffb6a3434b8f.png)
+![seaborn_org_26_0](/assets/images/legacy/6d8038c51d.webp)
 
 ### hue=
 
@@ -178,7 +178,7 @@ plt.title("Iris Pair Plot, Hue로 꽃의 종을 시각화")
 plt.show()
 ```
 
-![seaborn_org_27_0](https://user-images.githubusercontent.com/78655692/140617498-de4106e1-97fe-433a-b44f-2ea9f5fddffa.png)
+![seaborn_org_27_0](/assets/images/legacy/928d7b9d1e.webp)
 
 ## 2차원 카테고리 데이터
 
@@ -193,7 +193,7 @@ titanic_size = titanic.pivot_table(
 titanic_size
 ```
 
-![image](https://user-images.githubusercontent.com/78655692/140618446-d05766c1-a14c-442b-9624-22db7fe4bd5d.png)
+![image](/assets/images/legacy/3329cde7b9.webp)
 
 ```python
 sns.heatmap(titanic_size, cmap=sns.light_palette(
@@ -202,7 +202,7 @@ plt.title('Heatmap')
 plt.show()
 ```
 
-![seaborn_org_30_0](https://user-images.githubusercontent.com/78655692/140617866-b1f18658-888b-4fca-9557-c4b572267d8a.png)
+![seaborn_org_30_0](/assets/images/legacy/12ac7739b2.webp)
 
 ## 2차원 복합 데이터
 
@@ -225,7 +225,7 @@ plt.title('요일 별, 전체 팁')
 plt.show()
 ```
 
-![seaborn_org_32_0](https://user-images.githubusercontent.com/78655692/140617904-793aff44-a13e-47a4-b801-8180d6684e76.png)
+![seaborn_org_32_0](/assets/images/legacy/740ac2de0e.webp)
 
 ### boxplot()
 - boxplot 명령은 박스-휘스커 플롯(Box-Whisker Plot) 혹은 간단히 박스 플롯이라 부르는 차트를 그려준다.
@@ -242,7 +242,7 @@ plt.title('요일 별 전체 팁의 Box Plot')
 plt.show()
 ```
  
-![seaborn_org_33_0](https://user-images.githubusercontent.com/78655692/140617949-63350866-d36b-455c-89be-f3ef88b22682.png)
+![seaborn_org_33_0](/assets/images/legacy/31776b1b78.webp)
 
 ## violinplot(), stripplot(). swarmplot()
 
@@ -258,7 +258,7 @@ plt.title("요일 별 전체 팁의 Violin Plot")
 plt.show()
 ```
 
-![seaborn_org_35_0](https://user-images.githubusercontent.com/78655692/140618010-31bce276-9276-4528-8b5e-2599eb97c56d.png)
+![seaborn_org_35_0](/assets/images/legacy/b8fb295418.webp)
 
 ### stripplot 
 
@@ -272,7 +272,7 @@ plt.title("요일 별 전체 팁의 Strip Plot")
 plt.show()
 ```
 
-![seaborn_org_36_0](https://user-images.githubusercontent.com/78655692/140618026-21afb405-8bf4-4227-a12d-7f2c5bf8acfc.png)
+![seaborn_org_36_0](/assets/images/legacy/178f7f967b.webp)
 
 ### swarmplot 
 
@@ -284,7 +284,7 @@ plt.title("요일 별 전체 팁의 Swarm Plot")
 plt.show()
 ```
 
-![seaborn_org_37_0](https://user-images.githubusercontent.com/78655692/140618046-44b0866a-0001-4bb6-bef6-be9bc9906005.png)
+![seaborn_org_37_0](/assets/images/legacy/e7e2ef3a0c.webp)
 
 ## 다차원 복합 데이터
 
@@ -297,7 +297,7 @@ plt.title("요일 별, 성별 전체 팁의 Histogram")
 plt.show()
 ```
 
-![seaborn_org_39_0](https://user-images.githubusercontent.com/78655692/140618062-68d4a06d-3903-4132-b8c1-38692dcae511.png)
+![seaborn_org_39_0](/assets/images/legacy/00a49cec1c.webp)
 
 ### boxplot(), hue=
 ```python
@@ -306,7 +306,7 @@ plt.title("요일 별, 성별 전체 팁의 Box Plot")
 plt.show()
 ```
     
-![seaborn_org_40_0](https://user-images.githubusercontent.com/78655692/140618081-e80919f3-6ca5-47fc-9324-04b53fdf5354.png)
+![seaborn_org_40_0](/assets/images/legacy/f71a546afe.webp)
 
 ### violinplot(), hue=
 
@@ -316,7 +316,7 @@ plt.title("요일 별, 성별 전체 팁의 Violin Plot")
 plt.show()
 ```
 
-![seaborn_org_41_0](https://user-images.githubusercontent.com/78655692/140618102-0f14e235-5682-4e79-b12e-1c9f5aad4db0.png)
+![seaborn_org_41_0](/assets/images/legacy/d5d17e3426.webp)
 
 ### stripplot(), hue=
 
@@ -328,7 +328,7 @@ plt.legend(loc=1)
 plt.show()
 ```
 
-![seaborn_org_42_0](https://user-images.githubusercontent.com/78655692/140618117-e5bd6559-e289-4c54-ad89-49340b2b7fff.png)
+![seaborn_org_42_0](/assets/images/legacy/dbfb222b6e.webp)
 
 ### swarplot(), hue=
 ```python
@@ -338,7 +338,7 @@ plt.legend(loc=1)
 plt.show()
 ```
 
-![seaborn_org_43_0](https://user-images.githubusercontent.com/78655692/140618137-caac58cd-ccec-47ea-ba39-bfc3c64b63a1.png)
+![seaborn_org_43_0](/assets/images/legacy/648e3e6902.webp)
 
 ### split= or dodge=
 - stripplot, violinplot, swarmplot 등 에서는 split 또는 dodge 옵션으로 시각화 방법을 변경할 수도 있다.
@@ -349,7 +349,7 @@ plt.title("요일 별, 성별 전체 팁의 Violin Plot, Split=True")
 plt.show()
 ```
 
-![seaborn_org_44_0](https://user-images.githubusercontent.com/78655692/140618164-b4a6c31d-aa82-428e-a97e-7fcf7e7f225c.png)
+![seaborn_org_44_0](/assets/images/legacy/66d149179c.webp)
 
 ```python
 sns.stripplot(x="day", y="total_bill", hue="sex",
@@ -358,7 +358,7 @@ plt.title("요일 별, 성별 전체 팁의 Strip Plot, Split=True")
 plt.show()
 ```
 
-![seaborn_org_45_0](https://user-images.githubusercontent.com/78655692/140618176-c0967473-8087-4dec-b0e6-e3f7c5053071.png)
+![seaborn_org_45_0](/assets/images/legacy/a826f0bcb5.webp)
 
 ```python
 sns.swarmplot(x="day", y="total_bill", hue="sex", data=tips, dodge=True)
@@ -366,7 +366,7 @@ plt.title("요일 별, 성별 전체 팁의 Swarm Plot, Split=True")
 plt.show()
 ```
 
-![seaborn_org_46_0](https://user-images.githubusercontent.com/78655692/140618200-12b72491-e09d-4efa-955c-e5d95c964ca6.png)
+![seaborn_org_46_0](/assets/images/legacy/630e1b2738.webp)
 
 ### heatmap()
 
@@ -379,7 +379,7 @@ sns.heatmap(flights_passengers, annot=True, fmt="d", linewidths=1)
 plt.show()
 ```
 
-![seaborn_org_47_0](https://user-images.githubusercontent.com/78655692/140618239-2ef5926e-3734-49ac-b509-1d91467cc789.png)
+![seaborn_org_47_0](/assets/images/legacy/ec9400232d.webp)
 
 ### catplot()
 
@@ -392,7 +392,7 @@ plt.title("각 클래스의 성별 생존자 수의 Catplot")
 plt.show()
 ```
 
-![seaborn_org_49_0](https://user-images.githubusercontent.com/78655692/140618276-71760354-ae4f-4577-812e-77bedac5f339.png)
+![seaborn_org_49_0](/assets/images/legacy/7e10232637.webp)
 
 ## 기타
 
@@ -405,7 +405,7 @@ sns.stripplot(x="tip", y="day", data=tips, jitter=True, color="0.4")
 plt.show()
 ```
 
-![seaborn_org_51_0](https://user-images.githubusercontent.com/78655692/140618297-861e2cc0-843a-4bc5-9088-9af3efe1b4d0.png)
+![seaborn_org_51_0](/assets/images/legacy/3259e09a35.webp)
 
 ```python
 plt.title("Violin plot과 Swarm Plot로 표현한, 요일 별 팁")
@@ -414,7 +414,7 @@ sns.swarmplot(x="day", y="total_bill", data=tips, color="0.9")
 plt.show()
 ```
 
-![seaborn_org_52_0](https://user-images.githubusercontent.com/78655692/140618305-8a6c2aa4-b887-4707-a357-47a83aa27bdd.png)
+![seaborn_org_52_0](/assets/images/legacy/13c94f88d4.webp)
 
 ## 스타일
 
@@ -429,7 +429,7 @@ sns.set_style("ticks")
 sinplot()
 ```
 
-![seaborn_org_55_0](https://user-images.githubusercontent.com/78655692/140618326-19772661-bc30-420b-ab43-2e1250fbda3b.png)
+![seaborn_org_55_0](/assets/images/legacy/0b50c53e8c.webp)
 
 ```python
 sns.set_style("darkgrid")
@@ -437,7 +437,7 @@ sns.set_style("darkgrid")
 sinplot()
 ```
 
-![seaborn_org_56_0](https://user-images.githubusercontent.com/78655692/140618337-83754ad0-caca-4404-9e56-98628ef98561.png)
+![seaborn_org_56_0](/assets/images/legacy/fdfca1ff1c.webp)
 
 ```python
 sns.set_style("whitegrid")
@@ -445,7 +445,7 @@ sns.set_style("whitegrid")
 sinplot()
 ```
   
-![seaborn_org_57_0](https://user-images.githubusercontent.com/78655692/140618353-9f77bb9e-5b84-480b-b9bf-dfefac065221.png)
+![seaborn_org_57_0](/assets/images/legacy/73bf8478ba.webp)
 
 ## References
 

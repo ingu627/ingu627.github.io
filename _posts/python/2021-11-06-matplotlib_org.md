@@ -16,7 +16,7 @@ last_modified_at: 2026-10-09
 
 ## figure의 구성요소 
 
-![matplotlib_org_1_0](https://user-images.githubusercontent.com/78655692/140635477-5835141b-56cb-4d39-8d43-ce5ab43f9407.png)
+![matplotlib_org_1_0](/assets/images/legacy/db7ff836b1.webp)
 
 
 ## 라이브러리 불러오기 
@@ -41,7 +41,7 @@ plt.ylabel('y-label')
 plt.show()
 ```
     
-![matplotlib_org_3_0](https://user-images.githubusercontent.com/78655692/140635539-03190565-2863-4d92-96aa-d836454247c1.png)
+![matplotlib_org_3_0](/assets/images/legacy/d68fa24a78.webp)
 
 ```python
 # 첫번째 x값(x-value), 두번째 y값(y-value)
@@ -50,7 +50,7 @@ plt.show()
 plt.plot([1,2,3,4], [1,4,9, 16]) 
 ```
     
-![matplotlib_org_4_1](https://user-images.githubusercontent.com/78655692/140635559-0e07da15-ce6e-4e26-bdef-ccee67d0e433.png)
+![matplotlib_org_4_1](/assets/images/legacy/327b0df933.webp)
 
 
 ## 레이블이 있는 데이터 사용하기
@@ -60,7 +60,7 @@ plt.plot('data_x', 'data_y', data=data_dict)
 plt.show()
 ```
 
-![matplotlib_org_6_0](https://user-images.githubusercontent.com/78655692/140635567-47fcfb45-5eff-414f-a941-1177497e168c.png)
+![matplotlib_org_6_0](/assets/images/legacy/70275afc29.webp)
 
 
 ## 스타일 지정하기
@@ -75,7 +75,7 @@ plt.axis([0, 6, 0, 20])
 plt.show()
 ```
 
-![matplotlib_org_8_0](https://user-images.githubusercontent.com/78655692/140635724-ed6fc267-3f98-421a-8376-f16d8a1cf142.png)
+![matplotlib_org_8_0](/assets/images/legacy/f933fdeacd.webp)
 
 ```python
 t = np.arange(0., 5., 0.2)
@@ -84,7 +84,7 @@ plt.plot(t, t, 'r--', t, t**2, 'bs', t, t**3, 'g^') #default값은 실선
 plt.show()
 ```
 
-![matplotlib_org_9_0](https://user-images.githubusercontent.com/78655692/140635739-8b388ba5-c52e-4692-9327-126dfffb41fa.png)
+![matplotlib_org_9_0](/assets/images/legacy/6c34df3610.webp)
 
 
 ## 축 레이블 설정하기
@@ -95,7 +95,7 @@ plt.ylabel('Y-Label')
 plt.show()
 ```
 
-![matplotlib_org_11_0](https://user-images.githubusercontent.com/78655692/140635762-07df6299-6df7-4711-9c83-bc16d6f6172d.png)
+![matplotlib_org_11_0](/assets/images/legacy/e5eadd1e91.webp)
 
 
 ### 레이블 - 여백 지정하기(labelpad)
@@ -106,7 +106,7 @@ plt.ylabel('Y-Label', labelpad=20)
 plt.show()
 ```
 
-![matplotlib_org_13_0](https://user-images.githubusercontent.com/78655692/140635781-e8a55782-f5de-47a3-8377-c7905bef5c4e.png)
+![matplotlib_org_13_0](/assets/images/legacy/12edff91bd.webp)
 
 
 ### 레이블 - 위치 지정하기(loc)
@@ -120,7 +120,7 @@ plt.ylabel('Y-Label', loc='top')
 plt.show()
 ```
 
-![matplotlib_org_15_0](https://user-images.githubusercontent.com/78655692/140635822-b7f99e12-aaea-4d8f-864a-d64b3c4ba0e0.png)
+![matplotlib_org_15_0](/assets/images/legacy/7e31487943.webp)
 
 
 ## 축 범위 지정하기  
@@ -146,12 +146,12 @@ plt.ylim([0,20]) # Y축의 범위 : [ymin, ymax]
 plt.show()
 ```
 
-![matplotlib_org_17_0](https://user-images.githubusercontent.com/78655692/140636689-d6141a41-9c44-44a0-8fa9-8627d2bbeac7.png)
+![matplotlib_org_17_0](/assets/images/legacy/aaa5722043.webp)
 
 
 ## 범례 표시하기
     
-![matplotlib_org_19_0](https://user-images.githubusercontent.com/78655692/140636703-999b91a1-e53f-4605-9874-34bb3c9a7a5c.png)
+![matplotlib_org_19_0](/assets/images/legacy/979172beb8.webp)
 
 ```python
 plt.plot([1,2,3,4], [2,3,5,10], label='Price ($)')
@@ -164,21 +164,21 @@ plt.legend(loc='lower right', ncol=2, fontsize=14) #범례의 열 개수 지정�
 plt.show()
 ```
 
-![matplotlib_org_20_0](https://user-images.githubusercontent.com/78655692/140636713-1671664b-4226-467c-91eb-73124c162b8c.png)
+![matplotlib_org_20_0](/assets/images/legacy/64c5bebdd7.webp)
 
 
 ## marker 설정
 
-![matplotlib_org_22_0](https://user-images.githubusercontent.com/78655692/140636721-472c9ad7-4e4b-4dc5-945e-20347129e1b5.png)
+![matplotlib_org_22_0](/assets/images/legacy/d0ea332a01.webp)
     
-![matplotlib_org_23_0](https://user-images.githubusercontent.com/78655692/140636728-8dcf0983-4e04-49d6-b9e7-2ec37ca110ea.png)
+![matplotlib_org_23_0](/assets/images/legacy/a19d4d5586.webp)
 
 
 ## 색상
 
-![matplotlib_org_25_0](https://user-images.githubusercontent.com/78655692/140636746-6b2a99c9-bb8d-46c5-ba1b-5df7d560f6a6.png)
+![matplotlib_org_25_0](/assets/images/legacy/ac853bdc8f.webp)
 
-![matplotlib_org_26_0](https://user-images.githubusercontent.com/78655692/140636751-c06359c7-3532-49e4-bfe9-cb8f4aa15808.png)
+![matplotlib_org_26_0](/assets/images/legacy/ec57ec0974.webp)
 
 
 ### alpha
@@ -236,7 +236,7 @@ plt.ylabel('Y-Axis', labelpad=20, fontdict=font2)
 plt.show()
 ```
 
-![matplotlib_org_30_0](https://user-images.githubusercontent.com/78655692/140636908-d170e322-6625-463f-a12e-ac7994aa92ec.png)
+![matplotlib_org_30_0](/assets/images/legacy/e8ac102388.webp)
 
 
 ## 그래프 영역 채우기
@@ -266,7 +266,7 @@ plt.show()
 ```
 
 
-![matplotlib_org_33_0](https://user-images.githubusercontent.com/78655692/140636927-29027239-6211-468f-9db0-642aff2a0979.png)
+![matplotlib_org_33_0](/assets/images/legacy/21527b02ea.webp)
 
 
 ```python
@@ -281,7 +281,7 @@ plt.show()
 ```
 
 
-![matplotlib_org_34_0](https://user-images.githubusercontent.com/78655692/140636939-7d5af981-c69c-4e59-b416-a78f6d7fe30a.png)
+![matplotlib_org_34_0](/assets/images/legacy/17d0670537.webp)
 
 
 ```python
@@ -299,7 +299,7 @@ plt.show()
 ```
 
 
-![matplotlib_org_35_0](https://user-images.githubusercontent.com/78655692/140636954-72a85ef2-5b5a-4ff8-8f77-acedbfa39e71.png)
+![matplotlib_org_35_0](/assets/images/legacy/04be55abc9.webp)
 
 
 ```python
@@ -317,7 +317,7 @@ plt.show()
 ```
 
 
-![matplotlib_org_36_0](https://user-images.githubusercontent.com/78655692/140636974-b0c402dc-fd4f-47cc-8112-7a7a9ac82693.png)
+![matplotlib_org_36_0](/assets/images/legacy/7d4f7be093.webp)
 
 
 ```python
@@ -330,7 +330,7 @@ plt.show()
 ```
 
 
-![matplotlib_org_37_0](https://user-images.githubusercontent.com/78655692/140638429-63bc1452-4118-4a69-b736-3cf6ac80622e.png)
+![matplotlib_org_37_0](/assets/images/legacy/14f4d145ce.webp)
 
 
 ## 그리드(grid) 설정하기
@@ -346,7 +346,7 @@ plt.grid(True, axis='y')
 plt.show()
 ```
 
-![matplotlib_org_39_0](https://user-images.githubusercontent.com/78655692/140638457-926906c9-7587-4232-9d5e-b8fa8e3eb025.png)
+![matplotlib_org_39_0](/assets/images/legacy/469e5f18b0.webp)
 
 
 ## 눈금 표시하기
@@ -365,7 +365,7 @@ plt.yticks(np.arange(1, 6))
 plt.show()
 ```
 
-![matplotlib_org_41_0](https://user-images.githubusercontent.com/78655692/140638483-c3e9cf6c-6d75-4efc-82cf-3a3ee6d2af37.png)
+![matplotlib_org_41_0](/assets/images/legacy/8134bef2d0.webp)
 
 ```python
 a = np.arange(0, 2, 0.2)
@@ -379,7 +379,7 @@ plt.yticks(np.arange(0, 7), ('0', '1GB', '2GB', '3GB', '4GB', '5GB', '6GB'))
 plt.show()
 ```
 
-![matplotlib_org_42_0](https://user-images.githubusercontent.com/78655692/140638513-76e32d52-8147-4c12-9a7e-df94df35d0d8.png)
+![matplotlib_org_42_0](/assets/images/legacy/006a200f72.webp)
 
 
 ### tick_params()
@@ -434,7 +434,7 @@ plt.show()
 ```
 
 
-![matplotlib_org_44_0](https://user-images.githubusercontent.com/78655692/140638587-d8c5eebf-7786-4d23-a3ff-d5250706d932.png)
+![matplotlib_org_44_0](/assets/images/legacy/3a577ff957.webp)
 
 
 ## 타이틀 설정하기
@@ -466,7 +466,7 @@ plt.show()
 ```
 
 
-![matplotlib_org_47_0](https://user-images.githubusercontent.com/78655692/140638678-733e10f4-3f36-457a-a7de-fcc737e5543d.png)
+![matplotlib_org_47_0](/assets/images/legacy/d33bb5ae94.webp)
 
 ```python
 x = np.arange(0, 2, 0.2)
@@ -496,7 +496,7 @@ plt.show()
 ```
 
 
-![matplotlib_org_48_1](https://user-images.githubusercontent.com/78655692/140638718-4cd61151-4379-4f77-8bce-253e7789125d.png)
+![matplotlib_org_48_1](/assets/images/legacy/abc7665dc1.webp)
 
 
 ## 선 종류 지정하기
@@ -513,7 +513,7 @@ plt.legend(loc='upper right', ncol=4)
 plt.show()
 ```
 
-![matplotlib_org_50_0](https://user-images.githubusercontent.com/78655692/140638733-adea8293-f85a-4629-b284-842a5c3bbf62.png)
+![matplotlib_org_50_0](/assets/images/legacy/737823f001.webp)
 
 
 ## 여러 개의 그래프 그리기
@@ -524,7 +524,7 @@ plt.show()
 - 여러 개의 그래프를 하나의 그림에 나타내도록 한다.
 - `subplot(nrows, ncols, index)`
 
-![image](https://user-images.githubusercontent.com/78655692/142635521-da4d51d7-a03d-49e5-8f7f-419fd77e8e81.png)
+![image](/assets/images/legacy/5fe388c656.webp)
 
 ```python
 fig = plt.figure()
@@ -533,7 +533,7 @@ ax2 = fig.add_subplot(2, 1, 2)
 plt.show()
 ```
 
-![image](https://user-images.githubusercontent.com/78655692/142636675-3b62b7c1-692d-461a-ae7d-cff0be7bf60f.png)
+![image](/assets/images/legacy/84d1547630.webp)
 
 
 ## 수직선/수평선 표시하기
@@ -583,7 +583,7 @@ plt.show()
 ```
 
 
-![matplotlib_org_52_0](https://user-images.githubusercontent.com/78655692/140638766-28d81c4b-9e9b-48b2-8c0e-06eea5dbeeb5.png)
+![matplotlib_org_52_0](/assets/images/legacy/10a906b8d8.webp)
 
 
 ```python
@@ -599,7 +599,7 @@ plt.show()
 ```
 
 
-![matplotlib_org_53_0](https://user-images.githubusercontent.com/78655692/140638774-68e88311-0bfc-4680-8368-04027c5e46c6.png)
+![matplotlib_org_53_0](/assets/images/legacy/fd0a05c814.webp)
 
 
 ```python
@@ -620,7 +620,7 @@ plt.show()
 ```
 
 
-![matplotlib_org_54_0](https://user-images.githubusercontent.com/78655692/140638813-45fdb741-b942-4adf-97c0-e8f3ce35e67b.png)
+![matplotlib_org_54_0](/assets/images/legacy/e2553498e3.webp)
 
 
 ## 축 스케일 지정하기
@@ -633,7 +633,7 @@ plt.xscale('symlog')
 plt.show()
 ```
 
-![matplotlib_org_56_0](https://user-images.githubusercontent.com/78655692/140638821-3bc183fc-fd04-4995-852e-40e0ecdc339f.png)
+![matplotlib_org_56_0](/assets/images/legacy/398932f94d.webp)
 
 ```python
 x = np.linspace(0,5, 100)
@@ -646,7 +646,7 @@ plt.show()
 ```
 
 
-![matplotlib_org_57_0](https://user-images.githubusercontent.com/78655692/140638844-80f49bad-33ed-48b8-9d36-f2688cf030cc.png)
+![matplotlib_org_57_0](/assets/images/legacy/a03cb64d8a.webp)
 
 
 ## Bar graph()
@@ -664,7 +664,7 @@ plt.show()
 ```
 
 
-![matplotlib_org_60_0](https://user-images.githubusercontent.com/78655692/140638880-bb6b10ea-c280-41cc-b044-8c18f0d57f54.png)
+![matplotlib_org_60_0](/assets/images/legacy/08852598df.webp)
 
 
 ```python
@@ -678,7 +678,7 @@ plt.xticks(x, years) # 데이터 : x , 레이블 : years
 plt.show()
 ```
 
-![matplotlib_org_61_0](https://user-images.githubusercontent.com/78655692/140638893-3ef5479b-0478-4e5a-a3e2-92bebac8e0dd.png)
+![matplotlib_org_61_0](/assets/images/legacy/4ccc2bb370.webp)
 
 
 ### width
@@ -721,7 +721,7 @@ plt.show()
 ```
 
 
-![matplotlib_org_63_0](https://user-images.githubusercontent.com/78655692/140639030-ab7e02b3-5ef6-4b6d-a3e2-1bfd727ba48d.png)
+![matplotlib_org_63_0](/assets/images/legacy/bd256fbf55.webp)
 
 
 ### height
@@ -765,7 +765,7 @@ plt.show()
 ```
 
 
-![matplotlib_org_66_0](https://user-images.githubusercontent.com/78655692/140639117-b8f0d53d-0327-43b9-bf6e-49a95a46ea22.png)
+![matplotlib_org_66_0](/assets/images/legacy/b73181c1ad.webp)
 
 
 ## 산점도(scatter plot)
@@ -789,7 +789,7 @@ plt.scatter(x, y, s=area, c=colors, alpha=0.5, cmap='Spectral')
 ```
 
 
-![matplotlib_org_70_1](https://user-images.githubusercontent.com/78655692/140639163-91fb332b-63d0-4593-80a8-42408c72b165.png)
+![matplotlib_org_70_1](/assets/images/legacy/b39ce470ec.webp)
 
 
 ## 3차원 산점도 그리기
@@ -818,7 +818,7 @@ plt.show()
 ```
 
 
-![matplotlib_org_73_0](https://user-images.githubusercontent.com/78655692/140639186-13c0def2-747e-4abe-a178-25708521b84c.png)
+![matplotlib_org_73_0](/assets/images/legacy/80f7747482.webp)
 
 
 ## histogram()
@@ -833,7 +833,7 @@ plt.hist(weight)
 plt.show()
 ```
 
-![matplotlib_org_75_0](https://user-images.githubusercontent.com/78655692/140639249-0764cd07-3b0c-4c44-b648-2b3ed9ea30ca.png)
+![matplotlib_org_75_0](/assets/images/legacy/80c6756b36.webp)
 
 
 ```python
@@ -848,7 +848,7 @@ plt.legend()
 plt.show()
 ```
 
-![matplotlib_org_76_0](https://user-images.githubusercontent.com/78655692/140639285-3864e4a0-a9e1-41f6-b211-916f21faa0a7.png)
+![matplotlib_org_76_0](/assets/images/legacy/c550884992.webp)
 
 
 ## 누적 히스토그램 그리기
@@ -863,7 +863,7 @@ plt.legend(loc='upper left')
 plt.show()
 ```
 
-![matplotlib_org_77_0](https://user-images.githubusercontent.com/78655692/140639317-bf22cc3d-3edc-4a17-9ee9-6a0a9e15a9b0.png)
+![matplotlib_org_77_0](/assets/images/legacy/b5c76d88b5.webp)
 
 
 ## 히스토그램 종류 지정하기
@@ -896,13 +896,13 @@ plt.title('histtype - stepfilled')
 plt.show()
 ```
 
-![matplotlib_org_79_0](https://user-images.githubusercontent.com/78655692/140639349-3bbcd9b2-e747-44f6-ae52-d94d525f0a3e.png)
+![matplotlib_org_79_0](/assets/images/legacy/8a12d22ee8.webp)
 
-![matplotlib_org_79_1](https://user-images.githubusercontent.com/78655692/140639358-4492c462-0901-412c-819d-5ce005696c3f.png)
+![matplotlib_org_79_1](/assets/images/legacy/2724e717a5.webp)
 
-![matplotlib_org_79_2](https://user-images.githubusercontent.com/78655692/140639373-8ab678ba-1fc6-43e5-9995-98d7de2cd630.png)
+![matplotlib_org_79_2](/assets/images/legacy/9d24d4fe0d.webp)
 
-![matplotlib_org_79_3](https://user-images.githubusercontent.com/78655692/140639376-674a0d7e-f367-4532-a0b3-34a1b55acd57.png)
+![matplotlib_org_79_3](/assets/images/legacy/270f70d72d.webp)
 
 ```python
 a = 2.0 * np.random.randn(10000) + 1.0
@@ -918,7 +918,7 @@ plt.hist(c, bins=100, density=True, alpha=0.9, histtype='step')
 plt.show()
 ```
 
-![matplotlib_org_80_0](https://user-images.githubusercontent.com/78655692/140639394-ee5afd51-e513-4dc6-885d-24f772134de9.png)
+![matplotlib_org_80_0](/assets/images/legacy/0ff3cd4b83.webp)
 
 
 ## pie(파이) 차트 그리기
@@ -941,7 +941,7 @@ plt.pie(ratio, labels=labels, autopct='%.1f%%', startangle=260, counterclock=Fal
 plt.show()
 ```
 
-![matplotlib_org_82_0](https://user-images.githubusercontent.com/78655692/140639435-4655c3b1-19c9-4d8a-ba22-d1ab284f4d4f.png)
+![matplotlib_org_82_0](/assets/images/legacy/e9c3515f38.webp)
 
 
 ### explode : 부채꼴이 파이 차트의 중심에서 벗어나는 정도를 설정
@@ -959,7 +959,7 @@ plt.pie(ratio, labels=labels, autopct='%.1f%%', startangle=260, counterclock=Fal
 plt.show()
 ```
 
-![matplotlib_org_83_0](https://user-images.githubusercontent.com/78655692/140639449-6092c8cc-9aba-438c-a361-92b35cbf8e80.png)
+![matplotlib_org_83_0](/assets/images/legacy/b9f7ccf869.webp)
 
 ```python
 ratio = [34, 32, 16, 18]
@@ -973,7 +973,7 @@ plt.show()
 ```
 
 
-![matplotlib_org_84_0](https://user-images.githubusercontent.com/78655692/140639464-e0d43e3c-aff0-4f48-bb86-069dc1ca1688.png)
+![matplotlib_org_84_0](/assets/images/legacy/b24bbca281.webp)
 
 
 ## References

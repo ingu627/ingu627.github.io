@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "빅데이터분석기사 실기 작업형(6) - 앙상블부터 연관성분석까지"
-excerpt: "본 글은 빅데이터분석기사 실기 작업형에 대비하여 요약 및 실습한 것을 작성한 글입니다. 기출문제의 데이터는 https://github.com/ingu627/BigDataAnalysis에 데이터 셋을 남겨놨습니다."
+excerpt: "본 글은 빅데이터분석기사 실기 작업형에 대비하여 요약 및 실습한 것을 작성한 글입니다. 기출문제의 데이터는 https://github.com/ingu627/BigDataAnalysis에 데이터 셋을 남겨놨습니다. — 앙상블"
 categories: R_ML
 tags: [R, adsp, 빅데이터 분석기사, 실기, 앙상블, 배깅, 부스팅, 랜덤 포레스트, 군집 분석, 연관성 분석, 작업형, 필답형, 자격증, dataq, 정리, pdf, 기출문제, 정리본, 후기, 설명, 2회, 3회]
 toc: true
@@ -11,8 +11,7 @@ sidebar_main: false
 last_modified_at: 2026-10-11
 ---
 
-<img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/148633895-2be87d4e-7edb-4391-b583-eb2888b19bbb.png
-'>
+<img align='right' width='200' height='200' src='/assets/images/legacy/664a3c1e2f.webp'>
 본 글은 빅데이터분석기사 실기 작업형에 대비하여 요약 및 실습 내용을 정리한 글이다. 기출문제 데이터 출처는 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis){: target="_blank"} 저장소에 수록했다. 또한 해당 전체 코드는 `/concept/R_basic_to_pro_6.R` 파일에 정리되어 있다.
 
 > 2021.12.31 : 제 3회 빅데이터 분석기사 실기 시험에 합격했다. [빅데이터 분석기사(R)](https://ingu627.github.io/categories/R_ML) 시리즈를 참고하여 시험 대비에 도움이 되길 바란다.
@@ -27,7 +26,7 @@ last_modified_at: 2026-10-11
 
 ## 배깅(Bagging)
 
-![image](https://user-images.githubusercontent.com/78655692/142348954-39333baf-69d3-47ee-b724-7db5f3854cce.png)
+![image](/assets/images/legacy/015fe9f5e8.webp)
 
 - **배깅(Bagging; BootStrap Aggregating)**은 훈련 데이터에서 다수의 부트스트랩 자료를 생성하고, 각 자료를 모델링한 후 결합하여 최종 예측 모형을 만드는 알고리즘이다.[^1] 
 - **부트스트랩**은 주어진 자료에서 동일한 크기의 표본을 복원 추출(bootstrap sampling)로 생성한 표본 자료를 의미한다.
@@ -170,7 +169,7 @@ confusionMatrix(
 
 ## 부스팅
 
-![image](https://user-images.githubusercontent.com/78655692/142349340-89c63dd0-a949-41c5-83a7-fb2c7637bd3d.png)
+![image](/assets/images/legacy/c5ca59f0c1.webp)
 
 - **부스팅**(Boosting)은 예측력이 약한 모형들을 결합하여 강한 예측 모형을 만드는 방법이다. 
 
@@ -327,7 +326,7 @@ confusionMatrix(
 
 ## 랜덤 포레스트
 
-<img src="https://user-images.githubusercontent.com/78655692/143412154-aa6f9e63-2bc6-4f08-868b-711c5a2c520f.png" width="500" alt="image">
+<img src="/assets/images/legacy/677b547ec4.webp" width="500" alt="image">
 
 - **랜덤 포레스트**(Random Forest)는 의사결정나무의 특징인 큰 분산을 고려하여 배깅과 부스팅보다 더 많은 무작위성을 부여해 다수의 트리를 생성한 후, 이를 결합하여 최종 예측 모형을 만드는 앙상블 기법이다.[^3]
 - 랜덤 포레스트 패키지는 랜덤 입력에 따른 여러 트리의 집합인 포레스트를 이용한 분류방법이다.
@@ -502,7 +501,7 @@ US.single = hclust(US.dist_euclidean^2, method="single")
 plot(US.single)
 ```
 
-![image](https://user-images.githubusercontent.com/78655692/142362743-03621758-0305-4846-9c6a-f3fd459848d0.png)
+![image](/assets/images/legacy/8bd200d8c5.webp)
 
 
 ### 4. 군집 분석을 통한 그룹 확인 
@@ -585,7 +584,7 @@ points(
     pch=8, cex=1.5)
 ```
 
-![image](https://user-images.githubusercontent.com/78655692/142364885-d55766e8-4c7c-454c-ac8d-b7b5c71635e2.png)
+![image](/assets/images/legacy/7d417af059.webp)
 
 
 ## 연관성 분석 

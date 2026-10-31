@@ -11,7 +11,7 @@ sidebar_main: false
 last_modified_at: 2026-10-09
 ---
 
-<img align='right' width='150' height='150' src='https://user-images.githubusercontent.com/78655692/170685528-4060a9d3-172e-45d8-897b-3a8eb539970c.png'>
+<img align='right' width='150' height='150' src='/assets/images/legacy/ace131a3f8.webp'>
 요즘 파이썬을 사용하면서 자연스레 좀 더 효율적으로 코드를 짜고 싶은 마음이 커졌습니다. 그래서 이 책을 공부하기 시작했습니다. 이 글은 개인 공부를 목적으로 작성되었습니다. 혹시 오타나 글의 수정사항이 있어 알려주시면 감사하겠습니다.
 
 

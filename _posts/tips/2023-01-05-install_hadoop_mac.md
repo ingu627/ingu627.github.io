@@ -21,7 +21,7 @@ last_modified_at: 2026-10-09
 | Spark | 3.3.0 |
 | 환경 | macOS (Apple Silicon arm64) |
 
-<img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/210795225-fbe262fc-2749-4476-a38d-f74477240eb8.png'>
+<img align='right' width='200' height='200' src='/assets/images/legacy/ff8de389a8.webp'>
 
 ## 1. 자바(JDK 19) 설치
 
@@ -29,13 +29,13 @@ last_modified_at: 2026-10-09
 - [[ORACLE JAVA 19]](https://www.oracle.com/java/technologies/downloads/#jdk19-mac) 링크로 가 `Arm 64 DMG Installer`를 다운로드한다.
 - **스크린샷**
 
-    <img width="1316" alt="image" src="https://user-images.githubusercontent.com/78655692/210787305-4f3255b9-9a52-4a69-b282-642d8db596cd.png">
+    <img width="1316" alt="image" src="/assets/images/legacy/7782a78f5f.webp">
 
 - 또는 Azul의 Zulu OpenJDK도 맥 m1칩용을 제공한다. 둘 중 아무거나 받아도 상관없다.
 - [[AZUL Java 19(STS)]](https://www.azul.com/downloads/?version=java-19-sts&os=macos&architecture=arm-64-bit&package=jdk) 링크로 가 macOS arm64버전을 다운로드한다.
 - **스크린샷**
 
-    <img width="1304" alt="image" src="https://user-images.githubusercontent.com/78655692/210792060-85a0a650-7219-408b-b6d8-d73988256a46.png">
+    <img width="1304" alt="image" src="/assets/images/legacy/5827d256af.webp">
 
 - 그 후 `vi ~/.zshrc` 명령어를 통해 파일을 연 뒤, 아래처럼 java 경로를 export 해준다.
   - 또는 `~/.bashrc`
@@ -49,7 +49,7 @@ export PATH=${PATH}:$JAVA_HOME/bin
 
 - `java -version` 명령어로 아래처럼 나오면 정상적으로 설치가 됐다.
 
-    <img width="722" alt="image" src="https://user-images.githubusercontent.com/78655692/210792461-fd4e4187-c5aa-45a9-b50d-4175fb495fb1.png">
+    <img width="722" alt="image" src="/assets/images/legacy/ca044acaaf.webp">
 
 ## 2. ssh 설정
 
@@ -70,7 +70,7 @@ $ chmod 0600 ~/.ssh/authorized_keys
 - 마찬가지로, 해당 [[Apache Hadoop - Download]](https://hadoop.apache.org/releases.html) 링크로 가 `binary` 파일을 다운받는다.
 - **스크린샷**
 
-    <img width="1320" alt="image" src="https://user-images.githubusercontent.com/78655692/210796070-5453d9ad-0cbc-4a16-834e-3a4f7e3f8b10.png">
+    <img width="1320" alt="image" src="/assets/images/legacy/846d501919.webp">
 
 - 보통 `Downloads` 경로에 다운로드 받아지므로 이를 root 경로로 변경해준다.
 - `mv hadoop-3.3.4 ~/hadoop-3.3.4`
@@ -172,7 +172,7 @@ $ sbin/start-yarn.sh ## YARN
 - `http://localhost:9870` 웹 UI를 통해 데몬 프로세스를 확인할 수 있다.
 - **결과**
 
-  <img width="1323" alt="image" src="https://user-images.githubusercontent.com/78655692/210920628-0753f437-9d08-4fb1-9528-acb6da86328e.png">
+  <img width="1323" alt="image" src="/assets/images/legacy/54f4f73789.webp">
 
 - 또한, 자바의 `jps` 명령어를 사용해 데몬 동작 여부를 파악할 수 있다.
 
@@ -198,7 +198,7 @@ $ hadoop fs -mkdir -p /user/hyunseokjung
 - 하둡과 마찬가지로 [[Apache Spark Homepage - Download]](https://spark.apache.org/downloads.html) 링크로 가 최신 버전을 설치해준다.
 - **스크린샷**
 
-  <img width="1312" alt="image" src="https://user-images.githubusercontent.com/78655692/210923882-6b59709b-be2b-4a95-9a77-cc0b33508a20.png">
+  <img width="1312" alt="image" src="/assets/images/legacy/25788ccbdb.webp">
 
 - 보통 `Downloads` 경로에 다운로드 받아지므로 이를 root 경로로 변경해준다.
 - `mv spark-3.3.0-bin-hadoop3 ~/spark-3.3.0`

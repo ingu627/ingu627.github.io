@@ -11,7 +11,7 @@ sidebar_main: false
 last_modified_at: 2026-10-09
 ---
 
-<img align='right' width='150' height='200' src='https://user-images.githubusercontent.com/78655692/186088421-fe905f9e-d40f-43b2-ac6e-094e9c342473.png'>
+<img align='right' width='150' height='200' src='/assets/images/legacy/058f7b9a23.webp'>
 [Spark The Definitive Guide - BIG DATA PROCESSING MADE SIMPLE] 책을 중심으로 스파크를 개인 공부를 위해 요약 및 정리해보았습니다. 다소 복잡한 설치 과정은 도커에 미리 이미지를 업로드해 놓았습니다. 즉, 도커 이미지를 pull하면 바로 스파크를 사용할 수 있습니다.
 
 - 도커 설치 및 활용하는 방법 : [[Spark] 빅데이터와 아파치 스파크란 - 1.2 스파크 실행하기](https://ingu627.github.io/spark/spark_db1/#12-%EC%8A%A4%ED%8C%8C%ED%81%AC-%EC%8B%A4%ED%96%89%ED%95%98%EA%B8%B0)
@@ -36,7 +36,7 @@ last_modified_at: 2026-10-09
 
 - **교차최소제곱**은 각 아이템의 특징 벡터와 각 사용자의 특징 벡터의 내적이 해당 아이템에 대한 사용자의 평점과 근사하도록 각 사용자 및 아이템에 대해 k차원의 특징 벡터를 찾는다. 
 
-    <img width="532" alt="image" src="https://user-images.githubusercontent.com/78655692/205039999-83e7a79f-6871-4f7f-a6a7-e5fb7c285a5b.png"> 이미지출처[^1]
+    <img width="532" alt="image" src="/assets/images/legacy/15b61ffca9.webp"> 이미지출처[^1]
 
 - 따라서 사용자 아이디, 아이템 아이디, 평점 세 가지 컬럼을 가진, 사용자와 아이템 간에 존재하는 평점으로 구성된 입력 데이터셋만 있으면 된다.
 - 이 알고리즘은 아주 일반적이거나 많은 정보를 가지고 있는 서비스에 더 적합하다.
@@ -100,7 +100,7 @@ ratings = spark.read.text(f"{data_path}/sample_movielens_ratings.txt") \
 
 - **결과**
 
-    <img width="309" alt="image" src="https://user-images.githubusercontent.com/78655692/205214756-637a873c-1208-4847-8669-f82d18cfb033.png">
+    <img width="309" alt="image" src="/assets/images/legacy/e98c9e8363.webp">
 
 
 - 그 다음 이 데이터셋을 사용해 모델을 학습한다.
@@ -110,7 +110,7 @@ ratings = spark.read.text(f"{data_path}/sample_movielens_ratings.txt") \
 
 > **fit** : 수행하려는 변환이 입력 컬럼에 대한 데이터 또는 정보로 초기화되어야 할 때 필요하다. 이후 변환자를 생성하고 입력 데이터셋에 적용하여 새로운 컬럼을 추가한다.
 
-<img width="580" alt="image" src="https://user-images.githubusercontent.com/78655692/205215870-1502ebd1-10a5-43d4-b55f-4652f42d5e6e.png">
+<img width="580" alt="image" src="/assets/images/legacy/19a3d12942.webp">
 
 
 ```python
@@ -129,7 +129,7 @@ predictions = alsModel.transform(test)
 
 - **결과**
 
-    <img width="393" alt="image" src="https://user-images.githubusercontent.com/78655692/205215986-dc494f25-3abf-49dd-bc96-b0ea50745b4f.png">
+    <img width="393" alt="image" src="/assets/images/legacy/fa5c72b1c8.webp">
 
 
 - 이제 각사용자 또는 영화에 대한 상위 k 추천 결과를 출력할 수 있다.
@@ -148,7 +148,7 @@ alsModel.recommendForAllItems(3) \
 
 - **결과**
 
-    <img width="311" alt="image" src="https://user-images.githubusercontent.com/78655692/205217025-f9736a74-6ef3-4890-a2e3-ae8a13b21d28.png">
+    <img width="311" alt="image" src="/assets/images/legacy/9accbbd6c1.webp">
 
 
 - 다음은 성과 평가지표이다.

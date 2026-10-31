@@ -11,6 +11,9 @@
             🔥 <span style="font-family:'RIDIBatang';">전체 글 수</style> <span style="font-family:'RIDIBatang';">{{sum}}</style> <span style="font-family:'RIDIBatang';">개 🔥</style>
       </li>
       <li>
+        <a href="/archive/" style="font-family:'RIDIBatang';">📚 전체 글 목록 (Archive)</a>
+      </li>
+      <li>
         <!--span 태그로 카테고리들을 크게 분류 ex) C/C++/C -->
         <span class="nav__sub-title">AI</span>
         <ul>

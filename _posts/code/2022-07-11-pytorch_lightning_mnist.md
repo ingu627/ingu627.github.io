@@ -11,7 +11,7 @@ sidebar_main: false
 last_modified_at: 2026-10-09
 ---
 
-<img align='right' width='250' src='https://user-images.githubusercontent.com/78655692/178315781-684e139b-9095-45a4-ba26-41d4acacfc2b.png'>
+<img align='right' width='250' src='/assets/images/legacy/14cb0be0e7.webp'>
 본 글은 Pytorch Lightning + Wandb을 활용하여 mnist 예제 살펴보는 내용입니다. 개인 공부를 목적으로 썼습니다.
 
 참고 :
@@ -42,7 +42,7 @@ last_modified_at: 2026-10-09
 - **Trainer**는 모델읠 학습을 담당하는 클래스이다. 모델의 학습 epoch나 batch 상태들과 모델을 저장해 로그를 생성하는 부분들을 담당한다.
 
 
-<img src='https://user-images.githubusercontent.com/78655692/178400817-4c991d13-4e47-4545-a739-b5b6237a23dd.png' width=650> <br> 이미지출처 [^3]
+<img src='/assets/images/legacy/d88dfd8d56.webp' width=650> <br> 이미지출처 [^3]
 
 - 사용자는 파란색 부분만 건드리면 된다. 나머지는 pytorch-lightning이 알아서 해준다.
 
@@ -271,9 +271,9 @@ last_modified_at: 2026-10-09
 
 ## 결과
 
-![image](https://user-images.githubusercontent.com/78655692/178334879-202bf6ec-323f-49a8-8a30-6366b4fa6613.png)
+![image](/assets/images/legacy/34cc99c212.webp)
 
-![image](https://user-images.githubusercontent.com/78655692/178334933-00b6c95f-bd54-4127-b673-cbb0fc021fd0.png)
+![image](/assets/images/legacy/e8bd056b38.webp)
 
 
 

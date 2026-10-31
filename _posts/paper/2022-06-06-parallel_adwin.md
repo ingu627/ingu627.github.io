@@ -11,7 +11,7 @@ sidebar_main: false
 last_modified_at: 2026-10-11
 ---
 
-![image](https://user-images.githubusercontent.com/78655692/172111947-570a483a-c49a-4912-af2d-efa6c23f213c.png)
+![image](/assets/images/legacy/613b90c4c6.webp)
 
 "Scalable Detection of Concept Drifts on Data Streams with Parallel Adaptive Windowing" 논문을 정리하고 리뷰한 글이다.[^1]
 
@@ -61,14 +61,14 @@ ADWIN은 스트림 환경에서 실시간(on the fly)으로 컨셉 드리프트�
 
 구체적으로 ADWIN은 Figure 1과 같이 윈도우를 두 개의 슬라이딩 하위 윈도우(sliding subwindows)로 분할할 수 있는 모든 가능한 조합을 순회한다. 두 하위 윈도우의 평균값 분포 차이가 호프딩 부등식(Hoeffding bound) 기반의 임계값을 초과하면 컨셉 드리프트로 판정하고, 과거 하위 윈도우에 속한 튜플들을 삭제한다. 이를 **컷 감지(cut detection)**라 부르며, 오래된 과거 데이터를 잘라낼 지점을 결정하는 핵심 연산이다.
 
-![image](https://user-images.githubusercontent.com/78655692/172120746-8d7e3cc7-7758-49e6-bfab-6f9d174a258c.png)
+![image](/assets/images/legacy/966aa6ca15.webp)
 
 
 ### 2.2 Exponential Histograms
 
 모든 튜플마다 원시 데이터를 그대로 유지하며 하위 윈도우의 전수 분할을 검사하는 나이브 ADWIN 구현은 큰 메모리와 연산 비용을 초래한다. 이를 해결하기 위해 ADWIN은 지수 히스토그램(exponential histogram)[^3]을 핵심 내부 자료구조로 채택한다.
 
-![image](https://user-images.githubusercontent.com/78655692/172122072-51a342cb-b32a-4412-bcea-318c62bcf8ba.png)
+![image](/assets/images/legacy/601a66a702.webp)
 
 지수 히스토그램은 유입 튜플들을 기하급수적 크기를 갖는 버킷(bucket)으로 압축하여 관리한다.
 
@@ -81,14 +81,14 @@ ADWIN은 스트림 환경에서 실시간(on the fly)으로 컨셉 드리프트�
 
 지수 히스토그램을 포함한 ADWIN 알고리즘의 전체 실행 파이프라인 개요는 Figure 3과 같다.
 
-![image](https://user-images.githubusercontent.com/78655692/172123866-378f3f70-5b9e-4747-bd5c-eae5594c3673.png)
+![image](/assets/images/legacy/5b50b5b881.webp)
 
 
 ### 2.3 Initial Performance Analysis
 
 지수 히스토그램으로 메모리와 연산 복잡도를 로그 스케일로 압축했음에도 불구하고, 단일 스레드 기반의 기존 ADWIN은 고속 스트림 환경에서 뚜렷한 성능 한계를 노출한다.
 
-![image](https://user-images.githubusercontent.com/78655692/172124674-cefedbe9-f13f-457d-8509-073fd844e5f1.png)
+![image](/assets/images/legacy/540f669cdb.webp)
 
 프로파일링 결과 전체 수행 시간의 대부분은 튜플 삽입이 아닌 컷 검정(cut check) 루프에서 소비된다. 버킷 순회 검정이 끝날 때까지 새로운 튜플의 유입 처리가 블로킹되므로 스트림 처리 엔진의 병목으로 직결된다.
 
@@ -102,7 +102,7 @@ ADWIN의 처리량(throughput)을 확장하기 위해서는 병목의 근원인 
 
 ### 3.1 Single-Node Parallelization
 
-![image](https://user-images.githubusercontent.com/78655692/175618608-98cdfb44-bc4b-4d8d-96c9-7fc7dca90fbe.png)
+![image](/assets/images/legacy/59f2e7bc0e.webp)
 
 Figure 4의 의사코드는 단일 노드에서 튜플 수집과 컷 검사를 동시 수행하기 위한 병렬화 아키텍처의 전체 흐름을 요약한다. 병렬화는 상호 보완적인 세 단계 계층으로 구성된다.
 
@@ -118,7 +118,7 @@ Figure 4의 의사코드는 단일 노드에서 튜플 수집과 컷 검사를 �
 기존 ADWIN은 신규 튜플로 지수 히스토그램을 갱신하는 작업과, 컷 검정 절차를 통해 드리프트를 탐지하는 작업을 단일 스레드에서 순차적으로 실행한다. 이로 인해 매 튜플마다 컷 검정이 완료될 때까지 신규 튜플 유입 처리가 중단되어 전체 처리량이 급감한다.
 
 
-![image](https://user-images.githubusercontent.com/78655692/175768557-800a9675-f54b-4249-b271-e2e6a7bd46b9.png)
+![image](/assets/images/legacy/cdafaf26bc.webp)
 
 Optimistic ADWIN은 히스토그램 갱신 루프와 컷 검사 루프를 분리된 스레드로 격리하여 수집 블로킹을 해소한다.
 
@@ -137,7 +137,7 @@ Optimistic ADWIN은 히스토그램 갱신 루프와 컷 검사 루프를 분리
 
 스레드를 분리하더라도 개별 컷 검정 자체의 수행 시간이 길어지면 스냅샷과 주 히스토그램 사이의 차이가 벌어져 롤백 비용이 증가한다. 따라서 단일 컷 검정 절차 자체를 다중 스레드로 가속하는 기법이 필요하다.
 
-![image](https://user-images.githubusercontent.com/78655692/175769135-079c9ab3-025c-47af-b410-e530e103fa57.png)
+![image](/assets/images/legacy/1b2ff7ec98.webp)
 
 기존의 단일 스레드 컷 검사는 히스토그램의 가장 오래된 버킷(끝부분)부터 시작하여 최신 버킷(시작부분) 방향으로 순차 탐색을 진행한다. 두 하위 윈도우의 평균 차이를 계산하기 위해 버킷들의 누적 합과 분산 통계량을 집계하며 순회한다.
 

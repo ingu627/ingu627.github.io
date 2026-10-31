@@ -12,8 +12,7 @@ sidebar_main: false
 last_modified_at: 2026-10-09
 ---
 
-<img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/147719090-5f0942f1-1647-44ad-8d72-f11e3fe400d7.png
-'>
+<img align='right' width='200' height='200' src='/assets/images/legacy/14cf7d5543.webp'>
 본 글은 Distributed Systems 책의 내용을 개인 공부 목적을 위한 요약 및 정리한 내용입니다. 오타나 오류는 알려주시길 바라며, 도움이 되길 바랍니다. **2023.04.25 Update**
 
 **글을 읽으면서 스스로에게 물어보기**
@@ -50,14 +49,14 @@ last_modified_at: 2026-10-09
 - 컴포넌트들이 $L_j$에 있는 컴포넌트가 낮은 수준에 있는 컴포넌트 $L_i$에게 다운콜하고 응답을 기대하는 레이어드 방식으로 구성되어 있다. 
   - 특출난 케이스가 하이레벨 컨포넌트로 업콜 할 때이다.
 
-![image](https://user-images.githubusercontent.com/78655692/148709612-705ee8d0-0818-470f-bb0f-9e201ed9c5d4.png)
+![image](/assets/images/legacy/699f0b540b.webp)
 
 - (a)는 다음 하위 계층에 대해 다운콜만 수행되는 표준 구조를 보여준다. 
   - 이 구조는 네트워크 통신에 주로 보인다.
 
 ### Layered communication protocol
 
-![image](https://user-images.githubusercontent.com/78655692/148709840-6813bd39-f7ba-434f-a76d-7ff0be970a78.png)
+![image](/assets/images/legacy/78ecd77359.webp)
 
 - 통신-프로토콜 스택에서 각 계층은 데이터를 목적지로 보내는 것을 허용하는 하나 또는 몇몇의 통신 서비스를 실행한다. 
 - 이를 위해 각 계층은 요청될 수 있는 함수를 명시할 수 있는 인터페이스를 제공한다. 
@@ -105,7 +104,7 @@ s.close() # 연결 끊기
   - 그 후에 결과들이 리스트로 랭크되고, 리스트를 HTML 페이지에 전송한다.
   - 정보 회수 파트는 프로세싱 수준에 있다.
 
-  <img src="https://user-images.githubusercontent.com/78655692/148915278-47e23286-a77a-4424-9255-4896d45ba750.png" width="800">
+  <img src="/assets/images/legacy/a9f76b1260.webp" width="800">
 
 - *프로세싱 부분에 대한 예제2.* 부동산 중개업을 위한 의사결정 시스템
   - 3가지 구성요소
@@ -123,7 +122,7 @@ s.close() # 연결 끊기
 
 ## Object-based and service-oriented architectures
 
-![image](https://user-images.githubusercontent.com/78655692/148978947-7f2613a9-0f09-4787-bb22-f39e4aee889a.png)
+![image](/assets/images/legacy/537043ac3d.webp)
 
 - 각 객체는 컴포넌트라 정의한 것과 일치하며, 이런 컴포넌트들은 프로시저 호출 방식을 통해 연결되었다.
 - **객체기반 아키텍처**는 데이터(state 또는 field)와 데이터에 수행되는 동작(method)을 단일 엔티티로 캡슐화하는 방식을 제공한다. 
@@ -135,7 +134,7 @@ s.close() # 연결 끊기
   - **객체 (object)** : 사물(소프트웨어 또는 시스템)을 표현하는 단위 (프로그래밍)
   - **개체 (entity)** : 정보를 표현하는 단위 (이미있는 속성들이 모인 것)
 
-<img src='https://user-images.githubusercontent.com/78655692/149040992-ddb1cef8-58b2-44bf-9932-8640b2c2e4d0.png' width=800>
+<img src='/assets/images/legacy/e1f4211d67.webp' width=800>
 
 - 클라이언트가 분산 객체를 묶을때, 객체의 인터페이스(=`proxy`)의 실행은 클라이언트의 주소 공간으로 적재된다.
 - 프록시는 오직 메시지로의 마샬 메서드 호출과 메서드 호출의 결과를 클라이언트로 반환하기 위한 언마샬 응답 메시지만 받을 수 있다.
@@ -165,7 +164,7 @@ s.close() # 연결 끊기
       - **명명 스키마**(naming scheme) : 네임을 붙일 때 어떤 규칙을 가지고 붙임
   2. 모든 서비스는 많아 봐야 4가지 작동으로 구성된 같은 인터페이스를 제공한다. 
 
-    <img src='https://user-images.githubusercontent.com/78655692/149076180-53df2347-ce54-4d72-8c17-0be0a22e7e5d.png'>
+    <img src='/assets/images/legacy/9b853d1fc3.webp'>
 
   3. 서비스로부터 보낸 메시지들은 self-described이다.
   4. 서비스에서 동작을 실행한 후에, 컴포넌트는 호출자에 대해 모든 걸 잊어버린다.(=`stateless execution`)
@@ -194,7 +193,7 @@ s.close() # 연결 끊기
     - `coordination` : 여러 노드 사이에서 벌어지는 일에 대해서 뭔가를 조정하는 것을 말한다.
     - 이것은 프로세스에 의해 수행되는 활동들이 전체로 묶여지는 결합을 형성한다.
 
-  ![image](https://user-images.githubusercontent.com/78655692/149267509-f7397466-5d39-48f5-8a6a-b2db9697fefb.png)
+  ![image](/assets/images/legacy/366d64f6eb.webp)
 
 - **시간 결합(Temporal coupling)**은 두 개의 모듈이 서로 동시에 실행되어야 하는 경우를 의미한다. 
   - 즉, 한 모듈이 실행되는 도중에 다른 모듈도 실행되어야 하는 경우이다. 
@@ -227,11 +226,11 @@ s.close() # 연결 끊기
   - 키의 특징으로 프로세스는 서로 명시적 참조를 가지고 있지 않다.
   - 또한 그림에서 발행자와 구독자가 매치되는 (event bus로 알려짐) 메커니즘의 추상화를 볼 수 있다. 
 
-![image](https://user-images.githubusercontent.com/78655692/150331207-804bb101-aa8b-4a28-9ebf-69d369ebfe4f.png)
+![image](/assets/images/legacy/2b5b45f63f.webp)
 
 - description이 `(attribute, value)`로 구성된다면 **topic-based publish-subscribe systems**이라 부른다.
 
-![image](https://user-images.githubusercontent.com/78655692/149275075-781adbb1-dbf6-4633-9ee2-a093324b0c0b.png)
+![image](/assets/images/legacy/06107c122b.webp)
 
 - 구독은 알림에 대해 매치되어야 한다.
 - 이벤트는 실제로 이용가능한 데이터에 해당한다.
@@ -268,7 +267,7 @@ s.close() # 연결 끊기
   - 논리적으로 다른 애플리케이션 간의 모든 액세스를 다루는 컴포넌트가 중앙 **브로커**(broker)를 실행한다. 
   - **브로커**가 각각 애플리케이션에게 단일 인터페이스를 제공하기 때문에 우리는 $O(N^2)$ 대신에 많아봐야 $2N = O(N)$가 필요할 뿐이다.
 
-<img src='https://user-images.githubusercontent.com/78655692/149450604-e1ad3b47-3319-45d3-ad97-a04a0a1a7fa1.png'>
+<img src='/assets/images/legacy/5d2861515c.webp'>
 
 
 ### Interceptors
@@ -279,7 +278,7 @@ s.close() # 연결 끊기
   - 인터셉터를 포괄적으로 만드는 것은 상당한 실행 노력이 필요할 것이며 이러한 경우 일반화가 제한된 애플리케이션과 단순함보다 좋다고 말하는 것은 확실치 않다.
   - 또한, 많은 경우 오직 제한된 인터셉터를 가지는 것은 소프트웨어 관리와 분산시스템을 향상시킬 것이다.
 
-![image](https://user-images.githubusercontent.com/78655692/149452565-a2326416-7bb5-4319-b028-6c397f179e36.png)
+![image](/assets/images/legacy/4c7bce6f58.webp)
 
 - 객체 A는 객체 B에 속한 메서드를 호출하지만 객체 A는 A와 다른 시스템에 있다.
 - 이런 원격-객체 호출은 3단계에 걸쳐 수행된다.
@@ -319,7 +318,7 @@ s.close() # 연결 끊기
   - **server**는 특정 서비스(ex. 파일 시스템 서비스나 데이터베이스 시스템)를 실행하는 프로세스이다.
   - **client**는 서버로부터 서비스를 요청하는 프로세스이며, 서버의 응답을 기다린다.
 
-<img src='https://user-images.githubusercontent.com/78655692/149653998-894219e6-1806-49e8-a981-2964d8f99f57.png' width="800">
+<img src='/assets/images/legacy/601fc734e9.webp' width="800">
 
 - 클라이언트와 서버 간의 통신은 간단한 무접속 프로토콜 수단에 의해 실행되는데, 밑에 있는 네트워크가 많은 LAN과 같이 상당히 신뢰할 때이다.
 - 하지만, 프로토콜을 가끔 전송 실패에 대해 저항력있게 만드는 것은 흔하지 않다.
@@ -343,14 +342,14 @@ s.close() # 연결 끊기
     - processing layer
     - data layer
 
-![image](https://user-images.githubusercontent.com/78655692/149660183-240e48df-3911-4436-86c8-e5a1d152173c.png)
+![image](/assets/images/legacy/27b8a43c66.webp)
 
 - c의 예시로 워드 프로세서가 있다. 기본 편집기를 클라이언트(로컬에서 작동하거나 인메모리에서)쪽에서 실행하고, 서버쪽에서는 스펠링과 문법을 체크하는 고급 지원 기능들이 있다.
 - 많은 클라이언트-서버 환경에서 d나 e는 특히 인기있다.
 - 이런 조직들은 클라이언트 기계가 PC이거나 워크스테이션에서 사용된다. (네트워크를 통해 연결되어 분산 파일 시스템이나 데이터베이스로 가는) 
 - 본질적으로 대부분의 애플리케이션은 클라이언트 기계에서 실행되지만, 파일이나 데이터베이스 엔트리의 모든 작동은 서버로 간다.
 
-![image](https://user-images.githubusercontent.com/78655692/149660862-f7e3fc75-4f76-432a-88a3-5975869d1300.png)
+![image](/assets/images/legacy/3bc4e07f17.webp)
 
 - 위의 그림은 `three-tiered architecture`이다.
 - Client는 애플리케이션 서버와 통신하며, 애플리케이션 서버는 데이터베이스와 통신하여 데이터를 처리한다. 
@@ -396,7 +395,7 @@ s.close() # 연결 끊기
 - 시스템은 키를 기존 노드에 map하는 `lookup` 기능의 효과적인 구현을 제공한다.
   - `existing node = lookup(key)`
 
-![image](https://user-images.githubusercontent.com/78655692/150042920-f98d89fa-725e-4e77-83f8-4c7175eb7cd5.png)
+![image](/assets/images/legacy/813344cd27.webp)
 
 
 ### Unstructured peer-to-peer systems
@@ -445,7 +444,7 @@ s.close() # 연결 끊기
   - 약한 피어가 네트워크를 조인할 때마다, 슈퍼 피어에 붙게 되고 네트워크를 해제할 때까지 붙어 있는다.
   - 슈퍼 피어는 높은 가용성을 가진 수명이 긴 프로세스이다.
 
-![image](https://user-images.githubusercontent.com/78655692/150063109-a653a4bb-2e92-4b03-99e6-883b341b4194.png)
+![image](/assets/images/legacy/4970523ad4.webp)
 
 - 보았듯이, P2P 네트워크는 노드가 네트워크를 조인하고 해제하는 데 유연한 수단을 제공한다.
 - 하지만, 슈퍼피어 네트워크(super-peer network)의 문제는 슈퍼피어에 적합한 노드를 어떻게 선택하느냐 이다.
@@ -461,7 +460,7 @@ s.close() # 연결 끊기
 - 마찬가지로, 집에 있는 사용자가 ISP를 통해 인터넷에 연결하면, ISP는 인터넷의 엣지에 거주할 것을 고려된다.
 - 엣지 서버의 주요 목적은 필터링을 적용하고 기능을 변환한 후에 내용을 제공하는 것이다.
 
-![image](https://user-images.githubusercontent.com/78655692/150065317-1c243864-e7aa-4c7f-a6a3-585566a396fb.png)
+![image](/assets/images/legacy/c1b5f7dbdd.webp)
 
 
 ### Collaborative distributed systems
@@ -471,7 +470,7 @@ s.close() # 연결 끊기
   - 특히, 이것은 요청된 파일의 덩어리를 가지고 있는 정확한 활동노드 계정을 지키는 서버 tracker로 알려진 링크를 포함한다.
     - 활동노드는 현재 파일을 다운로드하고 있는 것이다.
 
-![image](https://user-images.githubusercontent.com/78655692/150066013-54e448a7-ac9d-43e4-b5b5-0819f9b7c1f3.png)
+![image](/assets/images/legacy/efde0411f0.webp)
 
 
 ## 2.4 Example architectures
@@ -489,12 +488,12 @@ s.close() # 연결 끊기
   - 특히, 클라이언트는 오직 다양한 파일 작동을 포함한 인터페이스를 제공받는다. 하지만 서버는 그러한 작동을 구현하는 것을 담당한다.
   - 이러한 모델을 `remote access model`이라 부른다. 
 
-![image](https://user-images.githubusercontent.com/78655692/150070079-d20ccc45-973d-41d6-8400-177da852c6e4.png)
+![image](/assets/images/legacy/31b09eab6c.webp)
 
 - 이와는 반대로, upload/download 모델에서는 클라이언트는 이것을 서버로부터 다운로드받은 후에 파일을 로컬로 접근한다. 
 - 클라이언트가 파일받는 걸 끝낼때, 이것은 다른 클라이언트가 쓸 수 있도록 서버에 다시 업로드된다.  
 
-![image](https://user-images.githubusercontent.com/78655692/150070715-672de127-99c1-46c1-97c2-295c93e5b8ea.png)
+![image](/assets/images/legacy/56ad925b09.webp)
 
 - 사실상 모든 현대 유닉스 시스템에서, NFS는 위의 그림처럼 구현된다.
 - 클라이언트는 로컬 운영 체제에 의해 제공되는 시스템 호출을 사용하여 파일 시스템에 접근한다. 
@@ -525,12 +524,12 @@ s.close() # 연결 끊기
 - 브라우저와 웹서버 사이의 통신은 표준화되어 있다.
   - 그들은 모두 HyperText Transfer Protocol(HTTP)을 지킨다. 
 
-![image](https://user-images.githubusercontent.com/78655692/150080128-9eb26f3e-43b1-48bc-87ce-0743c58f4d09.png)
+![image](/assets/images/legacy/b4063cf09c.webp)
 
 
 ### Multitiered architectures
 
-![image](https://user-images.githubusercontent.com/78655692/150081163-7ae790a3-ea1d-4150-ba59-6313f0eb72d5.png)
+![image](/assets/images/legacy/c91133e1b3.webp)
 
 - Figure 2.27과 같은 기본 아키텍처에서 첫번째 강화된 것 중 하나는 Common Gateway Interface(CGI) 수단에 의해 단순한 유저 인터랙션을 지원하는 것이다.  
   - CGI는 웹 서버가 유저 데이터를 입력으로 가져오는 프로그램을 실행할 수 있는 표준방식이다. 

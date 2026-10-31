@@ -19,13 +19,13 @@ last_modified_at: 2026-10-09
 ModuleNotFoundError: No module named 'tensorflow.keras'
 ```
 
-![image](https://user-images.githubusercontent.com/78655692/141083164-9de945bc-701c-49df-9d01-9f606f89b352.png)
+![image](/assets/images/legacy/a396a1f794.webp)
 
 ## 해결 방법
 
 1. `python` 추가
 
-![image](https://user-images.githubusercontent.com/78655692/141083287-742b8933-0450-45ca-965a-e5f1aad2112e.png)
+![image](/assets/images/legacy/0f8ccb572e.webp)
 
 ### + 또 다른 방법
 

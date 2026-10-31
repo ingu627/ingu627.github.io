@@ -12,7 +12,7 @@ sidebar_main: false
 last_modified_at: 2026-10-09
 ---
 
-<img align='right' width='250' src='https://user-images.githubusercontent.com/78655692/162919635-d03d7e8f-c492-493b-8c4d-d2f0f88ae67e.png'>
+<img align='right' width='250' src='/assets/images/legacy/249ec2aebc.webp'>
 본 글은 Pytorch 기반 ResNet 모델 처음부터 구현해보는 내용입니다. 하나하나 자세히 분해해봅시다.
 
 - 논문 : [Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385)
@@ -30,7 +30,7 @@ last_modified_at: 2026-10-09
 - 더 많은 층을 쌓아야 하는데, 연산량을 절감해야 되기 때문에 이 구조를 사용한다.
 - 다음으로 코드에 구현할 부분을 직접 그림에 적어보았다.
 
-<img src='https://user-images.githubusercontent.com/78655692/163796906-22b600a1-06dd-4575-aee1-56449681206a.jpg' width=650>
+<img src='/assets/images/legacy/e7ef51fe98.webp' width=650>
 
 
 ```python
@@ -89,7 +89,7 @@ class block(nn.Module):
 - 크게 초기화 단계, forward 단계, block 단위 형성인 _make_layer단계로 구현한다.
 
 
-![IMG_0151-1](https://user-images.githubusercontent.com/78655692/163798851-390d9944-0884-4759-84c4-3fe5878288d9.jpg)
+![IMG_0151-1](/assets/images/legacy/61cb385886.webp)
 
 ```python
 class ResNet(nn.Module): # resnet50 : [3, 4, 6, 3]

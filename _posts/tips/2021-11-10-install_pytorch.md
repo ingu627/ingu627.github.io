@@ -19,17 +19,17 @@ Windows10 환경에서 CUDA 11.0에 맞는 PyTorch를 설치하는 과정을 정
 
 ## 2. `Previous versions of PyTorch` 클릭
 
-![image](https://user-images.githubusercontent.com/78655692/141055817-ee4c44d4-2f04-4089-8334-83a1df1ed648.png)
+![image](/assets/images/legacy/78d48a3646.webp)
 
 ## 3. CUDA 버전에 맞는 pytorch 설치
 
-![image](https://user-images.githubusercontent.com/78655692/160165414-a2ee8389-fce6-48e4-a644-8b26fae23e70.png)
+![image](/assets/images/legacy/6a5cde86b6.webp)
 
 `pip install torch==1.7.1+cu110 torchvision==0.8.2+cu110 torchaudio==0.7.2 -f https://download.pytorch.org/whl/torch_stable.html`
 
 ## 4. 실행창에 코드 넣고 enter
 
-![image](https://user-images.githubusercontent.com/78655692/141056063-5b2a8dd3-7630-486e-af56-85f8cc1e0e58.png)
+![image](/assets/images/legacy/7c7deab4b0.webp)
 
 ## pytorch 실행시 GPU 작동 확인
 
@@ -44,7 +44,7 @@ if torch.cuda.is_available():
     print('Current cuda device:', torch.cuda.current_device())
 ```
 
-![image](https://user-images.githubusercontent.com/78655692/141098114-072338e8-470c-4cbe-8427-7d8a8fff090c.png)
+![image](/assets/images/legacy/f7ffa3b234.webp)
 
 ## 한계 및 주의사항
 

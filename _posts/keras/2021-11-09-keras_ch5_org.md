@@ -12,8 +12,7 @@ classes: wide
 last_modified_at: 2026-10-10
 ---
 
-<img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/147629300-4d7acc5e-225a-454a-92cd-4da82f6828f6.png
-'>
+<img align='right' width='200' height='200' src='/assets/images/legacy/be0ceae23f.webp'>
 본 글은 [케라스 창시자에게 배우는 딥러닝] - (박해선 옮김) 책을 개인공부하기 위해 요약, 정리한 내용입니다. 전체 코드는 [https://github.com/ingu627/deep-learning-with-python-notebooks](https://github.com/ingu627/deep-learning-with-python-notebooks)에 기재했습니다.(원본 코드 fork) 뿐만 아니라 책에서 설명이 부족하거나 이해가 안 되는 것들은 외부 자료들을 토대로 메꿔 놓았습니다. 즉, 딥러닝은 이걸로 끝을 내보는 겁니다. 오타나 오류는 알려주시길 바라며, 도움이 되길 바랍니다.
 
 이 글은 케라스(Keras)를 활용하여 컴퓨터 비전(Computer Vision) 문제를 해결하기 위한 합성곱 신경망(CNN)의 전반적인 개념과 실전 파이프라인을 5장의 흐름에 맞춰 종합적으로 정리한다. 합성곱 연산과 최대 풀링의 원리부터 소규모 데이터셋을 활용한 밑바닥 훈련, 과대적합 해소를 위한 데이터 증식, VGG16 사전 훈련 모델을 통한 특성 추출과 미세 조정, 그리고 네트워크 내부 표현을 해석하는 다양한 시각화 기법까지 차례대로 살펴본다.
@@ -35,34 +34,34 @@ last_modified_at: 2026-10-10
 - **CNN**은 이미지를 날것(raw input) 그대로 받음으로써 공간적/지역적 정보를 유지한 채 특성(feature)들의 계층을 빌드업한다.
 - **CNN**의 중요 포인트는 이미지 전체보다는 **부분**을 보는 것, 그리고 이미지의 한 픽셀과 주변 픽셀들의 **연관성**을 살리는 것이다.
 
-![image](https://user-images.githubusercontent.com/78655692/140931554-e3da83fa-233e-47bf-8a2d-87fb728a0ef1.jpg)
+![image](/assets/images/legacy/00ee8ef167.webp)
 
 
-![image](https://user-images.githubusercontent.com/78655692/143213825-c1818923-7100-468d-a43f-8fb5833529f2.png)
+![image](/assets/images/legacy/6824a88c05.webp)
 
 - **합성곱 신경망**은 크게 **합성곱층 (Convolution layer)**과 **풀링층 (Pooling layer)**으로 구성
 
 
-![image](https://user-images.githubusercontent.com/78655692/140943759-ffa78a7e-4d0e-4ba0-b614-abf7285f316a.png)
+![image](/assets/images/legacy/3e23c217df.webp)
 
 - **CONV**는 합성곱 연산을 의미하고, 합성곱 연산의 결과가 활성화 함수 **ReLU**를 지난다. 이 두 과정을 **합성곱층**이라고 한다. 그 후에 POOL이라는 구간을 지나는데 이는 풀링 연산을 의미하며 **풀링층**이라고 한다.
 
-![image](https://user-images.githubusercontent.com/78655692/143215721-fd456b9d-3821-4668-8fa5-ebc96ec27293.png)
+![image](/assets/images/legacy/5efeac5f52.webp)
 
 
-![image](https://user-images.githubusercontent.com/78655692/143215826-78a79147-eaf3-4eee-92e4-6d8567ac9b2d.png)
+![image](/assets/images/legacy/0a436c7a66.webp)
 
 - `Conv2D`와 `MaxPooling2D`층의 출력은 <b><span style="color:red">(height, width, channels) 크기의 3D 텐서</span></b>이다.
   - 높이와 너비 차원은 네트워크가 깊어질수록 작아지는 경향이 있다.
   - 채널의 수는 Conv2D 층에 전달된 첫 번째 매개변수에 의해 조절된다.(32개 또는 64개)
 
-![image](https://user-images.githubusercontent.com/78655692/140944365-adcafe9c-6f65-4e49-9944-a3ddecdfa35d.png)
+![image](/assets/images/legacy/17cc74d9e3.webp)
 
 - 위와 같이 결과는 변환 전에 가지고 있던 **공간적인 구조(spatial structure) 정보**가 유실된 상태이다.
   - 여기서 공간적인 구조 정보라는 것은 거리가 가까운 어떤 픽셀들끼리는 어떤 연관이 있고, 어떤 픽셀들끼리는 값이 비슷하거나 등을 포함하고 있다. 
 - 결국 이미지의 공간적인 구조 정보를 보존하면서 학습할 수 있는 방법이 필요해졌고, 이를 위해 사용하는 것이 **합성곱 신경망**이다.
 
-![image](https://user-images.githubusercontent.com/78655692/142873243-2b5a0196-2bb7-4142-9209-20dbcdbff2ac.png)
+![image](/assets/images/legacy/4a2fab32b9.webp)
 
 - <b><span style="color:red">CNN - activation - Pooling 과정을 통해 이미지 부분 부분의 주요한 Feature 들을 추출한다.</span></b>
 
@@ -88,9 +87,9 @@ last_modified_at: 2026-10-10
    - 이런 방식을 사용하여 컨브넷은 매우 복잡하고 추상적인 시각적 개념을 효과적으로 학습할 수 있다. 
 
 
-![image](https://user-images.githubusercontent.com/78655692/140944632-b37eae0e-93de-45a5-ad6a-0836e479297d.png)
+![image](/assets/images/legacy/4581740c35.webp)
 
-![image](https://user-images.githubusercontent.com/78655692/140944935-dd80e126-2748-43b6-9a3c-d55224af03cf.png)
+![image](/assets/images/legacy/46bc0ad997.webp)
 
 
 - 합성곱 연산은 **특성 맵**(feature map)이라고 부르는 3D 텐서에 적용된다.
@@ -99,7 +98,7 @@ last_modified_at: 2026-10-10
   - 흑백 이미지는 깊이 축의 차원이 1.
 - 합성곱 연산은 입력 특성 맵에서 작은 패치들을 추출하고 이런 모든 패치에 같은 변환을 적용하여 **출력 특성 맵**을 만든다.
 
-![image](https://user-images.githubusercontent.com/78655692/140945274-ac6bcdaf-2985-4139-b04e-9acba677f203.png)
+![image](/assets/images/legacy/d4f084e8b4.webp)
 
 - **특성 맵** : 입력으로부터 커널을 사용하여 합성곱 연산을 통해 나온 결과
 
@@ -109,7 +108,7 @@ last_modified_at: 2026-10-10
   - ex. (26, 26, 32) 크기의 특성 맵은 32개의 출력 채널 각각은 26 x 26 크기의 배열 값을 가진다. 
   - 입력에 대해 32개의 필터를 적용 (Conv2D의 첫 번째 매개변수(필터 또는 채널 수)가 추력 특성 맵의 깊이 차원을 결정)
 
-![image](https://user-images.githubusercontent.com/78655692/148865621-a0eff1bd-c823-4244-b639-a3af67e37ceb.png)
+![image](/assets/images/legacy/7a5fe60a25.webp)
 
 
 ### 2개의 파라미터 정의 
@@ -124,11 +123,11 @@ last_modified_at: 2026-10-10
 - **패딩 (padding)** : <b><span style="color:red">입력 특성 맵의 가장자리에 적절한 개수의 행과 열을 추가</span></b>
   - 합성곱 연산 이후에도 특성 맵의 크기가 입력의 크기와 동일하게 유지되도록 하고 싶을 때 패딩을 쓴다.
 
-![image](https://user-images.githubusercontent.com/78655692/140945555-5dbccced-09bd-47b3-88e1-e7e8d014e4d3.png)
+![image](/assets/images/legacy/3e7428ef54.webp)
 
 - **스트라이드 (stride)** : <b><span style="color:red">필터를 적용하는 위치의 간격 (이동 범위)</span></b>
 
-![image](https://user-images.githubusercontent.com/78655692/148866207-1ae93735-0b4a-4ad2-8282-d7bce2f1c4cf.png)
+![image](/assets/images/legacy/490b2cf08b.webp)
 
 
 
@@ -140,7 +139,7 @@ last_modified_at: 2026-10-10
 - CNN에서는 padding을 이용해서 사이즈를 보존해주되, 동시에 사이즈를 점점 줄어나가는 것이 중요하다.
 
 
-![image](https://user-images.githubusercontent.com/78655692/148876665-72071825-4d17-4f0d-8ca6-500e4a957b36.png)
+![image](/assets/images/legacy/cad1de1936.webp)
 
 
 ## 5_2. 소규모 데이터셋에서 밑바닥부터 컨브넷 훈련하기
@@ -174,14 +173,14 @@ last_modified_at: 2026-10-10
 
 <script src="https://gist.github.com/ingu627/a435ef91fdf1a5c4cab16f61b4a9ac05.js"></script>
 
-![image](https://user-images.githubusercontent.com/78655692/141032969-7b4e3533-3f34-412b-9762-26b364cf73bf.png)
+![image](/assets/images/legacy/8770bc3370.webp)
 
 
 ### 컨브넷 코드 파헤치기
 
-![cnn1](https://user-images.githubusercontent.com/78655692/141250053-8f8d26c1-13de-465a-9681-42caaae3154d.jpg)
+![cnn1](/assets/images/legacy/34ad122c90.webp)
 
-![cnn2](https://user-images.githubusercontent.com/78655692/141253732-d5c4b616-fd55-4ef4-b979-f4c8a8586930.jpg)
+![cnn2](/assets/images/legacy/3e9ed7862b.webp)
 
 1. `model.add(layers.Conv2D(32, (3,3), activation='relu', input_shape=(150,150,3)))` -> (None, 148, 148, 32), param : 896
 - `Convolution` : 이미지에 kernel이나 필터를 적용하는 과정
@@ -268,7 +267,7 @@ last_modified_at: 2026-10-10
 
 <script src="https://gist.github.com/ingu627/05793e4347c8047fb842c1340d944ed0.js"></script>
 
-![image](https://user-images.githubusercontent.com/78655692/141060757-0463d4ad-1679-42e6-9895-fdfa6d474052.png)
+![image](/assets/images/legacy/9f5219523b.webp)
 
 
 ### 소결: 과대적합 문제와 규제 방향
@@ -336,7 +335,7 @@ last_modified_at: 2026-10-10
 
 <script src="https://gist.github.com/ingu627/ccecf53beb0cca76de7f3c17ccb0dfe9.js"></script>
 
-![image](https://user-images.githubusercontent.com/78655692/141126641-076d4dae-be77-4222-8ffd-9ae8e1935eea.png)
+![image](/assets/images/legacy/0bf5c406c1.webp)
 
 
 ### 데이터 증식 제너레이터를 사용하여 컨브넷 훈련하기
@@ -377,7 +376,7 @@ last_modified_at: 2026-10-10
 - `VGG16` : 간단하고 ImageNet 데이터셋에 널리 사용되는 컨브넷 구조이다.
 - 사전 훈련된 네트워크를 사용하는 두 가지 방법 : `특성 추출(feature extraction)` & `미세 조정(fine tuning)`
 
-![image](https://user-images.githubusercontent.com/78655692/148877124-7c107b44-cea5-456b-b0e3-02f7d8e06bca.png) 이미지출처: [^1]
+![image](/assets/images/legacy/e9d6a86012.webp) 이미지출처: [^1]
 
 
 
@@ -393,7 +392,7 @@ last_modified_at: 2026-10-10
 - 첫 번째 부분을 **합성곱 기반 층**이라고 부른다.
 - 컨브넷의 경우 특성 추출은 사전에 훈련된 네트워크의 합성곱 기반 층을 선택하여 새로운 데이터를 통과시키고, 그 출력으로 새로운 분류기를 훈련한다.
 
-![cnn3](https://user-images.githubusercontent.com/78655692/141314937-efa9de1a-fb6c-4919-b7f7-5d453efb318f.jpg)
+![cnn3](/assets/images/legacy/c95a9a4e5d.webp)
 
 - **합성곱 층에 의해 학습된 표현이 더 일반적이어서 재사용이 가능하다.**
 - 컨브넷의 특성 맵은 사진에 대한 일반적인 콘셉트의 존재 여부를 기록한 맵
@@ -413,7 +412,7 @@ last_modified_at: 2026-10-10
 - `input_shape` : 네트워크에 주입할 이미지 텐서의 크기
   - 이 매개변수는 선택 사항. 이 값을 지정하지 않으면 네트워크가 어떤 크기의 입력도 처리할 수 있다.
 
-![image](https://user-images.githubusercontent.com/78655692/141317569-1d735a66-2d7b-467d-b08d-6ec10aaa0ccf.png)
+![image](/assets/images/legacy/b3390d6a9f.webp)
 
 
 ### 데이터 증식을 사용하지 않는 빠른 특성 추출
@@ -442,7 +441,7 @@ last_modified_at: 2026-10-10
 
 <script src="https://gist.github.com/ingu627/05793e4347c8047fb842c1340d944ed0.js"></script>
 
-![image](https://user-images.githubusercontent.com/78655692/141331305-bf73f19f-d62c-46c3-8952-eb7cff60491f.png)
+![image](/assets/images/legacy/a3911b523e.webp)
 
 
 ### 데이터 증식을 사용한 특성 추출
@@ -457,7 +456,7 @@ last_modified_at: 2026-10-10
 
 - 모델은 층과 동일하게 작동하므로 층을 추가하듯이 Sequential 모델에 다른 모델을 추가할 수 있다.
 
-![image](https://user-images.githubusercontent.com/78655692/141343228-378bae9d-0007-4f31-b86b-1f7ff1a6890a.png)
+![image](/assets/images/legacy/cf6fdb4ae7.webp)
 
 - 모델을 컴파일하고 훈련하기 전에 합성곱 기반 층을 동결하는 것이 중요하다.
   - **동결** : 훈련하는 동안 가중치가 업데이트되지 않도록 막는다는 의미
@@ -482,7 +481,7 @@ last_modified_at: 2026-10-10
 
 <script src="https://gist.github.com/ingu627/05793e4347c8047fb842c1340d944ed0.js"></script>
 
-![image](https://user-images.githubusercontent.com/78655692/141347345-629c15e5-78bf-4d74-bee7-bc0a020f014f.png)
+![image](/assets/images/legacy/0e81e4b147.webp)
 
 
 ## 5_3_2. 미세 조정
@@ -490,7 +489,7 @@ last_modified_at: 2026-10-10
 - **미세 조정 (Fine tuning)** : 특성 추출에 사용했던 동결 모델의 상위 층 몇 개를 동결에서 해제하고 모델에 새로 추가한 층(여기서는 완전 연결 분류기)과 함께 훈련하는 의미.
   - 주어진 문제에 조금 더 밀접하게 재사용 모델의 표현을 일부 조정하기 때문에 미세 조정이라고 부른다. 
 
-![cnn5](https://user-images.githubusercontent.com/78655692/141347912-542bc86c-c53f-4b97-a560-aacfdb42fbfd.jpg)
+![cnn5](/assets/images/legacy/9acff1c654.webp)
 
 
 ### 네트워크를 미세 조정하는 단계
@@ -503,7 +502,7 @@ last_modified_at: 2026-10-10
 
 `conv_base.summary()`
 
-![image](https://user-images.githubusercontent.com/78655692/141348344-81f3eb56-7705-4360-9ef4-4dde61e126ef.png)
+![image](/assets/images/legacy/63cde1c157.webp)
 
 - 마지막 3개의 합성곱 층을 미세 조정해본다.
 - 즉, block4_pool까지 모든 층은 동결되고 block5_con1, block5_conv2, block5_conv3 층은 학습 대상이 된다.
@@ -511,7 +510,7 @@ last_modified_at: 2026-10-10
 
 ### 특정 층까지 모든 층 동결하기
 
-![image](https://user-images.githubusercontent.com/78655692/141348691-66a8ffd1-24e3-46e8-af27-8ee10da73dd7.png)
+![image](/assets/images/legacy/116f46dce2.webp)
 
 <script src="https://gist.github.com/ingu627/b97edafae422214100966a1753b112de.js"></script>
 
@@ -531,7 +530,7 @@ last_modified_at: 2026-10-10
 
 <script src="https://gist.github.com/ingu627/05793e4347c8047fb842c1340d944ed0.js"></script>
 
-![image](https://user-images.githubusercontent.com/78655692/141351967-bf9cb694-6b3c-4d2f-b078-58382644d8bd.png)
+![image](/assets/images/legacy/11b8637a5a.webp)
 
 
 ### 부드러운 그래프 그리기
@@ -540,7 +539,7 @@ last_modified_at: 2026-10-10
 
 <script src="https://gist.github.com/ingu627/5f2f635e3bc40057f8372ffad1fe79f1.js"></script>
 
-![image](https://user-images.githubusercontent.com/78655692/141352028-67658686-9803-42af-a312-4ed0461ab644.png)
+![image](/assets/images/legacy/04161156a9.webp)
 
 - 그래프는 개별적인 손실 값의 평균을 그린 것. 정확도에 영향을 미치는 것은 손실 값의 분포이지 평균이 아님을 유의.
 
@@ -549,7 +548,7 @@ last_modified_at: 2026-10-10
 
 <script src="https://gist.github.com/ingu627/f491a3ac00ac3752a327066e9473fce1.js"></script>
 
-![image](https://user-images.githubusercontent.com/78655692/141352095-7e13f2f3-2adf-40fa-aa15-3b475d3d180f.png)
+![image](/assets/images/legacy/92a67f6360.webp)
 
 - **정확도 : 약 93.6%**
 
@@ -583,7 +582,7 @@ last_modified_at: 2026-10-10
 
 <script src="https://gist.github.com/ingu627/1893ee9988817fdc89ed3a8cf53cca80.js"></script>
 
-![image](https://user-images.githubusercontent.com/78655692/141426913-9f4d62a0-2d8b-485d-b061-e05993e1d999.png)
+![image](/assets/images/legacy/367bea1fcc.webp)
 
 
 ### 개별 이미지 전처리하기 
@@ -595,7 +594,7 @@ last_modified_at: 2026-10-10
 
 <script src="https://gist.github.com/ingu627/242f5aa11383293b275d2fbab591deef.js"></script>
 
-![image](https://user-images.githubusercontent.com/78655692/141429725-29994e99-1fd9-4c3f-bec7-f463517ac0e9.png)
+![image](/assets/images/legacy/68e7772fab.webp)
 
 
 ### 입력 텐서와 출력 텐서의 리스트로 모델 객체 만들기
@@ -622,7 +621,7 @@ last_modified_at: 2026-10-10
 - 32개의 채널을 가진 148x148 크기의 특성 맵이다. 
 - 이 채널은 대각선 에지를 감지하도록 인코딩되었다.
 
-![Image](https://user-images.githubusercontent.com/78655692/141429093-999032e0-7707-4fa9-9f4e-3165f4078a57.png)
+![Image](/assets/images/legacy/f0ea832f72.webp)
 
 
 ### 16번째 채널 시각화하기
@@ -631,14 +630,14 @@ last_modified_at: 2026-10-10
 
 - 이 채널은 `밝은 녹색 점`을 감지하는 거 같아 고양이 눈을 인코딩하기 좋다.
 
-![image](https://user-images.githubusercontent.com/78655692/141429839-bb6de544-4c88-478f-8f0f-c09297c63a80.png)
+![image](/assets/images/legacy/5698466a16.webp)
 
 
 ### 중간층의 모든 활성화에 있는 채널 시각화하기 
 
 <script src="https://gist.github.com/ingu627/4c326dd0da3af7fa94f9ad920b768b96.js"></script>
 
-![image](https://user-images.githubusercontent.com/78655692/141440597-1159db65-3b8d-4be1-acff-a92c89d8370b.png)
+![image](/assets/images/legacy/3758e3049a.webp)
 
 - 상위 층으로 갈수록 활성화는 점점 더 추상적으로 되고 시각적으로 이해하기 어려워 진다. 
 - 비어 있는 활성화가 층이 깊어짐에 따라 늘어난다. 첫 번째 층에서는 모든 필터가 입력 이미지에 활성화되었지만 층을 올라가면서 활성화되지 않는 필터들이 생긴다.
@@ -697,7 +696,7 @@ last_modified_at: 2026-10-10
 
 - 위의 코드들을 모아서 층의 이름과 필터 번호를 입력으로 받는 함수를 만든다.
 
-![image](https://user-images.githubusercontent.com/78655692/141673729-4b240b8d-1af7-4c6b-8ff1-17babf09d94c.png)
+![image](/assets/images/legacy/9f0d4d2e44.webp)
 
 - block3_conv1 층의 필터 0은 물방울 패턴에 반응했다.
 
@@ -706,7 +705,7 @@ last_modified_at: 2026-10-10
 
 <script src="https://gist.github.com/ingu627/d1095bd6c47fbf46ed6713cd6c7da066.js"></script>
 
-![image](https://user-images.githubusercontent.com/78655692/141674350-bed2f74b-b6bf-467e-ae11-b23802b9a4fb.png)
+![image](/assets/images/legacy/3946599f2a.webp)
 
 - 에러가 났다. (이부분) 
 
@@ -729,7 +728,7 @@ last_modified_at: 2026-10-10
 
 <script src="https://gist.github.com/ingu627/0d4511b783be6c4fe0e4aeea4078284c.js"></script>
 
-![image](https://user-images.githubusercontent.com/78655692/141674756-07ce7fd7-d0d7-4ed3-a825-832b0bb0eb82.png)
+![image](/assets/images/legacy/2a3afe79e8.webp)
 
 - 이 이미지에서 사전 훈련된 네트워크를 실행하고 예측 벡터를 이해하기 쉽게 디코딩한다. 
 - 아프리카 코끼리 (90%), 코끼리 (7%), 인도 코끼리 (0.4%) 예측
@@ -740,14 +739,14 @@ last_modified_at: 2026-10-10
 
 <script src="https://gist.github.com/ingu627/d0ade32798a38d89a5f27162764ff582.js"></script>
 
-![image](https://user-images.githubusercontent.com/78655692/141675032-d6b88190-2884-4c53-bb50-dcf7c9da865f.png)
+![image](/assets/images/legacy/d72d5a1100.webp)
 
 
 ### 원본 이미지에 히트맵 덧붙이기 
 
 <script src="https://gist.github.com/ingu627/ddb0232691e9894b4f237639d7bf6058.js"></script>
 
-![image](https://user-images.githubusercontent.com/78655692/141675189-cdfb7f74-3d68-49f3-8222-edbbec835dff.png)
+![image](/assets/images/legacy/a5eb977cfe.webp)
 
 ## 핵심 정리
 

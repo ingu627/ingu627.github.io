@@ -25,13 +25,13 @@ VS Code는 일렉트론(Electron) 기반의 멀티 프로세스 모델로 설계
 
 실제 사용자 계정 경로인 `%USERPROFILE%\.vscode` 폴더를 삭제한다. 이 폴더에는 마켓플레이스에서 내려받은 확장 프로그램(Extensions) 파일들이 저장되어 있다. 또한 최신 환경에 따라 `%USERPROFILE%\.vscode-shared` 폴더가 존재하는 경우 함께 삭제한다.
 
-![image](https://user-images.githubusercontent.com/78655692/146772823-6cec0b09-4022-484c-9cd8-802beefa527d.png)
+![image](/assets/images/legacy/2de942868f.webp)
 
 *2.* `C:\Users\<사용자명>\AppData\Roaming\Code` 폴더를 모두 지운다.
 
 실행 창(`Win + R`)에서 `%APPDATA%\Code`를 입력하거나 직접 이동하여 해당 폴더를 삭제한다. 이 폴더에는 사용자의 `settings.json`, `keybindings.json`, UI 레이아웃 상태, 작업 영역 캐시, LevelDB 데이터베이스 등 핵심 구성 정보가 저장되어 있다.
 
-![image](https://user-images.githubusercontent.com/78655692/146773025-2808144d-1025-42c0-8dad-ff980a0dbe5b.png)
+![image](/assets/images/legacy/4544cfa946.webp)
 
 *3.* 제어판에 가서 vscode 프로그램을 삭제한다.
 

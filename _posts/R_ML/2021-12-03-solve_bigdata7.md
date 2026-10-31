@@ -189,7 +189,7 @@ last_modified_at: 2026-10-11
 
 ### 25.
 
-![image](https://user-images.githubusercontent.com/78655692/144559394-eb269c9b-4e10-4cd5-9b8b-1121b98cb1ad.png)
+![image](/assets/images/legacy/a214c61d05.webp)
 
 <details>
     <summary>다음 그래프가 의미하는 활성화 함수는 무엇인가?</summary>
@@ -198,7 +198,7 @@ last_modified_at: 2026-10-11
 
 ### 26.
 
-![image](https://user-images.githubusercontent.com/78655692/144559496-38b5c59b-8ba3-4d48-8353-955cca696d31.png)
+![image](/assets/images/legacy/ddae4a3dad.webp)
 
 <details>
     <summary>다음 그래프가 의미하는 활성화 함수는 무엇인가?</summary>

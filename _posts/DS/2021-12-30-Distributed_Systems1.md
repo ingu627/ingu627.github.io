@@ -12,8 +12,7 @@ sidebar_main: false
 last_modified_at: 2026-10-09
 ---
 
-<img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/147719090-5f0942f1-1647-44ad-8d72-f11e3fe400d7.png
-'>
+<img align='right' width='200' height='200' src='/assets/images/legacy/14cf7d5543.webp'>
 본 글은 Distributed Systems 책의 내용을 개인 공부 목적을 위한 요약 및 정리한 내용입니다. 오타나 오류는 알려주시길 바라며, 도움이 되길 바랍니다. **2023.04.25 Update**
 
 > **글을 읽으면서 스스로에게 물어보기**
@@ -125,7 +124,7 @@ last_modified_at: 2026-10-09
   - **애플리케이션(application)**: 운영체제 위에서 사용자가 직접 사용하게 되는 소프트웨어 [^6]
 
 
-![image](https://user-images.githubusercontent.com/78655692/150115611-ca99401f-fcc2-43d0-8d53-ac9baa31aeb6.png)
+![image](/assets/images/legacy/1195ce59da.webp)
 
 
 - 각각의 애플리케이션은 같은 인터페이스를 제공한다.
@@ -307,7 +306,7 @@ last_modified_at: 2026-10-09
 - DNS 네임 공간은 위계적으로 구성되어 겹치지 않는 존으로 나뉘어져서 `domains`의 트리로 들어간다.
 - 각 존의 네임들은 단일 네임 서버에 의해 관리된다. 
 
-![image](https://user-images.githubusercontent.com/78655692/148327254-5ffaa947-7436-418b-96ce-9bdcc6923834.png)
+![image](/assets/images/legacy/768eec0ba6.webp)
 
 
 - 또 다른 예시로는 `World Wide Web`이 있다.
@@ -351,7 +350,7 @@ last_modified_at: 2026-10-09
 - 클러스터 컴퓨팅 시스템은 개인 컴퓨터와 워크스테이션의 낮은 가격과 성능이 향상되어 대중화되었다.
 - 클러스터 컴퓨팅은 단일 프로그램이 다중 머신에 병렬로 실행되는 병렬 프로그래밍에 사용된다.
 
-![image](https://user-images.githubusercontent.com/78655692/148669804-9f69d5ae-66a7-4328-babe-839f013c2781.png)
+![image](/assets/images/legacy/ffe163d8b8.webp)
 
 - 클러스터 컴퓨터의 예시로 그림처럼 리눅스 기반의 `Beowulf clusters`가 있다.
   - 각 클러스터는 마스터 노드에 의해 통제되고 접속되는 컴퓨터 노드들의 집합으로 구성된다.
@@ -370,7 +369,7 @@ last_modified_at: 2026-10-09
   - 같은 가상 조직의 속한 프로세스는 리소스의 접근 권한을 가진다.
 
 
-![image](https://user-images.githubusercontent.com/78655692/148682490-74f30183-8a22-498d-8e9c-cebd27fa2655.png)
+![image](/assets/images/legacy/3fe147dbd9.webp)
 
 - `fabric layer`는 특정 장소의 로컬 리소스에 대한 인터페이스를 제공한다.
   - **레이어 (layer)** : 하나의 대상을 여러 개로 나눈 층
@@ -392,7 +391,7 @@ last_modified_at: 2026-10-09
 - 클라우드 컴퓨팅은 보증이 **SLAs**(service-level agreements) 수단으로 제공되는 pay-per-use 모델에 기반한다.
 
 
-![image](https://user-images.githubusercontent.com/78655692/148691345-a83ac37a-9c27-4f4a-94b7-bb15b4b9edd8.png)
+![image](/assets/images/legacy/2365f3e817.webp)
 
 
 - **Hardware** : 가장 낮은 계층은 필요한 하드웨어(프로세서, 라우터, 파워, 쿨링 시스템)를 관리하는 수단으로 형성된다.
@@ -430,7 +429,7 @@ last_modified_at: 2026-10-09
   - 트랜잭션을 사용한 프로그래밍은 기본 분산 시스템이거나 언어 런타임 시스템에 의해 공급되는 특별한 기본 컴포넌트들을 요구한다. 
 - RPC는 트랜잭션에 캡슐화된다.
 
-![image](https://user-images.githubusercontent.com/78655692/148694039-8ca6171f-2744-4587-a7cf-5a8a6389a3f8.png)
+![image](/assets/images/legacy/23b4b0c3c5.webp)
 
 
 - `트랜잭션`은 ACID 특성들을 따른다.
@@ -446,13 +445,13 @@ last_modified_at: 2026-10-09
   - 따라서 영속성은 최상위 수준의 트랜잭션에만 적용된다.
 
 
-![image](https://user-images.githubusercontent.com/78655692/150288171-a950bb88-be93-46e2-a34b-a6ae52f96586.png)
+![image](/assets/images/legacy/e89fd91a97.webp)
 
 
 - 중첩 트랜잭션은 분산시스템에서 중요한데, 다중 시스템을 통해 트랜잭션을 분산하는 방식을 제공하기 때문이다.
   - 그들은 원본 트랜잭션의 작업의 논리적 분할을 따른다.
 
-![image](https://user-images.githubusercontent.com/78655692/150280849-07c3ee03-a2f9-4d10-ad94-742fe57e003b.png)
+![image](/assets/images/legacy/7eaa1e42d8.webp)
 
 - **TP monitor** (transaction-processing monitor) : 트랜잭션 프로그래밍 모델을 제공함으로써 애플리케이션을 다중 서버/데이터베이스에 접근할 수 있도록 해준다.
 
@@ -462,7 +461,7 @@ last_modified_at: 2026-10-09
 - 애플리케이션이 데이터베이스로부터 분리될수록, 설비가 필요하다는 것은 더욱 분명해졌다.
 
 
-![image](https://user-images.githubusercontent.com/78655692/148694784-263815b6-3b47-4bf2-b228-7431527cc9d1.png)
+![image](/assets/images/legacy/4d7681a224.webp)
 
 
 - 몇가지 타입의 통신 미들웨어가 존재한다.
@@ -524,7 +523,7 @@ last_modified_at: 2026-10-09
   - 또한 노드는 액츄에이터로 활동한다.
 
 
-![image](https://user-images.githubusercontent.com/78655692/148698298-a9682274-5bc8-4bf6-b050-1280fc121df4.png)
+![image](/assets/images/legacy/f55824c135.webp)
 
 
 - 위 그림의 첫번째는 센서들은 협력하진 않지만 그들의 데이터를 오퍼레이터의 위치에 자리한 중앙 데이터베이스에 보낸다.

@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "빅데이터분석기사 실기 작업형(3) - 데이터 정제, 변환"
-excerpt: "본 글은 빅데이터분석기사 실기 작업형에 대비하여 요약 및 실습한 것을 작성한 글입니다. 기출문제의 데이터는 https://github.com/ingu627/BigDataAnalysis에 데이터 셋을 남겨놨습니다."
+excerpt: "본 글은 빅데이터분석기사 실기 작업형에 대비하여 요약 및 실습한 것을 작성한 글입니다. 기출문제의 데이터는 https://github.com/ingu627/BigDataAnalysis에 데이터 셋을 남겨놨습니다. — 데이터 정제"
 categories: R_ML
 tags : [R, visualization, adsp, 빅데이터 분석기사, 실기, 작업형, 필답형, 자격증, dataq, 정리, pdf, 기출문제, 정리본, 후기, 설명, 2회, 3회]
 toc: true
@@ -11,8 +11,7 @@ sidebar_main: false
 last_modified_at: 2026-10-11
 ---
 
-<img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/148633895-2be87d4e-7edb-4391-b583-eb2888b19bbb.png
-'>
+<img align='right' width='200' height='200' src='/assets/images/legacy/664a3c1e2f.webp'>
 본 글은 빅데이터분석기사 실기 작업형에 대비하여 요약 및 실습한 내용을 정리한 글이다. 기출문제 데이터는 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis){: target="_blank"}에 정리해 두었다. 또한 전체 실습 코드는 `/concept/R_basic_to_pro_3.R` 파일에 수록되어 있다.
 
 > 2021.12.31 : 제 3회 빅데이터 분석기사 실기를 합격했습니다. [빅데이터 분석기사(R)](https://ingu627.github.io/categories/R_ML) 시리즈를 보시고 도움이 되길 바랍니다.
@@ -404,7 +403,7 @@ barplot(
     main = "기통별 수량")
 ```
 
-![image](https://user-images.githubusercontent.com/78655692/141936804-5fb66ef8-dbe2-45e6-94d6-9f7bf23e368d.png)
+![image](/assets/images/legacy/fb376f6ae9.webp)
 
 ```R
 pie(
@@ -412,7 +411,7 @@ pie(
 )
 ```
 
-![image](https://user-images.githubusercontent.com/78655692/141939286-47584e54-3bd5-4d4b-a744-fdcc271ce004.png)
+![image](/assets/images/legacy/7603ecb801.webp)
 
 
 ## 수치형 데이터

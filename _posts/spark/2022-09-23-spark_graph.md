@@ -11,7 +11,7 @@ sidebar_main: false
 last_modified_at: 2026-10-10
 ---
 
-<img align='right' width='150' height='200' src='https://user-images.githubusercontent.com/78655692/186088421-fe905f9e-d40f-43b2-ac6e-094e9c342473.png'>
+<img align='right' width='150' height='200' src='/assets/images/legacy/058f7b9a23.webp'>
 [Spark The Definitive Guide - BIG DATA PROCESSING MADE SIMPLE] 책을 중심으로 스파크를 개인 공부를 위해 요약 및 정리해보았습니다. 다소 복잡한 설치 과정은 도커에 미리 이미지를 업로드해 놓았습니다. 즉, 도커 이미지를 pull하면 바로 스파크를 사용할 수 있습니다.
 
 - 도커 설치 및 활용하는 방법 : [[Spark] 빅데이터와 아파치 스파크란 - 1.2 스파크 실행하기](https://ingu627.github.io/spark/spark_db1/#12-%EC%8A%A4%ED%8C%8C%ED%81%AC-%EC%8B%A4%ED%96%89%ED%95%98%EA%B8%B0)
@@ -48,14 +48,14 @@ last_modified_at: 2026-10-10
 - 친구 관계를 표현하는 그래프를 예를 들 수 있다.
 - 그래프 분석의 관점에서 각 정점 또는 노드는 특정 사람을 표현하고, 각 에지는 그들 간의 관계를 나타낸다.
 
-    ![image](https://user-images.githubusercontent.com/78655692/191026412-c8b6ff12-0020-46e7-8adc-263b1de95384.png)
+    ![image](/assets/images/legacy/d47646b882.webp)
 
 
 - 위의 예제 그래프처럼 방향성이 없는 것을 **비방향성 그래프(undirected graph)**이라 한다.
   - 에지가 어떤 정점에서 시작되고 어떤 정점에서 끝나는지 나타나 있지 않다.
 - 반면 시작과 끝을 지정한 방향성이 있는 그래프를 **방향성 그래프(directed graph)**이라 한다.
 
-    ![image](https://user-images.githubusercontent.com/78655692/191030288-d9013509-313b-4010-b5b9-a13f409b8543.png)
+    ![image](/assets/images/legacy/95e558a324.webp)
 
 
 - 그래프의 에지와 정점은 각각 속성(attribute)을 나타내는 데이터를 가질 수 있다.
@@ -86,7 +86,7 @@ val tripData = spark.read.option("header", "true"
 
 - **실행결과**
 
-  ![image](https://user-images.githubusercontent.com/78655692/192133301-4fdf28bb-4c2b-45d2-b208-18f18bb2321a.png)
+  ![image](/assets/images/legacy/8bb3fffa13.webp)
 
 
 ## 2. 그래프 작성하기
@@ -122,7 +122,7 @@ println(s"Total Number of Trips in Original Data: ${tripData.count()}")
 
 - **실행결과**
 
-  ![image](https://user-images.githubusercontent.com/78655692/192134958-6c01ca0e-aecb-426a-8394-92078aa12a7f.png)
+  ![image](/assets/images/legacy/6f70de9512.webp)
 
 
 ## 3. 그래프 쿼리하기 
@@ -140,7 +140,7 @@ stationGraph.edges.where("src = 'Townsend at 7th' OR dst = 'Townsend at 7th'"
 
 - **실행결과**
 
-  ![image](https://user-images.githubusercontent.com/78655692/192136980-76473100-eebf-4c82-b59f-6c90857c3c8f.png)
+  ![image](/assets/images/legacy/39a80138d9.webp)
 
 
 ## 4. 서브그래프
@@ -173,7 +173,7 @@ val motifs = stationGraph.find("(a)-[ab]->(b); (b)-[bc]->(c); (c)-[ca]->(a)")
 
 - **삼각형 모티프**
 
-  ![image](https://user-images.githubusercontent.com/78655692/192138313-1a1c278d-93b1-4d36-b7df-34d9b846fa31.png)
+  ![image](/assets/images/legacy/7b0d26da5a.webp)
 
 
 - 위 쿼리를 실행하면 정점 a, b, c와 가 에지의 중첩(nested) 필드가 포함된 DataFrame이 생성된다.
@@ -201,7 +201,7 @@ motifs.selectExpr("*",
 
 - **실행결과**
 
-  ![image](https://user-images.githubusercontent.com/78655692/192140860-e86e25d7-aa7a-4d2d-99fe-b67c5dcb25f5.png)
+  ![image](/assets/images/legacy/6bc2dd025f.webp)
 
 
 그래프의 구조적 패턴과 서브그래프를 쿼리하는 기초 단계를 거쳤다면, 이제 그래프 이론이 제공하는 고차원 알고리즘을 적용할 차례다. GraphFrame은 정점의 상대적 중요도 측정, 네트워크 연결성, 최단 경로 탐색 등을 분산 환경에서 곧바로 수행할 수 있는 다양한 그래프 알고리즘을 지원한다.
@@ -265,7 +265,7 @@ ranks.vertices.orderBy(desc("pagerank")).select("id", "pagerank").show(10)
 
 - **실행결과**
 
-    ![image](https://user-images.githubusercontent.com/78655692/192148949-0dbeb7c1-0d57-4a6a-81f6-82049f048934.png)
+    ![image](/assets/images/legacy/956a21b892.webp)
 
 
 ## 8. In-Degree와 Out-Degree 지표
@@ -273,7 +273,7 @@ ranks.vertices.orderBy(desc("pagerank")).select("id", "pagerank").show(10)
 - 방향성이 있는 그래프를 대상으로 공통으로 하는 작업은 바로 주어진 지점을 기준으로 도착하는 여행자 수와 출발하는 여행자 수를 계산하는 것이다.
 - 각 지점의 출입을 측정하기 위해 각각의 진입차수(`in-degree`)와 진출차수(`out-degree`) 지표를 사용한다.
 
-![image](https://user-images.githubusercontent.com/78655692/192149243-22f96716-6652-4823-8269-e42de8130eba.png)
+![image](/assets/images/legacy/942b2fce5f.webp)
 
 - 이러한 지표는 소셜 네트워크에서 관계를 분석하는 데 자주 활용된다.
   - 일반적으로 소셜 네트워크에서 특정 사용자는 아웃 바운드 연결(ex. 그 사용자가 팔로우함)보다 인바운드 연결(ex. 팔로워)가 더 많기 때문이다.
@@ -286,7 +286,7 @@ inDeg.orderBy(desc("inDegree")).show(5, false)
 
 - **실행결과**
 
-    ![image](https://user-images.githubusercontent.com/78655692/192149381-2290068c-82b4-40ff-8ced-9648770262dd.png)
+    ![image](/assets/images/legacy/64d5a7b8cb.webp)
 
 
 - out-degree도 같은 방식으로 쿼리할 수 있다.
@@ -298,7 +298,7 @@ outDeg.orderBy(desc("outDegree")).show(5, false)
 
 - **실행결과**
 
-    ![image](https://user-images.githubusercontent.com/78655692/192149430-51cc155d-d34c-4eb1-a88d-b232639d1edc.png)
+    ![image](/assets/images/legacy/24664e33aa.webp)
 
 
 - 비율(`in/out`)이 높은 곳은 주로 여행이 끝나는 지점이고, 비율이 낮은 곳은 여행이 자주 시작되는 지점이다.
@@ -312,7 +312,7 @@ degreeRatio.orderBy("degreeRatio").show(10, false)
 
 - **실행결과**
 
-    ![image](https://user-images.githubusercontent.com/78655692/192149616-522641e5-868d-4deb-a6d5-047fe6780104.png)
+    ![image](/assets/images/legacy/d306404e9d.webp)
 
 
 ## 9. 너비 우선 탐색
@@ -320,7 +320,7 @@ degreeRatio.orderBy("degreeRatio").show(10, false)
 - **너비 우선 탐색(Breadth-First Search)**은 그래프상의 연결 관계(에지, edge)를 기준으로 두 개의 노드를 연결하는 방법을 탐색하는 알고리즘이다.
   - BFS를 구현하기 위해 큐(Queue)의 FIFO 특성을 사용한다. 
 
-![image](https://user-images.githubusercontent.com/78655692/192150752-d6e3107f-3603-4813-b9b4-7c281975498a.png)
+![image](/assets/images/legacy/da86a5efd2.webp)
 
 이미지출처 [^4]
 
@@ -336,14 +336,14 @@ stationGraph.bfs.fromExpr("id = 'Townsend at 7th'"
 
 - **실행결과**
 
-    ![image](https://user-images.githubusercontent.com/78655692/192150937-9ceae44d-842f-4781-b887-a0d19dcca7f3.png)
+    ![image](/assets/images/legacy/025f89e829.webp)
 
 
 ## 10. 연결 요소
 
 - **연결 요소(connected component)**는 자체적인 연결을 가지고 있지만 큰 그래프에는 연결되지 않은(undirected) 서브 그래프이다.
 
-![image](https://user-images.githubusercontent.com/78655692/192151043-4329de00-6cf8-47ec-a82d-0430e39da0d4.png)
+![image](/assets/images/legacy/74db29386c.webp)
 
 
 - 로컬 시스템에서 이 알고리즘을 실행하기 위해 해야 할 일은 먼저 데이터를 샘플링하는 것이다.
@@ -362,7 +362,7 @@ cc.where("component !=0").show()
 
 - **실행결과**
 
-    ![image](https://user-images.githubusercontent.com/78655692/192151274-7801f0ff-a21d-4749-8f45-3c055d3cf7ab.png)
+    ![image](/assets/images/legacy/c79d6680b4.webp)
 
 
 ### 10.1 강한 연결 요소

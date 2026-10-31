@@ -15,7 +15,7 @@ sidebar_main: false
 
 ## Git이란? 
 
-![image](https://user-images.githubusercontent.com/78655692/144004525-dd21b094-3c73-405f-9392-389a25ac7105.png)
+![image](/assets/images/legacy/8bd6541961.webp)
 
 - **깃(Git)**은 컴퓨터 파일의 변경사항을 추적하고 여러 명의 사용자 간에 해당 파일들의 작업을 조율하기 위한 분산 버전 관리 시스템(DVCS)이다.[^1] 소스 코드 무결성을 암호화 해시로 보장하며 비선형적 브랜치 관리를 지원한다.
 
@@ -32,18 +32,18 @@ sidebar_main: false
 
 - 리눅스 배포판에서는 먼저 패키지 인덱스를 최신화하기 위해 `sudo apt-get update`를 실행하거나, `sudo apt-get install git`를 입력하여 패키지 의존성 상태를 점검한다.[^2]
 
-![image](https://user-images.githubusercontent.com/78655692/144005380-51876bc0-51cd-4849-aca3-d97445c11441.png)
+![image](/assets/images/legacy/835cf2b44e.webp)
 
 
 ### 2. sudo apt install git
 
 - `sudo apt install git`를 입력하여 Git 패키지를 설치한다.[^2]
 
-![image](https://user-images.githubusercontent.com/78655692/144005551-83b1ecd0-db34-40db-a69b-18f51f38ead3.png)
+![image](/assets/images/legacy/9394bb1598.webp)
 
 - `git --version`을 입력하여 설치가 잘 되었는지 확인한다. (Ubuntu 20.04 LTS 기본 저장소 기준 Git 2.25.1 버전이 확인된다.)
 
-![image](https://user-images.githubusercontent.com/78655692/144006203-202dfdfd-4a00-4c5f-8a61-79b20c3827be.png)
+![image](/assets/images/legacy/ee319cd9fc.webp)
 
 
 ### 3. 사용자 정보 입력
@@ -53,7 +53,7 @@ sidebar_main: false
   - `git config --global user.email "사용자 이메일"`
 - *주의*: 실습 스크린샷에는 `user.mail`로 기재되어 있으나, Git 공식 환경 설정에서 커밋 작성자 이메일을 인식하는 공식 키는 `user.email`이다.[^3] `user.mail`을 사용할 경우 커밋 시 작성자 식별 오류(`Author identity unknown`)가 발생하므로 반드시 `user.email`로 등록해야 한다.
 
-![image](https://user-images.githubusercontent.com/78655692/144006426-e00e7701-3227-4b43-bd1c-74af6f05ee2d.png)
+![image](/assets/images/legacy/455c58025d.webp)
 
 - `git config --global color.ui "auto"`를 입력하면 깃 명령 출력의 컬러 표시를 활성화한다.
 - 설정된 전역 정보는 `git config --global --list`로 확인할 수 있다.
@@ -71,7 +71,7 @@ sidebar_main: false
 
 - 공식 배포 사이트([https://git-scm.com/](https://git-scm.com/))에 접속하여 Windows용 설치 바이너리(Git for Windows)를 내려받는다.[^4]
 
-![image](https://user-images.githubusercontent.com/78655692/144007190-9da75d3e-8526-45c8-a984-181b769e2b0c.png)
+![image](/assets/images/legacy/577b1ac604.webp)
 
 
 ### 2. 기본사항대로 쭉 클릭한다.

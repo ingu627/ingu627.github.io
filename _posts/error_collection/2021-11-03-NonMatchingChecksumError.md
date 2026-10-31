@@ -20,7 +20,7 @@ tfds로 celeb_a 데이터셋을 불러오는 과정에서 NonMatchingChecksumErr
 NonMatchingChecksumError: Artifact https://drive.google.com/uc?export=download&id=0B7EVK8r0v71pZjFTYXZWM3FlRnM
 ```
 
-![image](https://user-images.githubusercontent.com/78655692/140298490-78dacbbc-1b79-4299-865d-17c9d9e6b495.png)
+![image](/assets/images/legacy/6d4d09dec5.webp)
 
 ## 원인
 
@@ -35,7 +35,7 @@ celeb_a = tfds.load('celeb_a')
 
 1. 구글 공식 사이트 답변을 참고한다.
 
-   ![image](https://user-images.githubusercontent.com/78655692/140298711-f4d0ec60-67a1-4d9a-a179-ae8904687412.png)
+   ![image](/assets/images/legacy/8e13ec0cbe.webp)
 
    - [tfds 및 Google 클라우드 스토리지](https://www.tensorflow.org/datasets/gcs)
 

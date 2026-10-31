@@ -22,27 +22,27 @@ last_modified_at: 2026-10-11
 
 > 주의사항 : JDK 16 이상으로 설치
 
-![image](https://user-images.githubusercontent.com/78655692/143981136-f51f09ae-15be-48a2-ae6d-40ac1a13cfed.png)
+![image](/assets/images/legacy/fc601f524b.webp)
 
-![image](https://user-images.githubusercontent.com/78655692/143981194-042fcfaf-1837-4710-82bc-50cbbf13a44c.png)
+![image](/assets/images/legacy/3c838bd486.webp)
 
 
 ## 2. 환경 변수 설정
 
 - 환경 변수를 설정하는 이유는 JAVA 설치를 컴퓨터가 인식하기 위함이다. `고급 -> 환경 변수 -> 시스템 변수의 새로만들기 -> 변수 : JAVA_HOME / 값 : 설치 경로 -> 적용 -> 확인`
 
-![image](https://user-images.githubusercontent.com/78655692/143981939-418fc97f-f876-4846-8903-42c90ac5a684.png)
+![image](/assets/images/legacy/0dac1ba71c.webp)
 
-![image](https://user-images.githubusercontent.com/78655692/143982044-946d2401-b843-48d4-81e3-ec1b5cb4839a.png)
+![image](/assets/images/legacy/3f539343e8.webp)
 
-![image](https://user-images.githubusercontent.com/78655692/143982229-e8f3ed76-f2f5-43bb-b2f5-8a81cac96e9b.png)
+![image](/assets/images/legacy/bc2bdcfa68.webp)
 
 
 ## 3. 아나콘다 설치
 
 - [https://www.anaconda.com/products/individual](https://www.anaconda.com/products/individual){: target="_blank"} 로 들어가 `Anaconda Individual Edition` 설치
 
-![image](https://user-images.githubusercontent.com/78655692/143982706-605172cc-7c2a-45bd-97d9-57f11a50bb32.png)
+![image](/assets/images/legacy/ff804ef27c.webp)
 
 
 ## 4. jpype 설치 
@@ -53,31 +53,31 @@ last_modified_at: 2026-10-11
 
 > 주의사항 : 호환성 문제로 1.1.2로 설치
 
-![image](https://user-images.githubusercontent.com/78655692/143982471-834f5fde-9447-4d50-a61a-2a3fb4859b46.png)
+![image](/assets/images/legacy/df973b7fd5.webp)
 
 - 보통 `Downloads` 폴더에 다운이 받아질 것이다. 설치 경로로 바꾼 다음 pip으로 설치를 진행한다.
 - 경로 변경 : 명령 프롬프트에서 `cd` 절대 경로 or 상대 경로로!
 
-![image](https://user-images.githubusercontent.com/78655692/143983386-6e591cf2-b736-4337-94d0-af77761d8aff.png)
+![image](/assets/images/legacy/b9b15f37c7.webp)
 
 
 ## 5. konlpy 설치
 
 - `pip install konlpy` 설치를 한다.
 
-![image](https://user-images.githubusercontent.com/78655692/143983473-09a8a522-fdfd-4027-8120-cfcb2c9231fb.png)
+![image](/assets/images/legacy/11bed053e1.webp)
 
 
 ### 5.1. tweepy 오류로 3.10.0으로 재설치한다.
 
 - `pip uninstall tweepy` 후 `pip install tweepy==3.10.0` 로 설치
 
-![image](https://user-images.githubusercontent.com/78655692/143983649-b277a687-4718-4e6e-81dc-bb2822343f6d.png)
+![image](/assets/images/legacy/8e1cc05d27.webp)
 
 
 ## 6. 설치 완료 확인
 
-![image](https://user-images.githubusercontent.com/78655692/143983862-c220dafa-79e7-4cd7-990e-c3ee82978731.png)
+![image](/assets/images/legacy/13ede833d6.webp)
 
 
 ## 한계 및 주의사항

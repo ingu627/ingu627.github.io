@@ -22,7 +22,7 @@ VSCode에서 파이썬 및 데이터 분석 확장을 원활하게 활용하려�
 
 ## 1. Tabnine
 
-![image](https://user-images.githubusercontent.com/78655692/143766991-a6441e63-3725-4cbc-9aeb-37ceaa92efaf.png)
+![image](/assets/images/legacy/ee165a5420.webp)
 
 ![tabnine](https://user-images.githubusercontent.com/78655692/143767185-26b2646a-a734-4029-b47f-3bc00855f61e.gif)
 
@@ -31,7 +31,7 @@ VSCode에서 파이썬 및 데이터 분석 확장을 원활하게 활용하려�
 
 ## 2. Pylance
 
-![image](https://user-images.githubusercontent.com/78655692/143767482-c095f3fb-6920-4c1a-9e86-2922e5c174d2.png)
+![image](/assets/images/legacy/7d41d224c3.webp)
 
 ![pylance](https://user-images.githubusercontent.com/78655692/143767592-a3ed1164-3076-4d15-b6b4-ea83c025d576.gif)
 
@@ -41,7 +41,7 @@ VSCode에서 파이썬 및 데이터 분석 확장을 원활하게 활용하려�
 
 ## 3. python snippets
 
-![image](https://user-images.githubusercontent.com/78655692/143767786-eda7dd16-dcea-43a0-9a5b-a89c1513cd30.png)
+![image](/assets/images/legacy/28d8783e7f.webp)
 
 ![python_snippets](https://user-images.githubusercontent.com/78655692/143767760-1a3b4040-0ca5-474a-9e65-518ce2d7f6f5.gif)
 
@@ -49,9 +49,9 @@ VSCode에서 파이썬 및 데이터 분석 확장을 원활하게 활용하려�
 
 ## 4. Python Extension Pack
 
-![image](https://user-images.githubusercontent.com/78655692/143767877-b6bb793c-8a04-4755-8c33-861eb7fea162.png)
+![image](/assets/images/legacy/846f89ff45.webp)
 
-![image](https://user-images.githubusercontent.com/78655692/143767907-b891b6ca-91f4-4d2e-af11-0ff11899a9a8.png)
+![image](/assets/images/legacy/3137376f6d.webp)
 
 - **포함된 주요 확장 번들**:
   - `Python` (Microsoft 공식 언어 지원)
@@ -62,18 +62,18 @@ VSCode에서 파이썬 및 데이터 분석 확장을 원활하게 활용하려�
 
 ## 5. Visual Studio IntelliCode
 
-![image](https://user-images.githubusercontent.com/78655692/143767934-6c0f0fb9-5721-447e-b4dc-97d7a91f3972.png)
+![image](/assets/images/legacy/1b5488e6b9.webp)
 
 ![intellicode](https://user-images.githubusercontent.com/78655692/143767977-dba36a84-db11-41b5-b78b-0f05edde6fec.gif)
 
 - Visual Studio IntelliCode 확장은 GitHub 오픈소스 저장소 수천 개에서 학습된 코드 패턴을 바탕으로 자동 완성 목록 상단에 가장 추천하는 항목을 별표(`★`)로 우선 배치해주는 도구이다.[^intellicode_doc] 현재 작성 중인 코드의 변수 타입과 컨텍스트에 맞춰 빈도 높은 메서드와 속성을 예측한다.
 - 딥러닝 지원 활성화를 위해 settings에서 관련 옵션을 활성화(enabled)할 수 있다.
 
-![image](https://user-images.githubusercontent.com/78655692/143768026-8fa8a240-5b4a-4c0b-9d90-c914fb18af99.png)
+![image](/assets/images/legacy/318542e5cc.webp)
 
 ## 6. Visual Studio IntelliCode API Usage Examples
 
-![image](https://user-images.githubusercontent.com/78655692/143768051-27ab622a-c777-45ca-a964-044c68db786e.png)
+![image](/assets/images/legacy/c551218eb5.webp)
 
 ![examples](https://user-images.githubusercontent.com/78655692/143768095-a674da80-cf66-4999-b6cf-285998ac2ff4.gif)
 
@@ -81,26 +81,26 @@ VSCode에서 파이썬 및 데이터 분석 확장을 원활하게 활용하려�
 
 ## 7. MagicPython
 
-![image](https://user-images.githubusercontent.com/78655692/143768171-4eaf53f3-ff3d-4dff-a3e4-a88fc7fe9688.png)
+![image](/assets/images/legacy/0bf572cec8.webp)
 
-![image](https://user-images.githubusercontent.com/78655692/143768184-58a83670-217d-40e6-b410-5a1841e75987.png)
+![image](/assets/images/legacy/097061cd33.webp)
 
 - MagicPython은 GitHub과 Atom의 기본 Python 구문 강조 문법으로 채택되었던 TextMate 기반 문법 확장이다. Python 3의 타입 어노테이션(Type Annotations), f-string 포맷팅, 복잡한 정규식, 비동기 키워드(`async`/`await`)를 정확한 토큰으로 분리하여 정밀한 구문 강조(syntax highlighting)를 지원한다.
 
 ## 8. Jupyter
 
-![image](https://user-images.githubusercontent.com/78655692/143768813-0d93b404-1f8e-419e-a7bc-c935d79bb481.png)
+![image](/assets/images/legacy/493d5f6a29.webp)
 
-![image](https://user-images.githubusercontent.com/78655692/143768837-c3a18aaa-8542-4d6c-94d3-590d975513b5.png)
+![image](/assets/images/legacy/57761f8e84.webp)
 
 - Microsoft 공식 Jupyter 확장으로, VSCode 내부에서 `.ipynb` 노트북 파일을 웹 브라우저 없이 열고 대화형으로 실행할 수 있게 한다.[^jupyter_doc]
 - 현재 활성화된 Python 가상환경(venv, conda)의 커널을 자동 감지하며, 셀 단위 실행(`Shift + Enter`), 인터랙티브 창(Interactive Window), 변수 탐색기(Variable Explorer), 판다스 데이터프레임 뷰어 기능을 지원한다.
 
 ## 9. Settings Sync
 
-![image](https://user-images.githubusercontent.com/78655692/143767355-8495d260-f750-400d-952c-5a857d03bd3d.png)
+![image](/assets/images/legacy/e00f62930d.webp)
 
-![image](https://user-images.githubusercontent.com/78655692/143767408-2eeeba7e-3988-4375-983c-030a85fa1fa5.png)
+![image](/assets/images/legacy/28419d65c8.webp)
 
 - Settings Sync는 여러 기기에서 작업할 때 사용 가능한 작업 공간 설정을 동기화해 준다.
 - 원격으로 독립되어 있는 컴퓨터끼리 인터넷을 통해 확장 프로그램, 키 바인딩, 테마, UI 설정을 동기화할 수 있다.
@@ -109,7 +109,7 @@ VSCode에서 파이썬 및 데이터 분석 확장을 원활하게 활용하려�
 
 ## 9. GitLens
 
-![image](https://user-images.githubusercontent.com/78655692/143768425-6367afed-f8d4-44af-bf82-c166f2ca45b2.png)
+![image](/assets/images/legacy/23df83f545.webp)
 
 ![gitlens](https://user-images.githubusercontent.com/78655692/143768524-c02ad8e7-1f7d-4041-8bdc-987f3a43f4d0.gif)
 
@@ -118,7 +118,7 @@ VSCode에서 파이썬 및 데이터 분석 확장을 원활하게 활용하려�
 
 ## 10. Git Graph
 
-![image](https://user-images.githubusercontent.com/78655692/143768669-c4afcbc2-e957-479e-9d63-46a786003096.png)
+![image](/assets/images/legacy/71d15b1b49.webp)
 
 ![gitGraph](https://user-images.githubusercontent.com/78655692/143768685-f9d64f88-0628-412f-9139-05587ba45af5.gif)
 
@@ -127,9 +127,9 @@ VSCode에서 파이썬 및 데이터 분석 확장을 원활하게 활용하려�
 
 ## 11. Git Extension Pack
 
-![image](https://user-images.githubusercontent.com/78655692/143768754-386f0497-4c18-400a-b313-7bf7be5a33f3.png)
+![image](/assets/images/legacy/0a9c3791a1.webp)
 
-![image](https://user-images.githubusercontent.com/78655692/143768769-bf983f6b-c3e3-4182-894d-1c05dbd5bce8.png)
+![image](/assets/images/legacy/f68c62565c.webp)
 
 - **포함된 주요 Git 확장 번들**:
   - `Git History (git log)` (커밋 로그 조회)
@@ -139,32 +139,32 @@ VSCode에서 파이썬 및 데이터 분석 확장을 원활하게 활용하려�
 
 ## 12. Better Comments
 
-![image](https://user-images.githubusercontent.com/78655692/143768903-7653cb41-ccd8-44cb-847d-112aa37fa355.png)
+![image](/assets/images/legacy/8b6e4a67c1.webp)
 
-![image](https://user-images.githubusercontent.com/78655692/143768924-faefbce4-54f3-4256-9e4c-f577b768d490.png)
+![image](/assets/images/legacy/0f58490270.webp)
 
 - 코드 주석(comment)의 접두어 기호에 따라 색상을 구분해 가독성을 높여주는 확장이다.
 - 느낌표(`!`)는 중요 경고, 물음표(`?`)는 질문 및 확인 사항, `TODO`는 작업 예정 항목, 별표(`*`)는 핵심 강조 사항으로 스타일을 자동 분기하여 협업 및 코드 검토 시 유용하다.
 
 ## 13. Rainbow CSV
 
-![image](https://user-images.githubusercontent.com/78655692/146767188-205fa52c-cdfc-4a9d-9cee-da19e85821cf.png)
+![image](/assets/images/legacy/86af98b49b.webp)
 
-![image](https://user-images.githubusercontent.com/78655692/146767240-87082a97-e1c4-4088-bf9d-68957b8c92a3.png)
+![image](/assets/images/legacy/f086d59d80.webp)
 
-![image](https://user-images.githubusercontent.com/78655692/146767366-aeee43ac-ab34-4bbc-9f56-476064025640.png)
+![image](/assets/images/legacy/847baabbc0.webp)
 
 - CSV 및 TSV 형식의 표 형태 데이터 파일을 열었을 때 각 열(column)을 무지개 색상으로 구분하여 강조해주는 확장이다.
 - 커서가 위치한 열의 이름과 번호를 하단 상태 표시줄에 안내하며, 내장된 RBQL(Rainbow Query Language)을 통해 SQL 형태의 문법으로 CSV 데이터에 대한 SELECT, WHERE 필터링 쿼리를 에디터 내부에서 바로 실행할 수 있다.
 
 ## 14. PyTorch Snippets
 
-![image](https://user-images.githubusercontent.com/78655692/152934058-d82ad55a-c214-46e0-af22-e4a643cdbfa1.png)
+![image](/assets/images/legacy/aecf683ad6.webp)
 
 - **PyTorch Snippets**은 VSCode에서 PyTorch 및 Torchvision 라이브러리를 사용할 때 자주 사용되는 신경망 모듈(`nn.Module`), 데이터로더(`DataLoader`), 학습 루프 템플릿을 빠르게 삽입할 수 있도록 돕는 확장이다.[^pytorch_doc]
 - 코드창에 `pytorch`를 입력하고 `Tab` 키를 누르면 아래 그림처럼 템플릿이 자동 완성된다.
 
-![image](https://user-images.githubusercontent.com/78655692/152934361-7ab888e7-4250-4df2-bcee-a1f9225d9cc7.png)
+![image](/assets/images/legacy/391988a110.webp)
 
 
 ## 한계 및 실무 주의사항

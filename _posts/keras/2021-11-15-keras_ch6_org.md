@@ -12,7 +12,7 @@ classes: wide
 last_modified_at: 2026-10-10
 ---
 
-<img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/147629300-4d7acc5e-225a-454a-92cd-4da82f6828f6.png'>
+<img align='right' width='200' height='200' src='/assets/images/legacy/be0ceae23f.webp'>
 본 글은 [케라스 창시자에게 배우는 딥러닝] - (박해선 옮김) 책을 개인공부하기 위해 요약, 정리한 내용입니다. 전체 코드는 [https://github.com/ingu627/deep-learning-with-python-notebooks](https://github.com/ingu627/deep-learning-with-python-notebooks)에 기재했습니다.(원본 코드 fork) 뿐만 아니라 책에서 설명이 부족하거나 이해가 안 되는 것들은 외부 자료들을 토대로 메꿔 놓았습니다. 즉, 딥러닝은 이걸로 끝을 내보는 겁니다. 오타나 오류는 알려주시길 바라며, 도움이 되길 바랍니다.
 
 - **이 글에서 다루는 것**
@@ -79,15 +79,15 @@ last_modified_at: 2026-10-10
 
 <script src="https://gist.github.com/ingu627/146f1ccee1a1fe3d29377ba348e84c72.js"></script>
 
-![image](https://user-images.githubusercontent.com/78655692/141731087-21a7bc72-ed72-4227-9d4c-24e9c18e7031.png)
+![image](/assets/images/legacy/bb0c11baab.webp)
 
-![image](https://user-images.githubusercontent.com/78655692/142895189-7ea3b23f-4fc0-408b-87b3-204570a88636.png)
+![image](/assets/images/legacy/934096fea8.webp)
 
 - `Tokenizer` : 문장으로부터 단어를 토큰화하고 숫자에 대응시키는 딕셔너리를 사용할 수 있도록 한다.
 -`fit_on_texts` : 문자 데이터를 입력받아서 리스트의 형태로 변환한다.
 - `word_index ` : tokenizer의 word_index 속성은 단어와 숫자의 키-값 쌍을 포함하는 딕셔너리를 반환한다.
 
-![image](https://user-images.githubusercontent.com/78655692/142895314-2f539154-3ffa-4343-acb8-e2689c744a48.png)
+![image](/assets/images/legacy/787b45a99f.webp)
 
 - `texts_to_sequences() ` : 텍스트 안의 단어들을 숫자의 시퀀스의 형태로 변환
 - `texts_to_matrix()` : 텍스트를 시퀀스 리스트로 바꾸어 주는 texts_to_sequences() 메서드와 시퀀스 리스트를 넘파이 배열로 바꾸어 주는 sequences_to_matrix() 메서드를 차례대로 호출한다.
@@ -119,7 +119,7 @@ last_modified_at: 2026-10-10
 
 - **단어 임베딩**은 언어를 기하학적 공간에 매핑하는 것이다.
 
-![image](https://user-images.githubusercontent.com/78655692/141734235-8f1e039b-eb4f-48ac-be66-6c962f74f447.png)
+![image](/assets/images/legacy/4723b4c6f3.webp)
 
 - 단어 임베딩 공간은 전형적으로 이런 해석 가능하고 잠재적으로 유용한 수천 개의 벡터를 특성으로 가진다. 
 - `Embedding Layer(임베딩 층)` : 가지고 있는 훈련 데이터 -> 처음부터 학습(Embedding)s
@@ -162,7 +162,7 @@ last_modified_at: 2026-10-10
 - 이 네트워크는 1만 개의 단어에 대해 8차원의 임베딩을 학습하여 정수 시퀀스 입력(2D 정수 텐서)을 임베딩 시퀀스(3D 실수형 텐서)로 바꾼다.
 - 그 다음 이 텐서를 2D로 펼쳐서 분류를 위한 Dense 층을 훈련한다.
 
-![image](https://user-images.githubusercontent.com/78655692/142895411-527e6b55-aff5-4a0f-94cc-a29ad8aa171b.png)
+![image](/assets/images/legacy/da696b4bcb.webp)
 
 - `pad_sequences` : 서로 다른 개수의 단어로 이루어진 문장을 같은 길이로 만들어주기 위해 패딩을 사용한다. 이 함수에 이 시퀀스를 입력하면 숫자 0을 이용해서 같은 길이의 시퀀스로 변환한다.
   - `padding` :  model에 데이터를 정형화하여 넣어줘야하기 때문에 최대 길이를 정하고, 이에 못미치는 굉장히 짧은 문장에 대해서는 0이라는 값으로 채워주며, 최대 길이를 넘어가는 문장에 대해서는 잘라내버리는 작업 
@@ -173,7 +173,7 @@ last_modified_at: 2026-10-10
 - `Embedding(10000, 8, input_length=maxlen)` : 10000개의 개수(10000개의 단어 종류가 있다)를 입력 받아 (예를 들어 [0,1,0,0,...0]) -> 신경망(임베딩) 학습 -> 8차원 임베딩 벡터(출력의 차원)->  input_length는 한 번에 학습하고자 하는 문장의 길이를 의미. maxlen는 각 문서에 대해 패딩을 수행한 이후 최대 문서의 길이
   - 다시 해석: vocab_size=10000으로 정의되어 있기 때문에 단어들은 10000차원 공간안에 정의되어 있다고 볼 수 있다. 이를 8차원으로 내려 `Data Sparsity`를 해결하고 효율적으로 학습할 수 있도록 한다.
 
-![image](https://user-images.githubusercontent.com/78655692/141738923-e285c39e-a909-46d0-b85c-0e2d4010f557.png)
+![image](/assets/images/legacy/53fdea71cf.webp)
 
 <br>
 <br>
@@ -201,7 +201,7 @@ last_modified_at: 2026-10-10
 - [https://nlp.stanford.edu/projects/glove](https://nlp.stanford.edu/projects/glove) 들어가서 `glove.6B.zip` 다운 받기
 - 그 후 datasets 폴더 아래에 파일의 압축 풀기
 
-![image](https://user-images.githubusercontent.com/78655692/142385645-e713ca38-63e1-4e7c-b1c1-782a6678d739.png)
+![image](/assets/images/legacy/3a33b9556b.webp)
 
 <br>
 <br>
@@ -247,7 +247,7 @@ last_modified_at: 2026-10-10
 
 <script src="https://gist.github.com/ingu627/05793e4347c8047fb842c1340d944ed0.js"></script>
 
-![image](https://user-images.githubusercontent.com/78655692/142393519-81cb9d57-b91c-4f9c-b507-a04958710ec2.png)
+![image](/assets/images/legacy/d95595ced2.webp)
 
 <br>
 <br>
@@ -265,14 +265,14 @@ last_modified_at: 2026-10-10
 
 > 용어는 비슷하지만 순환 신경망과 재귀 신경망(Recursive Neural Network)은 전혀 다른 개념이다.
 
-![image](https://user-images.githubusercontent.com/78655692/142578699-9154e73c-9c09-4f1d-902a-6f69c4045699.png)
+![image](/assets/images/legacy/3de60b8b42.webp)
 
 <br>
 <br>
 
 ### 예시
 
-![image](https://user-images.githubusercontent.com/78655692/142586146-148b0c31-5ea1-44b4-9af8-1243ad12f9f7.png)
+![image](/assets/images/legacy/5b663fe4fc.webp)
 
 
 <br>
@@ -352,7 +352,7 @@ last_modified_at: 2026-10-10
 
 <br>
 
-<img src="https://user-images.githubusercontent.com/78655692/142591414-28cdc1b6-3e07-40d1-957b-3059eb4275f6.png" width="500" height="400" alt="LSTM 구조">
+<img src="/assets/images/legacy/338964a620.webp" width="500" height="400" alt="LSTM 구조">
 
 - **SimpleRNN** 코드
 
@@ -382,7 +382,7 @@ model.add(Dense(1, activation='sigmoid'))
 
 <br>
 
-![image](https://user-images.githubusercontent.com/78655692/148879286-1643011d-16bc-4fe0-9dff-246903b3479f.png)
+![image](/assets/images/legacy/085a70c1a7.webp)
 
 - **GRU** 코드
 
@@ -436,7 +436,7 @@ model.add(Dense(1, activation='sigmoid'))
 
 <script src="https://gist.github.com/ingu627/b912f1938485bd0866e62c5e68ce21e7.js"></script>
 
-![image](https://user-images.githubusercontent.com/78655692/142636345-875e45b5-c660-4cf9-9067-3a9527dd957b.png)
+![image](/assets/images/legacy/080d5cb7a5.webp)
 
 ## 6_3_2. 데이터 준비
 
@@ -482,7 +482,7 @@ model.add(Dense(1, activation='sigmoid'))
 
 <script src="https://gist.github.com/ingu627/bcbc2a6c61f2f6b6f62dbc6b0372291e.js"></script>
 
-![image](https://user-images.githubusercontent.com/78655692/142822403-8fddba77-cd4d-4e0c-865e-12d1f50b4046.png)
+![image](/assets/images/legacy/808b5f26ca.webp)
 
 ## 6_3_5. 첫 번째 순환 신경망
 
@@ -494,7 +494,7 @@ model.add(Dense(1, activation='sigmoid'))
 
 ### 결과 그래프 그리기
 
-![image](https://user-images.githubusercontent.com/78655692/142823987-bb805703-bce9-4d67-9557-6cd147060971.png)
+![image](/assets/images/legacy/88f77d8e68.webp)
 
 ## 6_3_6. 과대적합을 감소하기 위해 순환 드롭아웃 사용하기
 
@@ -516,7 +516,7 @@ model.add(Dense(1, activation='sigmoid'))
 - GRU나 LSTM 같은 RNN 2개를 사용하는데 각 RNN은 입력 시퀀스를 한 방향(시간 순서나 반대 순서)으로 처리한 후 각 표현을 합친다.
 - 시퀀스를 양쪽 방향으로 처리하기 때문에 양방향 RNN은 단방향 RNN이 놓치기 쉬운 패턴을 감지할 수 있다.
 
-<img src="https://user-images.githubusercontent.com/78655692/142826896-d902f7a0-1497-4e91-9bb7-d3806e8f563e.png" width="500" height="400" alt="동작 원리" />
+<img src="/assets/images/legacy/c466733ada.webp" width="500" height="400" alt="동작 원리" />
 
 <script src="https://gist.github.com/ingu627/4b18c0331129eae4dbf537af7b302d61.js"></script>
 
@@ -527,7 +527,7 @@ model.add(Dense(1, activation='sigmoid'))
 
 - tf.data.Dataset의 `from_tensor_slices()`는 주어진 텐서들을 첫번째 차원을 따라 슬라이스한다.
 
-![image](https://user-images.githubusercontent.com/78655692/142894665-a34c7ebb-67d1-4226-927d-51efa9ab056b.png)
+![image](/assets/images/legacy/60b1a5dccb.webp)
 
 ## 6_4. 컨브넷을 사용한 시퀀스 처리
 
@@ -537,7 +537,7 @@ model.add(Dense(1, activation='sigmoid'))
   - **팽창 합성곱**은 커널에 구멍을 추가하여 입력을 건너뛰면서 합성곱하는 것과 같다.
 - **1D 합성곱** : 시퀀스에서 1D 패치(부분 시퀀스)를 추출하여 1D 합성곱을 적용한다.
 
-<img src="https://user-images.githubusercontent.com/78655692/142854777-41f8c287-0473-48d4-8943-bd7be31bad0b.png" width="500" height="400" alt="동작 원리" />
+<img src="/assets/images/legacy/0e9a7f846e.webp" width="500" height="400" alt="동작 원리" />
 
 - 이런 1D 합성곱 층은 시퀀스에 있는 지역 패턴을 인식할 수 있다.
 - 동일한 변환이 시퀀스에 있는 모든 패치에 적용되기 때문에 특정 위치에서 학스한 패턴을 나중에 다른 위치에서 인식할 수 있다.
@@ -567,7 +567,7 @@ model.add(Dense(1, activation='sigmoid'))
   - **GlobalAveragePooling2D**, **GlobalMaxPooling2D** 풀링은 (samples, height, width, channels) 크기의 텐서를 입력받고 (samples, channels) 크기의 텐서를 출력한다. 즉 특성 맵의 공간 차원 전체에 대한 풀링이다.
 - 이 구조는 3D 입력을 2D 출력으로 바꾸므로 분류나 회귀를 위해 모델에 하나 이상의 Dense 층을 추가할 수 있다.
 
-![image](https://user-images.githubusercontent.com/78655692/142859707-a26439ee-fe83-4577-b15b-c388e4ac41db.png)
+![image](/assets/images/legacy/b0cc8e0452.webp)
 
 ## 6_4_4. CNN과 RNN을 연결하여 긴 시퀀스를 처리하기 
 
@@ -578,7 +578,7 @@ model.add(Dense(1, activation='sigmoid'))
   - 컨브넷이 긴 입력 시퀀스를 더 짧은 고수준 특성의 (다운샘플된) 시퀀스로 변환한다.
   - 추출된 특성의 시퀀스는 RNN 파트의 입력이 된다.
 
-<img src="https://user-images.githubusercontent.com/78655692/142860349-542446c7-1441-4e82-b439-854d9b3eb45f.png" width="500" height="400" alt="결합 동작 원리" />
+<img src="/assets/images/legacy/5740892523.webp" width="500" height="400" alt="결합 동작 원리" />
 
 <br>
 <br>

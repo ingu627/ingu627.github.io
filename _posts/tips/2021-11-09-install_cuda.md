@@ -21,7 +21,7 @@ last_modified_at: 2026-10-11
 - **설치 완료 후 TensorFlow의 GPU 인식을 검증했다.**
 - 본문은 CUDA Toolkit 10.1 기준으로 작성했으나, CUDA 11.0 적용 시에도 호환 표에 맞춰 버전 디렉터리와 환경변수 경로를 동일하게 설정하면 된다.
 
-![image](https://user-images.githubusercontent.com/78655692/141088104-68bf5092-ea63-436f-9c94-a4d35b26488d.png)
+![image](/assets/images/legacy/ad64f9da81.webp)
 
 ## 순서
 
@@ -46,13 +46,13 @@ last_modified_at: 2026-10-11
 - RAM : 16GB
 - OS : Window10 64-bit
 
-![image](https://user-images.githubusercontent.com/78655692/140860532-9fbbd1ac-e6ac-4f9a-8ea2-8447b1482dbe.png)
+![image](/assets/images/legacy/9ecbd715ec.webp)
 
 ## 1. 아나콘다 설치
 
 ANACONDA site link : [https://www.anaconda.com/products/individual](https://www.anaconda.com/products/individual)
 
-![image](https://user-images.githubusercontent.com/78655692/140858868-6c17da63-8224-4123-bf46-28ffcb772f13.png)
+![image](/assets/images/legacy/7b50def2e4.webp)
 
 + **<span style="color:red">TensorFlow 2.x 초기 빌드는 특정 파이썬 버전(3.6)에 의존하므로, 파이썬 3.7이 기본 탑재된 아나콘다 5.3 설치 시 호환 패키지를 찾지 못할 수 있다. 따라서 파이썬 3.6 기반 가상환경을 별도로 생성해야 한다.</span>**
 
@@ -62,13 +62,13 @@ ANACONDA site link : [https://www.anaconda.com/products/individual](https://www.
 
 NVIDIA DRIVER link : [https://www.nvidia.com/download/index.aspx?lang=en-us](https://www.nvidia.com/download/index.aspx?lang=en-us)
 
-![image](https://user-images.githubusercontent.com/78655692/140859318-d8d2c16f-8a77-46e8-b365-d44315ada069.png)
+![image](/assets/images/legacy/f0250f105e.webp)
 
 ## 3. Visual Studio 설치
 
 Visual Studio link : [https://visualstudio.microsoft.com/ko/downloads/](https://visualstudio.microsoft.com/ko/downloads/)
 
-![image](https://user-images.githubusercontent.com/78655692/140862114-33c3a7f2-387c-4d07-971a-669f849a14eb.png)
+![image](/assets/images/legacy/da7f8d14db.webp)
 
 ## 3. CUDA Toolkit
 
@@ -76,17 +76,17 @@ Visual Studio link : [https://visualstudio.microsoft.com/ko/downloads/](https://
 
 CUDA Toolkit window(윈도우) link : [https://www.tensorflow.org/install/source_windows#tested_build_configurations](https://www.tensorflow.org/install/source_windows#tested_build_configurations)
 
-![image](https://user-images.githubusercontent.com/78655692/140859991-fc7918bc-5fed-428c-8088-873891de0926.png)
+![image](/assets/images/legacy/85ef8fe910.webp)
 
-![image](https://user-images.githubusercontent.com/78655692/140859931-3bf2d8d0-3335-4fae-91bd-9aa22d5ed956.png)
+![image](/assets/images/legacy/5d769ef67b.webp)
 
 ## 4. CUDA 설치
 
 CUDA Toolkit Archive : [https://developer.nvidia.com/cuda-toolkit-archive](https://developer.nvidia.com/cuda-toolkit-archive)
 
-![image](https://user-images.githubusercontent.com/78655692/140860284-cba42646-b76c-4078-995f-b36db7644793.png)
+![image](/assets/images/legacy/fa38d7a5bb.webp)
 
-![image](https://user-images.githubusercontent.com/78655692/140861225-eb032b2e-a497-4b21-b0bf-47695a7532ef.png)
+![image](/assets/images/legacy/69548b6007.webp)
 
 ## 5. cuDNN 설치
 
@@ -95,25 +95,25 @@ CUDA Toolkit Archive : [https://developer.nvidia.com/cuda-toolkit-archive](https
 
 cuDNN link : [https://developer.nvidia.com/cudnn](https://developer.nvidia.com/cudnn)
 
-![image](https://user-images.githubusercontent.com/78655692/140861718-70b2f48e-e9a6-49f1-a0c9-8471759e481b.png)
+![image](/assets/images/legacy/1e2f1e46e6.webp)
 
-![image](https://user-images.githubusercontent.com/78655692/140861827-24bdb28b-d07a-4d2a-9778-1f9e29340072.png)
+![image](/assets/images/legacy/4dd00b6bcc.webp)
 
-![image](https://user-images.githubusercontent.com/78655692/140861922-003339e1-0fe1-4a3c-bc23-335bd0f840bd.png)
+![image](/assets/images/legacy/c64fa43d90.webp)
 
-![image](https://user-images.githubusercontent.com/78655692/141049275-5ae863a1-a9a7-438c-a63e-393d9dce79db.png)
+![image](/assets/images/legacy/e3b84e6698.webp)
 
 - 파일 덮어쓰기 : 다운로드 받은 파일의 압축을 풀고, 아래의 디렉토리에 파일을 덮어씌움
 
 `C:\Program Files\NVIDIA GPU Computing Toolkit CUDA v10.1`
 
-![image](https://user-images.githubusercontent.com/78655692/141049509-e8cd1b3d-5821-4186-9d0f-0d0f9d3a6334.png)
+![image](/assets/images/legacy/1838c47ad9.webp)
 
 - `bin`, `include`, `lib` 폴더를 각각 들어가 안의 파일들을 복사.
 
 ## 5_1. 설치 확인 
 
-![image](https://user-images.githubusercontent.com/78655692/141050089-8c671f02-9ca7-4ce3-8e94-019b7d48eb0b.png)
+![image](/assets/images/legacy/906633b320.webp)
 
 - 클릭 후 검색창에 `cuda`라 쳤을 때 프로그램이 나오면 성공!!
 
@@ -121,13 +121,13 @@ cuDNN link : [https://developer.nvidia.com/cudnn](https://developer.nvidia.com/c
 
 - 추가할 경로는 앞에서 복사해서 넣었던 bin, include, lib의 경로를 설정해준다.
 
-![image](https://user-images.githubusercontent.com/78655692/141051481-d8806d86-07f7-46f9-aa80-8c77fdd7a097.png)
+![image](/assets/images/legacy/c6fad2c2ab.webp)
 
-![image](https://user-images.githubusercontent.com/78655692/141051518-0487ed1b-f707-4875-ab09-3c3f0fa8f267.png)
+![image](/assets/images/legacy/ed166a8874.webp)
 
-![image](https://user-images.githubusercontent.com/78655692/141051604-add55c2e-3f30-4a6c-a904-15ad77860ea4.png)
+![image](/assets/images/legacy/f96208f07e.webp)
 
-![image](https://user-images.githubusercontent.com/78655692/141051769-1464f5ad-6b73-4c3d-9e42-6e0ba572e177.png)
+![image](/assets/images/legacy/a7126a411f.webp)
 
 ## 6. 가상환경 
 
@@ -135,7 +135,7 @@ cuDNN link : [https://developer.nvidia.com/cudnn](https://developer.nvidia.com/c
 
 - `Anaconda Powershell Prompt (anaconda3)` 실행
 
-![image](https://user-images.githubusercontent.com/78655692/140862457-a782c74a-b5b1-4602-8a8d-6ebcd38d80bf.png)
+![image](/assets/images/legacy/34c217ef4a.webp)
 
 - **conda update** : `conda update -n base conda`
 - **가상 환경 설치** : `conda create -n 가상환경이름 python=3.6`
@@ -157,7 +157,7 @@ from tensorflow.python.client import device_lib
 print(device_lib.list_local_devices())
 ```
 
-![image](https://user-images.githubusercontent.com/78655692/141671882-b12399ab-9387-42ef-9869-c11f2a2fa43d.png)
+![image](/assets/images/legacy/1948f1dcfa.webp)
 
 이렇게 뜨면 잘 설치가 된 것이다.
 

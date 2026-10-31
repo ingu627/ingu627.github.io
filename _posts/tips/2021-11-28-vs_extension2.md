@@ -23,12 +23,12 @@ VSCode는 에디터 UI를 담당하는 렌더러 프로세스와 확장 프로�
 - `File - Preferences - Settings - Font Size 설정` 
   - 에디터 기본 글꼴 크기(`editor.fontSize`)는 작업 환경과 모니터 해상도에 맞춰 조절할 수 있으며, 예시에서는 17pt로 지정하였다.
 
-![image](https://user-images.githubusercontent.com/78655692/146759647-4fdf0582-2a93-41d0-a87f-5faf608ffa02.png)
+![image](/assets/images/legacy/64ba6dab42.webp)
 
 
 ## 1. Ponicode
 
-![image](https://user-images.githubusercontent.com/78655692/143844059-f9135f3e-ccda-4265-805a-f16d818883fa.png)
+![image](/assets/images/legacy/277160e7e0.webp)
 
 ![ponicode](https://user-images.githubusercontent.com/78655692/143844241-d6083525-233e-4477-9dab-350068f0f383.gif)
 
@@ -39,16 +39,16 @@ VSCode는 에디터 UI를 담당하는 렌더러 프로세스와 확장 프로�
 
 ## 2. Dracula Official
 
-![image](https://user-images.githubusercontent.com/78655692/143773176-851ef945-03af-4601-b8f4-0b504300f9ea.png)
+![image](/assets/images/legacy/aa593ab654.webp)
 
-![image](https://user-images.githubusercontent.com/78655692/143773207-7c708b55-d7de-4a28-a8c6-8c21db0cd11f.png)
+![image](/assets/images/legacy/204228b7fa.webp)
 
 - 어두운 배경(다크 테마) 기반의 코드 하이라이팅 테마이다.[^dracula] 대비도가 높은 색상 팔레트를 적용해 구문 요소를 명확히 구분할 수 있도록 돕는다.
 
 
 ## 3. Debugger for Chrome
 
-![image](https://user-images.githubusercontent.com/78655692/143773291-acb02066-a6ce-40af-b4cf-0316eb8b4931.png)
+![image](/assets/images/legacy/265422068c.webp)
 
 ![debugger](https://user-images.githubusercontent.com/78655692/143773391-2b0e4121-2916-4f20-8de2-24af6426d488.gif)
 
@@ -58,9 +58,9 @@ VSCode는 에디터 UI를 담당하는 렌더러 프로세스와 확장 프로�
 
 ## ~~4. Bracket Pair Colorizer 2~~
 
-![image](https://user-images.githubusercontent.com/78655692/143773517-1fdca65d-996f-441d-b393-6284c7f9e84b.png)
+![image](/assets/images/legacy/9afb2fd971.webp)
 
-![image](https://user-images.githubusercontent.com/78655692/143773557-a0879754-5aa1-4d38-81e4-5701da372b94.png)
+![image](/assets/images/legacy/9a4e4efd59.webp)
 
 - 중첩 괄호(브래킷)를 쌍별로 다른 색상으로 표시하여 코드 블록 식별을 돕던 확장 프로그램이다.[^bracket-pair-repo]
 - 해당 기능은 VSCode 1.60부터 에디터 코어 기능으로 정식 내장되어 확장 설치 없이 설정만으로 활성화할 수 있다.[^bracket-pair-blog] 코어 내장 구현은 네이티브 괄호 쌍 트리 구조를 사용하여 확장 대비 최대 10,000배 빠른 파싱 성능을 제공한다.
@@ -81,7 +81,7 @@ VSCode는 에디터 UI를 담당하는 렌더러 프로세스와 확장 프로�
 
 ## 4. Prettier
 
-![image](https://user-images.githubusercontent.com/78655692/146768480-15591390-596c-4e8b-8ea0-3275526533da.png)
+![image](/assets/images/legacy/dcbc26a1c2.webp)
 
 - 코드 서식 지정기(Code Formatter)로, 정해진 스타일 규칙에 맞춰 들여쓰기, 줄 바꿈, 따옴표 스타일 등을 자동으로 정렬한다.[^prettier]
 - `.prettierrc` 설정 파일을 통해 프로젝트 및 팀 단위의 일관된 코드 포맷팅 규칙을 적용할 수 있다.
@@ -89,7 +89,7 @@ VSCode는 에디터 UI를 담당하는 렌더러 프로세스와 확장 프로�
 
 ## 5. Code Spell Checker
 
-![image](https://user-images.githubusercontent.com/78655692/143773697-94e6c2b8-a07d-4f69-b390-827c4dbbd78d.png)
+![image](/assets/images/legacy/a4b43b3681.webp)
 
 ![spell](https://user-images.githubusercontent.com/78655692/143773766-2bdfa30c-c7fe-47c0-a2f3-0c0c1b88e900.gif)
 
@@ -99,11 +99,11 @@ VSCode는 에디터 UI를 담당하는 렌더러 프로세스와 확장 프로�
 
 ## 6. Code Runner
 
-![image](https://user-images.githubusercontent.com/78655692/143773932-8698fa57-1807-49c5-ac32-835cfcec9dbd.png)
+![image](/assets/images/legacy/3a8865a840.webp)
 
 ![runner](https://user-images.githubusercontent.com/78655692/143773977-61fe38b5-e1e5-44db-b2f9-4b79020a5817.gif)
 
-![image](https://user-images.githubusercontent.com/78655692/143774012-e23344d9-066f-4846-8d8e-a50c14c9f2ac.png)
+![image](/assets/images/legacy/3b6b2015ca.webp)
 
 - C, C++, Java, JavaScript, Python 등 다양한 언어의 코드 파일이나 선택된 코드 스니펫을 에디터 내에서 즉시 실행하고 출력 창에서 결과를 확인할 수 있는 확장 프로그램이다.[^code-runner]
 - **코드를 실행하는 방법:**
@@ -121,7 +121,7 @@ VSCode는 에디터 UI를 담당하는 렌더러 프로세스와 확장 프로�
 
 ## 7. Color Picker
 
-![image](https://user-images.githubusercontent.com/78655692/143774079-1510e48d-cc5c-4e8b-9366-8891f6d8bf2c.png)
+![image](/assets/images/legacy/229c9eb4ba.webp)
 
 ![picker](https://user-images.githubusercontent.com/78655692/143774128-9fca5027-7b9f-4591-8625-83dadf5190d4.gif)
 
@@ -130,7 +130,7 @@ VSCode는 에디터 UI를 담당하는 렌더러 프로세스와 확장 프로�
 
 ## 8. Live Server
 
-![image](https://user-images.githubusercontent.com/78655692/143774202-6323e835-b26e-4948-9220-e52b6be9f9fb.png)
+![image](/assets/images/legacy/624599cdcb.webp)
 
 ![server](https://user-images.githubusercontent.com/78655692/143774272-9be36ed1-5e81-44d2-bcfd-86157fc9409f.gif)
 
@@ -139,14 +139,14 @@ VSCode는 에디터 UI를 담당하는 렌더러 프로세스와 확장 프로�
 
 ## 9. Live Share
 
-![image](https://user-images.githubusercontent.com/78655692/143774395-5b39040e-d747-4f0f-8218-492e7adf2df3.png)
+![image](/assets/images/legacy/465176dfc9.webp)
 
 - 여러 개발자가 동일한 코드베이스에서 실시간으로 함께 편집하고 디버깅할 수 있는 Microsoft 공식 협업 도구이다.[^live-share] 저장소를 복제하거나 개발 환경을 따로 동기화하지 않고도 세션 링크를 통해 협업자의 커서 위치 공유, 터미널 및 로컬 서버 포트 공유가 가능하다.
 
 
 ## 10. Material Icon Theme
 
-![image](https://user-images.githubusercontent.com/78655692/143774499-7aefbf87-308c-435b-aed6-2dae66afc260.png)
+![image](/assets/images/legacy/cd3deb2a5f.webp)
 
 ![icon](https://user-images.githubusercontent.com/78655692/143774559-9dc16674-244e-4eb7-9514-0b3e272d52f9.gif)
 
@@ -155,16 +155,16 @@ VSCode는 에디터 UI를 담당하는 렌더러 프로세스와 확장 프로�
 
 ## 11. Markdown Preview Enhanced
 
-![image](https://user-images.githubusercontent.com/78655692/143774616-fe7ec7b2-ee5a-4f97-ab28-d14d9898c3dd.png)
+![image](/assets/images/legacy/5c330271bc.webp)
 
-![image](https://user-images.githubusercontent.com/78655692/143774634-5f74fdcb-62e1-46ab-9940-a0f50af185ef.png)
+![image](/assets/images/legacy/7cc68e61a5.webp)
 
 - 수식(MathJax/KaTeX), 다이어그램(Mermaid, PlantUML), PDF 내보내기 등 확장 기능을 지원하는 마크다운 실시간 미리보기 확장 프로그램이다.[^mpe] 에디터 우측 분할 화면에서 렌더링 결과를 즉시 확인할 수 있다.
 
 
 ## 12. Markdown All in One
 
-![image](https://user-images.githubusercontent.com/78655692/143774685-659f340e-a228-420d-a4b3-837de4dea3b9.png)
+![image](/assets/images/legacy/f3f78a1a93.webp)
 
 ![markdown](https://user-images.githubusercontent.com/78655692/143774740-0477c510-8d4a-4fd0-8b9d-b4eac21a19c1.gif)
 

@@ -45,7 +45,7 @@ ubuntu 20.04에서 nvidia driver 495, cuda 11.3, cudnn 8.2.1, pytorch를 설치�
     $ ubuntu-drivers devices
     ```
 
-![image](https://user-images.githubusercontent.com/78655692/178480486-761c2ecf-6e49-420b-9d02-549e7b11d012.png)
+![image](/assets/images/legacy/f2f98c08bc.webp)
 
 
 - 이제 설치하고픈 버전을 골라 설치하거나, 자동으로 드라이버를 설치한다. [^2]
@@ -87,7 +87,7 @@ ubuntu 20.04에서 nvidia driver 495, cuda 11.3, cudnn 8.2.1, pytorch를 설치�
     ```
 
 
-<img src='https://user-images.githubusercontent.com/78655692/178487504-86beaa95-4493-49bb-b9fc-608e307a8827.png' width=600>
+<img src='/assets/images/legacy/9102a781ec.webp' width=600>
 
 
 ## cuda 11.3 설치
@@ -96,10 +96,10 @@ ubuntu 20.04에서 nvidia driver 495, cuda 11.3, cudnn 8.2.1, pytorch를 설치�
 - [NVIDIA DEVELOPER - CUDA Toolkit Archive](https://developer.nvidia.com/cuda-toolkit-archive)
 - 그 다음, linux -> x86_64 -> Ubuntu -> 20.04 -> runfile(local)로 가 해당 명령어를 실행한다.
 
-<img src='https://user-images.githubusercontent.com/78655692/178489427-3b4965a6-93f7-4aee-b63d-d75667a3b629.png' width=550>
+<img src='/assets/images/legacy/1d2ceebf2a.webp' width=550>
 
 
-<img src='https://user-images.githubusercontent.com/78655692/178489726-78544f83-83f6-4e13-af4e-41546adaed37.png' width=550>
+<img src='/assets/images/legacy/fb05bb4f23.webp' width=550>
 
 
 ```shell
@@ -122,16 +122,16 @@ $ sudo apt-get -y install cuda
 
 - Continue 후, accept, 그 다음 Driver 선택을 해제후 Install 한다.
 
-<img src='https://user-images.githubusercontent.com/78655692/178490764-af6c4dd7-1821-4f43-bf81-8d7fa01b22da.png' width=550>
+<img src='/assets/images/legacy/b98d2f1833.webp' width=550>
 
-<img src='https://user-images.githubusercontent.com/78655692/178490957-33b2a570-faa0-47dc-a2de-44f1b83bad17.png' width=550>
+<img src='/assets/images/legacy/9d4f6db62f.webp' width=550>
 
-<img src='https://user-images.githubusercontent.com/78655692/178491105-46851e2a-0398-4d03-a74b-b68e935cfe05.png' width=550>
+<img src='/assets/images/legacy/4ab3cb776a.webp' width=550>
 
 
 - 설치가 잘 진행되었다면 아래 그림처럼 나올 것이다.
 
-![image](https://user-images.githubusercontent.com/78655692/178491438-7219204f-f98e-4421-af53-989902d61472.png)
+![image](/assets/images/legacy/a4e2e79708.webp)
 
 
 > 만약 gcc가 없어서 문제가 발생한다면, 다음 명령어를 수행한다.
@@ -148,7 +148,7 @@ $ sudo apt-get install manpages-dev
     $ nvcc -V
     ```
 
-<img src='https://user-images.githubusercontent.com/78655692/178491776-83b209b0-372b-4f9b-b488-ac0fde15cbf0.png' width=400>
+<img src='/assets/images/legacy/99abe2e061.webp' width=400>
 
 
 - CUDA Toolkit 관련 설정을 환경 변수에 추가하기 위해 다음 명령어를 실행한다. [^4]
@@ -168,16 +168,16 @@ $ sudo apt-get install manpages-dev
 - NVIDIA 계정이 있어야 한다. 없다면 회원가입해야 한다는 점 유의한다.
 - 그림에 표시한대로 따라 다운로드 받는다.
 
-![image](https://user-images.githubusercontent.com/78655692/178493921-0e35f854-fb08-46da-b304-7e51d057ccde.png)
+![image](/assets/images/legacy/12998af659.webp)
 
 
-![image](https://user-images.githubusercontent.com/78655692/178494017-567dadb0-5f1f-4f78-8500-5218af00875f.png)
+![image](/assets/images/legacy/25d16153ae.webp)
 
 
-![image](https://user-images.githubusercontent.com/78655692/178494120-cc6b23e3-66aa-45ad-88fc-55346dbd4b14.png)
+![image](/assets/images/legacy/0e83896026.webp)
 
 
-![image](https://user-images.githubusercontent.com/78655692/178494341-c8c50213-1c03-454f-b6a9-077a44a01934.png)
+![image](/assets/images/legacy/de3088e9fd.webp)
 
 
 - 다운로드 받은 파일을 압축풀어 파일을 복사한다. 
@@ -214,7 +214,7 @@ $ sudo apt-get install manpages-dev
     ldconfig -N -v $(sed 's/:/ /' <<< $LD_LIBRARY_PATH) 2>/dev/null | grep libcudnn
     ```
 
-    ![image](https://user-images.githubusercontent.com/78655692/178498523-5b1d6c98-052a-4a8f-9e00-5d12477d40df.png)
+    ![image](/assets/images/legacy/8d0f59855e.webp)
 
 
 ## python 가상환경 설치

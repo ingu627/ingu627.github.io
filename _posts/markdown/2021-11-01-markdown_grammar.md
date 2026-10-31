@@ -20,7 +20,7 @@ last_modified_at: 2026-10-09
 - 텍스트에 양식을 입히는 마크업 언어의 일종, **HTML**과 연동이 가능하다. (정의)
 - 마크다운은 빨리 작성할 수 있고, 또 인터넷에 글을 쓰는 사람을 위해 만들어졌다.
 
-<img align='right' width='230' height='200' src='https://user-images.githubusercontent.com/78655692/144753588-5f69dac1-8c11-493a-894d-08de24c42493.png'>
+<img align='right' width='230' height='200' src='/assets/images/legacy/794ae3c2d4.webp'>
 
 - 다양한 협업 툴에서 활용 (Notion, Slack...)
 - 다양한 Markdown용 Editor (Typora...)
@@ -104,7 +104,7 @@ _italic_
 
 ### RGB 색상표
 
-![image](https://user-images.githubusercontent.com/78655692/149109308-2f5dcb0b-bc09-4edc-b6a1-bc0a63485df8.png)
+![image](/assets/images/legacy/8c164e1353.webp)
 
 ## 형관펜
 
@@ -157,62 +157,62 @@ _italic_
   - 별 셋에서 일반 글크기 : 46 / 크게는 91
 - **별 하나** 
 
-<img width="25" alt="star1" src="https://user-images.githubusercontent.com/78655692/151471925-e5f35751-d4b9-416b-b41d-a059267a09e3.png">
+<img width="25" alt="star1" src="/assets/images/legacy/5fca286ee3.webp">
 
 ```html
-<img width="25" alt="star1" src="https://user-images.githubusercontent.com/78655692/151471925-e5f35751-d4b9-416b-b41d-a059267a09e3.png">
+<img width="25" alt="star1" src="/assets/images/legacy/5fca286ee3.webp">
 ```
 
-<img width="55" alt="star1" src="https://user-images.githubusercontent.com/78655692/151471925-e5f35751-d4b9-416b-b41d-a059267a09e3.png">
+<img width="55" alt="star1" src="/assets/images/legacy/5fca286ee3.webp">
 
 ```html
-<img width="55" alt="star1" src="https://user-images.githubusercontent.com/78655692/151471925-e5f35751-d4b9-416b-b41d-a059267a09e3.png">
+<img width="55" alt="star1" src="/assets/images/legacy/5fca286ee3.webp">
 ```
 
 - **별 둘**
 
-<img width="41" alt="star2" src="https://user-images.githubusercontent.com/78655692/151471960-29c5febe-c509-4c6d-99f4-a2203eb193c5.png">
+<img width="41" alt="star2" src="/assets/images/legacy/87bda9a123.webp">
 
 ```html
-<img width="41" alt="star2" src="https://user-images.githubusercontent.com/78655692/151471960-29c5febe-c509-4c6d-99f4-a2203eb193c5.png">
+<img width="41" alt="star2" src="/assets/images/legacy/87bda9a123.webp">
 ```
 
-<img width="81" alt="star2" src="https://user-images.githubusercontent.com/78655692/151471960-29c5febe-c509-4c6d-99f4-a2203eb193c5.png">
+<img width="81" alt="star2" src="/assets/images/legacy/87bda9a123.webp">
 
 ```html
-<img width="81" alt="star2" src="https://user-images.githubusercontent.com/78655692/151471960-29c5febe-c509-4c6d-99f4-a2203eb193c5.png">
+<img width="81" alt="star2" src="/assets/images/legacy/87bda9a123.webp">
 ```
 
 - **별 셋**
 
-<img width="46" alt="star3" src="https://user-images.githubusercontent.com/78655692/151471989-9e21d7a8-a7b6-44b0-b598-2bb204b56b00.png">
+<img width="46" alt="star3" src="/assets/images/legacy/c71164776b.webp">
 
 ```html
-<img width="46" alt="star3" src="https://user-images.githubusercontent.com/78655692/151471989-9e21d7a8-a7b6-44b0-b598-2bb204b56b00.png">
+<img width="46" alt="star3" src="/assets/images/legacy/c71164776b.webp">
 ```
 
-<img width="91" alt="star3" src="https://user-images.githubusercontent.com/78655692/151471989-9e21d7a8-a7b6-44b0-b598-2bb204b56b00.png">
+<img width="91" alt="star3" src="/assets/images/legacy/c71164776b.webp">
 
 ```html
-<img width="91" alt="star3" src="https://user-images.githubusercontent.com/78655692/151471989-9e21d7a8-a7b6-44b0-b598-2bb204b56b00.png">
+<img width="91" alt="star3" src="/assets/images/legacy/c71164776b.webp">
 ```
 
 - **예시**
 
-### <img width="91" alt="star3" src="https://user-images.githubusercontent.com/78655692/151471989-9e21d7a8-a7b6-44b0-b598-2bb204b56b00.png"> Virtualization (예시)
+### <img width="91" alt="star3" src="/assets/images/legacy/c71164776b.webp"> Virtualization (예시)
 
-<img width="25" alt="star1" src="https://user-images.githubusercontent.com/78655692/151471925-e5f35751-d4b9-416b-b41d-a059267a09e3.png"> Threads and processes can be seen as a way to do more things at the same
+<img width="25" alt="star1" src="/assets/images/legacy/5fca286ee3.webp"> Threads and processes can be seen as a way to do more things at the same
 time. In effect, they allow us to build (pieces of) programs that appear to be
 executed simultaneously. <span style="background-color:yellow">On a single-processor computer, this simultaneous
 execution is, of course, an illusion.</span> As there is only a single CPU, only an
 instruction from a single thread or process will be executed at a time. By
 rapidly switching between threads and processes, the illusion of parallelism
 is created.
-<img width="41" alt="star2" src="https://user-images.githubusercontent.com/78655692/151471960-29c5febe-c509-4c6d-99f4-a2203eb193c5.png"> This separation between having a single CPU and being able to pretend
+<img width="41" alt="star2" src="/assets/images/legacy/87bda9a123.webp"> This separation between having a single CPU and being able to pretend
 there are more can be extended to other resources as well, <span style="background-color:yellow">leading to what
 is known as resource virtualization.</span> This virtualization has been applied for
 many decades, but has received renewed interest as (distributed) computer
-systems have become more commonplace and complex, <img width="46" alt="star3" src="https://user-images.githubusercontent.com/78655692/151471989-9e21d7a8-a7b6-44b0-b598-2bb204b56b00.png"> leading to the situation
+systems have become more commonplace and complex, <img width="46" alt="star3" src="/assets/images/legacy/c71164776b.webp"> leading to the situation
 that application software is mostly always outliving its underlying
 systems software and hardware.
 
@@ -441,7 +441,7 @@ print('Hello World!')
 
 - 유튜브 동영상을 오른쪽 버튼을 누른 후, 소스 코드 복사를 누르면 끝
 
-![image](https://user-images.githubusercontent.com/78655692/143901417-87ed57ea-56db-4dab-a3fc-19820f282d5c.png)
+![image](/assets/images/legacy/a01e57bff1.webp)
 
 `<iframe width="896" height="504" src="https://www.youtube.com/embed/1xWmteIE3Y8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
 
@@ -454,7 +454,7 @@ print('Hello World!')
 
 `{ % include video id="v=다음의 id 값" provider="youtube" % }`
 
-![image](https://user-images.githubusercontent.com/78655692/143901643-c64f72d8-c6e7-426a-a723-8319dc927bde.png)
+![image](/assets/images/legacy/2d63d25f68.webp)
 
 {% include video id="1xWmteIE3Y8&t=2300s" provider="youtube" %}
 
@@ -468,9 +468,9 @@ print('Hello World!')
 - `<img src="" width="" height="" alt="" />`
 
 
-<img src="https://user-images.githubusercontent.com/78655692/149096925-170a1dbe-807d-40d9-b7d2-185dc3d05b38.png" width="400"  alt="matrix4"/>
+<img src="/assets/images/legacy/a0fc1c4cca.webp" width="400"  alt="matrix4"/>
 
-![image](https://user-images.githubusercontent.com/78655692/149096925-170a1dbe-807d-40d9-b7d2-185dc3d05b38.png)
+![image](/assets/images/legacy/a0fc1c4cca.webp)
 
 ## 이미지를 md 파일에 복사하기
 
@@ -478,25 +478,25 @@ print('Hello World!')
 <br/>
 해당 이미지를 `ctrl + c`를 누르시고 아래에 `ctrl + v`를 하시면
 
-`![image](https://user-images.githubusercontent.com/78655692/149096925-170a1dbe-807d-40d9-b7d2-185dc3d05b38.png)`
+`![image](/assets/images/legacy/a0fc1c4cca.webp)`
 
 로 나옵니다. 이것을 그대로 md파일에 복사넣기 하면 이미지가 생성됩니다.
 
 ## 이미지에 링크를 걸고 싶을땐
   `[![이미지설명](이미지 파일 저장 경로)](이미지 주소 링크)`
 
-[![image](https://user-images.githubusercontent.com/78655692/149096925-170a1dbe-807d-40d9-b7d2-185dc3d05b38.png)](https://www.youtube.com/watch?v=22_1CRL35Qk)
+[![image](/assets/images/legacy/a0fc1c4cca.webp)](https://www.youtube.com/watch?v=22_1CRL35Qk)
 
 ## 텍스트와 이미지 어울림
 
 - 기존 img 태그를 이용에서 `align`의 `left` 또는 `right`을 넣어, 이미지를 텍스트와 어울리게 할 수 있다.
 
-<img align='right' width='150' height='100' src='https://user-images.githubusercontent.com/78655692/144441367-4855a172-e479-411d-9ec9-8a258ed26a51.png'>
+<img align='right' width='150' height='100' src='/assets/images/legacy/a49b267358.webp'>
 
 매트릭스 시리즈의 네 번째 작품. 매트릭스 트릴로지의 최종편이었던 3편 레볼루션이 2003년 개봉된 이후 무려 18년 만에 돌아오는 키아누 리브스 주연의 매트릭스 신작이다.2019년 8월 20일, 워너 브라더스가 CNN을 통해 공개한 제작 계획에 따르면, 이전까지 시리즈의 감독을 맡았던 워쇼스키 자매중 언니 라나 워쇼스키가 각본과 연출 그리고 제작을 맡았으며, 이 시리즈의 주인공을 맡은 키아누 리브스와 캐리앤 모스의 출연이 확정되었다. 2019년 12월 12일, 워너 브라더스가 개봉일을 2021년 5월 21일로 정식 발표했다. 제작발표 이후 워낙 매트릭스 시리즈의 인기와 명성이 높다보니, 2021년 최고의 기대작 중 하나로 손꼽히고 있다.
 
 ```html
-<img align='right' width='150' height='100' src='https://user-images.githubusercontent.com/78655692/144441367-4855a172-e479-411d-9ec9-8a258ed26a51.png'>
+<img align='right' width='150' height='100' src='/assets/images/legacy/a49b267358.webp'>
 
 매트릭스 시리즈의 네 번째 작품. 매트릭스 트릴로지의 최종편이었던 3편 레볼루션이 2003년 개봉된 이후 무려 18년 만에 돌아오는 키아누 리브스 주연의 매트릭스 신작이다.2019년 8월 20일, 워너 브라더스가 CNN을 통해 공개한 제작 계획에 따르면, 이전까지 시리즈의 감독을 맡았던 워쇼스키 자매중 언니 라나 워쇼스키가 각본과 연출 그리고 제작을 맡았으며, 이 시리즈의 주인공을 맡은 키아누 리브스와 캐리앤 모스의 출연이 확정되었다. 2019년 12월 12일, 워너 브라더스가 개봉일을 2021년 5월 21일로 정식 발표했다. 제작발표 이후 워낙 매트릭스 시리즈의 인기와 명성이 높다보니, 2021년 최고의 기대작 중 하나로 손꼽히고 있다.
 ```

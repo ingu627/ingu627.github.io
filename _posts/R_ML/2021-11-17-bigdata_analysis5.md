@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "빅데이터분석기사 실기 작업형(5) - 의사결정나무부터 나이브 정리까지"
-excerpt: "본 글은 빅데이터분석기사 실기 작업형에 대비하여 요약 및 실습한 것을 작성한 글입니다. 기출문제의 데이터는 https://github.com/ingu627/BigDataAnalysis에 데이터 셋을 남겨놨습니다."
+excerpt: "본 글은 빅데이터분석기사 실기 작업형에 대비하여 요약 및 실습한 것을 작성한 글입니다. 기출문제의 데이터는 https://github.com/ingu627/BigDataAnalysis에 데이터 셋을 남겨놨습니다. — 의사결정나무"
 categories: R_ML
 tags : [R, adsp, 빅데이터 분석기사, 실기, 작업형, 필답형, 자격증, dataq, 정리, pdf, 기출문제, 정리본, 후기, 설명, 2회, 3회]
 toc: true
@@ -11,8 +11,7 @@ sidebar_main: false
 last_modified_at: 2026-10-11
 ---
 
-<img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/148633895-2be87d4e-7edb-4391-b583-eb2888b19bbb.png
-'>
+<img align='right' width='200' height='200' src='/assets/images/legacy/664a3c1e2f.webp'>
 본 글은 빅데이터분석기사 실기 작업형에 대비하여 요약 및 실습한 것을 작성한 글입니다. 기출문제의 데이터 출처는 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis){: target="_blank"}에 데이터 셋을 남겨놨습니다. 또한 해당 전체 코드는 `/concept/R_basic_to_pro_5.R` 파일에 담겨져 있습니다.
 
 2021.12.31 : 제 3회 빅데이터 분석기사 실기를 합격했습니다. [빅데이터 분석기사(R)](https://ingu627.github.io/categories/R_ML) 시리즈를 보시고 도움이 되길 바랍니다.
@@ -97,7 +96,7 @@ plot(md, compress=TRUE, margin=0.5)
 text(md, cex=1)
 ```
 
-![image](https://user-images.githubusercontent.com/78655692/143397783-49ec836f-fb6a-4f29-b8b1-1d006d71be38.png)
+![image](/assets/images/legacy/b699e4dceb.webp)
 
 의사결정나무 시각화에는 `rpart.plot` 패키지[^2]의 `prp()` 함수를 사용한다.
 
@@ -106,7 +105,7 @@ library(rpart.plot)
 prp(md, type=2, extra=2)
 ```
 
-![image](https://user-images.githubusercontent.com/78655692/143397700-37aa3443-8b7d-4c6c-a8a4-f1be158459dc.png)
+![image](/assets/images/legacy/982f92600c.webp)
 
 *5. 분석 모형 평가*
 
@@ -345,7 +344,7 @@ plot(
 )
 ```
 
-![image](https://user-images.githubusercontent.com/78655692/142248144-f137abaa-4b5c-4b74-a579-5d590ec8608a.png)
+![image](/assets/images/legacy/7fe3554da2.webp)
 
 
 ### 4. 분류 정확도 최적화

@@ -12,8 +12,8 @@ last_modified_at: 2026-10-09
 2. 해당 폴더에 마우스 커서를 대고 `shift + 오른쪽버튼`을 누릅니다. 
 3. `여기에 PowerShell 창 열기`를 클릭합니다.
 
-![image](https://user-images.githubusercontent.com/78655692/140633417-ec054b58-d64f-4a06-b77a-a1d062be3146.png)
+![image](/assets/images/legacy/74890b3a94.webp)
 
 4. `jupyter nbconvert --to markdown [변환할 노트북 파일명].ipynb` 를 치면 md파일이 새롭게 생성됩니다.
 
-![image](https://user-images.githubusercontent.com/78655692/140633456-ffe28a87-e1c9-4462-83ac-b048324a293f.png)
+![image](/assets/images/legacy/7abd776d19.webp)

@@ -12,8 +12,7 @@ sidebar_main: false
 last_modified_at: 2026-10-09
 ---
 
-<img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/147719090-5f0942f1-1647-44ad-8d72-f11e3fe400d7.png
-'>
+<img align='right' width='200' height='200' src='/assets/images/legacy/14cf7d5543.webp'>
 본 글은 Distributed Systems 책의 내용을 개인 공부 목적을 위한 요약 및 정리한 내용입니다. 오타나 오류는 알려주시길 바라며, 도움이 되길 바랍니다. **2022.02.02 Update** **2023.04.25 Update**
 
 **글을 읽으면서 스스로에게 물어보기**
@@ -77,7 +76,7 @@ last_modified_at: 2026-10-09
 - 프로그램 간 협력은 **IPC (프로세스 간 통신; interprocess communication)** 메커니즘에 의해 실행된다.
 - IPC 메커니즘의 주요 결함은 통신이 상대적으로 광범위한 컨텍스트 스위칭을 필요로 한다는 것이다.
 
-![image](https://user-images.githubusercontent.com/78655692/150777100-1e51ec70-97d1-4cf5-bc68-6446a407956f.png)
+![image](/assets/images/legacy/7531083122.webp)
 
 
 - 왜냐하면 IPC는 커널 중재를 필요로 하기 때문이다, 프로세스는 일반적으로 첫번째로 유저 모드에서 커널 모드로 바뀌어 질 것이다.
@@ -131,14 +130,14 @@ last_modified_at: 2026-10-09
 - 한 스레드(=**dispatcher**)는 파일 동작을 위해 들어오는 요청을 읽는다.
   - cf. **인터럽트 (interrupt)** : 어떤 장치가 다른 장치의 일을 잠시 중단시키고 자신의 상태 변화를 알려주는 것
 
-<img src='https://user-images.githubusercontent.com/78655692/151277316-e29cf852-df78-4783-831a-722e45ad6599.png' width=400> [^6]
+<img src='/assets/images/legacy/a217dcc9af.webp' width=400> [^6]
 
 
 - 요청을 검수하면, 서버는 worker thread를 고르고, 이것에게 요청을 처리한다.
 - 워커는 로컬 파일 시스템에 있는 블록 읽기를 수행함으로써 진행되고, 이는 스레드가 데이터가 디스크로부터 불러와야 중단된다.
 - 스레드가 중단되면, 다른 스레드를 실행시킨다.
 
-![image](https://user-images.githubusercontent.com/78655692/151277468-3e64f629-3f5b-4067-b660-bea52f7e73c1.png)
+![image](/assets/images/legacy/9037af0d53.webp)
 
 
 - 파일 서버를 단일 스레드로 동작한다고 본다면?
@@ -148,7 +147,7 @@ last_modified_at: 2026-10-09
   - 시간 당 처리할 수 있는 요청 수가 훨씬 적다.  
   - 따라서, 스레드는 상당한 성능을 얻지만 각 스레드는 순차적으로 프로그램된다.
  
-![image](https://user-images.githubusercontent.com/78655692/151281598-e70c7c31-0a39-4335-b7bc-6a9e73589467.png)
+![image](/assets/images/legacy/9e3fe2fce1.webp)
 
 - **parallelism** $\approx$ **performance**
 - **blocking system** $\approx$ **programming** 
@@ -170,7 +169,7 @@ last_modified_at: 2026-10-09
 - 모든 분산 컴퓨터 시스템은 프로그래밍 인터페이스를 높은 수준의 인터페이스에 제공한다.
 - **가상화 (virtualization)**는 다른 시스템의 행동을 흉내내기 위해 기존 인터페이스를 확장하거나 대체를 처리한다. 
 
-![image](https://user-images.githubusercontent.com/78655692/151499349-f69ad3e8-6534-4402-9f0d-2217f2ca226f.png)
+![image](/assets/images/legacy/c0046058df.webp)
 
 
 ### Virtualization nad distributed systems

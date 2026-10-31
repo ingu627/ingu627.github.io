@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "빅데이터분석기사 실기 작업형(4) - PCA부터 로지스틱까지"
-excerpt: "본 글은 빅데이터분석기사 실기 작업형에 대비하여 요약 및 실습한 것을 작성한 글입니다. 기출문제의 데이터는 https://github.com/ingu627/BigDataAnalysis에 데이터 셋을 남겨놨습니다."
+excerpt: "본 글은 빅데이터분석기사 실기 작업형에 대비하여 요약 및 실습한 것을 작성한 글입니다. 기출문제의 데이터는 https://github.com/ingu627/BigDataAnalysis에 데이터 셋을 남겨놨습니다. — 분석 모형 구축"
 categories: R_ML
 tags : [R, adsp, 빅데이터 분석기사, 실기, 작업형, 필답형, 자격증, dataq, 정리, pdf, 기출문제, 정리본, 후기, 설명, 2회, 3회]
 toc: true
@@ -11,8 +11,7 @@ sidebar_main: false
 last_modified_at: 2026-10-11
 ---
 
-<img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/148633895-2be87d4e-7edb-4391-b583-eb2888b19bbb.png
-'>
+<img align='right' width='200' height='200' src='/assets/images/legacy/664a3c1e2f.webp'>
 본 글은 빅데이터분석기사 실기 작업형에 대비하여 요약 및 실습한 것을 작성한 글입니다. 기출문제의 데이터는 [https://github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis){: target="_blank"}에 데이터 셋을 남겨놨습니다. 또한 해당 전체 코드는 `/concept/R_basic_to_pro_4.R` 파일에 담겨져 있습니다.
 
 2021.12.31 : 제 3회 빅데이터 분석기사 실기를 합격했다. [빅데이터 분석기사(R)](https://ingu627.github.io/categories/R_ML) 시리즈가 학습에 도움이 되길 바란다.
@@ -32,7 +31,7 @@ last_modified_at: 2026-10-11
     - **누적 기여율**이 85% 이상인 지점까지를 주성분의 수로 결정
   - `스크리 산점도` : x축에 주성분, y축에 각 주성분의 분산을 표현한 그래프
 
-![image](https://user-images.githubusercontent.com/78655692/142022724-55e0cc93-c775-4e7d-bd3a-8674d68404df.png)
+![image](/assets/images/legacy/a18b99e4c1.webp)
 
 - `princomp(x, cor, scores, ...)` : 주성분 분석 함수 
 
@@ -60,7 +59,7 @@ summary(iris_pca)
 plot(iris_pca, type='l', main='iris 스크리 산점도')
 ```
 
-![image](https://user-images.githubusercontent.com/78655692/142031927-8b91552a-e765-4c35-923b-1d549c3c241a.png)
+![image](/assets/images/legacy/cc27aed86e.webp)
 
 - `loadings` : 주성분 적재 값 분석
 
@@ -100,7 +99,7 @@ iris_pca$scores
 biplot(iris_pca, scale=0, main='iris biplot')
 ```
 
-![image](https://user-images.githubusercontent.com/78655692/142038073-e09a6d15-39aa-4c35-8b49-d5ad0c646976.png)
+![image](/assets/images/legacy/96ec24505d.webp)
 
 ## 요인 분석
 
@@ -471,7 +470,7 @@ summary(second_model)
 
 ## default 데이터셋 
 
-![image](https://user-images.githubusercontent.com/78655692/142223206-8afe2717-ad95-46ea-9c6e-dd235c904f46.png)
+![image](/assets/images/legacy/6e14c47677.webp)
 
 ### 1. 데이터 탐색
 

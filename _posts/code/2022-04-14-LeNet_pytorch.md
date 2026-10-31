@@ -11,7 +11,7 @@ sidebar_main: false
 last_modified_at: 2026-10-09
 ---
 
-<img align='right' width='400' src='https://user-images.githubusercontent.com/78655692/163406315-98f4f545-6775-432e-90f1-6c15222f4e79.png'>
+<img align='right' width='400' src='/assets/images/legacy/a6601b5cee.webp'>
 본 글은 Pytorch 기반 LeNet 직접 구현하여 CIFAR10 학습해보는 내용입니다. 하나하나 자세히 분해해봅시다.
 
 - 코드 : [udemy - PyTorch for Deep Learning and Computer Vision](https://www.udemy.com/course/pytorch-for-deep-learning-and-computer-vision/)
@@ -21,12 +21,12 @@ last_modified_at: 2026-10-09
 
 ## Introduction
 
-![image](https://user-images.githubusercontent.com/78655692/163407463-5cb5155d-28b4-47ef-9ba2-3088c911e07b.png) <br>이미지출처[^1]
+![image](/assets/images/legacy/02f9ff84e8.webp) <br>이미지출처[^1]
 
 - **LeNet-5**은 input, 3개의 convolution layer, 2개의 subsampling layer, 1개의 fully-connected layer, output 으로 되어있다.
 
 
-![image](https://user-images.githubusercontent.com/78655692/163408187-36ca6276-2ae9-4a9a-8b3b-d8b99e3ae626.png) <br>이미지출처[^2]
+![image](/assets/images/legacy/2db3c9609f.webp) <br>이미지출처[^2]
 
 - **CIFAR10 Dataset**은 10개 클래스 범주의 60000x32x32 컬러 이미지로 구성되며, 클래스당 6000개의 이미지로 구성되어 있다.
   - 50000개의 training image와 10000개의 test image가 있다.
@@ -157,7 +157,7 @@ for idx in np.arange(20):
 # 결과
 ```
 
-![image](https://user-images.githubusercontent.com/78655692/163418585-c81b38b5-3110-4870-9da2-7a9e92afbac3.png)
+![image](/assets/images/legacy/ccac364b93.webp)
 
 
 
@@ -196,7 +196,7 @@ model
 # 결과
 ```
 
-![image](https://user-images.githubusercontent.com/78655692/163420040-41138789-5766-4682-b1b0-c02d29247b87.png)
+![image](/assets/images/legacy/c9a7a32e8c.webp)
 
 
 ### 손실 및 옵티마이저 정의
@@ -285,7 +285,7 @@ plt.plot(val_running_loss_history, label='validation loss')
 plt.legend()
 ```
 
-![output](https://user-images.githubusercontent.com/78655692/163423106-6acfe32f-db77-4296-9215-8a0429d43e0c.png)
+![output](/assets/images/legacy/d1e8049d89.webp)
 
 ```python
 plt.plot(running_corrects_history, label="training_acc")
@@ -293,7 +293,7 @@ plt.plot(val_running_corrects_history, label="validation_acc")
 plt.legend()
 ```
 
-![output](https://user-images.githubusercontent.com/78655692/163427484-db373719-0c50-4ced-87cd-eeeee78f8739.png)
+![output](/assets/images/legacy/34698c539b.webp)
 
 
 

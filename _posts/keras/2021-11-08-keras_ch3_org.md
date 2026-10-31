@@ -11,8 +11,7 @@ sidebar_main: false
 last_modified_at: 2026-10-10
 ---
 
-<img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/147629300-4d7acc5e-225a-454a-92cd-4da82f6828f6.png
-'>
+<img align='right' width='200' height='200' src='/assets/images/legacy/be0ceae23f.webp'>
 본 글은 [케라스 창시자에게 배우는 딥러닝] - (박해선 옮김) 책을 개인공부하기 위해 요약, 정리한 내용입니다. 전체 코드는 [https://github.com/ingu627/deep-learning-with-python-notebooks](https://github.com/ingu627/deep-learning-with-python-notebooks)에 기재했습니다.(원본 코드 fork) 뿐만 아니라 책에서 설명이 부족하거나 이해가 안 되는 것들은 외부 자료들을 토대로 메꿔 놓았습니다. 즉, 딥러닝은 이걸로 끝을 내보는 겁니다. 오타나 오류는 알려주시길 바라며, 도움이 되길 바랍니다.
 
 - 이 글에서 다루는 것
@@ -32,7 +31,7 @@ last_modified_at: 2026-10-10
   - 학습 진행 방식을 결정하는 옵티마이저
 
 
-<img src='https://user-images.githubusercontent.com/78655692/148705082-1a23b111-b335-4cff-afbc-651609bd75c2.png' width=450>
+<img src='/assets/images/legacy/18607bdd1e.webp' width=450>
 
 
 ## 3_1_1. 층: 딥러닝의 구성 단위
@@ -493,7 +492,7 @@ plt.legend()
 plt.show()
 ```
 
-![image](https://user-images.githubusercontent.com/78655692/143211008-513255d4-a096-46d3-a9c8-dff2b6919ab8.png)
+![image](/assets/images/legacy/e1e7145be1.webp)
 
 
 ## 3_4_5. 훈련된 모델로 새로운 데이터에 대해 예측하기
@@ -672,7 +671,7 @@ print(np.sum(predictions[0])) # 0.99999994
 print(np.argmax(predictions[0])) # 3
 ```
 
-![output](https://user-images.githubusercontent.com/78655692/151475436-296d4539-3f6f-43f2-a556-c9df0803baf5.png)
+![output](/assets/images/legacy/65e4285971.webp)
 
 
 ### 레이블과 손실을 다루는 다른 방법
@@ -775,7 +774,7 @@ def build_model():
 - **K-겹 교차 검증**(K-fold cross-validation) : 데이터를 K개의 분할(즉 폴드(fold))로 나누고(일반적으로 K=4, K=5), K개의 모델을 각각 만들어 K-1개의 분할에서 훈련하고 나머지 분할에서 평가하는 방법
   - 모델의 검증 점수는 K개의 검증 점수 평균이 된다.
 
-![image](https://user-images.githubusercontent.com/78655692/140815069-1a9c61c4-4d17-4b46-96e2-34e3ff0fd70a.png)
+![image](/assets/images/legacy/f36d6afe34.webp)
 
 ```python
 # K-겹 검증하기 

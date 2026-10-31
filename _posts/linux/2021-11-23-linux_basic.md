@@ -14,7 +14,7 @@ last_modified_at: 2026-10-09
 sidebar_main: false
 ---
 
-<img align='right' width='200' height='200' src='https://user-images.githubusercontent.com/78655692/149885926-86d336ea-fe65-4bb1-96f8-c556918fbb5a.png' alt='Linux 로고'>
+<img align='right' width='200' height='200' src='/assets/images/legacy/2e263f2faa.webp' alt='Linux 로고'>
 
 본 글은 "생활 코딩 - Linux" 강의 내용을 요약 및 정리한 글입니다. 리눅스의 기초를 잡기 위해 개인공부 목적으로 정리했으며, 자세한 사항은 [생활코딩 - Linux](https://www.inflearn.com/course/%EC%83%9D%ED%99%9C%EC%BD%94%EB%94%A9-%EB%A6%AC%EB%88%85%EC%8A%A4-%EA%B0%95%EC%A2%8C#curriculum)로 참고하시길 바랍니다.
 
@@ -45,7 +45,7 @@ sidebar_main: false
 - `-p` : 필요하면 부모 디렉토리를 생성한다. (`--parents`)
   - 예시 : `mkdir -p dir1/dir2/dir3`
 
-![image](https://user-images.githubusercontent.com/78655692/142976212-add56922-2b1d-44e5-aff8-9f9d8d9eccb1.png)
+![image](/assets/images/legacy/34a24edcad.webp)
 
 
 ### touch
@@ -106,7 +106,7 @@ sidebar_main: false
 - 리눅스는 다중 사용자 컴퓨터가 특징 (하나의 운영체제를 여러 사람이 썼음) -> 권한 부여를 나눔
 - `super user` 또는 `root user`
 
-![image](https://user-images.githubusercontent.com/78655692/142977414-1280c4e0-91b3-46f2-b80d-0d306f7b416b.png)
+![image](/assets/images/legacy/b030204d41.webp)
 
 
 ### nano 
@@ -114,7 +114,7 @@ sidebar_main: false
 - `파일` : 정보를 저장하는 가장 기본적인 어떤 수단, 저장소이다.
 - `nano` : 파일 편집기
 
-![image](https://user-images.githubusercontent.com/78655692/142979879-ec660bd2-061a-402c-9c6f-9d0f6eae08d7.png)
+![image](/assets/images/legacy/8f41a11318.webp)
 
 - `^` = Ctrl
 - `^O` : write out (저장하고 나가기)
@@ -154,20 +154,20 @@ sidebar_main: false
 - `apt` 또는 `yum`이 있다.
 - `sudo apt-get update;` 를 하면 apt 패키지에 접속해서 최신 목록을 다운 받는다
 
-![image](https://user-images.githubusercontent.com/78655692/142982186-84ae9dcf-91d4-4bf8-8460-c803c187749d.png)
+![image](/assets/images/legacy/42995870b6.webp)
 
 - `sudo apt-cache search htop` : htop과 관련된 목록을 보여준다. 
   - `top` : 작업관리자와 비슷한 개념 
   - `q`를 누르면 화면에서 빠져나간다.
 
-![image](https://user-images.githubusercontent.com/78655692/142982254-5a26a1cf-cb9f-4012-a30f-1cafe512bd70.png)
+![image](/assets/images/legacy/d9a3efdf40.webp)
 
 - `clear` : 화면을 깨끗하게 지움
 - `sudo apt-get install htop` : htop 설치
 
 - `htop` 실행 (또는 `sudo htop`)
 
-![image](https://user-images.githubusercontent.com/78655692/142982513-8dd236d0-6729-47cb-b928-34d910d649e4.png)
+![image](/assets/images/legacy/5d23453440.webp)
 
 - `sudo apt-get upgrade htop` : htop 업그레이드 실행
 - `sudo apt-get remove htop` : htop 제거
@@ -177,16 +177,16 @@ sidebar_main: false
 
 - 파일을 다운로드받는 방법 (URL을 통해서)
 
-![image](https://user-images.githubusercontent.com/78655692/142983238-ee773aef-9c7b-41e8-b8dc-c3008849d917.png)
+![image](/assets/images/legacy/4e0ed085a3.webp)
 
 - `wget -O [바꿀이미지명] [이미지링크주소]` 
 
-![image](https://user-images.githubusercontent.com/78655692/142983505-5ae35d6a-1df0-44ce-a29e-08fcb59aa189.png)
+![image](/assets/images/legacy/376cc383dc.webp)
 
 
 ## IO Redirection
 
-![image](https://user-images.githubusercontent.com/78655692/143034784-7a084841-cba7-479c-8661-585952a3f6e1.png)
+![image](/assets/images/legacy/c98c5592b1.webp)
 
 
 ### output 
@@ -224,7 +224,7 @@ sidebar_main: false
 
 ## 쉘과 쉘스크립트
 
-![image](https://user-images.githubusercontent.com/78655692/143039373-251eab2f-ebe1-46d7-9890-c24f1fad54dc.png)
+![image](/assets/images/legacy/581bae8bc7.webp)
 
 - `하드웨어` : 컴퓨터의 기계적인 부분들
 - `kernel` : 물리적인 기계를 직접적으로 제어하는 그 운영체제에서 가장 중심이 되는 그 코어이다. (핵심, 알갱이, 코어)
@@ -239,7 +239,7 @@ sidebar_main: false
 
 - `sudo apt-get install zsh` : zsh 설치
 
-![image](https://user-images.githubusercontent.com/78655692/143040003-0eebe7b2-dc0b-4a56-b601-aa6a49bb6011.png)
+![image](/assets/images/legacy/96c6b5f07a.webp)
 
 - `echo` : 뒤에 들어온 문자를 화면에 출력하는 명령어
 - `echo $0` : bash가 뜬다면 이는 shell이라는 카테고리에 속하는 구체적인 제품 중에 하나인 bash라고 하는 프로그램을 쓰고 있음을 의미.
@@ -253,9 +253,9 @@ sidebar_main: false
 - 그 명령의 스크립트를 어딘가에다가 적어놓고 나중에 재사용할 수 있다면 효율적이다.
 - **쉘 스크립트** : 셸에서 실행되는 스크립트 어떤 셸 명령어들이 실행되어야 될 순서를, 실행되어야 될 방법을 각본을 짜서 저장해 놓은 파일
 
-![image](https://user-images.githubusercontent.com/78655692/143042211-c8e955db-663f-48a4-9f98-a11f90cf9b08.png)
+![image](/assets/images/legacy/3e59b09509.webp)
 
-![image](https://user-images.githubusercontent.com/78655692/143043518-5b595df9-789b-4358-a332-e62a6bfc09f4.png)
+![image](/assets/images/legacy/a4ee91a1ba.webp)
 
 - `nano backup`을 누른 뒤 편집기 실행
 - `#!/bin/bash` : 프로그램을 실행시켰을 때 운영 체제는 이 첫 번째 줄에 있는 #! 기호를 보고 그 뒤에 적혀 있는 /bin/bash를 보고 bin 밑에 있는 bash라고 하는 프로그램을 통해서 해석되어야 한다.
@@ -265,7 +265,7 @@ sidebar_main: false
 - `cp *.log bak` : .log 모든 파일을 bak에 복사한다.
 - 그 후 `Ctrl + X`를 누르고 엔터를 누르면 화면 밖으로 나와짐
 
-![image](https://user-images.githubusercontent.com/78655692/143044428-82f4a49d-2e40-4617-9e07-15943d805d6e.png)
+![image](/assets/images/legacy/59a3a90c2a.webp)
 
 - `./backup` 하면 Permission denied가 뜨는데 컴퓨터에게 backup이 실행가능하다고 알려줘야 함 
 - `chmod +x backup` : backup 파일에 x, 실행 가능한 모드를 추가하여 바꾼다.
@@ -317,7 +317,7 @@ sidebar_main: false
 - `cd ~`를 하면 홈 디렉토리로 한방에 이동할 수 있다.
 - 예를 들어, 사용자 이름이 bob인 경우 /home/bob에 홈 폴더가 있다. 이 홈 폴더에는 사용자의 데이터 파일과 사용자별 구성 파일이 들어 있다. 각 사용자는 자신의 홈 폴더에 대한 쓰기 권한만 가지며 시스템의 다른 파일을 수정하려면 높은 권한(루트 사용자가 됨)을 얻어야 한다.
 
-![image](https://user-images.githubusercontent.com/78655692/144047937-4bfdea67-7903-4f77-a6da-891553d1859a.png)
+![image](/assets/images/legacy/24aa3b3829.webp)
 
 
 ### `/var`
@@ -374,7 +374,7 @@ sidebar_main: false
 
 - 어디에 있냐
 
-![image](https://user-images.githubusercontent.com/78655692/144065331-604a7b07-1e70-419c-ac09-0cf742c5ccb1.png)
+![image](/assets/images/legacy/d4c9886d15.webp)
 
 - `ls: /usr/bin/ls` : ls의 위치
 - `/usr/share/man/man1/ls.1.gz` : `man ls` 했을 때의 사용설명서 내용
@@ -386,7 +386,7 @@ sidebar_main: false
 
 ## 컴퓨터의 구조 
 
-![image](https://user-images.githubusercontent.com/78655692/144157022-85550156-7635-4c3d-89bd-282bc49153d6.png)
+![image](/assets/images/legacy/a9ee1ae1e9.webp)
 
 - 프로그램은 storage에 깔려 있다. 깔려 있는 프로그램을 실제로 사용할 때는 그 프로그램을 읽어서 memory에 적재시킨다. 실행 안하는 것은 memory에 올라오지 않는다. 올라온 것을 cpu가 거기에 적혀있는 대로 읽어서 로딩한다.
 
@@ -406,22 +406,22 @@ sidebar_main: false
 
 - `ps` : process list를 보여주는 명령어
 
-![image](https://user-images.githubusercontent.com/78655692/144150859-546c743b-9f12-4708-a80a-23ff561b0594.png)
+![image](/assets/images/legacy/bb6ce974d9.webp)
 
 - `ps aux` : process background를 보여주는 명령어
 
-![image](https://user-images.githubusercontent.com/78655692/144150938-256cea14-ca77-46bf-ad61-2f580813a327.png)
+![image](/assets/images/legacy/a3e7b9e11d.webp)
 
 - `ps aux | grep apache` : 이 중 apache만을 보여줌
 
-![image](https://user-images.githubusercontent.com/78655692/144151213-741762fd-0c37-4b8a-9004-173b9d3eb3f5.png)
+![image](/assets/images/legacy/bbdef70546.webp)
 
 
 ### top
 
 - `sudo top` 입력
 
-![image](https://user-images.githubusercontent.com/78655692/144151320-326df3a7-69e2-4cfb-b4b9-08e8dc9a4043.png)
+![image](/assets/images/legacy/e9af57e8e3.webp)
 
 
 ### htop
@@ -430,7 +430,7 @@ sidebar_main: false
 - 화면 상단에 8개의 숫자가 있는데 이는 CPU 숫자를 의미.
 - Load average는 부하를 의미
 
-![image](https://user-images.githubusercontent.com/78655692/144151398-18c516f4-83a2-48d5-a282-fbfb8666c2a8.png)
+![image](/assets/images/legacy/ca63cd5c1c.webp)
 
 
 ## 백그라운드
@@ -440,23 +440,23 @@ sidebar_main: false
   - `Ctrl + Z`는 잠깐 나갔다 오는 것
   - `fg`로 치면 방금 실행한 것으로 감
 
-![image](https://user-images.githubusercontent.com/78655692/144155141-681f9798-f9b8-427f-a64e-1908eaace69e.png)
+![image](/assets/images/legacy/09d01454ef.webp)
 
 - `jobs` : 현재 진행중인 프로그램 알려줌
 - `+`는 fg를 했을 때 되돌아가는 프로그램
 - `fg %숫자` : 그 프로그램으로 돌아감
 
-![image](https://user-images.githubusercontent.com/78655692/144155319-c600bd7d-23bb-4fcd-aca3-2acf4ffe1018.png)
+![image](/assets/images/legacy/1f6b8f0118.webp)
 
 - `kill %숫자` : 그 프로그램 종료
 - `kill -9 %숫자` : 좀 더 강력하게 프로그램 종료
 
-![image](https://user-images.githubusercontent.com/78655692/144155681-9caf1a43-857f-4ac3-907b-a73f0e289d91.png)
+![image](/assets/images/legacy/e7627431aa.webp)
 
 
 ## 데몬 (daemon)
 
-![image](https://user-images.githubusercontent.com/78655692/144158753-c14dbae6-1614-4ea6-81c0-a2813fed1703.png)
+![image](/assets/images/legacy/8f4ecfb6fd.webp)
 
 - **데몬**의 특성은 항상 실행되고 있다는 것을 의미
 - ls, rm, mkdir은 필요할 때만 켰다 킨다. 그러나 server는 데몬을 의미.
@@ -468,26 +468,26 @@ sidebar_main: false
   - `start`: 실행
   - `stop` : 중지  
 
-![image](https://user-images.githubusercontent.com/78655692/144159075-0232a11d-ba2a-424a-aed6-d41a478a8a35.png)
+![image](/assets/images/legacy/1888b187e9.webp)
 
 - `sudo apt-get install apache2` 하면 아파치라는 웹서버를 설치한다.
   - 에러가 나면 `sudo apt-get update` 해준다.
   - `/etc/init.d/`에는 데몬 프로그램들이 있는 곳이다.
 
-![image](https://user-images.githubusercontent.com/78655692/144159849-f1cf8143-66bf-4b8c-9468-533131e4476a.png)
+![image](/assets/images/legacy/77d9d4ef13.webp)
 
 
 - `sudo service apache2 start`를 입력하면 apache2 웹서버가 시작된다.
 
-![image](https://user-images.githubusercontent.com/78655692/144164335-5b233049-9a93-4405-8a10-43d34890bd06.png)
+![image](/assets/images/legacy/0947f140fc.webp)
 
 - `ps aux | grep apache2`
 
-![image](https://user-images.githubusercontent.com/78655692/144164387-1f29c04f-a82a-4db8-8646-f3de83f75db7.png)
+![image](/assets/images/legacy/940bc051a9.webp)
 
 - `sudo service apache2 stop` : 서버 멈춤
 
-![image](https://user-images.githubusercontent.com/78655692/144165110-45e9e9c4-4d75-4eca-b6df-0f8bf52c60f5.png)
+![image](/assets/images/legacy/38f2b76496.webp)
 
 
 ## cron
@@ -496,9 +496,9 @@ sidebar_main: false
 - `crontab -e` : 하고자 하는 일을 정의할 수 있다.
   - 정기적으로 실행하고 싶을 때 여기에 적는다.
 
-![image](https://user-images.githubusercontent.com/78655692/144168386-d6402ea2-ded9-427a-a04b-023a9cf643ce.png)
+![image](/assets/images/legacy/0686e449f2.webp)
 
-![image](https://user-images.githubusercontent.com/78655692/144168863-9001e6c0-c0c2-4626-8d9d-a3f7ae85deff.png)
+![image](/assets/images/legacy/64586d9f61.webp)
 
 - `m` : 실행되는 분의 주기
   - `*/1` : 1분마다
@@ -510,15 +510,15 @@ sidebar_main: false
 
 - `date` : 현재 시간을 알려줌 
 
-![image](https://user-images.githubusercontent.com/78655692/144169018-066539b4-54d6-4a5a-b456-f5fdc37de1c2.png)
+![image](/assets/images/legacy/f184e823f6.webp)
 
-![image](https://user-images.githubusercontent.com/78655692/144169112-ef157412-2f44-4f42-8be6-b9e4c8630454.png)
+![image](/assets/images/legacy/42ebf2e573.webp)
 
 - `>>` : 실행할 때마다 date가 date.log 끝에 추가
 
 - `crontab -l` : 우리가 처리한 내용을 화면에 출력
 
-![image](https://user-images.githubusercontent.com/78655692/144169479-c90d36ce-6b76-4706-b4bf-4d693f331d32.png)
+![image](/assets/images/legacy/9297d8788a.webp)
 
 - `tail -f date.log` : tail은 끝부분을 보여주는데 -f를 하여 감시하고 있다가 date.log의 끝부분이 나타나면 출력해줌.
 - `Ctrl + C` : 빠져나감
@@ -529,29 +529,29 @@ sidebar_main: false
 
 ## 쉘을 시작할 때 실행
 
-![image](https://user-images.githubusercontent.com/78655692/144170515-a6601ade-b645-4691-8e28-1ca9e61cf91e.png)
+![image](/assets/images/legacy/a052f25cdc.webp)
 
 - `alias` : 별명
 - `alias l='ls -al'`하고 l만 누르면 `ls -al`이 실행된다.
 
-![image](https://user-images.githubusercontent.com/78655692/144170632-0e80929d-ffe3-4947-aaa7-066d5d04882a.png)
+![image](/assets/images/legacy/9baee0be96.webp)
 
 - `cd ~`로 간 다음 `nano .bashrc`로 하면 쉘에 접속할 때 쉘 프로그램이 .bashrc 안에 있는 명령어를 수행한다.
 
-![image](https://user-images.githubusercontent.com/78655692/144171147-3c40a89b-569d-46d7-8238-61df64616b8c.png)
+![image](/assets/images/legacy/9e8fcdd184.webp)
 
 - `Ctrl + End`를 누르면 코드 맨 아래로 가는데 여기서 `Hi, bash`를 쳐본다.
 - `exit` : 나가기
 - `bash` : bash 실행
 
-![image](https://user-images.githubusercontent.com/78655692/144171389-10e13ef1-b2ef-49df-b233-7029a7971088.png)
+![image](/assets/images/legacy/97075aae73.webp)
 
 ## 사용자
 
 
 ### 다중사용자
 
-![image](https://user-images.githubusercontent.com/78655692/144179402-e9622ed6-48b1-416c-a9d9-c4cd4d5a33dc.png)
+![image](/assets/images/legacy/8a725df483.webp)
 
 - `id` : identify의 줄임말
   - `uid` : user의 id
@@ -561,7 +561,7 @@ sidebar_main: false
 
 ### 관리자와 일반 사용자
 
-![image](https://user-images.githubusercontent.com/78655692/144180042-9163a4a0-8a06-4685-9822-4579b50b813a.png)
+![image](/assets/images/legacy/9baa58cf18.webp)
 
 - `sudo` : substitute user do의 약자로 다른 사용자의 권한으로 명령을 이행하라의 뜻
 - super(root) user VS user의 차이점
@@ -576,11 +576,11 @@ sidebar_main: false
   - `-u` 는 unlock을 뜻함
   - 초기 비밀번호 설정은 `sudo passwd`를 입력하면 됨
 
-![image](https://user-images.githubusercontent.com/78655692/144181098-21b32489-325c-46f4-b373-3d0a13e2cc01.png)
+![image](/assets/images/legacy/d8f4216ca1.webp)
 
 - `sudo passwd -l root`를 하면 root를 다시 lock 건다는 의미 (l = lock)
 
-![image](https://user-images.githubusercontent.com/78655692/144181369-744e7b02-f2f1-48e6-985f-a675fc77623e.png)
+![image](/assets/images/legacy/03117f7480.webp)
 
 - `~` : 현재 사용자의 홈 디렉토리
 
@@ -589,11 +589,11 @@ sidebar_main: false
 
 - `sudo useradd -m [사용자]` : 사용자 생성
 
-![image](https://user-images.githubusercontent.com/78655692/144181880-499ea1c8-2b27-4d58-85d2-969ce0403795.png)
+![image](/assets/images/legacy/e4a9e17788.webp)
 
 - `su - duru`하면 안 들어가진다. 처음에 비밀번호를 생성해 줘야 한다.
 
-![image](https://user-images.githubusercontent.com/78655692/144182135-88249522-5bff-4ffb-9bb6-72b69e312ee9.png)
+![image](/assets/images/legacy/44e38e7391.webp)
 
 - 이제 이 duru 사용자도 sudo 권한을 주려고 한다.
 - `exit` : 빠져나오기
@@ -606,13 +606,13 @@ sidebar_main: false
   - Read & Write & Execute에 대해 
 - `echo` : 뒤에 오는 문자를 표준 출력해줌. 화면에 print한다.
 
-![image](https://user-images.githubusercontent.com/78655692/144243244-991be862-b7e2-4836-b89d-763d5a2add2d.png)
+![image](/assets/images/legacy/faba46566b.webp)
 
 - `echo 'hi' > perm.txt` : hi라는 명령어를 redirection해서 perm.txt에 추가하여 저장한다.
 
-![image](https://user-images.githubusercontent.com/78655692/144245148-de4c32ba-87ca-45b9-8e8e-ac19f0c226a9.png)
+![image](/assets/images/legacy/397a2749c6.webp)
 
-![KakaoTalk_20211202_113101541](https://user-images.githubusercontent.com/78655692/144346828-4f4fd9d2-8ee6-4481-8b89-8014bc8819cf.jpg)
+![KakaoTalk_20211202_113101541](/assets/images/legacy/c9e8a974dd.webp)
 
 - 파일 유형 종류
   - `d` : 디렉토리
@@ -661,30 +661,30 @@ sidebar_main: false
 |0|	0|	---|	none|
 
 
-![image](https://user-images.githubusercontent.com/78655692/144347253-e2a259e3-c27c-479d-8122-c54dfc016f3e.png)
+![image](/assets/images/legacy/2a552c52d1.webp)
 
 - `chmod o-r perm.txt` : others의 read 권한을 빼주겠다.(-)
 
-![image](https://user-images.githubusercontent.com/78655692/144347493-5ddfd2b4-9d49-4a99-9a18-ecb173a38929.png)
+![image](/assets/images/legacy/f010b63b2b.webp)
 
 - `chmod o+w perm.txt` : others의 write 권한을 주겠다.(+)
 
-![image](https://user-images.githubusercontent.com/78655692/144347641-188c211f-9280-4d11-b240-7a406220c299.png)
+![image](/assets/images/legacy/45ec8e1b25.webp)
 
 - `chmod u-r perm.txt` : user의 read 권한을 빼겠다.(-)
 
-![image](https://user-images.githubusercontent.com/78655692/144356063-9c6f113a-99b5-416b-989c-6eceff76478a.png)
+![image](/assets/images/legacy/01bdc79158.webp)
 
 - `chmod a=rwx perm.txt`를 하면 모든 권한자에게 rwx를 부여한다.
 
 
 ### execute
 
-![image](https://user-images.githubusercontent.com/78655692/144353232-8f62493d-bf60-40cb-96b7-11e19b45ef30.png)
+![image](/assets/images/legacy/7b1b186be1.webp)
 
-![image](https://user-images.githubusercontent.com/78655692/144353574-f0eb952c-8cce-4cd5-9129-95e9dd3ccad2.png)
+![image](/assets/images/legacy/97643d59c7.webp)
 
-![image](https://user-images.githubusercontent.com/78655692/144353679-d3fa8c9b-509f-423d-bfd9-b51383a9de40.png)
+![image](/assets/images/legacy/44bd7c1ca1.webp)
 
 - `chmod u+x hi-machine.sh` : user에게 실행 권한(x)를 준다.
 - `#!/bin/bash` 이 코드가 있다면 운영체제는 `./hi-machine.sh`를 실행시켰을 때 제일 먼저 `hi-machine.sh`이 현재 사용자에게 실행가능한지 본다.
@@ -695,7 +695,7 @@ sidebar_main: false
 
 - group : 파일과 디렉토리를 여러 사용자들이 공동으로 관리할 수 있는 방법
 
-![KakaoTalk_20211202_132405230](https://user-images.githubusercontent.com/78655692/144357487-30227af2-13af-42f2-988b-30704af3cb57.jpg)
+![KakaoTalk_20211202_132405230](/assets/images/legacy/d42b4172a1.webp)
 
 
 ## 인터넷
@@ -705,7 +705,7 @@ sidebar_main: false
 - `DNS`는 이 세상의 모든 domain이 각각 어떤 IP인지 아는 거대한 서버이다.
 - `ip addr`를 치면 현재 자신의 IP를 알려준다. (이 컴퓨터의 실제 부여된 IP)
 
-![image](https://user-images.githubusercontent.com/78655692/144783087-7692d136-4661-45f6-a7a6-922774a9d3b3.png)
+![image](/assets/images/legacy/31bd2247c9.webp)
 
 - `curl ipinfo.io/ip`를 치면 IP를 알려준다. (온라인 입장에서 결과적인 IP가 뭔지 알려준다.)
 

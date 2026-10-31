@@ -33,13 +33,13 @@ import math
 pd.Series([1, 2, 3])
 ```
 
-![image](https://user-images.githubusercontent.com/78655692/140644876-c1b15e61-25bb-4ccb-987d-fd74b08e2772.png)
+![image](/assets/images/legacy/877afd288d.webp)
 
 ```python
 pd.Series(['a', 'b', 'c'])
 ```
 
-![image](https://user-images.githubusercontent.com/78655692/140644899-5a5fa8cc-c761-417a-8a56-ddb33bc04766.png)
+![image](/assets/images/legacy/0bbc603ca4.webp)
 
 ```python
 pd.Series(np.arange(200))
@@ -4661,7 +4661,7 @@ train_data.corr()
 plt.matshow(train_data.corr()) #색깔이 밝을수록 관련이 깊다.
 ```
 
-![pandas_org_120_1](https://user-images.githubusercontent.com/78655692/140646090-e0857119-5493-4285-93ef-1ff71eb985c9.png)
+![pandas_org_120_1](/assets/images/legacy/29137a67f6.webp)
     
 
 

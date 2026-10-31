@@ -21,7 +21,7 @@ RuntimeError: tf.gradients is not supported when eager execution is enabled
 
 아래 스크린샷 참고.
 
-![image](https://user-images.githubusercontent.com/78655692/151295186-5bf84602-eb91-41e9-9670-0838027de230.png)
+![image](/assets/images/legacy/8fbe250382.webp)
 
 ## 해결 방법
 
