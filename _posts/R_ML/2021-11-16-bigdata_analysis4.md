@@ -338,6 +338,7 @@ summary(full_model)
 ### 4. 분석 모형 구축 - 자동화된 변수 선택
 
 - `step()` 함수를 이용하여 AIC를 기준으로 단계적 변수 선택(Stepwise Selection)을 수행한다.[^r-step]
+
 ```R
 first_model = lm(
     Salary ~ AtBat + Hits + Walks + CWalks + Division + PutOuts,
