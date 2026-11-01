@@ -6,12 +6,9 @@ author_profile: true
 sidebar_main: true
 ---
 
-<br>
-<br>
-<br>
-<br>
+# References
 
-![image](https://user-images.githubusercontent.com/78655692/152114672-b4b85063-26af-424d-9ec0-811cb2093cbb.png)
+![image](/assets/images/legacy/3a0636e154.webp)
 
 
 <br>
@@ -31,7 +28,7 @@ sidebar_main: true
 
 ### papers 
 
-[![image](https://user-images.githubusercontent.com/78655692/151177221-59131530-78c7-42fe-ad99-3b03c0b44d69.png)](https://scholar.google.co.kr/schhp?hl=ko){: target="_blank"}
+[![image](/assets/images/legacy/9eff177520.webp)](https://scholar.google.co.kr/schhp?hl=ko){: target="_blank"}
 
 - [scholar.google.com](https://scholar.google.com/){: target="_blank"}
 - [arxiv.org](https://arxiv.org/){: target="_blank"}
@@ -159,11 +156,11 @@ sidebar_main: true
 
 ### Azure certificate
 
-![image](https://user-images.githubusercontent.com/78655692/151176817-90cca8d4-1cbb-4574-9d1d-34ac03bb5f61.png)
+![image](/assets/images/legacy/43e4c60ddd.webp)
 
 <br>
 
-![image](https://user-images.githubusercontent.com/78655692/151177803-67c4cb0e-401b-47d5-8785-0d9808c7cbf9.png)
+![image](/assets/images/legacy/8758272ab2.webp)
 
 <br>
 
