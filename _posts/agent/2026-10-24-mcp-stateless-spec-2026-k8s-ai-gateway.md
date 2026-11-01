@@ -8,14 +8,14 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 date: 2026-10-24
-last_modified_at: 2026-10-31
+last_modified_at: 2026-11-01
 ---
 
-엔터프라이즈 환경에서 **모델 컨텍스트 프로토콜(MCP, Model Context Protocol)**[^1] 서버를 단일 로컬 프로세스가 아닌 수백 개 파드(Pod) 규모의 쿠버네티스(Kubernetes) 클러스터로 운영하기 시작하면, 초기 프로토콜 설계가 가정했던 **유상태 세션(Stateful Session)** 모델이 곧바로 인프라 확장의 병목으로 작용한다. 이전 글에서 다룬 [MCP 코어 아키텍처와 통신 구조](/llm/mcp/)[^2] 및 [엔터프라이즈 바이브 코딩 환경의 MCP 컨텍스트 폭발 제어](/llm/enterprise-vibe-coding-mcp-context-bloat-governance/)[^3]가 클라이언트와 프롬프트 계층의 문제를 짚었다면, 실제 Day-2 프로덕션 운영에서는 로드밸런서 세션 고정(Sticky Session Pinning), JSON-RPC 본문 심층 패킷 검사(DPI, Deep Packet Inspection), 장기 연결 유지 비용이라는 네트워크·게이트웨이 계층의 문제가 전면에 등장한다.
+엔터프라이즈 환경에서는 **모델 컨텍스트 프로토콜(MCP, Model Context Protocol)**[^1] 서버를 수백 개 파드(Pod) 규모로 운영한다. 쿠버네티스(Kubernetes) 클러스터로 확장하는 순간, 초기 설계가 가정한 **유상태 세션(Stateful Session)** 모델이 확장의 병목이 된다. 이전 글에서 다룬 [MCP 코어 아키텍처와 통신 구조](/llm/mcp/)[^2]와 [엔터프라이즈 바이브 코딩 환경의 MCP 컨텍스트 폭발 제어](/llm/enterprise-vibe-coding-mcp-context-bloat-governance/)[^3]는 클라이언트 계층의 문제를 짚었다. 이 글은 그다음 층인 네트워크와 게이트웨이 계층을 다룬다. 여기서는 로드밸런서 세션 고정(Sticky Session Pinning), JSON-RPC 본문 심층 패킷 검사(DPI, Deep Packet Inspection), 장기 연결 유지 비용이 문제가 된다.
 
-이러한 구조적 한계를 해결하기 위해 2026년 5월 21일 릴리스 후보(RC, Release Candidate)로 확정되고 2026년 7월 28일 정식 발표된 **MCP `2026-07-28` Stateless 코어 스펙**은 초기화 핸드셰이크(`initialize`/`initialized`)와 프로토콜 세션 식별자(`Mcp-Session-Id`)를 코어 전송 계층에서 전면 제거했다[^4][^5]. 대신 모든 요청이 HTTP 헤더(`MCP-Protocol-Version`, `Mcp-Method`, `Mcp-Name`)와 본문 메타데이터(`_meta`)만으로 독립 처리되는 **자기완결적(Self-Contained) 무상태 아키텍처**로 전환되었다.
+이 구조적 한계를 해결하기 위해 **MCP `2026-07-28` Stateless 코어 스펙**이 등장했다. 이 스펙은 2026년 5월 21일 릴리스 후보(RC, Release Candidate)로 확정되었고, 2026년 7월 28일 정식 발표되었다[^4][^5]. 핵심은 초기화 핸드셰이크(`initialize`/`initialized`)와 프로토콜 세션 식별자(`Mcp-Session-Id`)를 코어 전송 계층에서 전면 제거한 것이다. 대신 모든 요청이 HTTP 헤더와 본문 메타데이터(`_meta`)만으로 독립 처리된다. 헤더는 `MCP-Protocol-Version`, `Mcp-Method`, `Mcp-Name` 세 가지다. 이렇게 만들어진 구조를 **자기완결적(Self-Contained) 무상태 아키텍처**라고 부른다.
 
-사내 쿠버네티스 클러스터의 MCP 게이트웨이 계층을 `2026-07-28` Stateless 스펙 기반으로 재설계하면서 분석한 주요 스펙 변경점(SEP)과 5대 AI 게이트웨이 솔루션의 아키텍처 트레이드오프, 그리고 결정론적 도구 호출 가드레일 패턴을 정리해 남깁니다.
+이 글은 세 가지를 다룬다. 주요 스펙 변경점(SEP)과 5대 AI 게이트웨이 솔루션의 아키텍처 트레이드오프, 그리고 결정론적 도구 호출 가드레일 패턴이다. 사내 쿠버네티스 클러스터의 MCP 게이트웨이 계층을 `2026-07-28` Stateless 스펙 기반으로 재설계하며 확인한 내용을 남깁니다.
 
 ---
 
@@ -23,31 +23,33 @@ last_modified_at: 2026-10-31
 
 ### 1.1 2024.11 및 2025 스펙의 세션 수명주기와 Mcp-Session-Id 종속성
 
-초기 MCP 사양인 `2024-11-05`(HTTP+SSE 전송)와 후속 `2025-03-26` 및 `2025-06-18`(Streamable HTTP 전송) 스펙은 클라이언트와 서버가 도구를 단 한 번 호출하기 위해서도 반드시 상태 유지형 세션 수명주기를 거치도록 강제했다[^1][^2].
+이 장은 세션 기반 MCP가 쿠버네티스에서 왜 병목이 되는지부터 설명한다. 먼저 2024년과 2025년 스펙이 강제한 세션 수명주기를 본다. 초기 MCP 사양은 `2024-11-05`의 HTTP+SSE 전송이었다. 후속 `2025-03-26`과 `2025-06-18`은 Streamable HTTP 전송을 쓴다. 두 세대 모두 도구를 단 한 번 호출하기 위해서도 상태 유지형 세션 수명주기를 거치도록 강제했다[^1][^2].
 
 ![MCP 아키텍처 개요: AI 애플리케이션과 데이터 소스·도구를 양방향으로 잇는 표준 프로토콜](/assets/images/agent/official-mcp.webp)
 *출처: [What is the Model Context Protocol (MCP)? — Model Context Protocol 공식 문서](https://modelcontextprotocol.io/docs/getting-started/intro), MIT License*
 
-구체적으로 기존 프로토콜에서 도구 실행(`tools/call`) 1회를 완료하기 위한 통신 절차는 다음과 같았다.
+구체적으로 기존 프로토콜에서 도구 실행(`tools/call`) 1회를 완료하려면 네 단계를 거쳐야 했다.
 
 1. **초기화 요청(`initialize`)**: 클라이언트가 프로토콜 버전과 클라이언트 역량(Capabilities)을 담아 `POST /mcp`로 전송한다.
-2. **세션 발급(`Mcp-Session-Id`)**: 서버가 응답 헤더에 고유 세션 식별자인 `Mcp-Session-Id`를 발급하고 인메모리 또는 외부 저장소에 세션 컨텍스트를 생성한다.
-3. **초기화 완료 알림(`notifications/initialized`)**: 클라이언트가 발급받은 `Mcp-Session-Id` 헤더를 첨부하여 핸드셰이크 완료 알림을 전송한다.
-4. **도구 탐색 및 호출(`tools/list`, `tools/call`)**: 이후 모든 JSON-RPC 요청은 동일한 `Mcp-Session-Id`를 포함해야 하며, 서버는 해당 세션 상태가 유효할 때만 요청을 처리한다.
+2. **세션 발급(`Mcp-Session-Id`)**: 서버가 응답 헤더에 고유 세션 식별자인 `Mcp-Session-Id`를 발급한다. 이어서 인메모리나 외부 저장소에 세션 컨텍스트를 만든다.
+3. **초기화 완료 알림(`notifications/initialized`)**: 클라이언트가 발급받은 `Mcp-Session-Id` 헤더를 첨부해 핸드셰이크 완료를 알린다.
+4. **도구 탐색 및 호출(`tools/list`, `tools/call`)**: 이후 모든 JSON-RPC 요청은 같은 `Mcp-Session-Id`를 포함해야 한다. 서버는 그 세션 상태가 유효할 때만 요청을 처리한다.
 
-이 구조는 데스크톱 IDE가 로컬 자식 프로세스(`stdio`)와 1:1로 통신할 때는 자연스럽게 작동하지만, 수천 개의 에이전트 워커가 클라우드 로드밸런서 뒤의 MCP 서버 풀(Pool)을 호출하는 순간 네 가지 치명적인 병목을 유발한다.
+데스크톱 IDE가 로컬 자식 프로세스(`stdio`)와 1:1로 통신할 때는 이 구조가 자연스럽다. 문제는 수천 개의 에이전트 워커가 클라우드 로드밸런서 뒤의 MCP 서버 풀(Pool)을 호출할 때 드러난다. 이때 네 가지 치명적인 병목이 동시에 나타난다.
 
 ### 1.2 수평 확장 시 발생하는 4대 인프라 병목과 비용 수식화
 
-첫째, **세션 고정(Sticky Session Pinning) 강제와 트래픽 불균형**이다. 특정 파드 메모리에 생성된 `Mcp-Session-Id` 상태를 참조하려면 L7 로드밸런서가 해당 세션의 모든 후속 요청을 동일 파드로 고정 라우팅해야 한다. 에이전트 워크로드 특성상 소수의 장기 실행 에이전트가 수백 번의 도구 호출을 집중 발생시키므로, 파드 간 CPU·메모리 사용량 편차가 벌어지고 롤링 업데이트(Rolling Update)나 오토스케일링 축소 시 인플라이트 세션이 끊기며 `404 Not Found` 또는 `-32001` 세션 만료 에러가 연쇄 발생한다.
+이 절은 수평 확장에서 실제로 무엇이 비용이 되는지 네 갈래로 나눠 본다. 병목은 라우팅, 저장소, 게이트웨이 파싱, 소켓 계층에서 각각 발생한다.
 
-둘째, **공유 세션 저장소(Shared Session Store) 오버헤드**이다. 세션 고정을 피하기 위해 레디스(Redis)나 포스트그레SQL(PostgreSQL)에 세션 상태를 외부화하면, 매 도구 호출마다 게이트웨이와 MCP 서버가 외부 저장소와 최소 1~2회의 네트워크 왕복(RTT, Round-Trip Time)을 추가로 수행해야 한다.
+첫째, **세션 고정(Sticky Session Pinning) 강제와 트래픽 불균형**이다. 특정 파드 메모리에 생성된 `Mcp-Session-Id` 상태를 참조하려면 L7 로드밸런서가 후속 요청을 모두 같은 파드로 고정 라우팅해야 한다. 에이전트 워크로드는 소수의 장기 실행 에이전트가 수백 번의 도구 호출을 집중 발생시킨다. 그래서 파드 간 CPU·메모리 사용량 편차가 벌어진다. 롤링 업데이트(Rolling Update)나 오토스케일링 축소 시에는 인플라이트 세션이 끊긴다. 그 결과 `404 Not Found` 또는 `-32001` 세션 만료 에러가 연쇄 발생한다.
 
-셋째, **API 게이트웨이의 JSON-RPC 바디 파싱(DPI, Deep Packet Inspection) 비용**이다. 기존 스펙에서는 모든 요청이 단일 경로(`POST /mcp`)로 유입되고 HTTP 헤더에는 JSON-RPC 메서드나 도구 이름이 전혀 노출되지 않았다. 따라서 게이트웨이가 `tools/call` 여부나 대상 도구 이름을 식별하여 역할 기반 접근 제어(RBAC, Role-Based Access Control) 및 속도 제한(Rate Limiting)을 적용하려면, 전체 HTTP 요청 본문 버퍼를 메모리에 적재한 뒤 JSON 역직렬화(Deserialization)를 수행해야만 했다.
+둘째, **공유 세션 저장소(Shared Session Store) 오버헤드**이다. 세션 고정을 피하려고 레디스(Redis)나 포스트그레SQL(PostgreSQL)에 세션 상태를 외부화할 수 있다. 그러면 매 도구 호출마다 게이트웨이와 MCP 서버가 외부 저장소와 최소 1~2회의 네트워크 왕복(RTT, Round-Trip Time)을 추가로 수행한다.
 
-넷째, **장기 SSE(Server-Sent Events) 스트림 유지 비용**이다. 서버 주도 알림이나 사용자 입력 유도(Elicitation)를 수신하기 위해 유휴 SSE 스트림을 열어두면, 동시 접속 에이전트 수에 비례하여 프록시와 서버의 소켓 파일 디스크립터(File Descriptor) 및 커널 TCP 버퍼가 고정 점유된다.
+셋째, **API 게이트웨이의 JSON-RPC 바디 파싱(DPI, Deep Packet Inspection) 비용**이다. 기존 스펙에서는 모든 요청이 단일 경로(`POST /mcp`)로 유입된다. HTTP 헤더에는 JSON-RPC 메서드도 도구 이름도 전혀 노출되지 않았다. 따라서 게이트웨이가 `tools/call` 여부나 대상 도구 이름을 알아내려면 본문을 직접 열어야 한다. 역할 기반 접근 제어(RBAC, Role-Based Access Control)와 속도 제한(Rate Limiting)을 적용하려면 전체 HTTP 요청 본문 버퍼를 메모리에 적재한다. 그다음 JSON 역직렬화(Deserialization)를 수행해야만 했다.
 
-기존 Stateful 게이트웨이에서 단일 도구 호출 요청(페이로드 크기 $B$ 바이트)이 겪는 프록시 계층 지연 시간 $\Delta L_{\text{stateful}}$과 클러스터 전체 세션 메모리 점유량 $M_{\text{cluster}}$를 수식으로 모델링하면 다음과 같다.
+넷째, **장기 SSE(Server-Sent Events) 스트림 유지 비용**이다. 서버 주도 알림이나 사용자 입력 유도(Elicitation)를 받으려면 유휴 SSE 스트림을 열어 둬야 한다. 그러면 동시 접속 에이전트 수에 비례하여 프록시와 서버의 소켓 파일 디스크립터(File Descriptor)와 커널 TCP 버퍼가 고정 점유된다.
+
+위 네 가지 병목은 수식으로 정리하면 더 분명해진다. 기존 Stateful 게이트웨이에서 단일 도구 호출 요청(페이로드 크기 $B$ 바이트)이 겪는 프록시 계층 지연 시간을 $\Delta L_{\text{stateful}}$로 둔다. 클러스터 전체 세션 메모리 점유량은 $M_{\text{cluster}}$로 둔다.
 
 $$
 \Delta L_{\text{stateful}}(B) = T_{\text{Handshake}} \cdot \mathbb{I}_{\text{cold}} + T_{\text{StoreRTT}} + \alpha_{\text{parse}} \cdot B + T_{\text{Route}}
@@ -57,32 +59,32 @@ $$
 M_{\text{cluster}}(N_{\text{conn}}, N_{\text{sse}}) = N_{\text{conn}} \cdot m_{\text{session}} + N_{\text{sse}} \cdot \left( m_{\text{socket}} + m_{\text{buf}} \right)
 $$
 
-여기서 $\mathbb{I}_{\text{cold}} \in \{0, 1\}$는 신규 세션 또는 파드 재시작으로 인한 핸드셰이크 발생 지시 함수이고, $T_{\text{Handshake}}$는 2-way 초기화 왕복 지연(통상 $15 \sim 45\text{ms}$), $T_{\text{StoreRTT}}$는 외부 Redis 세션 조회 지연($1.5 \sim 4\text{ms}$), $\alpha_{\text{parse}} \cdot B$는 바이트당 JSON 본문 파싱 비용이다. 반면 헤더 기반 Stateless 아키텍처에서는 $\mathbb{I}_{\text{cold}} = 0$, $T_{\text{StoreRTT}} = 0$, $\alpha_{\text{parse}} = 0$으로 수렴하여 오직 L7 헤더 해시 테이블 조회 시간 $T_{\text{Route}}$(수십 마이크로초)만 남는다.
+식의 각 항은 다음을 뜻한다. $\mathbb{I}_{\text{cold}} \in \{0, 1\}$는 신규 세션 또는 파드 재시작으로 인한 핸드셰이크 발생 지시 함수다. $T_{\text{Handshake}}$는 2-way 초기화 왕복 지연으로, 통상 $15 \sim 45\text{ms}$다. $T_{\text{StoreRTT}}$는 외부 Redis 세션 조회 지연이며 $1.5 \sim 4\text{ms}$다. $\alpha_{\text{parse}} \cdot B$는 바이트당 JSON 본문 파싱 비용이다. 반면 헤더 기반 Stateless 아키텍처에서는 세 항이 모두 0으로 수렴한다. $\mathbb{I}_{\text{cold}} = 0$, $T_{\text{StoreRTT}} = 0$, $\alpha_{\text{parse}} = 0$이라는 뜻이다. 남는 항은 L7 헤더 해시 테이블 조회 시간 $T_{\text{Route}}$ 하나이며, 그 크기는 수십 마이크로초다.
 
-**핵심 요약 — 기존 MCP의 `initialize` 핸드셰이크와 `Mcp-Session-Id` 세션 모델은 쿠버네티스 환경에서 Sticky Session 강제, 공유 스토리지 RTT 추가, L7 게이트웨이의 JSON 바디 파싱(DPI) 오버헤드, 장기 SSE 소켓 고갈이라는 4대 운영 병목을 초래했다.**
+**핵심 요약 — 기존 MCP의 `initialize` 핸드셰이크와 `Mcp-Session-Id` 세션 모델은 네 가지 운영 병목을 낳았다. 첫째는 Sticky Session 강제, 둘째는 공유 스토리지 RTT 추가다. 셋째는 L7 게이트웨이의 JSON 바디 파싱(DPI) 오버헤드, 넷째는 장기 SSE 소켓 고갈이다.**
 
 ---
 
 ## 2. MCP 2026-07-28 Stateless 코어 해부: SEP-2567과 SEP-2575
 
-2026년 5월 21일 릴리스 후보(RC)를 거쳐 2026년 7월 28일 확정된 `2026-07-28` 코어 스펙은 전송 계층을 근본부터 재정의하여 프로토콜 수준의 세션을 제거했다[^4][^5].
+이 장은 새 스펙이 전송 계층에서 무엇을 바꿨는지 정리한다. `2026-07-28` 코어 스펙은 2026년 5월 21일 릴리스 후보(RC)를 거쳐 2026년 7월 28일 확정되었다[^4][^5]. 이 스펙은 전송 계층을 근본부터 재정의했고, 프로토콜 수준의 세션을 제거했다.
 
 ![MCP 2026-07-28 Stateless 코어 스펙과 쿠버네티스 AI 게이트웨이 아키텍처](/assets/images/agent/mcp-stateless-2026-k8s-ai-gateway-cognition.webp)
 
 ### 2.1 SEP-2575와 SEP-2567: 초기화 핸드셰이크 폐기와 프로토콜 세션 제거
 
-`2026-07-28` 스펙의 핵심 아키텍처 전환은 두 가지 **사양 개선 제안(SEP, Specification Enhancement Proposal)**으로 요약된다.
+핵심 전환은 두 가지 **사양 개선 제안(SEP, Specification Enhancement Proposal)**으로 요약된다. 두 제안 모두 연결 상태를 전제하지 않는 요청 처리를 목표로 한다.
 
-- **SEP-2575 (초기화 핸드셰이크 폐기 및 온디맨드 `server/discover`)**[^4]: 연결 수립 시 의무화되었던 `initialize` 요청과 `notifications/initialized` 알림 절차를 전면 폐기했다. 클라이언트는 사전 협상 없이 첫 번째 HTTP 요청부터 즉시 `tools/call`이나 `resources/read`를 호출할 수 있다. 만약 서버가 지원하는 프로토콜 확장이나 메타데이터를 사전에 확인해야 하는 경우에만 선택적으로 `server/discover` 메서드를 단일 호출한다.
-- **SEP-2567 (`Mcp-Session-Id` 및 프로토콜 세션 전면 제거)**[^5]: 전송 계층에서 `Mcp-Session-Id` HTTP 헤더와 서버 측 프로토콜 세션 상태 머신을 삭제했다. 모든 MCP HTTP 요청은 이전 요청의 이력에 의존하지 않는 독립적인 트랜잭션으로 취급되며, 클러스터 내 어느 파드가 수신하더라도 동일한 결과를 반환한다.
+- **SEP-2575 (초기화 핸드셰이크 폐기 및 온디맨드 `server/discover`)** — 연결 수립 시 의무였던 절차를 없앴다[^4]. `initialize` 요청과 `notifications/initialized` 알림은 전면 폐기되었다. 클라이언트는 사전 협상 없이 첫 HTTP 요청부터 즉시 `tools/call`이나 `resources/read`를 호출할 수 있다. 서버가 지원하는 확장이나 메타데이터를 미리 확인해야 할 때만 `server/discover`를 단일 호출한다.
+- **SEP-2567 (`Mcp-Session-Id` 및 프로토콜 세션 전면 제거)** — 전송 계층에서 `Mcp-Session-Id` HTTP 헤더와 서버 측 프로토콜 세션 상태 머신을 삭제했다[^5]. 모든 MCP HTTP 요청은 이전 요청 이력에 의존하지 않는 독립 트랜잭션으로 취급된다. 그래서 클러스터 내 어느 파드가 수신하더라도 동일한 결과를 반환한다.
 
 ### 2.2 자기완결적(Self-Contained) HTTP 요청 구조와 헤더 명세
 
-초기화 핸드셰이크가 사라진 대신, 각 HTTP 요청은 라우팅과 버전 협상에 필요한 정보를 **표준 HTTP 헤더 3종**과 요청 본문의 **`_meta.io.modelcontextprotocol/clientInfo`** 필드에 담아 자기완결적(Self-Contained)으로 전달한다[^5].
+초기화 핸드셰이크가 사라진 대신, 각 요청이 필요한 정보를 직접 들고 다닌다. 그 정보는 **표준 HTTP 헤더 3종**과 본문의 **`_meta.io.modelcontextprotocol/clientInfo`** 필드에 담긴다[^5]. 요청 하나만 보고도 처리할 수 있으므로 이 구조를 자기완결적(Self-Contained)이라고 부른다.
 
 - **`MCP-Protocol-Version`**: 요청이 준수하는 스펙 버전(예: `2026-07-28`)을 명시한다.
-- **`Mcp-Method`**: JSON-RPC 본문 내부의 `method` 값(예: `tools/call`, `tools/list`, `resources/read`, `server/discover`)을 HTTP 헤더에 그대로 승격시켜 노출한다.
-- **`Mcp-Name`**: 호출 대상 도구 이름, 리소스 URI, 또는 프롬프트 식별자(예: `query_production_metrics`)를 HTTP 헤더에 명시한다. `tools/list`처럼 특정 대상 이름이 없는 메서드에서는 생략된다.
+- **`Mcp-Method`**: JSON-RPC 본문 내부의 `method` 값을 HTTP 헤더로 승격해 노출한다. 값은 `tools/call`, `tools/list`, `resources/read`, `server/discover` 등이다.
+- **`Mcp-Name`**: 호출 대상 도구 이름, 리소스 URI, 또는 프롬프트 식별자(예: `query_production_metrics`)를 헤더에 명시한다. `tools/list`처럼 특정 대상 이름이 없는 메서드에서는 생략된다.
 
 다음은 `2026-07-28` 스펙을 준수하는 단일 `tools/call` HTTP 요청 전문이다.
 
@@ -122,11 +124,11 @@ Mcp-Name: execute_readonly_sql
 
 ### 2.3 핸들 패턴(Handle Pattern)과 Stateless 멀티 라운드트립 Elicitation(SEP-2260, SEP-2322)
 
-프로토콜 세션이 제거되었다고 해서 상태를 다루는 워크플로우까지 불가능해진 것은 아니다. `2026-07-28` 스펙은 전송 계층 상태와 비즈니스 상태를 엄격히 분리하여 두 가지 표준 메커니즘을 제시한다.
+프로토콜 세션이 제거되었다고 해서 상태를 다루는 워크플로우까지 불가능해진 것은 아니다. `2026-07-28` 스펙은 전송 계층 상태와 비즈니스 상태를 엄격히 분리한다. 그 위에 두 가지 표준 메커니즘을 제시한다.
 
-첫째는 **핸들 패턴(Handle Pattern)**이다. 전자상거래 장바구니나 헤드리스 브라우저 제어처럼 여러 번의 도구 호출에 걸쳐 유지되어야 하는 애플리케이션 상태는, 첫 번째 도구(예: `browser_open`)가 응답 데이터로 명시적인 상태 핸들(`browser_id: "brw_7f9a2c"`, `basket_id: "bsk_3109"`)을 발급하고 후속 도구(예: `browser_click`)가 해당 핸들을 일반 입력 인자(`arguments.browser_id`)로 전달받아 외부 스토리지나 백엔드 워커에서 조회하도록 위임한다[^5].
+첫째는 **핸들 패턴(Handle Pattern)**이다. 전자상거래 장바구니나 헤드리스 브라우저 제어는 여러 도구 호출에 걸쳐 상태를 유지해야 한다. 이런 애플리케이션 상태는 첫 도구(예: `browser_open`)가 응답 데이터로 명시적 핸들을 발급하는 방식으로 다룬다[^5]. 핸들은 `browser_id: "brw_7f9a2c"`, `basket_id: "bsk_3109"`처럼 생겼다. 후속 도구(예: `browser_click`)는 그 핸들을 일반 입력 인자(`arguments.browser_id`)로 받는다. 실제 상태 조회는 외부 스토리지나 백엔드 워커에 위임한다.
 
-둘째는 **Stateless 멀티 라운드트립 유도(Multi-Roundtrip Elicitation, SEP-2260·SEP-2322)**이다[^6]. 과거에는 도구 실행 도중 사용자의 추가 확인(예: 고비용 쿼리 승인, MFA 코드 입력)이 필요할 때 서버가 별도의 장기 SSE 스트림으로 역방향 RPC를 푸시하고 응답이 올 때까지 스레드를 블로킹했다. 반면 SEP-2260과 SEP-2322는 활성 HTTP 요청에 대한 즉시 응답으로 **`InputRequiredResult`** 구조를 반환하고 HTTP 연결을 깔끔하게 종료한다.
+둘째는 **Stateless 멀티 라운드트립 유도(Multi-Roundtrip Elicitation, SEP-2260·SEP-2322)**이다[^6]. 과거에는 도구 실행 중 사용자의 추가 확인(예: 고비용 쿼리 승인, MFA 코드 입력)이 필요하면 서버가 장기 SSE 스트림으로 역방향 RPC를 푸시했다. 그리고 응답이 올 때까지 스레드를 블로킹했다. 반면 SEP-2260과 SEP-2322는 활성 HTTP 요청에 **`InputRequiredResult`** 구조를 즉시 응답으로 돌려준다. 그리고 HTTP 연결을 깔끔하게 종료한다.
 
 ```json
 {
@@ -154,9 +156,9 @@ Mcp-Name: execute_readonly_sql
 }
 ```
 
-서버는 중단 시점의 실행 컨텍스트를 암호화·서명한 불투명 토큰인 `requestState`에 담아 내려보낸다. 이후 클라이언트는 사용자로부터 입력받은 결과를 `inputResponses` 배열에 담고, 서버로부터 받았던 `requestState`를 그대로 첨부하여 동일한 `tools/call` 엔드포인트로 재요청한다. 클러스터 내 임의의 파드가 이 재요청을 수신하더라도 `requestState`의 서명을 검증하고 복호화하여 중단된 지점부터 즉시 실행을 이어갈 수 있다.
+서버는 중단 시점의 실행 컨텍스트를 암호화·서명한 불투명 토큰인 `requestState`에 담아 내려보낸다. 이후 클라이언트는 사용자 입력 결과를 `inputResponses` 배열에 담는다. 그리고 서버에서 받았던 `requestState`를 그대로 첨부해 같은 `tools/call` 엔드포인트로 재요청한다. 클러스터 내 임의의 파드가 이 재요청을 받더라도 문제없다. `requestState`의 서명을 검증하고 복호화하면 중단된 지점부터 즉시 실행을 이어갈 수 있다.
 
-**핵심 요약 — MCP `2026-07-28` 스펙은 SEP-2575와 SEP-2567을 통해 핸드셰이크와 `Mcp-Session-Id`를 폐기하고 `Mcp-Method`·`Mcp-Name` 헤더 기반 자기완결적 요청 구조를 확립했으며, 애플리케이션 상태는 핸들 패턴으로, 대화형 사용자 입력은 `InputRequiredResult`와 `requestState` 기반 Stateless Elicitation(SEP-2260·SEP-2322)으로 해결했다.**
+**핵심 요약 — MCP `2026-07-28` 스펙은 SEP-2575와 SEP-2567로 핸드셰이크와 `Mcp-Session-Id`를 폐기했다. 대신 `Mcp-Method`·`Mcp-Name` 헤더 기반 자기완결적 요청 구조를 확립했다. 애플리케이션 상태는 핸들 패턴으로 다룬다. 대화형 사용자 입력은 `requestState`와 `InputRequiredResult` 기반 Elicitation(SEP-2260·SEP-2322)으로 처리한다. 이 둘이 무상태 전환의 빈자리를 채운다.**
 
 ---
 
@@ -164,12 +166,12 @@ Mcp-Name: execute_readonly_sql
 
 ### 3.1 바디 파싱 없는 L7 라우팅과 SEP-2549 기반 tools/list 응답 캐싱
 
-`Mcp-Method`와 `Mcp-Name`이 HTTP L7 헤더로 노출되면서 API 게이트웨이와 서비스 메시(Service Mesh)의 역할이 근본적으로 달라졌다. 프록시는 JSON-RPC 본문을 전혀 파싱하지 않고도 HTTP 헤더만으로 다음과 같은 정책을 초저지연으로 집행할 수 있다.
+이 장은 헤더가 생기면서 게이트웨이가 무엇을 할 수 있게 되었는지 본다. `Mcp-Method`와 `Mcp-Name`이 HTTP L7 헤더로 노출되면서 API 게이트웨이의 역할이 달라졌다. 서비스 메시(Service Mesh)도 같은 이점을 얻는다. 프록시는 JSON-RPC 본문을 전혀 파싱하지 않아도 된다. HTTP 헤더만으로 다음 정책을 초저지연으로 집행할 수 있다.
 
-- **메서드·도구 단위 L7 라우팅**: `Mcp-Method: tools/call`이면서 `Mcp-Name: k8s_delete_pod`인 요청만 높은 보안 등급의 격리된 백엔드 풀로 라우팅하거나, 읽기 전용 도구(`Mcp-Name: k8s_get_*`)는 리드 레플리카 파드로 분산한다.
-- **세밀한 속도 제한 및 쿼터 적용**: 특정 테넌트의 JWT 클레임(`sub`)과 `Mcp-Name` 헤더를 조합하여, 비용이 큰 외부 검색 도구는 분당 20회로 제한하고 내부 조회 도구는 분당 1,000회까지 허용한다.
+- **메서드·도구 단위 L7 라우팅**: `Mcp-Method: tools/call`이면서 `Mcp-Name: k8s_delete_pod`인 요청을 골라낸다. 그 요청만 높은 보안 등급의 격리된 백엔드 풀로 보낸다. 읽기 전용 도구(`Mcp-Name: k8s_get_*`)는 리드 레플리카 파드로 분산한다.
+- **세밀한 속도 제한 및 쿼터 적용**: 특정 테넌트의 JWT 클레임(`sub`)과 `Mcp-Name` 헤더를 조합한다. 그러면 비용이 큰 외부 검색 도구는 분당 20회로 제한하고, 내부 조회 도구는 분당 1,000회까지 허용할 수 있다.
 
-여기에 더해 **SEP-2549(`tools/list` 응답 캐싱 메타데이터)**는 에이전트 시작 시 반복되는 도구 스키마 조회 비용을 줄인다[^9]. 기존에는 세션마다 `tools/list`를 새로 호출해야 했으나, SEP-2549는 응답 메타데이터에 유효 기간인 `ttlMs`(밀리초)와 캐시 격리 수준인 `cacheScope`를 명시하도록 표준화했다.
+여기에 **SEP-2549(`tools/list` 응답 캐싱 메타데이터)**가 더해진다. 이 제안은 에이전트 시작 시 반복되는 도구 스키마 조회 비용을 줄인다[^9]. 기존에는 세션마다 `tools/list`를 새로 호출해야 했다. SEP-2549는 응답 메타데이터에 유효 기간인 `ttlMs`(밀리초)와 캐시 격리 수준인 `cacheScope`를 명시하도록 표준화했다.
 
 ```json
 {
@@ -196,14 +198,14 @@ Mcp-Name: execute_readonly_sql
 }
 ```
 
-`cacheScope`가 `"public"`이면 AI 게이트웨이가 모든 에이전트 요청에 대해 300,000ms(5분) 동안 단일 인메모리 캐시 사본을 즉시 반환하고, `"credential"` 또는 `"user"`이면 인증 토큰 해시별로 분리 캐싱한다. 이 메커니즘을 이전 글에서 다룬 [MCP 토큰 최적화의 점진적 발견(Progressive Discovery)](/llm/mcp-token-optimization/)[^7] 및 [Skills와 MCP의 역할 분담 구조](/llm/skills-and-mcp/)[^8]와 결합하면, 게이트웨이가 캐싱된 전체 도구 카탈로그를 보유한 상태에서 에이전트에는 현재 작업에 필요한 소수의 도구 스키마만 온디맨드로 주입하여 초기 프롬프트 토큰 소비와 백엔드 네트워크 부하를 동시에 절감할 수 있다.
+`cacheScope`가 `"public"`이면 AI 게이트웨이가 300,000ms(5분) 동안 단일 인메모리 캐시 사본을 즉시 반환한다. `"credential"` 또는 `"user"`이면 인증 토큰 해시별로 캐시를 분리한다. 이 메커니즘은 이전 글에서 다룬 [MCP 토큰 최적화의 점진적 발견(Progressive Discovery)](/llm/mcp-token-optimization/)[^7] 및 [Skills와 MCP의 역할 분담 구조](/llm/skills-and-mcp/)[^8]와 바로 연결된다. 게이트웨이가 캐싱된 전체 도구 카탈로그를 들고 있으면, 에이전트에는 현재 작업에 필요한 소수의 도구 스키마만 온디맨드로 주입할 수 있다. 그러면 초기 프롬프트 토큰 소비와 백엔드 네트워크 부하를 동시에 절감한다.
 
 ![점진적 발견 좌우 비교: 전체 도구를 업프론트로 로드할 때와 온디맨드로 탐색할 때의 토큰 소비 구조 비교](/assets/images/llm/official-mcp-token-optimization.webp)
 *출처: [Model Context Protocol — Client Best Practices (Progressive Discovery)](https://modelcontextprotocol.io/docs/develop/clients/client-best-practices), MIT License*
 
 ### 3.2 엔터프라이즈 보안·관측성·스키마 하드닝 6대 SEP
 
-`2026-07-28` 릴리스는 무상태 전환과 함께 엔터프라이즈 보안 감사에서 반복 지적되던 인증·관측성·스키마 파서 취약점을 6개의 핵심 SEP로 하드닝했다[^10][^11][^12]. 앞서 정리한 [MCP 서버 보안 가이드](/llm/mcp-server-security-guide/)[^11]의 방어 원칙이 프로토콜 표준 수준으로 내재화된 것이다.
+`2026-07-28` 릴리스는 무상태 전환만 가져오지 않았다. 엔터프라이즈 보안 감사에서 반복 지적되던 인증·관측성·스키마 파서 취약점도 함께 다뤘다. 관련된 핵심 SEP는 6건이며, 아래 표에 정리한다[^10][^11][^12]. 앞서 정리한 [MCP 서버 보안 가이드](/llm/mcp-server-security-guide/)[^11]의 방어 원칙이 프로토콜 표준 수준으로 내재화된 셈이다.
 
 | SEP 번호 | 영역 | 핵심 스펙 변경 내용 | 방어하는 위협 및 운영 효과 |
 |---|---|---|---|
@@ -216,19 +218,19 @@ Mcp-Name: execute_readonly_sql
 
 ### 3.3 공식 확장 트랙(SEP-2133)과 수명주기 유예 정책(SEP-2577)
 
-코어 스펙의 비대화를 막기 위해 **SEP-2133(Official Extensions Track)**은 도메인 특화 기능을 코어에서 분리하여 독립적인 버전 주기를 갖는 공식 확장 트랙으로 재편했다[^14].
+코어 스펙이 비대해지는 것을 막으려는 장치도 있다. **SEP-2133(Official Extensions Track)**은 도메인 특화 기능을 코어에서 떼어낸다. 떼어낸 기능은 독립적인 버전 주기를 갖는 공식 확장 트랙을 따른다[^14].
 
-- **MCP 앱스(MCP Apps, SEP-1865)**: [MCP 앱스와 Generative UI 아키텍처](/llm/mcp-apps-generative-ui/)[^13]에서 살펴본 샌드박스형 양방향 UI 렌더링 기능은 공식 확장으로 편입되어 코어 Stateless 전송 위에서 독립적으로 동작한다.
-- **Stateless Tasks 확장과 `tasks/list` 삭제**: 수십 분이 소요되는 비동기 배치 작업을 위한 Tasks 확장도 무상태 핸들 기반으로 개편되었다. 특히 멀티테넌트 환경에서 타 사용자나 타 세션의 작업 메타데이터가 노출될 수 있는 스코핑(Scoping) 보안 우려로 인해 기존의 **`tasks/list` 메서드가 스펙에서 완전히 삭제**되었으며, 클라이언트는 작업 생성 시 발급받은 고유 `taskId` 핸들을 통해서만 개별 작업 상태(`tasks/get`, `tasks/cancel`)를 조회할 수 있다.
-- **SEP-2577 (최소 12개월 유예 기간 수명주기 정책) 및 Roots·Sampling·Logging Deprecated 처리**[^14]: 기능 폐기 시 최소 12개월의 사전 예고 및 하위 호환 유예 기간(Deprecation Window)을 보장하는 거버넌스 규칙이 제정되었다. 이에 따라 서버에서 클라이언트로의 지속적인 양방향 세션 연결을 전제로 설계되었던 **Roots**, **Sampling**, **Logging** 3대 기능은 `2026-07-28` 스펙에서 공식 **지원 중단(Deprecated)** 상태로 전환되었다. 엔터프라이즈 환경에서는 각각 요청별 인자 전달(Per-request Workspace URI Passing), 백엔드 서버의 AI 게이트웨이 직접 호출, 그리고 SEP-414 기반 OpenTelemetry/W3C Trace Context 로그 파이프라인으로 마이그레이션해야 한다.
+- **MCP 앱스(MCP Apps, SEP-1865)**: [MCP 앱스와 Generative UI 아키텍처](/llm/mcp-apps-generative-ui/)[^13]에서 살펴본 샌드박스형 양방향 UI 렌더링 기능이 여기 편입되었다. 이 기능은 코어 Stateless 전송 위에서 독립적으로 동작한다.
+- **Stateless Tasks 확장과 `tasks/list` 삭제**: 수십 분이 걸리는 비동기 배치 작업용 Tasks 확장도 무상태 핸들 기반으로 개편되었다. 멀티테넌트 환경에서 타 사용자나 타 세션의 작업 메타데이터가 노출될 수 있다는 스코핑(Scoping) 보안 우려가 있었다. 그래서 기존 **`tasks/list` 메서드가 스펙에서 완전히 삭제**되었다. 클라이언트는 작업 생성 시 받은 고유 `taskId` 핸들을 통해서만 개별 작업 상태(`tasks/get`, `tasks/cancel`)를 조회할 수 있다.
+- **SEP-2577 (최소 12개월 유예 기간 수명주기 정책) 및 Roots·Sampling·Logging Deprecated 처리** — 폐기 거버넌스 규칙이 새로 제정되었다. 기능을 없앨 때 최소 12개월의 사전 예고와 하위 호환 유예 기간(Deprecation Window)을 보장한다[^14]. 이에 따라 **Roots**, **Sampling**, **Logging** 3대 기능은 `2026-07-28` 스펙에서 공식 **지원 중단(Deprecated)** 으로 전환되었다. 세 기능 모두 지속적인 양방향 세션 연결을 전제로 설계되어 있었다. 엔터프라이즈 환경에서는 각각 다른 방식으로 마이그레이션해야 한다. 첫째는 요청별 인자 전달(Per-request Workspace URI Passing)이다. 둘째는 백엔드 서버의 AI 게이트웨이 직접 호출이다. 셋째는 SEP-414 기반 OpenTelemetry/W3C Trace Context 로그 파이프라인이다.
 
-**핵심 요약 — `Mcp-Method`·`Mcp-Name` 헤더 승격과 SEP-2549 캐싱으로 게이트웨이의 바디 파싱 비용이 제거되었으며, RFC 9207 `iss` 검증(SEP-2468)·외부 `$ref` 역참조 금지(SEP-2106)·`tasks/list` 삭제·Roots/Sampling/Logging Deprecated 처리(SEP-2577)를 통해 멀티테넌트 엔터프라이즈 보안 경계가 확립되었다.**
+**핵심 요약 — `Mcp-Method`·`Mcp-Name` 헤더 승격과 SEP-2549 캐싱으로 게이트웨이의 바디 파싱 비용이 제거되었다. 여기에 RFC 9207 `iss` 검증(SEP-2468), 외부 `$ref` 역참조 금지(SEP-2106)가 더해졌다. `tasks/list` 삭제와 Roots/Sampling/Logging Deprecated 처리(SEP-2577)도 함께 들어왔다. 그 결과 멀티테넌트 엔터프라이즈 보안 경계가 확립되었다.**
 
 ---
 
 ## 4. 쿠버네티스 AI & MCP 게이트웨이 5종 아키텍처 심층 비교
 
-MCP가 완전한 Stateless HTTP 구조로 재편되면서, 쿠버네티스 인그레스 및 이스트-웨스트(East-West) 트래픽 계층에서 LLM 추론과 MCP 도구 호출을 통합 제어하는 **AI 게이트웨이** 경쟁도 본격화되었다. 프로덕션 환경에서 가장 널리 검토되는 5대 솔루션의 아키텍처와 성능 지표를 비교한다[^15][^16].
+이 장은 게이트웨이 제품 다섯 개를 같은 기준으로 비교한다. MCP가 Stateless HTTP 구조로 재편되면서 AI 게이트웨이 경쟁도 본격화되었다. 쿠버네티스 인그레스와 이스트-웨스트(East-West) 트래픽 계층에서 LLM 추론과 MCP 도구 호출을 한 곳에서 제어하려는 수요가 커졌기 때문이다. 프로덕션에서 가장 널리 검토되는 5대 솔루션의 아키텍처와 성능 지표를 정리한다[^15][^16].
 
 ### 4.1 5대 게이트웨이 아키텍처 및 상태 동기화 비교
 
@@ -242,23 +244,14 @@ MCP가 완전한 Stateless HTTP 구조로 재편되면서, 쿠버네티스 인�
 
 ### 4.2 데이터플레인 지연 시간과 클러스터 상태 동기화 메커니즘 분석
 
-클러스터 아키텍트가 게이트웨이를 선택할 때 가장 주의 깊게 봐야 할 지점은 **상태 동기화 방식**과 **인프라 종속성**이다.
+클러스터 아키텍트가 게이트웨이를 고를 때 가장 주의 깊게 봐야 할 지점은 **상태 동기화 방식**과 **인프라 종속성**이다. 아래 네 갈래로 나눠 보면 차이가 분명해진다.
 
-1. **Bifrost의 Gossip 프로토콜 기반 무상태 확장과 운영 파라미터**[^15]:
-   - Bifrost는 외부 Redis 클러스터 장애가 전체 AI 게이트웨이의 단일 장애점(SPOF, Single Point of Failure)으로 번지는 것을 막기 위해, 쿠버네티스 Headless Service 및 Endpoints API를 통해 피어(Peer) 파드 IP 목록을 자동 탐색한다.
-   - 탐색된 파드들은 **가십 프로토콜(Gossip Protocol)**로 테넌트별 속도 제한 카운터와 토큰 예산(Token Budget) 차감 상태를 주기적으로 교환한다. 외부 네트워크 스토어 조회가 없으므로 **5,000 RPS 고부하 벤치마크에서 요청당 평균 11µs(마이크로초)의 내부 처리 오버헤드**만을 추가한다.
-   - 단, 스케일다운이나 롤링 업데이트 과정에서 인메모리 예산 집계치가 유실되거나 진행 중인 스트리밍 응답이 강제 종료되는 현상을 방지하려면, 파드 스펙의 `terminationGracePeriodSeconds`를 최소 **60초**로 설정하여 가십 상태 플러시(Flush) 및 드레인을 보장하고, HPA(HorizontalPodAutoscaler)의 `behavior.scaleDown.stabilizationWindowSeconds`를 **300초**로 구성해 급격한 파드 축소 플래핑(Flapping)을 억제해야 한다.
-2. **Agent Router(구 Envoy AI Gateway)와 Gateway API 표준화**[^16][^17]:
-   - 이전 글 [EKS에서 Ingress를 넘어 Gateway API로 전환하기](/k8s/gateway-api-migration-cilium/)[^17]에서 다룬 쿠버네티스 표준 Gateway API 사양을 이미 도입한 조직이라면, Envoy 기반의 Agent Router가 자연스럽게 통합된다.
-   - `AIGatewayRoute`, `AIServiceBackend`, `BackendSecurityPolicy` CRD를 통해 업스트림 자격증명 주입과 토큰 기반 속도 제한을 선언적으로 정의할 수 있으며, 개발자의 로컬 워크스테이션이나 CI 파이프라인에서는 쿠버네티스 클러스터 없이 `aigw run` 단일 명령어로 동일한 라우팅 정책을 검증할 수 있다.
-3. **agentgateway의 CEL 기반 MCP·A2A 통합 보안**[^16]:
-   - Rust 기반으로 구현된 `agentgateway`는 MCP뿐만 아니라 에이전트 간 협업 프로토콜인 **A2A(Agent-to-Agent)**까지 단일 바이너리에서 처리한다.
-   - 특히 구글의 **공통 표현식 언어(CEL, Common Expression Language)** 엔진을 데이터플레인에 내장하고 있어, `Mcp-Method`, `Mcp-Name` 헤더와 JWT 클레임(`iss`, `sub`, `groups`), 그리고 요청 본문의 특정 필드를 결합한 인가 규칙을 사이드카나 외부 OPA(Open Policy Agent) 호출 없이 인라인으로 평가한다.
-4. **Kong AI Gateway 2.x와 LiteLLM의 포지셔닝**:
-   - 이미 전사 API 게이트웨이로 Kong을 운영 중이라면 2.x 버전에 도입된 `AI Model Provider` 엔티티를 통해 기존 REST API와 동일한 컨트롤 플레인에서 MCP 트래픽을 통제할 수 있다.
-   - 반면 LiteLLM은 다양한 모델 포맷 변환과 초기 PoC 구축에는 편리하지만, 프로덕션 대규모 트래픽 환경에서는 PostgreSQL 및 Redis에 대한 강한 상태 의존성과 Python 런타임 오버헤드를 감안하여 아키텍처를 분리해야 한다.
+1. **Bifrost의 Gossip 프로토콜 기반 무상태 확장과 운영 파라미터**[^15] — Bifrost는 외부 Redis 장애를 단일 장애점(SPOF, Single Point of Failure)으로 키우지 않는다. 파드 IP 목록은 쿠버네티스 Headless Service와 Endpoints API로 자동 탐색한다. 탐색된 파드들은 **가십 프로토콜(Gossip Protocol)** 로 테넌트별 속도 제한 카운터와 토큰 예산(Token Budget) 차감 상태를 주기적으로 교환한다. 외부 네트워크 스토어 조회가 없으므로 **5,000 RPS 고부하 벤치마크에서 요청당 평균 11µs(마이크로초)의 내부 처리 오버헤드**만 추가된다. 다만 스케일다운이나 롤링 업데이트에서 인메모리 예산 집계치가 유실되거나 진행 중인 스트리밍 응답이 강제 종료될 수 있다. 이를 막으려면 파드 스펙의 `terminationGracePeriodSeconds`를 최소 **60초**로 둬서 가십 상태 플러시(Flush)와 드레인을 보장해야 한다. HPA(HorizontalPodAutoscaler)의 `behavior.scaleDown.stabilizationWindowSeconds`는 **300초**로 구성한다. 그러면 급격한 파드 축소 플래핑(Flapping)을 억제할 수 있다.
+2. **Agent Router(구 Envoy AI Gateway)와 Gateway API 표준화**[^16][^17] — Gateway API 사양을 이미 도입한 조직이라면 Envoy 기반 Agent Router가 자연스럽게 통합된다. 이전 글 [EKS에서 Ingress를 넘어 Gateway API로 전환하기](/k8s/gateway-api-migration-cilium/)[^17]에서 다룬 흐름과 같은 맥락이다. `AIGatewayRoute`, `AIServiceBackend`, `BackendSecurityPolicy` CRD로 업스트림 자격증명 주입과 토큰 기반 속도 제한을 선언적으로 정의할 수 있다. 개발자의 로컬 워크스테이션이나 CI 파이프라인에서는 클러스터 없이 `aigw run` 단일 명령으로 같은 라우팅 정책을 검증한다.
+3. **agentgateway의 CEL 기반 MCP·A2A 통합 보안**[^16] — Rust 기반 `agentgateway`는 MCP와 **A2A(Agent-to-Agent)** 를 단일 바이너리에서 처리한다. 데이터플레인에는 구글의 **공통 표현식 언어(CEL, Common Expression Language)** 엔진이 내장되어 있다. 그래서 `Mcp-Method`, `Mcp-Name` 헤더와 JWT 클레임(`iss`, `sub`, `groups`), 요청 본문의 특정 필드를 결합한 인가 규칙을 인라인으로 평가한다. 사이드카나 외부 OPA(Open Policy Agent) 호출은 필요 없다.
+4. **Kong AI Gateway 2.x와 LiteLLM의 포지셔닝**: 이미 전사 API 게이트웨이로 Kong을 운영 중이라면 2.x에 도입된 `AI Model Provider` 엔티티를 쓰면 된다. 그러면 기존 REST API와 같은 컨트롤 플레인에서 MCP 트래픽을 통제할 수 있다. 반면 LiteLLM은 다양한 모델 포맷 변환과 초기 PoC 구축에 편리하다. 다만 프로덕션 대규모 트래픽에서는 PostgreSQL과 Redis에 대한 강한 상태 의존성, Python 런타임 오버헤드를 감안해 아키텍처를 분리해야 한다.
 
-**핵심 요약 — 5,000 RPS에서 11µs 오버헤드와 Gossip 동기화를 제공하는 Bifrost, Gateway API CRD 기반의 Agent Router, CEL 표현식으로 MCP·A2A를 인라인 통제하는 Rust 기반 `agentgateway`는 외부 DB 의존성 없이 `2026-07-28` Stateless MCP 트래픽을 수평 확장하는 핵심 데이터플레인이다.**
+**핵심 요약 — 세 제품 모두 `2026-07-28` Stateless MCP 트래픽을 외부 DB 의존성 없이 수평 확장하는 핵심 데이터플레인이다. 5,000 RPS에서 11µs 오버헤드와 Gossip 동기화를 내는 Bifrost가 그중 하나다. Gateway API CRD 기반의 Agent Router도 여기에 속한다. CEL 표현식으로 MCP·A2A를 인라인 통제하는 Rust 기반 `agentgateway`도 같은 계열이다.**
 
 ---
 
@@ -266,7 +259,7 @@ MCP가 완전한 Stateless HTTP 구조로 재편되면서, 쿠버네티스 인�
 
 ### 5.1 Kubernetes Gateway API HTTPRoute 및 agentgateway CEL 정책 매니페스트
 
-`2026-07-28` 스펙의 `Mcp-Method`와 `Mcp-Name` 헤더를 활용하면, 쿠버네티스 표준 `HTTPRoute` 리소스만으로 읽기 전용 도구와 변경(Mutation) 도구의 백엔드 서비스 풀을 물리적으로 분리할 수 있다[^5][^17]. 아래는 Bifrost 게이트웨이의 무중단 드레인 설정과 Gateway API 헤더 라우팅, 그리고 `agentgateway`의 CEL 기반 접근 제어 정책을 결합한 프로덕션 매니페스트 예시이다.
+이 장은 앞에서 본 스펙 변경을 실제 매니페스트와 코드로 옮긴다. 먼저 쿠버네티스 리소스로 라우팅 경계를 나누는 방법부터 정리한다. `Mcp-Method`와 `Mcp-Name` 헤더가 있으면 표준 `HTTPRoute` 리소스만으로 라우팅을 나눌 수 있다[^5][^17]. 읽기 전용 도구와 변경(Mutation) 도구를 서로 다른 백엔드 서비스 풀로 물리적으로 분리할 수 있다. 아래 예시는 세 가지를 한 번에 묶는다. Bifrost 게이트웨이의 무중단 드레인 설정, Gateway API 헤더 라우팅, 그리고 `agentgateway`의 CEL 기반 접근 제어 정책이다.
 
 ```yaml
 apiVersion: gateway.networking.k8s.io/v1
@@ -340,7 +333,7 @@ spec:
           periodSeconds: 60
 ```
 
-여기에 `agentgateway`의 CEL 정책을 추가하면 RFC 9207 기반 토큰 발급자(`jwt.iss`) 검증(SEP-2468)과 도구별 권한 검사를 단일 표현식으로 선언할 수 있다[^10][^16].
+여기에 `agentgateway`의 CEL 정책을 더하면 권한 검사까지 선언형으로 내려간다. RFC 9207 기반 토큰 발급자(`jwt.iss`) 검증(SEP-2468)과 도구별 권한 검사를 단일 표현식으로 쓸 수 있다[^10][^16].
 
 ```yaml
 apiVersion: agentgateway.dev/v1alpha1
@@ -375,11 +368,11 @@ spec:
 
 ### 5.2 TypeSafe System One(Jev)을 결합한 도구 호출 인자 위험도 스냅 판정
 
-L7 헤더 매칭과 CEL 표현식은 `Mcp-Name`이나 JWT 클레임 같은 **정적·구조적 조건**을 수 마이크로초 내에 필터링하지만, 도구 인자(`arguments`) 내부의 **의미론적 위험도(Semantic Risk)**까지는 판별하지 못한다. 예를 들어 허용된 도구인 `execute_readonly_sql`이나 `run_diagnostic_command`의 인자 문자열 안에 주석이나 인코딩으로 위장된 간접 프롬프트 주입(Indirect Prompt Injection)이 포함되어 있거나, 운영 시간대에 전체 테이블 풀 스캔을 유발하는 조건절 누락 쿼리가 유입될 수 있다.
+L7 헤더 매칭과 CEL 표현식은 수 마이크로초 안에 **정적·구조적 조건**을 걸러낸다. 대상은 `Mcp-Name`이나 JWT 클레임 같은 값이다. 그러나 도구 인자(`arguments`) 내부의 **의미론적 위험도(Semantic Risk)**는 판별하지 못한다. 예를 들어 `execute_readonly_sql`이나 `run_diagnostic_command`처럼 허용된 도구가 있다. 그 인자 문자열 안에 주석이나 인코딩으로 위장된 간접 프롬프트 주입(Indirect Prompt Injection)이 숨어 있을 수 있다. 또는 운영 시간대에 전체 테이블 풀 스캔을 유발하는 조건절 누락 쿼리가 유입될 수 있다.
 
-이때 프록시 미들웨어에서 거대 생성형 LLM을 호출하여 사고 사슬(CoT, Chain-of-Thought) 추론을 돌리면 수 초의 지연이 추가되어 Stateless 게이트웨이의 이점이 사라진다. 대신 제어 흐름은 호스트 코드가 쥐고, **TypeSafe System One(`Jev`)**의 비생성형 단일 패스 스냅 판정(`POST /v1/systemone`, 지연 시간 $70 \sim 120\text{ms}$, $1\text{M}$ 입력 토큰당 $\$0.042$, 스키마 에러율 $0\%$)을 호출하여 원자적 질문들을 병렬 평가한다[^18].
+이때 프록시 미들웨어에서 거대 생성형 LLM을 불러 사고 사슬(CoT, Chain-of-Thought) 추론을 돌리면 어떻게 될까. 수 초의 지연이 붙어 Stateless 게이트웨이의 이점이 사라진다. 대신 제어 흐름은 호스트 코드가 쥔다. 그리고 **TypeSafe System One(`Jev`)** 의 비생성형 단일 패스 스냅 판정을 호출해 원자적 질문들을 병렬 평가한다[^18]. 호출 엔드포인트는 `POST /v1/systemone`이다. 지연 시간은 $70 \sim 120\text{ms}$이고, 비용은 $1\text{M}$ 입력 토큰당 $\$0.042$, 스키마 에러율은 $0\%$다.
 
-게이트웨이 미들웨어의 상태 공간 $\mathcal{S}$와 원자적 질문 집합 $\mathcal{Q}$로부터 최종 라우팅 결정 $D \in \{\text{ALLOW}, \text{ELICIT}, \text{DENY}\}$를 도출하는 결정론적 매핑은 다음과 같다.
+게이트웨이 미들웨어는 상태 공간 $\mathcal{S}$와 원자적 질문 집합 $\mathcal{Q}$에서 최종 결정을 뽑아낸다. 결정 $D$는 $\{\text{ALLOW}, \text{ELICIT}, \text{DENY}\}$ 중 하나다. 이 매핑은 결정론적이며 식은 다음과 같다.
 
 $$
 D(\mathcal{S}) = \begin{cases}
@@ -389,7 +382,7 @@ D(\mathcal{S}) = \begin{cases}
 \end{cases}
 $$
 
-다음은 `POST /v1/systemone` 엔드포인트로 전송되는 원시 HTTP 요청 페이로드 구조이다. 모든 런타임 텔레메트리와 도구 인자는 `state` 객체에만 격리하고, `questions`에는 배경 데이터 없이 순수 판정 기준만 명시한다[^18].
+다음은 `POST /v1/systemone`으로 보내는 원시 HTTP 요청 페이로드 구조다. 모든 런타임 텔레메트리와 도구 인자는 `state` 객체에만 격리한다. `questions`에는 배경 데이터 없이 순수 판정 기준만 명시한다[^18].
 
 ```json
 {
@@ -434,7 +427,7 @@ $$
 }
 ```
 
-이를 Python 기반 MCP 게이트웨이 미들웨어에서 TypeSafe SDK(`Choice`, `Score`, `Noul`)로 호출하고, 임계값에 따라 **SEP-2164 표준 `-32602` 차단 응답** 또는 **SEP-2260 `InputRequiredResult` 사용자 승인 유도**를 반환하는 결정론적 호스트 코드이다[^6][^12][^18].
+이 판정을 Python 기반 MCP 게이트웨이 미들웨어에서 호출한다고 하자. TypeSafe SDK의 `Choice`, `Score`, `Noul`로 질문을 정의할 수 있다. 임계값에 따라 결과는 두 갈래로 갈린다. **SEP-2164 표준 `-32602` 차단 응답** 또는 **SEP-2260 `InputRequiredResult` 사용자 승인 유도**다[^6][^12][^18]. 아래 코드는 그 결정론적 호스트 코드다.
 
 ```python
 from typing import Any, Dict
@@ -549,26 +542,21 @@ def evaluate_mcp_tool_call(
     return {"action": "FORWARD_TO_UPSTREAM", "state": runtime_state}
 ```
 
-**핵심 요약 — Kubernetes `HTTPRoute`와 `agentgateway` CEL 정책으로 L7 헤더(`Mcp-Method`, `Mcp-Name`) 및 OAuth `iss` 검증을 마이크로초 단위로 수행하고, 고위험 도구 호출에 대해서만 TypeSafe System One(`Jev`) 스냅 판정과 SEP-2260 Stateless Elicitation을 결합하면 지연 시간 증가를 최소화하면서 의미론적 사고를 방어할 수 있다.**
+**핵심 요약 — Kubernetes `HTTPRoute`와 `agentgateway` CEL 정책을 쓰면 L7 헤더 검증을 마이크로초 단위로 수행할 수 있다. 검증 대상은 `Mcp-Method`, `Mcp-Name`, 그리고 OAuth `iss`다. 여기에 고위험 도구 호출에만 TypeSafe System One(`Jev`) 스냅 판정과 SEP-2260 Stateless Elicitation을 결합한다. 그러면 지연 시간 증가를 최소화하면서 의미론적 사고를 방어할 수 있다.**
 
 ---
 
 ## 6. 엔지니어링 한계와 트레이드오프
 
-`2026-07-28` Stateless MCP 스펙과 차세대 AI 게이트웨이 아키텍처를 프로덕션에 도입할 때는 다음 다섯 가지 엔지니어링 한계와 트레이드오프를 반드시 아키텍처에 반영해야 한다.
+이 장은 도입 전에 반드시 짚어야 할 한계 다섯 가지를 정리한다. `2026-07-28` Stateless MCP 스펙과 차세대 AI 게이트웨이 아키텍처를 프로덕션에 넣을 때는 아래 트레이드오프를 설계에 반영해야 한다.
 
-1. **핸들 패턴(Handle Pattern) 전환에 따른 상태 서명·만료 관리 책임 전가**:
-   - 전송 계층에서 `Mcp-Session-Id`가 제거되었다고 해서 애플리케이션의 상태 관리 복잡도가 사라진 것은 아니다. 각 MCP 도구 서버 개발자는 발급하는 핸들(`basket_id`, `browser_id`)이 타 테넌트에 의해 추측되거나 위변조되지 않도록 HMAC-SHA256 서명 또는 AEAD(예: AES-256-GCM) 암호화를 직접 적용해야 하며, 에이전트가 비정상 종료되었을 때 고아(Orphaned) 핸들과 백엔드 리소스를 정리하는 TTL(Time-To-Live) 가비지 컬렉션 파이프라인을 직접 구축해야 한다.
-2. **Stateless Elicitation의 `requestState` 페이로드 크기 증가와 네트워크 오버헤드**:
-   - SEP-2260·SEP-2322에 따라 서버가 중간 실행 상태를 `requestState` 토큰으로 직렬화해 클라이언트에 왕복 전달하면, 서버 측 메모리 점유는 0이 되지만 HTTP 요청·응답 본문 크기가 커진다. 다단계 승인 과정에서 중간 컨텍스트가 수십 킬로바이트를 넘어가면 모바일·원격 클라이언트의 네트워크 대역폭을 소모하므로, 직렬화 상태가 임계 크기(예: $16\text{KB}$)를 초과할 때는 암호화된 페이로드 대신 짧은 만료 시간을 가진 외부 캐시 참조 키(Reference Handle)를 `requestState`에 담는 하이브리드 설계가 필요하다.
-3. **Bifrost 가십(Gossip) 프로토콜의 최종 일관성(Eventual Consistency) 한계**:
-   - Bifrost처럼 외부 Redis 없이 파드 간 가십 프로토콜로 속도 제한과 토큰 예산을 동기화하면 데이터플레인 오버헤드를 11µs 수준으로 낮출 수 있다. 그러나 가십 전파 주기(수백 밀리초) 동안 20개 이상의 파드에 동시 다발적인 버스트 요청이 유입되면, 클러스터 전체 합산 기준으로는 설정된 분당 토큰 한도를 일시적으로 5~12% 초과 허용(Over-admission)할 수 있다. 엄격한 선불 크레딧 차단이 요구되는 과금 경계에서는 안전 마진(Safety Margin)을 두거나 중앙 집중형 원자적 카운터와 병행해야 한다.
-4. **신뢰도 임계값(Confidence Threshold)의 도메인별 홀드아웃 보정 필수**:
-   - 섹션 5의 System One(`Jev`) 코드에 제시된 `0.82`나 `0.88`과 같은 확률·신뢰도 임계값은 모든 환경에 통용되는 고정 상수가 아니다. 실제 프로덕션 배포 전 반드시 사내 MCP 도구 호출 이력과 레드팀 공격 샘플로 구성된 **독립 홀드아웃 데이터셋(Held-out Dataset)**에서 정밀도-재현율(Precision-Recall) 곡선을 실측하여 도구 위험 등급별로 임계값을 보정(Calibration)해야 한다[^18].
-5. **타입 안정성(Type Safety) $\neq$ 판정 무오류성 및 다층 방어(Defense-in-Depth) 원칙**:
-   - System One(`Jev`)이 스키마 깨짐 없는 응답(포맷 에러율 0%)과 일관된 스냅 판정을 제공하더라도, 이는 모델의 의미론적 판단이 항상 무오류(Infallible)함을 보장하지 않는다. 정교하게 우회된 적대적 인자 주입(Steerability) 가능성에 대비하여, Jev 단독 가드레일에 의존하지 말고 `agentgateway`의 결정론적 CEL 규칙, OAuth 2.0 `iss`·자격증명 바인딩(SEP-2468·SEP-2352), JSON Schema 외부 `$ref` 역참조 차단(SEP-2106), 그리고 백엔드 실행 컨테이너의 네트워크 샌드박싱을 결합한 다층 방어 체계를 유지해야 한다.
+1. **핸들 패턴(Handle Pattern) 전환에 따른 상태 서명·만료 관리 책임 전가** — 전송 계층에서 `Mcp-Session-Id`가 빠졌다고 상태 관리 복잡도가 사라지는 것은 아니다. 각 MCP 도구 서버 개발자는 자기가 발급하는 핸들(`basket_id`, `browser_id`)이 타 테넌트에 추측되거나 위변조되지 않도록 막아야 한다. HMAC-SHA256 서명이나 AEAD(예: AES-256-GCM) 암호화를 직접 적용해야 한다. 에이전트가 비정상 종료되었을 때 고아(Orphaned) 핸들과 백엔드 리소스를 정리하는 TTL(Time-To-Live) 가비지 컬렉션 파이프라인도 직접 구축해야 한다.
+2. **Stateless Elicitation의 `requestState` 페이로드 크기 증가와 네트워크 오버헤드** — SEP-2260·SEP-2322에 따라 서버는 중간 실행 상태를 `requestState` 토큰으로 직렬화한다. 그리고 클라이언트에 왕복 전달한다. 그러면 서버 측 메모리 점유는 0이 되지만 HTTP 요청·응답 본문 크기가 커진다. 다단계 승인에서 중간 컨텍스트가 수십 킬로바이트를 넘으면 모바일·원격 클라이언트의 네트워크 대역폭을 그만큼 소모한다. 그래서 직렬화 상태가 임계 크기(예: $16\text{KB}$)를 초과할 때는 하이브리드 설계가 필요하다. 암호화된 페이로드 대신 짧은 만료 시간을 가진 외부 캐시 참조 키(Reference Handle)를 `requestState`에 담는다.
+3. **Bifrost 가십(Gossip) 프로토콜의 최종 일관성(Eventual Consistency) 한계.** 외부 Redis 없이 파드 간 가십으로 속도 제한과 토큰 예산을 동기화하면 오버헤드는 11µs 수준까지 내려간다. 그러나 가십 전파 주기(수백 밀리초) 동안 20개 이상의 파드에 버스트 요청이 동시에 몰릴 수 있다. 그러면 클러스터 전체 합산 기준으로 설정된 분당 토큰 한도를 일시적으로 5~12% 초과 허용(Over-admission)한다. 엄격한 선불 크레딧 차단이 필요한 과금 경계에서는 안전 마진(Safety Margin)을 두거나 중앙 집중형 원자적 카운터와 병행해야 한다.
+4. **신뢰도 임계값(Confidence Threshold)의 도메인별 홀드아웃 보정 필수.** 섹션 5의 System One(`Jev`) 코드에 나온 `0.82`나 `0.88` 같은 임계값은 모든 환경에 통용되는 고정 상수가 아니다. 실제 프로덕션 배포 전 사내 MCP 도구 호출 이력과 레드팀 공격 샘플로 **독립 홀드아웃 데이터셋(Held-out Dataset)** 을 구성해야 한다. 그 데이터셋에서 정밀도-재현율(Precision-Recall) 곡선을 실측한다. 그리고 도구 위험 등급별로 임계값을 보정(Calibration)한다[^18].
+5. **타입 안정성(Type Safety) $\neq$ 판정 무오류성 및 다층 방어(Defense-in-Depth) 원칙.** System One(`Jev`)은 스키마 깨짐 없는 응답(포맷 에러율 0%)과 일관된 스냅 판정을 준다. 그렇다고 판단이 항상 무오류(Infallible)라는 뜻은 아니다. 정교하게 우회된 적대적 인자 주입(Steerability) 가능성에 대비해야 한다. 그래서 Jev 단독 가드레일에 의존하지 않는다. `agentgateway`의 결정론적 CEL 규칙, OAuth 2.0 `iss`·자격증명 바인딩(SEP-2468·SEP-2352)을 함께 둔다. JSON Schema 외부 `$ref` 역참조 차단(SEP-2106)과 백엔드 실행 컨테이너의 네트워크 샌드박싱도 함께 유지한다.
 
-**핵심 요약 — Stateless MCP 전환은 게이트웨이 병목을 해소하지만 핸들 암호화·TTL 관리와 `requestState` 크기 제어 책임을 애플리케이션 계층으로 이동시키며, Gossip 최종 일관성 오차와 Jev 임계값 홀드아웃 보정 및 정적 CEL 규칙과의 다층 방어를 함께 설계해야 프로덕션 안정성이 완성된다.**
+**핵심 요약 — Stateless MCP 전환은 게이트웨이 병목을 해소한다. 그러나 핸들 암호화·TTL 관리와 `requestState` 크기 제어 책임을 애플리케이션 계층으로 옮긴다. Gossip 최종 일관성 오차와 Jev 임계값 홀드아웃 보정을 함께 다뤄야 한다. 정적 CEL 규칙과의 다층 방어를 함께 설계해야 프로덕션 안정성이 완성된다.**
 
 ---
 
