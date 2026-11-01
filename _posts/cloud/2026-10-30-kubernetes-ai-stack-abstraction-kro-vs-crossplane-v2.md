@@ -11,15 +11,21 @@ date: 2026-10-30
 last_modified_at: 2026-11-01
 ---
 
+금요일 밤, 모델 버전 하나를 올리려고 저장소를 열었더니 서로 다른 팀이 관리하는 매니페스트가 여러 벌로 흩어져 있었다. 어느 파일을 먼저 고쳐야 하는지 적어 둔 사람은 없었다.
+
 엔터프라이즈 환경에서 대규모 언어 모델(LLM)이나 멀티모달 에이전트 서비스를 쿠버네티스(Kubernetes) 클러스터 위에 프로덕션 수준으로 배포하는 일은 단순하지 않다. 단일 `Deployment`와 `Service` 두 개의 YAML 파일로는 끝나지 않는다. 앞서 살펴본 [쿠버네티스 DRA(Dynamic Resource Allocation) 기반 GPU 스케줄링](/k8s/kubernetes-dra-dynamic-resource-allocation-gpu/)[^1]으로 NVLink와 RDMA NIC 토폴로지를 할당한다. [분리형 서빙(Disaggregated Serving) 및 Gateway API Inference Extension(GAIE)](/llm/enterprise-ai-platform-disaggregated-serving-kvcache-gaie/)[^2]으로 프리필(Prefill)과 디코드(Decode) 파드 풀을 제어한다. 여기에 [Cilium Tetragon eBPF 커널 보안 및 OTel GenAI 관측성](/k8s/ebpf-ai-observability-cilium-tetragon-otel-genai-trajectory-eval/)[^3]까지 결합하면 사정이 달라진다. 단일 모델을 서빙하는 데만 최소 6개 이상의 **사용자 정의 리소스 정의(CustomResourceDefinition, CRD)** 인스턴스가 필요하다. 그것도 상호 참조로 엮은 상태여야 한다.
 
 문제는 그 요구 대상이 바뀔 때 생긴다. 플랫폼 위에서 모델을 배포하려는 애플리케이션 엔지니어와 ML 연구원에게 하부 인프라 CRD의 세부 스펙을 직접 작성하라고 요구하기 때문이다. 서비스 하나당 400~700줄에 달하는 YAML 보일러플레이트가 수십 개 팀의 Git 저장소로 복제된다. 그 과정에서 레이블 셀렉터 불일치, 보안 정책 누락, 버전 파편화 같은 **설정 드리프트(Configuration Drift)**가 일상화된다. 기존 [IaC와 GitOps 실전 아키텍처(Terraform·Helm·ArgoCD·Flux)](/cloud/iac-gitops/)[^4]에서 표준으로 쓰이던 Helm 차트는 정적 문자열 치환에 기반한다. 따라서 선행 리소스의 런타임 상태(`status`)를 읽어 후행 리소스의 스펙(`spec`)에 주입하는 동적 의존성 오케스트레이션은 수행하지 못한다.
+
+Helm은 반죽을 한 번 섞어 오븐에 넣는 방식에 가깝다. 다 구워진 뒤에야 속을 들여다볼 수 있고, 그 결과를 다시 반죽에 되돌리는 단계는 없다.
 
 인클러스터 AI 추론 스택과 클라우드 외부 리소스를 단일 추상화 API로 캡슐화하는 방법이 궁금했다. 그 답을 찾으려고 쿠버네티스 네이티브 리소스 합성기인 **kro(Kube Resource Orchestrator)**[^5]를 살펴본다. 2025년 하반기에 아키텍처를 전면 개편한 **Crossplane v2**[^6]의 내부 동작 원리도 함께 본다. 두 도구의 조합 패턴을 개인 연구 및 아키텍처 리뷰 목적으로 정리해 보았습니다.
 
 ---
 
 ## 1. AI 서비스 하나를 배포하기 위해 왜 6개의 CRD를 손으로 엮어야 하는가
+
+새 모델을 붙이려고 저장소를 열었더니 GPU 요청서, 분산 추론 워크로드, 라우팅 설정, 커널 보안 정책이 저마다 다른 폴더에 흩어져 있었다. 한 파일을 고치면 다른 파일의 레이블이 어긋났다.
 
 이 절은 AI 서비스 하나를 배포할 때 매니페스트가 왜 여섯 갈래로 찢어지는지 정리한다. 현대 쿠버네티스 기반 AI 플랫폼은 기능마다 담당 오퍼레이터(Operator)를 따로 두는 구조로 발전했다. 하드웨어 친화성(Hardware Affinity), 멀티노드 분산 통신, KV 캐시 인지형 라우팅, 커널 샌드박싱이 각각 독립된 오퍼레이터로 나뉘어 있다. 이 모듈화 전략은 개별 컴포넌트의 전문성을 높였다. 반면 최종 사용자 관점에서는 심각한 **매니페스트 파편화(Manifest Fragmentation)**를 초래했다.
 
@@ -61,6 +67,8 @@ $$P_{\text{drift}}(M, K) = 1 - (1 - \epsilon)^{E_{\text{total}}(M, K)} \approx 1
 
 ## 2. kro(Kube Resource Orchestrator) 해부: ResourceGraphDefinition과 CEL DAG
 
+서비스 하나를 배포할 때마다 같은 매니페스트를 복사해 이름만 바꾸는 작업을 반복하고 있었다면, 그 복사본을 대신 만들어 줄 상위 API 하나를 원하게 된다. 그 API가 하위 리소스를 어떤 순서로 엮는지가 관건이 된다.
+
 이 절은 클러스터 안의 리소스 여러 개를 하나의 고수준 API로 묶는 방법을 다룬다. 그 문제를 풀기 위해 AWS, Google Cloud, Microsoft Azure가 공동으로 설계한 오픈소스 컨트롤러가 **kro(Kube Resource Orchestrator)**다[^5]. `kro`는 클라우드 벤더 종속성 없이 표준 쿠버네티스 API만으로 복수의 리소스를 하나의 고수준 API로 캡슐화한다.
 
 ![클라우드 외부 인프라를 프로비저닝하는 Crossplane v2와 인클러스터 AI 추론 스택을 합성하는 kro(Kube Resource Orchestrator) 아키텍처 비교](/assets/images/cloud/kubernetes-ai-stack-abstraction-kro-crossplane-v2-cognition.webp)
@@ -73,6 +81,8 @@ $$P_{\text{drift}}(M, K) = 1 - (1 - \epsilon)^{E_{\text{total}}(M, K)} \approx 1
 2. **하위 리소스 스키마 인트로스펙션(Introspection)**: RGD의 `spec.resources` 배열에 어떤 리소스가 나열돼 있는지 본다. 각 대상 리소스의 스키마를 쿠버네티스 API 서버의 Discovery 엔드포인트에서 조회한다. 대상 리소스로는 `LeaderWorkerSet`, `ResourceClaimTemplate`, `InferencePool` 등이 있다. 조회 결과로 메모리 상에 타입 심볼 테이블을 구축한다.
 3. **정적 표현식 검증 및 유향 비순환 그래프(DAG) 컴파일**: 리소스 간에 작성된 모든 **공통 표현식 언어(Common Expression Language, CEL)**[^8] 참조식을 파싱한다. 참조 대상 필드의 존재 여부와 출력·입력 타입 일치 여부를 정적으로 검증한다. 이어서 리소스 간 실행 순서 그래프를 생성한다.
 4. **동적 마이크로 컨트롤러(Dynamic Controller) 기동**: 검증이 통과되면 RGD 상태가 `Active`로 전환된다. 그러면 `kro` 프로세스 내부의 동적 인포머(Informer)와 리컨실러 루프가 새로 등록된 커스텀 리소스의 이벤트를 감시한다. 커스텀 리소스의 예로 `DisaggregatedLLMService`가 있다. 생성·수정·삭제 이벤트와 하위 리소스들의 변화를 상시 감시한다.
+
+RGD는 조립 설명서 한 장을 받으면 부품 목록과 조립 순서를 스스로 만들어 내는 작업반장과 같다. 부품이 도착하지 않았으면 다음 공정을 시작하지 않고, 설명서에 없는 부품 이름을 적으면 공정을 시작하기도 전에 반려된다.
 
 ### 2.2 SimpleSchema와 튜링 불완전 CEL(Common Expression Language) 정적 타입 검증
 
@@ -108,6 +118,8 @@ $$T_{\text{provision}}(G) = \sum_{d=1}^{D} \max_{r \in L_d} \left( t_{\text{appl
 
 ## 3. Crossplane v2(2025.08+) 아키텍처 개편: 네임스페이스 Managed Resources와 Claims의 폐기
 
+개발팀이 자기 네임스페이스 안에서 클라우드 버킷 하나를 만들려 했는데, 실제로는 성격이 다른 오브젝트 세 개를 순서대로 만들어야 했다. 마지막 단계는 클러스터 전체 권한을 가진 사람만 밟을 수 있었다.
+
 이 절은 클러스터 바깥의 클라우드 자원을 쿠버네티스 API로 다루는 쪽을 정리한다. `kro`가 클러스터 **내부(In-cluster)** 리소스 합성에 집중한다면, 바깥은 다른 도구가 맡는다. VPC, S3 버킷, IAM Role, RDS, Azure CosmosDB 같은 클라우드 외부 관리형 인프라를 쿠버네티스 API로 프로비저닝하는 영역이다. 이 영역의 사실상 표준 도구는 CNCF 프로젝트인 **크로스플레인(Crossplane)**이다[^6]. Crossplane은 이들 자원의 생명주기까지 관리한다.
 
 ![Flux GitOps Toolkit 컨트롤러 구조: source·kustomize·helm·notification 컨트롤러가 각각 CRD를 감시하고 클러스터 상태를 수렴시키는 구조](/assets/images/cloud/official-flux-gitops-toolkit.webp)
@@ -130,6 +142,8 @@ Crossplane v1에서는 AWS S3 버킷이나 IAM 역할 같은 모든 **관리형 
 - **1. 관리형 리소스의 네임스페이스 스코프 전환**: Crossplane v2 MR은 이제 기본으로 **네임스페이스 스코프(Namespaced)**로 동작한다. AWS, Azure, GCP 프로바이더 모두 같다. 애플리케이션 네임스페이스 안에 `Pod`, `Service`와 나란히 S3 `Bucket`이나 IAM `Role`을 직접 배치할 수 있다. 팀별 클라우드 인프라 접근 통제는 쿠버네티스 표준 `Role` 및 `RoleBinding`만으로 완결된다.
 - **2. Claims(XRC) 계층의 완전 폐기와 네임스페이스 XR**: 복합 리소스(XR) 정의 자체가 네임스페이스 스코프를 지원한다. `CompositeResourceDefinition`(XRD v2)에서 만드는 XR이 `scope: Namespaced`를 직접 받는다. 이에 따라 v1에서 네임스페이스 노출만을 위해 존재했던 **Claims(`claimNames`) 메커니즘이 폐기(Deprecated & Removed in v2 API)**되었다. 복합 인프라 하나를 배포할 때 API 서버(etcd)에 생성되는 객체 수가 줄어든다. $\text{Claim} + \text{XR} + K \cdot \text{MR}$에서 $\text{XR} + K \cdot \text{MR}$로 단축된다. 교차 스코프 참조로 인한 GitOps 상태 추적 불일치도 사라졌다.
 - **3. Composition Functions 도입**: v2의 `Composition`에서는 레거시 YAML 패치 배열(`resources[].patches`)이 제거됐다. 네이티브 Patch-and-Transform 방식도 사라졌다. 모든 합성 로직이 **`mode: Pipeline` 기반의 컴포지션 함수(Composition Functions)**로 일원화되었다[^10]. 플랫폼 엔지니어는 여러 언어로 작성된 gRPC 함수를 파이프라인 단계로 연결한다. Go 템플릿(`function-go-templating`), KCL(`function-kcl`), CEL(`function-cel-filter`), 또는 범용 Python·Go 컨테이너가 그 재료다. 이렇게 외부 클라우드 리소스들을 프로그래밍 방식으로 조합한다.
+
+이전 구조는 건물마다 관리실을 거쳐야만 택배를 보낼 수 있던 것과 같다. 관리실이 사라지고 세대 앞에 우편함이 놓이면, 보내는 사람은 자기 앞에서 한 번만 접수하면 된다.
 
 ### 3.3 클라우드 외부 리소스 프로비저닝을 위한 Crossplane v2 XRD & Composition 예시
 
@@ -230,6 +244,8 @@ spec:
 
 이 절은 앞의 두 도구와 Helm을 나란히 놓고 어디에 무엇을 쓸지 정리한다. 클라우드 네이티브 플랫폼을 설계할 때 흔히 범하는 오류가 있다. 하나의 도구로 모든 계층의 문제를 해결하려는 것이다. Crossplane으로 인클러스터 파드와 서비스까지 전부 감싸면 유지보수 비용이 급증한다. 반대로 Helm 차트 하나에 Terraform 역할까지 우겨넣어도 결과는 같다.
 
+택배 회사가 장거리 간선 운송과 집 앞 배송을 나눠 맡는 것과 같다. 한 회사가 둘 다 떠안으면 트럭도 창고도 각각 따로 준비해야 하고, 한쪽이 밀릴 때 다른 쪽까지 같이 늦어진다.
+
 ### 4.1 3대 쿠버네티스 추상화 도구 정량·정성 비교 매트릭스
 
 | 비교 항목 | Helm (v3 / v4) | kro (`kro.run/v1alpha1`) | Crossplane v2 (`apiextensions.crossplane.io/v2`) |
@@ -263,6 +279,8 @@ $$M_{\text{apiserver}} = N_{\text{CRD}} \cdot m_{\text{schema}} + \sum_{k=1}^{N_
 ---
 
 ## 5. 실전 매니페스트와 TypeSafe Jev 기반 플랫폼 PR 정책 검증
+
+PR 하나를 올렸는데 리뷰어가 GPU 수량과 보안 예외 사유를 사람 눈으로 따져 보는 동안 머지가 계속 밀렸다면, 그 판단을 배포 전 게이트로 옮길 수 있는지가 문제가 된다. 그 판단 기준을 코드로 고정해 두면 리뷰 품질이 리뷰어의 기억에 좌우되지 않는다.
 
 이 절은 앞서 설계한 2계층 아키텍처를 배포 가능한 코드로 옮긴다. 먼저 6개의 인클러스터 AI CRD를 하나로 묶는 `kro` `ResourceGraphDefinition`을 작성한다. 이어서 개발자가 GitOps 저장소에 제출한 커스텀 리소스 PR을 검증하는 파이프라인을 붙인다. PR의 아키텍처·보안·비용 정합성을 **TypeSafe System One(`Jev`)**[^12]으로 스냅 판정하는 파이프라인이다.
 
@@ -445,6 +463,8 @@ spec:
 
 이런 PR 컨텍스트를 거대 생성형 LLM의 사고 연쇄(Chain-of-Thought, CoT)로 심사한다고 하자. 그러면 건당 4~8초의 지연이 생긴다. 비결정론적 JSON 파싱 오류도 함께 발생한다. 반면 **TypeSafe System One(`Jev`)**의 `/v1/systemone` 엔드포인트는 다르다. 단일 포워드 패스(Single-pass) 토큰 확률 분포 평가만 수행한다. 그 결과 70~150ms 내에 세 가지 원자적 질문을 병렬 판정(Speculative Fan-Out)한다[^12].
 
+사고 연쇄 심사는 지원자에게 자기소개를 길게 시키고 그 답변을 다시 읽어 채점하는 면접에 가깝다. 단일 패스 평가는 신분증 사진과 얼굴을 한 번 대조하고 끝내는 검문에 가깝다.
+
 **1) HTTP 엔드포인트(`/v1/systemone`) 요청 페이로드 구조**
 
 ```json
@@ -557,6 +577,8 @@ def evaluate_disaggregated_llm_pr(pr_state: Dict[str, Any]) -> GitOpsGateDecisio
 
 ## 6. 엔지니어링 한계와 트레이드오프
 
+`kro`로 만든 리소스를 클러스터에 올린 뒤 팀에서 LoRA 어댑터를 2개에서 5개로 늘려 달라고 요청했다. RGD의 스키마 배열 길이만 바꿨는데도 하위 `ConfigMap`은 여전히 2개만 생성됐다. 이것이 CEL의 표현력 한계가 운영에서 드러나는 첫 장면이다.
+
 이 절은 지금까지의 구성을 프로덕션에 넣을 때 남는 한계를 정리한다. `kro`와 Crossplane v2, 그리고 `Jev` 기반 PR 게이트에는 다섯 가지 운영상 트레이드오프가 있다. 설계 단계에서 미리 반영해야 한다. 앞의 세 가지는 도구 자체의 구조에서 오고, 뒤의 두 가지는 검증 계층 운영에서 생긴다.
 
 1. **kro API 성숙도(`v1alpha1`)와 튜링 불완전 CEL의 반복문 표현 제약**: `kro`는 2025~2026년 기준 `kro.run/v1alpha1` 단계로 발전 중이다. CEL이 튜링 불완전하기 때문에 동적 팬아웃(Dynamic Resource Fan-out)에 제약이 따른다. 입력 배열(`loraAdapters: [...]`)의 원소 수만큼 서로 다른 하위 `ConfigMap`이나 `HTTPRoute`를 N개 복제 생성하는 일이 그 예다. 입력 배열 길이에 따라 리소스 개수 자체가 변해야 하는 변환이 있다. 그런 변환은 Crossplane v2의 `function-kcl` 또는 `function-go-templating` 파이프라인으로 처리하는 편이 적합하다.
@@ -567,6 +589,8 @@ def evaluate_disaggregated_llm_pr(pr_state: Dict[str, Any]) -> GitOpsGateDecisio
 
 4. **Jev 판정 임계값의 홀드아웃 데이터셋 보정 필수성**: 5.2절의 GitOps PR 게이트 코드에서 쓴 확률 임계값(`prob >= 0.82`)은 임의로 하드코딩하면 안 된다. 사내에서 실제로 발생했던 과거 PR 반려 이력이 필요하다. OOM 장애를 유발한 매니페스트와 정상 승인 PR도 모아야 한다. 이렇게 모은 **독립 홀드아웃 검증셋(Held-out Validation Set)**으로 정밀도(Precision)와 재현율(Recall) 곡선을 측정한다. 그 뒤 도메인에 맞게 임계값을 보정해야 한다.
 5. **타입 안전성과 무오류성은 다르다**: 타입 안전성(Type Safety)이 무오류성(Infallibility)을 뜻하지는 않는다. `kro`의 CEL 정적 타입 검사와 `Jev`의 스키마 보장 응답(파싱 에러율 0%)은 **인터페이스 계약의 안전성**만 보장한다. 모델의 시맨틱 판정이 항상 참이라는 뜻도 아니다. 런타임 장애가 발생하지 않는다는 뜻도 아니다. PR 설명란에 적대적 프롬프트 주입(Adversarial Steering)을 시도해 `Jev`의 점수를 우회하려 할 수도 있다. 따라서 심층 방어(Defense-in-Depth)가 필요하다. `enableKernelSandbox: false` 금지나 GPU 상한선 같은 핵심 불변식(Invariant)은 쿠버네티스 네이티브 수단으로 이중 강제해야 한다. 강제 수단은 `ValidatingAdmissionPolicy`(CEL)와 `ResourceQuota`다.
+
+건물의 잠금장치가 규격대로 설치됐다는 검사 성적서는 그 문을 아무도 열 수 없다는 뜻이 아니다. 성적서는 자물쇠가 계약대로 달렸다는 것만 보증하고, 열쇠를 가진 사람이 문을 열지 않는다는 것까지 보증하지는 않는다.
 
 **핵심 요약 —** kro의 CEL 반복문 제약, 동적 CRD의 RBAC·GitOps 트래킹 설정, Crossplane v2의 etcd 워치 부하는 사전에 설계에 반영해야 한다. Jev 시맨틱 판정은 홀드아웃 임계값 보정과 쿠버네티스 네이티브 Admission Policy, 다층 방어로 결합해야 한다.
 
