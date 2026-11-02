@@ -168,7 +168,7 @@ OverlayFS 4계층 아키텍처:
 2. **`etcd`**:
    - 클러스터의 모든 Desired State와 런타임 메타데이터를 저장하는 강력한 일관성(Strong Consistency) 기반의 분산 키-값 저장소다. **Raft 합의 알고리즘**을 기반으로 고가용성을 유지한다.
 3. **`kube-scheduler`**:
-   - 아직 노드가 배정되지 않은 신규 파드(Pod)를 감지하고, 노드의 리소스 가용량(CPU/RAM), 태인트와 톨러레이션(Taints & Tolerations), 노드 어피니티(Affinity)를 평가하는 2단계(필터링 $\rightarrow$ 스코어링)를 거쳐 최적의 노드를 바인딩한다.
+   - 아직 노드가 배정되지 않은 신규 파드(Pod)를 감지하고, 노드의 리소스 가용량(CPU/RAM), 태인트와 톨러레이션(Taints & Tolerations), 노드 어피니티(Affinity)를 평가하는 2단계(필터링 → 스코어링)를 거쳐 최적의 노드를 바인딩한다.
 4. **`kube-controller-manager`**:
    - 클러스터의 수많은 컨트롤러(Deployment, ReplicaSet, Node, ServiceAccount)를 단일 프로세스로 실행한다.
 

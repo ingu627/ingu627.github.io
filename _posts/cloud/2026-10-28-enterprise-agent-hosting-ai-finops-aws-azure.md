@@ -29,14 +29,14 @@ last_modified_at: 2026-11-01
 
 ### 1.1 2026 AI FinOps 산업 지표와 95% 유휴 GPU 문제
 
-먼저 지출 규모와 실제 가동률을 나눠서 본다. 가트너(Gartner)의 2026년 클라우드 및 AI 인프라 지출 분석에 따르면 전 세계 기업의 신규 AI 인프라 설비 및 클라우드 지출 규모는 2026년 기준 4,010억 달러($401B)에 도달했다. 기업 전체 클라우드 지출에서 GPU 워크로드가 차지하는 비중은 2023년 4%에서 2026년 18%로 4.5배 증가했다[^6]. 단일 노드에 8개의 NVIDIA H100(80GB HBM3)을 장착한 AWS `p5.48xlarge` 인스턴스의 온디맨드 요금은 시간당 $55.04다. 1개 노드만 365일 상시 가동해도 월간 약 $40,000(연간 약 $482,000)의 고정 비용이 발생한다.
+먼저 지출 규모와 실제 가동률을 나눠서 본다. 가트너(Gartner)의 2026년 클라우드 및 AI 인프라 지출 분석에 따르면 전 세계 기업의 신규 AI 인프라 설비 및 클라우드 지출 규모는 2026년 기준 4,010억 달러(\$401B)에 도달했다. 기업 전체 클라우드 지출에서 GPU 워크로드가 차지하는 비중은 2023년 4%에서 2026년 18%로 4.5배 증가했다[^6]. 단일 노드에 8개의 NVIDIA H100(80GB HBM3)을 장착한 AWS `p5.48xlarge` 인스턴스의 온디맨드 요금은 시간당 \$55.04다. 1개 노드만 365일 상시 가동해도 월간 약 \$40,000(연간 약 \$482,000)의 고정 비용이 발생한다.
 
 그러나 투입된 비용 대비 실제 하드웨어 가동률은 낮은 수준에 머문다. CAST AI는 23,000개 이상의 프로덕션 쿠버네티스 클러스터를 전수 계측해 *2026 State of Kubernetes Optimization Report*를 발표했다. 이 보고서에 따르면 프로비저닝된 클라우드 GPU의 평균 연산 사용률(Utilization)은 5%에 불과하다. 나머지 95%의 시간과 용량은 유휴 상태로 방치되고 있다[^7]. Datadog의 컨테이너 리소스 활용률 보고서도 같은 방향을 가리킨다. 전체 컨테이너 인프라 지출의 83%가 실제 워크로드가 소비하지 않는 과잉 할당(Over-provisioned) 및 유휴 리소스에서 발생한다[^8].
 
 | 계측 지표 (2026 산업 리포트 기준) | 측정 수치 | 출처 및 계측 대상 | 비용 및 운영상 시사점 |
 | :--- | :--- | :--- | :--- |
-| 기업 클라우드 지출 내 GPU 비중 | 18% (2023년 4%) | Gartner 2026 ($401B 신규 지출) | 클라우드 예산 통제의 핵심 축이 CPU에서 GPU로 이동 |
-| `p5.48xlarge` (8×H100) 온디맨드 단가 | $55.04 / hr (월 ~$40,000) | AWS US-East 온디맨드 기준 | 단일 노드 유휴 방치 시 연간 약 6.5억 원 손실 |
+| 기업 클라우드 지출 내 GPU 비중 | 18% (2023년 4%) | Gartner 2026 (\$401B 신규 지출) | 클라우드 예산 통제의 핵심 축이 CPU에서 GPU로 이동 |
+| `p5.48xlarge` (8×H100) 온디맨드 단가 | \$55.04 / hr (월 ~\$40,000) | AWS US-East 온디맨드 기준 | 단일 노드 유휴 방치 시 연간 약 6.5억 원 손실 |
 | 쿠버네티스 클러스터 평균 GPU 사용률 | 5% (95% 유휴) | CAST AI 2026 (23,000개 클러스터) | 야간·주말 트래픽 공백 및 메모리 과잉 예약이 주원인 |
 | 전체 컨테이너 비용 중 유휴 리소스 비중 | 83% | Datadog Container Report | 오토스케일러 미작동 및 정적 리소스 요청(Requests) 고정 |
 
@@ -48,7 +48,7 @@ last_modified_at: 2026-11-01
 
 $$C_{\text{1M-tokens}}(\eta) = \frac{(P_{\text{node}} + C_{\text{overhead}}) \times 10^6}{3600 \times \Theta_{\text{max}} \times \eta}$$
 
-이 수식이 보여주는 핵심 법칙은 하나다. **유효 토큰 단가가 가동률 $\eta$에 반비례($\propto 1/\eta$)하여 비선형으로 급증한다**는 점이다. 피크 처리량 기준으로 설계된 GPU 서빙 클러스터를 예로 들자. 평균 가동률이 $\eta = 0.90$(90%)일 때 백만 토큰당 유효 비용은 $2.47이다. 그런데 주간 업무 시간 외 유휴 구간이 끼면 평균 가동률이 $\eta = 0.30$(30%)으로 떨어진다. 그 순간 동일한 인프라에서 백만 토큰당 유효 비용은 약 $8.00으로 3배 이상 치솟는다.
+이 수식이 보여주는 핵심 법칙은 하나다. **유효 토큰 단가가 가동률 $\eta$에 반비례($\propto 1/\eta$)하여 비선형으로 급증한다**는 점이다. 피크 처리량 기준으로 설계된 GPU 서빙 클러스터를 예로 들자. 평균 가동률이 $\eta = 0.90$(90%)일 때 백만 토큰당 유효 비용은 \$2.47이다. 그런데 주간 업무 시간 외 유휴 구간이 끼면 평균 가동률이 $\eta = 0.30$(30%)으로 떨어진다. 그 순간 동일한 인프라에서 백만 토큰당 유효 비용은 약 \$8.00으로 3배 이상 치솟는다.
 
 다음은 단일 에이전트 작업(Task) 단위의 추론 비용 $C_{\text{inference}}$다. 이 값은 여러 항목의 합으로 계산된다. 에이전트 루프의 평균 호출 횟수 $K$, 턴당 입력 토큰 $T_{\text{in}}^{(k)}$, 출력 및 사고 토큰 $T_{\text{out}}^{(k)}$가 앞의 세 항목이다. 외부 도구 실행 시간 $t_{\text{tool}}$ 동안 점유되는 런타임 세션 유지 비용 $C_{\text{session}}$이 마지막 항목이다.
 
@@ -58,7 +58,7 @@ $$C_{\text{inference}} = \sum_{k=1}^{K} \left( T_{\text{in}}^{(k)} \cdot c_{\tex
 
 ### 1.3 GPU 적정화(Right-sizing)와 VPA 기반 리소스 재할당
 
-GPU 단위 비용을 낮추는 첫 번째 엔지니어링 조치는 모델 파라미터 규모에 맞춘 **하드웨어 적정화(Right-sizing)**다. 모든 에이전트 서브태스크를 H100이나 A100 80GB 노드에 배치할 필요는 없다. 라우팅·분류·요약과 같은 7B 이하 소형 모델은 시간당 $0.526(`g4dn.xlarge`)인 NVIDIA T4(16GB VRAM)에 배치한다. 13B~24B 규모의 4비트/8비트 양자화(FP8/AWQ) 모델은 NVIDIA L4(24GB VRAM, `g6.xlarge`)에 매핑한다. 이렇게 하면 동일 처리량 대비 인스턴스 시간당 단가를 50~80% 절감할 수 있다.
+GPU 단위 비용을 낮추는 첫 번째 엔지니어링 조치는 모델 파라미터 규모에 맞춘 **하드웨어 적정화(Right-sizing)**다. 모든 에이전트 서브태스크를 H100이나 A100 80GB 노드에 배치할 필요는 없다. 라우팅·분류·요약과 같은 7B 이하 소형 모델은 시간당 \$0.526(`g4dn.xlarge`)인 NVIDIA T4(16GB VRAM)에 배치한다. 13B~24B 규모의 4비트/8비트 양자화(FP8/AWQ) 모델은 NVIDIA L4(24GB VRAM, `g6.xlarge`)에 매핑한다. 이렇게 하면 동일 처리량 대비 인스턴스 시간당 단가를 50~80% 절감할 수 있다.
 
 ![VPA 아키텍처: recommender·updater·admission controller를 통한 쿠버네티스 워크로드 적정화 구조](/assets/images/cloud/official-cloud-finops.webp)
 *출처: [Kubernetes Documentation — Vertical Pod Autoscaling](https://kubernetes.io/docs/concepts/workloads/autoscaling/vertical-pod-autoscale/), CC BY 4.0*
@@ -91,17 +91,17 @@ AWS의 AI 서비스는 이름이 서로 비슷해 무엇을 골라야 할지 헷
 
 이제 같은 워크로드를 두 과금 모델에 올려 비용을 숫자로 비교한다. 전형적인 사내 업무용 에이전트는 코드 리뷰, 사내 지식 검색, 재무 보고서 생성 같은 업무를 맡는다. 이런 에이전트의 트래픽은 평일 주간 업무 시간(오전 9시~오후 6시)에 집중된다. 야간 및 주말을 포함한 전체 시간의 약 **70% 동안 유휴(Idle) 상태**에 머문다. ExploreAgentic AI의 2026년 비용 벤치마크 데이터를 기반으로 두 런타임의 월간 비용을 비교해 보자[^10].
 
-상시 가동형 **SageMaker AI 실시간 엔드포인트**는 트래픽 유무와 무관하게 고정 인스턴스 비용이 청구된다. 시간당 $7.09인 GPU 인스턴스(예: 멀티 GPU `g5.12xlarge` 또는 고성능 추론 구성)를 월 730시간 내내 띄워 두면 된다.
+상시 가동형 **SageMaker AI 실시간 엔드포인트**는 트래픽 유무와 무관하게 고정 인스턴스 비용이 청구된다. 시간당 \$7.09인 GPU 인스턴스(예: 멀티 GPU `g5.12xlarge` 또는 고성능 추론 구성)를 월 730시간 내내 띄워 두면 된다.
 
 $$C_{\text{SageMaker}} = \$7.09/\text{hr} \times 730\,\text{hrs} = \$5,175.70 \approx \$5,176/\text{month}$$
 
-반면 **Amazon Bedrock**의 토큰 종량제(Pay-per-token)와 **Bedrock AgentCore** 소비 기반 과금 모델은 유휴 시간 과금이 $0이다. 같은 주간 활성 트래픽을 이쪽으로 처리하면 실제 활성 구간(30% 시간대)에 발생한 입출력 토큰과 에이전트 세션 실행 시간만 과금된다. 월간 총비용은 **$3,432**로 집계된다. 즉, 70% 유휴 구간이 존재하는 전형적인 엔터프라이즈 버스트 워크로드에서는 서버리스 쪽이 유리하다. 서버리스 아키텍처는 상시 가동형 엔드포인트 대비 **월 $1,744(33.7%)의 직접 비용을 절감**한다.
+반면 **Amazon Bedrock**의 토큰 종량제(Pay-per-token)와 **Bedrock AgentCore** 소비 기반 과금 모델은 유휴 시간 과금이 \$0이다. 같은 주간 활성 트래픽을 이쪽으로 처리하면 실제 활성 구간(30% 시간대)에 발생한 입출력 토큰과 에이전트 세션 실행 시간만 과금된다. 월간 총비용은 **\$3,432**로 집계된다. 즉, 70% 유휴 구간이 존재하는 전형적인 엔터프라이즈 버스트 워크로드에서는 서버리스 쪽이 유리하다. 서버리스 아키텍처는 상시 가동형 엔드포인트 대비 **월 \$1,744(33.7%)의 직접 비용을 절감**한다.
 
 이 결과를 시간 축으로 일반화해 보자. 시간당 인스턴스 비용이 $P_{\text{inst}}$이고, 활성 시간 동안 시간당 평균 토큰 소비 비용이 $C_{\text{active\_token}}$이라고 하자. 전체 시간 중 활성 트래픽 비율(Duty Cycle) $\alpha \in [0, 1]$에 대한 손익분기점 $\alpha^*$는 다음과 같이 도출된다.
 
 $$P_{\text{inst}} \times 730 = C_{\text{active\_token}} \times 730 \times \alpha^* \implies \alpha^* = \frac{P_{\text{inst}}}{C_{\text{active\_token}}}$$
 
-위 벤치마크 사례에서는 활성 구간 시간당 토큰 비용이 약 $15.67이다. 따라서 손익분기점 활성 비율은 $\alpha^* = 7.09 / 15.67 \approx 0.452$(45.2%)가 된다. 즉, 24시간 중 최대치 트래픽이 흐르는 시간이 45.2% 미만이면 Bedrock 서버리스가 유리하다. 반대로 24시간 글로벌 서비스처럼 평균 가동률이 45.2%를 지속적으로 초과하면 전용 인스턴스 클러스터가 저렴해진다.
+위 벤치마크 사례에서는 활성 구간 시간당 토큰 비용이 약 \$15.67이다. 따라서 손익분기점 활성 비율은 $\alpha^* = 7.09 / 15.67 \approx 0.452$(45.2%)가 된다. 즉, 24시간 중 최대치 트래픽이 흐르는 시간이 45.2% 미만이면 Bedrock 서버리스가 유리하다. 반대로 24시간 글로벌 서비스처럼 평균 가동률이 45.2%를 지속적으로 초과하면 전용 인스턴스 클러스터가 저렴해진다.
 
 ### 2.3 런타임 아키텍처 비교: Bedrock AgentCore vs EKS Auto Mode vs SageMaker HyperPod EKS
 
@@ -115,13 +115,13 @@ $$P_{\text{inst}} \times 730 = C_{\text{active\_token}} \times 730 \times \alpha
 
 | 비교 항목 | Amazon Bedrock AgentCore | Amazon EKS Auto Mode (2026.10) | SageMaker HyperPod EKS (2026.04+) |
 | :--- | :--- | :--- | :--- |
-| 과금 구조 및 유휴 비용 | 토큰/세션 초당 과금 (유휴 시 $0) | EC2 인스턴스 시간당 과금 + 관리비 | 전용 HyperPod 인스턴스 시간당 과금 |
+| 과금 구조 및 유휴 비용 | 토큰/세션 초당 과금 (유휴 시 \$0) | EC2 인스턴스 시간당 과금 + 관리비 | 전용 HyperPod 인스턴스 시간당 과금 |
 | 최대 세션 실행 시간 | 최대 8시간 비동기 세션 기본 지원 | 제한 없음 (파드 생명주기 직접 제어) | 제한 없음 (장기 분산 학습 및 상시 서빙) |
 | 배포 및 운영 인터페이스 | `@aws/agentcore` CLI 단일 명령 | Kubernetes API + 고급 컴퓨트 NodePool | HyperPod CLI / EKS 컨트롤 플레인 (8~12분 기동) |
 | 하드웨어 결함 복구 | AWS 완전 위임 (사용자 비가시 영역) | 노드 비정상 시 EC2 자동 교체 | 온디맨드 딥 헬스체크(NVLink/EFA) + 자동 노드 복구 |
 | 최적 워크로드 타깃 | 70% 이상 유휴 구간을 가진 버스트 에이전트 | 중규모 상시 에이전트 API 및 복합 마이크로서비스 | 고밀도 상시 LLM 서빙 및 대규모 가중치 학습 |
 
-**핵심 요약 — 주간 트래픽 위주의 70% 유휴 에이전트는 상시 가동형 SageMaker AI($5,176/월) 대신 Bedrock AgentCore($3,432/월)를 선택해 33.7% 비용을 절감한다. 가동률 손익분기점(45.2%)을 넘는 대규모 상시 부하는 InstantStart와 딥 헬스체크를 갖춘 SageMaker HyperPod EKS로 수용한다.**
+**핵심 요약 — 주간 트래픽 위주의 70% 유휴 에이전트는 상시 가동형 SageMaker AI(\$5,176/월) 대신 Bedrock AgentCore(\$3,432/월)를 선택해 33.7% 비용을 절감한다. 가동률 손익분기점(45.2%)을 넘는 대규모 상시 부하는 InstantStart와 딥 헬스체크를 갖춘 SageMaker HyperPod EKS로 수용한다.**
 
 ---
 
@@ -145,7 +145,7 @@ $$P_{\text{inst}} \times 730 = C_{\text{active\_token}} \times 730 \times \alpha
 
 오픈웨이트 모델(Llama 4, Qwen 3, DeepSeek 변형 등)이나 사내 파인튜닝 모델을 직접 서빙해야 하는 경우도 있다. vLLM, SGLang, TGI 컨테이너를 쓰면 되지만 24시간 상시 트래픽이 보장되지 않는다면 **Azure Container Apps(ACA) Serverless GPU**가 핵심 대안이 된다[^14].
 
-ACA Serverless GPU는 **NVIDIA T4(NC8as-T4)** 및 **NVIDIA A100(NC24-A100)** 가속기를 파드 단위로 온디맨드 할당한다. KEDA(Kubernetes Event-driven Autoscaling) 기반의 HTTP 동시성 또는 큐 길이 메트릭과 연동한다. 이 연동으로 **트래픽이 없을 때 복제본 수를 0으로 줄이는 Scale-to-Zero**를 지원한다. 초 단위로 과금되므로 유휴 시 GPU 컴퓨트 비용이 완전히 $0으로 떨어진다. 커스텀 가중치를 유지하면서도 서버리스의 비용 탄력성을 얻을 수 있다.
+ACA Serverless GPU는 **NVIDIA T4(NC8as-T4)** 및 **NVIDIA A100(NC24-A100)** 가속기를 파드 단위로 온디맨드 할당한다. KEDA(Kubernetes Event-driven Autoscaling) 기반의 HTTP 동시성 또는 큐 길이 메트릭과 연동한다. 이 연동으로 **트래픽이 없을 때 복제본 수를 0으로 줄이는 Scale-to-Zero**를 지원한다. 초 단위로 과금되므로 유휴 시 GPU 컴퓨트 비용이 완전히 \$0으로 떨어진다. 커스텀 가중치를 유지하면서도 서버리스의 비용 탄력성을 얻을 수 있다.
 
 식당 주방에 비유하면 상시 가동형 GPU는 손님이 없어도 불을 켜 두는 주방과 같다. Scale-to-Zero는 주문이 들어온 만큼만 불을 켜므로 손님이 없는 시간의 연료비가 0이 된다.
 
@@ -158,7 +158,7 @@ ACA Serverless GPU는 **NVIDIA T4(NC8as-T4)** 및 **NVIDIA A100(NC24-A100)** 가
 | :--- | :--- | :--- | :--- |
 | 주요 목적 | 장기 실행 에이전트 하네스·도구·상태 오케스트레이션 | 커스텀 vLLM/컨테이너 모델의 Scale-to-Zero 서빙 | 대규모 상시 추론 및 멀티노드 분산 GPU 클러스터 |
 | 지원 가속기 및 런타임 | 관리형 Foundry 컴퓨트 + Responses API | NVIDIA T4, NVIDIA A100 (온디맨드 초당 과금) | 모든 Azure N-시리즈 VM (H100/H200 InfiniBand 포함) |
-| 유휴 시 비용 (Idle Cost) | 유휴 시 추론 과금 $0 (Routines 실행 시만 과금) | Scale-to-Zero 지원 (Replicas = 0일 때 $0) | 노드 가동 시간당 상시 과금 (Cluster Autoscaler 의존) |
+| 유휴 시 비용 (Idle Cost) | 유휴 시 추론 과금 \$0 (Routines 실행 시만 과금) | Scale-to-Zero 지원 (Replicas = 0일 때 \$0) | 노드 가동 시간당 상시 과금 (Cluster Autoscaler 의존) |
 | 상태 복구 및 자동화 | Post-Crash 복구, Steerable Agents, Routines(09.24) | 컨테이너 수준 무상태 (외부 Redis/DB 결합 필요) | K8s 오퍼레이터(Kaito, Ray, LeaderWorkerSet) 직접 구축 |
 | 네트워크 및 보안 통제 | 내장 Network Egress 제어(09.24) + Entra Agent ID | VNet 통합, 프라이빗 엔드포인트, Managed Identity | Calico/Cilium NetworkPolicy, Azure CNI Overlay |
 
@@ -178,7 +178,7 @@ ACA Serverless GPU는 **NVIDIA T4(NC8as-T4)** 및 **NVIDIA A100(NC24-A100)** 가
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | 사내 지식·코딩 보조 에이전트 | 주간 집중, 70% 유휴 ($\alpha < 0.35$) | 5분~최대 8시간 비동기 루프 | Bedrock AgentCore + Bedrock API | Microsoft Foundry (Copilot Harness) | 상시 GPU 대비 33~60% 비용 절감 |
 | 정기 배치 감사·웹 크롤링 에이전트 | 일/주 단위 크론 트리거 ($\alpha < 0.10$) | 10~60분, 브라우저·도구 집중 | Bedrock AgentCore + EventBridge | Foundry Routines + Browser Tool | 별도 큐·상시 워커 인프라 비용 100% 제거 |
-| 도메인 특화 파인튜닝 모델 (7B~70B) 버스트 서빙 | 간헐적 스파이크 ($\alpha < 0.45$) | 단발성/짧은 멀티턴 추론 | Bedrock Custom Model Import | Container Apps Serverless GPU (T4/A100) | Scale-to-Zero로 야간·주말 유휴 GPU 비용 $0 |
+| 도메인 특화 파인튜닝 모델 (7B~70B) 버스트 서빙 | 간헐적 스파이크 ($\alpha < 0.45$) | 단발성/짧은 멀티턴 추론 | Bedrock Custom Model Import | Container Apps Serverless GPU (T4/A100) | Scale-to-Zero로 야간·주말 유휴 GPU 비용 \$0 |
 | 글로벌 고객 대면 상시 고부하 에이전트 | 24×7 지속 트래픽 ($\alpha > 0.65$) | 저지연(p99 < 2s) 스트리밍 | EKS Auto Mode + Karpenter GPU | AKS + Kaito / 예약 VM 노드풀 | 토큰 종량제 대비 대량 처리 단가 40~55% 절감 |
 | 초거대 모델 연속 학습 및 고밀도 멀티노드 추론 | 상시 80%+ 클러스터 점유 ($\alpha > 0.80$) | 수일~수주 장기 분산 작업 | SageMaker HyperPod EKS (InstantStart) | AKS NDv5 (H100 InfiniBand) + CycleCloud | 딥 헬스체크·자동 노드 복구로 학습 중단 손실 최소화 |
 
@@ -188,7 +188,7 @@ ACA Serverless GPU는 **NVIDIA T4(NC8as-T4)** 및 **NVIDIA A100(NC24-A100)** 가
 
 은행 창구에 비유하면 상시 창구는 예약 인력으로 계속 열어 두고, 줄이 길어질 때만 임시 창구를 여는 구조다. 임시 창구는 사람이 몰릴 때만 열리므로 빈 시간의 인건비가 붙지 않는다.
 
-이때 인바운드 요청의 작업 복잡도, 예상 실행 시간, 보안 이그레스 민감도를 생성형 LLM으로 먼저 판단하면 손해다. 그 판단 자체로 수백 밀리초의 지연과 추가 토큰 비용이 발생한다. 대신 TypeSafe AI의 비생성형 판단 모델인 **System One(`Jev`, `POST /v1/systemone`)**을 라우터 앞단에 배치한다. 그러면 단 70~120ms 만에 1M 입력 토큰당 $0.042의 초저비용으로 최적의 실행 런타임과 하드웨어 티어를 결정할 수 있다[^15]. 이 판정에서 스키마 오류는 0%다.
+이때 인바운드 요청의 작업 복잡도, 예상 실행 시간, 보안 이그레스 민감도를 생성형 LLM으로 먼저 판단하면 손해다. 그 판단 자체로 수백 밀리초의 지연과 추가 토큰 비용이 발생한다. 대신 TypeSafe AI의 비생성형 판단 모델인 **System One(`Jev`, `POST /v1/systemone`)**을 라우터 앞단에 배치한다. 그러면 단 70~120ms 만에 1M 입력 토큰당 \$0.042의 초저비용으로 최적의 실행 런타임과 하드웨어 티어를 결정할 수 있다[^15]. 이 판정에서 스키마 오류는 0%다.
 
 먼저 `/v1/systemone` 엔드포인트로 전송되는 원시 HTTP 요청 페이로드를 보자. 이 구조는 배경 데이터(`state`)와 순수 판단 규칙(`questions`)을 엄격히 분리한다.
 

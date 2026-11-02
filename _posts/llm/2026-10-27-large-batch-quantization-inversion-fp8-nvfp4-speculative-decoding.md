@@ -60,7 +60,7 @@ $$I(B) = \frac{\text{FLOPs}}{\text{Bytes}_{\text{HBM}}} = \frac{2 \cdot B \cdot 
 
 $$I(B) \approx \frac{2 \cdot B}{b_w} \quad (\text{FLOPs/Byte})$$
 
-하드웨어에는 피크 연산 성능 $\text{Peak}_{\text{FLOPs}}$와 HBM 대역폭 $\text{BW}_{\text{HBM}}$의 비율이 있다. 이 비율을 **릿지 포인트(Ridge Point)** $I_{\text{ridge}} = \text{Peak}_{\text{FLOPs}} / \text{BW}_{\text{HBM}}$라 한다. 이 값을 기준선으로 삼으면 영역이 둘로 갈린다. $I(B) < I_{\text{ridge}}$이면 메모리 바운드, $I(B) \ge I_{\text{ridge}}$이면 연산 바운드 영역에 진입한다. 배치 크기 $B$가 커질수록 $I(B)$는 선형으로 증가한다. 결국 하드웨어의 병목이 HBM 대역폭에서 텐서 코어 연산 및 커널 실행 오버헤드로 전환된다.
+하드웨어에는 피크 연산 성능 $\text{Peak}\_{\text{FLOPs}}$와 HBM 대역폭 $\text{BW}\_{\text{HBM}}$의 비율이 있다. 이 비율을 **릿지 포인트(Ridge Point)** $I\_{\text{ridge}} = \text{Peak}\_{\text{FLOPs}} / \text{BW}\_{\text{HBM}}$라 한다. 이 값을 기준선으로 삼으면 영역이 둘로 갈린다. $I(B) < I\_{\text{ridge}}$이면 메모리 바운드, $I(B) \ge I\_{\text{ridge}}$이면 연산 바운드 영역에 진입한다. 배치 크기 $B$가 커질수록 $I(B)$는 선형으로 증가한다. 결국 하드웨어의 병목이 HBM 대역폭에서 텐서 코어 연산 및 커널 실행 오버헤드로 전환된다.
 
 **핵심 요약 — Llama 3.3 70B FP8 서빙에서 동시 요청을 1개에서 100개로 늘리면 처리량은 20배 증가한다. 반면 TTFT p50은 16.4배 악화된다. 70GB 가중치 점유 때문에 남은 10GB 내외에서 KV 캐시를 운용해야 하는 물리적 제약도 남는다**.
 
@@ -98,11 +98,11 @@ NVIDIA는 H200 GPU에서 배치 크기별 상대 처리량을 측정했다. 조�
 
 표의 숫자를 배치 순서로 따라가면 역전이 그대로 보인다. Llama-3.1-70B의 INT4 AWQ는 Batch 1에서 `1.78x`였으나 Batch 16에서 `0.96x`, Batch 64에서 `0.88x`까지 내려간다. Batch 64의 `0.88x`는 처리량이 12% 낮다는 뜻이지 처리 시간이 12% 늘어난다는 뜻이 아니다. 같은 작업을 처리하는 데 BF16의 약 1.14배 시간이 걸린다. 반면 FP8은 Batch 1의 `1.45x`에서 Batch 64의 `1.64x`로 오히려 올라간다.
 
-실시간 역양자화가 포함된 W4A16 GEMM의 단위 스텝 실행 시간 $T_{\text{W4A16}}(B)$를 수식으로 분해하면 다음과 같다.
+실시간 역양자화가 포함된 W4A16 GEMM의 단위 스텝 실행 시간 $T\_{\text{W4A16}}(B)$를 수식으로 분해하면 다음과 같다.
 
 $$T_{\text{W4A16}}(B) = \max\left( \frac{\text{Bytes}_{\text{INT4}}}{\text{BW}_{\text{HBM}}}, \frac{\text{FLOPs}_{\text{FP16}}(B)}{\text{Peak}_{\text{FP16}}} + T_{\text{dequant}}(B) \right)$$
 
-여기서 $T_{\text{dequant}}(B)$는 역양자화에 드는 ALU/SIMT 코어 명령어 오버헤드다. 그 안에는 비트 시프트(`>>`), 비트 마스킹(`& 0x0F`), 영점(Zero-point) 감산, 그룹 스케일(Scale) 곱셈이 들어간다. 배치 크기가 커지면 HBM 절감 이득($\text{Bytes}_{\text{INT4}} / \text{BW}_{\text{HBM}}$)은 연산 시간 뒤에 숨어버린다(Latency Hiding). 반대로 $T_{\text{dequant}}(B)$는 텐서 코어 파이프라인을 지연시킨다. 결국 Llama-3.1-70B Batch 64에서 처리량이 BF16 대비 **0.88x**로 하락한다. 파라미터 규모가 작은 8B 모델은 가중치 로딩 비중이 더 낮다. 그래서 Batch 8에서 이미 **0.75x**로 역전이 시작된다.
+여기서 $T\_{\text{dequant}}(B)$는 역양자화에 드는 ALU/SIMT 코어 명령어 오버헤드다. 그 안에는 비트 시프트(`>>`), 비트 마스킹(`& 0x0F`), 영점(Zero-point) 감산, 그룹 스케일(Scale) 곱셈이 들어간다. 배치 크기가 커지면 HBM 절감 이득($\text{Bytes}\_{\text{INT4}} / \text{BW}\_{\text{HBM}}$)은 연산 시간 뒤에 숨어버린다(Latency Hiding). 반대로 $T\_{\text{dequant}}(B)$는 텐서 코어 파이프라인을 지연시킨다. 결국 Llama-3.1-70B Batch 64에서 처리량이 BF16 대비 **0.88x**로 하락한다. 파라미터 규모가 작은 8B 모델은 가중치 로딩 비중이 더 낮다. 그래서 Batch 8에서 이미 **0.75x**로 역전이 시작된다.
 
 ### 2.3 해결책: FP8(W8A8)·NVFP4 결합 및 vLLM 커스텀 선형 백엔드 분기
 

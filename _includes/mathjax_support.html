@@ -5,18 +5,21 @@
     tex2jax: {
       inlineMath: [ ['$','$'], ["\\(","\\)"] ],
       displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
-      processEscapes: true
+      processEscapes: true,
+      skipTags: ["script", "noscript", "style", "textarea", "pre", "code"]
     },
     "HTML-CSS": { availableFonts: ["TeX"] }
   });
 
+  MathJax.Hub.Register.MessageHook("Math Processing Error", function (message) {
+    console.warn("Math Processing Error: " + message[1]);
+  });
+  MathJax.Hub.Register.MessageHook("TeX Jax - parse error", function (message) {
+    console.warn("TeX Jax - parse error: " + message[1]);
+  });
+</script>
 
-  MathJax.Hub.Register.MessageHook("Math Processing Error",function (message) {
-    alert("Math Processing Error: "+message[1]);
-    });
-  MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
-    alert("Math Processing Error: "+message[1]);
-    });
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-MML-AM_CHTML">
 </script>
 
 

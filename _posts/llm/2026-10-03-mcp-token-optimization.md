@@ -65,7 +65,7 @@ MCP 연결 → tools/list → 도구 메타데이터 전량 수신
 
 | 축 | 무슨 일이 일어나는가 | 정량 예시 |
 |---|---|---|
-| 입력 토큰 비용 | 매 요청마다 도구 정의 전량을 재전송 | Claude Sonnet 4.5 기준 $3/M 토큰일 때 100k 정의 = 요청당 $0.30[^6] |
+| 입력 토큰 비용 | 매 요청마다 도구 정의 전량을 재전송 | Claude Sonnet 4.5 기준 \$3/M 토큰일 때 100k 정의 = 요청당 \$0.30[^6] |
 | 컨텍스트 윈도우 소진 | 대화에 쓸 수 있는 실질 공간이 줄어든다 | 200k 윈도우에서 100k를 정의가 선점 → 실질 가용 50%[^1] |
 | 프롬프트 캐시 히트율 | 도구 목록이 바뀔 때마다 접두부가 무효화된다 | 동적 도구 추가·제거가 캐시를 계속 깬다[^6] |
 
@@ -263,7 +263,7 @@ Cloudflare는 같은 발상을 Workers 샌드박스로 구현한 "Code Mode"를 
 
 ### 6.3 캐시가 만드는 단가 차이
 
-Anthropic Prompt Caching은 캐시 히트 시 입력 토큰 단가를 크게 낮춘다. 공개된 수치 기준으로 일반 입력이 $3/M, 캐시 입력이 $0.30/M이며, 이는 **약 90% 절감**이다[^6]. 정적 도구 100k 토큰을 캐시에 태우면 요청당 약 **$0.27** 를 아낀다.
+Anthropic Prompt Caching은 캐시 히트 시 입력 토큰 단가를 크게 낮춘다. 공개된 수치 기준으로 일반 입력이 \$3/M, 캐시 입력이 \$0.30/M이며, 이는 **약 90% 절감**이다[^6]. 정적 도구 100k 토큰을 캐시에 태우면 요청당 약 **\$0.27** 를 아낀다.
 
 주의할 점은 이 절감이 "토큰 수"가 아니라 "단가"에서 온다는 것이다. 그래서 캐시 절감과 컨텍스트 절감은 **반드시 따로 집계**해야 한다. 둘을 합쳐 놓으면 어느 기법이 실제로 얼마를 벌었는지 알 수 없다.
 
@@ -356,5 +356,5 @@ Anthropic Prompt Caching은 캐시 히트 시 입력 토큰 단가를 크게 낮
 [^3]: Anthropic Engineering, "Code Execution with MCP" — 10,000행 스프레드시트 150,000 → 2,000 토큰(98.7% 절감), 샌드박스 아키텍처. https://www.anthropic.com/engineering/code-execution-with-mcp
 [^4]: Model Context Protocol, "Client Best Practices" — Progressive Discovery, Catalog→Inspect→Execute 플로우, 컨텍스트 윈도우 1~5% 임계값. https://modelcontextprotocol.io/docs/develop/clients/client-best-practices
 [^5]: Cloudflare Blog, "Code Mode: MCP in Workers Sandbox" — Workers 샌드박스·V8 런타임 기반 Code Execution. https://blog.cloudflare.com/code-mode-mcp/
-[^6]: Anthropic, "Prompt Caching" — 입력 $3/M 대비 캐시 입력 $0.30/M, 약 90% 단가 절감. https://www.anthropic.com/engineering/advanced-tool-use
+[^6]: Anthropic, "Prompt Caching" — 입력 \$3/M 대비 캐시 입력 \$0.30/M, 약 90% 단가 절감. https://www.anthropic.com/engineering/advanced-tool-use
 [^7]: Engineering Playbook — `docs/agentic-ai-platform/design-architecture/advanced-patterns/mcp-token-optimization.md` (저장소 매뉴얼, https://devfloor9.github.io/engineering-playbook/). 게이트웨이 계층별 최적화 책임 분담과 보안 통제(도구 허용목록·스코프 토큰)와의 관계를 이 문서에서 참고했다.

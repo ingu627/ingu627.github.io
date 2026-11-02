@@ -257,13 +257,13 @@ $$
 
 ### 5.3 호에프딩·번스타인 부등식과 7일 이동평균 대비 $1.5\sigma$ 드리프트 경보
 
-온라인 평가 점수가 쌓이면 그다음은 시계열 판단이다. 에이전트 품질 저하나 보안 이상 징후를 시계열 상에서 포착해야 한다. 과거 블로그의 [이상 탐지를 위한 호에프딩·번스타인 확률 부등식 정리](/mlops/inequality_for_detection/)[^15], [컨셉 드리프트 탐지 방법론](/mlops/drift_detection/)[^16], 그리고 [FHDDM(Fast Hoeffding Drift Detection Method) 논문 리뷰](/paper/mlops/FHDDM/)[^17]에서 유도한 내용을 그대로 쓴다. 유계 확률 변수 $X_i \in [0, 1]$의 표본 평균 $\bar{X}_W$를 생각하자. 이 값이 기대치 $\mu_0$로부터 $\epsilon$ 이상 벗어날 확률은 호에프딩 부등식(Hoeffding's Inequality)으로 상한이 보장된다.
+온라인 평가 점수가 쌓이면 그다음은 시계열 판단이다. 에이전트 품질 저하나 보안 이상 징후를 시계열 상에서 포착해야 한다. 과거 블로그의 [이상 탐지를 위한 호에프딩·번스타인 확률 부등식 정리](/mlops/inequality_for_detection/)[^15], [컨셉 드리프트 탐지 방법론](/mlops/drift_detection/)[^16], 그리고 [FHDDM(Fast Hoeffding Drift Detection Method) 논문 리뷰](/paper/mlops/FHDDM/)[^17]에서 유도한 내용을 그대로 쓴다. 유계 확률 변수 $X_i \in [0, 1]$의 표본 평균 $\bar{X}\_W$를 생각하자. 이 값이 기대치 $\mu_0$로부터 $\epsilon$ 이상 벗어날 확률은 호에프딩 부등식(Hoeffding's Inequality)으로 상한이 보장된다.
 
 $$
 \mathbb{P}\left(\mu_{\text{7d}} - \bar{X}_W \ge \epsilon\right) \le \exp\left(-2 W \epsilon^2\right)
 $$
 
-여기에 분산 $\sigma_{\text{7d}}^2$까지 고려하는 번스타인 부등식(Bernstein's Inequality)을 결합한다. 그러면 운영 지표 하나를 만들 수 있다. 최근 7일 이동평균 $\mu_{\text{7d}}$와 표준편차 $\sigma_{\text{7d}}$를 기준선으로 삼는다. 여기에 현재 슬라이딩 윈도우 평균 점수 $\bar{X}_W$의 하락 폭을 재는 Z-스코어 드리프트 지표 $Z_{\text{drift}}$를 얹는다. 운용식은 다음과 같다.
+여기에 분산 $\sigma\_{\text{7d}}^2$까지 고려하는 번스타인 부등식(Bernstein's Inequality)을 결합한다. 그러면 운영 지표 하나를 만들 수 있다. 최근 7일 이동평균 $\mu\_{\text{7d}}$와 표준편차 $\sigma\_{\text{7d}}$를 기준선으로 삼는다. 여기에 현재 슬라이딩 윈도우 평균 점수 $\bar{X}\_W$의 하락 폭을 재는 Z-스코어 드리프트 지표 $Z\_{\text{drift}}$를 얹는다. 운용식은 다음과 같다.
 
 $$
 Z_{\text{drift}} = \frac{\mu_{\text{7d}} - \bar{X}_W}{\sigma_{\text{7d}}} \ge 1.5 \implies \text{Trigger Drift Alert} \quad (\bar{X}_W \le \mu_{\text{7d}} - 1.5\sigma_{\text{7d}})

@@ -43,7 +43,7 @@ Helm은 반죽을 한 번 섞어 오븐에 넣는 방식에 가깝다. 다 구�
 5. **커널 수준 런타임 샌드박싱** (`TracingPolicyNamespaced`, `cilium.io/v1alpha1`): 추론 컨테이너 안의 비인가 바이너리 실행(`sys_execve`)을 감시한다. 사설망 외부로의 무단 소켓 연결(`tcp_connect`)도 같은 지점에서 잡는다. 두 경우 모두 eBPF 커널 훅에서 즉시 차단(`Sigkill`)한다[^3].
 6. **메트릭 기반 오토스케일링 및 가용성 보장**: 리소스는 `HorizontalPodAutoscaler`와 `PodDisruptionBudget`이다. 토큰 생성 지연 시간(TPOT)이나 프리필 큐 깊이에 따라 `LeaderWorkerSet`의 복제본 수를 조절한다. 노드 드레인 시에는 최소 가용 복제본을 방어한다.
 
-클러스터에서 운영하는 모델 서비스의 수를 $M$이라 하자. 서비스당 결합되는 이기종 CRD의 수는 $K$($K \ge 6$)다. 리소스 쌍 사이에 존재하는 평균 이름·레이블·시크릿 참조 간선 수는 $\bar{p}_{\text{ref}}$로 둔다. 수동 YAML 관리 환경에서 전체 상호 참조 간선 수 $E_{\text{total}}$은 다음과 같이 증가한다.
+클러스터에서 운영하는 모델 서비스의 수를 $M$이라 하자. 서비스당 결합되는 이기종 CRD의 수는 $K$($K \ge 6$)다. 리소스 쌍 사이에 존재하는 평균 이름·레이블·시크릿 참조 간선 수는 $\bar{p}\_{\text{ref}}$로 둔다. 수동 YAML 관리 환경에서 전체 상호 참조 간선 수 $E\_{\text{total}}$은 다음과 같이 증가한다.
 
 $$E_{\text{total}}(M, K) = M \times \binom{K}{2} \bar{p}_{\text{ref}} = \frac{M \cdot K(K - 1)}{2} \bar{p}_{\text{ref}}$$
 
@@ -51,7 +51,7 @@ $$E_{\text{total}}(M, K) = M \times \binom{K}{2} \bar{p}_{\text{ref}} = \frac{M 
 
 $$P_{\text{drift}}(M, K) = 1 - (1 - \epsilon)^{E_{\text{total}}(M, K)} \approx 1 - \exp\left(-\frac{\epsilon \cdot \bar{p}_{\text{ref}} \cdot M \cdot K(K - 1)}{2}\right)$$
 
-예를 하나 들어 보자. 모델 서비스가 $M = 25$개, CRD가 $K = 6$개, $\bar{p}_{\text{ref}} = 1.6$, 간선당 휴먼 에러율이 $\epsilon = 0.002$(0.2%)인 환경을 가정한다. 이때 $E_{\text{total}} = 600$개에 달한다. 릴리스마다 설정 불일치가 발생할 확률은 $P_{\text{drift}} \approx 1 - (0.998)^{600} \approx 69.9\%$까지 치솟는다.
+예를 하나 들어 보자. 모델 서비스가 $M = 25$개, CRD가 $K = 6$개, $\bar{p}\_{\text{ref}} = 1.6$, 간선당 휴먼 에러율이 $\epsilon = 0.002$(0.2%)인 환경을 가정한다. 이때 $E\_{\text{total}} = 600$개에 달한다. 릴리스마다 설정 불일치가 발생할 확률은 $P\_{\text{drift}} \approx 1 - (0.998)^{600} \approx 69.9\%$까지 치솟는다.
 
 ### 1.2 Helm 템플릿 엔진의 구조적 한계: 문자열 치환과 단발성 렌더링
 

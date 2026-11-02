@@ -57,7 +57,7 @@ last_modified_at: 2026-11-01
 
 넷째, **장기 SSE(Server-Sent Events) 스트림 유지 비용**이다. 서버 주도 알림이나 사용자 입력 유도(Elicitation)를 받으려면 유휴 SSE 스트림을 열어 둬야 한다. 그러면 동시 접속 에이전트 수에 비례하여 프록시와 서버의 소켓 파일 디스크립터(File Descriptor)와 커널 TCP 버퍼가 고정 점유된다.
 
-위 네 가지 병목은 수식으로 정리하면 더 분명해진다. 기존 Stateful 게이트웨이에서 단일 도구 호출 요청(페이로드 크기 $B$ 바이트)이 겪는 프록시 계층 지연 시간을 $\Delta L_{\text{stateful}}$로 둔다. 클러스터 전체 세션 메모리 점유량은 $M_{\text{cluster}}$로 둔다.
+위 네 가지 병목은 수식으로 정리하면 더 분명해진다. 기존 Stateful 게이트웨이에서 단일 도구 호출 요청(페이로드 크기 $B$ 바이트)이 겪는 프록시 계층 지연 시간을 $\Delta L\_{\text{stateful}}$로 둔다. 클러스터 전체 세션 메모리 점유량은 $M\_{\text{cluster}}$로 둔다.
 
 $$
 \Delta L_{\text{stateful}}(B) = T_{\text{Handshake}} \cdot \mathbb{I}_{\text{cold}} + T_{\text{StoreRTT}} + \alpha_{\text{parse}} \cdot B + T_{\text{Route}}
@@ -67,7 +67,7 @@ $$
 M_{\text{cluster}}(N_{\text{conn}}, N_{\text{sse}}) = N_{\text{conn}} \cdot m_{\text{session}} + N_{\text{sse}} \cdot \left( m_{\text{socket}} + m_{\text{buf}} \right)
 $$
 
-식의 각 항은 다음을 뜻한다. $\mathbb{I}_{\text{cold}} \in \{0, 1\}$는 신규 세션 또는 파드 재시작으로 인한 핸드셰이크 발생 지시 함수다. $T_{\text{Handshake}}$는 2-way 초기화 왕복 지연으로, 통상 $15 \sim 45\text{ms}$다. $T_{\text{StoreRTT}}$는 외부 Redis 세션 조회 지연이며 $1.5 \sim 4\text{ms}$다. $\alpha_{\text{parse}} \cdot B$는 바이트당 JSON 본문 파싱 비용이다. 반면 헤더 기반 Stateless 아키텍처에서는 세 항이 모두 0으로 수렴한다. $\mathbb{I}_{\text{cold}} = 0$, $T_{\text{StoreRTT}} = 0$, $\alpha_{\text{parse}} = 0$이라는 뜻이다. 남는 항은 L7 헤더 해시 테이블 조회 시간 $T_{\text{Route}}$ 하나이며, 그 크기는 수십 마이크로초다.
+식의 각 항은 다음을 뜻한다. $\mathbb{I}\_{\text{cold}} \in \{0, 1\}$는 신규 세션 또는 파드 재시작으로 인한 핸드셰이크 발생 지시 함수다. $T\_{\text{Handshake}}$는 2-way 초기화 왕복 지연으로, 통상 $15 \sim 45\text{ms}$다. $T\_{\text{StoreRTT}}$는 외부 Redis 세션 조회 지연이며 $1.5 \sim 4\text{ms}$다. $\alpha\_{\text{parse}} \cdot B$는 바이트당 JSON 본문 파싱 비용이다. 반면 헤더 기반 Stateless 아키텍처에서는 세 항이 모두 0으로 수렴한다. $\mathbb{I}\_{\text{cold}} = 0$, $T\_{\text{StoreRTT}} = 0$, $\alpha\_{\text{parse}} = 0$이라는 뜻이다. 남는 항은 L7 헤더 해시 테이블 조회 시간 $T\_{\text{Route}}$ 하나이며, 그 크기는 수십 마이크로초다.
 
 **핵심 요약 — 기존 MCP의 `initialize` 핸드셰이크와 `Mcp-Session-Id` 세션 모델은 네 가지 운영 병목을 낳았다. 첫째는 Sticky Session 강제, 둘째는 공유 스토리지 RTT 추가다. 셋째는 L7 게이트웨이의 JSON 바디 파싱(DPI) 오버헤드, 넷째는 장기 SSE 소켓 고갈이다.**
 
