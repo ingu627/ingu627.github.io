@@ -79,7 +79,7 @@ google:
 google_site_verification : "Lkh6IHg3Jk6DRFEXBZP0zPlDuY6NpN2pXqFM-1Ow6Ok"
 bing_site_verification   :
 yandex_site_verification :
-naver_site_verification  :
+naver_site_verification  : "naver2f1ddca95d82110afdce071ed9dedab3" # matches /naver2f1ddca95d82110afdce071ed9dedab3.html (file method also present)
 
 # Social Sharing
 twitter:

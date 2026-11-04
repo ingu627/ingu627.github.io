@@ -42,7 +42,41 @@
   {%- assign author_twitter = author.twitter | replace: "@", "" -%}
 {%- endif -%}
 
-{%- assign page_large_image = page.header.og_image | default: page.header.overlay_image | default: page.header.image | absolute_url -%}
+{%- assign page_large_image = page.header.og_image | default: page.header.overlay_image | default: page.header.image -%}
+{%- comment %}
+  No hand-declared social image: fall back to the first image inside the post
+  itself (a local /assets/ image first, else the first absolute one) so the ~208
+  posts that carry screenshots stop sharing one generic og-default.jpg. Only
+  <img> tags are considered - matching any src="..." would also pick up gist
+  <script> embeds - and the URL must look like an image file.
+{% endcomment %}
+{%- if page_large_image == nil and page.content -%}
+  {%- assign _local_img = nil -%}
+  {%- assign _any_img = nil -%}
+  {%- assign _seo_parts = page.content | split: '<img' -%}
+  {%- for _part in _seo_parts offset: 1 -%}
+    {%- assign _cand = nil -%}
+    {%- assign _dq = _part | split: 'src="' -%}
+    {%- if _dq.size > 1 -%}
+      {%- assign _cand = _dq[1] | split: '"' | first -%}
+    {%- else -%}
+      {%- assign _sq = _part | split: "src='" -%}
+      {%- if _sq.size > 1 -%}
+        {%- assign _cand = _sq[1] | split: "'" | first -%}
+      {%- endif -%}
+    {%- endif -%}
+    {%- assign _is_img = false -%}
+    {%- if _cand contains '.webp' or _cand contains '.png' or _cand contains '.jpg' or _cand contains '.jpeg' or _cand contains '.gif' -%}
+      {%- assign _is_img = true -%}
+    {%- endif -%}
+    {%- if _is_img -%}
+      {%- if _any_img == nil -%}{%- assign _any_img = _cand -%}{%- endif -%}
+      {%- if _local_img == nil and _cand contains '/assets/' -%}{%- assign _local_img = _cand -%}{%- endif -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- assign page_large_image = _local_img | default: _any_img -%}
+{%- endif -%}
+{%- assign page_large_image = page_large_image | absolute_url -%}
 {%- assign page_large_image = page_large_image | escape -%}
 
 {%- assign page_teaser_image = page.header.teaser | default: site.og_image | absolute_url -%}
