@@ -4,8 +4,8 @@
  * and never flashes dark for light-theme visitors; this script is the only thing
  * that makes it apply.
  */
-const defaultTheme = document.querySelector('link[href*="main.css"]');
-const darkTheme = document.querySelector('link[href*="main_dark.css"]');
+const defaultTheme = document.querySelector('link[rel="stylesheet"][href*="main.css"]');
+const darkTheme = document.querySelector('link[rel="stylesheet"][href*="main_dark.css"]');
 
 function setDarkMode(isDark) {
   if (darkTheme) darkTheme.media = isDark === true ? 'all' : 'print';
