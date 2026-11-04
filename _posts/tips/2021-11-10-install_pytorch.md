@@ -7,6 +7,8 @@ tags: [tip, pytorch, install, 파이토치 설치, conda, pip, 윈도우10, 윈�
 sidebar_main: false
 
 last_modified_at: 2026-10-11
+redirect_from:
+  - /tips/install-pytorch-deep-learning-framework/
 ---
 
 Windows10 환경에서 CUDA 11.0에 맞는 PyTorch를 설치하는 과정을 정리한 글이다. PyTorch 공식 사이트에서 이전 버전 목록을 열어 CUDA 버전에 맞는 설치 명령을 실행하고, 설치 후 GPU가 정상 동작하는지 확인한다.

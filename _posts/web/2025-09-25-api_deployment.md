@@ -3,7 +3,9 @@ layout: single
 title: "엔터프라이즈 API 아키텍처와 FastAPI 프로덕션 엔지니어링: REST·GraphQL·gRPC 비교부터 무중단 서빙까지"
 excerpt: "REST·GraphQL·gRPC의 직렬화 및 전송 계층 트레이드오프, FastAPI 기반 AI 스트리밍(SSE) 및 비동기 워커 아키텍처, Redis 토큰 버킷 속도 제한, 그리고 Gunicorn/Uvicorn 프로덕션 배포 파이프라인을 심층 분석한다."
 categories: [web]
-redirect_from: /OS/api_deployment/
+redirect_from:
+  - /OS/api_deployment/
+  - /web/api-deployment-production-guide/
 tags: [fastapi, api, rest, graphql, grpc, architecture, docker, production, microservices]
 toc: true
 toc_sticky: true
@@ -11,6 +13,7 @@ sidebar_main: true
 
 date: 2025-09-25
 last_modified_at: 2026-10-08
+use_math: true
 ---
 
 엔터프라이즈 마이크로서비스 및 AI 플랫폼 아키텍처에서 API 계층은 단순한 엔드포인트의 모음이 아니다. 외부 사용자와 내부 분산 시스템 간의 지연시간(Latency), 네트워크 대역폭(Throughput), 시스템 가용성(High Availability), 그리고 개발자 경험(DX)을 결정짓는 핵심 관문이다.

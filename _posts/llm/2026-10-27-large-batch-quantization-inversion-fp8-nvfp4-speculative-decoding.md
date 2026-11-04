@@ -9,6 +9,7 @@ toc_sticky: true
 sidebar_main: true
 date: 2026-10-27
 last_modified_at: 2026-11-01
+use_math: true
 ---
 
 데모에서는 잘 돌던 모델이 사내 챗봇에 붙이자마자 느려졌다는 문의가 들어온다. 모델도 코드도 그대로인데 동시에 들어오는 요청 수만 달라졌을 때, 무엇을 먼저 의심해야 하는지가 이 글의 출발점이다.

@@ -10,6 +10,8 @@ sidebar_main: false
 classes: wide
 
 last_modified_at: 2026-10-11
+redirect_from:
+  - /r_ml/r-machine-learning-big-data-analysis-part-4/
 ---
 
 빅데이터 분석기사 실기(작업형 제2유형) 대비 차원에서 작성한 문제풀이 글이다. 실습 데이터는 [GitHub 저장소(BigDataAnalysis)](https://github.com/ingu627/BigDataAnalysis)에 정리해 두었으며, 전체 R 코드는 `sujebi_3.R` 파일에 수록되어 있다.

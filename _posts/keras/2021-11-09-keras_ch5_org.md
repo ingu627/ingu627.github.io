@@ -13,6 +13,7 @@ last_modified_at: 2026-10-10
 redirect_from:
   - /keras/keras_ch5_org_1/
   - /keras/keras_ch5_org_2/
+  - /keras/keras-deep-learning-chapter-5-computer-vision/
 ---
 
 <img align='right' width='200' height='200' src='/assets/images/legacy/be0ceae23f.webp'>

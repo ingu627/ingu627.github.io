@@ -10,6 +10,9 @@ toc_sticky: true
 sidebar_main: false
 
 last_modified_at: 2026-10-09
+use_math: true
+redirect_from:
+  - /ds/distributed-systems-fundamentals-part-2/
 ---
 
 <img align='right' width='200' height='200' src='/assets/images/legacy/14cf7d5543.webp'>

@@ -8,6 +8,8 @@ toc : True
 sidebar_main: false
 
 last_modified_at: 2026-10-11
+redirect_from:
+  - /tips/jupyter-notebook-keyboard-shortcuts/
 ---
 
 ## Jupyter 주요 단축키 모음

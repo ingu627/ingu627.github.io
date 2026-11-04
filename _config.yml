@@ -20,7 +20,7 @@ after_footer_scripts:
 
 # Site Settings
 locale                   : "ko-KR"
-title                    : "ingu627.dev"
+title                    : "ingu627.github.io"
 title_separator          : "|"
 subtitle                 : ""
 name                     : "ingu627"
@@ -109,7 +109,7 @@ analytics:
 # Site Author
 author:
   name             : "정현석"
-  avatar           : "/assets/images/261008_logo.png" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
+  avatar           : "/assets/images/261008_logo.webp" # 176x176 WebP (2.8KB, was 776KB PNG)
   bio              : "개인 저장공간입니다. <br/>Since 2021.10"
   location         : "South Korea"
   links:
@@ -321,8 +321,8 @@ defaults:
       comments: true
       share: true
       related: true
-      mathjax: true
-      use_math: true
+      # mathjax/use_math are NOT global: MathJax (~64KB core + fonts, render-blocking)
+      # is only loaded for posts that opt in with `use_math: true`.
       show_date: true
       sidebar_main: true
   # algorithms

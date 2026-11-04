@@ -7,6 +7,8 @@ toc: true
 sidebar_main: false
 
 last_modified_at: 2026-10-09
+redirect_from:
+  - /error/graphviz-executable-not-found-fix/
 ---
 
 graphviz를 `pip install graphviz`로 설치한 뒤 `dot` 실행 파일을 찾지 못해 발생하는 ExecutableNotFound 에러가 있다. 이 글은 해당 에러의 원인과 해결 방법을 정리한다.

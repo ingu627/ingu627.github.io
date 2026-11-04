@@ -7,6 +7,8 @@ toc: true
 sidebar_main: false
 
 last_modified_at: 2026-10-09
+redirect_from:
+  - /error/r-permission-denied-error-fix/
 ---
 
 ## 원인 : file.copy(savedcopy, lib, recursive = TRUE)에서 ~ 로 복사하는데 문제가 발생했습니다: Permission denied

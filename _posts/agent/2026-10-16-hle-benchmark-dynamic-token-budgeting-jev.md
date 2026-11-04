@@ -9,6 +9,7 @@ toc_sticky: true
 sidebar_main: true
 date: 2026-10-16
 last_modified_at: 2026-10-16
+use_math: true
 ---
 
 2026년 대규모 언어 모델(LLM)과 에이전트 엔지니어링 생태계는 근본적인 지표의 세대교체를 겪었다. 모델의 기본 코딩 소양을 검증하던 HumanEval이 95% 이상으로 변별력을 잃은 데 이어, 2024년 8월 OpenAI가 공개했던 실제 GitHub 이슈 해결 벤치마크인 **SWE-bench Verified(500문항)**마저 상한선에 도달하며 사실상 평가 무용론에 직면했다.

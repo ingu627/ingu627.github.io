@@ -9,6 +9,7 @@ toc_sticky: true
 sidebar_main: true
 date: 2026-10-20
 last_modified_at: 2026-10-20
+use_math: true
 ---
 
 앞선 1편[^3]에서 데이터 유출이 차단된 프라이빗 인프라 경계와 텐서 병렬화, 그리고 Prefill-Decode를 분리하는 PD Disaggregation 서빙 토폴로지를 살펴보았다. 분산 클러스터가 구축된 이후 엔지니어가 마주하는 다음 전장은 **운영화(Day-2 Operations)와 장애 복구성(Fault Tolerance)**이다.

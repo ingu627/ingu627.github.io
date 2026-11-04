@@ -12,15 +12,44 @@
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
 
-<!-- google ads -->
+<!-- google ads (deferred: first user interaction, else 5s) -->
 <meta name="google-adsense-account" content="ca-pub-6253756472465876">
 {% unless page.no_ads %}
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6253756472465876" crossorigin="anonymous"></script>
+<script>
+(function () {
+  var loaded = false;
+  function load() {
+    if (loaded) return;
+    loaded = true;
+    function tag(src, attrs) {
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = src;
+      if (attrs) { for (var k in attrs) { s.setAttribute(k, attrs[k]); } }
+      document.head.appendChild(s);
+    }
+    tag('https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6253756472465876', { crossorigin: 'anonymous' });
+    tag('https://fundingchoicesmessages.google.com/i/pub-6253756472465876?ers=1');
+    (function signalGooglefcPresent() {
+      if (!window.frames['googlefcPresent']) {
+        if (document.body) {
+          var f = document.createElement('iframe');
+          f.style = 'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;';
+          f.style.display = 'none';
+          f.name = 'googlefcPresent';
+          document.body.appendChild(f);
+        } else {
+          setTimeout(signalGooglefcPresent, 0);
+        }
+      }
+    })();
+  }
+  ['scroll', 'mousemove', 'touchstart', 'keydown', 'click'].forEach(function (e) {
+    window.addEventListener(e, load, { once: true, passive: true });
+  });
+  setTimeout(load, 5000);
+})();
+</script>
 {% endunless %}
 
 <!-- end custom head snippets -->
-
-{% unless page.no_ads %}
-<!-- 250927 광고 차단 회복 추가 -->
-<script async src="https://fundingchoicesmessages.google.com/i/pub-6253756472465876?ers=1"></script><script>(function() {function signalGooglefcPresent() {if (!window.frames['googlefcPresent']) {if (document.body) {const iframe = document.createElement('iframe'); iframe.style = 'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;'; iframe.style.display = 'none'; iframe.name = 'googlefcPresent'; document.body.appendChild(iframe);} else {setTimeout(signalGooglefcPresent, 0);}}}signalGooglefcPresent();})();</script>
-{% endunless %}

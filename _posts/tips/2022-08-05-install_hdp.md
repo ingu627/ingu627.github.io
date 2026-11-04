@@ -11,6 +11,8 @@ sidebar_main: false
 
 date: 2022-08-05
 last_modified_at: 2026-10-11
+redirect_from:
+  - /tips/install-hortonworks-data-platform/
 ---
 
 > 이 글은 2022년 당시 HDP 2.6.5 버전 기준으로 작성된 설치 기록이다. 최신 버전에서는 명령이 다를 수 있다.

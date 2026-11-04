@@ -10,6 +10,9 @@ sidebar_main: true
 
 date: 2025-09-14
 last_modified_at: 2026-10-08
+use_math: true
+redirect_from:
+  - /llm/llm-model-quantization-compression-techniques/
 ---
 
 대규모 언어 모델(LLM)을 프로덕션 환경에 배포할 때 가장 먼저 마주하는 장벽은 연산량(FLOPs) 자체가 아니라 **GPU 메모리 용량(VRAM)과 메모리 대역폭(Memory Bandwidth)**이다. 수십억~수천억 파라미터에 달하는 모델 가중치를 VRAM에 적재하고, 오토리그레시브(Auto-regressive) 디코딩 과정에서 매 토큰마다 수십 기가바이트의 텐서를 HBM(High Bandwidth Memory)에서 SRAM으로 로드하는 과정은 전형적인 메모리 대역폭 바운드(Memory Bandwidth Bound) 문제를 유발한다.

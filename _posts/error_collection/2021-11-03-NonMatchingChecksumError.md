@@ -8,6 +8,8 @@ sidebar_main: false
 
 date: 2021-11-03
 last_modified_at: 2026-10-09
+redirect_from:
+  - /error/non-matching-checksum-error-fix/
 ---
 
 > 이 글은 2021년 당시 작성된 설치/사용 기록이다. 최신 버전에서는 명령이 다를 수 있다.

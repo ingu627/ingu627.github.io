@@ -7,7 +7,9 @@ tags: [docker, kubernetes, k8s, container, oci, cgroups, namespaces, containerd,
 toc: true
 toc_sticky: true
 sidebar_main: true
-redirect_from: /docker/kubernetes_basic/
+redirect_from:
+  - /docker/kubernetes_basic/
+  - /docker/kubernetes-basic-concepts-architecture/
 
 date: 2025-09-21
 last_modified_at: 2026-10-08

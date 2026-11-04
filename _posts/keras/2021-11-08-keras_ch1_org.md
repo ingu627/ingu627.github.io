@@ -9,6 +9,8 @@ sidebar_main: false
 classes: wide
 
 last_modified_at: 2026-10-09
+redirect_from:
+  - /keras/keras-deep-learning-chapter-1-introduction/
 ---
 
 <img align='right' width='200' height='200' src='/assets/images/legacy/be0ceae23f.webp'>

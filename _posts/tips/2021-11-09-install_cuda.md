@@ -10,6 +10,8 @@ toc_sticky: true
 sidebar_main: false
 
 last_modified_at: 2026-10-11
+redirect_from:
+  - /tips/install-cuda-nvidia-gpu-part-1/
 ---
 
 > 이 글은 2021년 당시 CUDA 11.0, cuDNN 8.0, tensorflow_gpu-2.4.0 기준으로 작성된 설치/사용 기록이다. 최신 버전에서는 명령이 다를 수 있다.

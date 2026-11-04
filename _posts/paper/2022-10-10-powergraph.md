@@ -9,6 +9,9 @@ toc_sticky: true
 sidebar_main: false
 
 last_modified_at: 2026-10-10
+use_math: true
+redirect_from:
+  - /paper/powergraph-distributed-graph-computation/
 ---
 
 ![image](/assets/images/legacy/bb0452a971.webp)

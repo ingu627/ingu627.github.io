@@ -9,6 +9,8 @@ toc_sticky: True
 sidebar_main: false
 
 last_modified_at: 2026-10-11
+redirect_from:
+  - /tips/vscode-extensions-productivity-part-1/
 ---
 
 많은 글이 확장을 추천하지만, 이 글은 딥러닝과 데이터 분석 코드를 VSCode에서 작성할 때 생산성을 높여주는 확장 프로그램을 중심으로 정리한다.

@@ -7,7 +7,9 @@ tags: [kubernetes, k8s, docker-compose, ingress, persistent-volume, storageclass
 toc: true
 toc_sticky: true
 sidebar_main: true
-redirect_from: /docker/kubernetes1/
+redirect_from:
+  - /docker/kubernetes1/
+  - /docker/kubernetes-container-orchestration-basics/
 
 date: 2025-09-24
 last_modified_at: 2026-10-08

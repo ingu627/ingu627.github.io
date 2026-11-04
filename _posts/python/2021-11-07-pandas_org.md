@@ -9,6 +9,8 @@ toc_sticky: true
 sidebar_main: false
 
 last_modified_at: 2026-10-09
+redirect_from:
+  - /python/pandas-data-analysis-library/
 ---
 
 이 글은 파이썬 pandas 라이브러리의 사용법을 정리한다. Series와 DataFrame의 생성·인덱싱·연산부터 concat, merge, groupby, pivot, 결측값 처리까지 타이타닉 데이터 실습과 함께 다룬다.

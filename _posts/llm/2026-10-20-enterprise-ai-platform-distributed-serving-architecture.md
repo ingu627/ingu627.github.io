@@ -9,6 +9,7 @@ toc_sticky: true
 sidebar_main: true
 date: 2026-10-20
 last_modified_at: 2026-10-20
+use_math: true
 ---
 
 기업 내 핵심 기밀 데이터, 개인 식별 정보(PII), 혹은 고도의 규제 준수가 요구되는 환경에서는 외부 퍼블릭 클라우드 LLM API(예: OpenAI, Anthropic의 공용 엔드포인트)로 프롬프트를 전송하는 행위 자체가 원천 금지된다. 자연스럽게 기업들은 사설 가상 네트워크(VPC/VNet) 내부에 독립적인 자체 AI 플랫폼(Enterprise AI Platform)을 구축하고, 오픈 가중치 모델(Llama 3, DeepSeek-V3/V4, Qwen 2.5)을 자체 가속기 인프라에 직접 올려 서빙하는 방식을 채택하고 있다.

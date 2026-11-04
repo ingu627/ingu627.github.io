@@ -9,6 +9,9 @@ toc_sticky: true
 sidebar_main: false
 
 last_modified_at: 2026-10-09
+use_math: true
+redirect_from:
+  - /md/markdown-syntax-grammar-guide/
 ---
 
 저도 다 외우지 못합니다. 적용할 때마다 그때그때 보기 위해서 모두 정리해보았습니다. 보고 적용합시다! 🔥🔥

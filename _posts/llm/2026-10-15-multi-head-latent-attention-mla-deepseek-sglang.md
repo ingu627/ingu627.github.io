@@ -9,6 +9,7 @@ toc_sticky: true
 sidebar_main: true
 date: 2026-10-15
 last_modified_at: 2026-10-15
+use_math: true
 ---
 
 2026년 대규모 추론 모델과 장기 실행 에이전트 워크플로우가 프로덕션의 표준으로 자리 잡으면서, 서빙 인프라의 가장 치명적인 하드웨어 병목은 GPU 연산 능력(FLOPs)에서 **KV 캐시(Key-Value Cache) 메모리 대역폭(Memory Bandwidth)**으로 완전히 전환되었다.

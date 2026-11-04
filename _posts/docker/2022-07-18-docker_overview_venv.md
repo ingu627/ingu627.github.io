@@ -9,6 +9,8 @@ toc_sticky: true
 sidebar_main: false
 
 last_modified_at: 2026-10-09
+redirect_from:
+  - /docker/docker-overview-virtual-environment/
 ---
 
 <img src='/assets/images/legacy/f8a88052b9.webp' width=650>

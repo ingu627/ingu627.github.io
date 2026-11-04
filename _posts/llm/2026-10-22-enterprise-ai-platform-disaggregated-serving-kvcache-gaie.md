@@ -9,6 +9,7 @@ toc_sticky: true
 sidebar_main: true
 date: 2026-10-22
 last_modified_at: 2026-11-01
+use_math: true
 ---
 
 추론 클러스터에서 프리필과 디코드를 같은 GPU에 묶어 두면 GPU 시간의 20~40%가 그대로 논다. 프리필은 연산기가 병목이고 디코드는 메모리 대역폭이 병목이라, 한쪽이 돌 때 다른 쪽은 쉬기 때문이다. 앞선 [엔터프라이즈 AI 플랫폼 설계 1편](/llm/enterprise-ai-platform-distributed-serving-architecture/)[^1]에서는 사설망 제로 트러스트 경계와 텐서·파이프라인 병렬화의 통신 수식을 다루었다. [엔터프라이즈 AI 플랫폼 설계 2편](/agent/enterprise-ai-platform-fault-tolerance-operations/)[^2]에서는 슬라이딩 윈도우 서킷 브레이커와 투기적 헤지드 요청(Hedged Requests)으로 무중단 장애 격리를 만드는 방법을 살펴보았다. 인프라 격리와 고가용성 제어면이 준비되면 남는 것은 Day-2 운영 단계다. 이 단계의 핵심 과제는 **클러스터 단위의 GPU 자원 효율 극대화와 KVCache 중심의 데이터플레인 재설계**다.

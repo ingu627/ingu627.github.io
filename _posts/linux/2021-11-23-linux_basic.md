@@ -16,6 +16,7 @@ redirect_from:
   - /linux/life_coding_linux1/
   - /linux/life_coding_linux2/
   - /linux/life_coding_linux3/
+  - /linux/linux-command-line-basics/
 ---
 
 <img align='right' width='200' height='200' src='/assets/images/legacy/2e263f2faa.webp' alt='Linux 로고'>

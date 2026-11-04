@@ -10,6 +10,8 @@ toc_sticky: true
 sidebar_main: false
 
 last_modified_at: 2026-10-09
+redirect_from:
+  - /tips/install-docker-container-platform/
 ---
 
 윈도우10 또는 우분투 내에서 도커를 설치하는 과정을 정리할 필요가 있다고 느꼈습니다. 설치에 도움이 되었으면 합니다.

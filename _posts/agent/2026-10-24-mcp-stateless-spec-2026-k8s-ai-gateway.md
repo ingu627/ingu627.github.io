@@ -9,6 +9,7 @@ toc_sticky: true
 sidebar_main: true
 date: 2026-10-24
 last_modified_at: 2026-11-01
+use_math: true
 ---
 
 온콜 교대가 끝나기 무렵, 잘 돌던 도구 호출이 세션 만료로 실패하기 시작한다. 파드는 멀쩡하고 로그에도 예외가 없는데, 서버가 기억하던 대화 상대만 사라졌다.

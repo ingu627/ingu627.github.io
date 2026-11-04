@@ -8,6 +8,9 @@ sidebar_main: false
 classes: wide
 
 last_modified_at: 2026-10-09
+use_math: true
+redirect_from:
+  - /git_blog/mathjax-latex-markdown-integration/
 ---
 
 <img src="/assets/images/legacy/ca03c71998.webp" width=650 alt="mathjax">

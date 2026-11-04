@@ -12,6 +12,7 @@ classes: wide
 last_modified_at: 2026-10-11
 redirect_from:
   - /r_ml/solve_bigdata3/
+  - /r_ml/r-machine-learning-big-data-analysis-part-2/
 ---
 
 빅데이터 분석기사 실기(작업형 제1유형) 대비 차원에서 정리한 21개 실전 문제 풀이 모음이다[^1]. 기출문제 및 실습 데이터는 [GitHub 저장소(BigDataAnalysis)](https://github.com/ingu627/BigDataAnalysis)에 업로드되어 있으며, 전체 R 코드는 `sujebi_1.R`과 `sujebi_2.R`에 수록되어 있다.

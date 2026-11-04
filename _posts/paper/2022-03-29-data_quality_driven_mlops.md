@@ -11,6 +11,8 @@ sidebar_main: false
 last_modified_at: 2026-10-11
 redirect_from:
   - /paper/mlops/data_quality_driven_mlops/
+  - /paper/data-quality-mlops-production/
+use_math: true
 ---
 
 ![image](/assets/images/legacy/b98f0065b4.webp)

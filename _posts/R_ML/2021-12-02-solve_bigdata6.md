@@ -8,6 +8,9 @@ sidebar_main: false
 classes: wide
 
 last_modified_at: 2026-10-11
+use_math: true
+redirect_from:
+  - /r_ml/r-machine-learning-big-data-analysis-part-6/
 ---
 
 빅데이터분석기사 실기 대비를 위해 정리한 필답형 문제 풀이다. 2단원 빅데이터 탐색 영역의 핵심 개념인 데이터 정제, 결측값 대치, 이상값 탐지, 변수 선택 및 불균형 데이터 처리 기법을 정리한다[^kdata-exam]. 실무 및 실기 데이터 분석은 R 내장 통계 패키지(`stats`)[^r-stats] 및 CRAN의 공식 패키지 생태계[^r-cran]를 바탕으로 수행할 수 있다. 기출 연습용 데이터셋은 [github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis)에 정리해 두었다.

@@ -12,6 +12,8 @@ toc_sticky: true
 last_modified_at: 2026-10-11
 
 sidebar_main: false
+redirect_from:
+  - /tips/install-ubuntu-linux-setup/
 ---
 
 > 이 글은 2022년 당시 WSL2(Windows 10 21H2) 기준으로 작성된 설치/사용 기록이다. 최신 버전에서는 명령이 다를 수 있다.

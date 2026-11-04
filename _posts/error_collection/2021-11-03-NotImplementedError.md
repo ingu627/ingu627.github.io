@@ -8,6 +8,8 @@ sidebar_main: false
 
 date: 2021-11-03
 last_modified_at: 2026-10-09
+redirect_from:
+  - /error/not-implemented-error-fix/
 ---
 
 TensorFlow에서 순환 신경망 모델을 실행할 때 아래와 같은 NotImplementedError가 발생할 수 있다. 이 글은 해당 에러의 원인과 numpy 버전을 낮추는 해결 방법을 정리한다.

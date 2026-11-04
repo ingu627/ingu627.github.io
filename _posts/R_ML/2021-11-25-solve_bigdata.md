@@ -8,6 +8,8 @@ sidebar_main: false
 classes: wide
 
 last_modified_at: 2026-10-11
+redirect_from:
+  - /r_ml/r-machine-learning-big-data-analysis-part-1/
 ---
 
 빅데이터 분석기사 실기 대비 차원에서 정리한 문제풀이다. 기출문제 데이터셋은 [GitHub 저장소](https://github.com/ingu627/BigDataAnalysis)에 수록했으며, 전체 실행 코드는 `2021_2nd.R` 파일에 담겨 있다.

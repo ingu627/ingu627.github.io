@@ -10,6 +10,9 @@ sidebar_main: true
 
 date: 2025-05-05
 last_modified_at: 2026-10-08
+use_math: true
+redirect_from:
+  - /llm/llm-vector-database-embeddings/
 ---
 
 생성형 AI와 검색 증강 생성(RAG, Retrieval-Augmented Generation) 아키텍처가 발전하면서 비정형 데이터(텍스트, 이미지, 코드)를 고차원 밀집 벡터(Dense Vector)로 변환하여 검색하는 **벡터 검색 시스템(Vector Search System)**이 핵심 인프라로 자리 잡았다[^4].

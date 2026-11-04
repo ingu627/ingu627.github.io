@@ -9,6 +9,7 @@ toc_sticky: true
 sidebar_main: true
 date: 2026-10-14
 last_modified_at: 2026-10-14
+use_math: true
 ---
 
 2026년 AI 모델 개발 패러다임은 인간 연구원이 수동으로 하이퍼파라미터를 튜닝하고 손실 곡선(Loss Curve)을 관찰하던 전통적인 지도학습(SFT) 방식을 넘어, **에이전트가 스스로 연구 가설을 세우고 코드를 수정하며 훈련을 가속하는 '자율 연구(Autoresearch)'**의 시대로 진입했다.

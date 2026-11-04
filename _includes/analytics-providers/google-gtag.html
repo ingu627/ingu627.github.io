@@ -1,11 +1,29 @@
 {% if site.analytics.google.tracking_id %}
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id={{ site.analytics.google.tracking_id }}"></script>
+<!-- Global site tag (gtag.js) - Google Analytics (deferred: idle or first interaction) -->
 <script>
+(function () {
+  var id = '{{ site.analytics.google.tracking_id }}';
   window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
+  function gtag() { dataLayer.push(arguments); }
   gtag('js', new Date());
-
-  gtag('config', '{{ site.analytics.google.tracking_id }}'{% if site.analytics.google.anonymize_ip == true %}, { 'anonymize_ip': true }{% endif %});
+  gtag('config', id{% if site.analytics.google.anonymize_ip == true %}, { 'anonymize_ip': true }{% endif %});
+  var loaded = false;
+  function load() {
+    if (loaded) return;
+    loaded = true;
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + id;
+    document.head.appendChild(s);
+  }
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(load, { timeout: 4000 });
+  } else {
+    setTimeout(load, 3000);
+  }
+  ['scroll', 'mousemove', 'touchstart'].forEach(function (e) {
+    window.addEventListener(e, load, { once: true, passive: true });
+  });
+})();
 </script>
 {% endif %}

@@ -9,6 +9,8 @@ toc_sticky: true
 sidebar_main: false
 
 last_modified_at: 2026-10-09
+redirect_from:
+  - /code/lenet-pytorch-implementation/
 ---
 
 <img align='right' width='400' src='/assets/images/legacy/a6601b5cee.webp'>

@@ -9,6 +9,7 @@ toc_sticky: true
 sidebar_main: true
 date: 2026-10-10
 last_modified_at: 2026-10-10
+use_math: true
 ---
 
 앞선 글에서 비생성형 System One 모델 Jev의 거시적인 아키텍처와 에이전트 선택적 제어(Selective Control) 흐름을 살펴보았다. 이번 글에서는 엔지니어가 실제로 코드를 작성하고 시스템을 연동할 때 마주하는 구체적인 인터페이스 계약(API Contract)을 다루어보고자 한다.

@@ -9,6 +9,8 @@ toc_sticky: true
 sidebar_main: false
 
 last_modified_at: 2026-10-11
+redirect_from:
+  - /r_ml/r-big-data-analytics-fundamentals-part-6/
 ---
 
 <img align='right' width='200' height='200' src='/assets/images/legacy/664a3c1e2f.webp'>

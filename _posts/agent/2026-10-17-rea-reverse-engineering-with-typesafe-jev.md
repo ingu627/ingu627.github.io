@@ -9,6 +9,7 @@ toc_sticky: true
 sidebar_main: true
 date: 2026-10-17
 last_modified_at: 2026-10-17
+use_math: true
 ---
 
 소프트웨어 엔지니어링에서 타사 제품의 뛰어난 기능을 분석하거나, 문서화되지 않은 레거시 바이너리의 내부 프로토콜을 파악하고, 폐쇄형 웹·일렉트론(Electron) 애플리케이션의 동작 원리를 역추적하는 작업은 막대한 인지 부하를 동반한다. 최근 Claude Code, Cursor, Codex 등 자율 코딩 에이전트(Autonomous Coding Agents)가 보편화되면서 "이 앱이 검색을 어떻게 처리하는지 역공학해서 우리 프로젝트에 맞게 구현해달라"는 요청이 늘고 있다.

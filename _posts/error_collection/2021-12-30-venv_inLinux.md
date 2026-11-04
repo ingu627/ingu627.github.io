@@ -7,6 +7,8 @@ toc: true
 sidebar_main: false
 
 last_modified_at: 2026-10-09
+redirect_from:
+  - /error/python-virtual-environment-linux/
 ---
 
 리눅스(WSL)에서 파이썬 가상환경(`venv`)을 설치할 때 `Package 'python3.8-venv' has no installation candidate` 오류가 뜨는 경우가 있다. 이 글은 해당 에러 메시지와 `apt`를 이용한 해결 방법을 정리한다.

@@ -10,6 +10,8 @@ classes: wide
 sidebar_main: false
 
 last_modified_at: 2026-10-09
+redirect_from:
+  - /code/resnext-from-scratch-pytorch-implementation/
 ---
 
 <img align='right' width='250' src='/assets/images/legacy/6215747c10.webp'>

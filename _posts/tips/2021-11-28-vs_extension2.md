@@ -9,6 +9,8 @@ toc_sticky: True
 sidebar_main: false
 
 last_modified_at: 2026-10-11
+redirect_from:
+  - /tips/vscode-extensions-productivity-part-2/
 ---
 
 > 이 글은 2021년 당시 작성된 VSCode 확장 프로그램 설치/사용 기록이다. 최신 버전에서는 명령이 다를 수 있다.

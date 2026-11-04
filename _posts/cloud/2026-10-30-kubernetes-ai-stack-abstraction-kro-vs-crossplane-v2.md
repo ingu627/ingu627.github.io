@@ -9,6 +9,7 @@ toc_sticky: true
 sidebar_main: true
 date: 2026-10-30
 last_modified_at: 2026-11-01
+use_math: true
 ---
 
 금요일 밤, 모델 버전 하나를 올리려고 저장소를 열었더니 서로 다른 팀이 관리하는 매니페스트가 여러 벌로 흩어져 있었다. 어느 파일을 먼저 고쳐야 하는지 적어 둔 사람은 없었다.

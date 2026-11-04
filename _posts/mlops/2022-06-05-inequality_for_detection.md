@@ -9,6 +9,9 @@ toc_sticky: true
 sidebar_main: false
 
 last_modified_at: 2026-10-09
+use_math: true
+redirect_from:
+  - /mlops/statistical-inequality-drift-detection/
 ---
 
 Concept Drift Detection에 대한 기법들을 공부하면서 자연스레 나온 부등식들을 정리해보았습니다. 대부분의 기계 학습 문제에서 일부 샘플 훈련 세트가 제공되고 전체 모집단에 적용되는 일반 모델을 도출합니다.

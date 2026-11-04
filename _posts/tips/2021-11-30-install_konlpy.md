@@ -9,6 +9,8 @@ toc_sticky: true
 sidebar_main: false
 
 last_modified_at: 2026-10-11
+redirect_from:
+  - /tips/install-konlpy-korean-nlp/
 ---
 
 - **KoNLPy**는 한국어 정보처리를 위한 파이썬 패키지이다. NLP (자연어 처리)를 할 때 쓰이지만 운영체제가 윈도우같은 경우는 설치 버전을 좀 맞춰야 한다.

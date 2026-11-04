@@ -9,6 +9,8 @@ toc_sticky: true
 sidebar_main: false
 
 last_modified_at: 2026-10-09
+redirect_from:
+  - /python/effective-python-best-practices-part-5/
 ---
 
 <img align='right' width='150' height='150' src='/assets/images/legacy/ace131a3f8.webp'>

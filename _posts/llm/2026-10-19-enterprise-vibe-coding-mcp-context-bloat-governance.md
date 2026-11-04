@@ -9,6 +9,7 @@ toc_sticky: true
 sidebar_main: true
 date: 2026-10-19
 last_modified_at: 2026-10-19
+use_math: true
 ---
 
 2025년 2월 안드레이 카파시(Andrej Karpathy)가 *"분위기에 몸을 맡기고 코드가 존재한다는 사실조차 잊는 새로운 코딩"*이라 명명한 **바이브 코딩(Vibe Coding)**은 2026년 현재 자연어 프롬프트 기반 개발의 대표적인 워크플로우로 자리 잡았다.

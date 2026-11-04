@@ -10,6 +10,7 @@ toc_sticky: true
 sidebar_main: true
 date: 2026-10-12
 last_modified_at: 2026-10-12
+use_math: true
 ---
 
 대규모 언어 모델(Large Language Model, LLM)을 프로덕션 환경에 배포할 때, 서비스의 반응성을 좌우하는 가장 치명적인 지표는 첫 번째 토큰 생성 시간인 **TTFT(Time-to-First-Token)**이다. 특히 RAG(Retrieval-Augmented Generation), 멀티턴 자율 에이전트, 구조화된 출력(JSON Mode), 수천 토큰에 달하는 고정 시스템 프롬프트가 보편화되면서, 전체 입력 시퀀스 중 70%에서 90% 이상이 이전 요청과 동일한 접두사(Prefix)를 공유하는 현상이 관찰된다.

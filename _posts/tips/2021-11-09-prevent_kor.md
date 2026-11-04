@@ -7,6 +7,8 @@ tags: [tip, python, korea, colab, 한글 깨짐, 파이썬, 코랩, 주피터]
 sidebar_main: false
 
 last_modified_at: 2026-10-11
+redirect_from:
+  - /tips/prevent-korean-encoding-issues/
 ---
 
 이 글은 Jupyter·Colab 환경에서 파이썬(matplotlib) 한글이 깨질 때 사용하는 설정 코드를 정리한다. 로컬 환경에서 폰트를 지정하는 코드와 Colab에서 나눔 폰트를 설치하는 방법을 다룬다.

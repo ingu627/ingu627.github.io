@@ -6,6 +6,8 @@ tags: [jupyter, md]
 sidebar_main: false
 
 last_modified_at: 2026-10-09
+redirect_from:
+  - /md/jupyter-notebook-to-markdown-conversion/
 ---
 
 1. ipynb 파일이 존재하는 폴더로 갑니다.  

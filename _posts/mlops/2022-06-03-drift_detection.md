@@ -9,6 +9,9 @@ toc_sticky: true
 sidebar_main: false
 
 last_modified_at: 2026-10-09
+use_math: true
+redirect_from:
+  - /mlops/data-drift-concept-drift-detection/
 ---
 
 <img align='right' width='250' height='150' src='/assets/images/legacy/02c877e5c6.webp'> 

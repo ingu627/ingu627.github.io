@@ -10,6 +10,8 @@ toc_sticky: true
 sidebar_main: false
 
 last_modified_at: 2026-10-09
+redirect_from:
+  - /tips/install-hadoop-macos-setup-guide/
 ---
 
 **MacBook Pro (M1)** 로컬 환경에서 하둡(Hadoop)과 스파크(Spark)를 설치하고 의사 분산(Pseudo-distributed) 모드로 구동하는 과정을 정리한다. JDK 설치부터 SSH 설정, HDFS/YARN 기동 확인, Spark 연동까지 4단계로 진행한다.

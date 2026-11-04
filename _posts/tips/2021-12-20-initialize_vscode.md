@@ -8,6 +8,8 @@ toc: True
 sidebar_main: false
 
 last_modified_at: 2026-10-11
+redirect_from:
+  - /tips/initialize-vscode-development-environment/
 ---
 
 Visual Studio Code(VS Code)를 제어판에서 삭제한 뒤 다시 설치해도 이전 설정과 확장 프로그램이 그대로 복원되어 초기화되지 않는 현상이 발생한다. 이는 VS Code의 프로그램 본체(실행 파일)와 사용자 데이터 디렉터리가 서로 다른 경로에 분리되어 관리되기 때문이다[^1]. 단순 프로그램 삭제는 실행 파일만 제거할 뿐 로컬에 저장된 사용자 설정 파일과 확장 프로그램 캐시를 보존하도록 설계되어 있다. 이 글은 Windows 환경을 기준으로 VS Code의 사용자 구성 파일과 확장 데이터를 정리하고 클린 재설치(Clean Reinstall)를 수행하는 절차를 정리한다.

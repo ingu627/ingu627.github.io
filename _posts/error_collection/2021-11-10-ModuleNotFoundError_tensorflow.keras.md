@@ -7,6 +7,8 @@ toc: true
 sidebar_main: false
 
 last_modified_at: 2026-10-09
+redirect_from:
+  - /error/module-not-found-tensorflow-keras/
 ---
 
 `ModuleNotFoundError: No module named 'tensorflow.keras'` 에러를 해결하는 방법을 정리한다. `python` 환경을 추가하거나 `pip`로 특정 버전의 `keras`를 설치하는 방법을 다룬다.

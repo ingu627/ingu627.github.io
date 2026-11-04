@@ -11,6 +11,8 @@ toc_sticky: true
 last_modified_at: 2026-10-11
 
 sidebar_main: false
+redirect_from:
+  - /tips/git-setup-ubuntu-linux/
 ---
 
 ## Git이란? 

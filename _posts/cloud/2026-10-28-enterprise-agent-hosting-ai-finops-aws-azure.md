@@ -9,6 +9,7 @@ toc_sticky: true
 sidebar_main: true
 date: 2026-10-28
 last_modified_at: 2026-11-01
+use_math: true
 ---
 
 에이전트 워크로드를 프로덕션 클라우드에 배포한 뒤 엔지니어링 조직이 직면하는 가장 현실적인 Day-2 운영 문제는 모델의 추론 정확도가 아니다. 실제로 발목을 잡는 것은 **유휴 GPU로 인한 비용 누수(Idle GPU Waste)**와 **인프라 런타임 선택의 불확실성**이다. 앞서 [/cloud/cloud-finops/](/cloud/cloud-finops/)[^1]에서 Inform·Optimize·Operate 순환과 예약 할인 전략을 살펴보았다. 그리고 [/cloud/cloud-security-governance/](/cloud/cloud-security-governance/)[^2]에서 멀티계정 격리와 최소 권한 경계를 다뤘다. 이제는 에이전트 런타임 고유의 비대칭적 트래픽 패턴과 장기 실행 세션 특성을 반영한 **AI 전용 단위 경제학(AI Unit Economics)**이 필요한 시점이다.

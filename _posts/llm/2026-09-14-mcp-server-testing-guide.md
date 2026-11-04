@@ -9,6 +9,7 @@ toc_sticky: true
 sidebar_main: true
 date: 2026-09-14
 last_modified_at: 2026-10-10
+use_math: true
 ---
 
 MCP(Model Context Protocol) 서버를 처음 만들어 본 사람은 대개 같은 착각에 빠진다. 데코레이터 하나 붙이고 파이썬 함수 몇 줄을 쓰면 Claude Desktop이나 사내 에이전트 화면에 도구가 즉시 나타난다. "동작한다"는 감각은 5분 만에 얻는다.

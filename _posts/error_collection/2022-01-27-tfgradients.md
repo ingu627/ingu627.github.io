@@ -7,6 +7,8 @@ toc: true
 sidebar_main: false
 
 last_modified_at: 2026-10-09
+redirect_from:
+  - /error/tensorflow-gradients-error-fix/
 ---
 
 이 글은 TensorFlow에서 tf.gradients 사용 시 eager execution이 활성화되어 발생하는 RuntimeError를 해결한 기록이다. `tf.compat.v1.disable_eager_execution()`를 코드 맨 처음에 실행하는 방법을 정리한다.

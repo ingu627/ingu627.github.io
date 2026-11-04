@@ -8,6 +8,8 @@ toc : True
 sidebar_main: false
 
 last_modified_at: 2026-10-09
+redirect_from:
+  - /git_blog/jupyter-notebook-github-gist-integration/
 ---
 
 ## 개요

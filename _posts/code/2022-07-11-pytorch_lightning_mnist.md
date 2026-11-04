@@ -9,6 +9,8 @@ toc_sticky: true
 sidebar_main: false
 
 last_modified_at: 2026-10-09
+redirect_from:
+  - /code/pytorch-lightning-mnist-tutorial/
 ---
 
 <img align='right' width='250' src='/assets/images/legacy/14cb0be0e7.webp'>
