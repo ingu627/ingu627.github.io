@@ -10,6 +10,7 @@ date: 2021-11-03
 last_modified_at: 2026-10-09
 redirect_from:
   - /error/jupyter-kernel-died-attribute-error/
+  - /error/Kernel died_attributeError/
 ---
 
 > 이 글은 2021년 당시 Python 3.7 / TensorFlow 2.2 환경 기준으로 작성된 설치/사용 기록이다. 최신 버전에서는 명령이 다를 수 있다.
