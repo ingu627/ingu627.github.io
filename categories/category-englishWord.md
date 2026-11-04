@@ -4,6 +4,8 @@ layout: archive
 permalink: categories/englishWord
 author_profile: true
 sidebar_main: true
+noindex: true
+sitemap: false
 ---
 
 

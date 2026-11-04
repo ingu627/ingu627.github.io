@@ -1,23 +1,39 @@
-/* Modern Webfonts (Wanted Sans, Pretendard) */
-@import url("https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.1/packages/wanted-sans/fonts/webfonts/variable/split/WantedSansVariable.min.css");
-@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css");
+/* Web font stack.
+ *
+ * The webfont stylesheets themselves (Wanted Sans, Pretendard) are linked from
+ * _includes/head/custom.html instead of being @import-ed here: an @import inside
+ * main.css can only be discovered after main.css itself has downloaded, and the
+ * same chain was duplicated inside main_dark.css, so the fonts serialised behind
+ * two stylesheets across three origins.
+ */
 
 /* Global Font Stack Override */
 $sans-serif: "Wanted Sans Variable", "Pretendard Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo", "Roboto", "Helvetica Neue", Arial, sans-serif !default;
-/* Legacy & Utility Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500;600&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Gowun+Batang');
-@import url('https://fonts.googleapis.com/icon?family=Material+Icons+Sharp');
+
+/* RIDIBatang is only used for the sidebar counter and the archive link, so it is
+ * subset to exactly those characters (724KB woff -> 3.4KB woff2). */
 @font-face {
-    font-family: 'RIDIBatang';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/RIDIBatang.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'RIDIBatang';
+  src: url('/assets/fonts/ridibatang-subset.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Fira Mono: code blocks. 400/500 are served from Fontsource; the family used to
+ * be pulled a second time through the Google Fonts CSS API. */
+@font-face {
+  font-family: 'Fira Mono';
+  src: url('https://cdn.jsdelivr.net/npm/@fontsource/fira-mono@5/files/fira-mono-latin-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'Fira Mono';
-  src: url('https://cdn.jsdelivr.net/npm/@fontsource/fira-mono/files/fira-mono-latin-400-normal.woff2') format('woff2');
-  font-weight: 400;
+  src: url('https://cdn.jsdelivr.net/npm/@fontsource/fira-mono@5/files/fira-mono-latin-500-normal.woff2') format('woff2');
+  font-weight: 500;
   font-style: normal;
+  font-display: swap;
 }

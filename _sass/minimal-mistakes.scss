@@ -39,5 +39,7 @@
 @import "minimal-mistakes/sidebar";
 @import "minimal-mistakes/print";
 
-/* google fonts */
-@import url('https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap');
+/* No external @import here: a Google Fonts @import inside main.css can only be
+ * discovered after main.css downloads, and no rule in the theme uses Gowun
+ * Batang. The webfonts actually in use are linked from
+ * _includes/head/custom.html (see _sass/custom/customImport.scss). */

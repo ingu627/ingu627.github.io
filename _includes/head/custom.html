@@ -1,6 +1,15 @@
 <!-- start custom head snippets -->
-<link rel="preconnect" href="https://fonts.googleapis.com"> 
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+
+<!-- Web fonts: linked here (fetched in parallel with main.css) instead of
+     @import-ed from main.css, where they could only be discovered after
+     main.css had downloaded - and the same chain was duplicated in
+     main_dark.css. Wanted Sans is the primary body font, so it stays
+     render-blocking (no swap-induced layout shift); Pretendard is only the
+     fallback and must not delay the first paint. -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.1/packages/wanted-sans/fonts/webfonts/variable/split/WantedSansVariable.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"></noscript>
 
 <!-- insert favicons. use https://realfavicongenerator.net/  + manifest는 한번 봐야함-->
 <link rel="apple-touch-icon" sizes="180x180" href="{{site.baseurl}}/assets/logo.ico/apple-touch-icon.png">

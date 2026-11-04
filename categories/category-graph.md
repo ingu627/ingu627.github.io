@@ -4,6 +4,8 @@ layout: archive
 permalink: categories/graph
 author_profile: true
 sidebar_main: true
+noindex: true
+sitemap: false
 ---
 
 
