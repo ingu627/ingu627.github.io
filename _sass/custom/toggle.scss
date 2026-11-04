@@ -25,12 +25,18 @@
             transition: all 0.4s ease;
             color: gray;
             background: white;
+            /* Font Awesome is already loaded by the theme; the previous
+               Material Icons Sharp ligature needed a second icon font that
+               only this switch used. */
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            font-size: 0.7em;
         }
 
         background: lightgray;
         &:after {
             left: 0;
-            content: "brightness_3";
+            content: "\f186"; // fa-moon
         }
     }
 
@@ -38,7 +44,7 @@
         background: gray;
         &:after {
             left: 50%;
-            content: "brightness_2";
+            content: "\f185"; // fa-sun
         }
     }
 }
