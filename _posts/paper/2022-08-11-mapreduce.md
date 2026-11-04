@@ -9,6 +9,8 @@ toc_sticky: true
 sidebar_main: false
 
 last_modified_at: 2026-10-11
+redirect_from:
+  - /paper/hadoop/mapreduce/
 ---
 
 ![image](/assets/images/legacy/6a52427b66.webp)

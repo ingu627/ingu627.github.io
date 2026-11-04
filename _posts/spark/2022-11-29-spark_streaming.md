@@ -9,6 +9,9 @@ toc_sticky: true
 sidebar_main: false
 
 last_modified_at: 2026-10-11
+redirect_from:
+  - /spark/spark_streaming1/
+  - /spark/spark_streaming2/
 ---
 
 <img align='right' width='150' height='200' src='/assets/images/legacy/058f7b9a23.webp'>

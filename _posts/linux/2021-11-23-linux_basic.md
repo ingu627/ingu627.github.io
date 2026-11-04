@@ -12,6 +12,10 @@ date: 2021-11-23
 last_modified_at: 2026-10-09
 
 sidebar_main: false
+redirect_from:
+  - /linux/life_coding_linux1/
+  - /linux/life_coding_linux2/
+  - /linux/life_coding_linux3/
 ---
 
 <img align='right' width='200' height='200' src='/assets/images/legacy/2e263f2faa.webp' alt='Linux 로고'>

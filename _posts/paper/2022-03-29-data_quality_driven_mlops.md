@@ -9,6 +9,8 @@ toc_sticky: true
 sidebar_main: false
 
 last_modified_at: 2026-10-11
+redirect_from:
+  - /paper/mlops/data_quality_driven_mlops/
 ---
 
 ![image](/assets/images/legacy/b98f0065b4.webp)

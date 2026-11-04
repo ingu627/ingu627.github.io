@@ -9,6 +9,9 @@ toc_sticky: true
 sidebar_main: false
 
 last_modified_at: 2026-10-10
+redirect_from:
+  - /keras/keras_ch3_org_1/
+  - /keras/keras_ch3_org_2/
 ---
 
 <img align='right' width='200' height='200' src='/assets/images/legacy/be0ceae23f.webp'>

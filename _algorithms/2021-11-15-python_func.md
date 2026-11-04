@@ -12,6 +12,8 @@ use_math: true
 
 author_profile: true
 last_modified_at: 2025-09-26
+redirect_from:
+  - /python/python_func/
 ---
 
 문제 풀기 : 알고리즘 문제에서 주어지는 것들을 구별하는 습관 가지기!!  

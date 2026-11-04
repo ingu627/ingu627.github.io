@@ -9,6 +9,8 @@ toc_sticky: true
 sidebar_main: false
 
 last_modified_at: 2026-10-11
+redirect_from:
+  - /paper/mlops/concept_drift/
 ---
 
 ![image](/assets/images/legacy/8071d6d0c4.webp)

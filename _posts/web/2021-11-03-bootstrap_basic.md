@@ -9,6 +9,9 @@ sidebar_main: false
 
 date: 2021-11-03
 last_modified_at: 2026-10-09
+redirect_from:
+  - /web/bootstrap_basic_1/
+  - /web/bootstrap_basic_2/
 ---
 
 본 글은 패스트캠퍼스의 "한 번에 끝내는 파이썬 웹 개발 초격차 패키지" 강의를 개인 실습하여 따라 한 것입니다. 기타 완성용 파일을 원하시는 분은 [https://github.com/ParkYoungWoong/bootstrap5-github-landing](https://github.com/ParkYoungWoong/bootstrap5-github-landing) 링크로 가주시면 됩니다.

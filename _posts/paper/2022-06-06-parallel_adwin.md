@@ -9,6 +9,8 @@ toc_sticky: true
 sidebar_main: false
 
 last_modified_at: 2026-10-11
+redirect_from:
+  - /paper/mlops/parallel_adwin/
 ---
 
 ![image](/assets/images/legacy/613b90c4c6.webp)
