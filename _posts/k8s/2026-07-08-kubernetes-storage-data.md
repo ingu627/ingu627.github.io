@@ -40,7 +40,7 @@ last_modified_at: 2026-11-07
 
 이 시리즈는 쿠버네티스와 클라우드(AWS·GCP·Azure 공통 개념)를 실무 관점에서 정리한 기록이다. 핵심 개념·코드 예제·실전 함정(gotcha) 중심으로, 학습과 설계 리뷰·장애 대응에 바로 쓸 수 있게 구성했다. 각 편은 독립적으로 읽을 수 있고, 순서대로 보면 클러스터 내부 구조에서 클라우드 운영까지 하나의 흐름으로 이어진다.
 
-컨테이너의 파일시스템은 이미지 레이어 위에 얹힌 임시 레이어(writable layer)라 컨테이너가 재시작되면 그 안의 쓰기는 모두 사라진다. 그래서 쿠버네티스(Kubernetes) 스토리지 설계의 본질은 "데이터의 수명(lifetime)을 파드(Pod)·노드(Node)·클러스터 중 어디에 묶을 것인가"를 명시적으로 결정하는 일이다. 이번 편에서는 [쿠버네티스 네트워킹](https://ingu627.github.io/k8s/kubernetes-networking/)에서 외부 트래픽이 파드까지 도달하는 경로를 정리한 흐름을 이어, 파드가 사라져도 남아야 하는 데이터를 다루는 계층 — Volume 종류부터 PV/PVC 추상화, CSI 드라이버와 스냅샷, StatefulSet 기반 데이터베이스 운영, 백업/DR, 성능 튜닝, 그리고 데이터 유실 함정 — 을 운영 관점에서 정리한다.
+컨테이너의 파일시스템은 이미지 레이어 위에 얹힌 임시 레이어(writable layer)라 컨테이너가 재시작되면 그 안의 쓰기는 모두 사라진다. 그래서 쿠버네티스(Kubernetes) 스토리지 설계의 본질은 명시적 결정에 있다. "데이터의 수명(lifetime)을 파드(Pod)·노드(Node)·클러스터 중 어디에 묶을 것인가"를 정하는 일이다. 이번 편은 [쿠버네티스 네트워킹](https://ingu627.github.io/k8s/kubernetes-networking/)의 흐름을 잇는다. 그 글에서는 외부 트래픽이 파드까지 도달하는 경로를 정리했다. 이번 편은 파드가 사라져도 남아야 하는 데이터를 다루는 계층을 운영 관점에서 정리한다. 범위는 Volume 종류부터 PV/PVC 추상화, CSI 드라이버와 스냅샷, StatefulSet 기반 데이터베이스 운영이다. 백업/DR과 성능 튜닝, 데이터 유실 함정까지 함께 본다.
 
 - Volume 종류별 수명(lifetime)과 용도·제약을 비교하고, 상태 데이터에 무엇을 쓸지 판단 기준을 세운다
 - PV/PVC/StorageClass의 역할과 동적 프로비저닝 흐름, RWO/RWX 접근 모드의 실제 의미를 구분한다
@@ -130,11 +130,11 @@ volumes:
 
 1. PVC 생성 → 2. `volumeBindingMode: WaitForFirstConsumer`면 파드 스케줄까지 보류 → 3. 스케줄러가 노드를 결정하면 토폴로지(AZ)에 맞춰 CSI `CreateVolume` 호출 → 4. PV 생성 및 PVC 바인딩 → 5. kubelet이 노드에서 attach/mount → 6. 파드 기동.
 
-`Immediate` 모드는 PVC 생성 즉시 볼륨을 만들기 때문에 AZ가 임의로 정해지고, 이후 파드가 다른 AZ 노드에 스케줄되면 `FailedScheduling`이 발생한다. **멀티 AZ 클러스터에서는 항상 `WaitForFirstConsumer`를 기본으로 삼는다.**
+`Immediate` 모드는 PVC 생성 즉시 볼륨을 만들기 때문에 AZ가 임의로 정해진다. 이후 파드가 다른 AZ 노드에 스케줄되면 `FailedScheduling`이 발생한다. **멀티 AZ 클러스터에서는 항상 `WaitForFirstConsumer`를 기본으로 삼는다.**
 
 ![PVC → StorageClass → CSI 동적 프로비저닝 흐름](/assets/images/k8s/k8s-pv-pvc-csi.png)
 
-위 다이어그램은 PVC가 StorageClass의 프로비저너를 거쳐 CSI 드라이버의 `CreateVolume`을 호출하고, 생성된 PV가 다시 PVC에 바인딩된 뒤 kubelet이 노드에서 attach/mount하는 동적 프로비저닝 경로를 보여준다. `WaitForFirstConsumer`에서는 이 경로가 스케줄러의 노드 결정 이후에 시작되므로, 볼륨의 AZ가 파드가 놓일 노드와 어긋나지 않는다.
+위 다이어그램은 PVC가 StorageClass의 프로비저너를 거쳐 CSI 드라이버의 `CreateVolume`을 호출하는 경로를 보여준다. 생성된 PV가 다시 PVC에 바인딩되고, kubelet이 노드에서 attach/mount하는 단계까지 이어진다. `WaitForFirstConsumer`에서는 이 경로가 스케줄러의 노드 결정 이후에 시작되므로, 볼륨의 AZ가 파드가 놓일 노드와 어긋나지 않는다.
 
 | 항목 | 정적 프로비저닝 | 동적 프로비저닝 |
 | :--- | :--- | :--- |
@@ -198,7 +198,7 @@ spec:
             storage: 100Gi
 ```
 
-`volumeClaimTemplates`로 만든 PVC는 `data-pg-0`, `data-pg-1`처럼 파드 순번 기반 이름을 갖는다. **스케일 다운 시 쿠버네티스는 PVC를 삭제하지 않는다**(의도적 안전장치). 반대로 Helm `uninstall`이나 네임스페이스 삭제는 PVC를 지우므로 `helm.sh/resource-policy: keep` 애노테이션을 쓰거나 reclaimPolicy를 `Retain`으로 두는 편이 안전하다. 또한 `volumeClaimTemplates`는 생성 후 필드 수정이 금지되므로, 용량 증설은 PVC를 개별 패치한다.
+`volumeClaimTemplates`로 만든 PVC는 `data-pg-0`, `data-pg-1`처럼 파드 순번 기반 이름을 갖는다. **스케일 다운 시 쿠버네티스는 PVC를 삭제하지 않는다**(의도적 안전장치). 반대로 Helm `uninstall`이나 네임스페이스 삭제는 PVC를 지운다. 그럴 때는 `helm.sh/resource-policy: keep` 애노테이션을 쓰거나 reclaimPolicy를 `Retain`으로 두는 편이 안전하다. 또한 `volumeClaimTemplates`는 생성 후 필드 수정이 금지되므로, 용량 증설은 PVC를 개별 패치한다.
 
 ```bash
 # StatefulSet PVC 용량 확장 (SC에 allowVolumeExpansion: true 필요)
@@ -236,11 +236,11 @@ CSI(Container Storage Interface)는 kubelet·컨트롤러가 벤더 드라이버
 
 ![CSI 드라이버와 사이드카(external-provisioner/attacher)의 배치](/assets/images/k8s/official-kubernetes-storage-data.webp)
 
-*출처: [Kubernetes Blog — Dynamically Expand Volume with CSI and Kubernetes](https://kubernetes.io/blog/2018/08/02/dynamically-expand-volume-with-csi-and-kubernetes/), . 위 도식은 노드마다 kubelet과 CSI 볼륨 드라이버(node 플러그인)가 위치하고, 컨트롤러 측의 external-provisioner·external-attacher 사이드카가 API 서버·컨트롤러 매니저와 통신하는 구조를 보여준다. 위 구성 요소 목록에서 "무엇이 어디에서 도는가"를 그림으로 대응시킨 것으로, 노드 플러그인이 노드별 DaemonSet으로 배치되고 사이드카가 컨트롤러 Deployment에 붙는다는 점을 확인할 수 있다.*
+*출처: [Kubernetes Blog — Dynamically Expand Volume with CSI and Kubernetes](https://kubernetes.io/blog/2018/08/02/dynamically-expand-volume-with-csi-and-kubernetes/), . 위 도식은 노드마다 kubelet과 CSI 볼륨 드라이버(node 플러그인)가 위치함을 보여준다. 컨트롤러 측의 external-provisioner·external-attacher 사이드카는 API 서버·컨트롤러 매니저와 통신하는 구조다. 위 구성 요소 목록에서 "무엇이 어디에서 도는가"를 그림으로 대응시킨 것이다. 노드 플러그인이 노드별 DaemonSet으로 배치되고, 사이드카가 컨트롤러 Deployment에 붙는다는 점을 확인할 수 있다.*
 
 ### 4.1 예제 3: CSI 스냅샷 생성과 복원
 
-스냅샷은 `snapshot.storage.k8s.io/v1` CRD(VolumeSnapshotClass/VolumeSnapshot/VolumeSnapshotContent)와 스냅샷 컨트롤러 설치가 선행돼야 한다.
+스냅샷은 `snapshot.storage.k8s.io/v1` CRD가 먼저 필요하다. CRD는 VolumeSnapshotClass/VolumeSnapshot/VolumeSnapshotContent 세 가지이며, 스냅샷 컨트롤러 설치도 선행돼야 한다.
 
 ```yaml
 apiVersion: snapshot.storage.k8s.io/v1
@@ -290,11 +290,11 @@ kubectl describe volumesnapshot pg-data-snap -n db   # ReadyToUse: true 확인
 
 ## 5. StatefulSet + 데이터베이스 운영
 
-StatefulSet은 ① 안정적이고 예측 가능한 파드 이름(`pg-0`, `pg-1`), ② 순번 기반 PVC, ③ 순차적 롤아웃/롤백, ④ 헤드리스 서비스(`clusterIP: None`)를 통한 개별 DNS(`pg-0.pg-headless.db.svc`)를 제공한다. 데이터베이스가 자기 복제본을 찾아 클러스터를 구성하려면 이 정체성(identity)이 필수다.
+StatefulSet은 ① 안정적이고 예측 가능한 파드 이름(`pg-0`, `pg-1`), ② 순번 기반 PVC, ③ 순차적 롤아웃/롤백을 제공한다. ④ 헤드리스 서비스(`clusterIP: None`)를 통한 개별 DNS(`pg-0.pg-headless.db.svc`)도 함께 준다. 데이터베이스가 자기 복제본을 찾아 클러스터를 구성하려면 이 정체성(identity)이 필수다.
 
 ![StatefulSet + Headless Service + PVC 템플릿 DB 운영 패턴](/assets/images/k8s/k8s-statefulset-db.png)
 
-위 그림은 헤드리스 서비스가 각 파드에 개별 DNS를 부여하고, `volumeClaimTemplates`가 파드 순번마다 PVC를 따로 만들어 각 인스턴스가 자기 데이터 볼륨을 갖는 구조를 나타낸다. 스케일 다운이나 롤아웃에서도 파드 이름과 볼륨이 짝을 유지하기 때문에, 복제본끼리 서로를 식별하는 데이터베이스 클러스터 운영이 가능해진다.
+위 그림은 헤드리스 서비스가 각 파드에 개별 DNS를 부여하는 구조를 나타낸다. `volumeClaimTemplates`가 파드 순번마다 PVC를 따로 만들어, 각 인스턴스가 자기 데이터 볼륨을 갖는다. 스케일 다운이나 롤아웃에서도 파드 이름과 볼륨이 짝을 유지하기 때문에, 복제본끼리 서로를 식별하는 데이터베이스 클러스터 운영이 가능해진다.
 
 ### 5.1 Operator 패턴
 
@@ -406,7 +406,7 @@ velero backup describe app-daily --details
 velero restore logs app-restore-test
 ```
 
-DR 전략은 RPO/RTO로 결정한다. **콜드 DR**(백업에서 몇 시간 내 복원, 클러스터 교체 포함)은 Velero + 앱 인지 백업으로 충분하고, **웜/핫 DR**(수 분 내)은 다른 리전에 스트리밍 복제본(PostgreSQL 스트리밍 복제, Aurora Global Database, EFS Replication)을 상시 유지해야 한다. 리전 간 백업 버킷은 반드시 크로스 리전 복제를 켠다.
+DR 전략은 RPO/RTO로 결정한다. **콜드 DR**(백업에서 몇 시간 내 복원, 클러스터 교체 포함)은 Velero + 앱 인지 백업으로 충분하다. **웜/핫 DR**(수 분 내)은 다른 리전에 스트리밍 복제본을 상시 유지해야 한다. 복제본은 PostgreSQL 스트리밍 복제, Aurora Global Database, EFS Replication 같은 형태를 쓴다. 리전 간 백업 버킷은 반드시 크로스 리전 복제를 켠다.
 
 **복원 리허설 없는 백업은 백업이 아니다.** 분기마다 실제 네임스페이스 복원 → 애플리케이션 기동 → 데이터 정합성 검증 순서를 자동화한다.
 
@@ -414,7 +414,7 @@ DR 전략은 RPO/RTO로 결정한다. **콜드 DR**(백업에서 몇 시간 내 
 
 ## 7. 성능: 로컬 SSD vs 네트워크 스토리지
 
-데이터베이스 성능은 대부분 **fsync 지연(latency)** 과 **IOPS** 에서 결정된다. 아래 지연 값은 벤더 스펙 수치가 아니라 µs·ms 자릿수를 비교하기 위한 개략치이고, IOPS·처리량은 AWS EBS 공식 문서가 밝힌 볼륨당 프로비저닝 상한(벤더 스펙)이다[^1][^2]. 실제 달성치는 인스턴스 타입 한계·파일시스템·동시성에 따라 이보다 낮을 수 있으므로, 용량 계획은 자체 워크로드로 측정한 값으로 확정한다.
+데이터베이스 성능은 대부분 **fsync 지연(latency)** 과 **IOPS** 에서 결정된다. 아래 지연 값은 벤더 스펙 수치가 아니라 µs·ms 자릿수를 비교하기 위한 개략치다. IOPS·처리량은 AWS EBS 공식 문서가 밝힌 볼륨당 프로비저닝 상한(벤더 스펙)이다[^1][^2]. 실제 달성치는 인스턴스 타입 한계·파일시스템·동시성에 따라 이보다 낮을 수 있으므로, 용량 계획은 자체 워크로드로 측정한 값으로 확정한다.
 
 | 유형 | 지연 | IOPS 특성 | 용도 |
 | :--- | :--- | :--- | :--- |

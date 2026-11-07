@@ -40,7 +40,7 @@ last_modified_at: 2026-11-07
 
 이 시리즈는 쿠버네티스와 클라우드(AWS·GCP·Azure 공통 개념)를 실무 관점에서 정리한 기록이다. 핵심 개념·코드 예제·실전 함정(gotcha) 중심으로, 학습과 설계 리뷰·장애 대응에 바로 쓸 수 있게 구성했다. 각 편은 독립적으로 읽을 수 있고, 순서대로 보면 클러스터 내부 구조에서 클라우드 운영까지 하나의 흐름으로 이어진다.
 
-이번 편은 그중 **워크로드(workload)** 계층을 다룬다. 앞선 [쿠버네티스 기초](https://ingu627.github.io/k8s/kubernetes-architecture/)에서 컨트롤 플레인과 조정 루프(observe → diff → act)를 봤다면, 이번에는 그 조정 루프가 실제로 관리하는 대상—"컨테이너를 어떤 단위로, 몇 개나, 어떤 순서와 규칙으로 실행할 것인가"를 선언하는 API 객체—을 파고든다. 파드(Pod)라는 최소 실행 단위 위에 어떤 컨트롤러가 어떤 보장을 얹는지, 그리고 다음 편의 [쿠버네티스 네트워킹](https://ingu627.github.io/k8s/kubernetes-networking/)으로 넘어가기 전에 부하에 따라 개수를 조정하는 오토스케일링까지 한 번에 정리한다.
+이번 편은 그중 **워크로드(workload)** 계층을 다룬다. 앞선 글은 [쿠버네티스 기초](https://ingu627.github.io/k8s/kubernetes-architecture/)다. 거기서 컨트롤 플레인과 조정 루프(observe → diff → act)를 봤다면, 이번에는 그 조정 루프가 실제로 관리하는 대상을 파고든다. 그 대상은 "컨테이너를 어떤 단위로, 몇 개나, 어떤 순서와 규칙으로 실행할 것인가"를 선언하는 API 객체다. 파드(Pod)라는 최소 실행 단위 위에 어떤 컨트롤러가 어떤 보장을 얹는지 살핀다. 그리고 다음 편은 [쿠버네티스 네트워킹](https://ingu627.github.io/k8s/kubernetes-networking/)이다. 그곳으로 넘어가기 전에, 부하에 따라 개수를 조정하는 오토스케일링까지 한 번에 정리한다.
 
 - 다섯 워크로드 컨트롤러가 각각 무엇을 보장하는지, 언제 무엇을 고를지 판단 기준을 세운다
 - 워크로드 매니페스트의 실전 패턴(requests/limits·프로브·멀티컨테이너)을 그대로 쓸 수 있게 본다
@@ -52,13 +52,13 @@ last_modified_at: 2026-11-07
 
 ## 1. Pod: 최소 배포 단위
 
-쿠버네티스(Kubernetes)에서 워크로드(workload)는 "컨테이너를 어떤 단위로, 몇 개나, 어떤 순서와 규칙으로 실행할 것인가"를 선언하는 API 객체다. 파드(Pod)라는 최소 실행 단위 위에 ReplicaSet, Deployment, StatefulSet, DaemonSet, Job/CronJob이 각각 다른 보장(무상태 복제, 순서·영속성, 노드당 1개, 완료 보장)을 얹고, 그 위에 HPA·VPA·KEDA와 Cluster Autoscaler/Karpenter가 부하에 따라 개수를 조정한다.
+쿠버네티스(Kubernetes)에서 워크로드(workload)는 "컨테이너를 어떤 단위로, 몇 개나, 어떤 순서와 규칙으로 실행할 것인가"를 선언하는 API 객체다. 파드(Pod)라는 최소 실행 단위 위에 ReplicaSet, Deployment, StatefulSet, DaemonSet, Job/CronJob이 올라간다. 이들은 각각 다른 보장(무상태 복제, 순서·영속성, 노드당 1개, 완료 보장)을 얹는다. 그 위에 HPA·VPA·KEDA와 Cluster Autoscaler/Karpenter가 부하에 따라 개수를 조정한다.
 
 파드는 하나 이상의 컨테이너를 같은 네트워크 네임스페이스(Network namespace)·IPC·볼륨(Volume)을 공유하며 묶은 단위다. 즉 같은 파드의 컨테이너는 `localhost`로 통신하고, IP와 라이프사이클을 함께한다. 파드는 "일회용(ephemeral)"이며 직접 만들기보다 상위 컨트롤러(controller)가 관리하도록 선언하는 것이 원칙이다.
 
 ![쿠버네티스 워크로드 컨트롤러 선택 지도](/assets/images/k8s/k8s-workload-controllers.png)
 
-위 다이어그램은 파드 위에 얹히는 다섯 컨트롤러(Deployment·StatefulSet·DaemonSet·Job·CronJob)를 "무엇을 보장하는가"라는 기준으로 고르는 지도를 나타낸다. 무상태 복제는 Deployment, 순서와 영속성은 StatefulSet, 노드당 하나는 DaemonSet, 완료 보장은 Job/CronJob이 맡는다.
+위 다이어그램은 파드 위에 얹히는 다섯 컨트롤러(Deployment·StatefulSet·DaemonSet·Job·CronJob)를 보여준다. "무엇을 보장하는가"라는 기준으로 고르는 지도다. 무상태 복제는 Deployment, 순서와 영속성은 StatefulSet, 노드당 하나는 DaemonSet, 완료 보장은 Job/CronJob이 맡는다.
 
 ### 1.1 생명주기(phases)와 컨테이너 상태
 
@@ -106,7 +106,7 @@ spec:
 
 ## 2. requests/limits와 QoS 클래스
 
-`requests`는 스케줄러(scheduler)가 노드 용량을 계산할 때 쓰는 예약량이고, `limits`는 커널 cgroup이 강제하는 상한이다. CPU의 limit 초과는 **스로틀링(throttling)**(속도 저하), 메모리 limit 초과는 **OOMKill**(exit 137)이라는 결과 차이를 반드시 기억해야 한다.
+`requests`는 스케줄러(scheduler)가 노드 용량을 계산할 때 쓰는 예약량이고, `limits`는 커널 cgroup이 강제하는 상한이다. CPU의 limit 초과는 **스로틀링(throttling)**(속도 저하)을 일으킨다. 메모리 limit 초과는 **OOMKill**(exit 137)이라는 결과 차이를 반드시 기억해야 한다.
 
 | QoS 클래스 | 조건 | 노드 압박 시 축출 순위 |
 | :--- | :--- | :--- |
@@ -208,7 +208,7 @@ kubectl rollout pause deploy/api            # 카나리 구간 정지
 
 ## 5. StatefulSet: 순서와 영속성
 
-StatefulSet은 ① 안정적인 파드 이름(`db-0`, `db-1`…), ② 안정적 네트워크 ID(Headless Service의 DNS), ③ 파드별 영속 볼륨을 보장한다. 기본 `podManagementPolicy: OrderedReady`는 0번이 Ready여야 1번을 만들고, 종료는 역순(N-1 → 0)이다. 스케일 아웃은 순차적이고 느리므로 병렬이 필요하면 `Parallel`로 바꾼다.
+StatefulSet은 ① 안정적인 파드 이름(`db-0`, `db-1`…)을 보장한다. 아울러 ② 안정적 네트워크 ID(Headless Service의 DNS)와 ③ 파드별 영속 볼륨도 함께 보장한다. 기본 `podManagementPolicy: OrderedReady`는 0번이 Ready여야 1번을 만들고, 종료는 역순(N-1 → 0)이다. 스케일 아웃은 순차적이고 느리므로 병렬이 필요하면 `Parallel`로 바꾼다.
 
 핵심은 **Headless Service**(`clusterIP: None`)다. 개별 파드가 `db-0.db-headless.ns.svc.cluster.local`로 직접 주소 지정되며, 이것이 DB 클러스터의 피어 디스커버리 기반이 된다. `volumeClaimTemplates`는 파드마다 PVC를 자동 생성하며, **StatefulSet을 삭제해도 PVC는 남는다**(데이터 보호를 위한 의도된 동작).
 
@@ -255,7 +255,7 @@ DaemonSet은 (테인트를 감수하는) 모든 노드에 파드를 정확히 �
 
 ## 7. Job과 CronJob: 완료 보장
 
-Job은 "N개 성공까지"를 보장하는 배치(batch) 워크로드다. `completions`/`parallelism`으로 병렬성을, `backoffLimit`으로 재시도를, `activeDeadlineSeconds`로 최대 실행 시간을, `ttlSecondsAfterFinished`로 잡 객체 자동 정리를 제어한다. `restartPolicy`는 `Never` 또는 `OnFailure`만 허용된다.
+Job은 "N개 성공까지"를 보장하는 배치(batch) 워크로드다. `completions`/`parallelism`으로 병렬성을, `backoffLimit`으로 재시도를 제어한다. `activeDeadlineSeconds`로 최대 실행 시간을, `ttlSecondsAfterFinished`로 잡 객체 자동 정리를 제어한다. `restartPolicy`는 `Never` 또는 `OnFailure`만 허용된다.
 
 CronJob은 Job을 스케줄링한다. 스케줄은 **기본 UTC**이므로 `timeZone`(1.27+)을 명시하거나 cron식을 UTC로 작성해야 한다. `concurrencyPolicy`(Allow/Forbid/Replace)와 `startingDeadlineSeconds`를 설정하지 않으면 잡이 겹치거나 조용히 누락된다.
 
@@ -289,7 +289,7 @@ spec:
 
 ![쿠버네티스 오토스케일링 스택](/assets/images/k8s/k8s-autoscaling-stack.png)
 
-위 다이어그램은 지표 소스(metrics-server·Prometheus·이벤트 스케일러) 위에 Pod 오토스케일러(HPA·VPA·KEDA)가, 그 아래 노드 오토스케일러(Cluster Autoscaler·Karpenter)가 놓이는 계층 구조를 나타낸다. HPA가 파드 개수를 늘려도 노드에 자리가 없으면 파드가 Pending에 머물고, 그때 노드 오토스케일러가 용량을 확보한다.
+위 다이어그램은 지표 소스·Pod 오토스케일러·노드 오토스케일러의 계층 구조를 나타낸다. 지표 소스(metrics-server·Prometheus·이벤트 스케일러) 위에 Pod 오토스케일러(HPA·VPA·KEDA)가 놓인다. 그 아래에 노드 오토스케일러(Cluster Autoscaler·Karpenter)가 놓인다. HPA가 파드 개수를 늘려도 노드에 자리가 없으면 파드가 Pending에 머물고, 그때 노드 오토스케일러가 용량을 확보한다.
 
 ### 8.1 HPA (Horizontal Pod Autoscaler)
 

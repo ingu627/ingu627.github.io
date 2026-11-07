@@ -168,11 +168,11 @@ kubectl logs -f deployment/karpenter -n kube-system
 kubectl describe nodepool <nodepool-name> && kubectl describe ec2nodeclass <nodeclass-name>
 ```
 
-확인할 지점은 네 가지다. NodePool `limits` 초과 여부, EC2NodeClass의 서브넷·보안그룹 셀렉터 정확성, 인스턴스 타입 Service Quotas 여유, 파드의 `nodeSelector`/`affinity`와 NodePool `requirements` 매칭이다. Karpenter v1.0(v1 API)부터 `Provisioner`는 `NodePool`, `AWSNodeTemplate`은 `EC2NodeClass`로 바뀌었고 API 그룹도 `karpenter.sh/v1`이다. v0.x 설정이 남아 있으면 마이그레이션이 필요하다.[^1]
+확인할 지점은 네 가지다. NodePool `limits` 초과 여부, EC2NodeClass의 서브넷·보안그룹 셀렉터 정확성, 인스턴스 타입 Service Quotas 여유를 본다. 파드의 `nodeSelector`/`affinity`와 NodePool `requirements` 매칭도 확인한다. Karpenter v1.0(v1 API)부터 `Provisioner`는 `NodePool`로, `AWSNodeTemplate`은 `EC2NodeClass`로 바뀌었다. API 그룹도 `karpenter.sh/v1`이다. v0.x 설정이 남아 있으면 마이그레이션이 필요하다.[^1]
 
 ### 2.7 Ready인데 파드가 안 올라올 때
 
-노드는 Ready인데 스케줄링이 멈춘 경우는 준비 시점을 늦추는 장치가 걸려 있을 때다. 노드 쪽은 Node Readiness Controller(커스텀 taint를 선언적으로 관리, 2026.02 공개)가, 파드 쪽은 Pod Scheduling Readiness(`schedulingGates`, K8s 1.30 GA)와 Pod Readiness Gates(AWS LB Controller가 타겟 등록 완료까지 Ready 전환을 지연)가 담당한다.[^1] GPU 드라이버·CNI·CSI 초기화가 끝나기 전에 워크로드가 붙어 실패하는 문제를, taint가 해제될 때까지 기다리게 만드는 방식으로 풀 수 있다.
+노드는 Ready인데 스케줄링이 멈춘 경우는 준비 시점을 늦추는 장치가 걸려 있을 때다. 노드 쪽은 Node Readiness Controller(커스텀 taint를 선언적으로 관리, 2026.02 공개)가 담당한다. 파드 쪽은 Pod Scheduling Readiness(`schedulingGates`, K8s 1.30 GA)와 Pod Readiness Gates가 담당한다.[^1] Pod Readiness Gates는 AWS LB Controller가 타겟 등록 완료까지 Ready 전환을 지연하는 장치다. GPU 드라이버·CNI·CSI 초기화가 끝나기 전에 워크로드가 붙어 실패하는 문제를, taint가 해제될 때까지 기다리게 만드는 방식으로 풀 수 있다.
 
 ## 3. 네트워크 레벨: DNS·Service·NetworkPolicy
 
@@ -191,7 +191,7 @@ kubectl set env daemonset aws-node -n kube-system ENABLE_PREFIX_DELEGATION=true
 
 완화책으로 **Prefix Delegation**을 켠다. ENI에 개별 IP 대신 /28 프리픽스(16개 IP)를 붙여 같은 ENI로 더 많은 파드를 수용하는 방식이다. 문서가 드는 c5.xlarge 예시는 기본 모드 최대 58개 파드(4 ENI × 15 IP − 1), Prefix Delegation 적용 시 최대 110개 파드다.[^3]
 
-`kubectl set env`로 바꾼 값은 애드온 업데이트 시 충돌 처리 방식에 따라 유지되거나 덮어써질 수 있으므로, 애드온 API의 configurationValues로 이관할 때는 현재 전체 설정에 변경을 병합해야 한다.
+`kubectl set env`로 바꾼 값은 애드온 업데이트 시 충돌 처리 방식에 따라 유지되거나 덮어써질 수 있다. 따라서 애드온 API의 configurationValues로 이관할 때는 현재 전체 설정에 변경을 병합해야 한다.
 
 | 오류 메시지 | 먼저 볼 것 |
 |---|---|
@@ -211,7 +211,7 @@ kubectl set resources deployment coredns -n kube-system --limits=memory=300Mi --
 
 성능 문제로 자주 지목되는 것이 `ndots:5`다. 파드 `resolv.conf`의 `search` 목록 때문에 외부 도메인 한 번 조회에 쿼리가 다섯 번까지 나간다. `api.example.com`을 찾을 때 `.default.svc.cluster.local`부터 차례로 실패하고 마지막에 성공하는 식이다.
 
-해결은 세 갈래다. 파드 스펙의 `dnsConfig.options`에서 ndots를 2로 낮추거나, 외부 호출에 trailing dot을 붙여 FQDN으로 즉시 질의하거나, 노드별 캐시(NodeLocal DNSCache)를 깔아 CoreDNS와 VPC DNS 호출을 줄이는 것이다. VPC DNS resolver에는 ENI당 1,024 packets/sec 제한이 있다.[^3] 규모가 커지면 캐시 계층 없이는 한계에 부딪힌다.
+해결은 세 갈래다. 파드 스펙의 `dnsConfig.options`에서 ndots를 2로 낮추거나, 외부 호출에 trailing dot을 붙여 FQDN으로 즉시 질의하는 방법이 있다. 노드별 캐시(NodeLocal DNSCache)를 깔아 CoreDNS와 VPC DNS 호출을 줄이는 방법도 있다. VPC DNS resolver에는 ENI당 1,024 packets/sec 제한이 있다.[^3] 규모가 커지면 캐시 계층 없이는 한계에 부딪힌다.
 
 ### 3.3 Service 연결이 안 되는 세 가지 패턴
 
@@ -223,7 +223,7 @@ Service 문제는 대부분 엔드포인트가 비어 있느냐로 갈린다.
 | port/targetPort 불일치 | 파드가 실제 리스닝하는 포트 | `targetPort` 수정 |
 | 파드가 NotReady | 엔드포인트에서 제외되는지 | Probe 점검 |
 
-NodePort가 안 열리면 보안그룹에서 30000–32767 대역 허용 여부를, LoadBalancer가 계속 Pending이면 AWS Load Balancer Controller 설치와 IAM 권한을 확인한다.
+NodePort가 안 열리면 보안그룹에서 30000–32767 대역 허용 여부를 확인한다. LoadBalancer가 계속 Pending이면 AWS Load Balancer Controller 설치와 IAM 권한을 확인한다.
 
 ```bash
 kubectl get endpoints <service-name>
@@ -278,7 +278,7 @@ GPU 문제 발생
    +-- 모두 정상            -> 워크로드(CUDA/NCCL/vLLM) 디버깅
 ```
 
-노드에서는 `kubectl debug node/<gpu-node-name> -it --image=nvidia/cuda:12.2.0-base-ubuntu22.04`로 진입해 `nvidia-smi -q`를 확인하고, `kubectl describe node <gpu-node-name> | grep nvidia.com/gpu`로 노드가 노출하는 GPU 개수를 본다.
+노드에는 `kubectl debug node/<gpu-node-name> -it --image=nvidia/cuda:12.2.0-base-ubuntu22.04`로 진입한다. 그 안에서 `nvidia-smi -q`를 확인한다. `kubectl describe node <gpu-node-name> | grep nvidia.com/gpu`로 노드가 노출하는 GPU 개수도 본다.
 
 ### 4.2 XID 코드 읽기
 
@@ -309,7 +309,7 @@ env:
   - {name: NCCL_IB_DISABLE, value: "1"}
 ```
 
-원인은 세 갈래다. 같은 보안그룹 내 노드 간 트래픽 허용 여부(`nc -zv <pod-ip> 12345`로 확인), p4d·p5 계열의 EFA Device Plugin 설치와 `vpc.amazonaws.com/efa` 요청, 그리고 vLLM `--tensor-parallel-size`가 파드 GPU 수와·PyTorch DDP `WORLD_SIZE`가 실제 GPU 수와 일치하는지다. 분산 초기화만 따로 검증하려면 `torch.distributed.init_process_group(backend='nccl')` 후 `torch.ones(1).cuda()`에 `all_reduce`를 걸어 성공 여부를 본다.
+원인은 세 갈래다. 같은 보안그룹 내 노드 간 트래픽 허용 여부는 `nc -zv <pod-ip> 12345`로 확인한다. p4d·p5 계열이면 EFA Device Plugin 설치와 `vpc.amazonaws.com/efa` 요청을 본다. vLLM `--tensor-parallel-size`가 파드 GPU 수와, PyTorch DDP `WORLD_SIZE`가 실제 GPU 수와 일치하는지도 확인한다. 분산 초기화만 따로 검증하려면 `torch.distributed.init_process_group(backend='nccl')`를 먼저 호출한다. 그다음 `torch.ones(1).cuda()`에 `all_reduce`를 걸어 성공 여부를 본다.
 
 ### 4.4 vLLM 메모리 부족을 구분한다
 
@@ -336,7 +336,7 @@ args:
 
 GPU Operator는 ClusterPolicy 하나로 드라이버부터 메트릭까지 관리한다. 문제가 생기면 `kubectl describe clusterpolicy gpu-cluster-policy`로 조건을 확인하고 드라이버·디바이스 플러그인 파드 로그를 나눠 본다.
 
-드라이버 파드 실패 시 대표 메시지는 세 가지다. `Kernel headers not found`는 노드 AMI에 kernel-devel 패키지가 없다는 뜻이고, `Driver compilation failed`는 커널과 드라이버 호환성, `nouveau driver is loaded`는 AMI 빌드 시 nouveau 블랙리스트 누락이다.
+드라이버 파드 실패 시 대표 메시지는 세 가지다. `Kernel headers not found`는 노드 AMI에 kernel-devel 패키지가 없다는 뜻이다. `Driver compilation failed`는 커널과 드라이버 호환성 문제다. `nouveau driver is loaded`는 AMI 빌드 시 nouveau 블랙리스트 누락이다.
 
 EKS Auto Mode에서는 GPU 드라이버를 AWS가 관리하므로 **GPU Operator를 그대로 깔면 충돌**한다.[^2] 하이브리드 구성에서는 GPU 노드 쪽에만 Operator를 설치하고 디바이스 플러그인을 끈다.
 
@@ -381,7 +381,7 @@ Probe는 노드 내부에서 돌기 때문에 노드 보안그룹이나 라우�
 - **타임아웃 불일치**: Probe timeout 1초 안에 응답하지만 ALB HC가 기대하는 5초 안에 못 끝남
 - **보안그룹 불일치**: ALB → 파드 CIDR 차단. kubelet은 내부라 통과, ALB는 외부라 실패
 
-`TargetHealth.Reason`은 원인을 요약해 준다.[^4] `Target.FailedHealthChecks`는 헬스체크 실패, `Elb.RegistrationInProgress`·`Target.DeregistrationInProgress`는 등록·해제 진행 중, `Target.InvalidState`는 파드 IP 도달 불가(보안그룹 문제)다. 확인은 `kubectl get endpoints <service-name> -o yaml`과 `aws elbv2 describe-target-health --target-group-arn <tg-arn> --output table`로 한다. 경로를 통일하는 것이 가장 빠른 해결이다.[^7]
+`TargetHealth.Reason`은 원인을 요약해 준다.[^4] `Target.FailedHealthChecks`는 헬스체크 실패다. `Elb.RegistrationInProgress`·`Target.DeregistrationInProgress`는 등록·해제 진행 중이다. `Target.InvalidState`는 파드 IP 도달 불가(보안그룹 문제)다. 확인은 `kubectl get endpoints <service-name> -o yaml`로 한다. LB 쪽은 `aws elbv2 describe-target-health --target-group-arn <tg-arn> --output table`로 본다. 경로를 통일하는 것이 가장 빠른 해결이다.[^7]
 
 ```yaml
 metadata:
@@ -456,7 +456,7 @@ PodDisruptionBudget(`minAvailable: 50%` 등)도 같이 걸어 자발적 중단 �
 
 Local을 쓰면 파드가 없는 노드는 Target Group에서 빠지므로 노드당 파드가 최소 1개는 있어야 한다. 균등 분배가 우선이면 Cluster를 쓰고 `X-Forwarded-For`로 클라이언트 IP를 읽는다.
 
-Ingress-NGINX의 504는 대개 `proxy-read-timeout`(기본 60초)이 백엔드 처리 시간보다 짧아서 생긴다.[^8] 업로드 실패는 `proxy-body-size`(기본 1m) 초과로 `413`이 된다. 배치 API는 Ingress를 분리해 `proxy-read-timeout: "1800"`, `proxy-body-size: "1g"`처럼 타임아웃과 바디 크기를 따로 잡는 편이 안전하다.
+Ingress-NGINX의 504는 대개 `proxy-read-timeout`(기본 60초)이 백엔드 처리 시간보다 짧아서 생긴다.[^8] 업로드 실패는 `proxy-body-size`(기본 1m) 초과로 `413`이 된다. 배치 API는 Ingress를 분리해 `proxy-read-timeout: "1800"`, `proxy-body-size: "1g"`처럼 잡는다. 타임아웃과 바디 크기를 따로 두는 편이 안전하다.
 
 ## 6. 장애 유형별 명령 치트시트
 
@@ -517,7 +517,7 @@ Ingress-NGINX의 504는 대개 `proxy-read-timeout`(기본 60초)이 백엔드 �
 
 ### Azure/K8s 환경으로 옮길 때
 
-같은 골격은 다른 관리형 쿠버네티스에도 그대로 통한다. AKS에서도 노드 NotReady는 kubelet → CNI → 권한 → 리소스 압박 순으로 좁히면 되고, IP 고갈은 VPC CNI 대신 Azure CNI의 서브넷 IP 소진으로 형태만 바뀌어 나타난다. 로드밸런서 계층도 Application Gateway나 Load Balancer의 헬스 프로브가 kubelet Probe와 별개 시계로 돈다는 점은 동일하므로, 프로브 경로와 타임아웃을 맞추는 원칙은 그대로 적용된다.
+같은 골격은 다른 관리형 쿠버네티스에도 그대로 통한다. AKS에서도 노드 NotReady는 kubelet → CNI → 권한 → 리소스 압박 순으로 좁히면 된다. IP 고갈은 VPC CNI 대신 Azure CNI의 서브넷 IP 소진으로 형태만 바뀌어 나타난다. 로드밸런서 계층도 Application Gateway나 Load Balancer의 헬스 프로브가 kubelet Probe와 별개 시계로 도는 점은 같다. 프로브 경로와 타임아웃을 맞추는 원칙은 그대로 적용된다.
 
 ## References
 

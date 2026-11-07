@@ -38,9 +38,9 @@ use_math: true
 **이런 분께** — LLM 기반 챗봇이나 에이전트를 운영하면서 첫 응답 지연 시간(TTFT)을 줄이고 GPU 자원을 효율적으로 쓰고 싶은 백엔드 및 인프라 엔지니어. 처음 읽을 때는 1절과 4절의 비교표를 먼저 살펴본 뒤, 쿠버네티스 배포 구조가 궁금하다면 5.2절과 5.3절을 따라가면 된다.
 ---
 
-대규모 언어 모델(Large Language Model, LLM)을 프로덕션 환경에 배포할 때, 서비스의 반응성을 좌우하는 가장 치명적인 지표는 첫 번째 토큰 생성 시간인 **TTFT(Time-to-First-Token)**이다. 특히 RAG(Retrieval-Augmented Generation), 멀티턴 자율 에이전트, 구조화된 출력(JSON Mode), 수천 토큰에 달하는 고정 시스템 프롬프트가 보편화되면서, 전체 입력 시퀀스 중 70%에서 90% 이상이 이전 요청과 동일한 접두사(Prefix)를 공유하는 현상이 관찰된다.
+대규모 언어 모델(Large Language Model, LLM)을 프로덕션 환경에 배포할 때, 서비스의 반응성을 좌우하는 가장 치명적인 지표는 첫 번째 토큰 생성 시간이다. 바로 **TTFT(Time-to-First-Token)**이다. 특히 RAG(Retrieval-Augmented Generation), 멀티턴 자율 에이전트, 구조화된 출력(JSON Mode)이 널리 쓰이고 있다. 수천 토큰에 달하는 고정 시스템 프롬프트 역시 보편화되었다. 그 결과 전체 입력 시퀀스 중 70%에서 90% 이상이 이전 요청과 동일한 접두사(Prefix)를 공유하는 현상이 관찰된다.
 
-접두사 캐싱(Prefix Caching)이 없는 기존 서빙 환경에서는 동일한 시스템 프롬프트나 대화 이력이 들어올 때마다 매번 사전 채우기(Prefill) 연산을 처음부터 수행한다. 이는 GPU VRAM 메모리 대역폭을 불필요하게 고갈시키고 TTFT를 수 초 단위로 급증시킨다. 본 글에서는 대표적인 오픈소스 고성능 LLM 서빙 엔진인 **vLLM**과 **SGLang**의 접두사 캐싱 내부 아키텍처(PagedAttention 해시 청킹 vs RadixAttention 계층 트라이)를 비교 분석하고, 이를 Kubernetes 클러스터에서 초저지연·고처리량으로 서빙하기 위한 파드(Pod) 배치와 라우팅 설계를 정리한다.
+접두사 캐싱(Prefix Caching)이 없는 기존 서빙 환경에서는 동일한 시스템 프롬프트나 대화 이력이 반복해서 들어온다. 그때마다 사전 채우기(Prefill) 연산을 처음부터 수행한다. 이는 GPU VRAM 메모리 대역폭을 불필요하게 고갈시키고 TTFT를 수 초 단위로 급증시킨다. 본 글에서는 대표적인 오픈소스 고성능 LLM 서빙 엔진인 **vLLM**과 **SGLang**의 접두사 캐싱 내부 아키텍처를 비교 분석한다. PagedAttention 해시 청킹과 RadixAttention 계층 트라이라는 두 접근을 나란히 놓고 본다. 이어서 이를 Kubernetes 클러스터에서 초저지연·고처리량으로 서빙하기 위한 파드(Pod) 배치와 라우팅 설계를 정리한다.
 
 ---
 
@@ -59,7 +59,7 @@ LLM 서빙 파이프라인은 크게 두 단계의 상이한 연산 특성으로
 
 $$\text{TTFT} = T_{\text{queue}} + T_{\text{prefill}}(\text{Prompt Length}) + T_{\text{decode}}(1)$$
 
-동일한 접두사(System Prompt, 공통 RAG 문서, 이전 턴 대화)를 공유하는 다수의 요청이 유입될 때, 이미 계산된 KV 텐서를 GPU 고대역폭 메모리(HBM)에 캐싱해 두면 Prefill 단계의 어텐션 행렬 연산을 완전히 건너뛸 수 있다. 접두사 캐시 적중(Cache Hit)이 발생하면 엔진은 캐시된 KV 텐서를 참조 카운트만 증가시켜 연결하고, 신규 토큰(Unique Suffix)에 대해서만 $O(M^2)$ ($M \ll N$) 연산을 수행한다. 이에 따라 TTFT는 즉시 수십 밀리초(ms) 단위로 급감한다.
+동일한 접두사(System Prompt, 공통 RAG 문서, 이전 턴 대화)를 공유하는 다수의 요청이 유입되는 상황을 가정하자. 이미 계산된 KV 텐서를 GPU 고대역폭 메모리(HBM)에 캐싱해 두면 Prefill 단계의 어텐션 행렬 연산을 완전히 건너뛸 수 있다. 접두사 캐시 적중(Cache Hit)이 발생하면 엔진은 캐시된 KV 텐서를 참조 카운트만 증가시켜 연결한다. 그리고 신규 토큰(Unique Suffix)에 대해서만 $O(M^2)$ ($M \ll N$) 연산을 수행한다. 이에 따라 TTFT는 즉시 수십 밀리초(ms) 단위로 급감한다.
 
 ---
 
@@ -106,7 +106,7 @@ python3 -m vllm.entrypoints.openai.api_server \
 
 ## 3. SGLang: RadixAttention 기반 계층적 트라이 트리 캐싱
 
-SGLang[^2]은 복잡한 프롬프트 프로그램, 퓨샷(Few-shot) 예시, 다중 분기 에이전트 워크로드를 지원하기 위해 KV 캐시 관리자를 완전히 새로운 계층적 자료구조인 **라딕스 트리(Radix Tree / Trie)**로 설계했다. 이를 **RadixAttention**이라 부른다.
+SGLang[^2]은 복잡한 프롬프트 프로그램, 퓨샷(Few-shot) 예시, 다중 분기 에이전트 워크로드를 지원한다. 이를 위해 KV 캐시 관리자를 완전히 새로운 계층적 자료구조인 **라딕스 트리(Radix Tree / Trie)**로 설계했다. 이를 **RadixAttention**이라 부른다.
 
 ### 3.1 Radix Tree 자료구조와 매칭 메커니즘
 

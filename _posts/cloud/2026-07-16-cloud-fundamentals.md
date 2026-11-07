@@ -41,9 +41,9 @@ last_modified_at: 2026-11-07
 
 이 시리즈는 쿠버네티스와 클라우드(AWS·GCP·Azure 공통 개념)를 실무 관점에서 정리한 기록이다. 핵심 개념·코드 예제·실전 함정(gotcha) 중심으로, 학습과 설계 리뷰·장애 대응에 바로 쓸 수 있게 구성했다. 각 편은 독립적으로 읽을 수 있고, 순서대로 보면 클러스터 내부 구조에서 클라우드 운영까지 하나의 흐름으로 이어진다.
 
-이번 편에서는 클라우드 기초를 세 가지 질문으로 수렴시켜 정리한다. **무엇을 어디에 배치할 것인가(컴퓨팅·스토리지·DB)**, **누가 무엇에 접근할 수 있는가(IAM·네트워크 경계)**, **어디까지 장애를 견딜 것인가(리전·AZ·RTO/RPO)**. 이 세 축은 독립이 아니라 하나의 결정 사슬이며, 서비스 모델 선택 하나가 이후 네트워크·권한·비용 설계를 전부 제약한다.
+이번 편에서는 클라우드 기초를 세 가지 질문으로 수렴시켜 정리한다. **무엇을 어디에 배치할 것인가(컴퓨팅·스토리지·DB)**. **누가 무엇에 접근할 수 있는가(IAM·네트워크 경계)**. **어디까지 장애를 견딜 것인가(리전·AZ·RTO/RPO)**. 이 세 축은 독립이 아니라 하나의 결정 사슬이며, 서비스 모델 선택 하나가 이후 네트워크·권한·비용 설계를 전부 제약한다.
 
-클러스터 내부 구조는 [쿠버네티스 기초](https://ingu627.github.io/k8s/kubernetes-architecture/)에서 다뤘고, 이 편은 그 위에 올라가는 클라우드 리소스를 어떻게 고르고 연결하는지에 집중한다. 선언적으로 인프라를 관리하는 방법은 다음 편인 [IaC와 GitOps](https://ingu627.github.io/cloud/iac-gitops/)에서 이어진다. 서술은 AWS를 기준으로 하되 GCP/Azure 대응 서비스를 병기한다.
+클러스터 내부 구조는 [쿠버네티스 기초](https://ingu627.github.io/k8s/kubernetes-architecture/)에서 다뤘다. 이 편은 그 위에 올라가는 클라우드 리소스를 어떻게 고르고 연결하는지에 집중한다. 선언적으로 인프라를 관리하는 방법은 다음 편인 [IaC와 GitOps](https://ingu627.github.io/cloud/iac-gitops/)에서 이어진다. 서술은 AWS를 기준으로 하되 GCP/Azure 대응 서비스를 병기한다.
 
 - IaaS/PaaS/SaaS 경계와 공동 책임 모델에서 고객에게 끝까지 남는 네 가지 책임을 구분한다
 - 리전·AZ·엣지 구조와 N+1 AZ 배치를 기준으로 가용성 등급과 RTO/RPO 목표를 세운다
@@ -65,7 +65,7 @@ last_modified_at: 2026-11-07
 
 ![IaaS·PaaS·SaaS 공동 책임 모델](/assets/images/cloud/cloud-shared-responsibility.png)
 
-위 다이어그램은 클라우드 스택의 각 계층(데이터·앱·런타임·OS·가상화·물리)을 IaaS/PaaS/SaaS별로 나눠, 어느 계층이 고객 책임이고 어느 계층이 제공자 책임인지 보여준다. 서비스 모델이 올라갈수록 고객이 직접 관리하는 계층이 줄어들 뿐, 데이터와 접근 관리 책임은 줄어들지 않는다.
+위 다이어그램은 클라우드 스택의 각 계층(데이터·앱·런타임·OS·가상화·물리)을 IaaS/PaaS/SaaS별로 나눈다. 이 그림은 어느 계층이 고객 책임이고 어느 계층이 제공자 책임인지 보여준다. 서비스 모델이 올라갈수록 고객이 직접 관리하는 계층이 줄어들 뿐, 데이터와 접근 관리 책임은 줄어들지 않는다.
 
 **공동 책임 모델(Shared Responsibility Model)** 에서 절대 변하지 않는 고객 책임은 네 가지다.
 
@@ -100,7 +100,7 @@ last_modified_at: 2026-11-07
 | Multi-AZ (active-passive) | 2~3 AZ, 자동 페일오버 | 수 분 | 수 초~수 분 |
 | Multi-Region active-active | 2+ 리전, 글로벌 라우팅, 복제 | 수 초 | 0에 가까움 |
 
-**Gotcha — AZ 이름과 AZ ID**: `ap-northeast-2a`는 계정마다 실제 물리 AZ가 다르다(AWS가 계정별로 이름을 셔플한다). 여러 계정에서 "같은 AZ"에 배치하려면 `aws ec2 describe-availability-zones`의 `ZoneId`(`apne2-az1`)를 기준으로 정렬하고, Terraform에서는 `availability_zone_id`를 쓴다. 이걸 모르면 계정 A와 B의 리소스가 실제로 다른 AZ에 깔려 크로스 AZ 트래픽 비용이 터진다.
+**Gotcha — AZ 이름과 AZ ID**: `ap-northeast-2a`는 계정마다 실제 물리 AZ가 다르다(AWS가 계정별로 이름을 셔플한다). 여러 계정에서 "같은 AZ"에 배치하려면 `aws ec2 describe-availability-zones`의 `ZoneId`(`apne2-az1`)를 기준으로 정렬한다. Terraform에서는 `availability_zone_id`를 쓴다. 이걸 모르면 계정 A와 B의 리소스가 실제로 다른 AZ에 깔려 크로스 AZ 트래픽 비용이 터진다.
 
 ---
 
@@ -119,7 +119,7 @@ VPC(Virtual Private Cloud)는 리전 단위 논리 네트워크다. 설계 순�
 
 ![리전·AZ·VPC 네트워크 토폴로지](/assets/images/cloud/cloud-vpc-topology.png)
 
-위 그림은 하나의 리전 안에 AZ 두 개를 두고, VPC(`10.0.0.0/16`) 아래 퍼블릭·프라이빗 서브넷을 나눈 뒤 IGW·NAT 게이트웨이와 라우팅 테이블로 인터넷 경로를 제어하는 구조를 나타낸다. 퍼블릭 서브넷은 IGW로, 프라이빗 서브넷은 NAT 게이트웨이로만 아웃바운드가 나가며, 인스턴스 단위 경계는 보안 그룹이 맡는다.
+위 그림은 하나의 리전 안에 AZ 두 개를 두고, VPC(`10.0.0.0/16`) 아래 퍼블릭·프라이빗 서브넷을 나눈 구조를 나타낸다. 그 안에서 IGW·NAT 게이트웨이와 라우팅 테이블이 인터넷 경로를 제어한다. 퍼블릭 서브넷은 IGW로, 프라이빗 서브넷은 NAT 게이트웨이로만 아웃바운드가 나가며, 인스턴스 단위 경계는 보안 그룹이 맡는다.
 
 ```hcl
 # terraform: 2-AZ VPC + IGW + NAT + 프라이빗 라우팅
@@ -269,7 +269,7 @@ spec:
             limits:   { memory: "512Mi" }
 ```
 
-`topologySpreadConstraints`는 ReplicaSet 스케줄링 시점에만 평가된다. 노드가 죽어 파드가 밀리면 균형이 깨지므로, `kubectl get pods -o wide --sort-by=.spec.nodeName`로 주기적으로 확인하고 Descheduler나 클러스터 오토스케일러로 보정한다.
+`topologySpreadConstraints`는 ReplicaSet 스케줄링 시점에만 평가된다. 노드가 죽어 파드가 밀리면 균형이 깨진다. 그래서 `kubectl get pods -o wide --sort-by=.spec.nodeName`로 주기적으로 확인한다. Descheduler나 클러스터 오토스케일러로 보정한다.
 
 ---
 
@@ -412,7 +412,7 @@ export AWS_SESSION_TOKEN=$(jq -r .SessionToken <<<"$CREDS")
 aws sts get-caller-identity   # Arn이 assumable-role/ci-deployer 인지 확인
 ```
 
-**Gotcha — 혼동된 대리인(confused deputy)**: 제3자 계정이나 SaaS가 역할을 수임할 때 `ExternalId` 없이 `Principal`을 `root`로 열어두면, 다른 고객이 당신의 역할을 수임해 리소스에 접근할 수 있다. 가능하면 `Principal`을 특정 역할 ARN으로 좁히고 `Condition`으로 `aws:SourceArn`/`ExternalId`를 검증한다. 또한 와일드카드 `Action: "s3:*"` + `Resource: "*"` 조합은 IAM Access Analyzer와 `iam-policy-validation`으로 반드시 걸러낸다.
+**Gotcha — 혼동된 대리인(confused deputy)**. 제3자 계정이나 SaaS가 역할을 수임할 때 `ExternalId` 없이 `Principal`을 `root`로 열어둘 수 있다. 그러면 다른 고객이 당신의 역할을 수임해 리소스에 접근할 수 있다. 가능하면 `Principal`을 특정 역할 ARN으로 좁히고 `Condition`으로 `aws:SourceArn`/`ExternalId`를 검증한다. 또한 와일드카드 `Action: "s3:*"` + `Resource: "*"` 조합은 IAM Access Analyzer와 `iam-policy-validation`으로 반드시 걸러낸다.
 
 ---
 
