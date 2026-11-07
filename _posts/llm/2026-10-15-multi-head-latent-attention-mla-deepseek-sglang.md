@@ -38,7 +38,7 @@ use_math: true
 **이런 분께** — LLM 서빙을 운영하면서 비용과 지연 시간이 왜 그렇게 나오는지 원리까지 확인하고 싶은 엔지니어. 처음 읽을 때는 1절에서 문제를 잡고, 2.4절의 압축률 숫자와 3.1절의 비교표만 먼저 봐도 엔진 선택 기준이 잡힌다.
 ---
 
-2026년 대규모 추론 모델과 장기 실행 에이전트 워크플로우가 프로덕션의 표준으로 자리 잡았다. 그 결과 서빙 인프라의 가장 치명적인 하드웨어 병목은 GPU 연산 능력(FLOPs)에서 **KV 캐시(Key-Value Cache) 메모리 대역폭(Memory Bandwidth)**으로 완전히 전환되었다.
+2026년 대규모 추론 모델과 장기 실행 에이전트 워크플로우가 프로덕션의 표준으로 자리 잡았다. 서빙 인프라의 가장 치명적인 하드웨어 병목도 바뀌었다. GPU 연산 능력(FLOPs)에서 **KV 캐시(Key-Value Cache) 메모리 대역폭(Memory Bandwidth)**으로 완전히 전환된 것이다.
 
 수만 토큰에 달하는 시스템 프롬프트, 도구 스키마, 다중 턴 대화 히스토리를 VRAM에 상주시키면 정작 배치 크기(Batch Size)를 늘리지 못한다. 그 결과 GPU 연산 코어가 유휴 상태(Idle)에 빠지는 **메모리 바운드(Memory-bound)** 현상이 발생한다.
 
@@ -95,7 +95,7 @@ $$C_Q = W_{DQ} X \in \mathbb{R}^{d_q \times n}, \quad Q = W_{UQ} C_Q \in \mathbb
 
 $$S = K^T Q = (W_{UK} C_{KV})^T (W_{UQ} C_Q) = C_{KV}^T (W_{UK}^T W_{UQ}) C_Q$$
 
-여기서 $W_{UK}^T \in \mathbb{R}^{d_c \times d_h H}$와 $W_{UQ} \in \mathbb{R}^{d_h H \times d_q}$는 모두 **사전에 고정된 모델 가중치(Static Weights)**이다. 따라서 두 행렬을 사전에 곱해 흡수한 단일 가중치 행렬 $W_{KQ}$를 정의할 수 있다:
+여기서 $W_{UK}^T \in \mathbb{R}^{d_c \times d_h H}$는 고정된 모델 가중치이다. $W_{UQ} \in \mathbb{R}^{d_h H \times d_q}$ 역시 **사전에 고정된 모델 가중치(Static Weights)**이다. 따라서 두 행렬을 사전에 곱해 흡수한 단일 가중치 행렬 $W_{KQ}$를 정의할 수 있다:
 
 $$W_{KQ} = W_{UK}^T W_{UQ} \in \mathbb{R}^{d_c \times d_q}$$
 
