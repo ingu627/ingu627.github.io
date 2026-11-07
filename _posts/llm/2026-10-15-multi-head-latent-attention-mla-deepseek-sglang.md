@@ -38,11 +38,11 @@ use_math: true
 **이런 분께** — LLM 서빙을 운영하면서 비용과 지연 시간이 왜 그렇게 나오는지 원리까지 확인하고 싶은 엔지니어. 처음 읽을 때는 1절에서 문제를 잡고, 2.4절의 압축률 숫자와 3.1절의 비교표만 먼저 봐도 엔진 선택 기준이 잡힌다.
 ---
 
-2026년 대규모 추론 모델과 장기 실행 에이전트 워크플로우가 프로덕션의 표준으로 자리 잡으면서, 서빙 인프라의 가장 치명적인 하드웨어 병목은 GPU 연산 능력(FLOPs)에서 **KV 캐시(Key-Value Cache) 메모리 대역폭(Memory Bandwidth)**으로 완전히 전환되었다.
+2026년 대규모 추론 모델과 장기 실행 에이전트 워크플로우가 프로덕션의 표준으로 자리 잡았다. 그 결과 서빙 인프라의 가장 치명적인 하드웨어 병목은 GPU 연산 능력(FLOPs)에서 **KV 캐시(Key-Value Cache) 메모리 대역폭(Memory Bandwidth)**으로 완전히 전환되었다.
 
-수만 토큰에 달하는 시스템 프롬프트, 도구 스키마, 다중 턴 대화 히스토리를 VRAM에 상주시키다 보면, 정작 배치 크기(Batch Size)를 늘리지 못해 GPU 연산 코어가 유휴 상태(Idle)에 빠지는 **메모리 바운드(Memory-bound)** 현상이 발생한다.
+수만 토큰에 달하는 시스템 프롬프트, 도구 스키마, 다중 턴 대화 히스토리를 VRAM에 상주시키면 정작 배치 크기(Batch Size)를 늘리지 못한다. 그 결과 GPU 연산 코어가 유휴 상태(Idle)에 빠지는 **메모리 바운드(Memory-bound)** 현상이 발생한다.
 
-DeepSeek-V2/V3/R1 및 최신 V4에서 도입되어 Kimi K3, GLM-5 등 2026년 주요 오픈 가중치 프론티어 모델로 확산된 **Multi-Head Latent Attention(MLA)**[^1]은 이 병목을 수리적으로 돌파한 대표적인 어텐션 아키텍처이다. MLA의 저랭크 잠재 공간 압축과 가중치 흡수(Weight Absorption) 원리를 수식으로 증명하고, Kubernetes 환경에서 SGLang RadixAttention과 결합해 서빙 처리량을 극대화하는 엔지니어링 전략을 정리한다.
+**Multi-Head Latent Attention(MLA)**[^1]은 DeepSeek-V2/V3/R1 및 최신 V4에서 도입되었다. Kimi K3, GLM-5 등 2026년 주요 오픈 가중치 프론티어 모델로 확산된 이 아키텍처는 이 병목을 수리적으로 돌파한 대표적인 어텐션 아키텍처이다. MLA의 저랭크 잠재 공간 압축과 가중치 흡수(Weight Absorption) 원리를 수식으로 증명한다. 이어서 Kubernetes 환경에서 SGLang RadixAttention과 결합해 서빙 처리량을 극대화하는 엔지니어링 전략을 정리한다.
 
 ---
 
@@ -54,19 +54,19 @@ DeepSeek-V2/V3/R1 및 최신 V4에서 도입되어 Kimi K3, GLM-5 등 2026년 �
 
 $$\text{Memory}_{\text{MHA}} = 2 \times B \times N \times H \times d_h \times \text{BytesPerElement}$$
 
-예를 들어 128개의 헤드($H=128$), 헤드 차원 128($d_h=128$), 61개 레이어를 가진 671B MoE 모델에서 단일 요청이 128K 컨텍스트를 소모할 경우, 요청 1건당 순수 KV 캐시 메모리만 **수십 GB**에 달한다. 
+예를 들어 128개의 헤드($H=128$), 헤드 차원 128($d_h=128$), 61개 레이어를 가진 671B MoE 모델을 보자. 이 모델에서 단일 요청이 128K 컨텍스트를 소모할 경우, 요청 1건당 순수 KV 캐시 메모리만 **수십 GB**에 달한다. 
 
 ### 1.2 그룹 쿼리 어텐션(GQA)의 트레이드오프
 
-이를 완화하기 위해 Llama 3 등에서 채택된 그룹 쿼리 어텐션(GQA, Grouped-Query Attention)은 키-값 헤드 수를 그룹 수 $G$ ($G \ll H$)로 축소하여 공유하는 방식을 취했다.
+이를 완화하기 위해 Llama 3 등은 그룹 쿼리 어텐션(GQA, Grouped-Query Attention)을 채택했다. GQA는 키-값 헤드 수를 그룹 수 $G$ ($G \ll H$)로 축소하여 공유하는 방식을 취했다.
 
-그러나 GQA는 본질적으로 정보 표현력을 희생하여 메모리를 줄이는 다운샘플링 기법이며, 에이전트 루프와 같은 고난도 문맥 추론에서 어텐션 해상도(Resolution) 저하를 피할 수 없다.
+그러나 GQA는 본질적으로 정보 표현력을 희생하여 메모리를 줄이는 다운샘플링 기법이다. 따라서 에이전트 루프와 같은 고난도 문맥 추론에서 어텐션 해상도(Resolution) 저하를 피할 수 없다.
 
 ---
 
 ## 2. Multi-Head Latent Attention (MLA)의 수리적 메커니즘
 
-DeepSeek 팀이 고안한 MLA는 헤드 수를 억지로 줄이는 대신, **선형대수학적 저랭크 투영(Low-Rank Projection)과 가중치 흡수(Weight Absorption)**를 통해 KV 캐시 상태 자체를 압축하여 저장한다.
+DeepSeek 팀이 고안한 MLA는 헤드 수를 억지로 줄이지 않는다. 대신 **선형대수학적 저랭크 투영(Low-Rank Projection)과 가중치 흡수(Weight Absorption)**를 통해 KV 캐시 상태 자체를 압축하여 저장한다.
 
 ![Multi-Head Latent Attention (MLA) 압축 메커니즘](/assets/images/llm/multi-head-latent-attention-mla-deepseek.webp)
 
@@ -103,7 +103,7 @@ $$W_{KQ} = W_{UK}^T W_{UQ} \in \mathbb{R}^{d_c \times d_q}$$
 
 $$S = C_{KV}^T W_{KQ} C_Q$$
 
-값(Value) 연산 역시 동일하게 결합법칙을 적용하여 어텐션 출력 $O = V \cdot \text{Softmax}(S)$를 $O = W_{UV} (C_{KV} \cdot \text{Softmax}(S))$ 형태로 가중치 행렬을 출력단으로 흡수한다.
+값(Value) 연산 역시 동일하게 결합법칙을 적용한다. 어텐션 출력은 $O = V \cdot \text{Softmax}(S)$에서 $O = W_{UV} (C_{KV} \cdot \text{Softmax}(S))$로 바뀐다. 가중치 행렬이 출력단으로 흡수되기 때문이다.
 
 ### 2.3 분리형 RoPE (Decoupled RoPE)의 결합
 
@@ -124,13 +124,13 @@ DeepSeek-V3/V4는 $d_h = 128$, $H = 128$ 환경에서 $d_c = 512$를 설정했�
 
 $$\text{MHA 차원}: 2 \times 128 \times 128 = 32,768 \quad \longrightarrow \quad \text{MLA 차원}: 512 + 64(\text{RoPE}) = 576$$
 
-이 수리적 최적화를 통해 레이어당 저장되는 KV 캐시 크기는 표준 MHA 대비 **약 32분의 1로 압축(32x Compression Ratio)**되었으며, 동일 하드웨어에서 32배 큰 배치 크기와 최대 20배 빠른 추론 가속이 가능해졌다.
+이 수리적 최적화를 통해 레이어당 저장되는 KV 캐시 크기는 표준 MHA 대비 **약 32분의 1로 압축(32x Compression Ratio)**되었다. 그 결과 동일 하드웨어에서 32배 큰 배치 크기와 최대 20배 빠른 추론 가속이 가능해졌다.
 
 ---
 
 ## 3. Kubernetes 서빙 최적화: vLLM vs SGLang 실측 벤치마크
 
-이러한 MLA 아키텍처 모델(DeepSeek-V3/V4, Kimi K3, GLM-5)을 Kubernetes 환경에 배포할 때, 서빙 엔진(vLLM vs SGLang)의 선택은 워크로드의 **접두사 중복률(Prefix Overlap)**에 따라 극명하게 갈린다.
+이러한 MLA 아키텍처 모델(DeepSeek-V3/V4, Kimi K3, GLM-5)을 Kubernetes 환경에 배포할 때가 있다. 이때 서빙 엔진(vLLM vs SGLang)의 선택은 워크로드의 **접두사 중복률(Prefix Overlap)**에 따라 극명하게 갈린다.
 
 ### 3.1 접두사 중복률에 따른 처리량 변곡점
 
@@ -145,7 +145,7 @@ $$\text{MHA 차원}: 2 \times 128 \times 128 = 32,768 \quad \longrightarrow \qua
 
 ### 3.2 SGLang RadixAttention의 구조적 우위 원리
 
-접두사 중복률이 60%를 넘어서는 순간 SGLang의 처리량과 TTFT가 뚜렷하게 개선되는 이유는 **기수 트리(Radix Tree)**[^2] 기반의 KV 캐시 관리와 **캐시 인지 스케줄링(Cache-aware Scheduling)** 덕분이다.
+접두사 중복률이 60%를 넘어서는 순간 SGLang의 처리량과 TTFT가 뚜렷하게 개선된다. 그 이유는 **기수 트리(Radix Tree)**[^2] 기반의 KV 캐시 관리와 **캐시 인지 스케줄링(Cache-aware Scheduling)** 덕분이다.
 
 - **vLLM의 한계**: 고정 크기 블록(16/32 토큰) 단위 해시 체인 방식은 블록 경계가 정확히 일치하지 않으면 캐시가 누락(Fragmented)되며, 트리 분기형 대화 컨텍스트에서 탐색 오버헤드가 증가한다.
 - **SGLang의 Radix Trie**: 문자열 단위가 아닌 토큰 시퀀스 전체를 가변 길이 기수 트리(Radix Tree)로 관리하여 LRU(Least Recently Used) 기반으로 노드를 정밀하게 보존한다.
@@ -155,11 +155,11 @@ $$\text{MHA 차원}: 2 \times 128 \times 128 = 32,768 \quad \longrightarrow \qua
 
 ## 4. 프로덕션 배포 아키텍처: L7 프리픽스 라우터와 K8s 배포
 
-MLA 모델을 프로덕션 Kubernetes에 서빙할 때는 **인그레스(Ingress) 계층의 프리픽스 인지 라우팅(Prefix-Aware Routing)**[^4]이 결합되어야 한다.
+MLA 모델을 프로덕션 Kubernetes에 서빙할 때는 별도 라우팅이 필요하다. **인그레스(Ingress) 계층의 프리픽스 인지 라우팅(Prefix-Aware Routing)**[^4]이 결합되어야 한다.
 
 ![L7 Ingress Prefix Router와 SGLang RadixAttention 파드 간 세션 어피니티 바인딩 아키텍처 다이어그램](/assets/images/llm/sglang-k8s-ingress-prefix-routing-cognition.webp)
 
-동일한 에이전트 세션이나 공통 시스템 프롬프트를 공유하는 요청이 서로 다른 파드(Pod)로 분산되면 Radix 캐시가 파편화되므로, 인그레스에서 요청의 상위 1,000 토큰 해시값을 기준으로 동일 파드에 트래픽을 바인딩하는 것이 필수적이다.
+동일한 에이전트 세션이나 공통 시스템 프롬프트를 공유하는 요청이 서로 다른 파드(Pod)로 분산되면 Radix 캐시가 파편화된다. 그렇기 때문에 인그레스에서 요청의 상위 1,000 토큰 해시값을 기준으로 동일 파드에 트래픽을 바인딩하는 것이 필수적이다.
 
 ### 4.1 SGLang 프로덕션 K8s 배포 명세 예시
 

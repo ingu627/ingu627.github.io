@@ -39,7 +39,9 @@ last_modified_at: 2026-10-10
 
 이 시리즈는 쿠버네티스와 클라우드(AWS·GCP·Azure 공통 개념)를 실무 관점에서 정리한 기록이다. 핵심 개념·코드 예제·실전 함정(gotcha) 중심으로, 학습과 설계 리뷰·장애 대응에 바로 쓸 수 있게 구성했다. 각 편은 독립적으로 읽을 수 있고, 순서대로 보면 클러스터 내부 구조에서 클라우드 운영까지 하나의 흐름으로 이어진다.
 
-쿠버네티스 네트워킹의 핵심은 "모든 파드(Pod)는 고유 IP를 갖고, NAT 없이 서로 통신한다"는 평탄한(flat) 모델이다. 이번 편에서는 [Kubernetes 기본 개념 정리](https://ingu627.github.io/k8s/kubernetes1/)에서 잡은 오브젝트 감각을 전제로, 이 모델 위에 Service가 안정적인 가상 IP를 얹고 Ingress/Gateway API가 L7 진입점을 만들며, CNI 플러그인이 실제 패킷 전달과 NetworkPolicy(네트워크 정책) 집행을 담당하는 구조를 다룬다. 실무 장애의 대부분은 이 계층 경계(어디서 NAT가 걸리고, 어디서 DNS가 풀리고, 어디서 정책이 드롭하는지)를 구분하지 못해 발생하므로, 각 컴포넌트의 책임 범위를 명확히 하는 데 초점을 둔다. 다음 편인 [쿠버네티스 스토리지와 데이터](https://ingu627.github.io/k8s/kubernetes-storage-data/)에서는 PV/PVC·CSI와 StatefulSet 기반 DB 운영을 이어서 살펴본다.
+쿠버네티스 네트워킹의 핵심은 "모든 파드(Pod)는 고유 IP를 갖고, NAT 없이 서로 통신한다"는 평탄한(flat) 모델이다. 이번 편에서는 [Kubernetes 기본 개념 정리](https://ingu627.github.io/k8s/kubernetes1/)에서 잡은 오브젝트 감각을 전제로, 이 모델 위에 Service가 안정적인 가상 IP를 얹고 Ingress/Gateway API가 L7 진입점을 만들며, CNI 플러그인이 실제 패킷 전달과 NetworkPolicy(네트워크 정책) 집행을 담당하는 구조를 다룬다. 실무 장애의 대부분은 이 계층 경계(어디서 NAT가 걸리고, 어디서 DNS가 풀리고, 어디서 정책이 드롭하는지)를 구분하지 못해 발생하므로, 각 컴포넌트의 책임 범위를 명확히 하는 데 초점을 둔다.
+
+다음 편인 [쿠버네티스 스토리지와 데이터](https://ingu627.github.io/k8s/kubernetes-storage-data/)에서는 PV/PVC·CSI와 StatefulSet 기반 DB 운영을 이어서 살펴본다.
 
 - 파드마다 고유 IP를 주는 IP-per-Pod 모델과 네트워크 3원칙, IPAM 구조를 확인한다
 - Cilium·Calico를 데이터플레인·정책·라우팅 기준으로 비교하고 선택 기준을 세운다
@@ -375,7 +377,9 @@ spec:
 
 두 프로젝트가 공개한 처리량·지연 수치는 각자 구성한 벤치마크 환경의 측정값이며(프로젝트 측 자체 측정), 결과는 프록시 모드(사이드카·ambient), 요청 크기, 동시성, 프로토콜에 따라 달라진다[^3]. 도입 판단은 자체 서비스로 측정한 값으로 내리는 편이 안전하다.
 
-mTLS는 사이드카/노드 프록시가 SPIFFE(Secure Production Identity Framework for Everyone) 기반 워크로드 신원으로 자동 인증서를 발급·회전하며 처리한다. 애플리케이션 코드는 평문 HTTP를 그대로 쓰고, 인증서는 제어 평면(istiod / linkerd identity)이 갱신한다. 도입 판단 기준은 명확하다. mTLS·세밀 트래픽 제어·강한 관측이 필요하고 그 복잡도를 감당할 SRE 여력이 있으면 메시를, 단순 mTLS만 필요하면 CNI 레벨 암호화(Cilium WireGuard/IPsec)나 SPIFFE CSI로 대체하는 편이 비용 효율적이다.
+mTLS는 사이드카/노드 프록시가 SPIFFE(Secure Production Identity Framework for Everyone) 기반 워크로드 신원으로 자동 인증서를 발급·회전하며 처리한다. 애플리케이션 코드는 평문 HTTP를 그대로 쓰고, 인증서는 제어 평면(istiod / linkerd identity)이 갱신한다. 도입 판단 기준은 명확하다.
+
+mTLS·세밀 트래픽 제어·강한 관측이 필요하고 그 복잡도를 감당할 SRE 여력이 있으면 메시를, 단순 mTLS만 필요하면 CNI 레벨 암호화(Cilium WireGuard/IPsec)나 SPIFFE CSI로 대체하는 편이 비용 효율적이다.
 
 ---
 
@@ -432,7 +436,9 @@ kubectl exec -it netshoot -- ping -M do -s 1422 10.244.1.5
 
 ## 10. MTU / conntrack 실전 함정
 
-**MTU 불일치**는 가장 찾기 어려운 장애다. 작은 요청은 정상이고 큰 응답(인증서 체인, JSON 대용량, gRPC 프레임)에서 멈춘다. VXLAN 터널은 50바이트, IPIP는 20바이트 헤더를 더하므로 물리 MTU 1500에서 각각 1450/1480이 한계다. AWS EKS의 VPC CNI는 ENI 기반으로 9001(점보)이지만, 오버레이를 끼워 넣으면 다시 깎인다. Cilium/Calico Helm 값의 `MTU`와 노드 인터페이스 MTU를 일치시키고, 필요하면 `iptables -t mangle -A FORWARD -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu`로 MSS를 경로 MTU에 맞춘다.
+**MTU 불일치**는 가장 찾기 어려운 장애다. 작은 요청은 정상이고 큰 응답(인증서 체인, JSON 대용량, gRPC 프레임)에서 멈춘다. VXLAN 터널은 50바이트, IPIP는 20바이트 헤더를 더하므로 물리 MTU 1500에서 각각 1450/1480이 한계다.
+
+AWS EKS의 VPC CNI는 ENI 기반으로 9001(점보)이지만, 오버레이를 끼워 넣으면 다시 깎인다. Cilium/Calico Helm 값의 `MTU`와 노드 인터페이스 MTU를 일치시키고, 필요하면 `iptables -t mangle -A FORWARD -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu`로 MSS를 경로 MTU에 맞춘다.
 
 **conntrack 포화**는 NodePort/LoadBalancer에서 SNAT 엔트리가 급증할 때 발생한다. 증상은 `nf_conntrack: table full, dropping packet` 커널 로그와 간헐적 타임아웃이다.
 

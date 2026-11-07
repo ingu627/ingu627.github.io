@@ -38,13 +38,21 @@ use_math: true
 
 데모에서는 잘 돌던 모델이 사내 챗봇에 붙이자마자 느려졌다는 문의가 들어온다. 모델도 코드도 그대로인데 동시에 들어오는 요청 수만 달라졌을 때, 무엇을 먼저 의심해야 하는지가 이 글의 출발점이다.
 
-단일 GPU나 소규모 노드에 대규모 언어 모델(LLM, Large Language Model)을 올린다고 하자. 이때 엔지니어가 가장 먼저 꺼내는 처방은 4비트 가중치 양자화(INT4 Weight-Only Quantization)다. 근거는 앞서 다룬 [모델 경량화와 양자화 파이프라인 아키텍처](/llm/quantization1/)[^1]에서 이미 정리했다. PTQ(Post-Training Quantization) 기반의 AWQ나 GPTQ로 가중치를 4비트로 압축하면 병목이 하나 줄어든다. HBM(High Bandwidth Memory)에서 SRAM으로 가중치를 읽어오는 대역폭 병목이다. 그 결과 단일 스트림 디코딩 속도가 개선된다. 트래픽을 [추론 라우팅과 요청 캐스케이딩](/llm/inference-routing-cascading/)[^2] 및 [커스텀 모델 서빙 파이프라인](/llm/custom-model-serving-pipeline/)[^3]으로 계층별 분산해도 결론은 같다. 대형 모델을 실행하는 워커 노드의 단위 시간당 토큰 처리 효율을 높이는 일은 여전히 비용 절감의 핵심 과제다.
+단일 GPU나 소규모 노드에 대규모 언어 모델(LLM, Large Language Model)을 올린다고 하자. 이때 엔지니어가 가장 먼저 꺼내는 처방은 4비트 가중치 양자화(INT4 Weight-Only Quantization)다. 근거는 앞서 다룬 [모델 경량화와 양자화 파이프라인 아키텍처](/llm/quantization1/)[^1]에서 이미 정리했다.
+
+PTQ(Post-Training Quantization) 기반의 AWQ나 GPTQ로 가중치를 4비트로 압축하면 병목이 하나 줄어든다. HBM(High Bandwidth Memory)에서 SRAM으로 가중치를 읽어오는 대역폭 병목이다. 그 결과 단일 스트림 디코딩 속도가 개선된다.
+
+트래픽을 [추론 라우팅과 요청 캐스케이딩](/llm/inference-routing-cascading/)[^2] 및 [커스텀 모델 서빙 파이프라인](/llm/custom-model-serving-pipeline/)[^3]으로 계층별 분산해도 결론은 같다. 대형 모델을 실행하는 워커 노드의 단위 시간당 토큰 처리 효율을 높이는 일은 여전히 비용 절감의 핵심 과제다.
 
 가중치를 4비트로 줄이는 일은 창고에 넣을 짐의 부피를 줄이는 일과 같다. 창고에서 꺼내 오는 시간은 줄지만, 꺼낸 짐을 원래 쓰임에 맞게 되살리는 손이 한 번 더 든다.
 
-그러나 동시 접속자가 늘어 서빙 엔진의 **연속 배칭(Continuous Batching)** 배치 크기(Batch Size)가 16에서 64 이상으로 커지면 상황이 뒤집힌다. 이때는 직관과 정반대되는 현상이 관측된다. 메모리를 4분의 1로 줄인 INT4 AWQ(W4A16) 모델이 압축하지 않은 원본 BF16 모델보다 느려지는 **양자화 역전(Quantization Inversion)**이 바로 그것이다. 동시에 전체 시스템 처리량(Throughput)을 높이려 배치를 키울수록 개별 사용자가 체감하는 **첫 토큰 도달 시간(TTFT, Time-To-First-Token)**은 수십 배로 악화된다.
+그러나 동시 접속자가 늘어 서빙 엔진의 **연속 배칭(Continuous Batching)** 배치 크기(Batch Size)가 16에서 64 이상으로 커지면 상황이 뒤집힌다. 이때는 직관과 정반대되는 현상이 관측된다. 메모리를 4분의 1로 줄인 INT4 AWQ(W4A16) 모델이 압축하지 않은 원본 BF16 모델보다 느려지는 **양자화 역전(Quantization Inversion)**이 바로 그것이다.
 
-저자는 개인 오픈 웨이트 모델 허브인 [ollama.com/ingu627](https://ollama.com/ingu627) 및 [기술 포트폴리오](/portfolio/)[^12]를 통해 6종의 양자화 모델(누적 15,293 Pulls)을 패키징해 왔다. 대상 모델은 Qwen2.5-VL, Llama 4 Scout, EXAONE 4.0 등이다. 이들을 vLLM 클러스터에서 벤치마킹하는 과정에서 대배치 양자화 역전을 직접 겪었다. 이 글은 그 원인과, 이를 해결하기 위한 FP8·NVFP4 커널 분기 및 추측 디코딩(Speculative Decoding) 결합 아키텍처를 수식과 코드 중심으로 정리한다.
+동시에 전체 시스템 처리량(Throughput)을 높이려 배치를 키울수록 개별 사용자가 체감하는 **첫 토큰 도달 시간(TTFT, Time-To-First-Token)**은 수십 배로 악화된다.
+
+저자는 개인 오픈 웨이트 모델 허브인 [ollama.com/ingu627](https://ollama.com/ingu627) 및 [기술 포트폴리오](/portfolio/)[^12]를 통해 6종의 양자화 모델(누적 15,293 Pulls)을 패키징해 왔다. 대상 모델은 Qwen2.5-VL, Llama 4 Scout, EXAONE 4.0 등이다. 이들을 vLLM 클러스터에서 벤치마킹하는 과정에서 대배치 양자화 역전을 직접 겪었다.
+
+이 글은 그 원인과, 이를 해결하기 위한 FP8·NVFP4 커널 분기 및 추측 디코딩(Speculative Decoding) 결합 아키텍처를 수식과 코드 중심으로 정리한다.
 
 ---
 
@@ -54,7 +62,9 @@ use_math: true
 
 ### 1.1 H100 80GB 환경에서의 Llama 3.3 70B 연속 배칭 실측
 
-프로덕션 서빙 클러스터에서 GPU 대당 비용 효율(Tokens per Dollar)을 높이려면, 단일 GPU가 동시에 처리하는 요청 수(Concurrency)를 끌어올려야 한다. 그런데 이 선택에는 대가가 따른다. Spheron이 2026년 10월 NVIDIA H100 80GB SXM 환경에서 측정한 벤치마크[^4]가 그 대가를 보여준다. 측정 조건은 온디맨드 시간당 단가 $2.65/hr, 대상 모델은 Llama 3.3 70B FP8이다. 이 표는 연속 배칭이 만들어내는 처리량과 지연 시간 사이의 구조적 딜레마를 그대로 드러낸다.
+프로덕션 서빙 클러스터에서 GPU 대당 비용 효율(Tokens per Dollar)을 높이려면, 단일 GPU가 동시에 처리하는 요청 수(Concurrency)를 끌어올려야 한다. 그런데 이 선택에는 대가가 따른다. Spheron이 2026년 10월 NVIDIA H100 80GB SXM 환경에서 측정한 벤치마크[^4]가 그 대가를 보여준다.
+
+측정 조건은 온디맨드 시간당 단가 $2.65/hr, 대상 모델은 Llama 3.3 70B FP8이다. 이 표는 연속 배칭이 만들어내는 처리량과 지연 시간 사이의 구조적 딜레마를 그대로 드러낸다.
 
 | 동시 요청 수 (Concurrency) | 총 시스템 처리량 (Total Throughput) | 기준 대비 처리량 배수 | 개별 체감 TTFT (p50) | 기준 대비 TTFT 악화 배수 | GPU 병목 구간 특성 |
 |---|---|---|---|---|---|
@@ -63,21 +73,31 @@ use_math: true
 | **64개 (대배치 진입)** | 2,050 tok/s | 17.1x | 480 ms | 10.7x | 텐서 코어 연산 밀도 바운드 |
 | **100개 (고밀도 배치)** | **2,400 tok/s** | **20.0x** | **740 ms** | **16.4x** | 연산 포화 및 KV 캐시 경합 |
 
-동시 요청 수를 1개에서 100개로 확장하면, 연속 배칭 스케줄러가 디코드 단계의 행렬 곱셈을 묶어 처리한다. 그래서 전체 처리량은 `120 tok/s`에서 `2,400 tok/s`로 **20.0배** 증가한다. 반면 개별 요청의 중간값(p50) TTFT는 `45ms`에서 `740ms`로 **16.4배** 길어진다. 원인은 자원 경합이다. 다수의 디코드 스텝과 신규 진입 프롬프트의 프리필(Prefill) 연산이 같은 스트리밍 멀티프로세서(SM, Streaming Multiprocessor)와 HBM 대역폭을 두고 다투기 때문이다.
+동시 요청 수를 1개에서 100개로 확장하면, 연속 배칭 스케줄러가 디코드 단계의 행렬 곱셈을 묶어 처리한다. 그래서 전체 처리량은 `120 tok/s`에서 `2,400 tok/s`로 **20.0배** 증가한다. 반면 개별 요청의 중간값(p50) TTFT는 `45ms`에서 `740ms`로 **16.4배** 길어진다.
+
+원인은 자원 경합이다. 다수의 디코드 스텝과 신규 진입 프롬프트의 프리필(Prefill) 연산이 같은 스트리밍 멀티프로세서(SM, Streaming Multiprocessor)와 HBM 대역폭을 두고 다투기 때문이다.
 
 ### 1.2 80GB VRAM의 물리적 한계와 KV 캐시 예산 수식
 
-Llama 3.3 70B 모델을 단일 H100 80GB GPU에 적재할 때의 메모리 예산을 분해해보면 병목의 원인이 더 선명해진다. FP8(1바이트)로 양자화된 70B 모델의 정적 가중치 크기 $M_{\text{weights}}$는 약 70GB다. 여기에 CUDA 컨텍스트와 커널 작업 공간(Workspace), 런타임 활성화 텐서 버퍼($M_{\text{runtime}} \approx 2.5\text{GB}$)가 더 붙는다. 그 몫을 제외하면 **KV 캐시(Key-Value Cache)**에 쓸 수 있는 여유 공간 $M_{\text{KV}}$는 7.5~10GB 남짓에 불과하다.
+Llama 3.3 70B 모델을 단일 H100 80GB GPU에 적재할 때의 메모리 예산을 분해해보면 병목의 원인이 더 선명해진다. FP8(1바이트)로 양자화된 70B 모델의 정적 가중치 크기 $M_{\text{weights}}$는 약 70GB다. 여기에 CUDA 컨텍스트와 커널 작업 공간(Workspace), 런타임 활성화 텐서 버퍼($M_{\text{runtime}} \approx 2.5\text{GB}$)가 더 붙는다.
+
+그 몫을 제외하면 **KV 캐시(Key-Value Cache)**에 쓸 수 있는 여유 공간 $M_{\text{KV}}$는 7.5~10GB 남짓에 불과하다.
 
 KV 캐시 총량은 레이어 수 $L$, 키-값 헤드 수 $H_{kv}$, 헤드 차원 $d_h$, 데이터 타입 바이트 수 $b_{\text{kv}}$로 결정된다. 그룹 쿼리 어텐션(GQA, Grouped-Query Attention)을 쓰는 트랜스포머에서 동시 배치 크기 $B$와 평균 시퀀스 길이 $S$가 요구하는 총량은 다음과 같다.
 
 $$M_{\text{KV}}(B, S) = 2 \times L \times H_{kv} \times d_h \times B \times S \times b_{\text{kv}}$$
 
-Llama 3.3 70B는 $L=80, H_{kv}=8, d_h=128$다. KV 캐시를 FP16($b_{\text{kv}}=2$)으로 유지하면 토큰 1개당 소모량이 정해진다. 그 값은 $2 \times 80 \times 8 \times 128 \times 2 = 327,680\text{ Bytes} \approx 320\text{KB}$다. 남은 10GB VRAM 전체를 KV 캐시에 할당해도 사정은 빠듯하다. 클러스터가 동시에 보유할 수 있는 최대 토큰 수용량 $T_{\max}$는 약 32,768개에 그친다. 동시 요청 $B=100$개가 유입되면 요청당 평균 327토큰만 넘어가도 한계에 닿는다. 이때 PagedAttention 블록 퇴거(Eviction)와 재연산(Recomputation)이 발생하며 지연 시간이 급증한다.
+Llama 3.3 70B는 $L=80, H_{kv}=8, d_h=128$다. KV 캐시를 FP16($b_{\text{kv}}=2$)으로 유지하면 토큰 1개당 소모량이 정해진다. 그 값은 $2 \times 80 \times 8 \times 128 \times 2 = 327,680\text{ Bytes} \approx 320\text{KB}$다.
+
+남은 10GB VRAM 전체를 KV 캐시에 할당해도 사정은 빠듯하다. 클러스터가 동시에 보유할 수 있는 최대 토큰 수용량 $T_{\max}$는 약 32,768개에 그친다. 동시 요청 $B=100$개가 유입되면 요청당 평균 327토큰만 넘어가도 한계에 닿는다.
+
+이때 PagedAttention 블록 퇴거(Eviction)와 재연산(Recomputation)이 발생하며 지연 시간이 급증한다.
 
 ### 1.3 루프라인 모델(Roofline Model)과 산술 강도 유도
 
-배치 크기에 따라 서빙 병목이 이동하는 현상은 하드웨어의 **산술 강도(Arithmetic Intensity, $I$)**로 설명된다. 산술 강도는 부동소수점 연산 수(FLOPs)를 메모리 전송량(Bytes)으로 나눈 값이다. 선형 투영 레이어 하나를 생각하자. 은닉 차원 $d_{\text{model}}$과 중간 차원 $d_{\text{ffn}}$을 가진 레이어($W \in \mathbb{R}^{d_{\text{in}} \times d_{\text{out}}}$)다. 이 레이어에 배치 크기 $B$의 입력 행렬 $X \in \mathbb{R}^{B \times d_{\text{in}}}$가 통과할 때, 그 비율 $I(B)$는 다음과 같이 유도된다.
+배치 크기에 따라 서빙 병목이 이동하는 현상은 하드웨어의 **산술 강도(Arithmetic Intensity, $I$)**로 설명된다. 산술 강도는 부동소수점 연산 수(FLOPs)를 메모리 전송량(Bytes)으로 나눈 값이다. 선형 투영 레이어 하나를 생각하자.
+
+은닉 차원 $d_{\text{model}}$과 중간 차원 $d_{\text{ffn}}$을 가진 레이어($W \in \mathbb{R}^{d_{\text{in}} \times d_{\text{out}}}$)다. 이 레이어에 배치 크기 $B$의 입력 행렬 $X \in \mathbb{R}^{B \times d_{\text{in}}}$가 통과할 때, 그 비율 $I(B)$는 다음과 같이 유도된다.
 
 $$I(B) = \frac{\text{FLOPs}}{\text{Bytes}_{\text{HBM}}} = \frac{2 \cdot B \cdot d_{\text{in}} \cdot d_{\text{out}}}{d_{\text{in}} \cdot d_{\text{out}} \cdot b_w + (B \cdot d_{\text{in}} + B \cdot d_{\text{out}}) \cdot b_a}$$
 
@@ -85,7 +105,9 @@ $$I(B) = \frac{\text{FLOPs}}{\text{Bytes}_{\text{HBM}}} = \frac{2 \cdot B \cdot 
 
 $$I(B) \approx \frac{2 \cdot B}{b_w} \quad (\text{FLOPs/Byte})$$
 
-하드웨어에는 피크 연산 성능 $\text{Peak}\_{\text{FLOPs}}$와 HBM 대역폭 $\text{BW}\_{\text{HBM}}$의 비율이 있다. 이 비율을 **릿지 포인트(Ridge Point)** $I\_{\text{ridge}} = \text{Peak}\_{\text{FLOPs}} / \text{BW}\_{\text{HBM}}$라 한다. 이 값을 기준선으로 삼으면 영역이 둘로 갈린다. $I(B) < I\_{\text{ridge}}$이면 메모리 바운드, $I(B) \ge I\_{\text{ridge}}$이면 연산 바운드 영역에 진입한다. 배치 크기 $B$가 커질수록 $I(B)$는 선형으로 증가한다. 결국 하드웨어의 병목이 HBM 대역폭에서 텐서 코어 연산 및 커널 실행 오버헤드로 전환된다.
+하드웨어에는 피크 연산 성능 $\text{Peak}\_{\text{FLOPs}}$와 HBM 대역폭 $\text{BW}\_{\text{HBM}}$의 비율이 있다. 이 비율을 **릿지 포인트(Ridge Point)** $I\_{\text{ridge}} = \text{Peak}\_{\text{FLOPs}} / \text{BW}\_{\text{HBM}}$라 한다. 이 값을 기준선으로 삼으면 영역이 둘로 갈린다.
+
+$I(B) < I\_{\text{ridge}}$이면 메모리 바운드, $I(B) \ge I\_{\text{ridge}}$이면 연산 바운드 영역에 진입한다. 배치 크기 $B$가 커질수록 $I(B)$는 선형으로 증가한다. 결국 하드웨어의 병목이 HBM 대역폭에서 텐서 코어 연산 및 커널 실행 오버헤드로 전환된다.
 
 **핵심 요약 — Llama 3.3 70B FP8 서빙에서 동시 요청을 1개에서 100개로 늘리면 처리량은 20배 증가한다. 반면 TTFT p50은 16.4배 악화된다. 70GB 가중치 점유 때문에 남은 10GB 내외에서 KV 캐시를 운용해야 하는 물리적 제약도 남는다**.
 
@@ -121,17 +143,25 @@ NVIDIA는 H200 GPU에서 배치 크기별 상대 처리량을 측정했다. 조�
 - **소배치 구간 (Batch $\le 4$)**: HBM에서 레지스터로 가중치를 퍼 올리는 시간 $T_{\text{mem}}$이 전체 실행 시간을 지배한다. 가중치 크기를 BF16 대비 4분의 1로 줄이면 이 전송 시간도 그만큼 짧아진다. 그래서 INT4 AWQ(W4A16)는 Llama-3.1-70B Batch 1에서 `1.78x`의 가속비를 기록한다.
 - **대배치 구간 (Batch $\ge 16$)**: 입력 행렬 $X \in \mathbb{R}^{B \times d_{\text{in}}}$의 행(Row) 수가 늘어나면 산술 강도 $I(B)$가 상승한다. 그만큼 병목이 연산 밀도 쪽으로 옮겨간다. 그런데 GPU에는 INT4와 FP16을 직접 곱하는 네이티브 혼합 정밀도 텐서 코어 명령어가 없다. 그래서 W4A16 커널은 매 타일(Tile) 행렬 곱셈마다 **INT4 가중치를 레지스터 상에서 FP16으로 실시간 역양자화(On-the-fly Dequantization)**해야 한다.
 
-표의 숫자를 배치 순서로 따라가면 역전이 그대로 보인다. Llama-3.1-70B의 INT4 AWQ는 Batch 1에서 `1.78x`였으나 Batch 16에서 `0.96x`, Batch 64에서 `0.88x`까지 내려간다. Batch 64의 `0.88x`는 처리량이 12% 낮다는 뜻이지 처리 시간이 12% 늘어난다는 뜻이 아니다. 같은 작업을 처리하는 데 BF16의 약 1.14배 시간이 걸린다. 반면 FP8은 Batch 1의 `1.45x`에서 Batch 64의 `1.64x`로 오히려 올라간다.
+표의 숫자를 배치 순서로 따라가면 역전이 그대로 보인다. Llama-3.1-70B의 INT4 AWQ는 Batch 1에서 `1.78x`였으나 Batch 16에서 `0.96x`, Batch 64에서 `0.88x`까지 내려간다. Batch 64의 `0.88x`는 처리량이 12% 낮다는 뜻이지 처리 시간이 12% 늘어난다는 뜻이 아니다.
+
+같은 작업을 처리하는 데 BF16의 약 1.14배 시간이 걸린다. 반면 FP8은 Batch 1의 `1.45x`에서 Batch 64의 `1.64x`로 오히려 올라간다.
 
 실시간 역양자화가 포함된 W4A16 GEMM의 단위 스텝 실행 시간 $T\_{\text{W4A16}}(B)$를 수식으로 분해하면 다음과 같다.
 
 $$T_{\text{W4A16}}(B) = \max\left( \frac{\text{Bytes}_{\text{INT4}}}{\text{BW}_{\text{HBM}}}, \frac{\text{FLOPs}_{\text{FP16}}(B)}{\text{Peak}_{\text{FP16}}} + T_{\text{dequant}}(B) \right)$$
 
-여기서 $T\_{\text{dequant}}(B)$는 역양자화에 드는 ALU/SIMT 코어 명령어 오버헤드다. 그 안에는 비트 시프트(`>>`), 비트 마스킹(`& 0x0F`), 영점(Zero-point) 감산, 그룹 스케일(Scale) 곱셈이 들어간다. 배치 크기가 커지면 HBM 절감 이득($\text{Bytes}\_{\text{INT4}} / \text{BW}\_{\text{HBM}}$)은 연산 시간 뒤에 숨어버린다(Latency Hiding). 반대로 $T\_{\text{dequant}}(B)$는 텐서 코어 파이프라인을 지연시킨다. 결국 Llama-3.1-70B Batch 64에서 처리량이 BF16 대비 **0.88x**로 하락한다. 파라미터 규모가 작은 8B 모델은 가중치 로딩 비중이 더 낮다. 그래서 Batch 8에서 이미 **0.75x**로 역전이 시작된다.
+여기서 $T\_{\text{dequant}}(B)$는 역양자화에 드는 ALU/SIMT 코어 명령어 오버헤드다. 그 안에는 비트 시프트(`>>`), 비트 마스킹(`& 0x0F`), 영점(Zero-point) 감산, 그룹 스케일(Scale) 곱셈이 들어간다. 배치 크기가 커지면 HBM 절감 이득($\text{Bytes}\_{\text{INT4}} / \text{BW}\_{\text{HBM}}$)은 연산 시간 뒤에 숨어버린다(Latency Hiding).
+
+반대로 $T\_{\text{dequant}}(B)$는 텐서 코어 파이프라인을 지연시킨다. 결국 Llama-3.1-70B Batch 64에서 처리량이 BF16 대비 **0.88x**로 하락한다. 파라미터 규모가 작은 8B 모델은 가중치 로딩 비중이 더 낮다.
+
+그래서 Batch 8에서 이미 **0.75x**로 역전이 시작된다.
 
 ### 2.3 해결책: FP8(W8A8)·NVFP4 결합 및 vLLM 커스텀 선형 백엔드 분기
 
-대배치 역전을 피하는 첫걸음은 기본 포맷을 바꾸는 것이다. 가중치와 활성화 값을 모두 양자화하면 역양자화 단계 없이 텐서 코어에서 직접 행렬 곱을 수행할 수 있다. 그 포맷이 **FP8(W8A8)**이다. 여기에 메모리 점유율이 큰 KV 캐시용으로 4비트 부동소수점인 **NVFP4**를 결합한다. 한편 어텐션이나 라우터 게이트처럼 정밀도에 민감한 레이어는 NVFP4 W4A16 또는 BF16으로 남긴다. 이때는 vLLM에서 레이어 특성에 맞춰 선형 백엔드(Linear Backend) 커널을 분리 지정하면 오버헤드를 억제할 수 있다.
+대배치 역전을 피하는 첫걸음은 기본 포맷을 바꾸는 것이다. 가중치와 활성화 값을 모두 양자화하면 역양자화 단계 없이 텐서 코어에서 직접 행렬 곱을 수행할 수 있다. 그 포맷이 **FP8(W8A8)**이다.
+
+여기에 메모리 점유율이 큰 KV 캐시용으로 4비트 부동소수점인 **NVFP4**를 결합한다. 한편 어텐션이나 라우터 게이트처럼 정밀도에 민감한 레이어는 NVFP4 W4A16 또는 BF16으로 남긴다. 이때는 vLLM에서 레이어 특성에 맞춰 선형 백엔드(Linear Backend) 커널을 분리 지정하면 오버헤드를 억제할 수 있다.
 
 ```python
 import torch
@@ -190,7 +220,9 @@ spec:
 ![가지치기(Pruning)와 지식 증류(Distillation) 결합 경량화 파이프라인](/assets/images/llm/pruning-and-distillation-cognition.webp)
 *출처: [ingu627.github.io — 모델 경량화와 양자화 파이프라인 아키텍처](/llm/quantization1/)*
 
-실제로 NVIDIA는 하이브리드 MoE 모델인 **Nemotron-3-Nano-30B-A3B**에 세 단계를 순서대로 적용했다. ① 중요도 기반 가중치 가지치기(Pruning)다. ② 교사 모델의 은닉 상태 정렬 및 KL 발산 로짓 지도(Logit Guidance)를 결합한 **2단계 지식 증류(Two-Stage Knowledge Distillation)**다. ③ `nvidia-modelopt` 기반 **FP8(W8A8) 양자화**다. 그 결과 정확도 손실을 1% 미만으로 유지하면서 vLLM 서빙 환경에서 **처리량 2.6배 향상** 및 **VRAM 메모리 점유 2.6배 절감**을 동시에 달성했다[^7].
+실제로 NVIDIA는 하이브리드 MoE 모델인 **Nemotron-3-Nano-30B-A3B**에 세 단계를 순서대로 적용했다. ① 중요도 기반 가중치 가지치기(Pruning)다. ② 교사 모델의 은닉 상태 정렬 및 KL 발산 로짓 지도(Logit Guidance)를 결합한 **2단계 지식 증류(Two-Stage Knowledge Distillation)**다.
+
+③ `nvidia-modelopt` 기반 **FP8(W8A8) 양자화**다. 그 결과 정확도 손실을 1% 미만으로 유지하면서 vLLM 서빙 환경에서 **처리량 2.6배 향상** 및 **VRAM 메모리 점유 2.6배 절감**을 동시에 달성했다[^7].
 
 **핵심 요약 — Batch 16 이상에서 INT4 AWQ(W4A16)는 BF16 대비 처리량이 0.88x로 하락한다. 원인은 실시간 FP16 역양자화 커널 오버헤드다. 그래서 대배치 서빙에서는 텐서 코어 네이티브 연산을 수행하는 FP8(W8A8)과 NVFP4 KV 캐시, Humming/CUTLASS 커널 분기를 적용해야 한다**.
 
@@ -214,7 +246,9 @@ $$\mathbb{E}[\tau] = \sum_{i=0}^{K} \alpha^i = \frac{1 - \alpha^{K+1}}{1 - \alph
 
 $$S(\alpha, K, c) = \frac{\mathbb{E}[\tau]}{1 + K \cdot c} = \frac{1 - \alpha^{K+1}}{(1 - \alpha)(1 + K \cdot c)}$$
 
-예를 들어 $K=5, \alpha=0.80, c=0.04$인 환경을 보자. 단일 검증 패스에서 $\mathbb{E}[\tau] = (1 - 0.8^6) / 0.2 \approx 3.69$토큰이 생성된다. 전체 디코딩 지연 시간은 표준 디코딩 대비 **2.2~3.0배** 단축된다. 거부된 첫 위치에서는 수정 분포 $p'(x) = \text{norm}(\max(0, p(x) - q(x)))$에서 토큰을 다시 샘플링한다. 그래서 출력 분포는 원본 모델과 수학적으로 100% 동일(Lossless)하다.
+예를 들어 $K=5, \alpha=0.80, c=0.04$인 환경을 보자. 단일 검증 패스에서 $\mathbb{E}[\tau] = (1 - 0.8^6) / 0.2 \approx 3.69$토큰이 생성된다. 전체 디코딩 지연 시간은 표준 디코딩 대비 **2.2~3.0배** 단축된다.
+
+거부된 첫 위치에서는 수정 분포 $p'(x) = \text{norm}(\max(0, p(x) - q(x)))$에서 토큰을 다시 샘플링한다. 그래서 출력 분포는 원본 모델과 수학적으로 100% 동일(Lossless)하다.
 
 ### 3.2 vLLM Speculators 아키텍처: 3개 중간 레이어 은닉 상태 추출
 

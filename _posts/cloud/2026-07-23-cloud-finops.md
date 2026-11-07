@@ -41,7 +41,9 @@ last_modified_at: 2026-11-07
 
 이 시리즈는 쿠버네티스와 클라우드(AWS·GCP·Azure 공통 개념)를 실무 관점에서 정리한 기록이다. 핵심 개념·코드 예제·실전 함정(gotcha) 중심으로, 학습과 설계 리뷰·장애 대응에 바로 쓸 수 있게 구성했다. 각 편은 독립적으로 읽을 수 있고, 순서대로 보면 클러스터 내부 구조에서 클라우드 운영까지 하나의 흐름으로 이어진다.
 
-이번 편에서는 [클라우드 보안과 거버넌스](https://ingu627.github.io/cloud/cloud-security-governance/)에서 세운 계정·정책 경계 위에서 비용을 다루는 방법을 정리한다. FinOps 재단(FinOps Foundation)이 정의한 Inform·Optimize·Operate 순환을 축으로, 태깅과 쇼백으로 비용을 보이게 만드는 단계, RI·Compute SP·CUD·스팟을 섞어 단가를 낮추는 단계, 그리고 단위 경제성(unit economics)을 리뷰 루틴에 넣어 지속 가능하게 만드는 단계를 코드와 함께 살펴본다. 비용은 대개 아키텍처 결정의 그림자이므로, 단위 경제성을 측정 루프에 넣는 순간 최적화 대상은 자동으로 드러난다. 다음 편인 [클라우드 아키텍처 패턴과 재해 복구(DR)](https://ingu627.github.io/cloud/cloud-architecture-dr/)에서 RTO/RPO 기준의 이중화 설계와 그 비용 트레이드오프를 이어서 다룬다.
+이번 편에서는 [클라우드 보안과 거버넌스](https://ingu627.github.io/cloud/cloud-security-governance/)에서 세운 계정·정책 경계 위에서 비용을 다루는 방법을 정리한다. FinOps 재단(FinOps Foundation)이 정의한 Inform·Optimize·Operate 순환을 축으로, 태깅과 쇼백으로 비용을 보이게 만드는 단계, RI·Compute SP·CUD·스팟을 섞어 단가를 낮추는 단계, 그리고 단위 경제성(unit economics)을 리뷰 루틴에 넣어 지속 가능하게 만드는 단계를 코드와 함께 살펴본다. 비용은 대개 아키텍처 결정의 그림자이므로, 단위 경제성을 측정 루프에 넣는 순간 최적화 대상은 자동으로 드러난다.
+
+다음 편인 [클라우드 아키텍처 패턴과 재해 복구(DR)](https://ingu627.github.io/cloud/cloud-architecture-dr/)에서 RTO/RPO 기준의 이중화 설계와 그 비용 트레이드오프를 이어서 다룬다.
 
 - FinOps 3단계(Inform / Optimize / Operate)의 순환 구조와 핵심 원칙을 세운다
 - 태깅·비용 탐색·예산 알람·쇼백으로 비용 가시성을 확보하는 방법을 확인한다

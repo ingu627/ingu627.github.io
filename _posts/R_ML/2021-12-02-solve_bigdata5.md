@@ -12,7 +12,9 @@ redirect_from:
   - /r_ml/r-machine-learning-big-data-analysis-part-5/
 ---
 
-빅데이터분석기사 실기 대비를 위해 정리한 필답형 문제 풀이다. 1단원 빅데이터 분석 기획 영역의 핵심 개념인 데이터 수집·저장·적재 기술, 분산 파일 시스템, 데이터 전처리 및 거버넌스 기법을 정리한다[^kdata-exam]. 실무 및 실기 데이터 분석 작업은 R 내장 패키지(`base`, `stats`, `graphics`)[^r-intro]와 CRAN의 공식 패키지 생태계[^r-cran]를 바탕으로 수행할 수 있다. 기출 연습용 데이터셋은 [github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis)에 남겨두었다.
+빅데이터분석기사 실기 대비를 위해 정리한 필답형 문제 풀이다. 1단원 빅데이터 분석 기획 영역의 핵심 개념인 데이터 수집·저장·적재 기술, 분산 파일 시스템, 데이터 전처리 및 거버넌스 기법을 정리한다[^kdata-exam]. 실무 및 실기 데이터 분석 작업은 R 내장 패키지(`base`, `stats`, `graphics`)[^r-intro]와 CRAN의 공식 패키지 생태계[^r-cran]를 바탕으로 수행할 수 있다.
+
+기출 연습용 데이터셋은 [github.com/ingu627/BigDataAnalysis](https://github.com/ingu627/BigDataAnalysis)에 남겨두었다.
 
 > **정답 확인은 문제 왼쪽의 토글(▶)을 클릭한다.**
 

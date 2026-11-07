@@ -40,27 +40,45 @@ use_math: true
 
 금요일 밤 고객 문의 한 건이 들어오자 에이전트는 스스로 셸을 띄우고 외부 API를 호출하며 답을 만들어 냈다. 기존 대시보드에는 매끄러운 최종 응답만 남았고, 그 사이 어떤 도구를 어떤 순서로 호출했는지는 드러나지 않았다. 건물 출입을 경비일지에 손으로 적던 방식을 생각하면 이해가 빠르다. 회전문 자체가 통과 기록을 남기면 일지를 쓰는 사람도, 없는 사람도 없다.
 
-자율 에이전트와 외부 **모델 컨텍스트 프로토콜(Model Context Protocol, MCP)** 서버가 쿠버네티스 클러스터 내부에서 직접 셸 명령을 호출하고 외부 API와 통신하기 시작했다. 그 결과 기존의 관측성과 평가 체계는 두 가지 치명적인 사각지대를 드러내고 있다. 첫째는 컨테이너별 사이드카 프록시(Sidecar Proxy)가 유발하는 메모리·CPU 오버헤드다. 여기에 커널 시스템콜 수준의 가시성 부재가 겹친다. 둘째는 평가 구조의 문제다. 에이전트의 최종 응답 문자열만 채점할 뿐, 중간 도구 호출 **궤적(Trajectory)**에서 발생하는 정책 위반이나 리워드 해킹은 잡아내지 못한다.
+자율 에이전트와 외부 **모델 컨텍스트 프로토콜(Model Context Protocol, MCP)** 서버가 쿠버네티스 클러스터 내부에서 직접 셸 명령을 호출하고 외부 API와 통신하기 시작했다. 그 결과 기존의 관측성과 평가 체계는 두 가지 치명적인 사각지대를 드러내고 있다. 첫째는 컨테이너별 사이드카 프록시(Sidecar Proxy)가 유발하는 메모리·CPU 오버헤드다.
 
-앞서 정리한 [EKS Gateway API 도입 실전과 Cilium ENI 게이트웨이](/k8s/gateway-api-migration-cilium/)[^1] 및 [쿠버네티스 관찰성(Observability) 파이프라인 설계](/k8s/kubernetes-observability/)[^2]에서는 클러스터 인그레스 전환과 메트릭·로그·트레이스 수집 구조를 다루었다. 이어서 [Claude Code 아키텍처 해부와 8계층 보안 모델](/agent/claude-code-architecture-queryloop-harness/)[^3]에서는 애플리케이션 하네스 내부의 권한 경계를 살펴보았다. 이번 글은 사내 AI 에이전트 클러스터의 Day-2 운영 환경을 정비하면서 확인한 내용을 정리한 것이다. 2026년 10월 릴리즈된 Cilium 1.20·Tetragon 기반 커널 eBPF 보안 계층을 검증했다. OpenTelemetry GenAI 시맨틱 컨벤션(v1.38~v1.43)의 스팬 구조도 함께 확인했다. 이 두 축과 TypeSafe System One(`Jev`) 기반 온라인 궤적 평가 파이프라인을 하나로 통합하는 것이 목표다. 아래 내용은 그 통합 과정을 직접 검증하고 정리한 엔지니어링 기록입니다.
+여기에 커널 시스템콜 수준의 가시성 부재가 겹친다. 둘째는 평가 구조의 문제다. 에이전트의 최종 응답 문자열만 채점할 뿐, 중간 도구 호출 **궤적(Trajectory)**에서 발생하는 정책 위반이나 리워드 해킹은 잡아내지 못한다.
+
+앞서 정리한 [EKS Gateway API 도입 실전과 Cilium ENI 게이트웨이](/k8s/gateway-api-migration-cilium/)[^1] 및 [쿠버네티스 관찰성(Observability) 파이프라인 설계](/k8s/kubernetes-observability/)[^2]에서는 클러스터 인그레스 전환과 메트릭·로그·트레이스 수집 구조를 다루었다. 이어서 [Claude Code 아키텍처 해부와 8계층 보안 모델](/agent/claude-code-architecture-queryloop-harness/)[^3]에서는 애플리케이션 하네스 내부의 권한 경계를 살펴보았다. 이번 글은 사내 AI 에이전트 클러스터의 Day-2 운영 환경을 정비하면서 확인한 내용을 정리한 것이다.
+
+2026년 10월 릴리즈된 Cilium 1.20·Tetragon 기반 커널 eBPF 보안 계층을 검증했다. OpenTelemetry GenAI 시맨틱 컨벤션(v1.38~v1.43)의 스팬 구조도 함께 확인했다. 이 두 축과 TypeSafe System One(`Jev`) 기반 온라인 궤적 평가 파이프라인을 하나로 통합하는 것이 목표다.
+
+아래 내용은 그 통합 과정을 직접 검증하고 정리한 엔지니어링 기록입니다.
 
 ---
 
 ## 1. AI 에이전트 인프라의 두 가지 사각지대: 커널 보안과 중간 궤적(Trajectory)
 
-에이전트 파드 하나가 정상 응답을 계속 돌려주는 동안, 그 내부에서는 요청마다 서브프로세스가 새로 떴다. 외부 주소로 연결이 열렸는데도 대시보드에는 초록색 표시만 떠 있었다. 프로덕션 환경에 배치된 자율 에이전트 워크로드는 정적인 마이크로서비스와 다르다. 트래픽과 시스템콜 패턴부터 근본적으로 어긋난다. 사용자의 단일 프롬프트가 유입되면 에이전트 루프가 시작된다. 이 루프는 수십 차례에 걸쳐 내부 RAG 검색과 코드 인터프리터 서브프로세스 생성(`execve`)을 반복한다. 파일시스템 읽기·쓰기와 외부 서드파티 MCP 서버로의 아웃바운드 TCP 연결도 같은 흐름에서 일어난다. 이 전체 순서는 비결정론적으로 수행된다.
+에이전트 파드 하나가 정상 응답을 계속 돌려주는 동안, 그 내부에서는 요청마다 서브프로세스가 새로 떴다. 외부 주소로 연결이 열렸는데도 대시보드에는 초록색 표시만 떠 있었다. 프로덕션 환경에 배치된 자율 에이전트 워크로드는 정적인 마이크로서비스와 다르다.
+
+트래픽과 시스템콜 패턴부터 근본적으로 어긋난다. 사용자의 단일 프롬프트가 유입되면 에이전트 루프가 시작된다. 이 루프는 수십 차례에 걸쳐 내부 RAG 검색과 코드 인터프리터 서브프로세스 생성(`execve`)을 반복한다.
+
+파일시스템 읽기·쓰기와 외부 서드파티 MCP 서버로의 아웃바운드 TCP 연결도 같은 흐름에서 일어난다. 이 전체 순서는 비결정론적으로 수행된다.
 
 ![Cilium 1.20·Tetragon eBPF 커널 보안 스택과 OpenTelemetry GenAI·TypeSafe Jev 기반 에이전트 궤적(Trajectory) 온라인 평가 아키텍처](/assets/images/k8s/ebpf-ai-observability-otel-genai-trajectory-cognition.webp)
 
 ### 1.1 커널 및 네트워크 가시성 부재와 사이드카 비용 병목
 
-전통적인 서비스 메시에서는 모든 파드마다 Envoy 사이드카 컨테이너를 주입해 L7 트래픽을 감시했다. 그러나 AI 클러스터에서는 에이전트 샌드박스 파드와 동적 MCP 서버 파드가 수시로 생성·소멸한다. 그런 환경에서 파드당 $100\text{MB}\sim 350\text{MB}$의 메모리를 점유하는 사이드카 구조는 리소스 단편화를 유발한다. 더 큰 문제는 가시성의 범위다. 사이드카는 네트워크 소켓 계층만 가로챌 수 있다. 프롬프트 인젝션에 감염된 에이전트 프로세스는 커널 수준에서 민감한 경로를 읽을 수 있다. 사이드카가 놓치는 대표 경로가 `/var/run/secrets/kubernetes.io/serviceaccount/token`과 `/etc/shadow`다. 비인가 서브넷으로 우회 접속하는 시스템콜도 같은 이유로 탐지되지 않는다[^3][^8].
+전통적인 서비스 메시에서는 모든 파드마다 Envoy 사이드카 컨테이너를 주입해 L7 트래픽을 감시했다. 그러나 AI 클러스터에서는 에이전트 샌드박스 파드와 동적 MCP 서버 파드가 수시로 생성·소멸한다. 그런 환경에서 파드당 $100\text{MB}\sim 350\text{MB}$의 메모리를 점유하는 사이드카 구조는 리소스 단편화를 유발한다.
+
+더 큰 문제는 가시성의 범위다. 사이드카는 네트워크 소켓 계층만 가로챌 수 있다. 프롬프트 인젝션에 감염된 에이전트 프로세스는 커널 수준에서 민감한 경로를 읽을 수 있다.
+
+사이드카가 놓치는 대표 경로가 `/var/run/secrets/kubernetes.io/serviceaccount/token`과 `/etc/shadow`다. 비인가 서브넷으로 우회 접속하는 시스템콜도 같은 이유로 탐지되지 않는다[^3][^8].
 
 ### 1.2 최종 출력 채점의 맹점과 OpenAI 호스팅 Evals 종료(2026.10~11)
 
-애플리케이션 계층의 두 번째 사각지대는 **최종 출력 편향(Final-Output Bias)**이다. 에이전트가 고객의 환불 요청을 처리한다고 하자. 사내 규정 문서를 조회하지 않고 임의로 DB 수정 도구를 호출한 뒤, 우연히 공손한 안내문을 출력했다. 이때 최종 답변 기반 평가기(Output-only Grader)는 이 실행을 정상으로 판정한다. 앞서 [자가 개선 에이전트 루프와 리워드 해킹 방어](/llm/self-improving-agent-loop/)[^12]에서 분석했듯, 중간 실행 단계 전체를 담은 **궤적(Trajectory)**을 검증해야 한다. 그래야 비인가 도구 호출이나 무한 재시도 루프를 차단할 수 있다.
+애플리케이션 계층의 두 번째 사각지대는 **최종 출력 편향(Final-Output Bias)**이다. 에이전트가 고객의 환불 요청을 처리한다고 하자. 사내 규정 문서를 조회하지 않고 임의로 DB 수정 도구를 호출한 뒤, 우연히 공손한 안내문을 출력했다.
 
-여기에 외부 평가 인프라의 변화도 맞물렸다. OpenAI는 2026년 6월 3일 공식 공지를 냈다. 자사 호스팅 **Evals** 제품을 **2026년 10월 31일부로 읽기 전용(Read-only)**으로 전환한다는 내용이다. **2026년 11월 30일에 완전 종료(Shut down)**한다는 일정도 함께 확정했다[^4]. 이에 따라 외부 벤더의 폐쇄형 평가 대시보드에 의존하던 아키텍처는 더 이상 유지할 수 없다. **오픈텔레메트리(OpenTelemetry, OTel)** 표준 스팬 트리에 평가 이벤트를 직접 결합하는 자체 온라인 궤적 평가 파이프라인 구축이 필수 과제가 되었다[^10][^11].
+이때 최종 답변 기반 평가기(Output-only Grader)는 이 실행을 정상으로 판정한다. 앞서 [자가 개선 에이전트 루프와 리워드 해킹 방어](/llm/self-improving-agent-loop/)[^12]에서 분석했듯, 중간 실행 단계 전체를 담은 **궤적(Trajectory)**을 검증해야 한다. 그래야 비인가 도구 호출이나 무한 재시도 루프를 차단할 수 있다.
+
+여기에 외부 평가 인프라의 변화도 맞물렸다. OpenAI는 2026년 6월 3일 공식 공지를 냈다. 자사 호스팅 **Evals** 제품을 **2026년 10월 31일부로 읽기 전용(Read-only)**으로 전환한다는 내용이다.
+
+**2026년 11월 30일에 완전 종료(Shut down)**한다는 일정도 함께 확정했다[^4]. 이에 따라 외부 벤더의 폐쇄형 평가 대시보드에 의존하던 아키텍처는 더 이상 유지할 수 없다. **오픈텔레메트리(OpenTelemetry, OTel)** 표준 스팬 트리에 평가 이벤트를 직접 결합하는 자체 온라인 궤적 평가 파이프라인 구축이 필수 과제가 되었다[^10][^11].
 
 | 사각지대 영역 | 기존 접근 방식의 한계 | 프로덕션 장애 및 보안 리스크 | 해결 아키텍처 (본문 구성) |
 |---|---|---|---|
@@ -73,7 +91,11 @@ use_math: true
 
 ## 2. Cilium 1.20 Gateway API의 'L7 내장 Envoy 함정(Trapdoor)'과 해결책
 
-L7 규칙을 켠 순간 파드로 들어오던 정상 요청이 전부 사라졌다. 애플리케이션 코드는 한 줄도 바뀌지 않았는데 노드 정책 카운터에는 드롭만 쌓였다. 이 절이 다루는 문제는 인그레스 설정 하나가 트래픽 경로 전체를 바꾼다는 점이다. **Cilium 1.20**은 2026년 10월 21일 정식 릴리즈되었다. 이 버전은 쿠버네티스 표준 **게이트웨이 API(Gateway API)** 호환성을 강화했다. **확장 버클리 패킷 필터(Extended Berkeley Packet Filter, eBPF)** 데이터패스 최적화와 사이드카 없는 **상호 TLS(Mutual TLS, mTLS)** 인증도 기본 제공한다[^5]. 앞서 [EKS Gateway API 도입 실전](/k8s/gateway-api-migration-cilium/)[^1]에서 다룬 것처럼, `ingress-nginx`의 공식 은퇴 이후 Cilium Gateway API는 AI 서빙 클러스터의 표준 인그레스 계층으로 자리 잡았다.
+L7 규칙을 켠 순간 파드로 들어오던 정상 요청이 전부 사라졌다. 애플리케이션 코드는 한 줄도 바뀌지 않았는데 노드 정책 카운터에는 드롭만 쌓였다. 이 절이 다루는 문제는 인그레스 설정 하나가 트래픽 경로 전체를 바꾼다는 점이다.
+
+**Cilium 1.20**은 2026년 10월 21일 정식 릴리즈되었다. 이 버전은 쿠버네티스 표준 **게이트웨이 API(Gateway API)** 호환성을 강화했다. **확장 버클리 패킷 필터(Extended Berkeley Packet Filter, eBPF)** 데이터패스 최적화와 사이드카 없는 **상호 TLS(Mutual TLS, mTLS)** 인증도 기본 제공한다[^5].
+
+앞서 [EKS Gateway API 도입 실전](/k8s/gateway-api-migration-cilium/)[^1]에서 다룬 것처럼, `ingress-nginx`의 공식 은퇴 이후 Cilium Gateway API는 AI 서빙 클러스터의 표준 인그레스 계층으로 자리 잡았다.
 
 ![Gateway API의 세 가지 안정 리소스(HTTPRoute·Gateway·GatewayClass)가 클러스터 범위에서 맺는 관계](/assets/images/k8s/official-gateway-api-kind-relationships.webp)
 *출처: [Gateway API — Kubernetes Documentation](https://kubernetes.io/docs/concepts/services-networking/gateway/), CC BY 4.0*
@@ -90,7 +112,11 @@ Cilium을 순수 L3/L4 모드로 운영할 때, 패킷 포워딩과 정책 검�
 
 ### 2.2 크로스 네임스페이스 ReferenceGrant와 `fromEntities: [ingress]` 분리 설계
 
-이 함정을 우회하고 제로 트러스트 인그레스를 구성하려면 두 가지 리소스 계약을 명시적으로 선언해야 한다[^6][^7]. 첫째는 크로스 네임스페이스 참조 허가다. `infra-gateway` 네임스페이스의 `Gateway` 리소스가 `ai-agents` 네임스페이스의 TLS 인증서(`Secret`)나 백엔드 `Service`를 참조할 때 에러가 난다. `ResolvedRefs=False (RefNotPermitted)`가 그것이다. 이를 막으려면 타겟 네임스페이스에 `ReferenceGrant`를 배치해야 한다. 둘째는 엔티티 승인이다. 백엔드 파드의 `CiliumNetworkPolicy`에 `fromEntities: ["ingress", "cluster"]`를 명시해야 한다. 그래야 노드 내장 Envoy 프록시가 전달하는 트래픽이 합법적인 인그레스 엔티티로 승인된다.
+이 함정을 우회하고 제로 트러스트 인그레스를 구성하려면 두 가지 리소스 계약을 명시적으로 선언해야 한다[^6][^7]. 첫째는 크로스 네임스페이스 참조 허가다. `infra-gateway` 네임스페이스의 `Gateway` 리소스가 `ai-agents` 네임스페이스의 TLS 인증서(`Secret`)나 백엔드 `Service`를 참조할 때 에러가 난다.
+
+`ResolvedRefs=False (RefNotPermitted)`가 그것이다. 이를 막으려면 타겟 네임스페이스에 `ReferenceGrant`를 배치해야 한다. 둘째는 엔티티 승인이다.
+
+백엔드 파드의 `CiliumNetworkPolicy`에 `fromEntities: ["ingress", "cluster"]`를 명시해야 한다. 그래야 노드 내장 Envoy 프록시가 전달하는 트래픽이 합법적인 인그레스 엔티티로 승인된다.
 
 ```yaml
 apiVersion: gateway.networking.k8s.io/v1beta1
@@ -168,7 +194,11 @@ $$
 
 ### 3.2 Tetragon `TracingPolicy`를 통한 자율 에이전트·MCP 서버 커널 격리
 
-자율 에이전트나 외부 MCP 도구는 프롬프트 인젝션 공격의 경로가 된다. 공격을 받은 프로세스는 컨테이너 내부에서 민감한 자격 증명을 읽으려 한다. 내부 관리망으로 역방향 셸(Reverse Shell) 연결을 시도하는 경우도 있다. 이때 사용자 공간(User-space) 래퍼는 우회될 수 있다[^3]. **Cilium Tetragon**은 이 지점을 커널에서 막는다. 리눅스 커널 함수(`security_file_permission`, `tcp_connect`)에 직접 eBPF 프로브를 부착한다. 위반 행위가 감지되면 커널 컨텍스트에서 해당 프로세스에 `SIGKILL` 시그널을 주입한다[^8].
+자율 에이전트나 외부 MCP 도구는 프롬프트 인젝션 공격의 경로가 된다. 공격을 받은 프로세스는 컨테이너 내부에서 민감한 자격 증명을 읽으려 한다. 내부 관리망으로 역방향 셸(Reverse Shell) 연결을 시도하는 경우도 있다.
+
+이때 사용자 공간(User-space) 래퍼는 우회될 수 있다[^3]. **Cilium Tetragon**은 이 지점을 커널에서 막는다. 리눅스 커널 함수(`security_file_permission`, `tcp_connect`)에 직접 eBPF 프로브를 부착한다.
+
+위반 행위가 감지되면 커널 컨텍스트에서 해당 프로세스에 `SIGKILL` 시그널을 주입한다[^8].
 
 ```yaml
 apiVersion: cilium.io/v1alpha1
@@ -216,7 +246,11 @@ spec:
             - action: Sigkill
 ```
 
-위 `TracingPolicyNamespaced`는 `mcp-tool-runner` 파드의 접근을 감시한다. 감시 대상은 세 경로다. 첫째가 쿠버네티스 서비스 어카운트 토큰 경로 `/var/run/secrets/kubernetes.io/serviceaccount`다. 둘째와 셋째는 `/etc/shadow`와 `/root/.ssh`다. 이 경로에 접근하는 순간 프로세스를 즉각 종료(`Sigkill`)한다. 네트워크 경로도 함께 본다. 허가 대역은 클러스터 서비스 대역(`10.96.0.0/12`)과 사내 API 게이트웨이 서브넷(`172.16.40.0/24`)이다. 이 밖의 주소로 `tcp_connect`를 호출하면 커널 반환값을 `-EPERM (-1)`으로 덮어쓴다. 그리고 프로세스를 차단한다[^8].
+위 `TracingPolicyNamespaced`는 `mcp-tool-runner` 파드의 접근을 감시한다. 감시 대상은 세 경로다. 첫째가 쿠버네티스 서비스 어카운트 토큰 경로 `/var/run/secrets/kubernetes.io/serviceaccount`다.
+
+둘째와 셋째는 `/etc/shadow`와 `/root/.ssh`다. 이 경로에 접근하는 순간 프로세스를 즉각 종료(`Sigkill`)한다. 네트워크 경로도 함께 본다.
+
+허가 대역은 클러스터 서비스 대역(`10.96.0.0/12`)과 사내 API 게이트웨이 서브넷(`172.16.40.0/24`)이다. 이 밖의 주소로 `tcp_connect`를 호출하면 커널 반환값을 `-EPERM (-1)`으로 덮어쓴다. 그리고 프로세스를 차단한다[^8].
 
 **핵심 요약 — Cilium·Hubble·Tetragon·Beyla 조합은 노드당 1% 미만의 CPU와 약 600MB RAM으로 동작한다. 사이드카 대비 리소스는 50~70% 절감된다. 커널 `kprobes` 기반 `TracingPolicy`로 에이전트의 민감 파일 접근과 비인가 네트워크 연결을 실시간 차단한다.**
 
@@ -280,11 +314,15 @@ $$
 \kappa = \frac{p_o - p_e}{1 - p_e}, \qquad \text{where} \quad p_o = \frac{1}{N}\sum_{k=1}^{K} n_{kk}, \quad p_e = \frac{1}{N^2}\sum_{k=1}^{K} n_{k\cdot} n_{\cdot k}
 $$
 
-여기서 $N$은 보정 샘플 수($50 \le N \le 200$)이고 $K$는 판정 등급 수다. $n_{kk}$는 인간 합의와 자동 판정기가 모두 범주 $k$로 분류한 샘플 수다. 프로덕션 궤적 평가기로 배포하기 위한 최소 통과 기준은 **$\kappa \ge 0.60$ (Substantial Agreement)**이다. 안전(Safety)과 권한 위반 판정 루브릭은 더 엄격하다. $\kappa \ge 0.75$를 충족할 때까지 질문 지침(`instructions`)과 선택지 경계(`criteria`)를 정제한다[^13][^14].
+여기서 $N$은 보정 샘플 수($50 \le N \le 200$)이고 $K$는 판정 등급 수다. $n_{kk}$는 인간 합의와 자동 판정기가 모두 범주 $k$로 분류한 샘플 수다. 프로덕션 궤적 평가기로 배포하기 위한 최소 통과 기준은 **$\kappa \ge 0.60$ (Substantial Agreement)**이다.
+
+안전(Safety)과 권한 위반 판정 루브릭은 더 엄격하다. $\kappa \ge 0.75$를 충족할 때까지 질문 지침(`instructions`)과 선택지 경계(`criteria`)를 정제한다[^13][^14].
 
 ### 5.3 호에프딩·번스타인 부등식과 7일 이동평균 대비 $1.5\sigma$ 드리프트 경보
 
-온라인 평가 점수가 쌓이면 그다음은 시계열 판단이다. 에이전트 품질 저하나 보안 이상 징후를 시계열 상에서 포착해야 한다. 과거 블로그의 [이상 탐지를 위한 호에프딩·번스타인 확률 부등식 정리](/mlops/inequality_for_detection/)[^15], [컨셉 드리프트 탐지 방법론](/mlops/drift_detection/)[^16], 그리고 [FHDDM(Fast Hoeffding Drift Detection Method) 논문 리뷰](/paper/mlops/FHDDM/)[^17]에서 유도한 내용을 그대로 쓴다. 유계 확률 변수 $X_i \in [0, 1]$의 표본 평균 $\bar{X}\_W$를 생각하자. 이 값이 기대치 $\mu_0$로부터 $\epsilon$ 이상 벗어날 확률은 호에프딩 부등식(Hoeffding's Inequality)으로 상한이 보장된다.
+온라인 평가 점수가 쌓이면 그다음은 시계열 판단이다. 에이전트 품질 저하나 보안 이상 징후를 시계열 상에서 포착해야 한다. 과거 블로그의 [이상 탐지를 위한 호에프딩·번스타인 확률 부등식 정리](/mlops/inequality_for_detection/)[^15], [컨셉 드리프트 탐지 방법론](/mlops/drift_detection/)[^16], 그리고 [FHDDM(Fast Hoeffding Drift Detection Method) 논문 리뷰](/paper/mlops/FHDDM/)[^17]에서 유도한 내용을 그대로 쓴다.
+
+유계 확률 변수 $X_i \in [0, 1]$의 표본 평균 $\bar{X}\_W$를 생각하자. 이 값이 기대치 $\mu_0$로부터 $\epsilon$ 이상 벗어날 확률은 호에프딩 부등식(Hoeffding's Inequality)으로 상한이 보장된다.
 
 $$
 \mathbb{P}\left(\mu_{\text{7d}} - \bar{X}_W \ge \epsilon\right) \le \exp\left(-2 W \epsilon^2\right)
@@ -298,7 +336,11 @@ $$
 
 예를 들어 7일 기준선 평균이 0.92이고 표준편차가 0.04라고 하자. 최근 윈도우 평균이 0.86으로 내려가면 $Z_{\text{drift}} = (0.92 - 0.86) / 0.04 = 1.5$가 되어 경보 조건에 정확히 닿는다. 평균이 0.90에서 멈추면 $Z_{\text{drift}} = 0.5$이므로 경보는 나가지 않는다.
 
-이때 경보 라우팅은 지표의 성격에 따라 이원화한다. 먼저 안전 쪽이다. 도구 권한 위반이나 데이터 유출 위험을 평가하는 **안전 지표(Safety Score)**가 $1.5\sigma$ 이상 하락하면 즉시 경보한다. 단건 치명적 위반이 발생한 경우도 같다. 이때는 온콜 엔지니어에게 **페이저(PagerDuty) 호출**을 발송한다. 다음은 품질 쪽이다. 요약 충실도나 단계 효율성 같은 **품질 지표(Quality Score)**가 $1.5\sigma$ 이상 하락하면 자동으로 **이슈 티켓(Jira/GitHub Issue)**을 발행한다. 발행된 티켓은 회귀 분석 큐에 등록된다.
+이때 경보 라우팅은 지표의 성격에 따라 이원화한다. 먼저 안전 쪽이다. 도구 권한 위반이나 데이터 유출 위험을 평가하는 **안전 지표(Safety Score)**가 $1.5\sigma$ 이상 하락하면 즉시 경보한다.
+
+단건 치명적 위반이 발생한 경우도 같다. 이때는 온콜 엔지니어에게 **페이저(PagerDuty) 호출**을 발송한다. 다음은 품질 쪽이다.
+
+요약 충실도나 단계 효율성 같은 **품질 지표(Quality Score)**가 $1.5\sigma$ 이상 하락하면 자동으로 **이슈 티켓(Jira/GitHub Issue)**을 발행한다. 발행된 티켓은 회귀 분석 큐에 등록된다.
 
 ### 5.4 TypeSafe System One(`Jev`) 스팬 궤적 평가 및 `gen_ai.evaluation.result` 발행 구현
 

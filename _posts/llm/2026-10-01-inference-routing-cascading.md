@@ -39,7 +39,9 @@ last_modified_at: 2026-11-07
 
 사내 LLM 플랫폼을 처음 열면 요청은 거의 항상 하나의 엔드포인트로 들어온다. IDE 플러그인, 사내 챗봇, 배치 스크립트가 모두 같은 `base_url`을 바라본다. 그리고 그 뒤에는 가장 비싼 모델 하나가 서 있다. "일단 제일 좋은 모델로 붙여 두자"는 결정은 첫 달에는 합리적으로 보이지만, 트래픽이 늘면 두 가지가 동시에 무너진다. 비용 그래프가 요청 수에 정비례해 올라가고, 아주 단순한 질문 하나의 응답 시간이 가장 무거운 요청에 맞춰 결정된다.
 
-여기서 필요한 것이 **추론 라우팅(inference routing)** 이다. 요청을 어디로 보낼지 결정하는 계층을 따로 두고, 그 계층이 비용·지연·품질을 동시에 다루게 만드는 것이다. 사내 AI 플랫폼(Azure/Kubernetes 기반 서빙, 자체 vLLM과 외부 프로바이더를 함께 쓰는 구성)을 운영하면서 "게이트웨이를 한 겹 더 두는 게 정말 값어치가 있나"를 여러 번 따져 봤고, 결론은 조건부 찬성이었다. 조건은 게이트웨이를 **역할이 다른 두 계층으로 쪼개는 것**이다. 이 글은 그 구조와, 그 위에서 돌아가는 캐스케이딩·캐싱·관측성을 정리한다. 전제와 수치는 [^1], [^2] 문서를 기준으로 삼았고, 연구 인용은 원 논문을 확인해 표시했다.
+여기서 필요한 것이 **추론 라우팅(inference routing)** 이다. 요청을 어디로 보낼지 결정하는 계층을 따로 두고, 그 계층이 비용·지연·품질을 동시에 다루게 만드는 것이다. 사내 AI 플랫폼(Azure/Kubernetes 기반 서빙, 자체 vLLM과 외부 프로바이더를 함께 쓰는 구성)을 운영하면서 "게이트웨이를 한 겹 더 두는 게 정말 값어치가 있나"를 여러 번 따져 봤고, 결론은 조건부 찬성이었다.
+
+조건은 게이트웨이를 **역할이 다른 두 계층으로 쪼개는 것**이다. 이 글은 그 구조와, 그 위에서 돌아가는 캐스케이딩·캐싱·관측성을 정리한다. 전제와 수치는 [^1], [^2] 문서를 기준으로 삼았고, 연구 인용은 원 논문을 확인해 표시했다.
 
 ---
 
@@ -169,7 +171,9 @@ Tier 1은 네트워크 제어만 하고 모델 선택 로직은 넣지 않는다
 2. **InferencePool selector로 개별 Pod 주소(`podIP:port`)를 다룬다**: Service가 아니라 Pod 단위다.
 3. **모델 서버 메트릭으로 스케줄링한다**: 단순 LB가 아니라 KV 캐시·부하 인지다.
 
-EPP 내부는 단일 함수가 아니라 계층 파이프라인이다. 데이터 계층이 Pod 목록과 vLLM 메트릭을 모으고, 라우팅/정책 계층이 pool 선택과 우선순위를 처리하고, 흐름 제어 계층이 포화 감지기(saturation detector)로 과부하를 막고, 마지막 스케줄링 계층의 **scorer + picker** 가 실제 Pod를 고른다. scorer에는 `prefix-cache-scorer`(프롬프트 블록을 해싱해 prefix를 들고 있는 Pod를 추정) 외에 부하·큐 깊이 인지 scorer, LoRA affinity 등이 있다. picker는 점수를 종합해 최종 Pod를 정하고, 미지정이면 기본 `max-score-picker` 가 쓴다. 결정은 `x-gateway-destination-endpoint` 헤더와 `dynamic_metadata` 로 함께 전달되며 둘이 일치해야 한다.
+EPP 내부는 단일 함수가 아니라 계층 파이프라인이다. 데이터 계층이 Pod 목록과 vLLM 메트릭을 모으고, 라우팅/정책 계층이 pool 선택과 우선순위를 처리하고, 흐름 제어 계층이 포화 감지기(saturation detector)로 과부하를 막고, 마지막 스케줄링 계층의 **scorer + picker** 가 실제 Pod를 고른다. scorer에는 `prefix-cache-scorer`(프롬프트 블록을 해싱해 prefix를 들고 있는 Pod를 추정) 외에 부하·큐 깊이 인지 scorer, LoRA affinity 등이 있다.
+
+picker는 점수를 종합해 최종 Pod를 정하고, 미지정이면 기본 `max-score-picker` 가 쓴다. 결정은 `x-gateway-destination-endpoint` 헤더와 `dynamic_metadata` 로 함께 전달되며 둘이 일치해야 한다.
 
 ![EPP 스케줄링 흐름: 요청의 criticality를 먼저 보고, critical이면 LoRA 적합성 분기로, 아니면 큐·KV 여유 분기로 갈라진다. 각 분기에서 조건을 만족하는 Pod 집합을 좁힌 뒤 대기 큐가 짧은 순, KV 캐시 사용이 낮은 순으로 걸러 최종 목록에서 하나를 고르고, 어느 분기에서도 조건을 만족하지 못하면 요청을 드롭한다.](/assets/images/llm/official-kubernetes-inference-extension-epp.webp)
 *출처: [Kubernetes Blog, Introducing Gateway API Inference Extension](https://kubernetes.io/blog/2025/06/05/introducing-gateway-api-inference-extension/)*
@@ -317,7 +321,9 @@ router_settings:
 | vLLM 단독 + 분류 서비스 가용 | **vLLM Semantic Router** | vLLM 프로젝트 라우터, 경량 |
 | 하이브리드(외부+자체) | **LLM Classifier + LiteLLM** | 자체는 Classifier, 외부는 LiteLLM |
 
-한 가지 반례도 기록해 둔다. Bifrost를 자체 호스팅 vLLM 캐스케이딩에 쓰려던 시도는 네 가지 한계로 접혔다[^2]. 요청 시 `openai/glm-5` 같은 provider/model 포맷을 강제하는 점, provider당 `base_url` 이 하나뿐이라 SLM과 LLM이 다른 Service에 있으면 같은 provider로 라우팅할 수 없는 점, 라우팅 룰이 `complexity_tier` 에는 접근하지만 원시 프롬프트 텍스트를 키워드·정규식으로 직접 매칭하기는 어려운 점, 모델명 정규화(하이픈 제거 등)로 vLLM `served-model-name` 과 어긋나는 점이다. 결론은 명확하다. Bifrost는 외부 프로바이더 통합과 failover에 강하고, 자체 vLLM 사이의 지능형 캐스케이딩에는 별도 classifier가 더 유연하다.
+한 가지 반례도 기록해 둔다. Bifrost를 자체 호스팅 vLLM 캐스케이딩에 쓰려던 시도는 네 가지 한계로 접혔다[^2]. 요청 시 `openai/glm-5` 같은 provider/model 포맷을 강제하는 점, provider당 `base_url` 이 하나뿐이라 SLM과 LLM이 다른 Service에 있으면 같은 provider로 라우팅할 수 없는 점, 라우팅 룰이 `complexity_tier` 에는 접근하지만 원시 프롬프트 텍스트를 키워드·정규식으로 직접 매칭하기는 어려운 점, 모델명 정규화(하이픈 제거 등)로 vLLM `served-model-name` 과 어긋나는 점이다.
+
+결론은 명확하다. Bifrost는 외부 프로바이더 통합과 failover에 강하고, 자체 vLLM 사이의 지능형 캐스케이딩에는 별도 classifier가 더 유연하다.
 
 ### 4.5 RouteLLM이 가르쳐 준 것
 
@@ -344,7 +350,9 @@ router_settings:
 | Very Complex | 5% | Opus 4.7 | 3,000 / 2,000 | `$32.50` |
 | **합계** | | | | **`$111.00`/일 (월 `$3,330`)** |
 
-같은 요청을 전부 Opus 4.7로 처리하면(평균 1K 토큰 입/출력) 하루 `$300`, 월 `$9,000`이다. 즉 **약 63% 절감**이다. 자체 호스팅 시나리오도 방향은 같다. Qwen3-4B(weak 70%, g6.xlarge L4 Spot ~`$0.31/hr`) 약 `$223`/월, GLM-5 744B(strong 30%, p5en.48xlarge 8xH200 Spot ~`$16/hr`) 약 `$3,456`/월, Langfuse + AMP/AMG 약 `$200`/월을 더하면 약 `$3,879`/월이다. GLM-5를 상시 운영하는 약 `$11,520`/월과 비교하면 **약 66% 절감**이다[^2].
+같은 요청을 전부 Opus 4.7로 처리하면(평균 1K 토큰 입/출력) 하루 `$300`, 월 `$9,000`이다. 즉 **약 63% 절감**이다. 자체 호스팅 시나리오도 방향은 같다.
+
+Qwen3-4B(weak 70%, g6.xlarge L4 Spot ~`$0.31/hr`) 약 `$223`/월, GLM-5 744B(strong 30%, p5en.48xlarge 8xH200 Spot ~`$16/hr`) 약 `$3,456`/월, Langfuse + AMP/AMG 약 `$200`/월을 더하면 약 `$3,879`/월이다. GLM-5를 상시 운영하는 약 `$11,520`/월과 비교하면 **약 66% 절감**이다[^2].
 
 이 표를 그대로 예산 계획으로 옮기면 안 된다. 비중(50/30/15/5)이 곧 라우팅 정확도이고, 분류가 틀리면 절감분이 재시도로 새어 나간다. 그래서 다음 두 절이 필요하다.
 
@@ -364,7 +372,11 @@ router_settings:
 
 시맨틱 캐시는 "중복 LLM 호출 자체를 제거"하고, KV 캐시는 "호출은 하되 연산을 줄인다"는 점이 다르다. 그래서 시맨틱 캐시는 그 아래 계층과 독립적으로 조합된다.
 
-여기서 자주 오해되는 제품이 Kong이다. Kong AI Gateway의 `ai-semantic-cache` 플러그인이 하는 일은 "의미가 비슷한 요청이면 앞선 응답을 그대로 돌려준다"이고, 이는 호출 자체를 줄이는 응답 캐시 계층에 속한다[^1]. 반면 "어느 Pod에 prefix KV 캐시가 살아 있는지"를 보고 스케줄하는 일은 별개 계층이다. Kong의 부하 분산(consistent-hash, lowest-latency 등)은 프로바이더·모델 단위에서 동작하며, Envoy 기반이 아니라 GIE/ext-proc/InferencePool 계열 구현을 갖지 않는다. 그래서 KV-aware 스케줄링이 필요하면 Kong은 엣지(L1)에 남기고 L2는 EPP·HyperPod·Dynamo 쪽에 맡기는 구성이 자연스럽다. 저장소 위치도 짚어 둘 만하다. Kong은 자체 임베딩을 내장하지 않고 Redis·Valkey·PGVector 같은 외부 저장소에 연결하며, 임베딩 생성도 OpenAI·Bedrock 같은 외부 API 호출로 처리한다[^1].
+여기서 자주 오해되는 제품이 Kong이다. Kong AI Gateway의 `ai-semantic-cache` 플러그인이 하는 일은 "의미가 비슷한 요청이면 앞선 응답을 그대로 돌려준다"이고, 이는 호출 자체를 줄이는 응답 캐시 계층에 속한다[^1]. 반면 "어느 Pod에 prefix KV 캐시가 살아 있는지"를 보고 스케줄하는 일은 별개 계층이다.
+
+Kong의 부하 분산(consistent-hash, lowest-latency 등)은 프로바이더·모델 단위에서 동작하며, Envoy 기반이 아니라 GIE/ext-proc/InferencePool 계열 구현을 갖지 않는다. 그래서 KV-aware 스케줄링이 필요하면 Kong은 엣지(L1)에 남기고 L2는 EPP·HyperPod·Dynamo 쪽에 맡기는 구성이 자연스럽다. 저장소 위치도 짚어 둘 만하다.
+
+Kong은 자체 임베딩을 내장하지 않고 Redis·Valkey·PGVector 같은 외부 저장소에 연결하며, 임베딩 생성도 OpenAI·Bedrock 같은 외부 API 호출로 처리한다[^1].
 
 ### 5.2 임계값과 캐시 키
 
@@ -430,7 +442,9 @@ router_settings:
 
 ## 실무 적용: 단계적 도입과 품질·비용 가드레일
 
-지금까지는 개념이었다. 여기서부터는 Azure/Kubernetes 기반 사내 AI 플랫폼(자체 vLLM과 외부 프로바이더를 함께 쓰고, 요청은 단일 게이트웨이 엔드포인트로 들어오는 구성)을 운영하는 관점의 도입 절차다. Azure에는 대응 개념이 있다. 시맨틱 캐시의 벡터 저장소는 Azure Managed Redis를, 사내 인증·정책 계층은 Azure API Management를 게이트웨이 앞에 붙이는 식이다. 다만 L2(KV-aware Pod 선택)는 vLLM 곁에 있어야 하므로 Azure Kubernetes Service의 추론 Pod 계층에서 EPP 계열로 처리한다.
+지금까지는 개념이었다. 여기서부터는 Azure/Kubernetes 기반 사내 AI 플랫폼(자체 vLLM과 외부 프로바이더를 함께 쓰고, 요청은 단일 게이트웨이 엔드포인트로 들어오는 구성)을 운영하는 관점의 도입 절차다. Azure에는 대응 개념이 있다.
+
+시맨틱 캐시의 벡터 저장소는 Azure Managed Redis를, 사내 인증·정책 계층은 Azure API Management를 게이트웨이 앞에 붙이는 식이다. 다만 L2(KV-aware Pod 선택)는 vLLM 곁에 있어야 하므로 Azure Kubernetes Service의 추론 Pod 계층에서 EPP 계열로 처리한다.
 
 ### A. 도입 단계표
 

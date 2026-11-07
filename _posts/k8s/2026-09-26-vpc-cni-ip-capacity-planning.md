@@ -35,7 +35,9 @@ last_modified_at: 2026-11-07
 
 **이런 분께** — EKS에서 파드가 `ContainerCreating`에 머물거나 서브넷 주소가 모자랐던 경험이 있는 운영자. 처음 읽을 때는 3절 계산부터 보고, 1절 데이터패스는 구조가 궁금할 때 되돌아와 읽어도 된다.
 
-EKS 클러스터에서 "파드가 안 뜬다"는 문의는 대개 스케줄링 문제로 접수되지만, 실제로 열어 보면 절반은 IP 문제다. 노드에는 CPU와 메모리가 남아 있고 스케줄러도 파드를 배정했는데, 파드는 `ContainerCreating`에서 멈춰 있다. 원인은 노드 한 대가 미리 잡아 둔 주소 풀이 바닥났거나, 그 노드가 속한 서브넷에 가용 주소가 남아 있지 않은 경우다. VPC CNI를 "설치되는 애드온" 정도로만 이해하고 있으면 이 지점에서 판단할 근거가 없다. 이 글은 공개된 EKS 운영 매뉴얼(Engineering Playbook)의 네트워킹 문서 세 편을 읽고, 사내 AI 플랫폼 클러스터의 IP 압박을 기준으로 다시 정리한 기록이다[^1][^2][^3]. 데이터패스가 어떻게 생겼는지 → ipamd가 풀을 어떻게 유지하는지 → 그래서 노드당 몇 개를 계산해야 하는지 → 어디서 함정이 생기는지 순서로 훑는다.
+EKS 클러스터에서 "파드가 안 뜬다"는 문의는 대개 스케줄링 문제로 접수되지만, 실제로 열어 보면 절반은 IP 문제다. 노드에는 CPU와 메모리가 남아 있고 스케줄러도 파드를 배정했는데, 파드는 `ContainerCreating`에서 멈춰 있다. 원인은 노드 한 대가 미리 잡아 둔 주소 풀이 바닥났거나, 그 노드가 속한 서브넷에 가용 주소가 남아 있지 않은 경우다.
+
+VPC CNI를 "설치되는 애드온" 정도로만 이해하고 있으면 이 지점에서 판단할 근거가 없다. 이 글은 공개된 EKS 운영 매뉴얼(Engineering Playbook)의 네트워킹 문서 세 편을 읽고, 사내 AI 플랫폼 클러스터의 IP 압박을 기준으로 다시 정리한 기록이다[^1][^2][^3]. 데이터패스가 어떻게 생겼는지 → ipamd가 풀을 어떻게 유지하는지 → 그래서 노드당 몇 개를 계산해야 하는지 → 어디서 함정이 생기는지 순서로 훑는다.
 
 ---
 
@@ -50,7 +52,9 @@ VPC CNI를 하나의 바이너리로 생각하면 동작을 설명할 수 없다
 
 파드가 생성될 때 CNI 바이너리는 로컬 ipamd에 gRPC로 주소를 요청하고, ipamd는 이미 확보해 둔 여유분(warm pool)에서 즉시 하나를 돌려준다. EC2 API를 부르는 작업(ENI 생성, 보조 IP 할당)은 파드 생성 경로에서 분리되어 백그라운드에서 진행된다. 파드 기동 시간이 EC2 API 응답 속도에 묶이지 않는 이유가 이 분리 구조다[^1].
 
-기본 secondary-IP 모드에서 노드가 담을 수 있는 파드 주소는 인스턴스 타입의 ENI 개수와 ENI당 보조 IP 개수로 결정된다. ENI 4개에 ENI당 IP 15개인 타입이라면 ENI마다 primary IP 하나는 노드 자신이 쓰므로, 파드에 돌아갈 주소는 `4 × (15 - 1) = 56`개다. 여기서 흔히 오해하는 지점이 있다. 공개된 `max-pods` 권장 계산식의 `+ 2`는 파드 IP를 따로 소비하지 않는 `hostNetwork` 파드를 위한 몫이다. 따라서 계산 결과 58은 "파드 수 설정값"이고 파드 IP 58개가 아니다. 실제로 담기는 파드 수는 kubelet 설정과 워크로드의 리소스 요구량에 따라서도 달라진다[^1].
+기본 secondary-IP 모드에서 노드가 담을 수 있는 파드 주소는 인스턴스 타입의 ENI 개수와 ENI당 보조 IP 개수로 결정된다. ENI 4개에 ENI당 IP 15개인 타입이라면 ENI마다 primary IP 하나는 노드 자신이 쓰므로, 파드에 돌아갈 주소는 `4 × (15 - 1) = 56`개다. 여기서 흔히 오해하는 지점이 있다.
+
+공개된 `max-pods` 권장 계산식의 `+ 2`는 파드 IP를 따로 소비하지 않는 `hostNetwork` 파드를 위한 몫이다. 따라서 계산 결과 58은 "파드 수 설정값"이고 파드 IP 58개가 아니다. 실제로 담기는 파드 수는 kubelet 설정과 워크로드의 리소스 요구량에 따라서도 달라진다[^1].
 
 ### 1.1 L3 라우티드 모드: 브리지가 없는 데이터패스
 
@@ -120,7 +124,9 @@ VPC CNI v1.14.0부터 Kubernetes NetworkPolicy를 네이티브로 지원하며, 
 | `WARM_IP_TARGET` | 없음 | 여유 주소 개수를 직접 지정한다. `WARM_ENI_TARGET`을 덮어쓴다 |
 | `MINIMUM_IP_TARGET` | 없음 | 노드가 항상 보유할 주소의 하한(floor). 기동 직후 파드가 몰려 뜨는 상황을 대비한 pre-scaling 용도다 |
 
-`WARM_ENI_TARGET=1`은 숫자만 보면 과해 보이지만 의도된 기본값이다. ENI 하나를 붙이는 데 최대 10초가 걸리므로, 파드가 갑자기 늘어나는 시점에 ENI attach 경로로 들어가면 그 노드의 파드 기동이 한꺼번에 밀린다[^1]. 반대로 `WARM_IP_TARGET`을 너무 작게 잡으면 파드 생성·삭제(churn)마다 개별 주소를 EC2 API로 붙였다 떼게 되고, 이 호출이 스로틀링에 걸리면 해당 노드가 아니라 **클러스터 전체의 ENI·IP 할당이 막힌다**. 공개 문서가 대규모·high churn 환경에서 `WARM_IP_TARGET` 단독 사용을 자제하라고 적어 둔 이유가 여기 있다[^2].
+`WARM_ENI_TARGET=1`은 숫자만 보면 과해 보이지만 의도된 기본값이다. ENI 하나를 붙이는 데 최대 10초가 걸리므로, 파드가 갑자기 늘어나는 시점에 ENI attach 경로로 들어가면 그 노드의 파드 기동이 한꺼번에 밀린다[^1]. 반대로 `WARM_IP_TARGET`을 너무 작게 잡으면 파드 생성·삭제(churn)마다 개별 주소를 EC2 API로 붙였다 떼게 되고, 이 호출이 스로틀링에 걸리면 해당 노드가 아니라 **클러스터 전체의 ENI·IP 할당이 막힌다**.
+
+공개 문서가 대규모·high churn 환경에서 `WARM_IP_TARGET` 단독 사용을 자제하라고 적어 둔 이유가 여기 있다[^2].
 
 `MINIMUM_IP_TARGET`은 반드시 `WARM_IP_TARGET`과 함께 쓴다. 하한만 설정하면 `WARM_IP_TARGET`이 0으로 간주되어, 최소치를 채운 뒤에는 여유 주소가 하나도 남지 않는 상태가 될 수 있다[^1][^2].
 
@@ -135,9 +141,15 @@ VPC CNI v1.14.0부터 Kubernetes NetworkPolicy를 네이티브로 지원하며, 
 
 ### 2.3 IP 쿨다운과 비강제 축소
 
-파드가 사라지면 그 주소는 곧바로 재사용 가능 상태가 되지 않고 **쿨다운**을 거친다. 기본값은 30초이고 `IP_COOLDOWN_PERIOD`(v1.15.0+)로 조정한다. 쿨다운이 필요한 이유는 Kubernetes의 비동기성이다. 파드가 삭제돼도 각 노드의 kube-proxy 규칙에서 그 주소가 빠지기까지 시간이 걸리는데, 쿨다운 없이 새 파드에 즉시 재할당하면 아직 갱신되지 않은 규칙을 타고 이전 Service의 트래픽이 새 파드로 흘러들 수 있다. 0으로 설정하는 것이 지원되긴 하지만 공식 문서가 강하게 비권장한다. 반대로 너무 크게 잡으면 가용 주소가 쿨다운에 묶여 EC2 API 호출이 늘어난다. 파드 churn이 큰 워크로드에서는 초당 파드 삭제율 × 쿨다운 기간만큼의 주소가 상시 쿨다운 상태에 있다는 점을 워밍 풀 산정에 넣어야 한다[^1][^2].
+파드가 사라지면 그 주소는 곧바로 재사용 가능 상태가 되지 않고 **쿨다운**을 거친다. 기본값은 30초이고 `IP_COOLDOWN_PERIOD`(v1.15.0+)로 조정한다. 쿨다운이 필요한 이유는 Kubernetes의 비동기성이다.
 
-풀을 줄이는 경로에도 안전장치가 있다. ipamd는 30초 주기로 초과분 주소와 ENI를 반납하려 시도하지만, 이 축소는 **비강제(non-force) 삭제**만 한다. 데이터스토어에서 주소를 지울 때 그 주소가 파드에 물려 있으면 삭제가 거부된다. 강제로 지우는 경우는 EC2 API로 그 보조 주소가 이미 인스턴스에서 떨어져 나간 것을 재확인한 reconcile 단계뿐이다[^1]. 그래서 warm 타깃을 줄이거나 노드를 축소해도 실행 중인 파드의 연결이 IPAM 때문에 끊기는 일은 없다. 반납 대상은 언제나 아직 배정되지 않은 여유분이다.
+파드가 삭제돼도 각 노드의 kube-proxy 규칙에서 그 주소가 빠지기까지 시간이 걸리는데, 쿨다운 없이 새 파드에 즉시 재할당하면 아직 갱신되지 않은 규칙을 타고 이전 Service의 트래픽이 새 파드로 흘러들 수 있다. 0으로 설정하는 것이 지원되긴 하지만 공식 문서가 강하게 비권장한다. 반대로 너무 크게 잡으면 가용 주소가 쿨다운에 묶여 EC2 API 호출이 늘어난다.
+
+파드 churn이 큰 워크로드에서는 초당 파드 삭제율 × 쿨다운 기간만큼의 주소가 상시 쿨다운 상태에 있다는 점을 워밍 풀 산정에 넣어야 한다[^1][^2].
+
+풀을 줄이는 경로에도 안전장치가 있다. ipamd는 30초 주기로 초과분 주소와 ENI를 반납하려 시도하지만, 이 축소는 **비강제(non-force) 삭제**만 한다. 데이터스토어에서 주소를 지울 때 그 주소가 파드에 물려 있으면 삭제가 거부된다.
+
+강제로 지우는 경우는 EC2 API로 그 보조 주소가 이미 인스턴스에서 떨어져 나간 것을 재확인한 reconcile 단계뿐이다[^1]. 그래서 warm 타깃을 줄이거나 노드를 축소해도 실행 중인 파드의 연결이 IPAM 때문에 끊기는 일은 없다. 반납 대상은 언제나 아직 배정되지 않은 여유분이다.
 
 ### 2.4 관측 지점
 
@@ -188,7 +200,9 @@ P = hostNetwork 파드와 SGP 파드를 뺀, 나머지 파드가 실제로 쓰�
 | 8xlarge | 48 × 33 + 13 × 32 = 2,000 | 61 | 2,122 | 122 |
 | 24xlarge | 20 × 100 = 2,000 | 20 | 2,040 | 40 |
 
-같은 파드 수인데도 노드가 많아질수록 warm IP와 ENI primary 주소라는 고정비가 노드마다 붙어 총소비가 커진다. 배치가 달라지면 minimum 타깃에 묶여 남는 유휴량도 달라진다. 예를 들어 60대에 33개씩, 마지막 한 대에 20개를 배치하면 마지막 노드의 풀은 최소 33개를 유지하므로 파드 풀 합계는 2,133개가 된다. 이 비교는 크기별로 타깃을 다르게 둔 가정이라는 점도 짚어 둔다. 실제로는 하나의 `aws-node` DaemonSet에 공통 환경 변수가 적용되므로 크기별로 다른 warm 타깃을 줄 수 없다[^2].
+같은 파드 수인데도 노드가 많아질수록 warm IP와 ENI primary 주소라는 고정비가 노드마다 붙어 총소비가 커진다. 배치가 달라지면 minimum 타깃에 묶여 남는 유휴량도 달라진다. 예를 들어 60대에 33개씩, 마지막 한 대에 20개를 배치하면 마지막 노드의 풀은 최소 33개를 유지하므로 파드 풀 합계는 2,133개가 된다.
+
+이 비교는 크기별로 타깃을 다르게 둔 가정이라는 점도 짚어 둔다. 실제로는 하나의 `aws-node` DaemonSet에 공통 환경 변수가 적용되므로 크기별로 다른 warm 타깃을 줄 수 없다[^2].
 
 ### 3.3 NAU는 서브넷과 다른 카운터다
 
@@ -222,9 +236,13 @@ MINIMUM_IP_TARGET − 그 크기의 노드당 파드 수 = 노드 1대의 유휴
 
 ### 4.2 Security Groups for Pods는 별도 주소를 쓴다
 
-`ENABLE_POD_ENI=true`를 켜면 `SecurityGroupPolicy`에 걸린 파드가 branch ENI의 primary 주소를 하나씩 받는다. 컨트롤 플레인의 VPC Resource Controller가 노드에 **trunk ENI**(`aws-k8s-trunk-eni`)를 붙이고, 정책에 매칭된 파드마다 **branch ENI**(`aws-k8s-branch-eni`)를 만들어 trunk에 연결하는 구조다. 이 파드들은 앞 절의 보조 주소 풀을 쓰지 않고 branch ENI라는 별도 경로로 주소를 받는다. 그래서 branch ENI 수용량은 보조 IP 한도와 따로 계산해야 한다[^1][^2].
+`ENABLE_POD_ENI=true`를 켜면 `SecurityGroupPolicy`에 걸린 파드가 branch ENI의 primary 주소를 하나씩 받는다. 컨트롤 플레인의 VPC Resource Controller가 노드에 **trunk ENI**(`aws-k8s-trunk-eni`)를 붙이고, 정책에 매칭된 파드마다 **branch ENI**(`aws-k8s-branch-eni`)를 만들어 trunk에 연결하는 구조다. 이 파드들은 앞 절의 보조 주소 풀을 쓰지 않고 branch ENI라는 별도 경로로 주소를 받는다.
 
-branch ENI 한도는 인스턴스 타입마다 고정돼 있다. 공개된 vpc-resource-controller 한도에는 c5.4xlarge의 경우 ENI 8개, ENI당 IPv4 30개, branch ENI 54개가 적혀 있다. ENI당 primary IP 하나를 빼면 계산상 secondary 주소 상한은 `8 × (30 − 1) = 232`이고, CNI README의 `234 secondary IPs` 예시와 어긋나므로 둘 중 하나를 용량 보장값으로 그대로 쓰면 안 된다. 실제 파드 한도를 확정하려면 인터페이스를 다른 용도로 쓰는 몫(trunk ENI, 커스텀 네트워킹)과 CNI 버전, kubelet `maxPods`를 함께 봐야 한다[^2].
+그래서 branch ENI 수용량은 보조 IP 한도와 따로 계산해야 한다[^1][^2].
+
+branch ENI 한도는 인스턴스 타입마다 고정돼 있다. 공개된 vpc-resource-controller 한도에는 c5.4xlarge의 경우 ENI 8개, ENI당 IPv4 30개, branch ENI 54개가 적혀 있다. ENI당 primary IP 하나를 빼면 계산상 secondary 주소 상한은 `8 × (30 − 1) = 232`이고, CNI README의 `234 secondary IPs` 예시와 어긋나므로 둘 중 하나를 용량 보장값으로 그대로 쓰면 안 된다.
+
+실제 파드 한도를 확정하려면 인터페이스를 다른 용도로 쓰는 몫(trunk ENI, 커스텀 네트워킹)과 CNI 버전, kubelet `maxPods`를 함께 봐야 한다[^2].
 
 SGP 비중이 높은 클러스터에서 IP 계획을 어렵게 만드는 특성은 세 가지다.
 
@@ -234,9 +252,13 @@ SGP 비중이 높은 클러스터에서 IP 계획을 어렵게 만드는 특성�
 
 ### 4.3 EKS Auto Mode에서는 변수 자체가 없다
 
-EKS Auto Mode 클러스터는 노드 네트워킹(ENI 수명주기 포함)을 AWS가 관리하므로 `WARM_*`이나 `MINIMUM_IP_TARGET` 같은 환경 변수가 없다. 대신 NodeClass가 IP 할당을 조절한다. `advancedNetworking.ipv4PrefixSize`는 기본값 `Auto`(프리픽스 위임, 노드마다 /28을 먼저 잡고 부족하면 추가)와 `"32"`(secondary IP 모드, 파드당 1개, 여유 주소는 1개만 유지) 중 하나이고, `advancedNetworking.networkInterfaces`의 `secondaryIPv4Count`·`secondaryIPv4PrefixCount`는 런치 시점에 ENI별 주소 수를 고정하므로 이후에는 주소·프리픽스·ENI가 늘지 않는다. 파드 서브넷은 `podSubnetSelectorTerms`로 노드와 분리한다[^2].
+EKS Auto Mode 클러스터는 노드 네트워킹(ENI 수명주기 포함)을 AWS가 관리하므로 `WARM_*`이나 `MINIMUM_IP_TARGET` 같은 환경 변수가 없다. 대신 NodeClass가 IP 할당을 조절한다. `advancedNetworking.ipv4PrefixSize`는 기본값 `Auto`(프리픽스 위임, 노드마다 /28을 먼저 잡고 부족하면 추가)와 `"32"`(secondary IP 모드, 파드당 1개, 여유 주소는 1개만 유지) 중 하나이고, `advancedNetworking.networkInterfaces`의 `secondaryIPv4Count`·`secondaryIPv4PrefixCount`는 런치 시점에 ENI별 주소 수를 고정하므로 이후에는 주소·프리픽스·ENI가 늘지 않는다.
 
-Auto Mode에서 SGP는 지원되지 않는다. `podSubnetSelectorTerms`와 `podSecurityGroupSelectorTerms`는 함께 설정하고, 같은 NodeClass를 쓰는 노드의 모든 파드가 같은 파드 보안 그룹을 공유한다. 파드별 `SecurityGroupPolicy`와는 적용 범위가 다르므로, 정책을 달리 가져가야 하는 워크로드는 별도 NodeClass·NodePool과 배치 조건으로 갈라 놓는다. 노드 하나에 담기는 파드 수는 세 값 중 가장 작은 것으로 정해진다. 사용자가 지정한 `maxPods`, 그 인스턴스가 낼 수 있는 IP 용량, 그리고 Auto Mode가 두는 110이라는 상한이다. 노드 밀도가 낮은 Auto Mode에서는 `ipv4PrefixSize: "32"`로 프리픽스 최소 예약량을 줄일 수 있다[^2].
+파드 서브넷은 `podSubnetSelectorTerms`로 노드와 분리한다[^2].
+
+Auto Mode에서 SGP는 지원되지 않는다. `podSubnetSelectorTerms`와 `podSecurityGroupSelectorTerms`는 함께 설정하고, 같은 NodeClass를 쓰는 노드의 모든 파드가 같은 파드 보안 그룹을 공유한다. 파드별 `SecurityGroupPolicy`와는 적용 범위가 다르므로, 정책을 달리 가져가야 하는 워크로드는 별도 NodeClass·NodePool과 배치 조건으로 갈라 놓는다.
+
+노드 하나에 담기는 파드 수는 세 값 중 가장 작은 것으로 정해진다. 사용자가 지정한 `maxPods`, 그 인스턴스가 낼 수 있는 IP 용량, 그리고 Auto Mode가 두는 110이라는 상한이다. 노드 밀도가 낮은 Auto Mode에서는 `ipv4PrefixSize: "32"`로 프리픽스 최소 예약량을 줄일 수 있다[^2].
 
 ---
 
@@ -255,7 +277,9 @@ Auto Mode에서 SGP는 지원되지 않는다. `podSubnetSelectorTerms`와 `podS
 
 VPC 쪽 쿼터도 같은 표에서 확인한다. 한 VPC에 붙일 수 있는 IPv4 CIDR 블록은 기본 5개(최대 50개), 서브넷 수는 기본 200개이므로 모자라면 상향을 요청한다. 참고로 eksctl이 만드는 기본 VPC는 `192.168.0.0/16`을 /19 서브넷 8개로 쪼개고, 서브넷마다 주소 8,192개가 들어간다[^2].
 
-warm 타깃을 계속 만지고 애드온 설정이 틀어지는지 감시하는 대신, 노드 네트워킹 운영 자체를 넘기는 선택지도 있다. IP가 자주 마르는 워크로드를 Auto Mode NodePool로 옮기면 예약 단위를 `ipv4PrefixSize`로 고르는 것 외에는 ENI 수명주기와 CNI 업데이트를 AWS가 가져간다. 그 대가로 SGP를 못 쓰고, 노드당 파드가 110개로 묶이고, warm 타깃을 세밀하게 조정할 수 없다. 한 클러스터 안에서 Auto Mode 노드와 직접 관리하는 노드를 섞어 워크로드별로 갈라 두는 것도 가능하다[^2].
+warm 타깃을 계속 만지고 애드온 설정이 틀어지는지 감시하는 대신, 노드 네트워킹 운영 자체를 넘기는 선택지도 있다. IP가 자주 마르는 워크로드를 Auto Mode NodePool로 옮기면 예약 단위를 `ipv4PrefixSize`로 고르는 것 외에는 ENI 수명주기와 CNI 업데이트를 AWS가 가져간다. 그 대가로 SGP를 못 쓰고, 노드당 파드가 110개로 묶이고, warm 타깃을 세밀하게 조정할 수 없다.
+
+한 클러스터 안에서 Auto Mode 노드와 직접 관리하는 노드를 섞어 워크로드별로 갈라 두는 것도 가능하다[^2].
 
 ### 5.2 Karpenter는 IP 예산을 능동적으로 관리하지 않는다
 
@@ -393,7 +417,9 @@ sudo insmod ena.ko enable_frag_bypass=1
 
 EKS 노드에서 이 값을 영구 적용할 때는 노드 OS를 직접 고치지 않고 부트스트랩 계층에서 넣는다. 관리형 노드그룹·self-managed는 launch template user data 또는 Bottlerocket의 `[settings.kernel.sysctl]`, 파드 단위는 `securityContext.sysctls`(namespaced), 노드 전역은 부팅 시 도는 node-tuning DaemonSet을 쓴다. `net.core.*`나 `net.ipv4.tcp_*` 같은 노드 전역 파라미터는 파드 `securityContext`로는 못 넣는다는 점을 기억한다[^3].
 
-성능 신호는 두 갈래로 본다. ENA 드라이버가 노출하는 ethtool 메트릭(`bw_in/out_allowance_exceeded`, `pps_allowance_exceeded`, `conntrack_allowance_exceeded`, `conntrack_allowance_available`)이 0이 아니면 해당 allowance가 한계에 닿았다는 뜻이다. EKS Node Monitoring Agent는 `BandwidthInExceeded`·`BandwidthOutExceeded`·`PPSExceeded`·`ConntrackExceeded`·`LinkLocalExceeded`·`NetworkSysctl` 같은 노드 이벤트로 한계 초과를 알린다. 이들은 Event 심각도라 Auto Repair를 트리거하지 않으므로 노드 자동 교체로 해결되지 않는다. 반복된다면 인스턴스 타입 상향이나 워크로드 분산 같은 설계 대응이 필요하다[^3].
+성능 신호는 두 갈래로 본다. ENA 드라이버가 노출하는 ethtool 메트릭(`bw_in/out_allowance_exceeded`, `pps_allowance_exceeded`, `conntrack_allowance_exceeded`, `conntrack_allowance_available`)이 0이 아니면 해당 allowance가 한계에 닿았다는 뜻이다. EKS Node Monitoring Agent는 `BandwidthInExceeded`·`BandwidthOutExceeded`·`PPSExceeded`·`ConntrackExceeded`·`LinkLocalExceeded`·`NetworkSysctl` 같은 노드 이벤트로 한계 초과를 알린다.
+
+이들은 Event 심각도라 Auto Repair를 트리거하지 않으므로 노드 자동 교체로 해결되지 않는다. 반복된다면 인스턴스 타입 상향이나 워크로드 분산 같은 설계 대응이 필요하다[^3].
 
 ---
 
@@ -452,7 +478,9 @@ aws eks update-addon --cluster-name my-cluster --addon-name vpc-cni \
 | 5 | warm 타깃을 애드온 configuration으로 반영 | `describe-addon`의 `configurationValues`와 실제 DaemonSet 비교 |
 | 6 | 서브넷 사용률·NAU 지표 재확인 | 80% 아래로 회복 |
 
-warm 타깃을 바꿀 때는 현재 `configurationValues`와 실제 `aws-node` 설정을 먼저 저장하고, 설치된 애드온 버전의 schema를 확인한 뒤, 기존 설정 **전체**에 새 값을 병합한 파일을 검토한다. `kubectl set env`로 바꾼 값이 애드온 업데이트 뒤에도 남는지는 충돌 처리 방식에 따라 다르다. `PRESERVE`는 기존 수정을 보존할 수 있고 `OVERWRITE`는 관리 대상 필드를 덮어쓴다. 애드온 API를 써도 새 `configuration-values`에서 빠진 기존 고급 설정은 기본값으로 돌아갈 수 있으므로, `PRESERVE`를 썼다고 해서 요청한 새 값이 모두 반영됐다고 단정하면 안 된다. 업데이트 후에는 반환된 업데이트 ID로 `describe-update`의 `Successful` 여부와 `describe-addon`의 상태·health issue·`configurationValues`를 확인한다[^2].
+warm 타깃을 바꿀 때는 현재 `configurationValues`와 실제 `aws-node` 설정을 먼저 저장하고, 설치된 애드온 버전의 schema를 확인한 뒤, 기존 설정 **전체**에 새 값을 병합한 파일을 검토한다. `kubectl set env`로 바꾼 값이 애드온 업데이트 뒤에도 남는지는 충돌 처리 방식에 따라 다르다. `PRESERVE`는 기존 수정을 보존할 수 있고 `OVERWRITE`는 관리 대상 필드를 덮어쓴다.
+
+애드온 API를 써도 새 `configuration-values`에서 빠진 기존 고급 설정은 기본값으로 돌아갈 수 있으므로, `PRESERVE`를 썼다고 해서 요청한 새 값이 모두 반영됐다고 단정하면 안 된다. 업데이트 후에는 반환된 업데이트 ID로 `describe-update`의 `Successful` 여부와 `describe-addon`의 상태·health issue·`configurationValues`를 확인한다[^2].
 
 ### 모니터링 지표
 

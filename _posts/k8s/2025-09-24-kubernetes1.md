@@ -22,7 +22,7 @@ last_modified_at: 2026-10-08
 3. **스토리지 영속성(Persistence)**: 컨테이너가 예기치 않게 종료되거나 재스케줄링되어도 데이터베이스와 로그의 데이터를 유실 없이 보존할 수 있는 추상화는 무엇인가?
 4. **클라우드 인프라 거버넌스**: 복잡한 etcd와 컨트롤 플레인의 고가용성을 유지하기 위해 관리형 쿠버네티스(EKS, GKE, AKS)를 어떻게 평가하고 채택할 것인가?
 
-이 글에서는 Docker Compose의 선언적 메커니즘부터, 쿠버네티스 Ingress Controller의 트래픽 라우팅 원리, CSI(Container Storage Interface) 기반의 동적 스토리지 프로비저닝, 그리고 AWS EKS와 GCP GKE의 핵심 아키텍처 차이점을 심층 분석한다.
+이 글에서는 Docker Compose의 선언적 메커니즘과 쿠버네티스 Ingress Controller의 트래픽 라우팅 원리를 다룬다. 이어서 CSI(Container Storage Interface) 기반의 동적 스토리지 프로비저닝을 설명한다. 마지막으로 AWS EKS와 GCP GKE의 핵심 아키텍처 차이점을 심층 분석한다.
 
 ---
 
@@ -95,7 +95,7 @@ L4 Service vs. L7 Ingress 트래픽 라우팅:
   * 장점: 단일 엔트리포인트에서 SSL/TLS 종단, 호스트/경로 기반 라우팅, Rate Limiting을 함께 처리.
 ```
 
-공식 문서의 Ingress 개념도는 클라이언트 요청이 Ingress가 관리하는 로드밸런서를 거쳐 Ingress 규칙에 따라 Service, 다시 Pod로 전달되는 단일 진입 경로를 도식으로 보여준다.
+공식 문서의 Ingress 개념도는 클라이언트 요청이 Ingress가 관리하는 로드밸런서를 거치는 단일 진입 경로를 도식으로 보여준다. 요청은 Ingress 규칙에 따라 Service, 다시 Pod로 전달된다.
 
 ![클라이언트 → Ingress 관리 로드밸런서 → Ingress → 라우팅 규칙 → Service → Pod로 이어지는 단일 진입 경로](/assets/images/k8s/official-kubernetes1.webp)
 
@@ -103,7 +103,7 @@ L4 Service vs. L7 Ingress 트래픽 라우팅:
 
 ### 2.1 Ingress 리소스 vs. Ingress Controller
 
-쿠버네티스에서 `Ingress`는 단순한 **선언적 라우팅 규칙(Rule)**을 담은 매니페스트일 뿐이다[^2]. 이 규칙을 실제로 읽어 트래픽을 처리하는 **Ingress Controller**(Nginx Ingress, Traefik, Envoy 기반 Gateway API, AWS Load Balancer Controller)가 클러스터에 배포되어 있어야 한다.
+쿠버네티스에서 `Ingress`는 단순한 **선언적 라우팅 규칙(Rule)**을 담은 매니페스트일 뿐이다[^2]. 이 규칙을 실제로 읽어 트래픽을 처리하는 주체가 **Ingress Controller**다. Nginx Ingress, Traefik, Envoy 기반 Gateway API, AWS Load Balancer Controller 같은 구현을 클러스터에 배포해야 한다.
 
 ```yaml
 apiVersion: networking.k8s.io/v1
@@ -139,7 +139,7 @@ spec:
 
 ## 3. 상태 데이터의 영속성: PV, PVC, StorageClass 및 CSI
 
-컨테이너가 크래시되거나 노드에서 축출(Evicted)되어 다른 노드로 이동할 때, 컨테이너 내부의 파일 시스템(`emptyDir`)에 저장된 데이터는 영구 소실된다. 상태 저장(Stateful) 애플리케이션(PostgreSQL, Redis, Elasticsearch)을 운영하기 위해 쿠버네티스는 인프라 스토리지와 애플리케이션 요구를 분리하는 **3단계 스토리지 추상화**를 제공한다.
+컨테이너가 크래시되거나 노드에서 축출(Evicted)되어 다른 노드로 이동할 때, 컨테이너 내부의 파일 시스템(`emptyDir`)에 저장된 데이터는 영구 소실된다. 상태 저장(Stateful) 애플리케이션(PostgreSQL, Redis, Elasticsearch)을 운영하려면 인프라 스토리지와 애플리케이션 요구를 분리해야 한다. 쿠버네티스는 이를 위한 **3단계 스토리지 추상화**를 제공한다.
 
 ```
 스토리지 프로비저닝 수명주기:
@@ -164,9 +164,9 @@ spec:
 
 ### 3.2 Dynamic Provisioning과 CSI(Container Storage Interface)
 
-과거 쿠버네티스는 클라우드 벤더별 스토리지 드라이버 코드가 쿠버네티스 코어 바이너리(`in-tree`)에 내장되어, 드라이버 하나를 고치려 해도 코어 릴리스 주기를 함께 따라야 하는 유지보수 부담이 있었다. 현대 아키텍처는 이를 표준 gRPC 스펙인 **CSI(Container Storage Interface)** 플러그인(`out-of-tree`)으로 완전히 분리했다.
+과거 쿠버네티스는 클라우드 벤더별 스토리지 드라이버 코드를 코어 바이너리(`in-tree`)에 내장했다. 그래서 드라이버 하나를 고치려 해도 코어 릴리스 주기를 함께 따라야 하는 유지보수 부담이 있었다. 현대 아키텍처는 이를 표준 gRPC 스펙인 **CSI(Container Storage Interface)** 플러그인(`out-of-tree`)으로 완전히 분리했다.
 
-`StorageClass`를 선언해 두면, 개발자가 PVC를 생성하는 순간 CSI 컨트롤러가 클라우드 API(AWS `CreateVolume`)를 비동기 호출하여 실제 EBS 볼륨을 생성하고 이를 PV로 자동 등록한다.
+`StorageClass`를 선언해 두면 개발자는 PVC만 만들면 된다. CSI 컨트롤러가 클라우드 API(AWS `CreateVolume`)를 비동기 호출해 실제 EBS 볼륨을 생성하고, 이를 PV로 자동 등록한다.
 
 ### 3.3 Access Modes와 Reclaim Policy 트레이드오프
 
@@ -208,7 +208,7 @@ spec:
 └─────────────────┴─────────────────────────────────┴─────────────────────────────────┘
 ```
 
-표의 SLA 수치는 각 벤더가 공개한 SLA 문서 기준이다. EKS의 99.95%는 Standard 컨트롤 플레인의 월간 업타임 약속이고[^5], GKE의 99.95%는 리전 클러스터 컨트롤 플레인 기준이며 단일 존(zonal) 클러스터에는 99.5%가 적용된다[^6]. 두 수치 모두 벤더의 서비스 약속이므로, 실제 관측 가용성은 클러스터 구성·리전·워크로드에 따라 달라질 수 있다.
+표의 SLA 수치는 각 벤더가 공개한 SLA 문서 기준이다. EKS의 99.95%는 Standard 컨트롤 플레인의 월간 업타임 약속이다[^5]. GKE의 99.95%는 리전 클러스터 컨트롤 플레인 기준이며, 단일 존(zonal) 클러스터에는 99.5%가 적용된다[^6]. 두 수치 모두 벤더의 서비스 약속이므로, 실제 관측 가용성은 클러스터 구성·리전·워크로드에 따라 달라질 수 있다.
 
 1. **Amazon EKS 아키텍처 특성**:
    - **AWS VPC CNI**: 모든 파드가 오버레이 네트워크를 거치지 않고 실제 AWS VPC 서브넷의 보조 ENI IP를 직접 할당받는다. VPC 내부의 다른 RDS나 EC2와 네이티브 통신이 가능하지만, 서브넷 IP 고갈(IP Exhaustion) 문제에 유의해야 한다.

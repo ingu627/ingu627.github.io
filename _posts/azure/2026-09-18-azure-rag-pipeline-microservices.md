@@ -93,7 +93,9 @@ RAG는 오픈북 시험과 비슷하다. LLM이 답을 지어내는 대신, 먼�
 - **Reranker**: 검색으로 모아진 후보 문서들의 순위를 다시 매기는 재순위화 컴포넌트. Azure AI 서비스로 배포한 Cohere 계열 모델을 호출한다.
 - **aca-webui**: 이 컴포넌트들을 조합하는 오케스트레이터. 사용자 질문을 받아 검색·리랭킹·생성 체인을 엮는다.
 
-연결 방식에서 중요한 결정은 두 가지다. 첫째, 벡터 검색은 REST(6333) 대신 **gRPC(6334)** 를 우선 사용한다(`QDRANT_PREFER_GRPC: true`). gRPC는 프로토바이너리(protobuf) 기반 이진 직렬화를 쓰므로, 검색 한 번에 오가는 벡터와 페이로드를 REST+JSON보다 작게 주고받는다. [Qdrant 공식 문서](https://qdrant.tech/documentation/interfaces/)도 gRPC와 REST의 선택을 "편의성과 속도의 트레이드오프"로 규정하며, 애플리케이션 성능 최적화가 목적이면 gRPC를 권한다. 대신 이진 프로토콜이라 주고받는 내용을 눈으로 확인하기 어렵고, 디버깅 난이도는 REST보다 높다는 점을 감수해야 한다.
+연결 방식에서 중요한 결정은 두 가지다. 첫째, 벡터 검색은 REST(6333) 대신 **gRPC(6334)** 를 우선 사용한다(`QDRANT_PREFER_GRPC: true`). gRPC는 프로토바이너리(protobuf) 기반 이진 직렬화를 쓰므로, 검색 한 번에 오가는 벡터와 페이로드를 REST+JSON보다 작게 주고받는다.
+
+[Qdrant 공식 문서](https://qdrant.tech/documentation/interfaces/)도 gRPC와 REST의 선택을 "편의성과 속도의 트레이드오프"로 규정하며, 애플리케이션 성능 최적화가 목적이면 gRPC를 권한다. 대신 이진 프로토콜이라 주고받는 내용을 눈으로 확인하기 어렵고, 디버깅 난이도는 REST보다 높다는 점을 감수해야 한다.
 
 둘째, Qdrant는 **멀티테넌시(multitenancy)** 모드로 운영한다(`ENABLE_QDRANT_MULTITENANCY_MODE: true`). 사용자·조직별로 데이터를 분리해, 한 사용자의 문서가 다른 사용자의 검색 결과에 섞여 나오는 것을 막는다. 다만 이 격리는 공짜가 아니다. [Qdrant 멀티테넌시 가이드](https://qdrant.tech/documentation/guides/multiple-partitions/)에 따르면 테넌트 구분용 페이로드 필드에 테넌트 인덱스(`is_tenant: true`)를 만들어 두어야 필터링이 느려지지 않고, 테넌트마다 컬렉션을 따로 만들면 컬렉션마다 붙는 자원 오버헤드가 그대로 늘어난다.
 

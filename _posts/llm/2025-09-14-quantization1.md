@@ -15,9 +15,9 @@ redirect_from:
   - /llm/llm-model-quantization-compression-techniques/
 ---
 
-대규모 언어 모델(LLM)을 프로덕션 환경에 배포할 때 가장 먼저 마주하는 장벽은 연산량(FLOPs) 자체가 아니라 **GPU 메모리 용량(VRAM)과 메모리 대역폭(Memory Bandwidth)**이다. 수십억~수천억 파라미터에 달하는 모델 가중치를 VRAM에 적재하고, 오토리그레시브(Auto-regressive) 디코딩 과정에서 매 토큰마다 수십 기가바이트의 텐서를 HBM(High Bandwidth Memory)에서 SRAM으로 로드하는 과정은 전형적인 메모리 대역폭 바운드(Memory Bandwidth Bound) 문제를 유발한다.
+대규모 언어 모델(LLM)을 프로덕션 환경에 배포할 때 가장 먼저 마주하는 장벽은 연산량(FLOPs) 자체가 아니다. 그보다 근본적인 제약은 **GPU 메모리 용량(VRAM)과 메모리 대역폭(Memory Bandwidth)**이다. 수십억~수천억 파라미터에 달하는 모델 가중치를 VRAM에 적재한다. 오토리그레시브(Auto-regressive) 디코딩 과정에서는 매 토큰마다 수십 기가바이트의 텐서를 HBM(High Bandwidth Memory)에서 SRAM으로 로드한다. 이 과정은 전형적인 메모리 대역폭 바운드(Memory Bandwidth Bound) 문제를 유발한다.
 
-모델 경량화(Model Compression)는 단순히 모델 크기를 줄여 저장 공간을 아끼는 기술이 아니다. 서빙 엔진의 MFU(Model FLOPs Utilization)를 극대화하고, 토큰 생성 지연시간(TTFT, Time-to-First-Token 및 TPOT, Time-per-Output-Token)을 단축하며, 동시 처리 가능한 요청 수(Throughput)를 확장하기 위한 핵심 시스템 최적화 파이프라인이다. 이 글에서는 대표적인 경량화 축인 **양자화(Quantization)**, **프루닝(Pruning)**, **지식 증류(Knowledge Distillation)**, **저랭크 적응(LoRA)**의 수학적 원리와 실제 서빙 아키텍처에서의 엔지니어링 트레이드오프를 분석한다.
+모델 경량화(Model Compression)는 단순히 모델 크기를 줄여 저장 공간을 아끼는 기술이 아니다. 서빙 엔진의 MFU(Model FLOPs Utilization)를 극대화하기 위한 작업이다. 토큰 생성 지연시간(TTFT, Time-to-First-Token 및 TPOT, Time-per-Output-Token)을 단축한다. 동시 처리 가능한 요청 수(Throughput)를 확장하는 핵심 시스템 최적화 파이프라인이다. 이 글에서는 대표적인 경량화 축 네 가지를 다룬다. **양자화(Quantization)**, **프루닝(Pruning)**, **지식 증류(Knowledge Distillation)**, **저랭크 적응(LoRA)**이다. 각 축의 수학적 원리와 실제 서빙 아키텍처에서의 엔지니어링 트레이드오프를 분석한다.
 
 ---
 
@@ -46,7 +46,7 @@ LLM 추론 파이프라인은 성격이 상이한 두 단계로 나뉜다.
 
 ## 2. 양자화(Quantization): 정밀도 압축과 오차 제어
 
-양자화는 고정밀 부동소수점(FP32, FP16, BF16)으로 표현된 텐서를 더 적은 비트의 정수(INT8, INT4)나 저정밀 부동소수점(FP8, FP4)으로 사상하는 기법이다.
+양자화는 고정밀 부동소수점(FP32, FP16, BF16)으로 표현된 텐서를 더 적은 비트로 사상하는 기법이다. 정수(INT8, INT4)나 저정밀 부동소수점(FP8, FP4)이 그 대상이다.
 
 ![LLM 양자화 파이프라인: 부동소수점 텐서 사상과 오차 제어 아키텍처](/assets/images/llm/quantization-mapping-pipeline-cognition.webp)[^2]
 
@@ -66,9 +66,9 @@ $$\hat{x} = S \times (q - Z)$$
 
 ### 2.2 Activation Outlier 문제와 PTQ 알고리즘
 
-가중치만 양자화하는 **Weight-Only Quantization**(W4A16, W8A16)은 메모리 대역폭을 줄여 디코딩 속도를 높이지만, 연산 직전 FP16으로 역양자화되므로 텐서 코어 자체의 연산 가속은 누리지 못한다. 반면 가중치와 활성화 값 모두를 양자화하는 **Weight-Activation Quantization**(W8A8)은 INT8 텐서 코어를 직접 활용할 수 있으나, LLM 특유의 **활성화 이상치(Activation Outlier)** 문제에 직면한다.
+가중치만 양자화하는 **Weight-Only Quantization**(W4A16, W8A16)은 메모리 대역폭을 줄여 디코딩 속도를 높인다. 다만 연산 직전 FP16으로 역양자화되므로 텐서 코어 자체의 연산 가속은 누리지 못한다. 반면 가중치와 활성화 값 모두를 양자화하는 **Weight-Activation Quantization**(W8A8)은 INT8 텐서 코어를 직접 활용할 수 있다. 대신 LLM 특유의 **활성화 이상치(Activation Outlier)** 문제에 직면한다.
 
-LLM의 크기가 6.7B 이상으로 커지면 은닉 상태(Hidden States)의 특정 채널에서 다른 채널 대비 최대 100배 이상의 거대한 크기를 가진 활성화 이상치가 일관되게 발생한다. 이 이상치를 일반적인 방식으로 INT8 양자화하면 대부분의 정상 채널 정보가 0으로 뭉개지며 퍼플렉시티(Perplexity)가 치명적으로 폭증한다.
+LLM의 크기가 6.7B 이상으로 커지면 은닉 상태(Hidden States)의 특정 채널에서 활성화 이상치가 일관되게 발생한다. 이 값은 다른 채널 대비 최대 100배 이상의 거대한 크기를 가진다. 이 이상치를 일반적인 방식으로 INT8 양자화하면 대부분의 정상 채널 정보가 0으로 뭉개지며 퍼플렉시티(Perplexity)가 치명적으로 폭증한다.
 
 이를 극복하기 위해 제안된 현대적 PTQ(Post-Training Quantization) 전략들은 다음과 같다.
 
@@ -90,12 +90,12 @@ LLM의 크기가 6.7B 이상으로 커지면 은닉 상태(Hidden States)의 특
 
 ### 2.3 FP8 (E4M3 vs. E5M2)의 급부상
 
-NVIDIA Ada Lovelace 및 Hopper, Blackwell 아키텍처부터 네이티브 FP8 연산 유닛이 탑재되면서, 정수 양자화(INT8) 일변도에서 부동소수점 양자화(FP8)로 생태계가 급격히 재편되었다.
+NVIDIA Ada Lovelace 및 Hopper, Blackwell 아키텍처부터 네이티브 FP8 연산 유닛이 탑재되었다. 그 결과 정수 양자화(INT8) 일변도에서 부동소수점 양자화(FP8)로 생태계가 급격히 재편되었다.
 
 - **E4M3 (1 Sign, 4 Exponent, 3 Mantissa)**: 표현 범위는 좁지만($\pm 448$) 정밀도가 높아, 주로 이상치가 통제된 순전파 연산 및 가중치/활성화 양자화에 채택된다.
 - **E5M2 (1 Sign, 5 Exponent, 2 Mantissa)**: FP16과 동일한 지수 비트를 공유하여 표현 범위가 넓으므로($\pm 57344$), 그라디언트 및 역전파 단계와 동적 범위가 큰 어텐션 연산에 적합하다.
 
-FP8은 복잡한 캘리브레이션이나 가중치 재조정 없이도 FP16 대비 99% 이상의 정확도를 유지하면서 서빙 처리량을 2배 이상 끌어올릴 수 있어, vLLM과 TensorRT-LLM의 현대 프로덕션 표준으로 정착했다.
+FP8은 복잡한 캘리브레이션이나 가중치 재조정 없이도 FP16 대비 99% 이상의 정확도를 유지한다. 그 상태로 서빙 처리량을 2배 이상 끌어올릴 수 있어, vLLM과 TensorRT-LLM의 현대 프로덕션 표준으로 정착했다.
 
 ---
 

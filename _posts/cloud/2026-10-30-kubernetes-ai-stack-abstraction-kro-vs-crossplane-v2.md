@@ -38,9 +38,15 @@ use_math: true
 
 금요일 밤, 모델 버전 하나를 올리려고 저장소를 열었더니 서로 다른 팀이 관리하는 매니페스트가 여러 벌로 흩어져 있었다. 어느 파일을 먼저 고쳐야 하는지 적어 둔 사람은 없었다.
 
-엔터프라이즈 환경에서 대규모 언어 모델(LLM)이나 멀티모달 에이전트 서비스를 쿠버네티스(Kubernetes) 클러스터 위에 프로덕션 수준으로 배포하는 일은 단순하지 않다. 단일 `Deployment`와 `Service` 두 개의 YAML 파일로는 끝나지 않는다. 앞서 살펴본 [쿠버네티스 DRA(Dynamic Resource Allocation) 기반 GPU 스케줄링](/k8s/kubernetes-dra-dynamic-resource-allocation-gpu/)[^1]으로 NVLink와 RDMA NIC 토폴로지를 할당한다. [분리형 서빙(Disaggregated Serving) 및 Gateway API Inference Extension(GAIE)](/llm/enterprise-ai-platform-disaggregated-serving-kvcache-gaie/)[^2]으로 프리필(Prefill)과 디코드(Decode) 파드 풀을 제어한다. 여기에 [Cilium Tetragon eBPF 커널 보안 및 OTel GenAI 관측성](/k8s/ebpf-ai-observability-cilium-tetragon-otel-genai-trajectory-eval/)[^3]까지 결합하면 사정이 달라진다. 단일 모델을 서빙하는 데만 최소 6개 이상의 **사용자 정의 리소스 정의(CustomResourceDefinition, CRD)** 인스턴스가 필요하다. 그것도 상호 참조로 엮은 상태여야 한다.
+엔터프라이즈 환경에서 대규모 언어 모델(LLM)이나 멀티모달 에이전트 서비스를 쿠버네티스(Kubernetes) 클러스터 위에 프로덕션 수준으로 배포하는 일은 단순하지 않다. 단일 `Deployment`와 `Service` 두 개의 YAML 파일로는 끝나지 않는다. 앞서 살펴본 [쿠버네티스 DRA(Dynamic Resource Allocation) 기반 GPU 스케줄링](/k8s/kubernetes-dra-dynamic-resource-allocation-gpu/)[^1]으로 NVLink와 RDMA NIC 토폴로지를 할당한다.
 
-문제는 그 요구 대상이 바뀔 때 생긴다. 플랫폼 위에서 모델을 배포하려는 애플리케이션 엔지니어와 ML 연구원에게 하부 인프라 CRD의 세부 스펙을 직접 작성하라고 요구하기 때문이다. 서비스 하나당 400~700줄에 달하는 YAML 보일러플레이트가 수십 개 팀의 Git 저장소로 복제된다. 그 과정에서 레이블 셀렉터 불일치, 보안 정책 누락, 버전 파편화 같은 **설정 드리프트(Configuration Drift)**가 일상화된다. 기존 [IaC와 GitOps 실전 아키텍처(Terraform·Helm·ArgoCD·Flux)](/cloud/iac-gitops/)[^4]에서 표준으로 쓰이던 Helm 차트는 정적 문자열 치환에 기반한다. 따라서 선행 리소스의 런타임 상태(`status`)를 읽어 후행 리소스의 스펙(`spec`)에 주입하는 동적 의존성 오케스트레이션은 수행하지 못한다.
+[분리형 서빙(Disaggregated Serving) 및 Gateway API Inference Extension(GAIE)](/llm/enterprise-ai-platform-disaggregated-serving-kvcache-gaie/)[^2]으로 프리필(Prefill)과 디코드(Decode) 파드 풀을 제어한다. 여기에 [Cilium Tetragon eBPF 커널 보안 및 OTel GenAI 관측성](/k8s/ebpf-ai-observability-cilium-tetragon-otel-genai-trajectory-eval/)[^3]까지 결합하면 사정이 달라진다. 단일 모델을 서빙하는 데만 최소 6개 이상의 **사용자 정의 리소스 정의(CustomResourceDefinition, CRD)** 인스턴스가 필요하다.
+
+그것도 상호 참조로 엮은 상태여야 한다.
+
+문제는 그 요구 대상이 바뀔 때 생긴다. 플랫폼 위에서 모델을 배포하려는 애플리케이션 엔지니어와 ML 연구원에게 하부 인프라 CRD의 세부 스펙을 직접 작성하라고 요구하기 때문이다. 서비스 하나당 400~700줄에 달하는 YAML 보일러플레이트가 수십 개 팀의 Git 저장소로 복제된다.
+
+그 과정에서 레이블 셀렉터 불일치, 보안 정책 누락, 버전 파편화 같은 **설정 드리프트(Configuration Drift)**가 일상화된다. 기존 [IaC와 GitOps 실전 아키텍처(Terraform·Helm·ArgoCD·Flux)](/cloud/iac-gitops/)[^4]에서 표준으로 쓰이던 Helm 차트는 정적 문자열 치환에 기반한다. 따라서 선행 리소스의 런타임 상태(`status`)를 읽어 후행 리소스의 스펙(`spec`)에 주입하는 동적 의존성 오케스트레이션은 수행하지 못한다.
 
 Helm은 반죽을 한 번 섞어 오븐에 넣는 방식에 가깝다. 다 구워진 뒤에야 속을 들여다볼 수 있고, 그 결과를 다시 반죽에 되돌리는 단계는 없다.
 
@@ -287,7 +293,9 @@ spec:
 
 그렇다면 인클러스터 AI 추론 스택 합성에는 왜 Crossplane 대신 `kro`를 쓰고, 클라우드 외부 리소스에는 왜 Crossplane v2를 쓸까. 이 선택은 쿠버네티스 API 서버(`kube-apiserver`)의 메모리와 워치(Watch) 오버헤드 수식으로 설명된다.
 
-클러스터에 등록된 전체 CRD 개수를 $N_{\text{CRD}}$라 하자. CRD 1개당 API 서버가 OpenAPI v3 검증기와 디스커버리 캐시를 유지하는 데 쓰는 평균 힙 메모리를 $m_{\text{schema}}$(실측 약 $1.8 \sim 3.5\text{ MB}$)로 둔다. $k$번째 CRD의 활성 객체 수는 $N_{\text{obj}, k}$다. 객체당 평균 직렬화 크기는 $s_{\text{obj}, k}$다. 해당 리소스를 감시하는 컨트롤러 인포머(Watch) 배수는 $W_{\text{informer}, k}$다. 이때 API 서버의 CRD 관련 메모리 점유량 $M_{\text{apiserver}}$는 다음과 같이 근사된다.
+클러스터에 등록된 전체 CRD 개수를 $N_{\text{CRD}}$라 하자. CRD 1개당 API 서버가 OpenAPI v3 검증기와 디스커버리 캐시를 유지하는 데 쓰는 평균 힙 메모리를 $m_{\text{schema}}$(실측 약 $1.8 \sim 3.5\text{ MB}$)로 둔다. $k$번째 CRD의 활성 객체 수는 $N_{\text{obj}, k}$다.
+
+객체당 평균 직렬화 크기는 $s_{\text{obj}, k}$다. 해당 리소스를 감시하는 컨트롤러 인포머(Watch) 배수는 $W_{\text{informer}, k}$다. 이때 API 서버의 CRD 관련 메모리 점유량 $M_{\text{apiserver}}$는 다음과 같이 근사된다.
 
 $$M_{\text{apiserver}} = N_{\text{CRD}} \cdot m_{\text{schema}} + \sum_{k=1}^{N_{\text{CRD}}} N_{\text{obj}, k} \cdot s_{\text{obj}, k} \cdot \left(1 + W_{\text{informer}, k}\right)$$
 
