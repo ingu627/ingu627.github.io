@@ -282,7 +282,7 @@ redirect_from:
 - `footer`는 구분하는 태그
 - `webp` 파일 확장명은 구글에서 만든 거임
 - `container` : 어떤 특정한 영역을 화면에 가운데로 정렬시켜주는 역할
-- `width: 100%;` : css에서 illustration에서 가지고 있는 이미지는 커서 container보다 넘쳐서 출력이 됐었는데 그 이미지의 container 너비 만큼 (100%) 지정
+- `width: 100%;` : css에서 illustration에서 가지고 있는 이미지는 커서 container보다 넘쳐서 출력이 됐었다. 그래서 그 이미지의 container 너비 만큼 (100%) 지정
 - `transform: scale(-1,1);` : 이미지의 크기를 x, y축으로 지정. -1은 x축기준으로 반전 효과 
 - `opacity` : 투명도
 

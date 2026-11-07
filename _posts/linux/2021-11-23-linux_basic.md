@@ -21,7 +21,7 @@ redirect_from:
 
 <img align='right' width='200' height='200' src='/assets/images/legacy/2e263f2faa.webp' alt='Linux 로고'>
 
-본 글은 "생활 코딩 - Linux" 강의 내용을 요약 및 정리한 글입니다. 리눅스의 기초를 잡기 위해 개인공부 목적으로 정리했으며, 자세한 사항은 [생활코딩 - Linux](https://www.inflearn.com/course/%EC%83%9D%ED%99%9C%EC%BD%94%EB%94%A9-%EB%A6%AC%EB%88%85%EC%8A%A4-%EA%B0%95%EC%A2%8C#curriculum)로 참고하시길 바랍니다.
+본 글은 "생활 코딩 - Linux" 강의 내용을 요약 및 정리한 글입니다. 리눅스의 기초를 잡기 위해 개인공부 목적으로 정리했습니다. 자세한 사항은 [생활코딩 - Linux](https://www.inflearn.com/course/%EC%83%9D%ED%99%9C%EC%BD%94%EB%94%A9-%EB%A6%AC%EB%88%85%EC%8A%A4-%EA%B0%95%EC%A2%8C#curriculum)로 참고하시길 바랍니다.
 
 
 ## 리눅스 기초 
@@ -215,7 +215,7 @@ redirect_from:
   - `프로세스`에는 standard output과 standard error라고 하는 두 가지의 출력의 형식을 가진다. 그리고 한 가지의 입력, standard input이 들어가 있다. 즉, 하나의 input과 2개의 output이 존재한다.
 - `cat result.txt` : result.txt 읽기 (파일에 저장되어있는 내용을 입력으로 받아 화면에 결과가 출력된다.)
 - `cat`은 키보드의 입력을 받아 화면에 출력
-  - `cat` 명령을 그냥 실행시키면 프로그램이 끝나지 않고 대기 상태에 있게 되고 사용자가 입력한 정보를 standard input으로 받아 standard output으로 출력해준다.
+  - `cat` 명령을 그냥 실행시키면 프로그램이 끝나지 않고 대기 상태에 있게 된다. 사용자가 입력한 정보를 standard input으로 받아 standard output으로 출력해준다.
 - `head` : 앞쪽에 있는 일부의 텍스트만을 화면에 출력하는 기능
   - `head`는 기본 10줄만 출력을 하는데 옵션으로 마이너스 (-n1) 하면 한 줄만 출력을 해준다.
 - `head -n1 < one.txt > two.txt`이 코드에는 표준 입력에 대한 리다이렉션과 표준 출력에 대한 리다이렉션이 모두 포함되어 있다. 먼저 'one.txt'에 있는 내용이 리다이렉션되어서 head 프로세스에 입력되고 그 처리 결과를 'two.txt'에다가 출력을 한다.
@@ -237,7 +237,7 @@ redirect_from:
   - 사용자가 리눅스에서 우리가 입력한 명령이 Shell(셸)을 대상으로 해서 명령을 입력해 준다. 
   - 이후 Shell(셸)은 입력한 그 명령을 해석해서 Kernel(커널)이 이해할 수 있는 방식으로 Kernel(커널)에게 전달해준다.
   - 그러면 Kernel(커널)이라고 하는 프로그램은 하드웨어를 제어해서 어떠한 처리를 수행할 수 있도록 명령한다.
-  - 하드웨어가 동작하여 그 처리결과를 Kernel(커널)에게 알려주면 Kernel(커널)이 다시 Shell(셸)에게 알려주는 것을 통해서 우리가 입력하여 실행된 결과를 확인해볼 수가 있다.
+  - 하드웨어가 동작하여 그 처리결과를 Kernel(커널)에게 알려주면 Kernel(커널)이 다시 Shell(셸)에게 알려준다. 이를 통해서 우리가 입력하여 실행된 결과를 확인해볼 수가 있다.
 
 
 ### bash vs zsh
@@ -263,7 +263,7 @@ redirect_from:
 ![image](/assets/images/legacy/a4ee91a1ba.webp)
 
 - `nano backup`을 누른 뒤 편집기 실행
-- `#!/bin/bash` : 프로그램을 실행시켰을 때 운영 체제는 이 첫 번째 줄에 있는 #! 기호를 보고 그 뒤에 적혀 있는 /bin/bash를 보고 bin 밑에 있는 bash라고 하는 프로그램을 통해서 해석되어야 한다.
+- `#!/bin/bash` : 프로그램을 실행시켰을 때 운영 체제는 이 첫 번째 줄에 있는 #! 기호를 본다. 그 뒤에 적혀 있는 /bin/bash를 보고 bin 밑에 있는 bash라고 하는 프로그램을 통해서 해석되어야 한다.
 - `if [ -d bak ]` : 현재 디렉토리에 bak가 존재하는가?
 - `if ! [ -d bak ]; then` : 현재 디렉토리에 bak가 존재하지 않는다면
 - `fi` : 조건문 종료
@@ -348,7 +348,7 @@ redirect_from:
 
 - User Programs
 - 시스템에서 사용하는 응용 프로그램 및 파일과 달리 사용자가 사용하는 응용 프로그램 및 파일이 포함되어 있다.
-- 예를 들어, 비필수 응용 프로그램은 /bin 디렉토리 대신 /usr/bin 디렉토리에 있고, 비필수 시스템 관리 바이너리는 /sbin 디렉토리 대신 /usr/sbin 디렉토리에 있다. 
+- 예를 들어, 비필수 응용 프로그램은 /bin 디렉토리 대신 /usr/bin 디렉토리에 있다. 비필수 시스템 관리 바이너리는 /sbin 디렉토리 대신 /usr/sbin 디렉토리에 있다. 
 - 각각의 라이브러리는 /usr/lib 디렉토리에 있다.
 
 
@@ -732,8 +732,8 @@ redirect_from:
   - elinks 설치 : `sudo apt-get install elinks`
 - Unix 계열에서의 설정에 대한 것은 /etc에 저장되어 있다.
   - `cd /etc/apache2`로 경로 변경 (여기에 아파치에 대한 설정 파일이 있다.)
-- 그 중 apache2.conf를 확인하면 `IncludeOptional sites-enabled/*.conf`가 있는데 `sites-enabled`라는 디렉토리 안의 모든 .conf 파일을 읽고 사용한다는 것이다.
-- `/var/www/html`을 사용하는 이유는 `/etc/apache2/sites-enabled/000-default.conf`에 설정이 `/var/www/html`로 되어있기 때문이다.
+- 그 중 apache2.conf를 확인하면 `IncludeOptional sites-enabled/*.conf`가 있다. `sites-enabled`라는 디렉토리 안의 모든 .conf 파일을 읽고 사용한다는 것이다.
+- `/var/www/html`을 사용하는 데에는 이유가 있다. `/etc/apache2/sites-enabled/000-default.conf`에 설정이 `/var/www/html`로 되어있기 때문이다.
   - 어떤 서버를 설치하건 /etc 밑에 설정 파일이 있고 **그 곳의 설정 파일을 바꾸면 동작하는 방식이 달라진다.**
 
 - `/etc/apache2/sites-enabled/000-default.conf`를 확인하면
@@ -743,7 +743,7 @@ ErrorLog ${APACHE_LOG_DIR}/error.log
 CustomLog ${APACHE_LOG_DIR}/access.log combined
 ```
 
-- `${APACHE_LOG_DIR}`는 아파치 웹 서버가 동작할 때 로그를 확인하기 위해 특정 디렉토리 아래의 error.log 파일과 access.log 파일에 기록하겠다 라는 것이다.
+- `${APACHE_LOG_DIR}`는 다음을 뜻한다. 아파치 웹 서버가 동작할 때 로그를 확인하기 위해 특정 디렉토리 아래의 error.log 파일과 access.log 파일에 기록하겠다는 것이다.
 - `${APACHE_LOG_DIR}`는 /var/log/apache2/이다.
 - 해당 디렉토리를 보면 access.log와 error.log가 존재한다.
 - 누군가 웹 서버에 접속할 때마다 끝에 접속한 사람의 정보가 추가가 된다.

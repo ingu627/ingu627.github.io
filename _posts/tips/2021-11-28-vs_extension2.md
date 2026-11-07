@@ -17,7 +17,7 @@ redirect_from:
 
 VSCode는 확장 프로그램(extension)을 설치해 개발 생산성을 높일 수 있다. 이 글은 Ponicode, Dracula Official, Code Runner, Live Server, Markdown All in One 등 12개 확장 프로그램과 폰트 설정을 정리한다.
 
-VSCode는 에디터 UI를 담당하는 렌더러 프로세스와 확장 프로그램이 실행되는 확장 호스트(Extension Host) 프로세스를 분리하여 운영한다.[^vscode-sandbox] 이를 통해 특정 확장의 연산 부하가 전체 에디터 인터페이스를 멈추지 않도록 격리한다.
+VSCode는 에디터 UI를 담당하는 렌더러 프로세스를 운영한다. 확장 프로그램이 실행되는 확장 호스트(Extension Host) 프로세스는 이와 분리하여 운영한다.[^vscode-sandbox] 이를 통해 특정 확장의 연산 부하가 전체 에디터 인터페이스를 멈추지 않도록 격리한다.
 
 
 ## 0. Font 설정
@@ -54,8 +54,8 @@ VSCode는 에디터 UI를 담당하는 렌더러 프로세스와 확장 프로�
 
 ![debugger](https://user-images.githubusercontent.com/78655692/143773391-2b0e4121-2916-4f20-8de2-24af6426d488.gif)
 
-- Google Chrome 브라우저와 VSCode 에디터를 연동하여 자바스크립트 소스 코드를 에디터 내에서 중단점(breakpoint) 설정, 변수 조사, 호출 스택(call stack) 추적 등의 기능으로 디버깅할 수 있도록 지원하는 확장 프로그램이다.[^chrome-debug]
-- 최신 VSCode(v1.46 이상)에서는 JavaScript Debugger(`js-debug`)가 에디터에 내장됨에 따라 별도 확장 설치 없이도 `pwa-chrome` 환경 디버깅을 직접 수행할 수 있도록 통합되었다.[^js-debug]
+- Google Chrome 브라우저와 VSCode 에디터를 연동하여 자바스크립트 소스 코드 디버깅을 지원하는 확장 프로그램이다.[^chrome-debug] 에디터 내에서 중단점(breakpoint) 설정, 변수 조사, 호출 스택(call stack) 추적 등의 기능으로 디버깅할 수 있다.
+- 최신 VSCode(v1.46 이상)에서는 JavaScript Debugger(`js-debug`)가 에디터에 내장되었다. 이에 따라 별도 확장 설치 없이도 `pwa-chrome` 환경 디버깅을 직접 수행할 수 있도록 통합되었다.[^js-debug]
 
 
 ## ~~4. Bracket Pair Colorizer 2~~
@@ -107,7 +107,7 @@ VSCode는 에디터 UI를 담당하는 렌더러 프로세스와 확장 프로�
 
 ![image](/assets/images/legacy/3b6b2015ca.webp)
 
-- C, C++, Java, JavaScript, Python 등 다양한 언어의 코드 파일이나 선택된 코드 스니펫을 에디터 내에서 즉시 실행하고 출력 창에서 결과를 확인할 수 있는 확장 프로그램이다.[^code-runner]
+- C, C++, Java, JavaScript, Python 등 다양한 언어의 코드 파일이나 선택된 코드 스니펫을 에디터 내에서 즉시 실행할 수 있다. 출력 창에서 결과를 확인할 수 있는 확장 프로그램이다.[^code-runner]
 - **코드를 실행하는 방법:**
   - 단축키: `Ctrl + Alt + N` (macOS: `Control + Option + N`)
   - F1 키를 누른 뒤 `Run Code` 입력 및 선택
@@ -127,7 +127,7 @@ VSCode는 에디터 UI를 담당하는 렌더러 프로세스와 확장 프로�
 
 ![picker](https://user-images.githubusercontent.com/78655692/143774128-9fca5027-7b9f-4591-8625-83dadf5190d4.gif)
 
-- CSS, SCSS, HTML 등의 스타일 코드에서 색상 코드를 직관적인 GUI 색상 팔레트로 선택하고 RGB, HEX, HSL 형식으로 변환할 수 있는 도구이다.[^color-picker] (최신 VSCode는 기본 에디터 상에서도 색상 데코레이터 및 피커를 자체 지원한다).
+- CSS, SCSS, HTML 등의 스타일 코드에서 색상 코드를 직관적인 GUI 색상 팔레트로 선택할 수 있다. 이를 RGB, HEX, HSL 형식으로 변환할 수 있는 도구이다.[^color-picker] (최신 VSCode는 기본 에디터 상에서도 색상 데코레이터 및 피커를 자체 지원한다).
 
 
 ## 8. Live Server
@@ -136,7 +136,7 @@ VSCode는 에디터 UI를 담당하는 렌더러 프로세스와 확장 프로�
 
 ![server](https://user-images.githubusercontent.com/78655692/143774272-9be36ed1-5e81-44d2-bcfd-86157fc9409f.gif)
 
-- 정적 웹 페이지(HTML, CSS, JS) 개발 시 로컬 개발 서버를 구동하고, 파일 변경 사항을 감지하여 브라우저를 자동으로 새로고침(Live Reload)하는 확장 프로그램이다.[^live-server] 상태 표시줄의 'Go Live' 버튼을 클릭하거나 5500번 포트를 기본으로 로컬 개발 서버를 실행한다.
+- 정적 웹 페이지(HTML, CSS, JS) 개발 시 로컬 개발 서버를 구동한다. 파일 변경 사항을 감지하여 브라우저를 자동으로 새로고침(Live Reload)하는 확장 프로그램이다.[^live-server] 상태 표시줄의 'Go Live' 버튼을 클릭하거나 5500번 포트를 기본으로 로컬 개발 서버를 실행한다.
 
 
 ## 9. Live Share
@@ -152,7 +152,7 @@ VSCode는 에디터 UI를 담당하는 렌더러 프로세스와 확장 프로�
 
 ![icon](https://user-images.githubusercontent.com/78655692/143774559-9dc16674-244e-4eb7-9514-0b3e272d52f9.gif)
 
-- 파일 탐색기의 파일 확장자 및 폴더 구조에 머티리얼 디자인(Material Design) 기반의 아이콘을 부여하여 파일 유형 식별성을 높여주는 아이콘 테마이다.[^material-icons]
+- 파일 탐색기의 파일 확장자 및 폴더 구조에 머티리얼 디자인(Material Design) 기반의 아이콘을 부여한다. 이를 통해 파일 유형 식별성을 높여주는 아이콘 테마이다.[^material-icons]
 
 
 ## 11. Markdown Preview Enhanced
@@ -170,16 +170,16 @@ VSCode는 에디터 UI를 담당하는 렌더러 프로세스와 확장 프로�
 
 ![markdown](https://user-images.githubusercontent.com/78655692/143774740-0477c510-8d4a-4fd0-8b9d-b4eac21a19c1.gif)
 
-- 마크다운 문서 작성을 위한 단축키, 목차(Table of Contents, TOC) 자동 생성 및 갱신, 목록 서식 자동 서식 지정, 수학 수식 입력 지원 등을 제공하는 종합 마크다운 유틸리티이다.[^markdown-all-in-one]
+- 마크다운 문서 작성을 위한 단축키와 목차(Table of Contents, TOC) 자동 생성 및 갱신을 지원한다. 아울러 목록 서식 자동 서식 지정, 수학 수식 입력 지원 등을 제공하는 종합 마크다운 유틸리티이다.[^markdown-all-in-one]
 
 ## 확장 프로그램 운용 시 주의사항 및 트레이드오프
 
 VSCode 확장을 다수 설치해 운용할 때는 다음과 같은 시스템 제약과 성능 영향을 고려해야 한다.
 
-- **확장 호스트(Extension Host) 프로세스 부하:** 모든 확장은 단일 Node.js 기반 확장 호스트 프로세스 내에서 공유 실행되므로, 무거운 확장이 다수 활성화되면 CPU 사용량과 메모리 점유율이 증가하여 자동 완성 및 언어 서버 응답 속도가 저하될 수 있다.[^vscode-perf]
-- **서식 지정기(Formatter) 충돌:** Prettier와 언어별 기본 포맷터가 동시에 활성화된 경우 파일 저장 시 서식 지정 충돌이 발생할 수 있으므로, `settings.json`에서 언어별 기본 포맷터(`editor.defaultFormatter`)를 명시적으로 지정해야 한다.
-- **폐기 및 코어 내장 전환 관리:** Debugger for Chrome이나 Bracket Pair Colorizer 2처럼 확장이 폐기되고 VSCode 코어 기능으로 내장되는 경우가 있으므로, 정기적으로 확장 관리자(`@deprecated`)를 점검해 불필요한 레거시 확장을 제거해야 한다.
-- **원격 개발 및 웹 환경 제약:** Codespaces, Remote-SSH, 또는 VS Code for the Web(`vscode.dev`) 환경에서는 로컬 Node.js API에 의존하는 일부 확장의 실행이 제한되거나 별도의 원격 호스트 설치가 요구된다.[^vscode-remote]
+- **확장 호스트(Extension Host) 프로세스 부하:** 모든 확장은 단일 Node.js 기반 확장 호스트 프로세스 내에서 공유 실행된다. 무거운 확장이 다수 활성화되면 CPU 사용량과 메모리 점유율이 증가하여 자동 완성 및 언어 서버 응답 속도가 저하될 수 있다.[^vscode-perf]
+- **서식 지정기(Formatter) 충돌:** Prettier와 언어별 기본 포맷터가 동시에 활성화된 경우 파일 저장 시 서식 지정 충돌이 발생할 수 있다. 따라서 `settings.json`에서 언어별 기본 포맷터(`editor.defaultFormatter`)를 명시적으로 지정해야 한다.
+- **폐기 및 코어 내장 전환 관리:** Debugger for Chrome이나 Bracket Pair Colorizer 2처럼 확장이 폐기되는 경우가 있다. VSCode 코어 기능으로 내장되기도 하므로, 정기적으로 확장 관리자(`@deprecated`)를 점검해 불필요한 레거시 확장을 제거해야 한다.
+- **원격 개발 및 웹 환경 제약:** Codespaces, Remote-SSH, 또는 VS Code for the Web(`vscode.dev`) 환경에서는 제약이 따른다. 로컬 Node.js API에 의존하는 일부 확장의 실행이 제한되거나 별도의 원격 호스트 설치가 요구된다.[^vscode-remote]
 
 ## References
 

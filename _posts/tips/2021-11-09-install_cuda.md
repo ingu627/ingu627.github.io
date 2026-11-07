@@ -29,7 +29,7 @@ redirect_from:
 
 - 참고 : https://www.tensorflow.org/install/gpu
 
-딥러닝 프레임워크(TensorFlow)가 GPU 가속을 활용하려면 호스트(CPU)와 디바이스(GPU) 간 메모리 복사 및 커널 실행 파이프라인을 지원하는 드라이버, 런타임, 가속 라이브러리가 계층별로 설치되어야 한다 [^1].
+딥러닝 프레임워크(TensorFlow)가 GPU 가속을 활용하려면 드라이버, 런타임, 가속 라이브러리가 계층별로 설치되어야 한다 [^1]. 이들 계층은 호스트(CPU)와 디바이스(GPU) 간 메모리 복사 및 커널 실행 파이프라인을 지원한다.
 
 ![CUDA 호스트(CPU)와 디바이스(GPU) 간 처리 흐름: 호스트 메모리에서 GPU 메모리로 데이터 복사, 커널 호출, GPU 코어의 병렬 연산, 결과를 호스트 메모리로 복사하는 단계](/assets/images/tips/official-install_cuda.webp)
 

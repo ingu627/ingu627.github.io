@@ -13,7 +13,7 @@ redirect_from:
 
 이 글은 Jupyter·Colab 환경에서 파이썬(matplotlib) 한글이 깨질 때 사용하는 설정 코드를 정리한다. 로컬 환경에서 폰트를 지정하는 코드와 Colab에서 나눔 폰트를 설치하는 방법을 다룬다.
 
-Matplotlib의 기본 폰트 패밀리는 `sans-serif`(기본값 `DejaVu Sans`)로 설정되어 있어 한글 유니코드 영역(U+AC00~U+D7A3) 글리프가 포함되어 있지 않다[^1]. 따라서 제목(Title), 축 레이블(xlabel·ylabel), 눈금(Ticks), 범례(Legend) 등 텍스트 아티스트(Text Artist)를 렌더링할 때 `Glyph missing from current font` 경고와 함께 네모 박스(tofu) 형태로 글자가 깨진다[^1][^4]. 또한 기본 음수 부호 기호(`U+2212`, `−`) 역시 한글 폰트에서 지원하지 않는 경우가 많아 음수 눈금이 깨지므로 `axes.unicode_minus=False` 설정이 동반되어야 한다[^2].
+Matplotlib의 기본 폰트 패밀리는 `sans-serif`(기본값 `DejaVu Sans`)로 설정되어 있다. 이 폰트에는 한글 유니코드 영역(U+AC00~U+D7A3) 글리프가 포함되어 있지 않다[^1]. 따라서 제목(Title), 축 레이블(xlabel·ylabel), 눈금(Ticks), 범례(Legend) 등 텍스트 아티스트(Text Artist)를 렌더링할 때 글자가 깨진다. 이때 `Glyph missing from current font` 경고와 함께 네모 박스(tofu) 형태로 표시된다[^1][^4]. 또한 기본 음수 부호 기호(`U+2212`, `−`) 역시 한글 폰트에서 지원하지 않는 경우가 많다. 이 때문에 음수 눈금이 깨지므로 `axes.unicode_minus=False` 설정이 동반되어야 한다[^2].
 
 ![Matplotlib 시각화 구조와 텍스트 아티스트 구성 요소](/assets/images/tips/official-prevent_kor.webp)
 
@@ -64,9 +64,9 @@ plt.rcParams['axes.unicode_minus'] = False
 
 ## 한계와 주의사항
 
-- **운영체제 간 폰트 파일 경로 종속성**: Windows 전용 파일 경로(`c:/Windows/Fonts/malgun.ttf`)를 직접 지정하면 macOS나 Linux 환경에서 `FileNotFoundError`가 발생하므로, 운영체제별 분기(`platform.system()`)를 적용하거나 시스템 폰트 패밀리 이름을 등록해야 한다[^1].
-- **Google Colab 세션 비영속성**: Colab 가상머신은 세션 단위로 초기화되므로 런타임 연결이 종료되거나 새로 할당될 때마다 `fonts-nanum` apt 패키지 설치와 폰트 캐시 삭제 명령을 다시 실행해야 한다[^3].
-- **Matplotlib 폰트 캐시 미갱신 문제**: 시스템에 폰트를 새로 설치하더라도 Matplotlib 캐시 디렉터리(`~/.cache/matplotlib`) 내 `fontlist-*.json`이 갱신되지 않으면 기존 폰트 목록을 계속 참조하여 글리프 누락 경고가 지속될 수 있으므로 캐시 파일 삭제와 런타임 재시작이 필요하다[^1].
+- **운영체제 간 폰트 파일 경로 종속성**: Windows 전용 파일 경로(`c:/Windows/Fonts/malgun.ttf`)를 직접 지정하면 안 된다. macOS나 Linux 환경에서 `FileNotFoundError`가 발생하기 때문이다. 따라서 운영체제별 분기(`platform.system()`)를 적용하거나 시스템 폰트 패밀리 이름을 등록해야 한다[^1].
+- **Google Colab 세션 비영속성**: Colab 가상머신은 세션 단위로 초기화된다. 런타임 연결이 종료되거나 새로 할당될 때마다 `fonts-nanum` apt 패키지 설치와 폰트 캐시 삭제 명령을 다시 실행해야 한다[^3].
+- **Matplotlib 폰트 캐시 미갱신 문제**: 시스템에 폰트를 새로 설치하더라도 자동 갱신되지 않는다. 캐시 디렉터리(`~/.cache/matplotlib`) 내 `fontlist-*.json`이 유지되면 기존 폰트 목록을 계속 참조한다. 이로 인해 글리프 누락 경고가 지속될 수 있으므로 캐시 파일 삭제와 런타임 재시작이 필요하다[^1].
 
 ## References
 

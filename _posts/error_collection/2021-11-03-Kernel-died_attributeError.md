@@ -15,7 +15,7 @@ redirect_from:
 
 > 이 글은 2021년 당시 Python 3.7 / TensorFlow 2.2 환경 기준으로 작성된 설치/사용 기록이다. 최신 버전에서는 명령이 다를 수 있다.
 
-주피터 노트북에서 커널이 죽으면서 `AttributeError: 'SelectIOLoop' object has no attribute 'asyncio_loop'` 오류가 발생하는 경우가 있다. 이 글은 해당 에러 메시지와 `conda`를 이용한 해결 방법을 정리한다.
+주피터 노트북에서 커널이 죽는 문제가 발생하는 경우가 있다. 이때 `AttributeError: 'SelectIOLoop' object has no attribute 'asyncio_loop'` 오류가 발생한다. 이 글은 해당 에러 메시지와 `conda`를 이용한 해결 방법을 정리한다.
 
 ## 에러 메시지
 

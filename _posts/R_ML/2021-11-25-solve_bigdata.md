@@ -12,7 +12,7 @@ redirect_from:
   - /r_ml/r-machine-learning-big-data-analysis-part-1/
 ---
 
-빅데이터 분석기사 실기 대비 차원에서 정리한 문제풀이다. 기출문제 데이터셋은 [GitHub 저장소](https://github.com/ingu627/BigDataAnalysis)에 수록했으며, 전체 실행 코드는 `2021_2nd.R` 파일에 담겨 있다.
+빅데이터 분석기사 실기 대비 차원에서 정리한 문제풀이다. 기출문제 데이터셋은 [GitHub 저장소](https://github.com/ingu627/BigDataAnalysis)에 수록했다. 전체 실행 코드는 `2021_2nd.R` 파일에 담겨 있다.
 
 **전체 개요**
 
@@ -43,7 +43,7 @@ redirect_from:
 
 ### 제 1유형
 
-*11.* crim 항목의 상위에서 10번째 값(즉, 상위 10번째 값 중에서 가장 적은 값)으로 상위 10개의 값을 변환하고, age 80 이상인 값에 대하여 crim 평균을 구하시오. (BostonHousing 데이터 셋) 
+*11.* crim 항목의 상위에서 10번째 값(즉, 상위 10번째 값 중에서 가장 적은 값)으로 상위 10개의 값을 변환한다. age 80 이상인 값에 대하여 crim 평균을 구하시오. (BostonHousing 데이터 셋) 
 
 ```R
 library(mlbench)
@@ -65,7 +65,7 @@ print(result)
 
 
 
-*12.* 1) 주어진 데이터의 첫 번째 행부터 순서대로 80%까지의 데이터를 훈련 데이터로 추출 후 2) 'total_bedrooms' 변수의 결측값을 'total_bedrooms'변수의 중앙값으로 대체하고 3) 대체 전의 'total_bedrooms' 변수 표준편차 값과 대체 후의 'total_bedrooms' 변수 표준편차 값의 차이의 절댓값을 구하시오. (housing 데이터 셋)
+*12.* 1) 주어진 데이터의 첫 번째 행부터 순서대로 80%까지의 데이터를 훈련 데이터로 추출한다. 2) 'total_bedrooms' 변수의 결측값을 'total_bedrooms'변수의 중앙값으로 대체한다. 3) 대체 전의 'total_bedrooms' 변수 표준편차 값과 대체 후의 'total_bedrooms' 변수 표준편차 값의 차이의 절댓값을 구하시오. (housing 데이터 셋)
 
 > 데이터 참고 : [https://www.kaggle.com/camnugent/introduction-to-machine-learning-in-r-tutorial](https://www.kaggle.com/camnugent/introduction-to-machine-learning-in-r-tutorial)
 
@@ -117,11 +117,11 @@ insurance %>%
 
 *14.* 전자상거래 배송 데이터
 제품 배송 시간에 맞춰 배송되었는지 예측모델 만들기
-학습용 데이터 (X_train, y_train)을 이용하여 배송 예측 모형을 만든 후, 이를 평가용 데이터(X_test)에 적용하여 얻은 예측값을 다음과 같은 형식의 CSV파일로 생성하시오. (제출한 모델의 성능은 ROC-AUC 평가지표에 따라 채점)
+학습용 데이터 (X_train, y_train)을 이용하여 배송 예측 모형을 만든다. 이를 평가용 데이터(X_test)에 적용하여 얻은 예측값을 다음과 같은 형식의 CSV파일로 생성하시오. (제출한 모델의 성능은 ROC-AUC 평가지표에 따라 채점)
 
 > 데이터 참고 : [https://www.kaggle.com/prachi13/customer-analytics](https://www.kaggle.com/prachi13/customer-analytics)
 
-데이터 분할과 전처리에는 `caret`[^2] 패키지를 활용하고, 로지스틱 회귀(`glm`)[^3]와 단계적 변수 선택(`step`), 그리고 랜덤 포레스트(`randomForest`)[^4]로 분류 모형을 학습한다. 최종 모델 평가는 `ModelMetrics`[^5]의 ROC-AUC 지표로 산출한다.
+데이터 분할과 전처리에는 `caret`[^2] 패키지를 활용한다. 로지스틱 회귀(`glm`)[^3]와 단계적 변수 선택(`step`), 그리고 랜덤 포레스트(`randomForest`)[^4]로 분류 모형을 학습한다. 최종 모델 평가는 `ModelMetrics`[^5]의 ROC-AUC 지표로 산출한다.
 
 
 ```R

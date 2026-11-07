@@ -15,7 +15,7 @@ redirect_from:
 ---
 
 
-기존에 TensorFlow 2.4 환경을 운용하면서 런타임 충돌과 라이브러리 비호환 오류가 발생했기 때문에, 안정적인 빌드 구성을 확인하고 TensorFlow 2.8.0 및 PyTorch 1.9.0 GPU 환경을 구축하기로 결정했다.
+기존에 TensorFlow 2.4 환경을 운용하면서 런타임 충돌과 라이브러리 비호환 오류가 발생했다. 그래서 안정적인 빌드 구성을 확인하고, TensorFlow 2.8.0 및 PyTorch 1.9.0 GPU 환경을 구축하기로 결정했다.
 
 - **PyTorch** : `pytorch==1.9.0` `torchvision==0.10.0` `torchaudio==0.9.0` (CUDA 11.3 연동)[^pytorch-prev]
 - **TensorFlow** : `CUDA==11.3` `cuDNN==8.2.1` `tensorflow==2.8.0` `tensorflow-gpu==2.8.0`[^tf-windows-source]
