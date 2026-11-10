@@ -20,20 +20,12 @@ $sans-serif: "Wanted Sans Variable", "Pretendard Variable", -apple-system, Blink
   font-display: swap;
 }
 
-/* Fira Mono: code blocks. 400/500 are served from Fontsource; the family used to
- * be pulled a second time through the Google Fonts CSS API. */
+/* Fira Mono: code blocks (`pre` via $monospace). Only weight 400 is used - no
+ * rule in the site requests 500 - so only that face is declared here. */
 @font-face {
   font-family: 'Fira Mono';
   src: url('https://cdn.jsdelivr.net/npm/@fontsource/fira-mono@5/files/fira-mono-latin-400-normal.woff2') format('woff2');
   font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Fira Mono';
-  src: url('https://cdn.jsdelivr.net/npm/@fontsource/fira-mono@5/files/fira-mono-latin-500-normal.woff2') format('woff2');
-  font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
