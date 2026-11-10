@@ -10,8 +10,8 @@
 /* Global Font Stack Override */
 $sans-serif: "Wanted Sans Variable", "Pretendard Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo", "Roboto", "Helvetica Neue", Arial, sans-serif !default;
 
-/* RIDIBatang is only used for the sidebar counter and the archive link, so it is
- * subset to exactly those characters (724KB woff -> 3.4KB woff2). */
+/* RIDIBatang is used only by the sidebar's archive link, so it is subset to the
+ * characters that link needs (724KB woff -> 3.4KB woff2). */
 @font-face {
   font-family: 'RIDIBatang';
   src: url('/assets/fonts/ridibatang-subset.woff2') format('woff2');
