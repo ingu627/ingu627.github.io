@@ -2,6 +2,13 @@
 layout: archive
 ---
 
+{% comment %}
+  The visible home title ("ingu627.github.io") was removed on the owner's request.
+  An invisible H1 is kept so the document still has exactly one, which keeps the
+  accessibility heading order valid (h1 -> h2 for the post list heading).
+{% endcomment %}
+<h1 class="visually-hidden">{{ site.title }}</h1>
+
 {% comment %} <div class="top">
 <div class="col-lg-4 col-md-2">
   <ul>
