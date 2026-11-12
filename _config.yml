@@ -233,6 +233,7 @@ kramdown:
 sass:
   sass_dir: _sass
   style: compressed # https://sass-lang.com/documentation/file.SASS_REFERENCE.html#output_style
+  sourcemap: never # Jekyll emitted main.css.map / main_dark.css.map (285KB) into _site; browsers only fetch them with devtools open
 
 
 # Outputting
