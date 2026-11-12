@@ -129,3 +129,14 @@ code, pre, tt, kbd, samp {
     border-radius: 20%;
   }
 }
+
+/* Home hero: the owner's banner is 2400x360 (6.67:1), so the panel takes that
+   aspect ratio instead of the theme's 3em padding - no cropping, no dead band.
+   The dark render is the default; dark-theme.js swaps in the light one. */
+.layout--home .page__hero--overlay {
+  padding: 0;
+  aspect-ratio: 2400 / 360;
+  background-image: url("/assets/images/hero-banner-dark.webp");
+  background-size: cover;
+  background-position: center;
+}

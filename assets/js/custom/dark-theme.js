@@ -11,10 +11,19 @@ const darkTheme = document.querySelector('link[rel="stylesheet"][href*="main_dar
 // both data attributes follow the active theme; the HTML default is the dark one.
 const logoImages = document.querySelectorAll('img[data-logo-dark][data-logo-light]');
 
+const heroPanels = document.querySelectorAll('[data-hero-dark][data-hero-light]');
+
 function syncLogos(isDark) {
   for (const img of logoImages) {
     const wanted = isDark ? img.dataset.logoDark : img.dataset.logoLight;
     if (wanted && img.getAttribute('src') !== wanted) img.setAttribute('src', wanted);
+  }
+  // The home banner is artwork too: dark plate with light strokes for the dark
+  // theme, light plate with dark strokes for the light one.
+  for (const el of heroPanels) {
+    const url = isDark ? el.dataset.heroDark : el.dataset.heroLight;
+    const next = url ? 'url("' + url + '")' : '';
+    if (next && el.style.backgroundImage !== next) el.style.backgroundImage = next;
   }
 }
 
