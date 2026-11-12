@@ -77,7 +77,12 @@ google:
 # SEO Related
 # HTML-file method property is verified via /google892bd13e769859f8.html (do not delete that file)
 google_site_verification : "Lkh6IHg3Jk6DRFEXBZP0zPlDuY6NpN2pXqFM-1Ow6Ok"
+# Bing: https://www.bing.com/webmasters -> Add site -> "HTML meta tag" method ->
+# paste the content value of <meta name="msvalidate.01" ...> here. Empty = no tag
+# is emitted (this repo's history never carried a value).
 bing_site_verification   :
+# Yandex: https://webmaster.yandex.com -> Add site -> "Meta tag" method -> paste
+# the content value of <meta name="yandex-verification" ...> here. Empty = none.
 yandex_site_verification :
 naver_site_verification  : "naver2f1ddca95d82110afdce071ed9dedab3" # matches /naver2f1ddca95d82110afdce071ed9dedab3.html (file method also present)
 
@@ -104,6 +109,14 @@ analytics:
   google:
     tracking_id          : "G-R03EGK2CKN"
     anonymize_ip         :  false # true, false (default)
+  # Google Tag Manager - off unless an id is set. owns_analytics: true means the
+  # container itself carries the GA4 tag for the tracking_id above; only then is
+  # the direct gtag init skipped, so a pageview can never be counted twice.
+  # Enable order: publish the container with its GA4 tag first, then set both
+  # values in one deploy. Disable order: owns_analytics back to false first.
+  tag_manager:
+    id                   : "GTM-NTX9VR9"
+    owns_analytics       : false
 
 
 # Site Author

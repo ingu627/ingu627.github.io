@@ -1,0 +1,35 @@
+{% if site.analytics.tag_manager.id and site.analytics.tag_manager.id contains 'GTM-' %}
+{% comment %} The dataLayer bootstrap runs at parse time, before any page script
+   (the 404 page pushes its event, and a consent default would have to precede
+   gtm.js). Only the container download is deferred, like the rest of our
+   tracking, so it never competes with the first paint. {% endcomment %}
+<script>
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+</script>
+<script>
+(function (w, d, i) {
+  var loaded = false;
+  function load() {
+    if (loaded) return;
+    loaded = true;
+    var s = d.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + '&l=dataLayer';
+    d.head.appendChild(s);
+  }
+  if ('requestIdleCallback' in w) {
+    w.requestIdleCallback(load, { timeout: 1200 });
+  } else {
+    setTimeout(load, 1200);
+  }
+  ['scroll', 'mousemove', 'touchstart', 'pointerdown', 'keydown'].forEach(function (e) {
+    w.addEventListener(e, load, { once: true, passive: true });
+  });
+  d.addEventListener('visibilitychange', function () {
+    if (d.visibilityState === 'hidden') load();
+  }, { once: true });
+  w.addEventListener('pagehide', load, { once: true });
+})(window, document, '{{ site.analytics.tag_manager.id }}');
+</script>
+{% endif %}

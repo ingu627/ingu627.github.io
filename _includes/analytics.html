@@ -11,4 +11,10 @@
   {% include /analytics-providers/custom.html %}
 {% endcase %}
 
+{% comment %} Google Tag Manager runs alongside the selected provider; the
+   container id lives in _config.yml and an empty id keeps it off. {% endcomment %}
+{% if site.analytics.tag_manager.id %}
+  {% include /analytics-providers/google-tag-manager.html %}
+{% endif %}
+
 {% endif %}

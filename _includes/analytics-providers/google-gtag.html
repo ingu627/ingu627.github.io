@@ -1,4 +1,7 @@
-{% if site.analytics.google.tracking_id %}
+{% if site.analytics.google.tracking_id %}{% unless site.analytics.tag_manager.id and site.analytics.tag_manager.owns_analytics %}
+<!-- Direct gtag init is skipped while Google Tag Manager owns analytics
+     (_config.yml: analytics.tag_manager.owns_analytics), so a pageview can only
+     be counted once. -->
 <!-- Global site tag (gtag.js) - Google Analytics.
      Loaded shortly after first paint instead of blocking it: idle (bounded),
      first interaction, or the moment the page is hidden/left - so a visitor who
@@ -33,4 +36,4 @@
   window.addEventListener('pagehide', load, { once: true });
 })();
 </script>
-{% endif %}
+{% endunless %}{% endif %}
