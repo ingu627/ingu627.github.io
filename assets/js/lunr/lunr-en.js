@@ -23,7 +23,10 @@ var idx = lunr(function () {
 });
 
 $(document).ready(function() {
-  $('input#search').on('keyup', function () {
+  // 'input' covers every way the value can change - IME composition (the Korean
+  // case this site needs), paste, drag-and-drop and autofill - while 'keyup'
+  // alone misses the syllable a Korean IME commits without a following key press.
+  $('input#search').on('input compositionend', function () {
     var resultdiv = $('#results');
     var query = $(this).val().toLowerCase();
     var result =
