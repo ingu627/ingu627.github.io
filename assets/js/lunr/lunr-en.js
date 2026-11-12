@@ -20,30 +20,38 @@ var SEARCH_ALIASES = {
   "도커": "docker",
   "하둡": "hadoop",
   "스파크": "spark",
-  "에어플로": "airflow",
   "카프카": "kafka",
   "레디스": "redis",
   "엘라스틱서치": "elasticsearch",
-  "몽고디비": "mongodb",
   "포스트그레스": "postgresql",
   "마이에스큐엘": "mysql",
   "리눅스": "linux",
   "우분투": "ubuntu",
   "깃": "git",
   "깃허브": "github",
-  "젠킨스": "jenkins",
   "테라폼": "terraform",
-  "앤서블": "ansible",
   "람다": "lambda",
   "스칼라": "scala",
-  "스프링": "spring",
-  "스프링부트": "spring",
   "자바": "java"
 };
 var REVERSE_ALIASES = {};
 for (var ko in SEARCH_ALIASES) {
   if (!REVERSE_ALIASES[SEARCH_ALIASES[ko]]) REVERSE_ALIASES[SEARCH_ALIASES[ko]] = ko;
 }
+// One lowercased haystack of every indexed title+excerpt answers "does this literal
+// term occur at all?" in a single indexOf, which decides how strongly an alias may
+// score: with no literal match the alias IS the query, so it must not be down-weighted.
+var HAYSTACK = (function () {
+  var parts = [];
+  for (var i = 0; i < store.length; i++) {
+    parts.push(store[i].title || "", store[i].excerpt || "");
+  }
+  return parts.join(" ").toLowerCase();
+})();
+function literalExists(term) {
+  return term.length > 1 && HAYSTACK.indexOf(term) !== -1;
+}
+
 function expandTerm(term) {
   var out = [term];
   if (SEARCH_ALIASES[term]) out.push(SEARCH_ALIASES[term]);
@@ -82,13 +90,16 @@ $(document).ready(function() {
       idx.query(function (q) {
         query.split(lunr.tokenizer.separator).forEach(function (term) {
           expandTerm(term).forEach(function (t, i) {
-            var weight = i === 0 ? 1 : 0.6;   // literal term first, aliases ranked below it
+            var weight = i === 0 ? 1 : (literalExists(term) ? 0.6 : 1);   // alias ranks below a term the corpus really has
             if (t === "") return;
             q.term(t, { boost: 100 * weight })
             if(query.lastIndexOf(" ") != query.length-1){
               q.term(t, {  usePipeline: false, wildcard: lunr.Query.wildcard.TRAILING, boost: 10 * weight })
             }
-            q.term(t, {  usePipeline: false, editDistance: 1, boost: 1 })
+            var minFuzzy = /[^\x00-\x7F]/.test(t) ? 2 : 4;
+            if (t.length >= minFuzzy) {
+              q.term(t, {  usePipeline: false, editDistance: 1, boost: 1 })
+            }
           });
         })
       });

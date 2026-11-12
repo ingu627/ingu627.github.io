@@ -29,9 +29,9 @@ var store = [
               replace:"</h6>", " "|
             strip_html | strip_newlines | jsonify }},
           {%- else -%}
-            {%- comment -%} 250 words instead of the theme's 50: the index is built from
+            {%- comment -%} 150 words instead of the theme's 50: the index is built from
               the post opening, and a term that first appears in paragraph three used to be
-              unsearchable. Gzipped in transit (~55KB -> ~250KB for the whole store). {%- endcomment -%}
+              unsearchable. Gzipped in transit (~55KB before, ~130KB at this depth). {%- endcomment -%}
             {{ doc.content | newline_to_br |
               replace:"<br />", " " |
               replace:"</p>", " " |
@@ -41,7 +41,7 @@ var store = [
               replace:"</h4>", " " |
               replace:"</h5>", " " |
               replace:"</h6>", " "|
-            strip_html | strip_newlines | truncatewords: 250 | jsonify }},
+            strip_html | strip_newlines | truncatewords: 150 | jsonify }},
           {%- endif -%}
         "categories": {{ doc.categories | jsonify }},
         "tags": {{ doc.tags | jsonify }},
