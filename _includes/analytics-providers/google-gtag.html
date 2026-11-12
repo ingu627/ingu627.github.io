@@ -13,6 +13,14 @@
   function gtag() { dataLayer.push(arguments); }
   gtag('js', new Date());
   gtag('config', id{% if site.analytics.google.anonymize_ip == true %}, { 'anonymize_ip': true }{% endif %});
+{% if page.url == '/404.html' %}
+  // Sent from here because only this function pushes a genuine arguments object;
+  // gtag.js ignores plain arrays and plain objects pushed to dataLayer directly.
+  gtag('event', 'page_not_found', {
+    page_location: window.location.href,
+    page_path: window.location.pathname
+  });
+{% endif %}
   var loaded = false;
   function load() {
     if (loaded) return;
