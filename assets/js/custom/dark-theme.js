@@ -21,12 +21,18 @@ function syncLogos(isDark) {
 function setDarkMode(isDark) {
   if (darkTheme) darkTheme.media = isDark === true ? 'all' : 'print';
   if (defaultTheme) defaultTheme.disabled = isDark === true;
-  localStorage.setItem('theme', isDark ? 'dark' : 'dirt');
+  // Swap the logo before touching storage: in private mode or with site data
+  // blocked, localStorage throws, and an exception here used to leave the dark
+  // logo on the light theme (and to break every later toggle click).
   syncLogos(isDark === true);
+  try {
+    localStorage.setItem('theme', isDark ? 'dark' : 'dirt');
+  } catch (e) { /* storage unavailable: the theme just will not persist */ }
 }
 
 if (darkTheme && defaultTheme) {
-  let currentTheme = localStorage.getItem('theme');
+  let currentTheme = null;
+  try { currentTheme = localStorage.getItem('theme'); } catch (e) { /* blocked */ }
   let isDarkMode = false;
   if (currentTheme) {
     isDarkMode = currentTheme === 'dark';
