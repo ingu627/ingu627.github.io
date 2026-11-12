@@ -33,9 +33,25 @@ code, pre, tt, kbd, samp {
     padding-right: 1.5rem;
   }
 
-  /* Hide left sidebar on single post pages */
+  /* Sidebar (author profile) is hidden by default and only comes back on very
+     wide screens, where the 840px column plus a 200px rail still fits; below
+     that the single-column reading layout wins. */
   .sidebar {
     display: none !important;
+  }
+
+  @include breakpoint($x-large) {
+    .sidebar {
+      display: block !important;
+      float: right;
+      width: 200px;
+      margin-left: 2rem;
+    }
+
+    .page,
+    .breadcrumbs {
+      margin-right: 0 !important;
+    }
   }
 
   /* Hide right TOC on single post pages */
@@ -82,5 +98,18 @@ code, pre, tt, kbd, samp {
     max-width: 840px !important;
     margin: 2em auto 0 !important;
     padding-right: 0 !important;
+  }
+}
+/* Masthead logo: fixed square so the SVG never shifts the 2rem bar */
+.masthead .site-logo {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 0.6rem;
+
+  img {
+    width: 2rem;
+    height: 2rem;
+    max-height: none;
+    border-radius: 20%;
   }
 }

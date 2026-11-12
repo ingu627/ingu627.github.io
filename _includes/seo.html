@@ -207,7 +207,7 @@
         "name": {{ site.title | jsonify }},
         "logo": {
           "@type": "ImageObject",
-          "url": {{ '/assets/images/og-default.jpg' | absolute_url | jsonify }}
+          "url": {{ site.og_image | default: '/assets/images/og-default-2026.jpg' | absolute_url | jsonify }}
         }
       }{% if blog_posting_image %},
       "image": {{ blog_posting_image | absolute_url | jsonify }}{% endif %}

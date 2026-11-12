@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="120 120 760 760" role="img" aria-label="세 데이터 흐름이 하나로 모여 위로 확장되는 로고 (밝은 배경용)">
+  <rect width="1000" height="1000" fill="#F7F5F0"/>
+  <g fill="none" stroke="#1F2023" stroke-width="42" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 254 731 H 746"/>
+    <path d="M 336 630 C 405 630 439 566 500 504"/>
+    <path d="M 500 630 V 504"/>
+    <path d="M 664 630 C 595 630 561 566 500 504"/>
+    <path d="M 500 504 C 530 429 589 377 670 351"/>
+  </g>
+  <circle cx="681" cy="347" r="31" fill="#1F2023"/>
+</svg>

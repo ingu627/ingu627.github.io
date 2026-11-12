@@ -29,7 +29,7 @@ url                      : "https://ingu627.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : "ingu627/ingu627.github.io" # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
 teaser                   : # path of fallback teaser image, e.g. "/assets/images/500x300.png"
-logo                     : # "/assets/images/261008_logo.png"
+logo                     : "/assets/images/logo-final-dark.svg" # 1024x1024 vector; dark-theme.js swaps to the light render for the light theme
 masthead_title           : # overrides the website title displayed in the masthead, use " " for no title
 breadcrumbs              : true # true, false (default)
 words_per_minute         : 250
@@ -93,7 +93,7 @@ facebook:
   username               :
   app_id                 :
   publisher              :
-og_image                 : "/assets/images/og-default.jpg"
+og_image                 : "/assets/images/og-default-2026.jpg" # 1200x630 card built from the final logo
 # For specifying social profiles
 # - https://developers.google.com/structured-data/customize/social-profiles
 social:
@@ -128,8 +128,8 @@ analytics:
 # Site Author
 author:
   name             : "정현석"
-  avatar           : "/assets/images/logo-flow.svg" # 1024x1024 vector (641B), replaces 261008_logo.webp
-                   # rendered at 176x176 in the sidebar; the SVG keeps it sharp on retina
+  avatar           : "/assets/images/logo-final-dark.svg" # 1024x1024 vector; the light render is swapped in by dark-theme.js
+                   # rendered at 176x176 in the sidebar; vector keeps it sharp on retina
   bio              : "개인 저장공간입니다. <br/>Since 2021.10"
   location         : "South Korea"
   links:

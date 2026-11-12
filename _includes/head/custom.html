@@ -13,11 +13,18 @@
 <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"></noscript>
 
 <!-- insert favicons. use https://realfavicongenerator.net/  + manifest는 한번 봐야함-->
+<!-- Two renders of the same mark: dark plate with light strokes for dark tab bars,
+     light plate with dark strokes for light ones. Browsers that ignore media on
+     rel=icon fall back to the dark-plate files, which stay legible either way. -->
 <link rel="apple-touch-icon" sizes="180x180" href="{{site.baseurl}}/assets/logo.ico/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="192x192"  href="{{site.baseurl}}/assets/logo.ico/android-chrome-192x192.png">
-<link rel="icon" type="image/png" sizes="512x512"  href="{{site.baseurl}}/assets/logo.ico/android-chrome-512x512.png">
-<link rel="icon" type="image/png" sizes="32x32" href="{{site.baseurl}}/assets/logo.ico/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="{{site.baseurl}}/assets/logo.ico/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="{{site.baseurl}}/assets/logo.ico/android-chrome-192x192.png" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/png" sizes="192x192"  href="{{site.baseurl}}/assets/logo.ico/android-chrome-192x192-light.png" media="(prefers-color-scheme: light)">
+<link rel="icon" type="image/png" sizes="512x512"  href="{{site.baseurl}}/assets/logo.ico/android-chrome-512x512.png" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/png" sizes="512x512"  href="{{site.baseurl}}/assets/logo.ico/android-chrome-512x512-light.png" media="(prefers-color-scheme: light)">
+<link rel="icon" type="image/png" sizes="32x32" href="{{site.baseurl}}/assets/logo.ico/favicon-32x32.png" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/png" sizes="32x32" href="{{site.baseurl}}/assets/logo.ico/favicon-32x32-light.png" media="(prefers-color-scheme: light)">
+<link rel="icon" type="image/png" sizes="16x16" href="{{site.baseurl}}/assets/logo.ico/favicon-16x16.png" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/png" sizes="16x16" href="{{site.baseurl}}/assets/logo.ico/favicon-16x16-light.png" media="(prefers-color-scheme: light)">
 <link rel="manifest" href="{{site.baseurl}}/assets/logo.ico/site.webmanifest">
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
