@@ -34,7 +34,7 @@ masthead_title           : # overrides the website title displayed in the masthe
 breadcrumbs              : true # true, false (default)
 words_per_minute         : 250
 comments:
-  provider               : "utterances" # false (default), "disqus", "discourse", "facebook", "staticman", "staticman_v2", "utterances", "giscus", "custom"
+  provider               : "utterances" # false (default), "utterances", "giscus", "custom"
   disqus:
     shortname            :
   discourse:
@@ -105,7 +105,7 @@ social:
 
 # Analytics
 analytics:
-  provider               : "google-gtag" # false (default), "google", "google-universal", "google-gtag", "custom"
+  provider               : "google-gtag" # false (default), "google-gtag", "custom"
   google:
     tracking_id          : "G-R03EGK2CKN"
     anonymize_ip         :  false # true, false (default)
