@@ -109,13 +109,15 @@ analytics:
   google:
     tracking_id          : "G-R03EGK2CKN"
     anonymize_ip         :  false # true, false (default)
-  # Google Tag Manager - off unless an id is set. owns_analytics: true means the
+  # Google Tag Manager - off when id is empty. owns_analytics: true means the
   # container itself carries the GA4 tag for the tracking_id above; only then is
   # the direct gtag init skipped, so a pageview can never be counted twice.
-  # Enable order: publish the container with its GA4 tag first, then set both
-  # values in one deploy. Disable order: owns_analytics back to false first.
+  # Enable order: add the GA4 tag to the container first, then set both values in
+  # one deploy. Disable order: owns_analytics back to false first.
+  # GTM-MCQ4BBZ5 currently holds only legacy Universal Analytics tags (__u x3),
+  # which no longer collect, and no GA4 tag - hence owns_analytics: false.
   tag_manager:
-    id                   : "GTM-NTX9VR9"
+    id                   : "GTM-MCQ4BBZ5"
     owns_analytics       : false
 
 
