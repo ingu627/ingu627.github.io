@@ -1,0 +1,35 @@
+{% if site.analytics.clarity.id %}
+{% comment %} Microsoft Clarity (heatmaps + session replay). Same deferral policy
+   as the rest of the tracking: idle (bounded), first interaction, or the moment
+   the page is hidden - so the recorder never competes with the first paint and a
+   short bounce is still captured. The loader at clarity.ms/tag/<id> honours the
+   consent events this queue emits (window.clarity(...)). {% endcomment %}
+<script>
+(function (w, d, i) {
+  w.clarity = w.clarity || function () {
+    (w.clarity.q = w.clarity.q || []).push(arguments);
+  };
+  var loaded = false;
+  function load() {
+    if (loaded) return;
+    loaded = true;
+    var s = d.createElement('script');
+    s.async = true;
+    s.src = 'https://www.clarity.ms/tag/' + i;
+    d.head.appendChild(s);
+  }
+  if ('requestIdleCallback' in w) {
+    w.requestIdleCallback(load, { timeout: 1500 });
+  } else {
+    setTimeout(load, 1500);
+  }
+  ['scroll', 'mousemove', 'touchstart', 'pointerdown', 'keydown'].forEach(function (e) {
+    w.addEventListener(e, load, { once: true, passive: true });
+  });
+  d.addEventListener('visibilitychange', function () {
+    if (d.visibilityState === 'hidden') load();
+  }, { once: true });
+  w.addEventListener('pagehide', load, { once: true });
+})(window, document, '{{ site.analytics.clarity.id }}');
+</script>
+{% endif %}

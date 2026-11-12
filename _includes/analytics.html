@@ -17,4 +17,8 @@
   {% include /analytics-providers/google-tag-manager.html %}
 {% endif %}
 
+{% if site.analytics.clarity.id %}
+  {% include /analytics-providers/clarity.html %}
+{% endif %}
+
 {% endif %}

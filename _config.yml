@@ -119,6 +119,9 @@ analytics:
   tag_manager:
     id                   : "GTM-MCQ4BBZ5"
     owns_analytics       : false
+  # Microsoft Clarity (heatmaps + session replay). Empty id = off.
+  clarity:
+    id                   : "zca86xv08s"
 
 
 # Site Author
