@@ -1,5 +1,8 @@
 {% if site.analytics.google.tracking_id %}
-<!-- Global site tag (gtag.js) - Google Analytics (deferred: idle or first interaction) -->
+<!-- Global site tag (gtag.js) - Google Analytics.
+     Loaded shortly after first paint instead of blocking it: idle (bounded),
+     first interaction, or the moment the page is hidden/left - so a visitor who
+     bounces in ~1s is still recorded. A 4s idle window used to drop those. -->
 <script>
 (function () {
   var id = '{{ site.analytics.google.tracking_id }}';
@@ -17,13 +20,17 @@
     document.head.appendChild(s);
   }
   if ('requestIdleCallback' in window) {
-    requestIdleCallback(load, { timeout: 4000 });
+    requestIdleCallback(load, { timeout: 1200 });
   } else {
-    setTimeout(load, 3000);
+    setTimeout(load, 1200);
   }
-  ['scroll', 'mousemove', 'touchstart'].forEach(function (e) {
+  ['scroll', 'mousemove', 'touchstart', 'pointerdown', 'keydown'].forEach(function (e) {
     window.addEventListener(e, load, { once: true, passive: true });
   });
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'hidden') load();
+  }, { once: true });
+  window.addEventListener('pagehide', load, { once: true });
 })();
 </script>
 {% endif %}
