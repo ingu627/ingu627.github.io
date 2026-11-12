@@ -128,7 +128,8 @@ analytics:
 # Site Author
 author:
   name             : "정현석"
-  avatar           : "/assets/images/261008_logo.webp" # 176x176 WebP (2.8KB, was 776KB PNG)
+  avatar           : "/assets/images/logo-flow.svg" # 1024x1024 vector (641B), replaces 261008_logo.webp
+                   # rendered at 176x176 in the sidebar; the SVG keeps it sharp on retina
   bio              : "개인 저장공간입니다. <br/>Since 2021.10"
   location         : "South Korea"
   links:
