@@ -40,17 +40,33 @@ code, pre, tt, kbd, samp {
     display: none !important;
   }
 
+  /* A float-based rail put the article below the author block (the profile is
+     taller than the first row), so the wide layout is a two-column grid:
+     sidebar in column 1, article in column 2, same row. */
   @include breakpoint($x-large) {
-    .sidebar {
-      display: block !important;
-      float: right;
-      width: 200px;
-      margin-left: 2rem;
+    #main {
+      display: grid;
+      grid-template-columns: 200px minmax(0, 840px);
+      column-gap: 2.5rem;
+      justify-content: center;
+      align-items: start;
     }
 
-    .page,
-    .breadcrumbs {
-      margin-right: 0 !important;
+    .sidebar {
+      display: block !important;
+      float: none !important;
+      width: auto !important;
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .page {
+      float: none !important;
+      width: auto !important;
+      max-width: 840px !important;
+      margin: 0 !important;
+      grid-column: 2;
+      grid-row: 1;
     }
   }
 
