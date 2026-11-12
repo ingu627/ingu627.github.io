@@ -5,6 +5,11 @@
 {% else %}
   {% assign lang = "en" %}
 {% endcase %}
-<script src="{{ '/assets/js/lunr/lunr.min.js' | relative_url }}"></script>
-<script src="{{ '/assets/js/lunr/lunr-store.js' | relative_url }}"></script>
-<script src="{{ '/assets/js/lunr/lunr-' | append: lang | append: '.js' | relative_url }}"></script>
+{% comment %} All three must be deferred: main.min.js (which bundles jQuery) is
+   loaded with defer from _includes/scripts.html, and a non-deferred script here
+   executes before it, so `$(document).ready(...)` in lunr-en.js threw
+   "$ is not defined" and the #search keyup handler was never bound. Deferred
+   scripts keep their document order, so jQuery is ready before these run. {% endcomment %}
+<script defer src="{{ '/assets/js/lunr/lunr.min.js' | relative_url }}"></script>
+<script defer src="{{ '/assets/js/lunr/lunr-store.js' | relative_url }}"></script>
+<script defer src="{{ '/assets/js/lunr/lunr-' | append: lang | append: '.js' | relative_url }}"></script>
