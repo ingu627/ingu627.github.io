@@ -15,17 +15,60 @@
   <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ page.url | absolute_url | url_encode }}" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="{{ site.data.ui-text[site.locale].share_on_label | default: 'Share on' }} LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
 </section>
 
-<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script>
-    Kakao.init("46435ca82612a72b914bea93551bd46e");   // JavaScript 키
-    function sendLink() {
-      Kakao.Link.sendCustom({
-        templateId: 68343,   // 템플릿 ID
-        templateArgs: {
-          title: "{{ page.title }}",
-          description: "{{ page.excerpt }}",
-          url : "{{ page.url }}",
-        },
+  // Kakao share: the SDK (~2 requests, developers.kakao.com + kakaocdn) used to be
+  // loaded on every post page for a button most visitors never press. It is now
+  // fetched on first click; concurrent clicks queue behind one load.
+  (function () {
+    var SRC = 'https://developers.kakao.com/sdk/js/kakao.min.js';
+    var KEY = '46435ca82612a72b914bea93551bd46e';
+    var state = 'idle';
+    var queue = [];
+
+    function flush() {
+      while (queue.length) queue.shift()();
+    }
+
+    function load(cb) {
+      queue.push(cb);
+      if (state === 'ready') return flush();
+      if (state === 'loading') return;
+      state = 'loading';
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = SRC;
+      s.onload = function () {
+        try { Kakao.init(KEY); } catch (e) { state = 'failed'; queue.length = 0; return; }
+        state = 'ready';
+        flush();
+      };
+      s.onerror = function () { state = 'failed'; queue.length = 0; };
+      document.head.appendChild(s);
+    }
+
+    function send() {
+      load(function () {
+        try {
+          Kakao.Link.sendCustom({
+            templateId: 68343,
+            templateArgs: {
+              title: {{ page.title | jsonify }},
+              description: {{ page.excerpt | jsonify }},
+              url: {{ page.url | jsonify }}
+            }
+          });
+        } catch (e) { /* SDK refused (e.g. popup blocked); nothing else to do */ }
       });
     }
+
+    window.sendLink = send;
+    var btn = document.getElementById('kakao-link-btn');
+    if (btn) {
+      btn.setAttribute('href', '#');
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        send();
+      });
+    }
+  })();
 </script>

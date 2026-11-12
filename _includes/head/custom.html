@@ -22,6 +22,17 @@
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
 
+<!-- Microsoft Clarity (official snippet, verbatim; async so it does not block) -->
+{% if jekyll.environment == 'production' and site.analytics.clarity.id and page.analytics != false %}
+<script>
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i+"?ref=bwt";
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "{{ site.analytics.clarity.id }}");
+</script>
+{% endif %}
+
 <!-- google ads (deferred: first user interaction, else 5s) -->
 <meta name="google-adsense-account" content="ca-pub-6253756472465876">
 {% unless page.no_ads %}

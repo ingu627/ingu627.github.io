@@ -114,11 +114,12 @@ analytics:
   # the direct gtag init skipped, so a pageview can never be counted twice.
   # Enable order: add the GA4 tag to the container first, then set both values in
   # one deploy. Disable order: owns_analytics back to false first.
-  # GTM-MCQ4BBZ5 currently holds only legacy Universal Analytics tags (__u x3),
-  # which no longer collect, and no GA4 tag - hence owns_analytics: false.
+  # Verified on 2026-11-12: the published GTM-MCQ4BBZ5 bundle now carries the GA4
+  # tag (G-R03EGK2CKN x2, __gct) and its "Initialization - All Pages" trigger, so
+  # GTM is the single owner and the direct gtag init below is skipped.
   tag_manager:
     id                   : "GTM-MCQ4BBZ5"
-    owns_analytics       : false
+    owns_analytics       : true
   # Microsoft Clarity (heatmaps + session replay). Empty id = off.
   clarity:
     id                   : "zca86xv08s"
