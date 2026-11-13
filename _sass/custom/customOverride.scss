@@ -74,8 +74,27 @@ code, pre, tt, kbd, samp {
   }
 
   .page__inner-wrap {
+    display: flow-root;
     float: none !important;
     width: 100% !important;
+
+    .page__content,
+    .page__meta,
+    .page__share {
+      float: none !important;
+    }
+  }
+
+  /* Prevent long inline code tokens or links from overflowing narrow mobile viewports */
+  .page__content {
+    :not(pre) > code {
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    a {
+      overflow-wrap: anywhere;
+    }
   }
 
   /* Center related posts section to match 840px article width */
@@ -86,27 +105,46 @@ code, pre, tt, kbd, samp {
     margin: 2em auto 0 !important;
     padding-right: 0 !important;
   }
-    /* A float-based rail put the article below the author block (the profile is
-       taller than the first row), so the wide layout is a two-column grid:
-       sidebar in column 1, article in column 2, same row. */
-    @include breakpoint($x-large) {
-      #main {
-        display: grid;
-        grid-template-columns: 200px minmax(0, 840px);
-        column-gap: 2.5rem;
-        justify-content: center;
-        align-items: start;
+
+  /* A float-based rail put the article below the author block (the profile is
+     taller than the first row), so the wide layout is a two-column grid when a
+     sidebar is actually present: sidebar in column 1, article + related + any
+     injected nodes in column 2. Pages without a sidebar stay centered. */
+  @include breakpoint($x-large) {
+    &:has(#main > .sidebar) .breadcrumbs {
+      box-sizing: border-box !important;
+      max-width: calc(200px + 2.5rem + 840px) !important;
+      padding-left: calc(200px + 2.5rem) !important;
+    }
+
+    #main:has(> .sidebar) {
+      display: grid;
+      grid-template-columns: 200px minmax(0, 840px);
+      column-gap: 2.5rem;
+      justify-content: center;
+      align-items: start;
+
+      &::before,
+      &::after {
+        display: none !important;
       }
 
-      .sidebar {
+      > .sidebar {
         display: block !important;
         float: none !important;
         width: auto !important;
+        min-width: 0;
+        overflow-x: hidden;
         grid-column: 1;
         grid-row: 1;
       }
 
-      .page {
+      > :not(.sidebar) {
+        grid-column: 2;
+        min-width: 0;
+      }
+
+      > .page {
         float: none !important;
         width: auto !important;
         max-width: 840px !important;
@@ -114,7 +152,27 @@ code, pre, tt, kbd, samp {
         grid-column: 2;
         grid-row: 1;
       }
+
+      > .page__related {
+        float: none !important;
+        width: 100% !important;
+        max-width: 840px !important;
+        margin: 2em 0 0 !important;
+        padding-right: 0 !important;
+        grid-column: 2;
+        grid-row: 2;
+      }
     }
+  }
+}
+
+/* Prevent long titles/URLs in archive/tags lists from overflowing mobile viewports */
+.archive {
+  a,
+  .archive__item-title {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
 }
 /* Masthead logo: fixed square so the SVG never shifts the 2rem bar */
 .masthead .site-logo {
