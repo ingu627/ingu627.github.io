@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Submitted to Search Console as a NEW path: re-submitting the existing
+     /sitemap.xml was ignored for five days (Last read stayed 2024-10-15), while a
+     first-time submission is queued for fetching. The index points at the
+     generated sitemap, so nothing else has to change. -->
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap>
+    <loc>https://ingu627.github.io/sitemap.xml</loc>
+  </sitemap>
+</sitemapindex>

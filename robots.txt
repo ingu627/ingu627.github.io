@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://ingu627.github.io/sitemap.xml
+Sitemap: https://ingu627.github.io/sitemap-index.xml
