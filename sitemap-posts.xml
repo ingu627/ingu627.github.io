@@ -10,11 +10,16 @@ sitemap: false
     <lastmod>{{ post.last_modified_at | default: post.date | date_to_xmlschema }}</lastmod>
   </url>
 {%- endfor %}
-{%- for page in site.html_pages %}
-  {%- unless page.sitemap == false or page.url == '/404.html' %}
+{%- for p in site.html_pages %}
+  {%- assign u = p.url %}
+  {%- assign skip = false %}
+  {%- if p.sitemap == false or u == '/404.html' or u contains '/page' or u contains '/categories' or u contains '/tags' or u == '/search/' %}
+    {%- assign skip = true %}
+  {%- endif %}
+  {%- unless skip %}
   <url>
-    <loc>{{ page.url | absolute_url }}</loc>
-    {%- if page.last_modified_at %}<lastmod>{{ page.last_modified_at | date_to_xmlschema }}</lastmod>{% endif %}
+    <loc>{{ u | absolute_url }}</loc>
+    {%- if p.last_modified_at %}<lastmod>{{ p.last_modified_at | date_to_xmlschema }}</lastmod>{% endif %}
   </url>
   {%- endunless %}
 {%- endfor %}
