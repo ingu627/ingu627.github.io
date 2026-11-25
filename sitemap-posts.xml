@@ -16,6 +16,10 @@ sitemap: false
   {%- if p.sitemap == false or u == '/404.html' or u contains '/page' or u contains '/categories' or u contains '/tags' or u == '/search/' %}
     {%- assign skip = true %}
   {%- endif %}
+  {%- comment %} Empty collection stubs (no markdown body) add nothing to discovery. {%- endcomment %}
+  {%- if p.content.size < 200 %}
+    {%- assign skip = true %}
+  {%- endif %}
   {%- unless skip %}
   <url>
     <loc>{{ u | absolute_url }}</loc>
