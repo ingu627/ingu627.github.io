@@ -294,3 +294,10 @@ print(notebook)
 [^4]: [Python 강좌 : 제 37강 - 속성(Attribute) - Daehee YUN Tech Blog](https://076923.github.io/posts/Python-37/)
 [^5]: [느긋한 계산법 - 위키백과](https://ko.wikipedia.org/wiki/%EB%8A%90%EA%B8%8B%ED%95%9C_%EA%B3%84%EC%82%B0%EB%B2%95)
 [^6]: [[python] python의 self와 __init__의 이해 - 두더지 개발자](https://engineer-mole.tistory.com/190)
+
+---
+
+**관련 글**
+
+- [[Effective Python] 5장 클래스와 인터페이스 리뷰](/python/effective_python5/)
+- [[Effective Python] 2장 리스트와 딕셔너리 리뷰](/python/effective_python2/)

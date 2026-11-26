@@ -346,3 +346,10 @@ APIM의 구독(Subscription)은 키 단위로 쿼터·메트릭을 분리하는 
 - Microsoft Learn — [API Management 정책 참조: azure-openai-token-limit](https://learn.microsoft.com/azure/api-management/azure-openai-token-limit-policy)
 - Microsoft Learn — [API Management의 의미 체계 캐싱(Semantic Caching)](https://learn.microsoft.com/azure/api-management/azure-openai-semantic-cache-limit-policy)
 - Microsoft Learn — [Azure OpenAI Service의 할당량과 한도](https://learn.microsoft.com/azure/ai-services/openai/quotas-limits)
+
+---
+
+**관련 글**
+
+- [Microsoft Entra ID 기반 AI 서비스 인증·인가: OIDC SSO와 역할 매핑](/azure/entra-id-ai-service-auth/)
+- [Azure OpenAI 폐쇄망 네트워크 설계: VNet·Private Endpoint·Private DNS](/azure/azure-vnet-private-endpoint/)
