@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 date: 2026-10-20
-last_modified_at: 2026-11-19
+last_modified_at: 2026-11-28
 use_math: true
 ---
 
@@ -38,7 +38,7 @@ use_math: true
 **이런 분께** — LLM 서비스를 운영에 올렸거나 올리기 직전이라 "GPU가 죽으면 어떻게 되지"가 궁금한 엔지니어. 처음 읽을 때는 1장과 2장만 봐도 전체 구조가 잡히고, 4~5장은 실제 코드와 측정값이 필요할 때 찾아보면 된다.
 ---
 
-앞선 1편[^3]에서는 데이터 유출이 차단된 프라이빗 인프라 경계와 텐서 병렬화를 살펴보았다. 이어서 Prefill-Decode를 분리하는 PD Disaggregation 서빙 토폴로지도 다루었다. 분산 클러스터가 구축된 이후 엔지니어가 마주하는 다음 전장은 **운영화(Day-2 Operations)와 장애 복구성(Fault Tolerance)**이다.
+관련 글[^3]에서는 데이터 유출을 막기 위한 프라이빗 인프라 경계와 텐서 병렬화를 살펴보았다. Prefill-Decode를 분리하는 PD Disaggregation 서빙 토폴로지도 다루었다. 분산 클러스터가 구축된 이후 엔지니어가 마주하는 다음 과제는 **운영화(Day-2 Operations)와 장애 복구성(Fault Tolerance)**이다.
 
 일반적인 마이크로서비스 아키텍처에서 99.99% 가용성을 달성하는 표준 패턴(무상태 파드, 단순 라운드로빈, CPU 기반 오토스케일링)이 있다. 그러나 이 패턴은 대규모 언어 모델(LLM) 클러스터에서 그대로 작동하지 않는다. 수십 기가바이트의 KV 캐시가 VRAM에 묶여 있는 **유상태(Stateful) 특성** 때문이다. 여기에 예측할 수 없는 프롬프트 길이에 따른 극단적인 **지연 시간 편차(Jitter)**가 더해진다. 노드 장애 시 수십 분이 걸리는 **모델 가중치 콜드 스타트(Cold Start)**도 큰 원인이다.
 
@@ -243,5 +243,5 @@ async def call_worker_with_hedging(payload: Dict[str, Any], timeout_p95: float =
 
 [^1]: Jeffrey Dean and Luiz André Barroso: *The Tail at Scale* (2013). Published in *Communications of the ACM*. [https://cacm.acm.org/magazines/2013/2/160173-the-tail-at-scale/fulltext](https://cacm.acm.org/magazines/2013/2/160173-the-tail-at-scale/fulltext)
 [^2]: TypeSafe AI Official Documentation: *Jev Jaggedness & Question Design Guide* (2026). [https://docs.typesafe.ai](https://docs.typesafe.ai)
-[^3]: ingu627.github.io: *엔터프라이즈 AI 플랫폼 설계 (1): 프라이빗 인프라 격리와 초거대 분산 서빙 토폴로지* (2026). [/llm/enterprise-ai-platform-distributed-serving-architecture/](/llm/enterprise-ai-platform-distributed-serving-architecture/)
+[^3]: ingu627.github.io: [엔터프라이즈 AI 플랫폼: 프라이빗 경계와 분산 서빙](/llm/enterprise-ai-platform-disaggregated-serving-kvcache-gaie/) (2026).
 [^4]: ingu627.github.io: *부하 테스트로 검증하는 오토스케일링: Azure Load Testing과 p95 SLO* (2026). [/azure/azure-load-testing-slo/](/azure/azure-load-testing-slo/)

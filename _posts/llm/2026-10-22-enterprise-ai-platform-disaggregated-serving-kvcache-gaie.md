@@ -1,24 +1,27 @@
 ---
 layout: single
-title: "엔터프라이즈 AI 플랫폼 설계 (3): KVCache 중심 분리형 서빙(llm-d·Dynamo·Mooncake)과 Gateway API 추론 라우팅"
-excerpt: "단일 파드(Colocated) 서빙에서 발생하는 프리필·디코드 자원 간섭과 20~40%의 GPU 유휴 낭비를 어떻게 해결할 것인가? 수리적 손익분기점 모델링, Kubernetes Gateway API Inference Extension(GAIE) 기반 캐시 인식 라우팅, NVIDIA Dynamo 1.0과 CNCF llm-d v0.5 오케스트레이션, 그리고 Mooncake·LMCache 제로카피 KV 전송 아키텍처를 정리한다."
+title: "엔터프라이즈 AI 플랫폼 분산 서빙: 제로 트러스트·TP/PP부터 KVCache와 GAIE까지"
+excerpt: "사설 AI 클러스터의 보안 경계와 텐서·파이프라인 병렬화 비용을 살펴보고, 프리필·디코드 분리와 KVCache 전송, GAIE 기반 라우팅의 실무 트레이드오프를 정리한다."
 categories: [llm]
 tags: [llm, vllm, k8s, llmops, architecture, pd-disaggregation, mooncake, lmcache, dynamo, llm-d, gaie, 정리, 설명]
 toc: true
 toc_sticky: true
 sidebar_main: true
 date: 2026-10-22
-last_modified_at: 2026-11-07
+last_modified_at: 2026-11-28
 use_math: true
+redirect_from:
+  - /llm/enterprise-ai-platform-distributed-serving-architecture/
 ---
 
 ## 이 글을 30초에 파악하기
 
-> **한 줄로** — 긴 문서를 읽히는 작업과 짧은 대화를 받는 작업을 같은 GPU에서 번갈아 처리하느라 생기는 대기 시간을, 일을 나눠 맡기고 이미 계산해 둔 결과를 다시 쓰는 방식으로 줄이는 설계를 정리한다.
+> **한 줄로** — 기밀 데이터를 다루는 사설 GPU 클러스터의 보안 경계와 모델 병렬화를 설계하고, 프리필·디코드 분리와 캐시 재사용의 이득을 전송 비용과 함께 판단한다.
 
 **읽고 나면 알게 되는 것**
 
-- 한 GPU에 두 작업을 묶어 두면 왜 20~40%가 노는지, 그리고 작업을 나눠 맡겼을 때 드는 전송 비용을 언제 넘어서는지
+- 사설망의 접근·반출 경계와 TP·PP 병렬화의 통신 비용을 어떻게 판단하는지
+- 프리필과 디코드의 간섭을 줄이는 이득이 KV 전송 비용을 언제 넘어서는지
 - 같은 프롬프트를 이미 계산한 파드로 보내려면 라우터가 무엇을 보고 판단해야 하는지
 - Dynamo와 llm-d가 각각 무엇을 맡는지, 실제 매니페스트에서 무엇을 확인해야 하는지
 
@@ -35,27 +38,55 @@ use_math: true
 |Mooncake|KVCache를 중심에 두고 프리필과 디코드를 나눈 분산 서빙 아키텍처. 여러 RDMA NIC를 묶어 KV를 옮기는 Transfer Engine이 핵심이다|4.3절 실측 지표의 대상|
 |LMCache|서빙 엔진의 KVCache를 파드 밖으로 내보내 다른 요청이 재사용하게 해 주는 오픈소스 계층|4.4절과 5절 매니페스트에 등장|
 
-**이런 분께** — GPU 추론 서버를 직접 운영하거나, 특정 시간대에 응답이 유난히 느려지는 이유를 찾는 분께 맞다. 처음 읽을 때는 1.2절 손익분기점 계산과 5.2절 검증 포인트부터 보면 판단 기준이 먼저 잡힌다.
+**이런 분께** — 사내 GPU 추론 서버의 보안 경계와 분산 배치를 정하거나 응답 지연의 원인을 찾는 운영자를 위한 글이다.
 
-추론 클러스터에서 프리필과 디코드를 같은 GPU에 묶어 두면 GPU 시간의 20~40%가 그대로 논다. 프리필은 연산기가 병목이고 디코드는 메모리 대역폭이 병목이라, 한쪽이 돌 때 다른 쪽은 쉬기 때문이다. 앞선 [엔터프라이즈 AI 플랫폼 설계 1편](/llm/enterprise-ai-platform-distributed-serving-architecture/)[^1]에서는 사설망 제로 트러스트 경계와 텐서·파이프라인 병렬화의 통신 수식을 다루었다.
+기밀 문서가 사설 클러스터를 벗어나면 안 되는데 70B 모델은 GPU 한 장에 들어가지 않는다. 여러 GPU를 연결해도 장문 프롬프트가 기존 생성 요청을 지연시킬 수 있다. 접근 경계와 병렬화 통신을 먼저 설계한 뒤, 프리필·디코드 분리와 캐시 전송이 실제 워크로드에서 이득인지 확인해야 한다.
 
-[엔터프라이즈 AI 플랫폼 설계 2편](/agent/enterprise-ai-platform-fault-tolerance-operations/)[^2]에서는 슬라이딩 윈도우 서킷 브레이커와 투기적 헤지드 요청(Hedged Requests)으로 무중단 장애 격리를 만드는 방법을 살펴보았다. 인프라 격리와 고가용성 제어면이 준비되면 남는 것은 Day-2 운영 단계다. 이 단계의 핵심 과제는 **클러스터 단위의 GPU 자원 효율 극대화와 KVCache 중심의 데이터플레인 재설계**다.
+이 글은 제로 트러스트와 TP·PP에서 시작해 PD 분리, GAIE 라우팅, KVCache 전송과 운영 한계까지 이어진다. 장애 격리와 운영 제어는 별도의 [엔터프라이즈 AI 플랫폼 장애 격리 글](/agent/enterprise-ai-platform-fault-tolerance-operations/)[^2]에서 다룬다.
 
-주방 하나에서 대량 조리와 한 접시씩 플레이팅을 같은 화구로 번갈아 하는 셈이다. 대량 조리 중에는 재료를 나르는 손이 놀고, 한 접시씩 담는 동안에는 화구가 논다.
+## 0. 사설 AI 플랫폼의 보안 경계와 모델 병렬화
 
-단일 서빙 파드 안에서 프롬프트 처리(Prefill)와 토큰 생성(Decode)을 함께 실행하는 기존 일체형(Colocated) 아키텍처를 먼저 보자. 이 구조는 워크로드 특성이 상반된 두 단계를 동일 가속기에 묶어 둔다. 그 결과 전체 GPU 시간의 20~40%를 구조적으로 낭비한다.
+### 0.1 제로 트러스트와 데이터 반출 경계
 
-여기에 KVCache가 특정 파드의 로컬 HBM에만 고립되는 문제가 겹친다. 기존 L7 로드밸런서는 캐시 위치와 큐 깊이를 무시한 채 요청을 분배한다. 그래서 중복 프리필 연산과 꼬리 지연(Tail Latency)이 따라온다.
+사설망에 있다는 사실만으로 접근이 안전해지는 것은 아니다. 권한을 최소화하고 요청과 워크로드의 신원을 검증하는 다층 방어가 필요하다. 아래는 외부 API 호출이 허용되지 않는 환경의 설계 예시다.
 
-분산 추론 클러스터의 데이터플레인을 재설계할 시점이다. KVCache 전송 계층(Mooncake, LMCache)과 쿠버네티스 추론 라우팅 표준(GAIE, llm-d, NVIDIA Dynamo)을 한 번에 정리해 둘 필요가 있다. 프리필·디코드 분리의 수리적 손익분기점부터 시작한다. 이어서 레이어별 스트리밍 전송을 본다. 마지막으로 TypeSafe System One(Jev)을 결합한 결정론적 라우팅 제어를 차례대로 해부한다.
+
+- **아웃바운드 기본 차단**: 워커에 퍼블릭 IP를 주지 않고 방화벽에서 인터넷 이그레스를 차단한다. 모델 가중치는 검증과 승인 절차를 거쳐 사내 암호화 객체 저장소의 사설 엔드포인트로 공급한다. 운영에 필요한 예외 경로도 명시적으로 통제한다.
+- **신원과 자격 증명**: 코드에 장기 마스터 API 키를 넣지 않는다. 호출자의 단기 OIDC/JWT 토큰을 검증하고, 워크로드 아이덴티티와 mTLS로 게이트웨이와 파드 간 통신을 보호한다. 인증뿐 아니라 테넌트별 인가와 감사가 필요하다.
+- **패브릭 격리**: GPU 간 RDMA 통신용 NIC와 관리·로그 트래픽을 분리하고 해당 경로의 접근 권한을 제한한다. 사설 네트워크만으로 데이터 유출이 불가능해지는 것은 아니다. 로그, 캐시, 저장소와 관리자 권한도 통제해야 한다.
+
+### 0.2 텐서 병렬화(TP)의 통신 비용
+
+70B 파라미터 모델의 FP16 가중치는 대략 140GB이며, KV 캐시와 런타임 메모리는 별도다. H100 80GB 한 장에 전부 담기 어렵기 때문에 모델 병렬화가 필요할 수 있다. 텐서 병렬화는 같은 레이어의 행렬을 GPU에 나누고, 파이프라인 병렬화는 레이어를 스테이지별로 나눈다.[^1]
+
+가중치 $W$를 열 방향으로 나누면 각 GPU가 $Y_i = XW_i$를 계산하고 결과를 결합한다. 행 방향 분할에서는 $Y = \sum_{i=1}^{TP} X_iW_i$의 부분합을 All-Reduce로 합친다. 배치 크기 $B$, 시퀀스 길이 $S$, 은닉 차원 $H$, 원소 크기 $b$에 대해 링 All-Reduce 한 번의 GPU당 송신량 모델은 다음과 같다.
+
+$$V_{\text{comm}} = 2 \cdot \frac{TP-1}{TP} \cdot B \cdot S \cdot H \cdot b$$
+
+이는 통신 한 번의 단순 모델이지 레이어 전체의 고정 비용이 아니다. 실제 비용은 collective 횟수·알고리즘·링크 토폴로지·지연에 좌우된다. 빠른 노드 내 링크에 TP를 우선 배치하고 노드 간 TP는 실측한다. TP를 반드시 8 이하로 제한하거나 특정 대역폭이 항상 필요하다고 단정할 수는 없다.
+
+### 0.3 파이프라인 병렬화(PP)의 버블과 선택 기준
+
+PP는 레이어 그룹 사이에 활성화 텐서를 전달하므로 노드 간 잦은 All-Reduce를 줄일 수 있지만 스테이지 불균형과 대기 시간이 생긴다. 균등한 스테이지 $PP$개에 독립 마이크로배치 $M$개를 포워드 전용 파이프라인으로 흘리는 이상화 모델의 유휴 비율은 다음과 같다.
+
+$$F_{\text{bubble}} = \frac{PP-1}{M+PP-1}$$
+
+실제 자기회귀 디코드는 토큰 의존성, 배치 스케줄링, 스테이지별 처리 시간과 통신이 다르므로 이 식만으로 예측하지 않는다. 노드 내 TP와 노드 간 PP 조합을 출발점으로 삼고, 모델 메모리 적합성, TTFT·TPOT SLO, 동시 요청 수와 패브릭 대역폭을 함께 측정한다. Mooncake는 긴 입력의 프리필에 청크 단위 PP를 적용해 노드 간 통신을 줄이는 방식을 설명한다.[^17]
+
+아래는 vLLM의 실험적 분리 프리필 예제다. 프록시가 프리필 인스턴스에 요청을 보내 KV 캐시를 만들고, 이어서 디코드 인스턴스에 요청을 전달한다. 세부 흐름은 커넥터와 버전에 따라 달라질 수 있다.
+
+![vLLM 프록시가 프리필을 요청하고 KV 캐시를 디코드 인스턴스에 전달하는 흐름](/assets/images/llm/official-vllm-disaggregated-prefill.webp)
+
+*출처: [vLLM 프로젝트의 분리 프리필 워크플로 원본](https://github.com/vllm-project/vllm/blob/a1fe24d961d85089c8a254032d35e4bdbca278d6/docs/assets/features/disagg_prefill/overview.jpg), [Apache-2.0](https://github.com/vllm-project/vllm/blob/a1fe24d961d85089c8a254032d35e4bdbca278d6/LICENSE). 원본을 WebP로 변환했다.*
+
+[그림 크게 보기](/assets/images/llm/official-vllm-disaggregated-prefill.webp)
 
 ---
 
 ## 1. 단일 파드(Colocated) 서빙의 구조적 낭비와 분리 역설
 
-긴 문서 요약 요청 하나가 파드에 들어오면, 같은 GPU에 배정된 짧은 질문들은 첫 토큰도 받지 못하고 그 뒤에 줄을 선다. 사용자 화면에서는 방금 보낸 질문의 답이 유난히 늦게 뜬다. 이 절은 단일 파드를 그대로 쓰면 왜 GPU가 노는지를 따져 본다. 대규모 언어 모델(LLM)의 자기회귀(Autoregressive) 추론은 연산 특성이 판이하게 다른 두 단계로 나뉜다[^3][^4].
+긴 문서 요약 요청이 들어오면 함께 실행 중인 짧은 질문의 토큰 생성이 지연될 수 있다. 실제 간섭과 GPU 활용도는 배칭과 워크로드에 따라 달라진다. LLM의 자기회귀 추론은 연산 특성이 다른 두 단계로 나뉜다.[^3][^4]
 
-![엔터프라이즈 KVCache 중심 분리형 서빙(PD Disaggregation)과 GAIE·EPP 추론 라우팅 아키텍처](/assets/images/llm/disaggregated-serving-kvcache-gaie-cognition.webp)
 
 ### 1.1 Prefill(Compute-bound) vs Decode(Memory-bound) 비대칭성
 
@@ -68,13 +99,13 @@ use_math: true
 
 동일한 파드와 GPU에서 두 단계를 연속 배칭(Continuous Batching)으로 혼합 실행하면 구조적 손실이 생긴다. 아래 세 가지가 대표적이다.
 
-1. **자원 불일치로 인한 20~40% GPU 시간 낭비**: 프리필이 실행되는 동안에는 HBM 대역폭이 남는다. 반면 디코드가 실행되는 동안에는 텐서 코어 연산 유닛의 70% 이상이 유휴 상태로 대기한다. 결과적으로 클러스터 전체 기준 약 20~40%의 GPU 사이클이 두 단계 간 하드웨어 요구사항 불일치로 소실된다[^3].
-2. **단계 간 간섭과 TPOT 스파이크**: 디코드 배치가 진행되는 도중에 수천 토큰 규모의 신규 프롬프트가 유입된다고 하자. 그러면 프리필 연산이 수백 밀리초 동안 GPU를 독점한다. 기존 사용자들의 **출력 토큰당 생성 시간(Time-Per-Output-Token, TPOT)**은 이 구간에서 순간적으로 5~10배 치솟는다.
-3. **병렬화 전략의 강제 결합**: 프리필은 높은 처리량을 위해 작은 텐서 병렬화($TP$)와 데이터 병렬화($DP$) 조합이 유리하다. 반면 디코드는 HBM 대역폭 확보와 대규모 전문가 병렬화(Expert Parallelism, EP)를 위해 넓은 노드 분산이 유리하다. 일체형 파드에서는 두 단계에 서로 다른 병렬화 토폴로지를 적용할 수 없다.
+1. **자원 요구의 불일치**: 프리필과 디코드는 연산과 메모리 대역폭에 서로 다른 압력을 준다. 이 차이가 곧 GPU 시간의 특정 비율이 낭비된다는 뜻은 아니다.[^3]
+2. **단계 간 간섭**: 긴 프리필이 진행되는 동안 기존 디코드 요청의 토큰 간 지연이 늘어날 수 있다. 청크 프리필과 배칭 정책에 따라 크기가 달라진다.
+3. **병렬화 전략의 결합**: 일체형 배치는 단계마다 독립적인 자원 배분과 병렬화 토폴로지를 선택하기 어렵다.
 
 ### 1.2 PD 분리의 수리적 손익분기점(Break-Even Point) 모델링
 
-**프리필-디코드 분리(Prefill-Decode Disaggregation, PD 분리)**는 프리필 전용 워커 풀과 디코드 전용 워커 풀을 물리적으로 격리한다. 그리고 프리필 풀에서 생성된 KVCache를 네트워크를 통해 디코드 풀로 넘긴다[^1][^3]. 그러나 모든 워크로드에서 PD 분리가 유리한 것은 아니다. 프리필 노드에서 디코드 노드로 KVCache 텐서를 복사하는 **전송 세금(Transfer Tax)**이 붙기 때문이다.
+**프리필-디코드 분리(Prefill-Decode Disaggregation, PD 분리)**는 프리필과 디코드를 별도 워커 풀에서 실행하고 KVCache를 전송한다.[^3] 모든 워크로드에서 유리한 것은 아니다. 전송에 따른 지연과 자원 비용이 붙기 때문이다.
 
 이 비용이 언제 이득을 넘어서는지 계산으로 확인해 보자. 모델의 레이어 수를 $L$, KV 헤드 수를 $H_{kv}$, 헤드 차원을 $d_h$라 하자. 정밀도 바이트 수 $b$는 FP16이면 $2$, FP8이면 $1$이다. 이때 입력 길이 $S_{\text{in}}$에 대한 KVCache 볼륨 $V_{\text{KV}}$는 다음과 같다.
 
@@ -84,26 +115,22 @@ $$V_{\text{KV}}(S_{\text{in}}) = 2 \cdot L \cdot H_{kv} \cdot d_h \cdot b \cdot 
 
 $$T_{\text{transfer}}(S_{\text{in}}) = \frac{V_{\text{KV}}(S_{\text{in}})}{B_{\text{net}}} + L_{\text{setup}}$$
 
-일체형 서빙에서 프리필과 디코드가 같은 배치를 공유할 때 간섭 지연 $\Delta T_{\text{interference}}(S_{\text{in}}, S_{\text{out}})$이 생긴다. 전용 하드웨어와 병렬화 최적화로 절감되는 연산 시간은 $\Delta T_{\text{compute}}(S_{\text{in}}, S_{\text{out}})$이다. PD 분리가 순이득(Net Gain)을 내는 수리적 조건은 다음과 같다.
+일체형 대비 간섭 감소와 단계별 최적화가 줄이는 시간을 각각 $\Delta T_{\text{interference}}$, $\Delta T_{\text{compute}}$라고 하자. 전송과 연산이 겹치지 않는 단순 모델의 순이득 조건은 다음과 같다.
 
-$$\Delta T_{\text{interference}}(S_{\text{in}}, S_{\text{out}}) + \Delta T_{\text{compute}}(S_{\text{in}}, S_{\text{out}}) > \frac{2 \cdot L \cdot H_{kv} \cdot d_h \cdot b \cdot S_{\text{in}}}{B_{\text{net}}} + L_{\text{setup}}$$
+$$\Delta T_{\text{interference}} + \Delta T_{\text{compute}} > T_{\text{transfer}}$$
 
-이 부등식은 운영 경계를 그대로 알려 준다. 아래 표가 워크로드 프로파일별 권장 모드를 정리한 것이다.
+실제 판단에는 요청 큐, SLO, 풀별 GPU 비용과 전송·연산 중첩을 포함해야 한다. 아래 길이는 실험할 예시이지 보편적인 경계값이 아니다.
 
-| 워크로드 프로파일 | 입력/출력 토큰 규모 | 전송 오버헤드 대비 분리 이득 | 권장 서빙 모드 |
-|---|---|---|---|
-| **단문 질의응답 및 단순 분류** | $S_{\text{in}} < 512$, $S_{\text{out}} < 200$ | $T_{\text{transfer}} + L_{\text{setup}}$이 간섭 제거 이득을 초과하여 전체 지연 시간 8~15% 악화 | 일체형(Colocated) 파드 서빙 |
-| **장문 RAG 및 문서 분석** | $S_{\text{in}} \ge 8,192$, $S_{\text{out}} \in [256, 1024]$ | 대형 프리필의 디코드 배치 블로킹 제거로 p99 TPOT 50% 이상 단축 | PD 분리 + 레이어별 KV 스트리밍 |
-| **다중 턴 에이전트 루프** | $S_{\text{in}} \ge 16,384$ (누적 컨텍스트) | 글로벌 KV 스토어 히트 시 프리필 연산 자체를 생략하고 디코드 직행 | PD 분리 + 계층형 KV 캐시 풀링 |
-| **대규모 MoE 모델 (DeepSeek-V3/Kimi K2)** | 가변 길이, 대규모 동시 배치 | 프리필(DP+TP)과 디코드(광역 EP)의 비대칭 병렬화로 Goodput 2~3배 향상 | 멀티노드 EP 결합 PD 분리 |
+| 워크로드 | 먼저 비교할 선택지 | 확인할 비용 |
+|---|---|---|
+| 짧은 질의와 출력 | 일체형과 PD 분리 | 고정 연결·전송 지연이 간섭 감소보다 큰지 |
+| 장문 RAG·문서 분석 | PD 분리와 청크 프리필 | 디코드 간섭 감소와 큰 KV 전송량 |
+| 다중 턴 에이전트 | 캐시 인식 라우팅과 KV 재사용 | 캐시 적중률, 전송 시간, 테넌트 격리 |
+| 대규모 MoE | 단계별 병렬화와 PD 분리 | 풀 비율, 전문가 통신, 네트워크 경합 |
 
-특히 [DeepSeek-V3/R1의 Multi-Head Latent Attention(MLA) 아키텍처](/llm/multi-head-latent-attention-mla-deepseek-sglang/)[^5]처럼 KV 텐서를 저차원 잠재 벡터($d_c = 512$)로 압축하는 모델을 보자. 이 구조에서는 $V_{\text{KV}}$ 자체가 표준 GQA 대비 70% 이상 줄어든다. 전송량이 줄어드는 만큼 $T_{\text{transfer}}$도 감소한다.
+[DeepSeek의 MLA](/llm/multi-head-latent-attention-mla-deepseek-sglang/)[^5]처럼 캐시 표현을 압축하는 모델은 전송량이 달라질 수 있다. 위 KV 크기 식은 일반적인 KV 헤드 표현을 가정하므로 MLA에 그대로 적용하지 않는다. 분리 여부는 같은 모델·하드웨어·요청 분포와 SLO에서 일체형 기준선을 측정해 정한다.
 
-그래서 PD 분리의 손익분기점이 더 짧은 시퀀스 영역까지 내려간다. 반면 프롬프트 512 토큰 미만·출력 200 토큰 미만의 단문 트래픽에서는 사정이 다르다. RPC 설정 비용($L_{\text{setup}}$)과 NIC 복사 오버헤드가 분리 이득을 잠식하기 때문이다.
-
-따라서 게이트웨이 계층에서 요청 특성에 따라 일체형 풀과 분리형 풀을 동적으로 분기해야 한다.
-
-**핵심 요약 — 단일 파드 서빙은 프리필(연산 바운드)과 디코드(메모리 바운드)의 자원 불일치로 GPU 시간의 20~40%를 낭비한다. 그러나 512 토큰 미만의 단문 요청에서는 KV 전송 세금이 이득을 초과한다. 따라서 수리적 손익분기점에 기반한 선택적 PD 분리가 필수적이다**.
+**핵심 요약 — PD 분리는 간섭과 병렬화 결합을 줄일 수 있지만 KV 전송 비용을 치른다. 단문과 장문을 포함한 실제 트래픽에서 손익분기점을 측정해야 한다.**
 
 ---
 
@@ -117,9 +144,9 @@ PD 분리 클러스터를 구축하더라도 앞단의 인그레스 프록시가
 
 ### 2.1 전통적 L7 게이트웨이의 한계와 추론 트래픽의 비대칭성
 
-기존 Envoy나 NGINX 인그레스는 라운드로빈(Round-Robin)이나 최소 연결(Least-Connections) 알고리즘을 쓴다. 두 방식 모두 **HTTP 요청 1건의 무게를 동일하게 취급**한다. 그러나 LLM 서빙에서 200 토큰짜리 단문 요청 1건과 20,000 토큰짜리 장문 요약 요청 1건은 연산량과 HBM 점유량에서 100배 이상 차이가 난다.
+기존 Envoy나 NGINX 인그레스의 라운드로빈과 최소 연결 방식은 토큰 길이와 캐시 위치를 직접 고려하지 않는다. 입력 길이가 서로 다른 요청은 연산량과 메모리 점유량도 다를 수 있다.
 
-더 큰 문제는 **캐시 비인식(Cache-Oblivious) 라우팅**이다. [Kubernetes 환경에서 vLLM과 SGLang의 접두사 캐싱(Prefix Caching) 비교](/llm/k8s-low-latency-llm-serving-vllm-sglang/)[^8]에서 분석했듯, 다중 턴 대화나 동일한 시스템 프롬프트를 공유하는 RAG 요청이 있다. 이 요청이 이전에 처리된 워커 파드로 다시 라우팅되면 KVCache 히트를 통해 TTFT를 60~80% 줄일 수 있다.
+**캐시 비인식(Cache-Oblivious) 라우팅**에서는 같은 시스템 프롬프트를 쓰는 요청이 이전 워커로 돌아가지 못할 수 있다. 접두사 캐싱과 TTFT의 관계는 [vLLM과 SGLang 비교](/llm/k8s-low-latency-llm-serving-vllm-sglang/)[^8]에서도 다룬다. 절감폭은 적중 길이와 부하에 따라 달라진다.
 
 반면 단순 라운드로빈 라우터는 요청을 매번 다른 파드로 흩뿌린다. 그러면 클러스터 전체에서 동일한 프리필 연산이 중복 수행된다. HBM 공간도 중복 KV 블록으로 채워진다.
 
@@ -157,9 +184,41 @@ $$S_{\text{EPP}}(p, q) = w_{\text{cache}} \cdot H_{\text{prefix}}(p, q) + w_{\te
 
 ### 2.4 TypeSafe System One(Jev) 기반 초저지연 라우팅 분기 제어
 
-프롬프트의 단순 토큰 길이($S_{\text{in}}$)만으로는 **출력 시퀀스 길이($S_{\text{out}}$)와 추론 복잡도**를 사전에 알 수 없다. 예를 들어 입력은 300 토큰에 불과한 요청이 있다. 그런데 작업 지시가 `"주어진 스키마를 바탕으로 5개 마이크로서비스의 전체 OpenAPI 명세와 마이그레이션 코드를 작성하라"`처럼 되어 있다면 수천 토큰의 긴 디코드 세션이 열린다.
+입력 토큰 길이만으로 출력 길이나 추론 복잡도를 확정할 수 없다. 게이트웨이에서 민감도·요청 티어·주입 가능성을 평가한 뒤, 허용된 경로 중 어디로 보낼지 선택하는 설계를 고려할 수 있다.
 
-라우터 앞단에서 무거운 생성형 LLM을 호출해 이를 분류하면 수백 밀리초의 지연이 더해진다. 그래서 TypeSafe AI의 비생성형 판정 엔진인 **System One(Jev)**[^9]을 인바운드 라우터에 결합한다. `POST /v1/systemone` 엔드포인트는 단일 순전파 패스로 70~120ms 내에 타입화된 판정 결과를 반환한다.
+TypeSafe AI의 System One(Jev)[^9]을 L1 평가 계층으로 사용하는 다음 루브릭은 개념 예시다. 외부 판정 서비스에 원문을 보내는 것 자체가 반출일 수 있으므로 사설망 정책과 서비스 배치·데이터 처리 조건을 먼저 확인해야 한다. 배치가 허용되지 않으면 승인된 내부 통제 수단을 사용한다.
+
+```python
+from typesafe import SystemOne, Choice, Noul
+
+client = SystemOne()
+ENTERPRISE_GATEWAY_RUBRIC = {
+    "data_sensitivity": Choice(
+        instructions="입력의 기밀 정보 및 규제 등급을 분류하시오.",
+        criteria={
+            "public_general": "공개 가능한 일반 질의.",
+            "internal_confidential": "사내 코드, 회의록 또는 업무 지침.",
+            "restricted_pii": "개인 식별 정보, 재무 결산 또는 감사 대상 데이터.",
+        },
+    ),
+    "compute_tier": Choice(
+        instructions="요청에 적합한 서빙 티어를 분류하시오.",
+        criteria={
+            "l1_cache_or_small": "캐시 또는 소형 모델로 해결 가능한 단순 요청.",
+            "l2_standard_70b": "일반 코드 작성이나 문서 구조화 분석.",
+            "l3_distributed_frontier": "대규모 분산 추론이 필요한 복잡한 요청.",
+        },
+    ),
+    "is_adversarial_injection": Noul(
+        instructions="시스템 지침 우회 또는 비인가 정보 유출 시도가 포함되어 있는가?"
+    ),
+}
+# 판정 결과를 검증된 정책 엔진에 전달한다.
+```
+
+예를 들어 호스트 정책은 주입 의심 요청을 검토·거절하고, 제한 정보는 실제로 격리된 엔드포인트만 허용하며, 나머지는 허용 목록 안에서 소형 또는 분산 풀로 보낼 수 있다. 모델 이름만 바꿔서는 격리가 되지 않는다. 판정은 오탐과 누락이 있으므로 인가, DLP, 네트워크 차단을 대체하지 못한다. 실패·타임아웃 시 민감 요청을 외부 경로로 보내지 않도록 정책을 정하고, 라벨링한 홀드아웃 데이터로 분류 품질과 지연을 측정한다.
+
+아래는 출력 길이와 캐시 상태를 이용한 별도 경로 선택 예시다. 지연 수치와 임계값은 서비스·환경·부하에 따라 측정해야 한다.
 
 호스트 코드는 이 결과를 바탕으로 경로를 결정론적으로 나눈다. 경로는 **일체형 단문 풀(Colocated Short Pool)**, **PD 분리 파이프라인(Disaggregated PD Pool)**, **디코드 직행(Decode Direct Bypass)** 세 가지다.
 
@@ -248,7 +307,7 @@ async def dispatch_inference_request(
         questions=DISAGG_ROUTING_RUBRIC,
     )
 
-    # 홀드아웃 검증 데이터셋으로 보정된 임계값 기반 결정론적 호스트 분기
+    # 예시 임계값: 실제 홀드아웃 데이터로 보정해야 한다.
     if cached_decode_pod_url and prefix_hit_ratio >= 0.90 and judgment.can_bypass_prefill_pool.prob >= 0.88:
         target_endpoint = f"{cached_decode_pod_url}/v1/chat/completions"
         routing_mode = "DECODE_DIRECT_BYPASS"
@@ -264,7 +323,7 @@ async def dispatch_inference_request(
         return resp.json()
 ```
 
-**핵심 요약 — GAIE와 EPP는 큐 깊이와 KV 캐시 히트율을 결합해 추론 요청을 스케줄링한다. 여기에 TypeSafe System One(Jev)을 앞단에 결합하면 단문 일체형 경로·PD 분리 경로·프리필 우회 직행 경로를 100ms 내외의 단일 패스로 결정론적 분기할 수 있다**.
+**핵심 요약 — GAIE와 EPP의 라우팅에 판정 계층을 결합할 수 있지만, 임계값과 전체 지연은 실측하고 인가·데이터 격리는 별도로 강제해야 한다.**
 
 ---
 
@@ -287,7 +346,7 @@ PD 분리와 캐시 인식 라우팅을 쿠버네티스에서 굴리려면 전�
 | **스케줄링 및 배포 단위** | 단일 그래프 선언 내에서 Frontend, Router, Prefill Worker, Decode Worker 생명주기 통합 관리 | Prefill, Decode, Router를 각각 독립된 K8s `Service` 및 `LeaderWorkerSet`으로 분리 배포 |
 | **오토스케일링 시그널** | **Planner Profiler + SLA Planner**: 목표 TTFT/ITL SLO에 맞춰 Prefill:Decode 비율 자동 재조정 | 역할별 분리 HPA: 프리필 풀은 **Queue Depth**, 디코드 풀은 **KV Cache Utilization** 기반 독립 스케일링 |
 | **KV 캐시 전송 계층** | **NIXL(NVIDIA Inference Transfer Library)**: GPUDirect RDMA/InfiniBand 우선, UCX/TCP 자동 폴백 | vLLM NIXL 커넥터, **LMCache**, **UCCL**(컨테이너 레벨 집합 통신 및 전송) 플러그인 지원 |
-| **핵심 특화 기능** | 글로벌 KV 캐시 관리자(GPU HBM ↔ CPU DRAM ↔ 로컬/네트워크 SSD 티어링), 이기종 엔진 통합 | 계층형 KV 오프로딩, 캐시 인식 LoRA 어댑터 라우팅, 토폴로지 랙 패킹(`packDomain: rack`), Scale-to-Zero |
+| **핵심 특화 기능** | 글로벌 KV 캐시 관리자(GPU HBM ↔ CPU DRAM ↔ 로컬/네트워크 SSD 티어링), 이기종 엔진 통합 | 계층형 KV 오프로딩, 캐시 인식 LoRA 어댑터 라우팅, 토폴로지 인식 배치, Scale-to-Zero |
 
 ### 3.2 NVIDIA Dynamo 1.0: SLA Planner와 NIXL 전송 추상화
 
@@ -310,7 +369,7 @@ Dynamo의 핵심 차별점은 **SLA Planner**와 **NIXL(NVIDIA Inference Transfe
 이를 해결하기 위해 llm-d는 Kubernetes SIG Apps의 **LeaderWorkerSet(LWS)**[^12]을 기본 워크로드 컨트롤러로 사용한다. 아래 네 가지 기능이 그 핵심이다.
 
 - **그룹 단위 원자적 생명주기(All-or-Nothing Topology)**: 1개의 리더 파드(Rank 0)와 $N-1$개의 워커 파드를 단일 복제본 그룹으로 묶어 함께 생성·재시작·스케일링한다. 2026년 7월 릴리스된 **LWS v1.2**에서는 동적 토폴로지 조정과 우선순위 어노테이션이 추가되었다. 부분 노드 장애 시 그룹 재스케줄링 속도가 개선되었다.
-- **물리적 랙 인식 배치(`packDomain: rack`)**: LWS 매니페스트의 `topologyConstraint`에 `packDomain: rack`을 선언할 수 있다. 그러면 스케줄러가 동일 복제본 그룹에 속한 파드들을 동일 Top-of-Rack(ToR) 스위치 아래 노드에 모아 배치한다. Spine 스위치를 거치는 홉(Hop) 지연을 차단하기 위함이다.
+- **물리적 토폴로지 인식 배치**: LWS 공식 문서는 `leaderworkerset.sigs.k8s.io/exclusive-topology` 어노테이션에 노드 토폴로지 레이블 키를 지정하는 방식을 설명한다.[^19] 예를 들어 랙을 나타내는 레이블이 모든 관련 노드에 정확히 지정되어 있다면 그룹별로 같은 랙 도메인에 배치할 수 있다. 이 기능은 설치한 LWS 버전과 클러스터의 레이블·스케줄링 조건을 확인해야 하며, 랙 배치만으로 네트워크 경로나 혼잡 방지가 보장되지는 않는다.
 - **역할별 비대칭 오토스케일링**: llm-d는 프리필과 디코드를 별도의 쿠버네티스 `Service`로 노출한다. 프리필 풀의 HPA는 **대기 큐 길이(Queue Depth)**를 주 시그널로 삼는다. 디코드 풀의 HPA는 **KV 캐시 메모리 사용률(KV Utilization)**을 주 시그널로 삼아 HBM 고갈을 방어한다.
 - **llm-d v0.5 확장 기능**: 계층형 KV 오프로딩(HBM $\to$ CPU RAM $\to$ 원격 스토리지)을 지원한다. 캐시 인식 LoRA 라우팅과 컨테이너 집합 통신 가속을 위한 **UCCL** 통합도 포함한다. 유휴 시간대 GPU 비용을 줄이는 **Scale-to-Zero**도 제공한다.
 
@@ -337,19 +396,15 @@ KVCache 중심 서빙 아키텍처는 고전 원리를 GPU 클러스터로 옮�
 
 ### 4.2 전송 계층 병목 해부: Post-prefill Pull vs Layer-by-layer 스트리밍
 
-KVCache를 언제, 어떤 단위로 보내느냐에 따라 체감 지연이 크게 바뀐다. **첫 토큰 생성 시간(Time-To-First-Token, TTFT)**이 여기에 직접 걸린다. 최근 연구(arXiv:2610.18444)[^16]는 두 가지 전송 패턴의 차이를 실측으로 보여준다.
+KVCache를 언제, 어떤 단위로 보내느냐에 따라 지연이 바뀐다. 전송은 첫 토큰까지 걸리는 시간(TTFT)에 영향을 줄 수 있다. 광 회선 전환을 프리필에 겹치는 방법도 연구되었으며, 해당 연구의 결과는 H100에서 측정한 프리필 시간을 바탕으로 한 시뮬레이션이다.[^16]
 
 1. **기본 vLLM NIXL 커넥터의 Post-prefill Pull 방식**:
    프리필 워커가 $L$개 레이어의 순전파를 끝까지 완료한다. 그 뒤 디코드 워커로 완료 알림을 보낸다. 디코드 워커는 원격 읽기(RDMA Read / Pull)로 전체 KVCache를 가져온다. 이 방식에서는 연산 시간 $T_{\text{prefill}}$과 전송 시간 $T_{\text{transfer}}$가 직렬로 이어진다.
    $$\text{TTFT}_{\text{pull}} = T_{\text{prefill}} + T_{\text{transfer}} + T_{\text{decode\_step1}}$$
-   입력 컨텍스트가 32K~128K 토큰으로 커지면 $T_{\text{transfer}}$가 수백 밀리초에 달한다. 그만큼 TTFT가 정직하게 늘어난다.
+   실제 전송 시간은 캐시 크기, 유효 대역폭, 혼잡에 따라 측정해야 한다.
 
-2. **Mooncake 및 LMCache의 Layer-by-layer 비동기 스트리밍(Push) 방식**:
-   트랜스포머의 $l$번째 레이어($l = 1, \dots, L$) 연산이 끝나는 즉시 전송을 시작한다. 전용 CUDA 스트림과 비동기 RDMA 스레드가 해당 KV 텐서를 디코드 노드로 바로 푸시(Push)한다. 그동안 GPU 연산 스트림은 멈추지 않고 $l+1$번째 레이어 연산을 이어간다.
-
-$$T_{\text{effective\_transfer}} = \max\left(0, \; \sum_{l=1}^{L} T_{\text{transfer}}^{(l)} - \sum_{l=2}^{L} T_{\text{compute}}^{(l)}\right) + T_{\text{transfer}}^{(L)}$$
-
-연산 시간 동안 $1 \sim L-1$번째 레이어의 전송이 백그라운드에서 오버랩(Overlap)되어 가려진다. 그래서 겉으로 드러나는 순수 전송 지연은 **마지막 레이어($L$)의 전송 시간 $T_{\text{transfer}}^{(L)}$** 수준으로 줄어든다[^16].
+2. **레이어별 비동기 스트리밍**:
+   Mooncake 논문은 레이어별로 생성된 KVCache를 전송하면서 후속 프리필 연산을 이어가는 방식을 설명한다.[^17] 연산과 전송이 겹치면 프리필 완료 후 남는 대기 시간을 줄일 수 있지만, 대역폭이 부족하거나 큐가 쌓이면 마지막 레이어 외에도 전송이 남는다. 실제 중첩과 지연은 엔진·전송 경로·하드웨어별로 확인해야 한다.
 
 이삿짐을 모두 싼 뒤에 트럭을 부르는 방식과, 짐을 싸는 즉시 트럭에 올리는 방식의 차이다. 뒤쪽은 포장이 끝나기를 기다리지 않으므로 트럭이 짐을 다 받는 시점이 앞당겨진다.
 
@@ -359,12 +414,12 @@ Moonshot AI와 칭화대 연구진이 설계한 **Mooncake**[^17]를 보자. KVC
 
 Mooncake의 핵심 엔진은 **Transfer Engine**이다. 서버에 장착된 여러 RDMA NIC(예: 4×200Gbps 또는 8×400Gbps RoCE v2 / InfiniBand)를 하나의 논리 전송 파이프로 묶는다(Multi-NIC Aggregation). GPU-CPU-NIC 간 NUMA 토폴로지도 자동으로 탐색한다. 이를 통해 크로스 소켓 QPI/UPI 병목을 피해 간다.
 
-| 벤치마크 시나리오 및 환경 | 비교 기준 (Baseline) | Mooncake 실측 성능 | 핵심 기술 요인 |
-|---|---|---|---|
-| **LLaMA3-70B 12.8만 토큰 (40GB KV) 전송 (4×200Gbps RoCE)** | TCP 소켓 전송 (약 36 GB/s) | **최대 87 GB/s** (TCP 대비 2.4배 가속) | NUMA 인식 다중 RNIC 대역폭 병합 및 제로카피 RDMA Write |
-| **LLaMA3-70B 12.8만 토큰 (40GB KV) 전송 (8×400Gbps RoCE)** | TCP 소켓 전송 (약 41 GB/s) | **최대 190 GB/s** (TCP 대비 4.6배 가속) | 8개 400G NIC 스트라이핑 및 PCIe Gen5 Direct P2P 전송 |
-| **장문 컨텍스트 시뮬레이션 및 실 프로덕션 부하** | 기존 일체형 vLLM 기준선 | 시뮬레이션 처리량 **최대 525% 증가**, 실 Kimi 워크로드 **75% 더 많은 요청 처리** | SLO 인식 조기 거절(Early Rejection) + 글로벌 DRAM KV 풀 재사용 |
-| **128대 H200 클러스터 Kimi K2 (대규모 MoE) 배포** | 단일 역할 대칭 배포 | **프리필 22.4만 tok/s, 디코드 28.8만 tok/s** 달성 | PD 분리 + 대규모 전문가 병렬화(EP) 결합 및 무손실 KV 스트리밍 |
+| 실험 조건과 비교 기준 | 논문이 보고한 결과 |
+|---|---|
+| 16개 8×A800 노드, 실제 대화 트레이스, TTFT·TBT SLO 아래 vLLM 기준선과 비교 | 기준선과 TBT 조건에 따라 유효 요청 용량 59~498% 증가 |
+| Kimi 운영의 기존 시스템 대비 저자 측 과거 통계 | A800에서 115%, H800에서 107% 더 많은 요청 처리 |
+
+이는 논문 저자의 특정 환경 결과이며 모든 PD 배포에 적용되는 수치가 아니다.[^17] 흡수된 이전 글의 32개 H100, 입력 4,096·출력 1,024 토큰 표와 p99 63% 감소는 해당 논문에서 같은 실험 조건과 수치를 확인하지 못해 실측 결과로 인용하지 않는다.
 
 또한 Mooncake는 노드들의 유휴 CPU DRAM과 로컬 SSD를 묶어 분산 KV 저장소(**Mooncake Store**)를 만든다. 특정 파드의 HBM에서 쫓겨난(Evict) KV 블록도 원격 DRAM 풀에 남아 있을 수 있다. 그러면 다음 턴 요청이 들어왔을 때 재연산하지 않고 RDMA로 읽는다. 프리필 GPU 연산을 아끼는 방법이다.
 
@@ -372,122 +427,109 @@ Mooncake의 핵심 엔진은 **Transfer Engine**이다. 서버에 장착된 여�
 
 vLLM 생태계에서 널리 쓰이는 **LMCache**[^18]는 PagedAttention의 구조적 I/O 단위 불일치를 해결하는 데 집중한다.
 
-vLLM의 기본 페이지 크기(보통 16 토큰 블록)는 개당 **20KB~63KB** 수준이다. 이처럼 잘게 쪼개진 비연속 메모리 포인터를 그대로 I/O 큐에 던지면 오버헤드가 크다. 드라이버 인터럽트와 디스크립터 생성 비용 때문에 400Gbps NIC 대역폭의 15%도 채우지 못한다.
+잘게 쪼개진 비연속 KV 페이지를 개별적으로 전송하면 요청과 메타데이터 처리 오버헤드가 늘 수 있다. 블록 크기와 대역폭 활용률은 모델과 구현에 따라 달라진다.
 
 LMCache는 이를 두 단계로 해결한다.
 
 1. **가변 대형 청크 병합(Configurable Chunk Coalescing)**: 파편화된 KV 페이지들을 전송 직전에 묶는다. **256 토큰 이상의 연속된 대형 청크(수 메가바이트 단위)**로 병합하여 단일 벌크 DMA/RDMA 트랜잭션으로 밀어 넣는다.
 2. **별도 CUDA 스트림 기반 레이어별 파이프라이닝**: 추론 연산용 기본 스트림과 분리된 전용 I/O 스트림(`cudaStreamNonBlocking`)을 띄운다. 레이어 연산이 돌아가는 동안 백그라운드에서 CPU RAM, 로컬 디스크, NIXL, 또는 Mooncake Store로 KV 청크를 비동기 전송한다.
 
-**핵심 요약 — Mooncake와 LMCache는 OS 가상 메모리 계층화와 GFS의 대형 청크 분리 원리를 빌려왔다. 소형 KV 페이지를 대형 청크로 병합하고, 레이어별 비동기 스트리밍과 다중 RDMA NIC 병합으로 40GB KV 캐시를 최대 190GB/s 속도로 은닉 전송한다**.
+**핵심 요약 — Mooncake와 LMCache는 KVCache를 계층화하고 전송을 최적화한다. 전송 속도와 연산 중첩 효과는 하드웨어와 구현 조건에서 따로 측정해야 한다.**
 
 ---
 
-## 5. 실전 배포 토폴로지: DynamoGraphDeployment와 LMCacheEngine 매니페스트
+## 5. 배포 예시: Dynamo PD 분리와 LMCache CPU 오프로딩
 
-매니페스트를 붙여 넣고 파드가 모두 Running이 되면 배포가 끝난 것처럼 보인다. 그런데 청크 크기와 RDMA 바인딩, 랙 고정 세 줄이 빠지면 설계한 대역폭은 나오지 않는다. 이 절은 앞서 살펴본 Dynamo와 LMCache를 쿠버네티스 매니페스트로 엮는 실전 배포를 다룬다. 실제 프로덕션 클러스터에서 멀티프로세스 PD 분리 파이프라인을 배포하는 YAML 예시다. `disagg_lmcache_mp.yaml` 스타일의 선언적 매니페스트 구조를 나타낸다.
+아래 두 예시는 서로 다른 공식 구성을 보여준다. 첫째는 Dynamo의 NIXL 기반 PD 분리이고, 둘째는 별도 vLLM 서버의 LMCache CPU 오프로딩이다. 두 예시를 결합한 통합 매니페스트라고 가정해서는 안 된다.
 
-### 5.1 쿠버네티스 `DynamoGraphDeployment` 및 `LMCacheEngine` 통합 매니페스트
+### 5.1 Dynamo 1.0.0 공식 분리형 배포
 
-아래 매니페스트는 Dynamo 선언 안에서 프리필과 디코드 워커를 나누고 LMCache로 KV 캐시를 연동하는 실제 배포 예시다.
+다음은 Dynamo **v1.0.0**의 vLLM 분리형 [공식 `disagg.yaml` 예제][^20]다. `nvidia.com/v1alpha1`과 `spec.services`는 이 버전의 API이며, 다른 버전에 그대로 적용한다고 가정하지 않는다. 프론트엔드와 프리필·디코드 워커가 각각 선언되며 프리필 워커의 `NixlConnector`는 LMCache 커넥터가 아니다.
 
 ```yaml
+# SPDX-FileCopyrightText: Copyright (c) 2025-2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
 apiVersion: nvidia.com/v1alpha1
 kind: DynamoGraphDeployment
 metadata:
-  name: llama3-70b-disagg-lmcache
-  namespace: llm-serving
+  name: vllm-disagg
 spec:
-  slaPlanner:
-    enabled: true
-    targetTtftMs: 800
-    targetItlMs: 25
-    minPrefillWorkers: 2
-    maxPrefillWorkers: 12
-    minDecodeWorkers: 4
-    maxDecodeWorkers: 24
   services:
     Frontend:
-      dynamoNamespace: llama3-disagg
-      componentType: main
-      replicas: 2
-    KvRouter:
-      dynamoNamespace: llama3-disagg
-      componentType: router
-      replicas: 2
-      env:
-        - { name: DYNAMO_ROUTER_KV_OVERLAP_WEIGHT, value: "1.5" }
-        - { name: DYNAMO_ROUTER_QUEUE_PENALTY_WEIGHT, value: "0.8" }
-    PrefillWorker:
-      dynamoNamespace: llama3-disagg
+      componentType: frontend
+      replicas: 1
+      extraPodSpec:
+        mainContainer:
+          image: nvcr.io/nvidia/ai-dynamo/vllm-runtime:1.0.0
+    VllmDecodeWorker:
+      envFromSecret: hf-token-secret
       componentType: worker
-      replicas: 4
-      topologyConstraint: { packDomain: rack }
+      subComponentType: decode
+      replicas: 1
       resources:
-        limits: { nvidia.com/gpu: "8", rdma/roce_gdr: "4" }
-      env:
-        - { name: VLLM_USE_V1, value: "1" }
-        - { name: LMCACHE_USE_EXPERIMENTAL, value: "True" }
-        - { name: LMCACHE_CONFIG_FILE, value: "/etc/lmcache/lmcache-prefill.yaml" }
-      args:
-        - "vllm"
-        - "serve"
-        - "/models/Meta-Llama-3.1-70B-Instruct"
-
-        - "--tensor-parallel-size=8"
-        - "--enable-prefix-caching"
-        - "--kv-transfer-config"
-        - '{"kv_connector":"LMCacheConnectorV1","kv_role":"kv_producer","kv_parallel_size":8}'
-    DecodeWorker:
-      dynamoNamespace: llama3-disagg
+        limits:
+          gpu: "1"
+      extraPodSpec:
+        mainContainer:
+          image: nvcr.io/nvidia/ai-dynamo/vllm-runtime:1.0.0
+          workingDir: /workspace/examples/backends/vllm
+          command:
+          - python3
+          - -m
+          - dynamo.vllm
+          args:
+            - --model
+            - Qwen/Qwen3-0.6B
+            - --disaggregation-mode
+            - decode
+    VllmPrefillWorker:
+      envFromSecret: hf-token-secret
       componentType: worker
-      replicas: 8
-      topologyConstraint: { packDomain: rack }
+      subComponentType: prefill
+      replicas: 1
       resources:
-        limits: { nvidia.com/gpu: "8", rdma/roce_gdr: "4" }
-      env:
-        - { name: VLLM_USE_V1, value: "1" }
-        - { name: LMCACHE_USE_EXPERIMENTAL, value: "True" }
-        - { name: LMCACHE_CONFIG_FILE, value: "/etc/lmcache/lmcache-decode.yaml" }
-      args:
-        - "vllm"
-        - "serve"
-        - "/models/Meta-Llama-3.1-70B-Instruct"
-
-        - "--tensor-parallel-size=8"
-        - "--max-num-seqs=512"
-        - "--kv-transfer-config"
-        - '{"kv_connector":"LMCacheConnectorV1","kv_role":"kv_consumer","kv_parallel_size":8}'
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: lmcache-engine-config
-  namespace: llm-serving
-data:
-  lmcache-prefill.yaml: |
-    chunk_size: 256
-    local_cpu: true
-    max_local_cpu_size: 64.0
-    enable_async_loading: true
-    transfer_channel: "nixl"
-    remote_url: "mooncakestore://mooncake-master.llm-serving.svc:50051"
-    remote_serde: "naive"
-    pipelined_backend: true
-    numa_bind_policy: "auto_strict"
+        limits:
+          gpu: "1"
+      extraPodSpec:
+        mainContainer:
+          image: nvcr.io/nvidia/ai-dynamo/vllm-runtime:1.0.0
+          workingDir: /workspace/examples/backends/vllm
+          command:
+          - python3
+          - -m
+          - dynamo.vllm
+          args:
+            - --model
+            - Qwen/Qwen3-0.6B
+            - --disaggregation-mode
+            - prefill
+            - --kv-transfer-config
+            - '{"kv_connector":"NixlConnector","kv_role":"kv_both"}'
 ```
 
-### 5.2 프로덕션 배포 시 핵심 검증 포인트
+공식 배포 안내[^21]의 전제는 Dynamo Kubernetes 플랫폼 설치, GPU 클러스터와 이미지 레지스트리 접근, 배포 네임스페이스의 `hf-token-secret`이다. 공식 예제는 Hugging Face에서 모델을 받는 구성이다. 외부 연결을 차단한 환경에서는 승인된 모델 공급 경로와 이미지·시크릿을 별도로 준비해야 한다. 위 설정은 SLA Planner나 랙 배치를 선언하지 않는다.
 
-프로덕션 배포 시에는 아래 세 가지 검증 포인트를 순서대로 확인해야 한다.
+### 5.2 별도 LMCache CPU 오프로딩과 검증 포인트
 
-1. **청크 크기(`chunk_size: 256`)와 레이어 파이프라이닝**: vLLM의 기본 16 토큰 블록을 묶는다. 256 토큰 단위로 묶어 NIXL 및 Mooncake Store로 보낸다. 이렇게 해서 소형 패킷 오버헤드를 걷어낸다.
-2. **GPUDirect RDMA 리소스 바인딩(`rdma/roce_gdr: "4"`)**: 쿠버네티스 SR-IOV 또는 RDMA Plugin으로 파드에 RNIC를 직접 할당한다. `numa_bind_policy: "auto_strict"` 설정으로 GPU와 같은 PCIe 루트 아래의 NIC만 매핑한다.
-3. **랙 단위 토폴로지 고정(`packDomain: rack`)**: 프리필과 디코드 워커 그룹이 물리적 랙 경계를 넘지 않게 묶는다. 스케줄링 제약을 걸어 RoCE v2 PFC 스톰과 크로스 랙 지연 변동을 억제한다.
+LMCache 공식 CPU RAM 문서[^22]의 독립 vLLM 예제에서 사용하는 `cpu-offload.yaml` 설정은 다음과 같다. 문서는 특정 LMCache 버전을 고정하지 않으므로 설치 전에 [버전 호환성 안내](https://docs.lmcache.ai/getting_started/compatibility.html)를 확인해야 한다.
 
-낱개 택배 상자를 창구에 하나씩 올리는 대신 팔레트 단위로 묶어 넘기는 것과 같다. 상자마다 라벨을 다시 붙이는 시간이 사라지고, 창구는 화물을 옮기는 일에만 집중하면 된다.
+```yaml
+chunk_size: 256
+local_cpu: true
+max_local_cpu_size: 5.0
+```
 
-**핵심 요약 — 프로덕션 배포 매니페스트에서는 vLLM의 `LMCacheConnectorV1`을 통해 생산자(Prefill)와 소비자(Decode) 역할을 분리한다. 256 토큰 청크 병합·NUMA 바인딩·랙 패킹(`packDomain: rack`)을 선언적으로 결합해야 설계된 RDMA 처리량이 달성된다**.
+같은 공식 예제는 `LMCACHE_CONFIG_FILE`로 이 파일을 지정하고 `LMCACHE_USE_EXPERIMENTAL=True` 환경 변수를 설정한다. vLLM에 `--kv-transfer-config '{"kv_connector":"LMCacheConnectorV1", "kv_role":"kv_both"}'`를 전달하여 로컬 CPU 캐시의 저장·로드를 사용한다. 이는 위 Dynamo PD 배포와 별도인 단일 서버 오프로딩 예제이며, 워커 간 KV 전송이나 Dynamo와의 통합을 검증한 구성은 아니다.
+
+운영 환경에서는 다음을 확인한다.
+
+1. **버전과 캐시**: 설치된 CRD와 엔진·커넥터 버전의 호환성, 모델 접근 경로, 캐시 적중률과 청크 크기에 따른 메모리·전송 비용을 측정한다.
+2. **네트워크와 NUMA**: 실제 장치 플러그인이 노출하는 리소스 이름과 GPU·NIC 토폴로지를 확인한다. 워커 간 유효 대역폭, 지연, 패킷 손실과 혼잡, RDMA 경로 및 GPU 직접 전송 사용 여부를 계측한다. 장치 이름이나 NUMA 옵션은 환경과 제품 버전별로 다르다.
+3. **토폴로지와 장애**: 노드 레이블 및 LWS 버전에 맞는 배치를 검증하고, 랙 간 경로와 PFC 설정·카운터를 관찰한다. 랙 배치만으로 PFC 스톰이나 혼잡이 억제된다고 보장할 수 없다.
+
+**핵심 요약 — 버전이 고정된 공식 배포를 기준으로 시작하고, LMCache 설정은 별도 예제로 다룬다. 실제 통합 및 네트워크 효과는 해당 조합에서 검증해야 한다.**
+
 
 ---
 
@@ -495,10 +537,10 @@ data:
 
 출근 직후에는 짧은 질문만 쏟아지는데, 그 시간대에 오히려 꼬리 지연이 나빠지는 일이 생긴다. 원인은 파드를 나눈 구조 자체가 짧은 요청에서 손해를 보기 때문이다. 이 절은 PD 분리 아키텍처를 도입하기 전에 따져 보아야 할 제약과 비용을 다룬다. KVCache 중심 PD 분리와 GAIE 라우팅은 대규모 클러스터의 Goodput을 끌어올린다. 그러나 운영 현장에서 마주하는 4가지 한계와 트레이드오프가 있다.
 
-1. **단문 워크로드에서의 역성능(Transfer Tax Dominance)**:
-   1.2절의 손익분기점 모델을 보자. 입력 512 토큰 미만·출력 200 토큰 미만 트래픽에서는 전송 세금이 이득을 넘는다. KVCache 직렬화, RDMA 메타데이터 협상($L_{\text{setup}}$), 워커 간 홉 지연이 분리 이득보다 크다. 모든 트래픽에 획일적으로 PD 분리를 걸면 단문 TTFT가 오히려 8~15% 악화된다. 따라서 일체형 패스트패스(Fast-path) 풀을 함께 굴려야 한다.
-2. **RDMA 패브릭 및 NUMA 하드웨어 의존성**:
-   Mooncake의 87~190GB/s 전송 속도는 베어메탈 고성능 클러스터를 전제로 한다. 4×200Gbps 또는 8×400Gbps RoCE v2 / InfiniBand와 GPUDirect RDMA가 필수다. 일반 25~100GbE TCP 네트워크에서는 전송 계층이 바로 병목이 된다. PCIe P2P가 꺼진 가상화 환경에서도 프리필 워커의 버퍼가 막힌다(Backpressure stall).
+1. **단문 워크로드에서의 전송 비용**:
+   KVCache 전송과 워커 간 홉의 고정 비용이 간섭 감소보다 크면 일체형보다 느릴 수 있다. 일체형 풀을 기준선으로 유지하고 실제 트래픽에서 비교한다.
+2. **네트워크 및 NUMA 의존성**:
+   KV 전송량과 유효 대역폭, 혼잡, GPU·NIC 토폴로지가 손익을 좌우한다. RDMA는 유용한 선택지지만 모든 배포에 특정 속도의 RDMA가 필수인 것은 아니다. 일반 이더넷과 가상화 환경에서는 해당 경로를 측정한다.
 3. **트래픽 급변 시 Prefill:Decode 비율 리밸런싱 지연**:
    문서 요약 배치가 몰리면 프리필 풀이 먼저 찬다. 반대로 긴 코드 생성이 몰리면 디코드 풀의 HBM이 바닥난다. Dynamo의 SLA Planner나 llm-d의 역할별 HPA가 워커 비율을 재조정할 수 있다. 그러나 새 파드 HBM에 수백 기가바이트의 모델 가중치를 올리는 데 수십 초에서 수 분의 지연(Scaling Lag)이 든다.
 4. **TypeSafe System One(Jev) 라우팅 임계값 보정과 타입 안정성의 한계**:
@@ -506,15 +548,13 @@ data:
 
 환전할 때 붙는 고정 수수료와 같다. 바꾸는 금액이 작을수록 수수료의 비중이 커져서, 작은 금액을 나눠 바꾸는 쪽이 오히려 손해다.
 
-**핵심 요약 — PD 분리 아키텍처는 단문 요청의 전송 세금, 400Gbps급 RDMA 하드웨어 강제성, 가중치 로딩으로 인한 오토스케일링 지연이라는 물리적 제약을 안고 있다. 따라서 홀드아웃 데이터셋으로 보정된 라우팅 정책과 일체형 풀 병행 전략이 함께 설계되어야 한다**.
+**핵심 요약 — 전송 비용, 네트워크와 NUMA, 풀 비율 조정 지연, 라우팅 오분류를 같은 SLO와 실제 트래픽 조건에서 평가한다.**
 
 ---
 
-*PD 분리와 KVCache 전송, GAIE 라우팅 구현에 집중한다. 제로트러스트 경계와 병렬화 선택의 큰 그림은 [엔터프라이즈 AI 플랫폼 분산 서빙](/llm/enterprise-ai-platform-distributed-serving-architecture/)에서 먼저 정리했다.*
-
 ## References
 
-[^1]: ingu627.github.io: *엔터프라이즈 AI 플랫폼 설계 (1): 프라이빗 인프라 격리와 초거대 분산 서빙 토폴로지* (2026). [/llm/enterprise-ai-platform-distributed-serving-architecture/](/llm/enterprise-ai-platform-distributed-serving-architecture/)
+[^1]: Narayanan et al.: *Efficient Large-Scale Language Model Training on GPU Clusters Using Megatron-LM* (2021). [arXiv:2104.04473](https://arxiv.org/abs/2104.04473)
 [^2]: ingu627.github.io: *엔터프라이즈 AI 플랫폼 설계 (2): 무중단 장애 격리와 프로덕션 운영화(LLMOps)* (2026). [/agent/enterprise-ai-platform-fault-tolerance-operations/](/agent/enterprise-ai-platform-fault-tolerance-operations/)
 [^3]: Zhong et al.: *DistServe: Disaggregating Prefill and Decoding for Goodput-optimized Large Language Model Serving*, USENIX OSDI (2024). [arXiv:2401.09670](https://arxiv.org/abs/2401.09670)
 [^4]: Patel et al.: *Splitwise: Efficient Generative LLM Inference Using Phase Splitting*, ACM/IEEE ISCA (2024). [arXiv:2311.18677](https://arxiv.org/abs/2311.18677)
@@ -529,6 +569,10 @@ data:
 [^13]: ingu627.github.io: *운영체제(OS) - Main Memory (9)* (2022). [/os/os9_10th/](/os/os9_10th/)
 [^14]: ingu627.github.io: *운영체제(OS) - Virtual Memory (10)* (2022). [/os/os10_10th/](/os/os10_10th/)
 [^15]: ingu627.github.io: *[논문 리뷰] The Google File System (GFS) 아키텍처 정리* (2022). [/paper/gfs/](/paper/gfs/)
-[^16]: *Disaggregated LLM Serving Transfer-Layer Analysis: Post-prefill Pull vs Layer-by-layer Streaming* (2026). [arXiv:2610.18444](https://arxiv.org/abs/2610.18444)
+[^16]: Yoon and Yu: *An Optical KV Cache Network for Disaggregated LLM Serving* (2026). [arXiv:2610.18444](https://arxiv.org/abs/2610.18444)
 [^17]: Qin et al.: *Mooncake: A KVCache-Centric Disaggregated Architecture for LLM Serving*, USENIX FAST Best Paper (2025). [https://www.usenix.org/conference/fast25/presentation/qin](https://www.usenix.org/conference/fast25/presentation/qin)
 [^18]: LMCache Team: *LMCache: Efficient KV Cache Offloading and Disaggregated Transfer for vLLM* (2026). [https://github.com/LMCache/LMCache](https://github.com/LMCache/LMCache)
+[^19]: Kubernetes SIGs: *LeaderWorkerSet — Exclusive Topology Placement*. [공식 문서](https://lws.sigs.k8s.io/docs/concepts/leaderworkerset/topology-placement/)
+[^20]: NVIDIA Dynamo v1.0.0: [vLLM 분리형 `disagg.yaml`](https://github.com/ai-dynamo/dynamo/blob/v1.0.0/examples/backends/vllm/deploy/disagg.yaml), [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0).
+[^21]: NVIDIA Dynamo v1.0.0: [vLLM Kubernetes Deployment Configurations](https://github.com/ai-dynamo/dynamo/blob/v1.0.0/examples/backends/vllm/deploy/README.md).
+[^22]: LMCache: [CPU RAM 오프로딩 공식 문서](https://docs.lmcache.ai/kv_cache/cpu_ram.html).

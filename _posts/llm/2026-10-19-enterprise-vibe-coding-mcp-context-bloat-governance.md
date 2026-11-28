@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 date: 2026-10-19
-last_modified_at: 2026-11-07
+last_modified_at: 2026-11-28
 use_math: true
 ---
 
@@ -122,5 +122,5 @@ use_math: true
 
 [^1]: Model Context Protocol (MCP) Specification: *Architecture, Security and Context Optimization Guidelines* (2026). [https://modelcontextprotocol.io](https://modelcontextprotocol.io)
 [^2]: ingu627.github.io: *MCP 토큰 최적화 4가지 기법: 점진적 발견부터 코드 실행 호출까지* (2026). [/llm/mcp-token-optimization/](/llm/mcp-token-optimization/)
-[^3]: ingu627.github.io: *Claude Code 소스맵 유출 완전 해부: 왜 프로덕션 에이전트는 상태 그래프 대신 결정론적 하네스(query.ts)를 택했는가* (2026). [/agent/claude-code-architecture-queryloop-harness/](/agent/claude-code-architecture-queryloop-harness/)
+[^3]: ingu627.github.io: [Claude Code 하네스 실행 루프·메모리·권한 분석](/agent/claude-code-harness-runtime-2026/) (2026).
 [^4]: ingu627.github.io: *추론 라우팅과 요청 캐스케이딩: 2-Tier 게이트웨이와 시맨틱 캐싱* (2026). [/llm/inference-routing-cascading/](/llm/inference-routing-cascading/)

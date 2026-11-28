@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 date: 2026-10-14
-last_modified_at: 2026-11-19
+last_modified_at: 2026-11-28
 use_math: true
 ---
 
@@ -171,4 +171,4 @@ class RewardHackingGuard:
 [^1]: DeepSeek-AI: *DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning* (2025). [arXiv:2501.12948](https://arxiv.org/abs/2501.12948)
 [^2]: Andrej Karpathy: *Autoresearch: Autonomous Unsupervised Training Optimization with LLM Agents* (2026). Technical Disclosure & Eureka Labs / Anthropic Pretraining Initiative.
 [^3]: ingu627.github.io: *자가 개선 에이전트 루프 설계: 5단계 아키텍처와 리워드 해킹 방어* (2026). [/llm/self-improving-agent-loop/](/llm/self-improving-agent-loop/)
-[^4]: ingu627.github.io: *Claude Code 소스맵 유출 완전 해부: 왜 프로덕션 에이전트는 상태 그래프 대신 결정론적 하네스(query.ts)를 택했는가* (2026). [/agent/claude-code-architecture-queryloop-harness/](/agent/claude-code-architecture-queryloop-harness/)
+[^4]: ingu627.github.io: [Claude Code 하네스 실행 루프·메모리·권한 분석](/agent/claude-code-harness-runtime-2026/) (2026).

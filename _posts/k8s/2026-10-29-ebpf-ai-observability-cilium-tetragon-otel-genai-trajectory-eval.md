@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 date: 2026-10-29
-last_modified_at: 2026-11-07
+last_modified_at: 2026-11-28
 use_math: true
 ---
 
@@ -44,7 +44,7 @@ use_math: true
 
 여기에 커널 시스템콜 수준의 가시성 부재가 겹친다. 둘째는 평가 구조의 문제다. 에이전트의 최종 응답 문자열만 채점할 뿐, 중간 도구 호출 **궤적(Trajectory)**에서 발생하는 정책 위반이나 리워드 해킹은 잡아내지 못한다.
 
-앞서 정리한 [EKS Gateway API 도입 실전과 Cilium ENI 게이트웨이](/k8s/gateway-api-migration-cilium/)[^1] 및 [쿠버네티스 관찰성(Observability) 파이프라인 설계](/k8s/kubernetes-observability/)[^2]에서는 클러스터 인그레스 전환과 메트릭·로그·트레이스 수집 구조를 다루었다. 이어서 [Claude Code 아키텍처 해부와 8계층 보안 모델](/agent/claude-code-architecture-queryloop-harness/)[^3]에서는 애플리케이션 하네스 내부의 권한 경계를 살펴보았다. 이번 글은 사내 AI 에이전트 클러스터의 Day-2 운영 환경을 정비하면서 확인한 내용을 정리한 것이다.
+앞서 정리한 [EKS Gateway API 도입 실전과 Cilium ENI 게이트웨이](/k8s/gateway-api-migration-cilium/)[^1] 및 [쿠버네티스 관찰성(Observability) 파이프라인 설계](/k8s/kubernetes-observability/)[^2]에서는 클러스터 인그레스 전환과 메트릭·로그·트레이스 수집 구조를 다루었다. 이어서 [Claude Code 하네스 실행 루프와 권한 제어](/agent/claude-code-harness-runtime-2026/)[^3]에서는 애플리케이션 하네스 내부의 권한 경계를 살펴보았다. 이번 글은 사내 AI 에이전트 클러스터의 Day-2 운영 환경을 정비하면서 확인한 내용을 정리한 것이다.
 
 2026년 10월 릴리즈된 Cilium 1.20·Tetragon 기반 커널 eBPF 보안 계층을 검증했다. OpenTelemetry GenAI 시맨틱 컨벤션(v1.38~v1.43)의 스팬 구조도 함께 확인했다. 이 두 축과 TypeSafe System One(`Jev`) 기반 온라인 궤적 평가 파이프라인을 하나로 통합하는 것이 목표다.
 
@@ -344,7 +344,7 @@ $$
 
 ### 5.4 TypeSafe System One(`Jev`) 스팬 궤적 평가 및 `gen_ai.evaluation.result` 발행 구현
 
-라이브 트래픽의 5~25%에 해당하는 OTel 스팬 트리를 빠르고 저렴하게 채점하는 것이 목표다. 그 기준은 $70\sim 350\text{ms}$ 응답과 $\$0.042 / 1\text{M}$ 입력 토큰 수준의 비용이다. 이를 위해 두 가지를 온라인 평가 워커에 배치한다. [TypeSafe System One 의사결정 모델](/agent/jev-system-one-decision-model/)[^13]과 [Jev 프리미티브(`Choice`, `Score`, `Noul`)](/agent/jev-primitives-deep-dive/)[^14]다.
+라이브 트래픽의 5~25%에 해당하는 OTel 스팬 트리를 빠르고 저렴하게 채점하는 것이 목표다. 그 기준은 $70\sim 350\text{ms}$ 응답과 $\$0.042 / 1\text{M}$ 입력 토큰 수준의 비용이다. 이를 위해 온라인 평가 워커에서 [TypeSafe System One과 Jev의 Choice·Score·Noul 프리미티브](/agent/jev-system-one-decision-model/#jev-api-contract)[^13][^14]를 사용한다.
 
 먼저 `/v1/systemone` 엔드포인트로 보내는 JSON 요청을 보자. 이 페이로드는 원시 스팬 데이터(`state`)와 판정 루브릭(`questions`)을 엄격히 분리한다[^18].
 
@@ -494,7 +494,7 @@ class OnlineTrajectoryMonitor:
 
 [^1]: [EKS Gateway API 도입 실전: NGINX Ingress 은퇴 대응과 Cilium ENI 게이트웨이 — ingu627.dev](/k8s/gateway-api-migration-cilium/)
 [^2]: [쿠버네티스 관찰성(Observability) 파이프라인 설계: 메트릭·로그·트레이스 통합 — ingu627.dev](/k8s/kubernetes-observability/)
-[^3]: [Claude Code 아키텍처 해부: QueryLoop 상태 머신과 8계층 도구 실행 보안 하네스 — ingu627.dev](/agent/claude-code-architecture-queryloop-harness/)
+[^3]: [Claude Code 하네스: 실행 루프·메모리·도구 권한 — ingu627.dev](/agent/claude-code-harness-runtime-2026/)
 [^4]: [OpenAI Platform Documentation — Evals Deprecation and Shutdown Notice (Read-only 2026-10-31, Shutdown 2026-11-30)](https://platform.openai.com/docs/guides/evals)
 [^5]: [Isovalent / Cilium Documentation — Cilium 1.20 Release Notes: Gateway API, Scalable eBPF Datapath & Sidecarless Mutual Authentication (2026-10-21)](https://docs.cilium.io/en/stable/network/servicemesh/gateway-api/gateway-api/)
 [^6]: [Kubernetes Documentation — Gateway API Concepts & Cross-Namespace ReferenceGrant](https://kubernetes.io/docs/concepts/services-networking/gateway/)
@@ -505,7 +505,7 @@ class OnlineTrajectoryMonitor:
 [^11]: [OpenTelemetry Specification — Semantic Conventions for Generative AI Events (`gen_ai.evaluation.result`) and Agent Spans (`invoke_agent`, `execute_tool`)](https://opentelemetry.io/docs/specs/semconv/gen-ai/)
 [^12]: [자가 개선 에이전트 루프(Self-Improving Agent Loop): 리워드 해킹 방어와 궤적 검증 — ingu627.dev](/llm/self-improving-agent-loop/)
 [^13]: [TypeSafe System One 의사결정 모델: 생성형 추론과 비생성형 스냅 판정의 분리 — ingu627.dev](/agent/jev-system-one-decision-model/)
-[^14]: [TypeSafe Jev 프리미티브 심층 분석: Choice·Score·Noul 계약과 병렬 팬아웃 — ingu627.dev](/agent/jev-primitives-deep-dive/)
+[^14]: [TypeSafe Jev 프리미티브: Choice·Score·Noul 계약과 병렬 판정 — ingu627.dev](/agent/jev-system-one-decision-model/#jev-api-contract)
 [^15]: [이상 탐지와 드리프트 감지를 위한 확률 부등식 정리: 마르코브·체비쇼프·호에프딩·번스타인 — ingu627.dev](/mlops/inequality_for_detection/)
 [^16]: [데이터 및 컨셉 드리프트 탐지(Concept Drift Detection) 방법론 정리 — ingu627.dev](/mlops/drift_detection/)
 [^17]: [[논문 리뷰] FHDDM: Fast Hoeffding Drift Detection Method for Evolving Data Streams — ingu627.dev](/paper/mlops/FHDDM/)
