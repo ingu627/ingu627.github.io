@@ -9,7 +9,7 @@ toc_sticky: true
 sidebar_main: true
 
 date: 2025-05-05
-last_modified_at: 2026-11-07
+last_modified_at: 2026-11-28
 use_math: true
 redirect_from:
   - /llm/llm-vector-database-embeddings/
@@ -55,7 +55,6 @@ redirect_from:
 
 ## 1. ANN 인덱싱 알고리즘 심층 분석
 
-<img src="https://github.com/user-attachments/assets/cab36080-2c29-4e82-9f2c-410d152e00b3" alt="벡터 데이터베이스 개념 설명 다이어그램" width="600">
 
 ANN 알고리즘은 크게 **그래프 기반(Graph-based)**, **양자화 기반(Quantization-based)** 방식으로 나뉜다. 여기에 **트리/해시 기반(Tree/Hash-based)** 방식과 최근 부상한 **디스크 최적화(Disk-optimized)** 방식이 더해진다.
 
@@ -155,7 +154,6 @@ $$RRF(d) = \sum_{m \in M} \frac{1}{k + r_m(d)}$$
 
 ## 4. 주요 프로덕션 벡터 데이터베이스 아키텍처 비교
 
-<img src="https://github.com/user-attachments/assets/af90886f-4f60-4a44-9129-7ba921e01aca" width="800">
 
 ```
 프로덕션 엔진별 아키텍처 매트릭스:

@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 date: 2026-09-30
-last_modified_at: 2026-11-07
+last_modified_at: 2026-11-28
 ---
 
 ## 이 글을 30초에 파악하기
@@ -100,8 +100,6 @@ last_modified_at: 2026-11-07
                             (SLM·LLM 라우팅)      (기본 모델 + 어댑터)
 ```
 
-![커스텀 모델 서빙 파이프라인. 도메인 데이터 → QLoRA 학습 → 평가 게이트 → 어댑터 레지스트리 → Multi-LoRA 서빙의 다섯 단계를 한 줄로 배치했고, 평가 불합격 시 학습으로 되돌아가는 경로를 표시했다. 하단에는 "평가 게이트를 통과한 어댑터만 서빙에 올린다"는 결론을 적었다.](/assets/images/llm/custom-model-pipeline.webp)
-
 ### 2.2 QLoRA로 GPU 요구 낮추기
 
 QLoRA(Quantized LoRA)는 기본 모델 가중치를 INT4로 양자화한 상태에서 LoRA 어댑터만 학습한다. Full Fine-tuning 대비 GPU 요구량이 극적으로 줄어든다[^1].
@@ -188,8 +186,6 @@ MoE(Mixture of Experts) 구조는 "전체 파라미터는 크지만 토큰당 �
 ### 3.3 배포 모드: 관리형 노드 그룹이 기본값
 
 EKS의 Auto Mode와 Standard Mode + 관리형 노드 그룹(MNG) 중에서는 후자를 권장한다[^2]. Auto Mode는 최신 가속 인스턴스 지원이 추가되어 선택지가 넓어졌지만, 인스턴스 타입 자유도·Spot 대체 전략·노드 그룹 생성 안정성에서 관리형 노드 그룹이 예측 가능하다.
-
-![서빙 배포 모드 선택표. 단일 GPU 노드, 멀티노드 LWS, 관리형 API 세 가지를 나란히 비교했고, 각 모드의 핵심 파라미터와 트레이드오프를 적었다. 하단에는 "VRAM이 충분한 단일 노드를 먼저 검토한다"는 결론을 두었다.](/assets/images/llm/serving-deploy-modes.webp)
 
 | 모드 | 특징 | 주의 |
 |---|---|---|

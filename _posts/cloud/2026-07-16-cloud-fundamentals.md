@@ -9,7 +9,7 @@ toc_sticky: true
 sidebar_main: true
 
 date: 2026-07-16
-last_modified_at: 2026-11-07
+last_modified_at: 2026-11-28
 ---
 
 ## 이 글을 30초에 파악하기
@@ -63,9 +63,7 @@ last_modified_at: 2026-11-07
 | PaaS | 앱 코드, 데이터, 설정 | OS/런타임/스케일링/제어 평면 | RDS, EKS/GKE/AKS, App Service |
 | SaaS | 데이터, 접근 권한, 설정 | 전체 스택 | Notion, Workspace, M365 |
 
-![IaaS·PaaS·SaaS 공동 책임 모델](/assets/images/cloud/cloud-shared-responsibility.png)
-
-위 다이어그램은 클라우드 스택의 각 계층(데이터·앱·런타임·OS·가상화·물리)을 IaaS/PaaS/SaaS별로 나눈다. 이 그림은 어느 계층이 고객 책임이고 어느 계층이 제공자 책임인지 보여준다. 서비스 모델이 올라갈수록 고객이 직접 관리하는 계층이 줄어들 뿐, 데이터와 접근 관리 책임은 줄어들지 않는다.
+클라우드 스택의 각 계층(데이터·앱·런타임·OS·가상화·물리)은 IaaS/PaaS/SaaS별로 고객과 제공자의 책임이 나뉜다. 서비스 모델이 올라갈수록 고객이 직접 관리하는 계층이 줄어들 뿐, 데이터와 접근 관리 책임은 줄어들지 않는다.
 
 **공동 책임 모델(Shared Responsibility Model)** 에서 절대 변하지 않는 고객 책임은 네 가지다.
 
@@ -117,9 +115,7 @@ VPC(Virtual Private Cloud)는 리전 단위 논리 네트워크다. 설계 순�
 - **Transit Gateway(TGW)**: 허브-스포크로 다수 VPC/온프레미스/VPN을 연결. 전이적 라우팅 + 라우팅 테이블로 세그멘테이션. VPC가 4개를 넘거나 온프레미스와 연결하면 TGW가 정답이다.
 - **VPC 엔드포인트**: S3/DynamoDB는 **게이트웨이 엔드포인트**(무료, 라우팅 테이블에 추가), 나머지 대부분은 **인터페이스 엔드포인트**(ENI + PrivateLink, 시간당+GB 과금). NAT 비용을 없애고 트래픽을 AWS 백본에 가둔다.
 
-![리전·AZ·VPC 네트워크 토폴로지](/assets/images/cloud/cloud-vpc-topology.png)
-
-위 그림은 하나의 리전 안에 AZ 두 개를 두고, VPC(`10.0.0.0/16`) 아래 퍼블릭·프라이빗 서브넷을 나눈 구조를 나타낸다. 그 안에서 IGW·NAT 게이트웨이와 라우팅 테이블이 인터넷 경로를 제어한다. 퍼블릭 서브넷은 IGW로, 프라이빗 서브넷은 NAT 게이트웨이로만 아웃바운드가 나가며, 인스턴스 단위 경계는 보안 그룹이 맡는다.
+예를 들어 하나의 리전 안에 AZ 두 개를 두고, VPC(`10.0.0.0/16`) 아래 퍼블릭·프라이빗 서브넷을 나눌 수 있다. 그 안에서 IGW·NAT 게이트웨이와 라우팅 테이블이 인터넷 경로를 제어한다. 퍼블릭 서브넷은 IGW로, 프라이빗 서브넷은 NAT 게이트웨이로만 아웃바운드가 나가며, 인스턴스 단위 경계는 보안 그룹이 맡는다.
 
 ```hcl
 # terraform: 2-AZ VPC + IGW + NAT + 프라이빗 라우팅

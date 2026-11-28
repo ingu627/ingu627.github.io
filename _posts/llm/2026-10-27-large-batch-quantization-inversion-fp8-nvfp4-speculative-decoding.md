@@ -121,8 +121,6 @@ $I(B) < I\_{\text{ridge}}$이면 메모리 바운드, $I(B) \ge I\_{\text{ridge}
 
 과거 TensorRT Model Optimizer로 불리던 도구는 2025년 12월 8일부로 **NVIDIA Model Optimizer(`nvidia-modelopt`)**로 이름을 바꿨다. 이 도구는 단일 `mtq.quantize()` API 호출만으로 표준화된 양자화 체크포인트를 만든다. 그 체크포인트는 TensorRT-LLM, vLLM, SGLang에서 즉시 로드된다[^5].
 
-![배치 크기별 양자화 역전 현상(FP8·NVFP4 vs INT4 AWQ)과 vLLM Speculators v0.5·VLM 추측 디코딩 아키텍처](/assets/images/llm/quantization-inversion-fp8-speculative-decoding-cognition.webp)
-
 양자화 포맷은 두 갈래로 나뉜다. 하나는 가중치만 압축하고 활성화 값은 고정밀도로 두는 **W4A16(INT4 AWQ[^6], GPTQ)** 방식이다. 다른 하나는 가중치와 활성화 값을 모두 저정밀도로 바꿔 전용 텐서 코어에서 연산하는 **W8A8(FP8)** 및 **W4A4(NVFP4)** 방식이다.
 
 ### 2.2 H200 실측 벤치마크: 배치 크기에 따른 INT4 AWQ 처리량 역전
@@ -216,9 +214,6 @@ spec:
 ### 2.4 가지치기(Pruning)·2단계 지식 증류·FP8 순차 결합 실측
 
 양자화만 적용해서 얻는 이득에는 한계가 있다. 구조적 가지치기(Structural Pruning)와 지식 증류(Knowledge Distillation)를 파이프라인으로 결합하면 대배치 처리량과 메모리 효율을 함께 끌어올릴 수 있다[^1][^7].
-
-![가지치기(Pruning)와 지식 증류(Distillation) 결합 경량화 파이프라인](/assets/images/llm/pruning-and-distillation-cognition.webp)
-*출처: [ingu627.github.io — 모델 경량화와 양자화 파이프라인 아키텍처](/llm/quantization1/)*
 
 실제로 NVIDIA는 하이브리드 MoE 모델인 **Nemotron-3-Nano-30B-A3B**에 세 단계를 순서대로 적용했다. ① 중요도 기반 가중치 가지치기(Pruning)다. ② 교사 모델의 은닉 상태 정렬 및 KL 발산 로짓 지도(Logit Guidance)를 결합한 **2단계 지식 증류(Two-Stage Knowledge Distillation)**다.
 

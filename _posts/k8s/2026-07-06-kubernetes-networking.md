@@ -9,7 +9,7 @@ toc_sticky: true
 sidebar_main: true
 
 date: 2026-07-06
-last_modified_at: 2026-10-10
+last_modified_at: 2026-11-28
 ---
 
 ## 이 글을 30초에 파악하기
@@ -123,9 +123,7 @@ resource "helm_release" "cilium" {
 
 Service는 셀렉터로 선택된 파드 집합에 대해 안정적인 가상 IP(ClusterIP)와 DNS 이름을 제공한다. 파드가 재생성되어 IP가 바뀌어도 클라이언트는 서비스 이름만 알면 된다.
 
-![Service·Ingress 경로와 kube-proxy](/assets/images/k8s/k8s-service-ingress-path.png)
-
-위 다이어그램은 외부 트래픽이 Ingress를 거쳐 ClusterIP·NodePort·LoadBalancer 타입의 Service로 들어오는 경로를 보여준다. 각 노드의 kube-proxy는 iptables/IPVS 규칙으로 이 트래픽을 백엔드 파드에 전달한다. 클라이언트가 보는 주소는 Service의 가상 IP와 DNS 이름뿐이고, 실제 파드 IP는 EndpointSlice로 관리된다.
+외부 트래픽은 Ingress를 거쳐 ClusterIP·NodePort·LoadBalancer 타입의 Service로 들어온다. 각 노드의 kube-proxy는 iptables/IPVS 규칙으로 이 트래픽을 백엔드 파드에 전달한다. 클라이언트가 보는 주소는 Service의 가상 IP와 DNS 이름뿐이고, 실제 파드 IP는 EndpointSlice로 관리된다.
 
 | 타입 | 동작 | 사용 시점 |
 | :--- | :--- | :--- |
@@ -332,9 +330,7 @@ spec:
 
 NetworkPolicy는 파드 셀렉터로 대상을 고르고, 허용(allow) 규칙만 기술하는 화이트리스트 모델이다. 즉 정책이 하나도 없으면 전부 허용이고, 어떤 파드에 정책이 하나라도 걸리면 그 파드는 나열된 트래픽 외 전부 차단된다. Ingress/Egress 방향을 각각 선언할 수 있고, 정책은 누적(additive)된다. flannel처럼 정책을 지원하지 않는 CNI를 쓰면 오브젝트는 생성되지만 아무 효과가 없다.
 
-![NetworkPolicy 기본 deny와 선택 허용 흐름](/assets/images/k8s/k8s-networkpolicy.png)
-
-위 다이어그램은 네임스페이스 전체에 default-deny 정책을 먼저 까는 흐름을 나타낸다. 그다음 필요한 통신만 podSelector·namespaceSelector·ipBlock으로 역추적해 허용한다. Egress를 기본 차단하면 DNS(53/udp, 53/tcp)와 노드 메타데이터, 외부 API 엔드포인트를 허용 목록에 반드시 넣어야 한다.
+네임스페이스 전체에 default-deny 정책을 먼저 적용한다. 그다음 필요한 통신만 podSelector·namespaceSelector·ipBlock으로 역추적해 허용한다. Egress를 기본 차단하면 DNS(53/udp, 53/tcp)와 노드 메타데이터, 외부 API 엔드포인트를 허용 목록에 반드시 넣어야 한다.
 
 ```yaml
 apiVersion: networking.k8s.io/v1

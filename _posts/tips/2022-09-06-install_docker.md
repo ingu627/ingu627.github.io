@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "Window10 또는 Ubuntu 22.04 내 도커(docker) 설치하기"
-excerpt : "윈도우10 또는 우분투 내에서 도커를 설치하는 과정을 정리할 필요가 있다고 느꼈습니다. 설치에 도움이 되었으면 합니다."
+excerpt: "윈도우10 또는 우분투 내에서 도커를 설치하는 과정을 정리할 필요가 있다고 느꼈습니다. 설치에 도움이 되었으면 합니다."
 categories: [tips, docker]
 tags: [리눅스, 우분투, window10, 윈도우, 도커, docker, linux, 설치, ubuntu, 윈도우10, wsl2, docker desktop, 사용법]
 
@@ -9,7 +9,7 @@ toc: true
 toc_sticky: true
 sidebar_main: false
 
-last_modified_at: 2026-10-09
+last_modified_at: 2026-11-28
 redirect_from:
   - /tips/install-docker-container-platform/
 ---
@@ -36,7 +36,7 @@ redirect_from:
 
 도커는 아래 그림처럼 클라이언트(`docker` CLI), 도커 호스트(`dockerd` 데몬), 레지스트리로 나뉜다. 이 글에서 설치하는 `docker-ce-cli`, `docker-ce`, `containerd.io`가 각각 어느 위치에 해당하는지 염두에 두고 보면 이해에 도움이 된다.
 
-![도커 아키텍처 - 클라이언트, 도커 호스트(데몬), 레지스트리](assets/images/tips/official-docker-architecture.webp)
+![도커 아키텍처 - 클라이언트, 도커 호스트(데몬), 레지스트리](/assets/images/tips/official-docker-architecture.webp)
 
 *출처: [Docker Docs - Docker architecture](https://docs.docker.com/get-started/docker-overview/#docker-architecture)*
 

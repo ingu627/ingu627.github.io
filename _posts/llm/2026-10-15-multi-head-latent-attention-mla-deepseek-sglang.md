@@ -68,8 +68,6 @@ $$\text{Memory}_{\text{MHA}} = 2 \times B \times N \times H \times d_h \times \t
 
 DeepSeek 팀이 고안한 MLA는 헤드 수를 억지로 줄이지 않는다. 대신 **선형대수학적 저랭크 투영(Low-Rank Projection)과 가중치 흡수(Weight Absorption)**를 통해 KV 캐시 상태 자체를 압축하여 저장한다.
 
-![Multi-Head Latent Attention (MLA) 압축 메커니즘](/assets/images/llm/multi-head-latent-attention-mla-deepseek.webp)
-
 ### 2.1 저랭크 잠재 공간 압축 ($C_{KV}$)
 
 입력 토큰 벡터 $X \in \mathbb{R}^{d \times n}$에 대해, MLA는 곧바로 거대한 $K, V$ 행렬을 생성하지 않는다.
@@ -157,8 +155,6 @@ $$\text{MHA 차원}: 2 \times 128 \times 128 = 32,768 \quad \longrightarrow \qua
 ## 4. 프로덕션 배포 아키텍처: L7 프리픽스 라우터와 K8s 배포
 
 MLA 모델을 프로덕션 Kubernetes에 서빙할 때는 별도 라우팅이 필요하다. **인그레스(Ingress) 계층의 프리픽스 인지 라우팅(Prefix-Aware Routing)**[^4]이 결합되어야 한다.
-
-![L7 Ingress Prefix Router와 SGLang RadixAttention 파드 간 세션 어피니티 바인딩 아키텍처 다이어그램](/assets/images/llm/sglang-k8s-ingress-prefix-routing-cognition.webp)
 
 동일한 에이전트 세션이나 공통 시스템 프롬프트를 공유하는 요청이 서로 다른 파드(Pod)로 분산되면 Radix 캐시가 파편화된다. 그렇기 때문에 인그레스에서 요청의 상위 1,000 토큰 해시값을 기준으로 동일 파드에 트래픽을 바인딩하는 것이 필수적이다.
 

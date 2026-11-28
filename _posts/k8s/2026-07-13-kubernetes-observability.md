@@ -9,7 +9,7 @@ toc_sticky: true
 sidebar_main: true
 
 date: 2026-07-13
-last_modified_at: 2026-11-07
+last_modified_at: 2026-11-28
 ---
 
 ## 이 글을 30초에 파악하기
@@ -54,11 +54,9 @@ last_modified_at: 2026-11-07
 
 ## 1. 관찰성 3축 — 무엇을 어디에 쓰는가
 
-세 축은 대체 관계가 아니라 질문의 종류가 다르다. 장애 대응은 보통 **메트릭으로 감지 → 트레이스로 구간 특정 → 로그로 원인 확정** 순서로 좁혀진다. 그래서 각 축을 어디서 수집해 어디로 보내는지를 먼저 한 장으로 잡고 들어가면 이후 설정이 훨씬 수월하다.
+세 축은 대체 관계가 아니라 질문의 종류가 다르다. 장애 대응은 보통 **메트릭으로 감지 → 트레이스로 구간 특정 → 로그로 원인 확정** 순서로 좁혀진다. 각 축을 어디서 수집해 어디로 보내는지 먼저 파악하면 이후 설정이 훨씬 수월하다.
 
-![쿠버네티스 관찰성 파이프라인](/assets/images/k8s/k8s-observability-pipeline.png)
-
-위 다이어그램은 세 축이 클러스터 안에서 출발해 저장소와 시각화 도구까지 도달하는 수집 경로를 보여준다. 메트릭은 ServiceMonitor를 통해 Prometheus가 긁어가고, 로그는 Fluent Bit 데몬셋이 노드에서 걷어 Loki로 보내며, 트레이스는 애플리케이션이 OTLP로 OTel Collector에 넘겨 Tempo에 저장된다. 세 경로가 Grafana에서 다시 만나고, `trace_id`와 exemplar로 서로를 가리킨다.
+한 수집 경로의 예로, 메트릭은 ServiceMonitor를 통해 Prometheus가 긁어가고, 로그는 Fluent Bit 데몬셋이 노드에서 걷어 Loki로 보내며, 트레이스는 애플리케이션이 OTLP로 OTel Collector에 넘겨 Tempo에 저장된다. 세 경로가 Grafana에서 다시 만나고, `trace_id`와 exemplar로 서로를 가리킨다.
 
 ### 1.1 세 축의 역할 분담
 
@@ -368,9 +366,7 @@ spec:
 
 순서를 고정해 두면 추측을 줄일 수 있다: **get → describe → logs → exec → events**. `describe`를 건너뛰고 로그부터 보는 습관은 흔한 시간 낭비다. 스케줄링 실패·이미지 풀 실패는 애플리케이션 로그에 아무것도 남기지 않는다.
 
-![증상별 kubectl 디버깅 분기](/assets/images/k8s/k8s-debug-decision-flow.png)
-
-위 그림은 증상을 먼저 분류한 뒤 어느 명령으로 들어갈지 정하는 분기를 나타낸다. Pending과 ImagePullBackOff는 애플리케이션 로그가 아니라 `describe`의 Events와 스케줄러 사유로, CrashLoopBackOff는 `logs --previous`로, OOMKilled는 컨테이너의 Last State로 각각 경로가 갈린다.
+증상을 먼저 분류해 어느 명령으로 들어갈지 정한다. Pending과 ImagePullBackOff는 애플리케이션 로그가 아니라 `describe`의 Events와 스케줄러 사유로, CrashLoopBackOff는 `logs --previous`로, OOMKilled는 컨테이너의 Last State로 각각 경로가 갈린다.
 
 ### 7.1 다섯 단계 명령
 

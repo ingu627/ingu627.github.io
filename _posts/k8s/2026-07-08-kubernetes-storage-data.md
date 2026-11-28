@@ -9,7 +9,7 @@ toc_sticky: true
 sidebar_main: true
 
 date: 2026-07-08
-last_modified_at: 2026-11-07
+last_modified_at: 2026-11-28
 ---
 
 ## 이 글을 30초에 파악하기
@@ -132,9 +132,7 @@ volumes:
 
 `Immediate` 모드는 PVC 생성 즉시 볼륨을 만들기 때문에 AZ가 임의로 정해진다. 이후 파드가 다른 AZ 노드에 스케줄되면 `FailedScheduling`이 발생한다. **멀티 AZ 클러스터에서는 항상 `WaitForFirstConsumer`를 기본으로 삼는다.**
 
-![PVC → StorageClass → CSI 동적 프로비저닝 흐름](/assets/images/k8s/k8s-pv-pvc-csi.png)
-
-위 다이어그램은 PVC가 StorageClass의 프로비저너를 거쳐 CSI 드라이버의 `CreateVolume`을 호출하는 경로를 보여준다. 생성된 PV가 다시 PVC에 바인딩되고, kubelet이 노드에서 attach/mount하는 단계까지 이어진다. `WaitForFirstConsumer`에서는 이 경로가 스케줄러의 노드 결정 이후에 시작되므로, 볼륨의 AZ가 파드가 놓일 노드와 어긋나지 않는다.
+PVC는 StorageClass의 프로비저너를 거쳐 CSI 드라이버의 `CreateVolume`을 호출한다. 생성된 PV가 다시 PVC에 바인딩되고, kubelet이 노드에서 attach/mount하는 단계까지 이어진다. `WaitForFirstConsumer`에서는 이 경로가 스케줄러의 노드 결정 이후에 시작되므로, 볼륨의 AZ가 파드가 놓일 노드와 어긋나지 않는다.
 
 | 항목 | 정적 프로비저닝 | 동적 프로비저닝 |
 | :--- | :--- | :--- |
@@ -292,9 +290,7 @@ kubectl describe volumesnapshot pg-data-snap -n db   # ReadyToUse: true 확인
 
 StatefulSet은 ① 안정적이고 예측 가능한 파드 이름(`pg-0`, `pg-1`), ② 순번 기반 PVC, ③ 순차적 롤아웃/롤백을 제공한다. ④ 헤드리스 서비스(`clusterIP: None`)를 통한 개별 DNS(`pg-0.pg-headless.db.svc`)도 함께 준다. 데이터베이스가 자기 복제본을 찾아 클러스터를 구성하려면 이 정체성(identity)이 필수다.
 
-![StatefulSet + Headless Service + PVC 템플릿 DB 운영 패턴](/assets/images/k8s/k8s-statefulset-db.png)
-
-위 그림은 헤드리스 서비스가 각 파드에 개별 DNS를 부여하는 구조를 나타낸다. `volumeClaimTemplates`가 파드 순번마다 PVC를 따로 만들어, 각 인스턴스가 자기 데이터 볼륨을 갖는다. 스케일 다운이나 롤아웃에서도 파드 이름과 볼륨이 짝을 유지하기 때문에, 복제본끼리 서로를 식별하는 데이터베이스 클러스터 운영이 가능해진다.
+헤드리스 서비스는 각 파드에 개별 DNS를 부여한다. `volumeClaimTemplates`가 파드 순번마다 PVC를 따로 만들어, 각 인스턴스가 자기 데이터 볼륨을 갖는다. 스케일 다운이나 롤아웃에서도 파드 이름과 볼륨이 짝을 유지하기 때문에, 복제본끼리 서로를 식별하는 데이터베이스 클러스터 운영이 가능해진다.
 
 ### 5.1 Operator 패턴
 

@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 date: 2026-09-28
-last_modified_at: 2026-11-07
+last_modified_at: 2026-11-28
 ---
 
 ## 이 글을 30초에 파악하기
@@ -91,8 +91,6 @@ Gateway API는 스니펫을 없애 주는 도구가 아니다. **설정을 표�
 ---
 
 ## 2. Ingress와 Gateway API의 책임 분리
-
-![Ingress 단일 리소스와 Gateway API의 3계층 역할 분리 비교](/assets/images/k8s/gateway-api-roles.webp)
 
 ### 2.1 3계층 리소스 모델
 
@@ -238,8 +236,6 @@ URL Rewrite와 헤더 조작은 Gateway API v1 표준이라 구현체를 바꿔�
 ---
 
 ## 5. 5단계 마이그레이션 절차
-
-![Gateway API 마이그레이션 5단계 흐름과 단계별 기간](/assets/images/k8s/gateway-api-migration-phases.webp)
 
 ### 5.1 Phase 1 준비: 인벤토리와 리스크
 

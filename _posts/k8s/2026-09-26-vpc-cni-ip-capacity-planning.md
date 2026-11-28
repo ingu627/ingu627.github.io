@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 date: 2026-09-26
-last_modified_at: 2026-11-07
+last_modified_at: 2026-11-28
 ---
 
 ## 이 글을 30초에 파악하기
@@ -104,8 +104,6 @@ VPC CNI v1.14.0부터 Kubernetes NetworkPolicy를 네이티브로 지원하며, 
 - **aws-network-policy-agent** — 노드마다 도는 DaemonSet이다. `PolicyEndpoints`를 감시(watch)하다가, 파드의 host veth에 **eBPF 프로브를 attach**해 정책을 적용한다. iptables 체인을 만들지 않기 때문에, 정책이 아무리 많아져도 규칙을 훑는 비용이 선형으로 커지지 않는다.
 
 운영에서 챙길 함의는 이렇다. 정책이 적용됐는지 확인할 1차 대상은 NetworkPolicy 오브젝트가 아니라 **`PolicyEndpoints` CRD**다. 컨트롤러의 해석 결과가 여기까지 도달했는지가 분기점이기 때문이다. 커널 레벨에서 실제로 어떤 트래픽이 거부됐는지는 노드 에이전트가 제공하는 CLI(`aws-eks-na-cli`)와 정책 이벤트 로그로 본다. 적용 범위에도 제약이 있다. 대상은 파드의 `eth0`뿐이고, host networking 파드·Windows 노드·Fargate에는 적용되지 않는다[^1].
-
-![VPC CNI 데이터패스 개념도. 왼쪽 파드 네임스페이스의 eth0가 더미 게이트웨이 169.254.1.1과 정적 ARP를 거쳐 veth pair로 이어지고, 가운데 호스트 네임스페이스에서 ip rule과 main·ENI별 라우팅 테이블이 방향별로 분기하며, 오른쪽으로 primary·secondary ENI를 지나 VPC로 나간다. 아래 띠에는 "파드 IP는 VPC 서브넷에서 온다"는 문장을 두었다.](/assets/images/k8s/vpc-cni-datapath.webp)
 
 ---
 
@@ -209,8 +207,6 @@ P = hostNetwork 파드와 SGP 파드를 뺀, 나머지 파드가 실제로 쓰�
 NAU(Network Address Usage)는 VPC에 붙은 주소 자원을 세는 별도 단위다. IP, 프리픽스, ENI가 각각 정해진 값으로 집계되고, Amazon EKS 파드도 1 NAU 항목으로 잡힌다. 그래서 "프리픽스 하나가 1 NAU"라는 사실만 보고 클러스터 전체를 "파드 16개당 1 NAU"로 환산하면 안 된다. 실제 자원 구성을 공식 NAU 표와 대조하고 VPC의 관측 NAU로 확인해야 한다[^2].
 
 쿼터는 VPC당 기본 64,000이고 256,000까지 올릴 수 있다. 같은 리전에서 peered VPC를 합산하는 쿼터는 기본 128,000, 최대 512,000이며 cross-Region peering은 합산 대상이 아니다[^2]. 클러스터 수십 개가 VPC 하나를 나눠 쓰는 환경에서는 서브넷에 주소가 남아 있어도 NAU 쿼터에 먼저 걸릴 수 있다. 서브넷 크기와 NAU를 같은 표에 놓고 계산해야 하는 이유가 여기다.
-
-![IP 용량 산정 흐름 개념도. 왼쪽에서 목표 파드 수가 시작해 노드당 파드 밀도(ENI 수 × ENI당 보조 IP)를 거쳐 노드 수와 파드용 풀 주소를 계산하고, 프리픽스 모드 분기와 branch ENI 소비를 지나 서브넷 가용 주소·VPC NAU 쿼터로 수렴한다. 아래 띠에는 "노드 수가 늘면 고정비도 늘어난다"는 문장을 두었다.](/assets/images/k8s/ip-capacity-planning.webp)
 
 ---
 

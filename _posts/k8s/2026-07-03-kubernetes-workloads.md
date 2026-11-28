@@ -9,7 +9,7 @@ toc_sticky: true
 sidebar_main: true
 
 date: 2026-07-03
-last_modified_at: 2026-11-07
+last_modified_at: 2026-11-28
 ---
 
 ## 이 글을 30초에 파악하기
@@ -56,9 +56,7 @@ last_modified_at: 2026-11-07
 
 파드는 하나 이상의 컨테이너를 같은 네트워크 네임스페이스(Network namespace)·IPC·볼륨(Volume)을 공유하며 묶은 단위다. 즉 같은 파드의 컨테이너는 `localhost`로 통신하고, IP와 라이프사이클을 함께한다. 파드는 "일회용(ephemeral)"이며 직접 만들기보다 상위 컨트롤러(controller)가 관리하도록 선언하는 것이 원칙이다.
 
-![쿠버네티스 워크로드 컨트롤러 선택 지도](/assets/images/k8s/k8s-workload-controllers.png)
-
-위 다이어그램은 파드 위에 얹히는 다섯 컨트롤러(Deployment·StatefulSet·DaemonSet·Job·CronJob)를 보여준다. "무엇을 보장하는가"라는 기준으로 고르는 지도다. 무상태 복제는 Deployment, 순서와 영속성은 StatefulSet, 노드당 하나는 DaemonSet, 완료 보장은 Job/CronJob이 맡는다.
+다섯 컨트롤러(Deployment·StatefulSet·DaemonSet·Job·CronJob)는 "무엇을 보장하는가"라는 기준으로 고른다. 무상태 복제는 Deployment, 순서와 영속성은 StatefulSet, 노드당 하나는 DaemonSet, 완료 보장은 Job/CronJob이 맡는다.
 
 ### 1.1 생명주기(phases)와 컨테이너 상태
 
@@ -287,9 +285,7 @@ spec:
 
 ## 8. 오토스케일링
 
-![쿠버네티스 오토스케일링 스택](/assets/images/k8s/k8s-autoscaling-stack.png)
-
-위 다이어그램은 지표 소스·Pod 오토스케일러·노드 오토스케일러의 계층 구조를 나타낸다. 지표 소스(metrics-server·Prometheus·이벤트 스케일러) 위에 Pod 오토스케일러(HPA·VPA·KEDA)가 놓인다. 그 아래에 노드 오토스케일러(Cluster Autoscaler·Karpenter)가 놓인다. HPA가 파드 개수를 늘려도 노드에 자리가 없으면 파드가 Pending에 머물고, 그때 노드 오토스케일러가 용량을 확보한다.
+오토스케일링은 지표 소스·Pod 오토스케일러·노드 오토스케일러의 계층으로 구성된다. 지표 소스(metrics-server·Prometheus·이벤트 스케일러) 위에 Pod 오토스케일러(HPA·VPA·KEDA)가 놓인다. 그 아래에 노드 오토스케일러(Cluster Autoscaler·Karpenter)가 놓인다. HPA가 파드 개수를 늘려도 노드에 자리가 없으면 파드가 Pending에 머물고, 그때 노드 오토스케일러가 용량을 확보한다.
 
 ### 8.1 HPA (Horizontal Pod Autoscaler)
 

@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 date: 2026-09-16
-last_modified_at: 2026-11-07
+last_modified_at: 2026-11-28
 use_math: true
 ---
 
@@ -61,8 +61,6 @@ LLM의 기본 출력은 **토큰 스트림(Token Stream)**, 즉 1차원 문자�
 | 확인(Verification) | 근거(Evidence) 검증 | 판단 근거가 서술문 뒤로 숨음. 검증하려면 원본을 따로 열어야 함 |
 | 후속 행동(Follow-up) | 결정 즉시 실행 | 답변 → 재프롬프트 → 도구 호출의 왕복이 매번 발생 |
 
-![텍스트만 있을 때 잃는 네 가지와 생성형 UI가 되돌려 주는 것: 구조는 불릿 나열 대신 표와 차트로, 조작은 프롬프트 재작성 대신 폼과 슬라이더로, 확인은 원본을 따로 여는 대신 근거 인라인으로, 후속 행동은 대화 이탈 대신 인라인 도구 호출로 바뀐다](/assets/images/llm/mcp-apps-text-vs-ui.webp)
-
 특히 확인의 손실은 조용히 위험하다. 컴퓨터 비전 워크플로우에서는 이 상황이 더 날카롭다. **"정확한 탐지가 틀린 답일 수 있다(A Correct Detection Can Still Be the Wrong Answer)"** — 신뢰도는 높은데 그 작업에는 틀렸거나, 객체는 맞는데 연관 관계가 틀렸거나, 검토할 근거가 아예 없는 경우다. 세 경우 모두 **눈으로 확인할 자료를 요청자에게 주지 않은 것**에서 나온다[^5].
 
 ### 1.3 그래서 제너레이티브 UI(Generative UI)
@@ -105,8 +103,6 @@ LLM의 기본 출력은 **토큰 스트림(Token Stream)**, 즉 1차원 문자�
 
 실무 감각으로 요약하면 **"호스트가 이미 잘 그릴 수 있는 것은 선언적으로, 도메인 지식이 있어야만 그릴 수 있는 것은 개방형으로"** 간다. 비용 비교 표는 어느 호스트든 그릴 수 있으니 선언적이 맞고, GPU 클러스터 토폴로지나 노드별 자원 스케줄 히트맵은 도메인 특화 시각화이므로 개방형이 맞다.
 
-![선언적 UI와 개방형 UI(MCP 앱스)의 트레이드오프: 선언적 UI는 정해진 컴포넌트 조합을 호스트가 직접 렌더링하므로 호스트 통제 범위 안에서 표·폼·승인 패널에 적합하고, 개방형 UI는 HTML·CSS·JS 전체를 샌드박스로 격리해 실행하며 확장을 지원하는 호스트가 필요하다](/assets/images/llm/mcp-apps-ui-tradeoffs.webp)
-
 ## 3. MCP 앱스 확장의 위치와 계보
 
 ### 3.1 공식 MCP 확장 `io.modelcontextprotocol/ui`
@@ -141,8 +137,6 @@ MCP 앱스는 하늘에서 떨어진 규격이 아니다. **MCP-UI와 OpenAI App
 | View | 리소스를 **샌드박스 iframe에서 실행**한다 |
 
 기존 MCP 토폴로지(Host–Client–Server)와 비교하면 **View**가 새로 등장한다는 점이 핵심이다. View는 서버도 클라이언트도 아니다. **호스트 안에서 격리 실행되는 서드파티 프런트엔드 코드**다[^4].
-
-![MCP 앱 툴 호출 시퀀스 6단계: LLM의 tools/call로 시작해 호스트가 content와 structuredContent를 받고 _meta.ui.resourceUri로 UI를 선언하면, resources/read로 HTML 문서를 읽어 샌드박스 iframe의 뷰를 띄우고 ui/initialize 이후 뷰가 스스로 후속 툴을 호출한다](/assets/images/llm/mcp-apps-call-sequence.webp)
 
 ### 4.2 툴 호출 한 번의 전체 흐름
 

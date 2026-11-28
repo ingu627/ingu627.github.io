@@ -9,7 +9,7 @@ toc_sticky: true
 sidebar_main: true
 
 date: 2026-09-15
-last_modified_at: 2026-11-07
+last_modified_at: 2026-11-28
 ---
 
 ## 이 글을 30초에 파악하기
@@ -89,9 +89,7 @@ last_modified_at: 2026-11-07
 
 결론부터 말하면, 트레이싱 백엔드는 오픈소스 **Langfuse**를 사설망(Internal VNet) 안에 직접 배포하는 쪽으로 정했다. 외부 SaaS 트레이싱 도구는 프롬프트 원문을 외부로 내보내야 하므로, 기밀 데이터가 오가는 폐쇄망 환경에서는 선택지가 되지 못한다.
 
-![사설망 LLM 옵저버빌리티 스택](/assets/images/azure/azure-llmops-observability.png)
-
-대화 1건이 남기는 두 갈래의 증적을 도식화한 것이다. 애플리케이션 트레이스는 Langfuse로, 인프라 로그는 Azure Monitor로 흐른다. 둘은 목적이 다르다. Langfuse는 "무엇을 물었고 얼마가 나갔는가"를, Azure Monitor는 "컨테이너가 정상이었는가"를 답한다.
+대화 1건은 두 갈래의 증적을 남긴다. 애플리케이션 트레이스는 Langfuse로, 인프라 로그는 Azure Monitor로 흐른다. 둘은 목적이 다르다. Langfuse는 "무엇을 물었고 얼마가 나갔는가"를, Azure Monitor는 "컨테이너가 정상이었는가"를 답한다.
 
 ### 2.1 컨테이너 구성: web + worker 분리
 
@@ -133,9 +131,7 @@ LANGFUSE_SECRET_KEY: "<secret: langfuse-secret-key>"
 
 Langfuse의 자료구조는 **세션 → 트레이스 → 스팬 → 제너레이션 → 스코어**의 계층으로 되어 있다. 이 계층을 이해해야 "4.2초가 어디서 나왔는가"라는 질문에 답할 수 있다.
 
-![Langfuse 트레이스 구조](/assets/images/azure/azure-langfuse-trace-tree.png)
-
-대화 1건이 계층적으로 기록되고 비용·지연·품질이 각각 다른 층위에 귀속되는 구조를 나타낸 것이다. 아래에서 각 계층을 위에서 아래로 짚는다.
+대화 1건이 계층적으로 기록되고 비용·지연·품질이 각각 다른 층위에 귀속된다. 아래에서 각 계층을 위에서 아래로 짚는다.
 
 ### 3.1 계층 구조
 

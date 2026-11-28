@@ -9,7 +9,7 @@ toc_sticky: true
 sidebar_main: true
 
 date: 2026-09-25
-last_modified_at: 2026-11-07
+last_modified_at: 2026-11-28
 ---
 
 ## 이 글을 30초에 파악하기
@@ -85,9 +85,7 @@ last_modified_at: 2026-11-07
 
 ## 2. 구조: Key Vault + Managed Identity
 
-![Key Vault와 관리 ID 기반 시크릿 거버넌스 및 사설 엔드포인트 통신 아키텍처 다이어그램](/assets/images/azure/azure-secrets-managed-identity-cognition.webp)
-
-위 그림은 `aca-webui`가 비밀 값을 직접 들지 않고도 데이터베이스·스토리지·게이트웨이에 접근하는 흐름을 보여준다. 핵심은 `kv-chat-prod`가 비밀의 단일 저장소이고, `aca-webui`의 관리 ID가 그 저장소를 읽을 권한을 가진 주체라는 점이다.
+`aca-webui`는 비밀 값을 직접 들지 않고도 데이터베이스·스토리지·게이트웨이에 접근한다. 핵심은 `kv-chat-prod`가 비밀의 단일 저장소이고, `aca-webui`의 관리 ID가 그 저장소를 읽을 권한을 가진 주체라는 점이다.
 
 결론부터 말하면, 값은 Key Vault 한 곳에만 두고 나머지는 참조로 바꾼다.
 
@@ -190,9 +188,7 @@ Dockerfile의 `ENV`, 소스의 상수, 커밋된 `.env`는 가장 흔하고 가�
 
 ## 4. 로테이션과 피해 범위
 
-![Key Vault 3단계 무중단 시크릿 로테이션 및 피해 반경 제로화 아키텍처 다이어그램](/assets/images/azure/azure-secret-rotation-cognition.webp)
-
-위 그림은 자격증명을 교체할 때 "새 값을 먼저 유효하게 만들고, 소비자를 옮긴 뒤, 구 값을 폐기한다"는 순서를 보여준다. 순서를 지키면 무중단으로 교체되고, 반대로 구 값을 먼저 지우면 그 값을 쓰던 모든 인스턴스가 동시에 죽는다.
+자격증명을 교체할 때는 "새 값을 먼저 유효하게 만들고, 소비자를 옮긴 뒤, 구 값을 폐기한다"는 순서를 따른다. 순서를 지키면 무중단으로 교체되고, 반대로 구 값을 먼저 지우면 그 값을 쓰던 모든 인스턴스가 동시에 죽는다.
 
 로테이션의 성패는 값이 아니라 순서가 가른다.
 

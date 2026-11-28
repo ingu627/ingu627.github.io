@@ -9,7 +9,7 @@ toc_sticky: true
 sidebar_main: true
 
 date: 2026-07-01
-last_modified_at: 2026-11-07
+last_modified_at: 2026-11-28
 ---
 
 ## 이 글을 30초에 파악하기
@@ -89,9 +89,7 @@ last_modified_at: 2026-11-07
 
 클러스터는 요청을 해석하는 컨트롤 플레인과 실제 워크로드가 도는 워커 노드로 나뉜다. 두 영역의 컴포넌트와 그 사이를 오가는 흐름을 먼저 한 장으로 잡고 들어가면 이후 개념이 훨씬 수월하다.
 
-![쿠버네티스 클러스터 아키텍처: 컨트롤 플레인 컴포넌트와 워커 노드 런타임 상호작용 다이어그램](/assets/images/k8s/k8s-control-plane-cognition.webp)
-
-위 다이어그램은 컨트롤 플레인의 네 컴포넌트(kube-apiserver·etcd·kube-scheduler·kube-controller-manager)와 워커 노드의 런타임 구성(kubelet·containerd·kube-proxy·CNI)이 어떻게 연결되는지 보여준다. 모든 컴포넌트는 kube-apiserver만 거쳐 etcd에 접근하고, kubelet은 apiserver를 watch하다가 자신에게 바인딩된 파드를 런타임으로 넘긴다.
+컨트롤 플레인의 네 컴포넌트(kube-apiserver·etcd·kube-scheduler·kube-controller-manager)와 워커 노드의 런타임 구성(kubelet·containerd·kube-proxy·CNI)이 서로 연결된다. 모든 컴포넌트는 kube-apiserver만 거쳐 etcd에 접근하고, kubelet은 apiserver를 watch하다가 자신에게 바인딩된 파드를 런타임으로 넘긴다.
 
 ![업스트림 공식 클러스터 아키텍처 도식 — 컨트롤 플레인, 워커 노드, 클라우드 프로바이더 API](/assets/images/k8s/official-kubernetes-architecture.webp)
 
@@ -125,9 +123,7 @@ last_modified_at: 2026-11-07
 
 명령적(imperative) 방식은 "컨테이너 3개 띄워라"라고 지시한다. 선언적(declarative) 방식은 "레플리카 3개를 유지하라"는 상태를 기술하고, 컨트롤러가 현재 상태를 반복 관찰해 차이를 좁힌다. 이 루프는 **관찰(observe) → 비교(diff) → 조치(act)** 세 단계의 무한 반복이다.
 
-![선언적 모델과 조정 루프](/assets/images/k8s/k8s-reconciliation-loop.png)
-
-위 그림은 사용자가 쓰는 `spec`과 컨트롤러만 기록하는 `status`의 분리, observe → diff → act로 이어지는 조정 루프, 그리고 Deployment → ReplicaSet → Pod로 내려가는 소유 관계를 함께 나타낸다. 컨트롤러는 이 세 단계를 끝없이 반복하며 선언된 상태로 수렴시킨다.
+사용자가 쓰는 `spec`과 컨트롤러만 기록하는 `status`는 분리된다. 조정 루프는 observe → diff → act로 이어지고, 소유 관계는 Deployment → ReplicaSet → Pod로 내려간다. 컨트롤러는 이 세 단계를 끝없이 반복하며 선언된 상태로 수렴시킨다.
 
 - **멱등성(idempotency)**: 같은 조치를 두 번 적용해도 결과가 같아야 한다. 컨트롤러는 이벤트를 놓쳐도 주기적 재조회로 복구하므로 **레벨 트리거(level-triggered)** 방식으로 동작한다.
 - **spec/status 분리**: 사용자는 `spec`만 쓰고 `status`는 컨트롤러만 쓴다. `status`를 수동 편집해도 대개 곧바로 덮어써진다(서브리소스로 분리된 필드).

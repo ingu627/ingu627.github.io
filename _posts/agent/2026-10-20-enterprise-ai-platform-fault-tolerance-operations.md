@@ -68,8 +68,6 @@ use_math: true
 
 이러한 특수 장애 모드를 방어하기 위해 플랫폼 게이트웨이 계층에 구축되는 4단계 회복성 파이프라인이다.
 
-![엔터프라이즈 AI 플랫폼 회복성 아키텍처: 게이트웨이 서킷 브레이커와 워커 메시 그레이스풀 드레인](/assets/images/agent/enterprise-ai-platform-fault-tolerance-cognition.webp)
-
 ### 2.1 계층 1: 슬라이딩 윈도우 적응형 서킷 브레이커 (Adaptive Circuit Breaker)
 - 단순한 연속 실패 카운트가 아니라, 최근 10초 슬라이딩 윈도우 내의 **에러율(5xx 비율 $\ge 15\%$)과 p99 지연 시간($\ge 3,500\text{ms}$)**을 결합하여 상태를 판정한다[^4].
 - 임계치를 초과하면 해당 워커 파드를 `Open` 상태로 전환하고 트래픽을 즉시 격리한다.

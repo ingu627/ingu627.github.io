@@ -9,7 +9,7 @@ toc_sticky: true
 sidebar_main: true
 
 date: 2026-07-18
-last_modified_at: 2026-11-07
+last_modified_at: 2026-11-28
 ---
 
 ## 이 글을 30초에 파악하기
@@ -73,9 +73,7 @@ IaC는 서버·네트워크·권한 같은 인프라를 콘솔 클릭이나 수�
 
 Terraform은 클라우드 리소스를 HCL(HashiCorp Configuration Language)로 선언하는 대표적인 IaC 도구다. 워크플로·state·모듈이라는 세 축으로 이해하면 나머지는 부속이다.
 
-![Terraform state·plan·apply와 워크스페이스 구조](/assets/images/cloud/terraform-workflow.png)
-
-위 다이어그램은 Terraform이 코드를 읽어 원격 백엔드의 state와 비교하고(plan), 승인된 plan을 실제 API 호출로 반영하며(apply), 환경·레이어별로 state를 분리해 블라스트 반경을 줄이는 구조를 보여준다.
+Terraform은 코드를 읽어 원격 백엔드의 state와 비교하고(plan), 승인된 plan을 실제 API 호출로 반영하며(apply), 환경·레이어별로 state를 분리해 블라스트 반경을 줄인다.
 
 ### 2.1 기본 워크플로: init / plan / apply
 
@@ -263,9 +261,7 @@ patches:
 
 GitOps는 "Git을 단일 진실 공급원으로 두고, 에이전트가 클러스터를 그 상태로 계속 수렴시킨다"는 운영 모델이다.
 
-![IaC와 GitOps 전체 흐름](/assets/images/cloud/iac-gitops-flow.png)
-
-위 다이어그램은 애플리케이션 저장소에서 CI가 이미지를 빌드·스캔·테스트하고 매니페스트 태그를 커밋하면, CD(Argo CD)가 Git을 읽어 클러스터에 sync하고 다시 라이브 상태와 비교하는 순환 루프를 보여준다. 사람은 Git에 PR을 올릴 뿐 클러스터에 `kubectl apply`를 치지 않는다.
+애플리케이션 저장소에서 CI가 이미지를 빌드·스캔·테스트하고 매니페스트 태그를 커밋하면, CD(Argo CD)가 Git을 읽어 클러스터에 sync하고 다시 라이브 상태와 비교하는 순환 루프가 이어진다. 사람은 Git에 PR을 올릴 뿐 클러스터에 `kubectl apply`를 치지 않는다.
 
 GitOps는 도구 제공 진영이 아니라 CNCF OpenGitOps 워킹그룹이 정리한 네 가지 원칙으로 정의된다.
 

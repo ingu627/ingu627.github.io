@@ -9,7 +9,7 @@ toc_sticky: true
 sidebar_main: true
 
 date: 2025-09-14
-last_modified_at: 2026-11-07
+last_modified_at: 2026-11-28
 use_math: true
 redirect_from:
   - /llm/llm-model-quantization-compression-techniques/
@@ -73,9 +73,7 @@ LLM 추론 파이프라인은 성격이 상이한 두 단계로 나뉜다.
 
 ## 2. 양자화(Quantization): 정밀도 압축과 오차 제어
 
-양자화는 고정밀 부동소수점(FP32, FP16, BF16)으로 표현된 텐서를 더 적은 비트로 사상하는 기법이다. 정수(INT8, INT4)나 저정밀 부동소수점(FP8, FP4)이 그 대상이다.
-
-![LLM 양자화 파이프라인: 부동소수점 텐서 사상과 오차 제어 아키텍처](/assets/images/llm/quantization-mapping-pipeline-cognition.webp)[^2]
+양자화는 고정밀 부동소수점(FP32, FP16, BF16)으로 표현된 텐서를 더 적은 비트로 사상하는 기법이다. 정수(INT8, INT4)나 저정밀 부동소수점(FP8, FP4)이 그 대상이다.[^2]
 
 ### 2.1 수학적 정식화와 매핑 함수
 
@@ -128,9 +126,7 @@ FP8은 복잡한 캘리브레이션이나 가중치 재조정 없이도 FP16 대
 
 ## 3. 프루닝(Pruning): 구조적 vs. 비구조적 희소성
 
-프루닝은 파라미터 값 자체를 0으로 마스킹하거나 모델 레이어/헤드를 물리적으로 절삭하여 희소성(Sparsity)을 부여하는 기법이다.
-
-![구조적 vs 비구조적 프루닝 및 지식 증류 메커니즘 비교](/assets/images/llm/pruning-and-distillation-cognition.webp)[^2]
+프루닝은 파라미터 값 자체를 0으로 마스킹하거나 모델 레이어/헤드를 물리적으로 절삭하여 희소성(Sparsity)을 부여하는 기법이다.[^2]
 
 ### 3.1 비구조적 희소성(Unstructured Sparsity)의 하드웨어 한계
 
@@ -180,9 +176,7 @@ $$W = W_0 + \Delta W = W_0 + \frac{\alpha}{r} (B \times A), \quad B \in \mathbb{
 
 ## 5. 프로덕션 서빙 아키텍처와 트레이드오프 매트릭스
 
-![프로덕션 LLM 압축 워크플로우와 서빙 통합 아키텍처](/assets/images/llm/compression-serving-workflow-cognition.webp)[^1]
-
-경량화 기법은 개별적으로 적용되는 단편적 트릭이 아니라, 타깃 인프라와 서비스 지연시간 요구사항에 맞춰 조합되는 엔지니어링 파이프라인이다.
+경량화 기법은 개별적으로 적용되는 단편적 트릭이 아니라, 타깃 인프라와 서비스 지연시간 요구사항에 맞춰 조합되는 엔지니어링 파이프라인이다.[^1]
 
 ```
 경량화 기법별 프로덕션 서빙 트레이드오프 매트릭스:

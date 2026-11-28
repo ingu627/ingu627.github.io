@@ -9,7 +9,7 @@ toc_sticky: true
 sidebar_main: true
 
 date: 2026-07-21
-last_modified_at: 2026-11-07
+last_modified_at: 2026-11-28
 ---
 
 ## 이 글을 30초에 파악하기
@@ -155,9 +155,7 @@ aws accessanalyzer list-findings \
   --query 'findings[].{type:findingType,resource:resource}' --output table
 ```
 
-![IAM 역할 수임과 권한 경계](/assets/images/cloud/cloud-iam-boundary.png)
-
-위 다이어그램은 사람·워크로드 신원이 `sts:AssumeRole`이나 OIDC 페더레이션으로 임시 자격증명을 받아 역할 세션을 시작하고, 그 세션의 유효 권한이 신원 정책·권한 경계·SCP·세션 정책의 허용 교집합으로 좁혀지는 구조를 보여준다. 상한 정책은 권한을 부여하지 않고 깎기만 하므로, 어느 하나에라도 `Deny`가 걸리면 그 즉시 거부된다.
+사람·워크로드 신원은 `sts:AssumeRole`이나 OIDC 페더레이션으로 임시 자격증명을 받아 역할 세션을 시작하고, 그 세션의 유효 권한은 신원 정책·권한 경계·SCP·세션 정책의 허용 교집합으로 좁혀진다. 상한 정책은 권한을 부여하지 않고 깎기만 하므로, 어느 하나에라도 `Deny`가 걸리면 그 즉시 거부된다.
 
 ---
 
@@ -170,9 +168,7 @@ aws accessanalyzer list-findings \
 - **랜딩 존(Landing Zone)**: AWS Control Tower / Landing Zone Accelerator, Azure Landing Zone(관리 그룹 + Policy + 허브-스포크), GCP 조직 정책(Org Policy). 계정 생성·기준선 적용·로그 중앙화를 코드로 자동화하는 프레임워크로 이해하면 된다.
 - **신규 계정 온보딩 순서**: 계정 생성 → 기준선 SCP/Policy → 중앙 로그 연결(CloudTrail 조직 트레일/진단 설정) → 네트워크 연결 → IAM 역할 위임 → 태그 표준. 이 순서를 뒤집으면 "로그 없는 계정"이 생긴다.
 
-![조직·계정 거버넌스 계층](/assets/images/cloud/cloud-org-governance.png)
-
-위 그림은 조직 루트에서 보안·로그 아카이브 OU와 업무 OU(prod/nonprod)로 계정을 나누고, SCP·Azure Policy·조직 정책이 계층을 따라 상속되는 구조를 나타낸다. 계정이 곧 폭발 반경이므로, 격리는 태그나 네임스페이스가 아니라 계정 단위로 잡는다.
+조직 루트에서 보안·로그 아카이브 OU와 업무 OU(prod/nonprod)로 계정을 나누고, SCP·Azure Policy·조직 정책은 계층을 따라 상속된다. 계정이 곧 폭발 반경이므로, 격리는 태그나 네임스페이스가 아니라 계정 단위로 잡는다.
 
 ```hcl
 # Terraform: OU 단위 SCP — 리전 제한 + 루트 사용자 금지 + 로그 무력화 차단

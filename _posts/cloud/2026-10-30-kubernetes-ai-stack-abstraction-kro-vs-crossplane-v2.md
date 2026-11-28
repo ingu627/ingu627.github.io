@@ -40,7 +40,7 @@ use_math: true
 
 엔터프라이즈 환경에서 대규모 언어 모델(LLM)이나 멀티모달 에이전트 서비스를 쿠버네티스(Kubernetes) 클러스터 위에 프로덕션 수준으로 배포하는 일은 단순하지 않다. 단일 `Deployment`와 `Service` 두 개의 YAML 파일로는 끝나지 않는다. 앞서 살펴본 [쿠버네티스 DRA(Dynamic Resource Allocation) 기반 GPU 스케줄링](/k8s/kubernetes-dra-dynamic-resource-allocation-gpu/)[^1]으로 NVLink와 RDMA NIC 토폴로지를 할당한다.
 
-[분리형 서빙(Disaggregated Serving) 및 Gateway API Inference Extension(GAIE)](/llm/enterprise-ai-platform-disaggregated-serving-kvcache-gaie/)[^2]으로 프리필(Prefill)과 디코드(Decode) 파드 풀을 제어한다. 여기에 [Cilium Tetragon eBPF 커널 보안 및 OTel GenAI 관측성](/k8s/ebpf-ai-observability-cilium-tetragon-otel-genai-trajectory-eval/)[^3]까지 결합하면 사정이 달라진다. 단일 모델을 서빙하는 데만 최소 6개 이상의 **사용자 정의 리소스 정의(CustomResourceDefinition, CRD)** 인스턴스가 필요하다.
+[분리형 서빙(Disaggregated Serving) 및 Gateway API Inference Extension(GAIE)](/llm/enterprise-ai-platform-disaggregated-serving-kvcache-gaie/)[^2]으로 프리필(Prefill)과 디코드(Decode) 파드 풀을 제어한다. 여기에 Cilium Tetragon을 이용한 런타임 보안과 OpenTelemetry 관측성까지 결합하면 사정이 달라진다. 단일 모델을 서빙하는 데만 최소 6개 이상의 **사용자 정의 리소스 정의(CustomResourceDefinition, CRD)** 인스턴스가 필요하다.
 
 그것도 상호 참조로 엮은 상태여야 한다.
 
@@ -71,7 +71,7 @@ Helm은 반죽을 한 번 섞어 오븐에 넣는 방식에 가깝다. 다 구�
 앞의 세 가지는 하드웨어와 워커 파드 쪽을 다룬다. 나머지 세 가지는 트래픽과 보안, 확장을 맡는다.
 
 4. **L7(애플리케이션 계층) 추론 트래픽 라우팅**: 리소스는 `InferenceModel`과 `HTTPRoute`(`gateway.networking.k8s.io/v1`)다. 외부에 노출되는 모델 이름(예: `deepseek-r1-70b`)을 `InferencePool`과 연결한다. 어댑터(LoRA) 버전별 가중치 분할과 테넌트 우선순위(Criticality)도 여기서 정한다.
-5. **커널 수준 런타임 샌드박싱** (`TracingPolicyNamespaced`, `cilium.io/v1alpha1`): 추론 컨테이너 안의 비인가 바이너리 실행(`sys_execve`)을 감시한다. 사설망 외부로의 무단 소켓 연결(`tcp_connect`)도 같은 지점에서 잡는다. 두 경우 모두 eBPF 커널 훅에서 즉시 차단(`Sigkill`)한다[^3].
+5. **커널 수준 런타임 샌드박싱** (`TracingPolicyNamespaced`, `cilium.io/v1alpha1`): 추론 컨테이너 안의 비인가 바이너리 실행(`sys_execve`)과 외부 소켓 연결(`tcp_connect`)을 감시하는 정책을 둘 수 있다. Tetragon은 조건에 맞는 프로세스를 `SIGKILL`로 종료하거나 지원되는 훅에서 반환값을 덮어쓸 수 있다. `SIGKILL`만으로 이미 시작된 동작의 차단을 보장하지는 않는다[^3].
 6. **메트릭 기반 오토스케일링 및 가용성 보장**: 리소스는 `HorizontalPodAutoscaler`와 `PodDisruptionBudget`이다. 토큰 생성 지연 시간(TPOT)이나 프리필 큐 깊이에 따라 `LeaderWorkerSet`의 복제본 수를 조절한다. 노드 드레인 시에는 최소 가용 복제본을 방어한다.
 
 클러스터에서 운영하는 모델 서비스의 수를 $M$이라 하자. 서비스당 결합되는 이기종 CRD의 수는 $K$($K \ge 6$)다. 리소스 쌍 사이에 존재하는 평균 이름·레이블·시크릿 참조 간선 수는 $\bar{p}\_{\text{ref}}$로 둔다. 수동 YAML 관리 환경에서 전체 상호 참조 간선 수 $E\_{\text{total}}$은 다음과 같이 증가한다.
@@ -101,8 +101,6 @@ $$P_{\text{drift}}(M, K) = 1 - (1 - \epsilon)^{E_{\text{total}}(M, K)} \approx 1
 서비스 하나를 배포할 때마다 같은 매니페스트를 복사해 이름만 바꾸는 작업을 반복하고 있었다면, 그 복사본을 대신 만들어 줄 상위 API 하나를 원하게 된다. 그 API가 하위 리소스를 어떤 순서로 엮는지가 관건이 된다.
 
 이 문제를 풀기 위해 AWS, Google Cloud, Microsoft Azure가 공동으로 설계한 오픈소스 컨트롤러가 **kro(Kube Resource Orchestrator)**다[^5]. `kro`는 클라우드 벤더 종속성 없이 표준 쿠버네티스 API만으로 복수의 리소스를 하나의 고수준 API로 캡슐화한다.
-
-![클라우드 외부 인프라를 프로비저닝하는 Crossplane v2와 인클러스터 AI 추론 스택을 합성하는 kro(Kube Resource Orchestrator) 아키텍처 비교](/assets/images/cloud/kubernetes-ai-stack-abstraction-kro-crossplane-v2-cognition.webp)
 
 ### 2.1 ResourceGraphDefinition(RGD)과 동적 CRD 합성 메커니즘
 
@@ -632,7 +630,7 @@ def evaluate_disaggregated_llm_pr(pr_state: Dict[str, Any]) -> GitOpsGateDecisio
 
 [^1]: ingu627.github.io: *쿠버네티스 DRA(Dynamic Resource Allocation) 기반 차세대 GPU 스케줄링 아키텍처* (2026). [/k8s/kubernetes-dra-dynamic-resource-allocation-gpu/](/k8s/kubernetes-dra-dynamic-resource-allocation-gpu/)
 [^2]: ingu627.github.io: *엔터프라이즈 AI 플랫폼 설계: 분리형 서빙(Disaggregated Serving), KV 캐시 오프로딩, Gateway API Inference Extension(GAIE)* (2026). [/llm/enterprise-ai-platform-disaggregated-serving-kvcache-gaie/](/llm/enterprise-ai-platform-disaggregated-serving-kvcache-gaie/)
-[^3]: ingu627.github.io: *eBPF 기반 AI 런타임 보안(Cilium Tetragon)과 OpenTelemetry GenAI 에이전트 궤적 평가 아키텍처* (2026). [/k8s/ebpf-ai-observability-cilium-tetragon-otel-genai-trajectory-eval/](/k8s/ebpf-ai-observability-cilium-tetragon-otel-genai-trajectory-eval/)
+[^3]: Tetragon Documentation: [Enforcement](https://tetragon.io/docs/concepts/enforcement/).
 [^4]: ingu627.github.io: *IaC와 GitOps 실전 가이드: Terraform, Helm, ArgoCD, Flux 아키텍처 비교* (2026). [/cloud/iac-gitops/](/cloud/iac-gitops/)
 [^5]: Kubernetes SIGs / kro Official Documentation: *Kube Resource Orchestrator (kro) — ResourceGraphDefinition, SimpleSchema, and CEL DAG Concepts* (2025–2026). [https://kro.run/docs/overview](https://kro.run/docs/overview)
 [^6]: Crossplane Official Documentation & Blog: *Announcing Crossplane v2.0 — Namespaced Managed Resources, Direct Composite Resources, and Simplified App Authoring* (2025). [https://docs.crossplane.io](https://docs.crossplane.io)

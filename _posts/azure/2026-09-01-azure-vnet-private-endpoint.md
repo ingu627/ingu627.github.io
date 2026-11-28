@@ -9,7 +9,7 @@ toc_sticky: true
 sidebar_main: true
 
 date: 2026-09-01
-last_modified_at: 2026-11-07
+last_modified_at: 2026-11-28
 ---
 
 ## 이 글을 30초에 파악하기
@@ -118,11 +118,7 @@ VNet: vnet-hub-prod (10.0.0.0/16)
 - **snet-pe를 /24로**: Private Endpoint는 리소스당 NIC 하나, 고정 IP 하나를 영구 점유한다. 초기에는 `pe-aoai`, `pe-blob`, `pe-keyvault` 3개만 필요하지만 앞으로 늘어날 것을 감안해 `/24`를 잡았다.
 - **비워 둔 대역**: `10.0.2.0/24`는 온프레미스 연결 게이트웨이나 방화벽 삽입을 염두에 두고 예약했다. 나중에 하이브리드 연결을 붙일 때 VNet 주소 공간을 다시 건드리지 않아도 된다.
 
-먼저 전체 토폴로지를 보자.
-
-![VNet·서브넷·Private Endpoint 토폴로지](/assets/images/azure/azure-vnet-topology.png)
-
-위 다이어그램은 하나의 VNet 안에서 애플리케이션 서브넷과 Private Endpoint 서브넷이 분리되고, Private Endpoint가 각각 사설 IP를 통해 Azure OpenAI·Blob·Key Vault로 연결되는 구조를 보여준다. 애플리케이션은 사설 IP만 알 뿐 관리형 서비스의 공용 FQDN에는 접근할 수 없다.
+하나의 VNet 안에서 애플리케이션 서브넷과 Private Endpoint 서브넷이 분리되고, Private Endpoint가 각각 사설 IP를 통해 Azure OpenAI·Blob·Key Vault로 연결된다. 애플리케이션은 사설 IP만 알 뿐 관리형 서비스의 공용 FQDN에는 접근할 수 없다.
 
 ### 2.3 az CLI로 VNet과 서브넷 만들기
 
@@ -266,11 +262,7 @@ az cognitiveservices account update \
 
 > 정리하면, 공용 DNS는 `privatelink.*` CNAME까지만 안내하고, 마지막 A 레코드만 사설 존이 사설 IP로 바꿔 끼운다.
 
-해석 흐름을 그림으로 정리하면 다음과 같다.
-
-![Private DNS 해석 흐름](/assets/images/azure/azure-dns-resolution-flow.png)
-
-위 그림은 클라이언트가 공용 FQDN을 조회할 때 공용 DNS가 CNAME을 반환하고, VNet에 연결된 사설 존이 마지막 A 레코드를 사설 IP로 응답하는 흐름을 나타낸다. VNet Link가 빠지면 이 재정의 단계가 통째로 생략된다.
+클라이언트가 공용 FQDN을 조회할 때 공용 DNS가 CNAME을 반환하고, VNet에 연결된 사설 존이 마지막 A 레코드를 사설 IP로 응답한다. VNet Link가 빠지면 이 재정의 단계가 통째로 생략된다.
 
 ### 4.3 존 생성·링크·A 레코드
 

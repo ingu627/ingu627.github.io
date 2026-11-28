@@ -39,7 +39,7 @@ use_math: true
 
 온콜 교대가 끝나기 무렵, 잘 돌던 도구 호출이 세션 만료로 실패하기 시작한다. 파드는 멀쩡하고 로그에도 예외가 없는데, 서버가 기억하던 대화 상대만 사라졌다.
 
-엔터프라이즈 환경에서는 **모델 컨텍스트 프로토콜(MCP, Model Context Protocol)**[^1] 서버를 수백 개 파드(Pod) 규모로 운영한다. 쿠버네티스(Kubernetes) 클러스터로 확장하는 순간, 초기 설계가 가정한 **유상태 세션(Stateful Session)** 모델이 확장의 병목이 된다. 이전 글에서 다룬 [MCP 코어 아키텍처와 통신 구조](/llm/mcp/)[^2]와 [엔터프라이즈 바이브 코딩 환경의 MCP 컨텍스트 폭발 제어](/llm/enterprise-vibe-coding-mcp-context-bloat-governance/)[^3]는 클라이언트 계층의 문제를 짚었다.
+엔터프라이즈 환경에서는 **모델 컨텍스트 프로토콜(MCP, Model Context Protocol)**[^1] 서버를 수백 개 파드(Pod) 규모로 운영한다. 쿠버네티스(Kubernetes) 클러스터로 확장하는 순간, 초기 설계가 가정한 **유상태 세션(Stateful Session)** 모델이 확장의 병목이 된다. 이전 글에서 다룬 [MCP 코어 아키텍처와 통신 구조](/llm/mcp/)[^2]와 [MCP 토큰 최적화](/llm/mcp-token-optimization/)[^7]는 클라이언트 계층의 문제를 짚었다.
 
 이 글은 그다음 층인 네트워크와 게이트웨이 계층을 다룬다. 여기서는 로드밸런서 세션 고정(Sticky Session Pinning), JSON-RPC 본문 심층 패킷 검사(DPI, Deep Packet Inspection), 장기 연결 유지 비용이 문제가 된다.
 
@@ -113,10 +113,6 @@ $\mathbb{I}\_{\text{cold}} = 0$, $T\_{\text{StoreRTT}} = 0$이다. 다만 백엔
 새 에이전트를 배포한 직후 첫 도구 호출이 유독 느리다. 같은 호출을 두 번째부터 하면 빨라지는데, 다른 파드로 가면 다시 느려진다.
 
 이 장은 새 스펙이 전송 계층에서 무엇을 바꿨는지 정리한다. `2026-07-28` 코어 스펙은 2026년 5월 21일 릴리스 후보(RC)를 거쳐 2026년 7월 28일 확정되었다[^4][^5]. 이 스펙은 전송 계층을 근본부터 재정의했고, 프로토콜 수준의 세션을 제거했다.
-
-![MCP 전송 규격 진화: 2025 Streamable HTTP 선택적 세션과 2026 완전 무상태 요청 비교](/assets/images/agent/mcp-transport-evolution-session-vs-stateless.webp)
-
-![MCP 2026-07-28 Stateless 코어 스펙과 쿠버네티스 AI 게이트웨이 아키텍처](/assets/images/agent/mcp-stateless-2026-k8s-ai-gateway-cognition.webp)
 
 ### 2.1 SEP-2575와 SEP-2567: 초기화 핸드셰이크 폐기와 프로토콜 세션 제거
 
@@ -641,7 +637,6 @@ def evaluate_mcp_tool_call(
 
 [^1]: Model Context Protocol Official Documentation: *What is the Model Context Protocol (MCP)?* (2025-2026). [https://modelcontextprotocol.io/docs/getting-started/intro](https://modelcontextprotocol.io/docs/getting-started/intro)
 [^2]: ingu627.github.io: *MCP(Model Context Protocol) 아키텍처와 표준 통신 구조 정리* (2025). [/llm/mcp/](/llm/mcp/)
-[^3]: ingu627.github.io: *엔터프라이즈 바이브 코딩의 이면: MCP 컨텍스트 폭발 제어와 멀티 에이전트 거버넌스* (2026). [/llm/enterprise-vibe-coding-mcp-context-bloat-governance/](/llm/enterprise-vibe-coding-mcp-context-bloat-governance/)
 [^4]: Model Context Protocol Specification: *Specification Versioning and Compatibility (`server/discover` & Protocol Negotiation)* (2026-07-28). [https://modelcontextprotocol.io/specification/2026-07-28/basic/versioning.md](https://modelcontextprotocol.io/specification/2026-07-28/basic/versioning.md)
 [^5]: Model Context Protocol Specification: *Streamable HTTP Transport (`MCP-Protocol-Version`, `Mcp-Method`, `Mcp-Name` Headers & Self-Contained Requests)* (2026-07-28). [https://modelcontextprotocol.io/specification/2026-07-28/basic/transports/streamable-http.md](https://modelcontextprotocol.io/specification/2026-07-28/basic/transports/streamable-http.md)
 [^6]: Model Context Protocol Specification: *Multi Round-Trip Requests (MRTR, SEP-2322) & Elicitation Patterns* (2026-07-28). [https://modelcontextprotocol.io/specification/2026-07-28/basic/patterns/mrtr.md](https://modelcontextprotocol.io/specification/2026-07-28/basic/patterns/mrtr.md)

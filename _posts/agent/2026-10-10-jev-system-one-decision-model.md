@@ -47,8 +47,6 @@ use_math: true
 
 심리학자 대니얼 카너먼의 System 1과 System 2는 각각 빠른 직관과 신중한 사고를 설명하는 비유다. TypeSafe의 **System One**은 이 비유에서 이름을 따온 모델 계열로, Jev는 상태를 읽고 미리 정한 타입의 결과와 확률을 반환한다[^5]. 문장이나 추론 과정을 생성하는 대신 호스트 코드가 실행 흐름을 소유한다.
 
-![전통적 소프트웨어, 자율 LLM 에이전트와 System One을 이용한 AI 지원 소프트웨어 비교](/assets/images/llm/jev-system-one-vs-two.webp)
-
 생성형 루프의 일부를 이렇게 작은 판정으로 바꾸는 실무적 접근을 `jevify`라고 부르기도 한다. 다만 분기 코드가 결정론적이어도 모델의 판정 자체가 정확하거나 결정론적이라는 뜻은 아니다.
 
 ### 1.2 RLCD와 확률 보정
@@ -90,11 +88,7 @@ TypeSafe는 **RLCD(Reinforcement Learning for Calibrated Decisions)**를 확률�
 
 질문을 한 요청에 묶으면 같은 상태를 바탕으로 병렬 평가하고 각 답을 별도 ID로 돌려준다. 질문 간 대화를 이어가는 방식이 아니다. 응답에는 실제 모델 ID와 `usage.input_tokens`, `usage.output_tokens`도 포함된다[^6].
 
-아래는 이 입력 계약을 선택적 제어에 연결한 개념 예시다. 호스트 코드는 타입별 결과를 받은 뒤 검증된 임계값과 실행 조건을 확인한다. 조건을 충족하지 않거나 불확실하면 사람에게 검토를 요청하거나 강한 모델에 위임한다.
-
-![상태와 질문을 Jev로 판정한 뒤 검증된 기준에 따라 실행하거나 사람 또는 강한 모델에 검토를 넘기는 분기](/assets/images/agent/jev-selective-control-decision-flow.webp)
-
-[그림 크게 보기](/assets/images/agent/jev-selective-control-decision-flow.webp)
+이 입력 계약을 선택적 제어에 연결할 수 있다. 호스트 코드는 타입별 결과를 받은 뒤 검증된 임계값과 실행 조건을 확인한다. 조건을 충족하지 않거나 불확실하면 사람에게 검토를 요청하거나 강한 모델에 위임한다.
 
 이 글은 세 텍스트 판정 프리미티브에 집중한다. 현재 공식 모델 문서에는 Jev 1.14의 이미지 위치 지정용 **Box**도 별도로 명시되어 있다[^12].
 

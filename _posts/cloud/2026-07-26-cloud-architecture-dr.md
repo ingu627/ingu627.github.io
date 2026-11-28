@@ -9,7 +9,7 @@ toc_sticky: true
 sidebar_main: true
 
 date: 2026-07-26
-last_modified_at: 2026-11-07
+last_modified_at: 2026-11-28
 ---
 
 ## 이 글을 30초에 파악하기
@@ -313,9 +313,7 @@ time velero restore create --from-backup daily-2026-10-09 --namespace-mappings p
 | 웜 스탠바이(Warm Standby) | 분 | 초 | 중상 | 축소판 스택 상시 운영, 트래픽만 전환 |
 | 액티브-액티브(Active-Active) | 초 | 거의 0 | 높음 | 양 리전 동시 서비스, 데이터 충돌 해소 필요 |
 
-![DR 전략 매트릭스](/assets/images/cloud/dr-strategy-matrix.png)
-
-위 다이어그램은 네 가지 DR 전략을 RTO·RPO·비용/복잡도 축에서 비교한 것이다. 백업·복원에서 액티브-액티브로 갈수록 RTO/RPO는 짧아지지만 비용과 운영 복잡도는 계단식으로 올라가므로, 서비스별 목표치에 맞는 전략을 따로 고른다.
+백업·복원에서 액티브-액티브로 갈수록 RTO/RPO는 짧아지지만 비용과 운영 복잡도는 계단식으로 올라가므로, 서비스별 목표치에 맞는 전략을 따로 고른다.
 
 - **백업·복원에서 RPO는 백업 주기가 결정한다.** 백업 주기가 24시간이면 최악의 경우 하루치가 사라지고, 자동·연속 백업으로 PITR(point-in-time recovery)을 켜면 경우에 따라 5분 수준까지 낮출 수 있다. 같은 이름의 전략 안에서도 RPO가 두 자릿수 배 차이 난다.
 - 액티브-액티브의 대가는 **쓰기 충돌**이다. 지역별 쓰기 분리(홈 리전), 충돌 해소 규칙(last-write-wins, CRDT), 전역 일관성 요구사항을 먼저 정의한다. 쓰기가 단일 리전이면 그것은 액티브-패시브에 가깝다.
@@ -366,9 +364,7 @@ resource "aws_rds_global_cluster" "main" {
 }
 ```
 
-![멀티리전 트래픽 라우팅과 장애 조치](/assets/images/cloud/multi-region-patterns.png)
-
-위 그림은 멀티리전 구성에서 트래픽이 어떻게 라우팅되고 장애 시 어떤 순서로 다른 리전으로 조치(failover)되는지 나타낸다. 헬스체크 실패를 감지하면 DNS/전역 LB가 트래픽을 DR 리전으로 돌리고, 데이터 계층은 복제본 승격과 함께 새 쓰기 지점을 갖는다.
+헬스체크 실패를 감지하면 DNS/전역 LB가 트래픽을 DR 리전으로 돌리고, 데이터 계층은 복제본 승격과 함께 새 쓰기 지점을 갖는다.
 
 ---
 

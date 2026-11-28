@@ -9,7 +9,7 @@ toc_sticky: true
 sidebar_main: true
 
 date: 2026-07-11
-last_modified_at: 2026-11-07
+last_modified_at: 2026-11-28
 ---
 
 ## 이 글을 30초에 파악하기
@@ -70,11 +70,9 @@ last_modified_at: 2026-11-07
 
 ## 2. 인증(Authentication)과 인가(Authorization)
 
-kube-apiserver로 들어온 요청은 인증 → 인가 → 어드미션을 순서대로 통과하고, 세 단계를 모두 통과해야 etcd에 저장된다. 세 게이트가 어디서 갈라지는지 먼저 한 장으로 잡고 들어가면 이후 섹션이 훨씬 수월하다.
+kube-apiserver로 들어온 요청은 인증 → 인가 → 어드미션을 순서대로 통과하고, 세 단계를 모두 통과해야 etcd에 저장된다.
 
-![쿠버네티스 요청 처리 파이프라인: 인증 → 인가(RBAC) → 어드미션 → etcd](/assets/images/k8s/k8s-authn-authz-admission.png)
-
-위 다이어그램은 하나의 요청이 kube-apiserver 안에서 인증(Authentication) → 인가(Authorization, RBAC) → 어드미션(Admission)을 통과한 뒤 etcd에 기록되는 파이프라인을 보여준다. 인증 실패는 401, 인가는 통과했지만 권한이 없으면 403이며, 어드미션 단계에서 하나라도 거부되면 객체는 etcd에 저장되지 않는다.
+인증 실패는 401, 인가는 통과했지만 권한이 없으면 403이며, 어드미션 단계에서 하나라도 거부되면 객체는 etcd에 저장되지 않는다.
 
 ### 2.1 인증: 누구인가
 
@@ -438,9 +436,7 @@ gitleaks detect --source . --redact -v
 | 증명 | in-toto, SLSA provenance | 빌드 과정의 재현성·변조 방지 |
 | 강제 | Kyverno verifyImages, policy-controller | 배포 시점 검증 |
 
-![이미지 공급망 보안 파이프라인: 빌드 → 스캔·SBOM → 서명 → 어드미션 검증 → 런타임](/assets/images/k8s/k8s-supply-chain-security.png)
-
-위 다이어그램은 이미지가 빌드된 뒤 스캔·SBOM 생성·서명을 거쳐 레지스트리에 올라가고, 어드미션에서 서명과 신뢰 레지스트리를 검증한 다음에야 런타임에 도달하는 공급망을 나타낸다. 어느 단계에서 검증하느냐가 아니라, 태그가 아닌 다이제스트를 고정한 상태로 배포 시점(어드미션)에 강제하느냐가 실효를 가른다.
+이미지는 빌드된 뒤 스캔·SBOM 생성·서명을 거쳐 레지스트리에 올라가고, 어드미션에서 서명과 신뢰 레지스트리를 검증한 다음에야 런타임에 도달한다. 어느 단계에서 검증하느냐가 아니라, 태그가 아닌 다이제스트를 고정한 상태로 배포 시점(어드미션)에 강제하느냐가 실효를 가른다.
 
 ### 8.1 스캔·SBOM·서명 파이프라인
 

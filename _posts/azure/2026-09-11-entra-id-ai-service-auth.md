@@ -9,7 +9,7 @@ toc_sticky: true
 sidebar_main: true
 
 date: 2026-09-11
-last_modified_at: 2026-11-07
+last_modified_at: 2026-11-28
 ---
 
 ## 이 글을 30초에 파악하기
@@ -97,9 +97,7 @@ Entra ID 단일 인증으로 전환하면 이 비용 구조가 바뀐다. 계정
 
 ### 2.2 Authorization Code Flow 4단계
 
-![Entra ID OIDC 인증 흐름](/assets/images/azure/azure-entra-oidc-flow.png)
-
-위 다이어그램은 브라우저·서비스·Entra ID 세 주체 사이에서 인가 코드가 오가는 순서를 나타낸다. 사용자가 서비스에 접속하면, 서비스는 세션 쿠키가 없을 때 사용자를 곧바로 Entra ID 로그인 엔드포인트로 리디렉션한다.
+인가 코드는 브라우저·서비스·Entra ID 세 주체 사이에서 오간다. 사용자가 서비스에 접속하면, 서비스는 세션 쿠키가 없을 때 사용자를 곧바로 Entra ID 로그인 엔드포인트로 리디렉션한다.
 
 ```
 OIDC Authorization Code Flow:
@@ -143,9 +141,7 @@ User          Service(Web)              Entra ID
 
 인증이 "누구인가"라면 인가는 "무엇을 할 수 있는가"다. 이 플랫폼은 Entra ID의 **App Roles**와 **보안 그룹(Security Group)** 두 축으로 서비스 내부 역할을 결정한다.
 
-![Entra ID 역할 → 서비스 권한 매핑](/assets/images/azure/azure-rbac-role-mapping.png)
-
-다이어그램은 디렉터리 쪽 그룹 멤버십이 토큰의 `roles` 클레임을 거쳐 서비스 내부 권한으로 변환되는 경로를 보여준다. 사용자에게 직접 역할을 붙이지 않고 그룹에 붙이는 이유는, 권한 부여가 그룹 멤버십 편집 한 번으로 끝나기 때문이다.
+디렉터리 쪽 그룹 멤버십은 토큰의 `roles` 클레임을 거쳐 서비스 내부 권한으로 변환된다. 사용자에게 직접 역할을 붙이지 않고 그룹에 붙이는 이유는, 권한 부여가 그룹 멤버십 편집 한 번으로 끝나기 때문이다.
 
 권한 변경이 곧 그룹 편집이다.
 

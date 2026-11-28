@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 date: 2026-09-23
-last_modified_at: 2026-11-07
+last_modified_at: 2026-11-28
 ---
 
 ## 이 글을 30초에 파악하기
@@ -45,8 +45,6 @@ GPU 워크로드처럼 실패 원인이 하드웨어·네트워크·런타임에
 
 장애 대응이 느려지는 이유는 도구가 부족해서가 아니라 **확인 순서가 매번 달라지기 때문**이다.
 
-![EKS 장애 디버깅 4계층 의사결정 트리 - 노드, 네트워크, 워크로드, GPU 순으로 인프라 신호를 먼저 확인하고 애플리케이션 계층으로 좁혀간다](/assets/images/k8s/eks-debugging-decision-tree.webp)
-
 ### 1.1 아래에서 위로 좁힌다
 
 디버깅은 항상 물리 인프라에 가까운 쪽에서 시작한다. 노드가 Ready가 아니면 그 위의 파드 상태는 결과일 뿐 원인이 아니다.
@@ -81,8 +79,6 @@ SSM으로 노드에 들어가려면 노드 IAM Role에 `AmazonSSMManagedInstance
 ## 2. 노드 레벨: NodeNotReady와 리소스 압박
 
 노드 문제는 **클러스터에 조인하지 못하는 경우**와 **조인은 했는데 Ready가 되지 못하거나 압박에 빠지는 경우**로 나뉜다.
-
-![NodeNotReady 조사 순서 - EC2 인스턴스 상태, kubelet, CNI, IAM과 보안그룹, 리소스 압박, Karpenter 프로비저닝 한도 순으로 확인한다](/assets/images/k8s/node-notready-checklist.webp)
 
 ### 2.1 노드가 조인하지 못하는 여덟 가지 원인
 

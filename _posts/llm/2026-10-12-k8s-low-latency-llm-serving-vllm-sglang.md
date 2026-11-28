@@ -148,9 +148,6 @@ python3 -m sglang.launch_server \
 | **내부 메모리 단편화** | 블록 경계 미달 토큰에 대한 낭비 존재 | 가변 간선 표현으로 내부 블록 단편화 없음 |
 | **구조화된 디코딩 지원** | 외부 파서 기반 가이드 연동 | Radix 트리와 인터리브(Interleaved)된 최적화 연계 |
 
-![vLLM과 SGLang의 프리픽스 캐싱 독립 구현 아키텍처 비교 다이어그램](/assets/images/llm/k8s-vllm-vs-sglang-prefix-caching.webp)
-*출처: vLLM(Apache-2.0) 및 SGLang(Apache-2.0) 공식 문서의 독립 캐싱 설계를 바탕으로 공통 요청의 분기 구조를 독립 제작함*
-
 ---
 
 ## 5. Kubernetes 기반 초저지연 LLM 서빙 아키텍처

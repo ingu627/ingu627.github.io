@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 date: 2026-09-14
-last_modified_at: 2026-11-07
+last_modified_at: 2026-11-28
 use_math: true
 ---
 
@@ -101,8 +101,6 @@ MCP 서버 테스트가 어렵다는 이야기는 주장으로만 두지 않고 
 
 마지막 줄이 가장 시사적이다. 결함의 절반 가까이가 **기술 문제가 아니라 우선순위 문제**로 남는다. 즉 테스트 자동화의 목적은 "결함을 찾는 것"에서 한 걸음 더 나아가, **결함을 무시할 수 없게 만드는 것**이어야 한다. CI에서 빨간불이 켜지고, 그 빨간불이 머지를 막는 구조가 필요하다.
 
-![실측 결함 통계 개념도: 큰 숫자 카드 세 장에 펜테스트한 서버의 43%가 명령 주입, 473개 리포지토리에서 837개 런타임 폴트, 통보받은 팀의 45%가 "이론상·수용 가능"으로 응답한 비율을 정리](/assets/images/llm/mcp-testing-defects.webp)
-
 ---
 
 ## 파트 2: Inspector로 시작하는 대화형 검증
@@ -182,8 +180,6 @@ FAIL  tools/list: ttlMs expired but stale result still served
 
 41 passed · 1 failed · spec 2026-07-28
 ```
-
-![CI 게이트 파이프라인 개념도: PR 변경 감지 → Conformance(스펙 리비전 매트릭스) → 계약 테스트(in-memory pytest) → 보안 회귀(재현 테스트 5종) → 릴리스 스모크(롤백 기준 확인)를 잇는 다섯 단계](/assets/images/llm/mcp-testing-ci-gates.webp)
 
 여기서 눈여겨볼 것은 실패 항목의 성격이다. "TTL이 지난 캐시를 그대로 내보냈다"는 프로토콜 위반이 아니라 **캐시 정합성 결함**이다. Conformance 통과가 곧 품질을 뜻하지는 않는다. 그래서 다음 파트의 도구 계약 테스트가 필요하다.
 
@@ -407,8 +403,6 @@ PBT의 생성기는 스키마를 만족하는 입력을 만든다. 그런데 실
    └──────────────────────────────────┘
         ▼  빠름 · 흔함 · 기계 판정
 ```
-
-![MCP 서버 테스트 피라미드 개념도: 아래에서 위로 단위 테스트(인프로세스) → 속성 기반 퍼징 → 프로토콜 Conformance → Inspector(대화형) → 린트 + LLM 평가 순으로 쌓고, 아래로 갈수록 빠르고 흔하며 위로 갈수록 느리고 드물게 돌린다](/assets/images/llm/mcp-testing-pyramid.webp)
 
 각 계층의 실행 비용과 차단 강도를 표로 정리하면 다음과 같다.
 
