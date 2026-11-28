@@ -90,6 +90,14 @@ TypeSafe는 **RLCD(Reinforcement Learning for Calibrated Decisions)**를 확률�
 
 이 입력 계약을 선택적 제어에 연결할 수 있다. 호스트 코드는 타입별 결과를 받은 뒤 검증된 임계값과 실행 조건을 확인한다. 조건을 충족하지 않거나 불확실하면 사람에게 검토를 요청하거나 강한 모델에 위임한다.
 
+아래 그림은 이 계약이 호스트 코드에서 어떻게 갈라지는지 정리한 것이다. 판정 결과와 확률을 받은 호스트가 검증된 임계값과 실행 조건을 확인해 실행, 위임, 사람 검토를 고른다.
+
+![state와 questions를 Jev로 판정해 choice·score·noul 확률을 받고, 호스트가 임계값으로 실행·모델 위임·사람 검토를 나누는 흐름](/assets/images/agent/jev-system-one-decision-model.webp)
+
+[그림 크게 보기](/assets/images/agent/jev-system-one-decision-model.webp)
+
+*그림: 직접 작성한 SVG 도식(원본 `assets/images/agent/jev-system-one-decision-model.svg`)*
+
 이 글은 세 텍스트 판정 프리미티브에 집중한다. 현재 공식 모델 문서에는 Jev 1.14의 이미지 위치 지정용 **Box**도 별도로 명시되어 있다[^12].
 
 ### 2.2 세 질문 타입의 요청과 결과

@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="620" viewBox="0 0 1200 620" role="img" aria-labelledby="t d">
+  <title id="t">Jev 판정과 선택적 제어 흐름</title>
+  <desc id="d">state와 questions를 POST /v1/systemone으로 보내면 Jev가 choice, score, noul 판정과 확률을 돌려주고, 호스트가 검증된 임계값과 실행 조건으로 실행, 강한 모델 위임, 사람 검토를 나눈다.</desc>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1f2937"/>
+    </marker>
+    <style>
+      .box{fill:#ffffff;stroke:#1f2937;stroke-width:1.6}
+      .ttl{font:600 20px 'Pretendard','Apple SD Gothic Neo','Noto Sans KR',system-ui,sans-serif;fill:#111827}
+      .lbl{font:400 17px 'Pretendard','Apple SD Gothic Neo','Noto Sans KR',system-ui,sans-serif;fill:#1f2937}
+      .sub{font:400 15px 'Pretendard','Apple SD Gothic Neo','Noto Sans KR',system-ui,sans-serif;fill:#4b5563}
+      .mono{font:400 15px 'SFMono-Regular',Menlo,Consolas,monospace;fill:#111827}
+      .edge{stroke:#1f2937;stroke-width:1.6;fill:none;marker-end:url(#a)}
+      .bus{stroke:#1f2937;stroke-width:1.6;fill:none}
+      .note{font:400 14px 'Pretendard','Apple SD Gothic Neo','Noto Sans KR',system-ui,sans-serif;fill:#6b7280}
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1200" height="620" fill="#ffffff"/>
+
+  <!-- 입력 -->
+  <rect class="box" x="40" y="90" width="240" height="200" rx="6"/>
+  <text class="ttl" x="60" y="128">입력</text>
+  <text class="mono" x="60" y="168">state</text>
+  <text class="sub" x="60" y="192">문자열 · 객체 · 배열</text>
+  <text class="mono" x="60" y="232">questions</text>
+  <text class="sub" x="60" y="256">choice · score · noul</text>
+
+  <!-- 입력 → Jev -->
+  <line class="edge" x1="280" y1="190" x2="414" y2="190"/>
+  <text class="mono" x="347" y="164" text-anchor="middle" style="font-size:12px">POST</text>
+  <text class="mono" x="347" y="180" text-anchor="middle" style="font-size:12px">/v1/systemone</text>
+
+  <!-- Jev -->
+  <rect class="box" x="420" y="90" width="280" height="200" rx="6"/>
+  <text class="ttl" x="440" y="128">Jev · 비생성형 판정</text>
+  <text class="mono" x="440" y="170">choice</text>
+  <text class="lbl" x="520" y="170">→ 선택지별 확률</text>
+  <text class="mono" x="440" y="206">score</text>
+  <text class="lbl" x="520" y="206">→ 확률 가중 기대값</text>
+  <text class="mono" x="440" y="242">noul</text>
+  <text class="lbl" x="520" y="242">→ 참일 확률</text>
+  <text class="note" x="440" y="272">생성 토큰 없음 · 입력만 소비</text>
+
+  <!-- Jev → 응답 -->
+  <line class="edge" x1="700" y1="190" x2="794" y2="190"/>
+  <text class="mono" x="747" y="172" text-anchor="middle" style="font-size:13px">answers[id]</text>
+
+  <!-- 응답 -->
+  <rect class="box" x="800" y="90" width="320" height="200" rx="6"/>
+  <text class="ttl" x="820" y="128">응답</text>
+  <text class="mono" x="820" y="168">choice</text>
+  <text class="lbl" x="890" y="168">choice · confidence</text>
+  <text class="mono" x="820" y="204">score</text>
+  <text class="lbl" x="890" y="204">score · confidence</text>
+  <text class="mono" x="820" y="240">noul</text>
+  <text class="lbl" x="890" y="240">참일 확률</text>
+  <text class="note" x="820" y="272">usage.input_tokens · output_tokens</text>
+
+  <!-- 응답 → 임계값 -->
+  <line class="edge" x1="960" y1="290" x2="960" y2="328"/>
+
+  <!-- 임계값 -->
+  <polygon class="box" points="960,330 1085,382 960,434 835,382"/>
+  <text class="lbl" x="960" y="377" text-anchor="middle">임계값 검사</text>
+  <text class="sub" x="960" y="399" text-anchor="middle">검증된 실행 조건</text>
+
+  <!-- 분배 버스 -->
+  <line class="bus" x1="960" y1="434" x2="960" y2="462"/>
+  <line class="bus" x1="200" y1="462" x2="960" y2="462"/>
+  <line class="edge" x1="200" y1="462" x2="200" y2="496"/>
+  <line class="edge" x1="600" y1="462" x2="600" y2="496"/>
+  <line class="edge" x1="960" y1="462" x2="960" y2="496"/>
+
+  <!-- 분기 -->
+  <rect class="box" x="50" y="500" width="300" height="100" rx="6"/>
+  <text class="ttl" x="70" y="538">결정론적 실행</text>
+  <text class="sub" x="70" y="566">확률 ≥ 임계값 · 조건 충족</text>
+
+  <rect class="box" x="450" y="500" width="300" height="100" rx="6"/>
+  <text class="ttl" x="470" y="538">강한 모델 위임</text>
+  <text class="sub" x="470" y="566">불확실 · 복잡도 높음</text>
+
+  <rect class="box" x="810" y="500" width="300" height="100" rx="6"/>
+  <text class="ttl" x="830" y="538">사람 검토</text>
+  <text class="sub" x="830" y="566">경계 사례 · 낮은 confidence</text>
+</svg>
