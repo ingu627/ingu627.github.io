@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 date: 2026-10-17
-last_modified_at: 2026-11-19
+last_modified_at: 2026-11-28
 use_math: true
 ---
 
@@ -42,7 +42,7 @@ use_math: true
 
 하지만 소스코드가 없는 바이너리(Native Binary)나 난독화된 번들(Packaged Bundle)을 마주한 에이전트는 쉽게 한계에 봉착한다. 수백~수천 개의 스트립트(Stripped) 함수와 디컴파일러 출력 전체를 거대 언어 모델(LLM)의 컨텍스트 창에 쏟아붓는다. 그러면 분당 토큰 제한(TPM)과 막대한 API 비용에 부딪힌다. 결국 모델 특유의 환각(Hallucination)으로 존재하지 않는 심볼이나 허위 로직을 사실처럼 보고하곤 한다.
 
-이 문제를 해결하기 위해 등장한 오픈소스 도구가 바로 **REA(Reverse Engineer Anything)**[^1]이다. REA가 묶어내는 범위는 네이티브 바이너리(Ghidra, Hopper, IDA Pro), 웹·자바스크립트(ASAR, AST 투영, 소스맵)다. 런타임 관찰(V8 Inspector, CDP)과 모바일(JADX, APK)까지 포함한다. 이들을 하나의 모델 컨텍스트 프로토콜(MCP, Model Context Protocol) 및 CLI 환경으로 묶어낸 도구이다. 
+이 문제를 해결하기 위해 오픈소스 도구 **REA(Reverse Engineer Anything)**[^1]는 분석 도구를 하나의 모델 컨텍스트 프로토콜(MCP, Model Context Protocol) 및 CLI 환경으로 묶는다. 대상은 네이티브 바이너리(Ghidra, Hopper, IDA Pro), 웹·자바스크립트(ASAR, AST 투영, 소스맵), 런타임 관찰(V8 Inspector, CDP), 모바일(JADX, APK)이다.
 
 여기에 TypeSafe AI의 비생성형 **System One 모델인 Jev**[^2][^3]를 결합할 수 있다. 그러면 에이전트의 역공학 파이프라인을 완전히 **결정론적(Deterministic)이고 비용 효율적인 구조**로 재편할 수 있다. REA의 증거 원장(EvidenceLedger) 아키텍처를 분석한다. 그리고 TypeSafe 공식 하우스 스타일 규약에 맞춘 Jev 평가 루브릭(Rubric)을 설계하여 실무 파이프라인에 적용한 경험을 정리한다.
 
@@ -268,7 +268,7 @@ async def filter_candidate_functions(
 - **모달리티 분류 분포**: Web/JS 6건, Native Binary 5건, Managed/Mobile 5건, Session/Evidence 3건, Network Capture 3건
 - **동적 런타임 요구 판정**: 정적 분석 전용 16건, 동적 관찰 요구 6건
 
-단 0.8초와 2원의 비용으로 모듈 22개의 역할과 동적 실행 필요성을 오류 없이 분류해냈다.
+모듈의 역할과 동적 실행 필요성도 오류 없이 분류해냈다.
 
 ### 5.2 전수 생성형 호출 vs REA + Jev 하이브리드 비교
 

@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 date: 2026-10-27
-last_modified_at: 2026-11-07
+last_modified_at: 2026-11-28
 use_math: true
 ---
 
@@ -46,7 +46,7 @@ PTQ(Post-Training Quantization) 기반의 AWQ나 GPTQ로 가중치를 4비트로
 
 가중치를 4비트로 줄이는 일은 창고에 넣을 짐의 부피를 줄이는 일과 같다. 창고에서 꺼내 오는 시간은 줄지만, 꺼낸 짐을 원래 쓰임에 맞게 되살리는 손이 한 번 더 든다.
 
-그러나 동시 접속자가 늘어 서빙 엔진의 **연속 배칭(Continuous Batching)** 배치 크기(Batch Size)가 16에서 64 이상으로 커지면 상황이 뒤집힌다. 이때는 직관과 정반대되는 현상이 관측된다. 메모리를 4분의 1로 줄인 INT4 AWQ(W4A16) 모델이 압축하지 않은 원본 BF16 모델보다 느려지는 **양자화 역전(Quantization Inversion)**이 바로 그것이다.
+그러나 동시 접속자가 늘어 서빙 엔진의 **연속 배칭(Continuous Batching)** 배치 크기(Batch Size)가 16에서 64 이상으로 커지면 상황이 뒤집힌다. 메모리를 4분의 1로 줄인 INT4 AWQ(W4A16) 모델이 압축하지 않은 원본 BF16 모델보다 느려지는 **양자화 역전(Quantization Inversion)**이 관측된다.
 
 동시에 전체 시스템 처리량(Throughput)을 높이려 배치를 키울수록 개별 사용자가 체감하는 **첫 토큰 도달 시간(TTFT, Time-To-First-Token)**은 수십 배로 악화된다.
 
@@ -64,7 +64,7 @@ PTQ(Post-Training Quantization) 기반의 AWQ나 GPTQ로 가중치를 4비트로
 
 프로덕션 서빙 클러스터에서 GPU 대당 비용 효율(Tokens per Dollar)을 높이려면, 단일 GPU가 동시에 처리하는 요청 수(Concurrency)를 끌어올려야 한다. 그런데 이 선택에는 대가가 따른다. Spheron이 2026년 10월 NVIDIA H100 80GB SXM 환경에서 측정한 벤치마크[^4]가 그 대가를 보여준다.
 
-측정 조건은 온디맨드 시간당 단가 $2.65/hr, 대상 모델은 Llama 3.3 70B FP8이다. 이 표는 연속 배칭이 만들어내는 처리량과 지연 시간 사이의 구조적 딜레마를 그대로 드러낸다.
+측정 조건은 온디맨드 시간당 단가 $2.65/hr, 대상 모델은 Llama 3.3 70B FP8이다.
 
 | 동시 요청 수 (Concurrency) | 총 시스템 처리량 (Total Throughput) | 기준 대비 처리량 배수 | 개별 체감 TTFT (p50) | 기준 대비 TTFT 악화 배수 | GPU 병목 구간 특성 |
 |---|---|---|---|---|---|
@@ -143,7 +143,7 @@ NVIDIA는 H200 GPU에서 배치 크기별 상대 처리량을 측정했다. 조�
 - **소배치 구간 (Batch $\le 4$)**: HBM에서 레지스터로 가중치를 퍼 올리는 시간 $T_{\text{mem}}$이 전체 실행 시간을 지배한다. 가중치 크기를 BF16 대비 4분의 1로 줄이면 이 전송 시간도 그만큼 짧아진다. 그래서 INT4 AWQ(W4A16)는 Llama-3.1-70B Batch 1에서 `1.78x`의 가속비를 기록한다.
 - **대배치 구간 (Batch $\ge 16$)**: 입력 행렬 $X \in \mathbb{R}^{B \times d_{\text{in}}}$의 행(Row) 수가 늘어나면 산술 강도 $I(B)$가 상승한다. 그만큼 병목이 연산 밀도 쪽으로 옮겨간다. 그런데 GPU에는 INT4와 FP16을 직접 곱하는 네이티브 혼합 정밀도 텐서 코어 명령어가 없다. 그래서 W4A16 커널은 매 타일(Tile) 행렬 곱셈마다 **INT4 가중치를 레지스터 상에서 FP16으로 실시간 역양자화(On-the-fly Dequantization)**해야 한다.
 
-표의 숫자를 배치 순서로 따라가면 역전이 그대로 보인다. Llama-3.1-70B의 INT4 AWQ는 Batch 1에서 `1.78x`였으나 Batch 16에서 `0.96x`, Batch 64에서 `0.88x`까지 내려간다. Batch 64의 `0.88x`는 처리량이 12% 낮다는 뜻이지 처리 시간이 12% 늘어난다는 뜻이 아니다.
+Llama-3.1-70B의 INT4 AWQ는 Batch 1에서 `1.78x`였으나 Batch 16에서 `0.96x`, Batch 64에서 `0.88x`까지 내려간다. Batch 64의 `0.88x`는 처리량이 12% 낮다는 뜻이지 처리 시간이 12% 늘어난다는 뜻이 아니다.
 
 같은 작업을 처리하는 데 BF16의 약 1.14배 시간이 걸린다. 반면 FP8은 Batch 1의 `1.45x`에서 Batch 64의 `1.64x`로 오히려 올라간다.
 
@@ -265,7 +265,7 @@ Speculators의 데이터 추출 및 학습 파이프라인은 검증 모델의 �
 
 ### 3.3 Speculators v0.5.0의 핵심 진화: DFlash 블록 확산과 온·오프라인 통합 학습
 
-2026년 5월 28일 릴리즈된 **Speculators v0.5.0**[^9]은 초안 생성 자체의 직렬 병목을 없애는 데 초점을 맞췄다. 이를 위해 네 가지 아키텍처 업그레이드를 도입했다. 아래 목록은 각 항목이 어떤 병목을 겨냥하는지를 보여준다.
+2026년 5월 28일 릴리즈된 **Speculators v0.5.0**[^9]은 초안 생성 자체의 직렬 병목을 없애는 데 초점을 맞춰 네 가지 아키텍처 업그레이드를 도입했다.
 
 - **DFlash 블록 확산(Block-Diffusion) 초안 모델**: 기존 EAGLE3는 초안 토큰 $K$개를 만들 때 $K$번의 순차적 소형 순전파를 수행해야 했다. DFlash는 이 한계를 **블록 단위 확산(Block-Diffusion) 디노이징**으로 넘는다. 후보 토큰 블록 $K$개 전체를 **단일 순전파(Single-step Parallel Drafting)**로 동시에 예측하는 방식이다. 덕분에 식 $S(\alpha, K, c)$의 초안 비용 항 $K \cdot c$가 $c_{\text{block}}$ 단일 상수로 줄어든다.
 - **온·오프라인 통합 학습(Unified Online/Offline Training)**: 기존 오프라인 방식은 테라바이트 규모의 은닉 상태 텐서를 디스크에 덤프했다. 온라인 모드는 vLLM 추론 서버가 실시간으로 만드는 은닉 상태를 공유 메모리 버퍼로 받아 즉시 학습한다. 두 방식을 단일 트레이너 인터페이스로 통합한 것이 이번 변경이다.
@@ -419,7 +419,7 @@ def select_vlm_serving_execution_plan(telemetry: dict) -> dict:
 
 같은 4비트 파일을 올렸는데 어떤 모델은 VRAM이 빠듯하고 어떤 모델은 여유롭다. 모델마다 어텐션 구조가 달라 KV 캐시가 차지하는 몫이 크게 갈리기 때문이다.
 
-이 절은 실제로 배포한 모델들의 구조를 나란히 놓고 비교한다. 같은 4비트 양자화라도 어텐션 구조가 다르면 KV 캐시와 연산 프로파일이 달라진다. 표를 먼저 보고, 그 아래에서 대표 모델 세 개의 설계를 뜯어본다.
+이 절에서는 실제로 배포한 모델들의 어텐션 구조에 따른 KV 캐시와 연산 프로파일을 비교한다. 표를 먼저 보고, 그 아래에서 대표 모델 세 개의 설계를 뜯어본다.
 
 ### 5.1 `ollama.com/ingu627` 배포 6종 모델 양자화 및 어텐션 구조 비교
 
@@ -438,14 +438,13 @@ def select_vlm_serving_execution_plan(telemetry: dict) -> dict:
 
 ### 5.2 EXAONE 4.0의 3:1 Hybrid Attention·NoPE·QK-Reorder-Norm 해부
 
-4,556회 다운로드된 **EXAONE 4.0(32B 및 1.2B)**은 장문 컨텍스트 서빙에서 KV 캐시 메모리와 연산량을 줄이려 했다. 이를 위해 세 가지 구조적 설계를 결합했다. 아래 세 항목은 각각 윈도우, 위치 인코딩, 정규화 순서를 건드린다.
+4,556회 다운로드된 **EXAONE 4.0(32B 및 1.2B)**은 장문 컨텍스트 서빙에서 KV 캐시 메모리와 연산량을 줄이려 세 가지 구조적 설계를 결합했다. 각 설계는 윈도우, 위치 인코딩, 정규화 순서를 다룬다.
 
 1. **3:1 하이브리드 어텐션(Hybrid Attention — Sliding Window : Global Attention)**:
    - 전체 트랜스포머 블록을 4개 레이어 단위로 묶는다. 앞의 3개 레이어는 고정된 로컬 윈도우 크기 $W$ 내부의 토큰만 참조하는 **슬라이딩 윈도우 어텐션(SWA, Sliding Window Attention)**으로 실행한다. 4번째 레이어 단 1개만 전체 시퀀스 $N$을 참조하는 **글로벌 어텐션(Global Attention)**으로 배치한다.
    - 이에 따라 시퀀스 길이 $N \gg W$인 장문 구간에서 레이어당 평균 어텐션 복잡도와 KV 캐시 요구량 $M_{\text{KV, EXAONE}}$은 다음과 같이 축소된다.
      $$M_{\text{KV, EXAONE}} = L \cdot H_{kv} \cdot d_h \cdot b_{\text{kv}} \cdot \left( \frac{3}{4} W + \frac{1}{4} N \right)$$
 
-여기까지가 윈도우 크기를 제한하는 설계다. 다음 두 항목은 위치 정보와 정규화 순서를 다룬다.
 
 2. **RoPE 생략(NoPE 구조 결합)**:
    - 글로벌 어텐션 레이어에서는 회전 위치 임베딩(RoPE)을 의도적으로 생략한다. 이것이 **NoPE(No Positional Embedding)** 방식이다. 이렇게 하면 학습 시 본 컨텍스트 길이를 넘어서는 외삽(Length Extrapolation) 구간에서 어텐션 스코어가 발산하는 문제를 막을 수 있다. 원인은 회전 주파수 왜곡이다.
@@ -454,7 +453,7 @@ def select_vlm_serving_execution_plan(telemetry: dict) -> dict:
 
 ### 5.3 Llama 4 Scout의 Early Fusion MoE·iRoPE 및 Qwen3 듀얼 모드 특성
 
-두 모델은 서로 다른 방식으로 연산 예산과 컨텍스트를 다룬다. 하나는 전문가 라우팅으로 연산량을 줄이고, 다른 하나는 추론 깊이를 토글한다. 아래 목록은 그 차이를 정리한 것이다.
+두 모델은 서로 다른 방식으로 연산 예산과 컨텍스트를 다룬다. 하나는 전문가 라우팅으로 연산량을 줄이고, 다른 하나는 추론 깊이를 토글한다.
 
 - **Llama 4 Scout (109B Total / 17B Active, 16 Experts)**:
   - 텍스트와 이미지/비디오 토큰을 초기 트랜스포머 레이어부터 단일 백본으로 통합 처리한다. **조기 융합(Early Fusion) MoE** 구조다.

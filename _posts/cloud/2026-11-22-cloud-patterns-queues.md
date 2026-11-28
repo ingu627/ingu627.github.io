@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 date: 2026-11-22
-last_modified_at: 2026-11-27
+last_modified_at: 2026-11-28
 ---
 
 ## 이 글을 30초에 파악하기
@@ -46,7 +46,7 @@ last_modified_at: 2026-11-27
 
 [그림 크게 보기](/assets/images/cloud/official-queue-leveling.webp)
 
-*출처: Microsoft 및 기여자, [Queue-Based Load Leveling](https://learn.microsoft.com/en-us/azure/architecture/patterns/queue-based-load-leveling) · [CC 허가본](https://github.com/reddev9339/architecture-center/blob/fa6c83c844280f548222c94857377596cbedae6f/docs/patterns/_images/queue-based-load-leveling-pattern.png) · [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). 원본을 WebP로 변환했다.*
+*출처: Microsoft 및 기여자, [Queue-Based Load Leveling](https://learn.microsoft.com/en-us/azure/architecture/patterns/queue-based-load-leveling) · [CC 허가본](https://github.com/reddev9339/architecture-center/blob/fa6c83c844280f548222c94857377596cbedae6f/docs/patterns/_images/queue-based-load-leveling-pattern.png) · [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) · 형식 변환*
 
 왼쪽 막대는 변동하는 요청 유입을, 오른쪽 막대는 상대적으로 일정한 처리 속도를 개념적으로 나타낸다. 다음 계산의 수치는 그림과 별도로 정한 가상 조건이다.
 
@@ -64,9 +64,9 @@ last_modified_at: 2026-11-27
 
 [그림 크게 보기](/assets/images/cloud/official-async-request-reply.webp)
 
-*출처: Microsoft 및 기여자, [Asynchronous Request-Reply](https://learn.microsoft.com/en-us/azure/architecture/patterns/asynchronous-request-reply) · [CC 허가본](https://github.com/reddev9339/architecture-center/blob/fa6c83c844280f548222c94857377596cbedae6f/docs/patterns/_images/async-request-fn.png) · [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). 원본을 WebP로 변환했다.*
+*출처: Microsoft 및 기여자, [Asynchronous Request-Reply](https://learn.microsoft.com/en-us/azure/architecture/patterns/asynchronous-request-reply) · [CC 허가본](https://github.com/reddev9339/architecture-center/blob/fa6c83c844280f548222c94857377596cbedae6f/docs/patterns/_images/async-request-fn.png) · [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) · 형식 변환*
 
-이 예시에서는 Azure Functions가 요청을 큐에 넣고 상태 조회 주소를 반환한다. 다른 함수가 메시지를 처리해 결과를 Blob에 저장하면 상태 조회 함수가 Blob을 확인한다. 이는 구현 예시이며 Azure Functions, 큐와 Blob이 이 패턴의 필수 구성은 아니다.
+이 예시에서는 Azure Functions가 요청을 큐에 넣고 상태 조회 주소를 반환한다. 다른 함수가 메시지를 처리해 결과를 Blob에 저장하면 상태 조회 함수가 Blob을 확인한다. Azure Functions, 큐와 Blob은 이 패턴의 필수 구성은 아니다.
 
 1. API가 입력과 권한을 검증하고 작업 식별자를 만든다.
 2. 접수한 작업이 유실되지 않도록 기록과 큐 발행의 실패 경계를 설계한다.

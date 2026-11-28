@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 date: 2026-10-15
-last_modified_at: 2026-11-19
+last_modified_at: 2026-11-28
 use_math: true
 ---
 
@@ -42,7 +42,7 @@ use_math: true
 
 수만 토큰에 달하는 시스템 프롬프트, 도구 스키마, 다중 턴 대화 히스토리를 VRAM에 상주시키면 정작 배치 크기(Batch Size)를 늘리지 못한다. 그 결과 GPU 연산 코어가 유휴 상태(Idle)에 빠지는 **메모리 바운드(Memory-bound)** 현상이 발생한다.
 
-**Multi-Head Latent Attention(MLA)**[^1]은 DeepSeek-V2/V3/R1 및 최신 V4에서 도입되었다. Kimi K3, GLM-5 등 2026년 주요 오픈 가중치 프론티어 모델로 확산된 이 아키텍처는 이 병목을 수리적으로 돌파한 대표적인 어텐션 아키텍처이다. MLA의 저랭크 잠재 공간 압축과 가중치 흡수(Weight Absorption) 원리를 수식으로 증명한다. 이어서 Kubernetes 환경에서 SGLang RadixAttention과 결합해 서빙 처리량을 극대화하는 엔지니어링 전략을 정리한다.
+**Multi-Head Latent Attention(MLA)**[^1]은 DeepSeek-V2/V3/R1 및 최신 V4에서 도입되었다. Kimi K3, GLM-5 등 2026년 주요 오픈 가중치 프론티어 모델로 확산된 이 어텐션 아키텍처는 이 병목을 수리적으로 돌파했다. MLA의 저랭크 잠재 공간 압축과 가중치 흡수(Weight Absorption) 원리를 수식으로 증명한다. 이어서 Kubernetes 환경에서 SGLang RadixAttention과 결합해 서빙 처리량을 극대화하는 엔지니어링 전략을 정리한다.
 
 ---
 
@@ -58,7 +58,7 @@ $$\text{Memory}_{\text{MHA}} = 2 \times B \times N \times H \times d_h \times \t
 
 ### 1.2 그룹 쿼리 어텐션(GQA)의 트레이드오프
 
-이를 완화하기 위해 Llama 3 등은 그룹 쿼리 어텐션(GQA, Grouped-Query Attention)을 채택했다. GQA는 키-값 헤드 수를 그룹 수 $G$ ($G \ll H$)로 축소하여 공유하는 방식을 취했다.
+이를 완화하기 위해 Llama 3 등은 그룹 쿼리 어텐션(GQA, Grouped-Query Attention)을 채택했다. GQA는 키-값 헤드 수를 그룹 수 $G$ ($G \ll H$)로 축소하여 공유한다.
 
 그러나 GQA는 본질적으로 정보 표현력을 희생하여 메모리를 줄이는 다운샘플링 기법이다. 따라서 에이전트 루프와 같은 고난도 문맥 추론에서 어텐션 해상도(Resolution) 저하를 피할 수 없다.
 
@@ -80,7 +80,7 @@ $$C_{KV} = W_{DKV} X \in \mathbb{R}^{d_c \times n} \quad (\text{단, } d_c \ll 2
 - $d$: 모델 은닉 차원 (예: 7,168)
 - $d_c$: 압축 잠재 차원 (예: $d_c = 4 d_h = 512$)
 
-이후 복원 시점에는 두 개의 업 프로젝션 행렬 $W_{UK} \in \mathbb{R}^{d_h H \times d_c}$와 $W_{UV} \in \mathbb{R}^{d_h H \times d_c}$를 쓴다. 이를 통해 각각 키와 값을 복원한다:
+이후 복원 시점에는 두 업 프로젝션 행렬 $W_{UK} \in \mathbb{R}^{d_h H \times d_c}$와 $W_{UV} \in \mathbb{R}^{d_h H \times d_c}$로 각각 키와 값을 복원한다:
 
 $$K = W_{UK} C_{KV}, \quad V = W_{UV} C_{KV}$$
 
@@ -96,7 +96,7 @@ $$C_Q = W_{DQ} X \in \mathbb{R}^{d_q \times n}, \quad Q = W_{UQ} C_Q \in \mathbb
 
 $$S = K^T Q = (W_{UK} C_{KV})^T (W_{UQ} C_Q) = C_{KV}^T (W_{UK}^T W_{UQ}) C_Q$$
 
-여기서 $W_{UK}^T \in \mathbb{R}^{d_c \times d_h H}$는 고정된 모델 가중치이다. $W_{UQ} \in \mathbb{R}^{d_h H \times d_q}$ 역시 **사전에 고정된 모델 가중치(Static Weights)**이다. 따라서 두 행렬을 사전에 곱해 흡수한 단일 가중치 행렬 $W_{KQ}$를 정의할 수 있다:
+여기서 $W_{UK}^T \in \mathbb{R}^{d_c \times d_h H}$와 $W_{UQ} \in \mathbb{R}^{d_h H \times d_q}$는 모두 **고정된 모델 가중치(Static Weights)**이다. 따라서 두 행렬을 사전에 곱해 흡수한 단일 가중치 행렬 $W_{KQ}$를 정의할 수 있다:
 
 $$W_{KQ} = W_{UK}^T W_{UQ} \in \mathbb{R}^{d_c \times d_q}$$
 
@@ -146,7 +146,7 @@ $$\text{MHA 차원}: 2 \times 128 \times 128 = 32,768 \quad \longrightarrow \qua
 
 ### 3.2 SGLang RadixAttention의 구조적 우위 원리
 
-접두사 중복률이 60%를 넘어서는 순간 SGLang의 처리량과 TTFT가 뚜렷하게 개선된다. 그 이유는 **기수 트리(Radix Tree)**[^2] 기반의 KV 캐시 관리와 **캐시 인지 스케줄링(Cache-aware Scheduling)** 덕분이다.
+접두사 중복률이 60%를 넘어서는 순간 SGLang의 처리량과 TTFT가 뚜렷하게 개선된다. 이는 **기수 트리(Radix Tree)**[^2] 기반의 KV 캐시 관리와 **캐시 인지 스케줄링(Cache-aware Scheduling)** 덕분이다.
 
 - **vLLM의 한계**: 고정 크기 블록(16/32 토큰) 단위 해시 체인 방식은 블록 경계가 정확히 일치하지 않으면 캐시가 누락(Fragmented)되며, 트리 분기형 대화 컨텍스트에서 탐색 오버헤드가 증가한다.
 - **SGLang의 Radix Trie**: 문자열 단위가 아닌 토큰 시퀀스 전체를 가변 길이 기수 트리(Radix Tree)로 관리하여 LRU(Least Recently Used) 기반으로 노드를 정밀하게 보존한다.

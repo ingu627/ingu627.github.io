@@ -77,7 +77,7 @@ $$F_{\text{bubble}} = \frac{PP-1}{M+PP-1}$$
 
 ![vLLM 프록시가 프리필을 요청하고 KV 캐시를 디코드 인스턴스에 전달하는 흐름](/assets/images/llm/official-vllm-disaggregated-prefill.webp)
 
-*출처: [vLLM 프로젝트의 분리 프리필 워크플로 원본](https://github.com/vllm-project/vllm/blob/a1fe24d961d85089c8a254032d35e4bdbca278d6/docs/assets/features/disagg_prefill/overview.jpg), [Apache-2.0](https://github.com/vllm-project/vllm/blob/a1fe24d961d85089c8a254032d35e4bdbca278d6/LICENSE). 원본을 WebP로 변환했다.*
+*출처: [vLLM 프로젝트의 분리 프리필 워크플로 원본](https://github.com/vllm-project/vllm/blob/a1fe24d961d85089c8a254032d35e4bdbca278d6/docs/assets/features/disagg_prefill/overview.jpg), [Apache-2.0](https://github.com/vllm-project/vllm/blob/a1fe24d961d85089c8a254032d35e4bdbca278d6/LICENSE) · 형식 변환*
 
 [그림 크게 보기](/assets/images/llm/official-vllm-disaggregated-prefill.webp)
 
@@ -90,7 +90,7 @@ $$F_{\text{bubble}} = \frac{PP-1}{M+PP-1}$$
 
 ### 1.1 Prefill(Compute-bound) vs Decode(Memory-bound) 비대칭성
 
-두 단계는 같은 GPU를 쓰지만 병목 지점이 정반대다. 아래 두 항목이 그 차이를 정리한다.
+두 단계는 같은 GPU를 쓰지만 병목 지점이 정반대다.
 
 - **프리필 단계(Prefill Phase — Compute-bound)**: 사용자의 입력 시퀀스 $S_{\text{in}}$ 전체를 한 번의 순전파(Forward Pass)로 병렬 처리한다. 이때 초기 **키-값 캐시(Key-Value Cache, KVCache)**가 만들어진다. 대규모 행렬 곱셈(GEMM)이 지배적이므로 병목은 GPU의 텐서 코어(Tensor Core) 연산량(FLOPs)이다. 산술 강도(Arithmetic Intensity, $\text{FLOPs/Byte}$)는 수백 이상으로 높다.
 - **디코드 단계(Decode Phase — Memory-bound)**: 직전에 생성된 토큰 단 1개를 입력으로 받는다. 전체 모델 가중치와 누적된 KVCache를 HBM에서 읽어 들인 뒤 다음 토큰 1개를 만든다. 행렬-벡터 곱셈(GEMV) 위주로 동작하므로 산술 강도가 $1 \sim 4\text{ FLOPs/Byte}$ 수준으로 떨어진다. 텐서 코어는 대부분 유휴 상태로 남고 **고대역폭 메모리(High Bandwidth Memory, HBM)** 대역폭만 포화된다.
@@ -174,11 +174,10 @@ $$S_{\text{EPP}}(p, q) = w_{\text{cache}} \cdot H_{\text{prefix}}(p, q) + w_{\te
 
 ### 2.3 캐시 인식 라우터와 PD 분리의 결합: Prefill Bypass
 
-이 절은 프리필 단계를 아예 건너뛸 수 있는 조건을 정리한다. GAIE의 EPP를 PD 분리 아키텍처와 결합하면 최적화 경로가 하나 더 열린다. 일반적인 PD 분리 흐름에서는 모든 요청이 `라우터 -> 프리필 풀 -> KV 전송 -> 디코드 풀` 순서로 이동한다.
+GAIE의 EPP를 PD 분리 아키텍처와 결합하면 최적화 경로가 하나 더 열린다. 일반적인 PD 분리 흐름에서는 모든 요청이 `라우터 -> 프리필 풀 -> KV 전송 -> 디코드 풀` 순서로 이동한다.
 
 그러나 EPP가 클러스터의 분산 KV 캐시 인덱스를 조회하는 순간이 있다. 그때 **요청 프롬프트의 프리픽스 캐시 히트율이 임계치(예: 90% 이상)를 넘는다면** 상황이 달라진다. 해당 KV 블록이 이미 특정 디코드 파드(또는 디코드 노드의 로컬 DRAM 티어)에 상주하고 있다면 더욱 그렇다.
 
-이 조건이 맞으면 프리필 풀을 거칠 이유가 없다.
 
 이 경우 라우터는 프리필 워커 디스패치와 네트워크 KV 전송 단계를 통째로 우회(Bypass)한다. 그리고 해당 디코드 파드로 요청을 직행시킨다. 남은 미스 토큰(Suffix)만 로컬에서 짧게 계산하고, 곧바로 토큰 생성을 시작한다.
 
@@ -337,7 +336,7 @@ PD 분리와 캐시 인식 라우팅을 쿠버네티스에서 굴리려면 전�
 
 ### 3.1 NVIDIA Dynamo 1.0 vs CNCF llm-d v0.5 아키텍처 비교
 
-아래 표는 NVIDIA Dynamo와 CNCF llm-d를 아키텍처 포지셔닝, 배포 단위, KV 전송 계층 관점에서 나란히 비교한 결과다.
+아래 표는 NVIDIA Dynamo와 CNCF llm-d의 아키텍처 포지셔닝, 배포 단위, KV 전송 계층을 비교한다.
 
 | 비교 항목 | NVIDIA Dynamo (v1.0 GA) | CNCF llm-d (v0.5) |
 |---|---|---|
@@ -389,7 +388,7 @@ PD 분리 아키텍처의 성패는 네트워크 전송 지연에 달려 있다.
 
 ### 4.1 운영체제 가상 메모리 및 GFS 아키텍처와의 설계 대조
 
-KVCache 중심 서빙 아키텍처는 고전 원리를 GPU 클러스터로 옮겨온 결과물이다. 운영체제(OS)의 메모리 관리와 분산 파일 시스템의 지혜가 여기에 쓰인다. 아래 두 항목이 그 대응 관계를 보여준다.
+KVCache 중심 서빙 아키텍처에는 운영체제(OS)의 메모리 관리와 분산 파일 시스템 원리가 쓰인다.
 
 - **OS 페이징·스왑 및 NUMA 지역성과의 대응**: 과거 정리했던 [운영체제 메인 메모리 관리와 페이징](/os/os9_10th/)[^13] 및 [가상 메모리와 요구 페이징(Demand Paging), 워킹셋 모델](/os/os10_10th/)[^14]을 떠올려 보자. OS 커널은 단편화를 막기 위해 고정 크기 페이지 테이블을 둔다. 워킹셋에서 밀려난 콜드 페이지는 디스크 스왑 영역으로 내린다(Page-out). vLLM의 PagedAttention은 단일 GPU 안의 페이지 테이블이다. Mooncake와 LMCache는 이를 클러스터 단위 가상 메모리로 넓힌다. 계층은 **GPU HBM(L1 캐시) $\leftrightarrow$ 호스트 CPU DRAM(메인 메모리) $\leftrightarrow$ 로컬 NVMe 및 원격 RDMA 메모리 풀(스왑 스토리지)**로 이어진다. 다중 소켓 서버에서 PCIe 루트를 가로지르면 대역폭이 반감된다. 따라서 OS의 **비균일 메모리 접근(NUMA)** 스케줄링처럼, GPU와 같은 NUMA 노드에 직결된 RDMA NIC(RNIC)와 핀 고정 메모리(Pinned Memory)만 묶어야 제로카피 대역폭이 온전히 나온다.
 - **Google File System(GFS)과의 대응**: [Google File System(GFS) 논문 리뷰](/paper/gfs/)[^15]에서 살펴본 핵심 설계는 두 가지다. 첫째, 작은 블록 대신 **64MB의 대형 청크(Chunk)** 단위로 데이터를 묶는다. 이렇게 해서 메타데이터 오버헤드와 왕복 비용을 상각(Amortize)한다. 둘째, **제어 흐름과 데이터 흐름을 분리**한다. 마스터 노드는 청크 위치 메타데이터만 본다. 클라이언트와 청크서버는 직접 파이프라인으로 데이터를 스트리밍한다. Mooncake의 Conductor(메타데이터 스케줄러)와 Transfer Engine(직접 RDMA 전송)이 이 분리를 따른다. LMCache의 청크 병합 역시 같은 GFS 원칙을 KVCache 전송에 옮긴 구조다.
@@ -535,7 +534,7 @@ max_local_cpu_size: 5.0
 
 ## 6. 엔지니어링 한계와 트레이드오프
 
-출근 직후에는 짧은 질문만 쏟아지는데, 그 시간대에 오히려 꼬리 지연이 나빠지는 일이 생긴다. 원인은 파드를 나눈 구조 자체가 짧은 요청에서 손해를 보기 때문이다. 이 절은 PD 분리 아키텍처를 도입하기 전에 따져 보아야 할 제약과 비용을 다룬다. KVCache 중심 PD 분리와 GAIE 라우팅은 대규모 클러스터의 Goodput을 끌어올린다. 그러나 운영 현장에서 마주하는 4가지 한계와 트레이드오프가 있다.
+출근 직후에는 짧은 질문만 쏟아지는데, 그 시간대에 오히려 꼬리 지연이 나빠지는 일이 생긴다. 원인은 파드를 나눈 구조 자체가 짧은 요청에서 손해를 보기 때문이다. KVCache 중심 PD 분리와 GAIE 라우팅은 대규모 클러스터의 Goodput을 끌어올린다. 그러나 운영 현장에서 마주하는 4가지 한계와 트레이드오프가 있다.
 
 1. **단문 워크로드에서의 전송 비용**:
    KVCache 전송과 워커 간 홉의 고정 비용이 간섭 감소보다 크면 일체형보다 느릴 수 있다. 일체형 풀을 기준선으로 유지하고 실제 트래픽에서 비교한다.

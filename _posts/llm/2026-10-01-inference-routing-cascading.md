@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 date: 2026-10-01
-last_modified_at: 2026-11-19
+last_modified_at: 2026-11-28
 ---
 
 ## 이 글을 30초에 파악하기
@@ -59,7 +59,7 @@ LLM 요청의 실제 분포는 놀랄 만큼 편향되어 있다. 자동완성 �
 
 ### 1.2 라우팅 결정이 일어나는 두 개의 레이어
 
-이 글에서 계속 구분해서 쓸 개념이 있다. 라우팅 결정은 서로 다른 두 질문에 답하며, 이 둘은 물리적으로 같은 게이트웨이에 있어도 논리적으로는 다른 레이어다[^1].
+라우팅 결정은 서로 다른 두 질문에 답하며, 이 둘은 물리적으로 같은 게이트웨이에 있어도 논리적으로는 다른 레이어다[^1].
 
 | 레이어 | 결정하는 질문 | 사용하는 신호 | 선택 단위 |
 |---|---|---|---|
@@ -117,7 +117,7 @@ Tier 2-A는 모델 API를 추상화하는 프로바이더 프록시다. Bifrost�
 3. 의미가 같은 이전 요청의 응답을 재사용한다(시맨틱 캐싱).
 4. 프로바이더가 죽으면 다른 프로바이더로 넘긴다(failover).
 
-여기서 헷갈리기 쉬운 구분이 있다. Tier 2-A는 **모델 간(across-model)** 선택을 하고, 뒤에서 다룰 Gateway API Inference Extension은 **모델 내(within-model)** Pod 선택을 한다. 용도가 다르다.
+Tier 2-A는 **모델 간(across-model)** 선택을 하고, 뒤에서 다룰 Gateway API Inference Extension은 **모델 내(within-model)** Pod 선택을 한다.
 
 ### 2.3 Tier 2-B: Agent Data Plane (agentgateway)
 
@@ -181,7 +181,7 @@ picker는 점수를 종합해 최종 Pod를 정하고, 미지정이면 기본 `m
 ![EPP 스케줄링 흐름: 요청의 criticality를 먼저 보고, critical이면 LoRA 적합성 분기로, 아니면 큐·KV 여유 분기로 갈라진다. 각 분기에서 조건을 만족하는 Pod 집합을 좁힌 뒤 대기 큐가 짧은 순, KV 캐시 사용이 낮은 순으로 걸러 최종 목록에서 하나를 고르고, 어느 분기에서도 조건을 만족하지 못하면 요청을 드롭한다.](/assets/images/llm/official-kubernetes-inference-extension-epp.webp)
 *출처: [Kubernetes Blog, Introducing Gateway API Inference Extension](https://kubernetes.io/blog/2025/06/05/introducing-gateway-api-inference-extension/)*
 
-여기서 정확히 해 둘 것이 하나 있다. **KV-cache-aware 라우팅에서 라우팅 결정 자체는 추론이 아니다.** prefix 블록 해시와 인덱스 조회라는 기계적 연산이고 모델 forward pass가 없다. 반면 컨텍스트 인지(시맨틱) 라우팅은 인코더·분류 모델을 돌리므로 라우팅 경로에 경량 추론이 생긴다. 어느 쪽이든 선택된 Pod가 수행하는 최종 워크로드는 LLM 추론이다.
+**KV-cache-aware 라우팅에서 라우팅 결정 자체는 추론이 아니다.** prefix 블록 해시와 인덱스 조회라는 기계적 연산이고 모델 forward pass가 없다. 반면 컨텍스트 인지(시맨틱) 라우팅은 인코더·분류 모델을 돌리므로 라우팅 경로에 경량 추론이 생긴다. 어느 쪽이든 선택된 Pod가 수행하는 최종 워크로드는 LLM 추론이다.
 
 L2 구현은 세 갈래로 비교된다.
 
@@ -387,7 +387,7 @@ GLM-5 744B(strong 30%, p5en.48xlarge 8xH200 Spot ~`$16/hr`) 약 `$3,456`/월이 
 여기서 자주 오해되는 제품이 Kong이다. Kong AI Gateway의 `ai-semantic-cache` 플러그인이 하는 일은 "의미가 비슷한 요청이면 앞선 응답을 그대로 돌려준다"이고, 이는 호출 자체를 줄이는 응답 캐시 계층에 속한다[^1]. 반면 "어느 Pod에 prefix KV 캐시가 살아 있는지"를 보고 스케줄하는 일은 별개 계층이다.
 
 Kong의 부하 분산(consistent-hash, lowest-latency 등)은 프로바이더·모델 단위에서 동작한다. Envoy 기반이 아니므로 GIE/ext-proc/InferencePool 계열 구현을 갖지 않는다.
-그래서 KV-aware 스케줄링이 필요하면 Kong은 엣지(L1)에 남기고 L2는 EPP·HyperPod·Dynamo 쪽에 맡기는 구성이 자연스럽다. 저장소 위치도 짚어 둘 만하다.
+그래서 KV-aware 스케줄링이 필요하면 Kong은 엣지(L1)에 남기고 L2는 EPP·HyperPod·Dynamo 쪽에 맡기는 구성이 자연스럽다.
 
 Kong은 자체 임베딩을 내장하지 않고 Redis·Valkey·PGVector 같은 외부 저장소에 연결하며, 임베딩 생성도 OpenAI·Bedrock 같은 외부 API 호출로 처리한다[^1].
 
@@ -455,7 +455,7 @@ Kong은 자체 임베딩을 내장하지 않고 Redis·Valkey·PGVector 같은 �
 
 ## 실무 적용: 단계적 도입과 품질·비용 가드레일
 
-지금까지는 개념이었다. 여기서부터는 Azure/Kubernetes 기반 사내 AI 플랫폼(자체 vLLM과 외부 프로바이더를 함께 쓰고, 요청은 단일 게이트웨이 엔드포인트로 들어오는 구성)을 운영하는 관점의 도입 절차다. Azure에는 대응 개념이 있다.
+Azure/Kubernetes 기반 사내 AI 플랫폼(자체 vLLM과 외부 프로바이더를 함께 쓰고, 요청은 단일 게이트웨이 엔드포인트로 들어오는 구성)을 운영하는 관점의 도입 절차다.
 
 시맨틱 캐시의 벡터 저장소는 Azure Managed Redis를, 사내 인증·정책 계층은 Azure API Management를 게이트웨이 앞에 붙이는 식이다. 다만 L2(KV-aware Pod 선택)는 vLLM 곁에 있어야 하므로 Azure Kubernetes Service의 추론 Pod 계층에서 EPP 계열로 처리한다.
 
@@ -516,7 +516,7 @@ Kong은 자체 임베딩을 내장하지 않고 Redis·Valkey·PGVector 같은 �
 임계값 조정은 방향을 미리 정해 둔다. 재실행율이 높으면 승격 조건을 완화(임계값 상향)하고, 비용이 예상보다 높으면 승격 조건을 조인다. 두 KPI가 반대 방향으로 당기므로 한 번에 하나만 움직인다.
 
 ### E. 배포 전 체크리스트
-연속된 점검 항목은 목적에 따라 묶어서 관리한다. 먼저 인프라와 배포 정책 점검이다.
+먼저 인프라와 배포 정책을 점검한다.
 
 - [ ] 클라이언트가 단일 엔드포인트(`base_url`)만 쓰는가
 - [ ] 라우팅 룰이 코드(YAML)로 리뷰되고 버전 관리되는가

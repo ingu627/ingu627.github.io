@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 date: 2026-11-26
-last_modified_at: 2026-11-27
+last_modified_at: 2026-11-28
 ---
 
 ## 이 글을 30초에 파악하기
@@ -77,7 +77,7 @@ last_modified_at: 2026-11-27
 
 [그림 크게 보기](/assets/images/cloud/official-gatekeeper.webp)
 
-*출처: Microsoft 및 기여자, [Gatekeeper 패턴](https://learn.microsoft.com/en-us/azure/architecture/patterns/gatekeeper) · [CC 허가본](https://github.com/reddev9339/architecture-center/blob/fa6c83c844280f548222c94857377596cbedae6f/docs/patterns/_images/gatekeeper-diagram.png) · [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). 원본을 WebP로 변환했다.*
+*출처: Microsoft 및 기여자, [Gatekeeper 패턴](https://learn.microsoft.com/en-us/azure/architecture/patterns/gatekeeper) · [CC 허가본](https://github.com/reddev9339/architecture-center/blob/fa6c83c844280f548222c94857377596cbedae6f/docs/patterns/_images/gatekeeper-diagram.png) · [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) · 형식 변환*
 
 그림에서 클라이언트에 엔드포인트를 공개하는 게이트키퍼는 요청을 검증하고 정제한다. 게이트키퍼와 분리할 수 있는 신뢰된 호스트 또는 키마스터는 서비스와 데이터 저장소에 접근한다. 외부 요청을 받는 구성 요소와 내부 자원에 접근하는 구성 요소의 경계를 보여준다.
 
@@ -152,7 +152,7 @@ last_modified_at: 2026-11-27
 | Quarantine | 검사 대기 시간, 통과·실패·예외 건수, 재검사 지연 | 배포 지연, 우회 경로, 오래된 승인 |
 | Valet Key | 발급·사용 실패, 저장소 요청량과 전송량, 만료 후 실패 | 토큰 오용, 반복 전송, 유효 기간 부적합 |
 
-발급 요청과 저장소 작업은 가능한 범위에서 상관관계를 연결한다. 단, 토큰 발급 로그만으로 업로드가 성공했다고 판단하지 않는다. 저장소 감사 기록의 제공 여부와 지연은 사용하는 서비스의 계약을 확인해야 한다.
+가능한 범위에서 발급 요청과 저장소 작업을 연관 짓는다. 단, 토큰 발급 로그만으로 업로드가 성공했다고 판단하지 않는다. 저장소 감사 기록의 제공 여부와 지연은 사용하는 서비스의 계약을 확인해야 한다.
 
 ### 도입 순서와 복구 기준
 

@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 date: 2026-11-23
-last_modified_at: 2026-11-27
+last_modified_at: 2026-11-28
 ---
 
 ## 이 글을 30초에 파악하기
@@ -84,7 +84,7 @@ last_modified_at: 2026-11-27
 
 [그림 크게 보기](/assets/images/cloud/official-pipes-and-filters.webp)
 
-*출처: Microsoft 및 기여자, [Pipes and Filters](https://learn.microsoft.com/en-us/azure/architecture/patterns/pipes-and-filters) · [CC 허가본](https://github.com/reddev9339/architecture-center/blob/fa6c83c844280f548222c94857377596cbedae6f/docs/patterns/_images/pipes-and-filters-solution.png) · [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). 원본을 WebP로 변환했다.*
+*출처: Microsoft 및 기여자, [Pipes and Filters](https://learn.microsoft.com/en-us/azure/architecture/patterns/pipes-and-filters) · [CC 허가본](https://github.com/reddev9339/architecture-center/blob/fa6c83c844280f548222c94857377596cbedae6f/docs/patterns/_images/pipes-and-filters-solution.png) · [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) · 형식 변환*
 
 그림에서 서로 다른 데이터 원본은 각각 독립된 파이프라인을 거친다. 두 파이프라인은 Task B 필터를 재사용하고, 변환된 데이터를 업무 로직(Business logic)에 전달한다.
 

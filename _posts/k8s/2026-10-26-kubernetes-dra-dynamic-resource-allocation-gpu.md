@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 date: 2026-10-26
-last_modified_at: 2026-11-19
+last_modified_at: 2026-11-28
 use_math: true
 ---
 
@@ -50,7 +50,7 @@ GPU 노드 앞에서 플랫폼 엔지니어가 가장 자주 듣는 질문은 "�
 
 쿠버네티스 커뮤니티는 이 구조적 제약을 풀기 위해 **동적 리소스 할당(Dynamic Resource Allocation, DRA)** 아키텍처를 도입했다. 스토리지 계층의 동적 볼륨 프로비저닝 모델을 하드웨어 가속기 영역으로 확장한 설계다[^6]. 쿠버네티스 v1.34에서 핵심 API(`resource.k8s.io/v1`)가 정식(GA) 단계에 진입했다.
 
-이어 v1.35~v1.37 릴리즈를 거치며 부분 용량 공유와 기존 매니페스트 호환 매핑까지 갖춰졌다[^6][^9]. 프로덕션 전환을 위한 퍼즐이 모두 맞춰진 셈이다. 이 글은 사내 멀티 테넌트 GPU 클러스터를 쿠버네티스 v1.34 이상으로 업그레이드하며 검토한 내용을 정리한 것이다.
+이어 v1.35~v1.37 릴리즈를 거치며 부분 용량 공유와 기존 매니페스트 호환 매핑까지 갖춰졌다[^6][^9]. 이 글은 사내 멀티 테넌트 GPU 클러스터를 쿠버네티스 v1.34 이상으로 업그레이드하며 검토한 내용을 정리한 것이다.
 
 기존 Device Plugin 체계에서 DRA 기반으로 무중단 전환하기 위한 아키텍처 명세와 운영 절차를 담았다. 개인 학습과 설계 리뷰 목적의 기록이다.
 
@@ -156,8 +156,6 @@ DRA 아키텍처에서는 외부 컨트롤러가 스케줄링 결정을 가로�
 1. **`ResourceSlice` 발행**이 첫 단계다.
    - 각 GPU 노드에 배포된 NVIDIA DRA 드라이버 데몬셋이 로컬 PCIe 버스와 NVML(NVIDIA Management Library), MIG 구성을 스캔한다. 그다음 해당 노드가 보유한 장치 목록과 속성(UUID, 아키텍처, VRAM 용량, PCIe 루트, 드라이버 버전)을 담은 `ResourceSlice` 오브젝트를 API 서버에 자동으로 발행한다[^6][^10].
 
-이어서 드라이버가 함께 등록하는 표준 클래스 목록을 본다.
-
 2. **기본 `DeviceClass` 등록**도 배포 시점에 자동으로 이뤄진다.
    - NVIDIA GPU DRA 드라이버를 배포하면 다음 5종의 표준 클래스를 포함한 `DeviceClass` 리소스가 클러스터에 등록된다[^10].
    - **`gpu.nvidia.com`**: 베어메탈 또는 패스스루 환경의 전체 물리 GPU 및 부분 공유(Consumable Capacity) 대상 장치를 추상화한다.
@@ -241,7 +239,7 @@ $$\sum_{c \in \mathcal{C}(d)} r_{c,k} \le C_{d,k} \quad (\forall k), \qquad \tex
 
 2026년 9월 3일 릴리즈된 **쿠버네티스 v1.37**에는 중요한 이정표가 있다. **확장 리소스 매핑(Extended Resource Mapping)** 기능이 정식(GA, Stable) 버전으로 승격된 것이다[^9].
 
-클러스터 관리자가 `DeviceClass` 스펙에 `spec.extendedResourceName: "nvidia.com/gpu"`를 선언해 두면 나머지는 자동이다. 기존에 운영 중이던 수백 개의 Deployment와 Helm 차트를 고칠 필요가 없다. `resources.limits["nvidia.com/gpu"]: 1` 문법을 단 한 줄도 수정하지 않아도 동작한다.
+클러스터 관리자가 `DeviceClass` 스펙에 `spec.extendedResourceName: "nvidia.com/gpu"`를 선언해 두면 기존 수백 개의 Deployment와 Helm 차트에서 `resources.limits["nvidia.com/gpu"]: 1` 문법을 수정하지 않아도 동작한다.
 
 컨트롤 플레인이 백그라운드에서 이를 암묵적 `ResourceClaim`으로 자동 변환한다. 그리고 DRA 드라이버로 스케줄링한다[^9]. 이 기능 덕분에 애플리케이션 팀의 매니페스트 수정 일정을 기다리지 않아도 된다.
 
@@ -478,8 +476,6 @@ def evaluate_resource_claim_admission(
 
 운영 중인 GPU 클러스터를 한 번에 갈아엎으면 학습 잡이 전부 죽는다. 그래서 새 노드 몇 대만 먼저 바꿔 놓고, 그 위에서 파드가 제대로 뜨는지 확인한 뒤 나머지를 옮긴다.
 
-이 절은 운영 중인 클러스터를 중단 없이 DRA로 옮기는 절차를 다섯 단계로 정리한다.
-
 대규모 GPU 클러스터에서 기존 Device Plugin 워크로드를 중단시키지 않고 DRA로 이관하려면 순서가 중요하다. 카나리 노드 풀(Canary NodePool) 분리와 K8s v1.37의 `Extended Resource Mapping`을 결합한 5단계 절차를 밟아야 한다[^2][^5][^9]. 이사할 때 새집에 짐을 다 들이기 전에 가전제품부터 옮겨 콘센트와 배관을 확인하는 것과 같다. 새집에서 문제가 생기면 아직 짐을 싸지 않은 원래 집으로 돌아오면 된다.
 
 | 단계 | 작업 명칭 | 핵심 실행 조치 | 검증 기준 (Validation Gate) | 롤백 방법 |
@@ -511,8 +507,6 @@ kubectl exec -n ai-serving vllm-multi-container-worker -c vllm-engine -- nvidia-
 ## 6. 엔지니어링 한계와 트레이드오프
 
 DRA로 갈아탄 뒤 모든 문제가 사라질 것이라 기대했다면, 곧 예상 밖의 지연을 만난다. 하드웨어는 멀쩡한데 파드가 뜨기까지 걸리는 시간만 늘어나는 경우다.
-
-이 절은 DRA를 프로덕션에 넣을 때 남는 제약과 트레이드오프를 정리한다.
 
 DRA는 기존 Device Plugin의 구조적 한계를 해소한다. 그렇다고 제약이 사라지는 것은 아니다. 현시점(쿠버네티스 v1.34~v1.37 및 NVIDIA GPU Operator v26.7.1 기준) 프로덕션 도입 시 고려해야 할 제약과 트레이드오프가 네 가지 있다.
 

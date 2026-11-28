@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 date: 2026-11-27
-last_modified_at: 2026-11-27
+last_modified_at: 2026-11-28
 ---
 
 ## 이 글을 30초에 파악하기
@@ -54,9 +54,9 @@ last_modified_at: 2026-11-27
 
 [그림 크게 보기](/assets/images/cloud/official-compute-consolidation.webp)
 
-*출처: Microsoft 및 기여자, [Compute Resource Consolidation pattern](https://learn.microsoft.com/en-us/azure/architecture/patterns/compute-resource-consolidation) · [CC 허가본](https://github.com/reddev9339/architecture-center/blob/fa6c83c844280f548222c94857377596cbedae6f/docs/patterns/_images/compute-resource-consolidation-diagram.png) · [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). 원본을 WebP로 변환했다.*
+*출처: Microsoft 및 기여자, [Compute Resource Consolidation pattern](https://learn.microsoft.com/en-us/azure/architecture/patterns/compute-resource-consolidation) · [CC 허가본](https://github.com/reddev9339/architecture-center/blob/fa6c83c844280f548222c94857377596cbedae6f/docs/patterns/_images/compute-resource-consolidation-diagram.png) · [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) · 형식 변환*
 
-예를 들어 가정상 두 작업이 각각 별도 인스턴스를 쓰고 대부분 한가하다고 하자. 피크 시간대와 메모리 요구가 겹치지 않고 함께 실행할 충분한 여유가 있다면 한 단위로 묶는 후보가 된다. 먼저 시간대별 CPU·메모리 사용과 배치 주기를 측정하고, 합친 뒤에도 지연과 여유 용량을 비교한다. 이 예시는 실측이나 절감액 예측이 아니다.
+가정상 두 작업이 각각 별도 인스턴스를 쓰고 대부분 한가하다고 하자. 피크 시간대와 메모리 요구가 겹치지 않고 함께 실행할 충분한 여유가 있다면 한 단위로 묶는 후보가 된다. 먼저 시간대별 CPU·메모리 사용과 배치 주기를 측정하고, 합친 뒤에도 지연과 여유 용량을 비교한다. 이 예시는 실측이나 절감액 예측이 아니다.
 
 통합은 작업의 확장 요구와 배포 주기가 비슷할 때 유리하다. 반면 하나는 급격히 확장해야 하고 다른 하나는 드물게 실행된다면, 함께 확장되는 자원이 낭비될 수 있다. 한 작업의 메모리 고갈이나 시작 실패가 이웃 작업에도 영향을 줄 수 있다. 장시간 작업은 호스트 재시작 시 중단 지점에서 복구할 수 있어야 한다.
 

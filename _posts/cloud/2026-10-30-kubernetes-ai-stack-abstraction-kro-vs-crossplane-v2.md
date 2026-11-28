@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 date: 2026-10-30
-last_modified_at: 2026-11-19
+last_modified_at: 2026-11-28
 use_math: true
 ---
 
@@ -62,7 +62,7 @@ Helm은 반죽을 한 번 섞어 오븐에 넣는 방식에 가깝다. 다 구�
 
 ### 1.1 현대 쿠버네티스 AI 추론 스택의 매니페스트 파편화와 설정 드리프트
 
-프로덕션 클러스터에 70B 이상의 LLM 추론 서비스를 하나 올린다고 하자. 플랫폼이 요구하는 표준 리소스 그래프는 다음 6종의 CRD로 구성된다. 아래 목록은 그 여섯 가지가 각각 무엇을 책임지는지 보여준다.
+프로덕션 클러스터에 70B 이상의 LLM 추론 서비스를 하나 올린다고 하자. 플랫폼이 요구하는 표준 리소스 그래프는 다음 6종의 CRD로 구성된다.
 
 1. **하드웨어 토폴로지 할당** (`ResourceClaimTemplate`, `resource.k8s.io/v1`): 쿠버네티스 DRA 드라이버를 호출한다. 동일 NVSwitch 도메인 안의 GPU 4~8장과 RoCE v2 RDMA NIC를 원자적으로 묶어 요청한다[^1].
 2. **멀티노드 분산 추론 워크로드**: 리소스는 `LeaderWorkerSet`(`leaderworkerset.x-k8s.io/v1`)다. 텐서 병렬화(TP)와 파이프라인 병렬화(PP)를 수행하는 파드 집합을 단일 라이프사이클로 묶는다. 리더(Leader) 파드와 워커(Worker) 파드가 그 대상이다. gang 스케줄링과 토폴로지 정렬 재시작도 이 리소스가 보장한다[^7].
@@ -86,7 +86,7 @@ $$P_{\text{drift}}(M, K) = 1 - (1 - \epsilon)^{E_{\text{total}}(M, K)} \approx 1
 
 ### 1.2 Helm 템플릿 엔진의 구조적 한계: 문자열 치환과 단발성 렌더링
 
-플랫폼 팀은 예전부터 이런 다중 리소스 보일러플레이트를 감추려고 **헬름(Helm)** 차트를 써 왔다. 그러나 Helm의 템플릿 엔진은 Go 템플릿(`text/template`)에 기반한다. 이 구조는 현대 AI 추론 스택을 추상화할 때 세 가지 한계를 드러낸다. 아래 세 항목이 그 한계다.
+플랫폼 팀은 예전부터 이런 다중 리소스 보일러플레이트를 감추려고 **헬름(Helm)** 차트를 써 왔다. 그러나 Helm의 템플릿 엔진은 Go 템플릿(`text/template`)에 기반한다. 이 구조는 현대 AI 추론 스택을 추상화할 때 세 가지 한계를 드러낸다.
 
 - **비타입화 문자열 치환**: Helm은 쿠버네티스 리소스의 **추상 구문 트리(Abstract Syntax Tree, AST)**나 OpenAPI v3 스키마를 이해하지 못한다. 이런 방식을 비타입화 문자열 치환(Untyped Text Interpolation)이라 부른다. 수행하는 일은 공백 들여쓰기(`nindent 4`)와 문자열 이어붙이기뿐이다. `values.yaml`에 정수 대신 문자열을 넣어도 차트 패키징 시점에는 검출되지 않는다. 존재하지 않는 CRD 필드 경로를 적어도 마찬가지다. 실제 클러스터 API 서버에 적용될 때야 실패한다.
 - **런타임 상태 전파(Status Propagation) 및 순서 제어 부재**: Helm은 YAML 텍스트를 한 번 렌더링해 API 서버로 던지는 **단발성 렌더러(One-shot Renderer)**다. 렌더링은 클라이언트나 GitOps 컨트롤러에서 일어난다. 선행 리소스가 준비된 뒤에야 채워지는 런타임 값을 후행 리소스로 넘길 방법이 없다. 예를 들어 `InferencePool`이나 클라우드 스토리지가 프로비저닝된 후 `.status.addresses[0].value`에 기록되는 값을 읽는다고 하자. 이 값을 후행 `LeaderWorkerSet`의 환경 변수에 주입하는 일은 Helm 템플릿만으로 불가능하다.
@@ -100,7 +100,7 @@ $$P_{\text{drift}}(M, K) = 1 - (1 - \epsilon)^{E_{\text{total}}(M, K)} \approx 1
 
 서비스 하나를 배포할 때마다 같은 매니페스트를 복사해 이름만 바꾸는 작업을 반복하고 있었다면, 그 복사본을 대신 만들어 줄 상위 API 하나를 원하게 된다. 그 API가 하위 리소스를 어떤 순서로 엮는지가 관건이 된다.
 
-이 절은 클러스터 안의 리소스 여러 개를 하나의 고수준 API로 묶는 방법을 다룬다. 그 문제를 풀기 위해 AWS, Google Cloud, Microsoft Azure가 공동으로 설계한 오픈소스 컨트롤러가 **kro(Kube Resource Orchestrator)**다[^5]. `kro`는 클라우드 벤더 종속성 없이 표준 쿠버네티스 API만으로 복수의 리소스를 하나의 고수준 API로 캡슐화한다.
+이 문제를 풀기 위해 AWS, Google Cloud, Microsoft Azure가 공동으로 설계한 오픈소스 컨트롤러가 **kro(Kube Resource Orchestrator)**다[^5]. `kro`는 클라우드 벤더 종속성 없이 표준 쿠버네티스 API만으로 복수의 리소스를 하나의 고수준 API로 캡슐화한다.
 
 ![클라우드 외부 인프라를 프로비저닝하는 Crossplane v2와 인클러스터 AI 추론 스택을 합성하는 kro(Kube Resource Orchestrator) 아키텍처 비교](/assets/images/cloud/kubernetes-ai-stack-abstraction-kro-crossplane-v2-cognition.webp)
 
@@ -160,7 +160,7 @@ $$T_{\text{provision}}(G) = \sum_{d=1}^{D} \max_{r \in L_d} \left( t_{\text{appl
 
 ### 3.1 Crossplane v1의 구조적 부채: 클러스터 스코프 MR과 3계층 Claim 보일러플레이트
 
-Crossplane v1에서는 AWS S3 버킷이나 IAM 역할 같은 모든 **관리형 리소스(Managed Resource, MR)**가 예외 없이 **클러스터 스코프(Cluster-scoped)**였다. 이 설계는 실제 운영 환경에서 세 가지 엔지니어링 부채를 남겼다. 아래 목록이 그 부채다.
+Crossplane v1에서는 AWS S3 버킷이나 IAM 역할 같은 모든 **관리형 리소스(Managed Resource, MR)**가 예외 없이 **클러스터 스코프(Cluster-scoped)**였다. 이 설계는 실제 운영 환경에서 세 가지 엔지니어링 부채를 남겼다.
 
 1. **XR과 Claim(XRC)의 이중 추상화 강제**: 애플리케이션 팀에게 특정 네임스페이스(`team-alpha`) 권한만 준 상태를 가정하자. 이때 클러스터 스코프인 MR이나 **복합 리소스(Composite Resource, XR)**를 직접 생성하게 할 수 없었다. 결과적으로 플랫폼 팀이 클러스터 스코프 XR 위에 네임스페이스 스코프 프록시 객체를 얹어야 했다. **클레임(Claim, XRC)**이 그 객체다. 그 결과 3계층 구조($\text{Claim} \to \text{XR} \to \text{MR}$)를 모든 추상화마다 강제로 작성하게 됐다.
 2. **네이티브 Patch-and-Transform(P&T)의 가독성 저하**: XR의 필드 값을 하위 MR로 복사하려면 경로 규칙을 나열해야 했다. `FromCompositeFieldPath`, `ToCompositeFieldPath`, 정규식 변환이 수백 줄의 YAML 배열로 이어진다. 이것이 네이티브 P&T 방식이다. 조건문 하나나 리스트 반복문을 표현하려 해도 YAML 코드가 기하급수적으로 비대해졌다.
@@ -302,7 +302,7 @@ $$M_{\text{apiserver}} = N_{\text{CRD}} \cdot m_{\text{schema}} + \sum_{k=1}^{N_
 - **클라우드 외부 계층(Crossplane v2)**: AWS나 Azure의 외부 API를 제어하려면 패밀리 프로바이더를 설치해야 한다. `provider-upjet-aws-s3`, `provider-upjet-aws-iam` 등이 그 예다. gRPC `Composition Function` 러너 파드도 띄워야 한다. 이 비용은 외부 클라우드 API와 쿠버네티스 상태 머신을 동기화하는 데 필요하다. 앞서 다룬 [2026 엔터프라이즈 에이전트 호스팅 & AI FinOps 아키텍처](/cloud/enterprise-agent-hosting-ai-finops-aws-azure/)[^11]의 클라우드 스토리지·네트워크·권한 경계를 코드로 관리할 때도 이 계층이 핵심 역할을 한다.
 - **인클러스터 AI 스택 계층(`kro`)**: 이미 클러스터 내부에 설치된 리소스를 묶는 작업에는 외부 클라우드 API 호출이 전혀 없다. 대상은 `LeaderWorkerSet`, `ResourceClaimTemplate`, `InferencePool`, `TracingPolicyNamespaced`다. 그래서 gRPC 함수 러너 파드를 거칠 네트워크 홉도 필요 없다. `kro`의 단일 프로세스 메모리 안에서 CEL AST 평가($< 2\text{ ms}$)와 자동 DAG 위상 정렬로 처리하면 된다. 이렇게 하면 컨트롤 플레인 지연 시간과 메모리 오버헤드가 최소화된다.
 
-그래서 가장 실용적인 역할 분담은 **플랫폼 엔지니어링 2계층 추상화 패턴(Two-Tier Abstraction Pattern)**으로 정리된다. 아래 두 계층이 그것이다.
+그래서 가장 실용적인 역할 분담은 **플랫폼 엔지니어링 2계층 추상화 패턴(Two-Tier Abstraction Pattern)**으로 정리된다.
 
 1. **Outer Infrastructure Loop(Crossplane v2 담당)**: `XAIModelStorage` XR로 외부 저장소를 만든다. S3/Blob 모델 저장소, KMS 암호화 키, IAM 워크로드 아이덴티티가 대상이다. 연결 메타데이터(버킷 ARN, 리전, 엔드포인트)는 해당 네임스페이스의 `Secret`(`*-cloud-env`)으로 출력한다.
 2. **Inner AI Stack Loop(`kro` `ResourceGraphDefinition` 담당)**: Crossplane v2가 생성한 `Secret` 이름을 입력 파라미터로 받는다. 합성 대상은 DRA GPU 클레임 템플릿, LWS(LeaderWorkerSet) 분산 추론 파드, GAIE 추론 풀 및 라우트, Tetragon eBPF 샌드박스, HPA다. 이들을 단일 `DisaggregatedLLMService` CRD로 합성한다.
@@ -618,7 +618,6 @@ def evaluate_disaggregated_llm_pr(pr_state: Dict[str, Any]) -> GitOpsGateDecisio
 2. **동적 생성 CRD의 RBAC 권한 집중과 ArgoCD/Flux 상태 추적 충돌**: `kro` 컨트롤러가 RGD로부터 새 CRD를 등록한다고 하자. 그리고 `LeaderWorkerSet`이나 `TracingPolicyNamespaced`를 대신 생성·수정한다고 하자. 그러려면 `kro`의 ServiceAccount에 해당 하위 리소스들에 대한 광범위한 클러스터 권한(ClusterRole)이 필요하다. 최소 권한 원칙을 지키려면 RGD로 허용할 리소스 그룹만 명시적으로 묶은 Aggregated ClusterRole을 구성해야 한다. ArgoCD를 쓸 때는 문제가 하나 더 있다. `kro`가 동적으로 생성한 하위 리소스들은 부모 인스턴스를 가리키는 `ownerReferences`를 갖는다. ArgoCD `Application`에서 `ServerSideApply=true`와 리소스 무시 규칙을 제대로 설정하지 않으면 동기화 플래핑(Sync Flapping)이 생긴다. 하위 리소스의 런타임 필드 갱신을 두고 ArgoCD와 `kro` 리컨실러가 서로 덮어쓰는 현상이다.
 3. **대규모 MR 운영 시 API 서버와 클라우드 Rate Limit 부하**: Crossplane v2가 Claims 계층을 제거해 객체 수를 줄였어도 본질은 같다. 수천 개의 클라우드 리소스를 단일 쿠버네티스 관리 클러스터의 etcd에 저장한다. 그리고 주기적으로 클라우드 API(`Describe*`, `Get*`)를 폴링한다. 관리 대상 MR이 5,000개를 넘어가는 환경이라면 모놀리식 프로바이더 대신 필요한 서비스만 분리된 패밀리 프로바이더(`provider-upjet-aws-s3` 등)를 설치한다. 컨트롤러의 `--max-reconcile-rate` 및 `--poll-interval` 파라미터도 보수적으로 튜닝한다. 그래야 AWS/Azure API 스로틀링(`ThrottlingException`)과 API 서버 OOM을 예방할 수 있다.
 
-아래 두 항목은 앞의 셋과 성격이 다르다. 판정과 검증 계층을 어떻게 운영할지에 대한 조건이다.
 
 4. **Jev 판정 임계값의 홀드아웃 데이터셋 보정 필수성**: 5.2절의 GitOps PR 게이트 코드에서 쓴 확률 임계값(`prob >= 0.82`)은 임의로 하드코딩하면 안 된다. 사내에서 실제로 발생했던 과거 PR 반려 이력이 필요하다. OOM 장애를 유발한 매니페스트와 정상 승인 PR도 모아야 한다. 이렇게 모은 **독립 홀드아웃 검증셋(Held-out Validation Set)**으로 정밀도(Precision)와 재현율(Recall) 곡선을 측정한다. 그 뒤 도메인에 맞게 임계값을 보정해야 한다.
 5. **타입 안전성과 무오류성은 다르다**: 타입 안전성(Type Safety)이 무오류성(Infallibility)을 뜻하지는 않는다. `kro`의 CEL 정적 타입 검사와 `Jev`의 스키마 보장 응답(파싱 에러율 0%)은 **인터페이스 계약의 안전성**만 보장한다. 모델의 시맨틱 판정이 항상 참이라는 뜻도 아니다. 런타임 장애가 발생하지 않는다는 뜻도 아니다. PR 설명란에 적대적 프롬프트 주입(Adversarial Steering)을 시도해 `Jev`의 점수를 우회하려 할 수도 있다. 따라서 심층 방어(Defense-in-Depth)가 필요하다. `enableKernelSandbox: false` 금지나 GPU 상한선 같은 핵심 불변식(Invariant)은 쿠버네티스 네이티브 수단으로 이중 강제해야 한다. 강제 수단은 `ValidatingAdmissionPolicy`(CEL)와 `ResourceQuota`다.

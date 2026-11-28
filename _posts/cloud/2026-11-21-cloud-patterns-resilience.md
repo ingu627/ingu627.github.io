@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 date: 2026-11-21
-last_modified_at: 2026-11-27
+last_modified_at: 2026-11-28
 ---
 
 ## 이 글을 30초에 파악하기
@@ -64,7 +64,7 @@ last_modified_at: 2026-11-27
 
 [그림 크게 보기](/assets/images/cloud/official-retry.webp)
 
-*출처: Microsoft 및 기여자, [Retry 패턴](https://learn.microsoft.com/en-us/azure/architecture/patterns/retry) · [CC 허가본](https://github.com/reddev9339/architecture-center/blob/fa6c83c844280f548222c94857377596cbedae6f/docs/patterns/_images/retry-pattern.png) · [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). 원본을 WebP로 변환했다.*
+*출처: Microsoft 및 기여자, [Retry 패턴](https://learn.microsoft.com/en-us/azure/architecture/patterns/retry) · [CC 허가본](https://github.com/reddev9339/architecture-center/blob/fa6c83c844280f548222c94857377596cbedae6f/docs/patterns/_images/retry-pattern.png) · [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) · 형식 변환*
 
 대기가 필요한 오류는 시도 간 간격을 늘리고 무작위 지연을 섞는다. 여러 인스턴스가 동시에 다시 호출하는 현상을 줄이기 위해서다. 제공자가 `Retry-After`를 보낸다면 그 안내와 남은 마감 시간을 함께 고려한다. 무조건 기다리면 사용자의 응답 시간 목표를 넘길 수 있다.
 
@@ -88,7 +88,7 @@ SDK의 기본 재시도도 이 계산에 포함해야 한다. 재시도를 담�
 
 [그림 크게 보기](/assets/images/cloud/official-circuit-breaker.webp)
 
-*출처: Microsoft 및 기여자, [Circuit Breaker 패턴](https://learn.microsoft.com/en-us/azure/architecture/patterns/circuit-breaker) · [CC 허가본](https://github.com/reddev9339/architecture-center/blob/fa6c83c844280f548222c94857377596cbedae6f/docs/patterns/_images/circuit-breaker-diagram.png) · [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). 원본을 WebP로 변환했다.*
+*출처: Microsoft 및 기여자, [Circuit Breaker 패턴](https://learn.microsoft.com/en-us/azure/architecture/patterns/circuit-breaker) · [CC 허가본](https://github.com/reddev9339/architecture-center/blob/fa6c83c844280f548222c94857377596cbedae6f/docs/patterns/_images/circuit-breaker-diagram.png) · [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) · 형식 변환*
 
 1. **닫힘(Closed)**: 호출을 전달하고 최근 실패를 관찰한다. 정해진 기준을 넘으면 회로를 연다.
 2. **열림(Open)**: 의존성을 호출하지 않고 빠르게 실패한다. 정해진 대기 시간이 지나면 시험 단계로 넘어간다.

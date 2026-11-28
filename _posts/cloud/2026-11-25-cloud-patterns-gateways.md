@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 date: 2026-11-25
-last_modified_at: 2026-11-27
+last_modified_at: 2026-11-28
 ---
 
 ## 이 글을 30초에 파악하기
@@ -59,9 +59,9 @@ last_modified_at: 2026-11-27
 
 [그림 크게 보기](/assets/images/cloud/official-gateway-routing.webp)
 
-*출처: Microsoft 및 기여자, [Gateway Routing 패턴](https://learn.microsoft.com/en-us/azure/architecture/patterns/gateway-routing) · [CC 허가본](https://github.com/reddev9339/architecture-center/blob/fa6c83c844280f548222c94857377596cbedae6f/docs/patterns/_images/gateway-multiple-services.png) · [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). 원본을 WebP로 변환했다.*
+*출처: Microsoft 및 기여자, [Gateway Routing 패턴](https://learn.microsoft.com/en-us/azure/architecture/patterns/gateway-routing) · [CC 허가본](https://github.com/reddev9339/architecture-center/blob/fa6c83c844280f548222c94857377596cbedae6f/docs/patterns/_images/gateway-multiple-services.png) · [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) · 형식 변환*
 
-그림에서 소비자(Consumer)는 게이트웨이를 거쳐 검색, 결제, 주문 이력, 장바구니 또는 리뷰 서비스로 요청을 보낸다. 게이트웨이는 요청에 맞는 백엔드 서비스로 전달한다.
+그림에서 소비자(Consumer)는 게이트웨이를 거쳐 요청에 맞는 검색, 결제, 주문 이력, 장바구니 또는 리뷰 서비스로 요청을 보낸다.
 
 같은 서비스의 여러 인스턴스나 버전으로 요청을 나눌 수도 있다. 다만 진입점이 같다고 백엔드의 API 계약 변경이 자동으로 숨겨지는 것은 아니다. 기존 경로와 응답 계약을 유지할 때만 클라이언트 변경을 피할 수 있다.
 
