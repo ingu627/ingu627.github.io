@@ -38,10 +38,6 @@ last_modified_at: 2026-11-27
 
 이 글은 이런 연쇄 장애를 줄이는 일곱 패턴을 공식 문서와 함께 정리한다. 수치가 등장하는 사례는 모두 설명을 위한 가정이며 실측 결과가 아니다. 각 패턴의 임계값은 실제 업무 목표와 부하를 기준으로 정해야 한다.
 
-![재시도, 회로 차단, 자원 분리로 실패의 확산 범위를 줄이는 세 가지 방식](/assets/images/cloud/cloud-patterns-resilience.webp)
-
-*장애의 확산을 막는 자원 경계와 호출·운영 제어를 함께 살펴본다.*
-
 ### Bulkhead: 한 구획의 침수를 다른 구획으로 옮기지 않는다
 
 **벌크헤드(Bulkhead)** 는 배의 방수 격벽처럼 자원을 독립된 구획으로 나눈다.[^1] 결제 호출과 주문 조회 호출에 별도 연결 풀과 동시 실행 한도를 두는 방식이다. 결제 풀이 가득 차도 주문 조회의 풀이 남아 있다면 조회는 계속 진행할 수 있다.
@@ -62,6 +58,14 @@ last_modified_at: 2026-11-27
 
 **재시도(Retry)** 는 짧은 네트워크 단절처럼 회복될 가능성이 있는 실패를 다시 시도한다.[^2] 오류를 분류한 뒤 재시도 가능한 경우에만 실행하고, 정해진 횟수나 마감 시간에 도달하면 실패를 반환한다. 인증 실패나 잘못된 입력처럼 반복해도 해결되지 않는 오류에는 적용하지 않는다.
 
+다음 그림은 애플리케이션이 서비스로부터 HTTP 500 응답을 두 번 받은 뒤, 대기 시간을 늘려 세 번째 시도에서 HTTP 200을 받는 예다. 모든 500 오류가 재시도에 적합하거나 부작용이 있는 작업을 안전하게 반복할 수 있다는 뜻은 아니다.
+
+![두 차례 HTTP 500 응답 후 세 번째 시도에서 HTTP 200 응답을 받는 재시도 예](/assets/images/cloud/official-retry.webp)
+
+[그림 크게 보기](/assets/images/cloud/official-retry.webp)
+
+*출처: Microsoft 및 기여자, [Retry 패턴](https://learn.microsoft.com/en-us/azure/architecture/patterns/retry) · [CC 허가본](https://github.com/reddev9339/architecture-center/blob/fa6c83c844280f548222c94857377596cbedae6f/docs/patterns/_images/retry-pattern.png) · [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). 원본을 WebP로 변환했다.*
+
 대기가 필요한 오류는 시도 간 간격을 늘리고 무작위 지연을 섞는다. 여러 인스턴스가 동시에 다시 호출하는 현상을 줄이기 위해서다. 제공자가 `Retry-After`를 보낸다면 그 안내와 남은 마감 시간을 함께 고려한다. 무조건 기다리면 사용자의 응답 시간 목표를 넘길 수 있다.
 
 응답 타임아웃은 서버가 작업을 수행하지 않았다는 증거가 아니다. 결제는 성공했지만 응답만 유실됐을 수 있다. 따라서 부작용이 있는 요청은 같은 작업을 구별하는 식별자와 서버 측 중복 방지 계약을 확인해야 한다. 재시도 로그에는 민감한 결제 정보나 인증 토큰을 남기지 않는다.
@@ -78,9 +82,13 @@ SDK의 기본 재시도도 이 계산에 포함해야 한다. 재시도를 담�
 
 **서킷 브레이커(Circuit Breaker)** 는 실패할 가능성이 높은 의존성 호출을 잠시 막는다.[^3] 재시도가 다음 시도의 성공을 기대한다면, 차단기는 계속 호출하지 않을 시점을 정한다. 전기 차단기처럼 고장을 직접 고치는 장치는 아니다.
 
-![닫힘, 열림, 반열림 상태와 시험 요청 결과에 따른 회로 차단기 전이](/assets/images/cloud/cloud-patterns-circuit-breaker.webp)
+그림에서 닫힘(Closed) 상태의 실패가 기준에 도달하면 열림(Open)으로 전환된다. 대기 시간이 지나면 반열림(Half-Open)에서 시험하고, 성공 횟수가 기준에 도달하면 닫히며 실패하면 다시 열린다.
 
-*직접 그린 상태도. 원문 그림은 Circuit Breaker 문서에서 확인할 수 있다.[^3]*
+![실패 기준과 대기 시간, 시험 요청 결과에 따른 회로 차단기의 닫힘·열림·반열림 상태 전이](/assets/images/cloud/official-circuit-breaker.webp)
+
+[그림 크게 보기](/assets/images/cloud/official-circuit-breaker.webp)
+
+*출처: Microsoft 및 기여자, [Circuit Breaker 패턴](https://learn.microsoft.com/en-us/azure/architecture/patterns/circuit-breaker) · [CC 허가본](https://github.com/reddev9339/architecture-center/blob/fa6c83c844280f548222c94857377596cbedae6f/docs/patterns/_images/circuit-breaker-diagram.png) · [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). 원본을 WebP로 변환했다.*
 
 1. **닫힘(Closed)**: 호출을 전달하고 최근 실패를 관찰한다. 정해진 기준을 넘으면 회로를 연다.
 2. **열림(Open)**: 의존성을 호출하지 않고 빠르게 실패한다. 정해진 대기 시간이 지나면 시험 단계로 넘어간다.

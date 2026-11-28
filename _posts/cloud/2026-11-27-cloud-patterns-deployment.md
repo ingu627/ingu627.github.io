@@ -36,10 +36,6 @@ last_modified_at: 2026-11-27
 
 서버를 무조건 늘리거나 합치는 것만으로는 세 문제가 모두 해결되지 않는다. 계산 단위의 이용률, 고객이 배정되는 위치, 데이터 복제 방식은 각각 다른 결정이기 때문이다. 이 글은 Microsoft의 패턴을 공부하며 그 결정의 경계를 묶어 정리한 기록이다.
 
-![배포 단위, 지역 복제, 점진적 전환과 운영 비용](/assets/images/cloud/cloud-patterns-deployment.webp)
-
-*배포 단위를 합치거나 복제하고 기존 기능을 전환할 때 확인할 경계를 나타낸 그림이다.*
-
 ### 여섯 가지 결정은 서로 대체재가 아니다
 
 자원 통합은 한 단위 안의 이용률을 높인다. 스탬프는 고객 집합별 배포 단위를 만들고, Geode는 지역마다 같은 요청을 처리하도록 설계한다. 외부 설정과 정적 파일 분리는 배포 대상의 책임을 나누며, 단계적 전환은 기존 기능을 옮기는 순서를 정한다.
@@ -51,6 +47,14 @@ last_modified_at: 2026-11-27
 ### Compute Resource Consolidation: 빈 공간을 공유한다
 
 **계산 자원 통합(Compute Resource Consolidation)** 은 여러 작업을 하나의 계산 단위에 배치한다.[^1] 비유하면 각자 사무실을 임대하던 소규모 팀이 공간을 함께 쓰는 것이다. 따로 남겨 두던 여유 용량을 공유하므로, 실제 청구 자원을 줄일 수 있다면 비용도 낮아질 수 있다.
+
+아래 그림은 통합하기 전의 구성이다. Task A부터 E까지 각 작업이 별도의 계산 단위(Computational unit)에서 실행된다.
+
+![작업 A부터 E까지 별도의 계산 단위에서 실행하는 통합 전 구성](/assets/images/cloud/official-compute-consolidation.webp)
+
+[그림 크게 보기](/assets/images/cloud/official-compute-consolidation.webp)
+
+*출처: Microsoft 및 기여자, [Compute Resource Consolidation pattern](https://learn.microsoft.com/en-us/azure/architecture/patterns/compute-resource-consolidation) · [CC 허가본](https://github.com/reddev9339/architecture-center/blob/fa6c83c844280f548222c94857377596cbedae6f/docs/patterns/_images/compute-resource-consolidation-diagram.png) · [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). 원본을 WebP로 변환했다.*
 
 예를 들어 가정상 두 작업이 각각 별도 인스턴스를 쓰고 대부분 한가하다고 하자. 피크 시간대와 메모리 요구가 겹치지 않고 함께 실행할 충분한 여유가 있다면 한 단위로 묶는 후보가 된다. 먼저 시간대별 CPU·메모리 사용과 배치 주기를 측정하고, 합친 뒤에도 지연과 여유 용량을 비교한다. 이 예시는 실측이나 절감액 예측이 아니다.
 

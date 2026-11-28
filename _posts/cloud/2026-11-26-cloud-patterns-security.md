@@ -33,10 +33,6 @@ last_modified_at: 2026-11-27
 
 외부 파트너와 파일을 주고받는 서비스를 운영하는 개발자와 보안 담당자를 위한 글이다. 네 가지 패턴을 공부하며 무엇을 어디서 신뢰하는지 정리했다.
 
-![사용자 인증, 접근 권한, 자산 격리를 구분하는 신뢰 경계](/assets/images/cloud/cloud-patterns-security.webp)
-
-*사용자 인증, 접근 권한과 외부 자산 격리를 구분한 개요다.*
-
 ## 같은 서비스에도 여러 신뢰 경계가 있다
 
 파트너가 포털에 로그인한 뒤 대용량 파일을 올린다고 가정하자. 서비스는 파트너의 회사 계정을 신뢰해야 한다. 업로드 요청을 검증하고, 저장소에 직접 접근할 권한도 제한해야 한다. 한편 포털이 사용하는 외부 컨테이너 이미지도 배포 전에 확인해야 한다.
@@ -76,6 +72,14 @@ last_modified_at: 2026-11-27
 2. 게이트키퍼는 인증 정보, 요청 형식, 허용된 크기와 정책을 확인하고 부적절한 요청을 거부한다.
 3. 통과한 요청만 보호된 내부 경로로 전달한다.
 4. 내부 서비스는 업무 권한과 데이터 관계를 다시 확인하고 작업을 수행한다.
+
+![게이트키퍼가 클라이언트 요청을 검증하고 신뢰된 호스트가 서비스와 데이터 저장소에 접근하는 경계](/assets/images/cloud/official-gatekeeper.webp)
+
+[그림 크게 보기](/assets/images/cloud/official-gatekeeper.webp)
+
+*출처: Microsoft 및 기여자, [Gatekeeper 패턴](https://learn.microsoft.com/en-us/azure/architecture/patterns/gatekeeper) · [CC 허가본](https://github.com/reddev9339/architecture-center/blob/fa6c83c844280f548222c94857377596cbedae6f/docs/patterns/_images/gatekeeper-diagram.png) · [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). 원본을 WebP로 변환했다.*
+
+그림에서 클라이언트에 엔드포인트를 공개하는 게이트키퍼는 요청을 검증하고 정제한다. 게이트키퍼와 분리할 수 있는 신뢰된 호스트 또는 키마스터는 서비스와 데이터 저장소에 접근한다. 외부 요청을 받는 구성 요소와 내부 자원에 접근하는 구성 요소의 경계를 보여준다.
 
 게이트키퍼는 최소 권한으로 실행하고, 내부 저장소의 광범위한 자격 증명을 갖지 않게 한다. 내부 서비스는 외부에서 직접 접근할 수 없도록 네트워크와 접근 정책을 구성한다. 내부 통신도 가능한 한 암호화하고 호출 주체를 확인한다.
 

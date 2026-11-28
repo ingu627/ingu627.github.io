@@ -34,10 +34,6 @@ last_modified_at: 2026-11-27
 
 주문 접수 화면에는 성공이 떴지만 배송 예약은 아직 시작되지 않았다고 가정하자. 접수 서버가 재고와 배송 서비스를 동시에 기다리지 않도록 큐에 작업을 넣었다면 가능한 장면이다. 공부하면서 정리한 일곱 패턴으로 이 간격에서 생기는 책임을 살펴본다. 수치는 모두 이해를 위한 가상 사례다.
 
-![요청 접수, 메시지 대기, 작업자 처리와 중복·대기 시간 관리](/assets/images/cloud/cloud-patterns-queues.webp)
-
-*요청 접수와 실제 처리는 다른 단계이며, 메시지의 크기·순서·우선순위도 각각 별도로 다룬다.*
-
 ## 접수 속도가 처리 속도를 앞서면
 
 가게 입구에 번호표를 놓으면 손님이 계산대 앞에서 한꺼번에 밀치는 일은 줄어든다. 그러나 계산대가 계속 부족하다면 대기 줄은 끝없이 길어진다. 큐도 같은 원리로 유입과 처리 사이의 시간을 벌어 줄 뿐이다.
@@ -46,9 +42,13 @@ last_modified_at: 2026-11-27
 
 **큐 기반 부하 평탄화(Queue-Based Load Leveling)** 는 생산자와 처리 서비스 사이에 큐를 둔다.[^1] 생산자는 작업을 기록하고, 소비자는 하위 서비스가 감당할 속도로 가져간다. 소비자가 늘어도 하위 데이터베이스나 외부 API에 보내는 전체 동시 호출을 제한해야 한다. 제한하지 않으면 큐 뒤쪽으로 과부하가 이동한다.
 
-![초당 150건 유입과 100건 처리 시 큐에 초당 50건이 쌓이는 가상 흐름](/assets/images/cloud/cloud-patterns-queue.webp)
+![변동하는 요청을 메시지 큐에 담고 서비스가 보다 일정한 속도로 처리하는 개념도](/assets/images/cloud/official-queue-leveling.webp)
 
-*직접 그린 흐름도. 원문 그림은 Queue-Based Load Leveling 문서에서 확인할 수 있다.[^1]*
+[그림 크게 보기](/assets/images/cloud/official-queue-leveling.webp)
+
+*출처: Microsoft 및 기여자, [Queue-Based Load Leveling](https://learn.microsoft.com/en-us/azure/architecture/patterns/queue-based-load-leveling) · [CC 허가본](https://github.com/reddev9339/architecture-center/blob/fa6c83c844280f548222c94857377596cbedae6f/docs/patterns/_images/queue-based-load-leveling-pattern.png) · [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). 원본을 WebP로 변환했다.*
+
+왼쪽 막대는 변동하는 요청 유입을, 오른쪽 막대는 상대적으로 일정한 처리 속도를 개념적으로 나타낸다. 다음 계산의 수치는 그림과 별도로 정한 가상 조건이다.
 
 가상으로 유입이 초당 150건이고 실제 완료가 초당 100건이라고 가정한다. 두 속도가 일정하고 만료나 유실이 없다면 적체 증가량은 초당 `150 - 100 = 50`건이다. 5분은 300초이므로 추가 적체는 `50 × 300 = 15,000`건이다.
 
@@ -59,6 +59,14 @@ last_modified_at: 2026-11-27
 ### Asynchronous Request-Reply: 접수와 완료를 나눈다
 
 파일 변환 요청처럼 결과가 늦게 나오는 작업에서는 연결을 계속 붙잡지 않아도 된다. **비동기 요청-응답(Asynchronous Request-Reply)** 은 먼저 접수 상태를 알리고 나중에 결과를 조회하게 한다.[^2]
+
+![Azure Functions가 요청을 큐에 넣고 상태 조회 시 Blob의 처리 결과를 확인하는 예시](/assets/images/cloud/official-async-request-reply.webp)
+
+[그림 크게 보기](/assets/images/cloud/official-async-request-reply.webp)
+
+*출처: Microsoft 및 기여자, [Asynchronous Request-Reply](https://learn.microsoft.com/en-us/azure/architecture/patterns/asynchronous-request-reply) · [CC 허가본](https://github.com/reddev9339/architecture-center/blob/fa6c83c844280f548222c94857377596cbedae6f/docs/patterns/_images/async-request-fn.png) · [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). 원본을 WebP로 변환했다.*
+
+이 예시에서는 Azure Functions가 요청을 큐에 넣고 상태 조회 주소를 반환한다. 다른 함수가 메시지를 처리해 결과를 Blob에 저장하면 상태 조회 함수가 Blob을 확인한다. 이는 구현 예시이며 Azure Functions, 큐와 Blob이 이 패턴의 필수 구성은 아니다.
 
 1. API가 입력과 권한을 검증하고 작업 식별자를 만든다.
 2. 접수한 작업이 유실되지 않도록 기록과 큐 발행의 실패 경계를 설계한다.

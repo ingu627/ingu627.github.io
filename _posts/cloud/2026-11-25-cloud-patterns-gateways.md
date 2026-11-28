@@ -38,10 +38,6 @@ last_modified_at: 2026-11-27
 
 건물로 비유하면 게이트웨이는 안내 데스크다. 방문자를 어느 부서로 보낼지는 정할 수 있다. 여러 부서의 자료를 모아 줄 수도 있다. 그러나 각 부서의 업무 판단까지 안내 데스크가 대신할 필요는 없다.
 
-![요청 라우팅, 응답 집계, 공통 기능과 게이트웨이 병목](/assets/images/cloud/cloud-patterns-gateways.webp)
-
-*요청 라우팅, 응답 집계와 공통 기능을 구분한 개요다.*
-
 다음은 가능한 한 가지 흐름이다. 모든 시스템에 일곱 패턴을 함께 넣으라는 뜻은 아니다.
 
 1. 클라이언트가 하나의 진입점에 요청한다. 게이트웨이는 경로에 맞는 서비스나 BFF로 전달한다.
@@ -58,6 +54,14 @@ last_modified_at: 2026-11-27
 ### Gateway Routing: 어느 서비스로 보낼 것인가
 
 **게이트웨이 라우팅(Gateway Routing)** 은 하나의 엔드포인트 뒤에서 요청을 적절한 서비스나 인스턴스로 전달한다.[^1] 예를 들어 `/orders`는 주문 서비스로, `/shipping`은 배송 서비스로 보낸다. 경로나 호스트 같은 애플리케이션 계층 정보를 기준으로 규칙을 정할 수 있다.
+
+![소비자의 요청을 게이트웨이가 검색, 결제, 주문 이력, 장바구니, 리뷰 서비스로 전달하는 구조](/assets/images/cloud/official-gateway-routing.webp)
+
+[그림 크게 보기](/assets/images/cloud/official-gateway-routing.webp)
+
+*출처: Microsoft 및 기여자, [Gateway Routing 패턴](https://learn.microsoft.com/en-us/azure/architecture/patterns/gateway-routing) · [CC 허가본](https://github.com/reddev9339/architecture-center/blob/fa6c83c844280f548222c94857377596cbedae6f/docs/patterns/_images/gateway-multiple-services.png) · [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). 원본을 WebP로 변환했다.*
+
+그림에서 소비자(Consumer)는 게이트웨이를 거쳐 검색, 결제, 주문 이력, 장바구니 또는 리뷰 서비스로 요청을 보낸다. 게이트웨이는 요청에 맞는 백엔드 서비스로 전달한다.
 
 같은 서비스의 여러 인스턴스나 버전으로 요청을 나눌 수도 있다. 다만 진입점이 같다고 백엔드의 API 계약 변경이 자동으로 숨겨지는 것은 아니다. 기존 경로와 응답 계약을 유지할 때만 클라이언트 변경을 피할 수 있다.
 

@@ -36,10 +36,6 @@ last_modified_at: 2026-11-27
 
 이 글은 Microsoft의 공식 패턴을 바탕으로 그 차이를 정리한 학습 기록이다. 아래 예시는 이해를 돕기 위한 가정이며 성능 실측이 아니다.
 
-![캐시, 읽기와 쓰기, 수평 분할의 데이터 설계 주제](/assets/images/cloud/cloud-patterns-data.webp)
-
-*캐시, 읽기·쓰기 분리와 수평 분할을 구분한 개요다.*
-
 ## 반복 조회는 캐시로 줄이되 최신성을 계약한다
 
 ### Cache-Aside: 필요한 항목만 옆에 둔다
@@ -66,6 +62,14 @@ last_modified_at: 2026-11-27
 주문 접수는 재고와 결제 상태를 검증해야 한다. 주문 목록은 그 모든 규칙보다 화면에 보여줄 상태와 시간을 빠르게 읽는 데 관심이 있다. **CQRS**는 상태를 변경하는 명령 모델과 데이터를 반환하는 조회 모델의 책임을 나눈다.[^2]
 
 예를 들어 명령 측은 주문을 승인하기 전에 업무 규칙을 검사한다. 조회 측은 주문 목록에 필요한 항목만 반환하는 모델을 제공한다. 두 모델은 하나의 데이터베이스를 공유할 수도 있고 서로 다른 저장소를 쓸 수도 있다. **별도 데이터베이스와 이벤트 소싱은 CQRS의 필수 조건이 아니다.**
+
+![하나의 데이터 저장소 안에 읽기 모델과 쓰기 모델을 둔 CQRS 구성](/assets/images/cloud/official-cqrs.webp)
+
+[그림 크게 보기](/assets/images/cloud/official-cqrs.webp)
+
+*출처: Microsoft 및 기여자, [CQRS 패턴](https://learn.microsoft.com/en-us/azure/architecture/patterns/cqrs) · [CC 허가본](https://github.com/reddev9339/architecture-center/blob/fa6c83c844280f548222c94857377596cbedae6f/docs/patterns/_images/command-and-query-responsibility-segregation-cqrs-basic.png) · [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). 원본을 WebP로 변환했다.*
+
+그림은 하나의 데이터 저장소 안에 읽기 모델과 쓰기 모델을 둔 예다. 명령과 도메인 로직은 쓰기 모델을 거치고, 조회는 읽기 모델에서 데이터 전송 객체(DTO)를 만든다. 별도 데이터베이스는 이 구성의 필수 조건이 아니다.
 
 읽기 모델을 비동기 갱신하는 구성이라면 쓰기 성공 후 조회 반영까지 지연이 생길 수 있다. CQRS 자체가 지연을 강제하는 것은 아니다. 같은 저장소를 동기적으로 조회하는 구성에서는 해당 비동기 갱신 지연이 없다. 실제 최신성은 트랜잭션과 저장소의 읽기 일관성에도 달려 있다.
 

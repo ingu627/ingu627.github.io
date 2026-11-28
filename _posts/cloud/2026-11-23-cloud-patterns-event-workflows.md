@@ -38,10 +38,6 @@ last_modified_at: 2026-11-27
 
 이 문제는 식당의 주문표와 닮았다. 주문표를 주방에 전달하는 것과 요리를 끝내는 것은 다른 일이다. 조리 중 실패했을 때 누가 주문 상태를 바꾸고 결제를 취소할지도 따로 정해야 한다.
 
-![이벤트 전달, 상태 추적, 보상 처리라는 분산 작업의 세 관심사](/assets/images/cloud/cloud-patterns-event-workflows.webp)
-
-*이벤트 전달 경로와 업무 조정·복구의 책임을 구분한 개념도다.*
-
 이 글의 모든 수치와 주문 흐름은 이해를 위한 가정이다. 특정 서비스의 처리량이나 요금을 측정한 결과가 아니다.
 
 ## 이벤트 전달과 업무 흐름은 어떻게 다른가
@@ -83,6 +79,14 @@ last_modified_at: 2026-11-27
 ### Pipes and Filters: 처리 단계를 계약으로 연결한다
 
 **파이프와 필터(Pipes and Filters)** 는 복잡한 작업을 독립된 처리 단계인 필터로 나눈다. 파이프는 한 필터의 출력을 다음 필터로 전달한다.[^4] 예를 들어 상품 이미지의 검증, 크기 조정, 게시를 구분할 수 있다.
+
+![두 독립 파이프라인이 Task B 필터를 재사용하고 변환된 데이터를 업무 로직에 전달하는 흐름](/assets/images/cloud/official-pipes-and-filters.webp)
+
+[그림 크게 보기](/assets/images/cloud/official-pipes-and-filters.webp)
+
+*출처: Microsoft 및 기여자, [Pipes and Filters](https://learn.microsoft.com/en-us/azure/architecture/patterns/pipes-and-filters) · [CC 허가본](https://github.com/reddev9339/architecture-center/blob/fa6c83c844280f548222c94857377596cbedae6f/docs/patterns/_images/pipes-and-filters-solution.png) · [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). 원본을 WebP로 변환했다.*
+
+그림에서 서로 다른 데이터 원본은 각각 독립된 파이프라인을 거친다. 두 파이프라인은 Task B 필터를 재사용하고, 변환된 데이터를 업무 로직(Business logic)에 전달한다.
 
 검증 필터는 입력 파일과 검증 결과를 정의하고, 크기 조정 필터는 유효한 파일을 받아 결과를 만든다. 필터는 같은 프로세스에 둘 수도 있고 독립 배포할 수도 있다. 단계의 데이터 의존성과 업무 규칙을 지키는 경우에만 순서를 바꿀 수 있다. 검증 전에 게시하도록 순서를 바꾸면 안 된다.
 

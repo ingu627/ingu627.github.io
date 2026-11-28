@@ -27,11 +27,15 @@ last_modified_at: 2026-11-27
 | 멱등성 | 같은 작업을 여러 번 수행해도 업무 효과가 한 번과 같은 성질 |
 | 결과적 일관성 | 변경이 다른 복사본에 즉시 보이지 않을 수 있지만, 조건이 충족되면 수렴하는 모델 |
 
-**이런 분께** — 서비스가 느려지거나 일부가 실패할 때 어떤 설계부터 살펴볼지 고민하는 개발자와 아키텍트. 전체 지도를 본 뒤 아래 일곱 편에서 필요한 주제를 골라 읽으면 된다.
+**이런 분께** — 서비스가 느려지거나 일부가 실패할 때 어떤 설계부터 살펴볼지 고민하는 개발자와 아키텍트. 아래 일곱 편의 주제를 살펴보고 필요한 글을 골라 읽으면 된다.
 
-![장애 격리, 부하 흡수, 데이터 정합성, 요청 경계로 나눈 클라우드 디자인 패턴 개요](/assets/images/cloud/cloud-architecture-design-patterns.webp)
+Ambassador 패턴은 호출자와 원격 서비스 사이에 프록시를 두는 한 가지 예다. 그림에서 애플리케이션은 같은 호스트의 Ambassador를 거쳐 요청을 보내고, 프록시는 재시도·회로 차단·모니터링·보안 같은 공통 기능을 담당한다.
 
-*시리즈의 주요 문제를 기준으로 직접 구성한 개요다.*
+![애플리케이션과 원격 서비스 사이에서 재시도와 회로 차단 등을 담당하는 Ambassador 프록시](/assets/images/cloud/official-ambassador.webp)
+
+[그림 크게 보기](/assets/images/cloud/official-ambassador.webp)
+
+*출처: Microsoft 및 기여자, [Ambassador 패턴](https://learn.microsoft.com/en-us/azure/architecture/patterns/ambassador) · [CC 허가본](https://github.com/reddev9339/architecture-center/blob/fa6c83c844280f548222c94857377596cbedae6f/docs/patterns/_images/ambassador.png) · [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). 원본을 WebP로 변환했다.*
 
 ## 결제 버튼을 두 번 누른 뒤에 생기는 일
 
@@ -61,7 +65,7 @@ last_modified_at: 2026-11-27
 | [신뢰 경계와 권한](/cloud/cloud-patterns-security/) | 사용자·토큰·외부 자산을 어디까지 신뢰할지 정해야 한다 | 4 |
 | [배포·지역·전환](/cloud/cloud-patterns-deployment/) | 복제 단위를 늘리거나 기존 시스템을 단계적으로 바꿔야 한다 | 6 |
 
-각 편은 해당 패턴의 공식 문서와 원문 그림을 연결한다. 본문 그림은 사용 조건이 불명확한 Microsoft 원본을 복제하지 않고 별도로 제작했다. 각 편의 숫자는 별도 실측이라고 밝히지 않은 한 설명을 위한 가상 사례다.
+각 편은 해당 패턴의 공식 문서와 원문 그림을 연결한다. 이 글의 그림은 Microsoft 원본을 WebP로 변환했으며 출처와 허가본은 그림 아래에 표시했다. 각 편의 숫자는 별도 실측이라고 밝히지 않은 한 설명을 위한 가상 사례다.
 
 ## 패턴을 고르기 전에 정할 것
 
