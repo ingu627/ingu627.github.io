@@ -58,6 +58,14 @@ LLM(대규모 언어 모델) 추론에서 파드마다 다른 값은 세 가지�
 
 Gateway API에서 `HTTPRoute`의 `backendRef`는 보통 Service를 가리킨다. GAIE는 그 자리에 `InferencePool`을 놓을 수 있게 했다[^1]. 게이트웨이가 `InferencePool`을 백엔드로 인식하면, 요청을 넘기기 전에 그 풀의 **엔드포인트 선택기(Endpoint Picker, EPP)** 에 판단을 물어본다. 통로는 Envoy 계열 게이트웨이가 제공하는 **ext_proc** 훅이고, 형식은 gRPC다. 게이트웨이는 돌려받은 `podIP:port`로 요청을 보낸다[^2].
 
+GAIE 문서의 요청 흐름도는 이 순서를 그대로 그린다. 게이트웨이가 `InferencePool`을 고르고, 본문 기반 라우팅과 EPP의 부하 판단을 거쳐 모델 복제본이 정해지면, 게이트웨이가 그 엔드포인트로 요청을 넘긴다.
+
+![게이트웨이, InferencePool, EPP를 거쳐 모델 서버 파드로 이어지는 추론 요청 흐름](/assets/images/k8s/official-gaie-1-6-llm-d-inference-routing.webp)
+
+[그림 크게 보기](/assets/images/k8s/official-gaie-1-6-llm-d-inference-routing.webp)
+
+*출처: The Kubernetes Authors, [Inference Gateway Request Flow](https://github.com/kubernetes-sigs/gateway-api-inference-extension/blob/f6274684049e1fdda587d8adfe6d7f07032c083e/site-src/images/request-flow.png) · [Apache-2.0](https://github.com/kubernetes-sigs/gateway-api-inference-extension/blob/f6274684049e1fdda587d8adfe6d7f07032c083e/LICENSE) · WebP 변환*
+
 여기서 표준이 정한 범위를 눈여겨볼 필요가 있다. 정해진 것은 "어떤 리소스가 백엔드가 되는가", "언제 누구에게 물어보는가", "그 답을 어떤 형식으로 받는가"까지다. 점수를 매기는 규칙, 어떤 신호를 볼지, 플러그인을 어떻게 조합할지는 이 표준의 몫이 아니었다. 2026년 8월의 분할은 이 문장을 제도화한 사건이다.
 
 ---

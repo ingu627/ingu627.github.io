@@ -158,6 +158,14 @@ MLA 모델을 프로덕션 Kubernetes에 서빙할 때는 별도 라우팅이 �
 
 동일한 에이전트 세션이나 공통 시스템 프롬프트를 공유하는 요청이 서로 다른 파드(Pod)로 분산되면 Radix 캐시가 파편화된다. 그렇기 때문에 인그레스에서 요청의 상위 1,000 토큰 해시값을 기준으로 동일 파드에 트래픽을 바인딩하는 것이 필수적이다.
 
+SGLang 라우터 문서의 배포 구성도는 이 요구를 그대로 구현한 예다. 짧은 문맥과 긴 문맥 버킷을 나누고, 프리필(Prefill)과 디코드(Decode) 엔진을 분리한 뒤 KV 이벤트를 라우터로 되돌려 다음 배치를 정한다.
+
+![SGLang 라우터 배포 구성: 짧은·긴 문맥 버킷, 프리필과 디코드 엔진 분리, KV 이벤트 피드백](/assets/images/llm/official-multi-head-latent-attention-mla-deepseek-sglang.webp)
+
+[그림 크게 보기](/assets/images/llm/official-multi-head-latent-attention-mla-deepseek-sglang.webp)
+
+*출처: SGLang Team, [sgl-router 배포 아키텍처](https://github.com/sgl-project/sglang/blob/19ef10682e6ef7864c6b5fda78aa5ca2c9673645/sgl-router/assets/architecture-deployment.png) · [Apache-2.0](https://github.com/sgl-project/sglang/blob/19ef10682e6ef7864c6b5fda78aa5ca2c9673645/LICENSE) · 1400px WebP 변환*
+
 ### 4.1 SGLang 프로덕션 K8s 배포 명세 예시
 
 아래 매니페스트는 GPU 8장을 한 파드에 묶어 DeepSeek-V3를 올리고, Radix 캐시와 최장 접두사 우선 스케줄링을 켠 최소 예시다.

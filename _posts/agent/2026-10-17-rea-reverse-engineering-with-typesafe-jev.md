@@ -60,6 +60,14 @@ REA의 내부 아키텍처는 다음 세 계층으로 구성된다.
 2. **세션 및 라우팅 계층 (SessionProviderRouter)**: 분석 대상 파일(ELF, Mach-O, PE, ASAR, APK)에 대해 불변의 깊은 바인딩(Deep Binding)을 생성하고, 캐시 스냅샷(`AnalysisSnapshotCache`)을 유지한다.
 3. **증거 및 계약 계층 (Contracts & EvidenceLedger)**: 에이전트가 호출할 수 있는 정형화된 MCP 도구 계약을 노출하며, 모든 분석 결과를 불변의 표준 증거(`Evidence`) 레코드로 직렬화한다.
 
+REA 공식 문서의 조사 흐름도는 이 세 계층이 실제 요청에서 어떤 순서로 도는지 보여준다. 질문이 들어오면 CLI와 MCP를 거쳐 증거를 읽고, 그 증거로 설명과 구현, 테스트를 만들고, 남은 의문이 다음 질문으로 돌아온다.
+
+![REA 조사 흐름: 질문, CLI와 MCP 검사·추적, 증거 읽기, 학습 활용과 후속 질문의 순환](/assets/images/agent/official-rea-reverse-engineering-with-typesafe-jev.webp)
+
+[그림 크게 보기](/assets/images/agent/official-rea-reverse-engineering-with-typesafe-jev.webp)
+
+*출처: morluto, [REA investigation flow](https://github.com/morluto/rea/blob/d41d1032d959733c731b61020f16a3f9f2f6dbd0/website/public/assets/figures/rea-investigation-flow.svg) · [MIT](https://github.com/morluto/rea/blob/d41d1032d959733c731b61020f16a3f9f2f6dbd0/LICENSE) · WebP 변환*
+
 ### 1.2 정규화된 Evidence 레코드와 불확실성(Unknowns)의 명시
 
 REA의 핵심 철학은 **"증거의 부재가 부재의 증거는 아니다(Absence of evidence is not evidence of absence)"**이다[^4].

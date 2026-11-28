@@ -119,6 +119,14 @@ Artificial Analysis의 계측 데이터에 따르면 최상위 추론 모드에�
 
 3. **L2 프론티어 하이브리드 추론 계층 (Claude Thinking / GPT-6)**: 할당된 $N$ 토큰 예산 내에서만 정밀하게 추론을 수행하여 과도한 토큰 소모를 방어한다.
 
+아래 그림은 같은 원리를 프로덕션 라우터에 구현한 vLLM Semantic Router의 캐스케이드다. 작은 판정 모델(Kai 0.6B)이 먼저 답하고, 확률이 임계값을 넘지 못할 때만 큰 모델(Vega 27B)로 승격한다. 그림의 모델 이름은 해당 프로젝트의 실험 구성이며, 이 글의 예산 계산은 Jev가 돌려준 판정 확률을 입력으로 쓴다.
+
+![2단 캐스케이드: 작은 판정 모델이 먼저 답하고 확률이 임계값을 넘지 못하면 큰 모델로 승격](/assets/images/agent/official-hle-benchmark-dynamic-token-budgeting-jev.webp)
+
+[그림 크게 보기](/assets/images/agent/official-hle-benchmark-dynamic-token-budgeting-jev.webp)
+
+*출처: vLLM Semantic Router, [System One Auto — Cascade](https://github.com/vllm-project/semantic-router/blob/a548c21818f120dcad8ce17e3e11aa2f39b7ceeb/website/static/img/blog/system-one-auto/cascade.svg) · [Apache-2.0](https://github.com/vllm-project/semantic-router/blob/a548c21818f120dcad8ce17e3e11aa2f39b7ceeb/LICENSE) · WebP 변환*
+
 ---
 
 ## 4. 구현 쿡북: TypeSafe Jev 루브릭과 동적 예산 계산기

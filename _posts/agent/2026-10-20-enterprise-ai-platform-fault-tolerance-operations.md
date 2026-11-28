@@ -77,6 +77,14 @@ use_math: true
 - 노드 점검, 모델 버전 교체, 혹은 서킷 트립으로 인해 워커 파드를 종료할 때 즉시 `SIGKILL`을 보내지 않는다.
 - 쿠버네티스 인그레스에서 해당 파드로의 신규 요청 수신을 즉시 중단(`deregister`)한다. 이후 토큰을 생성 중인 진행 세션(In-flight)이 응답을 반환할 때까지 최대 60초의 유예 시간(Grace Period)을 보장한다.
 
+쿠버네티스가 종료 중인 파드를 어떻게 다루는지는 공식 블로그의 그림이 정확하다. `ready`는 false로 내려 신규 트래픽을 끊고, `serving`은 true로 남겨 진행 중인 요청을 마저 처리한다.
+
+![종료 중인 파드의 EndpointSlice 조건: ready false, serving true, terminating true](/assets/images/agent/official-enterprise-ai-platform-fault-tolerance-operations.webp)
+
+[그림 크게 보기](/assets/images/agent/official-enterprise-ai-platform-fault-tolerance-operations.webp)
+
+*출처: Kubernetes Authors, [Advancements in Kubernetes Traffic Engineering — Figure 6](https://kubernetes.io/blog/2022/12/30/advancements-in-kubernetes-traffic-engineering/) · [CC BY 4.0](https://github.com/kubernetes/website/blob/38552b318453cbf9e282f36262a6f163bb7a8017/LICENSE) · WebP 변환*
+
 ### 2.3 계층 3: 제로 다운타임 가중치 롤아웃 (Canary & Blue-Green Shift)
 - 수백 기가바이트의 모델 가중치가 완전히 VRAM에 로드되어 첫 번째 테스트 추론(Dry-run inference)을 마칠 때까지 인그레스 트래픽을 주입하지 않는다.
 - 새 리비전이 준비되면 트래픽 가중치를 `95:5` $\to$ `80:20` $\to$ `0:100`으로 5분간 단계적 이전하며, 에러율이나 지연 시간 이상 감지 시 즉각 1초 내에 100% 롤백한다.

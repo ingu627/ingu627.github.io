@@ -82,6 +82,14 @@ vLLM의 KV 캐시는 고정된 토큰 수(기본값 16개 또는 32개)를 담�
 - **LRU(Least Recently Used) 방출 정책**:
   요청 생명주기가 끝나 점유가 해제되면 블록의 `ref_count`가 0이 된다. vLLM은 이 블록을 즉시 해제하지 않고 캐시 공간(Free Block Queue)에 보존하다가, 메모리가 고갈될 때 가장 오래 참조되지 않은 블록부터 방출한다.
 
+vLLM 설계 문서는 같은 구조를 한 장으로 정리한다. 물리 블록 풀과 가용 블록 큐, 접두사 해시 테이블, 요청별 블록 매핑이 서로 어떻게 참조되는지 보인다.
+
+![vLLM 자동 접두사 캐싱의 블록 관리자 구성: 물리 블록 풀, 가용 블록 큐, 접두사 해시 테이블, 요청별 블록 매핑](/assets/images/llm/official-k8s-low-latency-llm-serving-vllm-sglang.webp)
+
+[그림 크게 보기](/assets/images/llm/official-k8s-low-latency-llm-serving-vllm-sglang.webp)
+
+*출처: vLLM Project, [Prefix Caching — Component Overview](https://github.com/vllm-project/vllm/blob/c6dbe55260baa2195983184e4287ff7da3a003d6/docs/assets/design/prefix_caching/overview.png) · [Apache-2.0](https://github.com/vllm-project/vllm/blob/c6dbe55260baa2195983184e4287ff7da3a003d6/LICENSE) · WebP 변환*
+
 ### 2.2 vLLM 엔진 파라미터 및 한계점
 
 vLLM에서 접두사 캐싱을 활성화하기 위한 핵심 실행 인자는 다음과 같다[^3].

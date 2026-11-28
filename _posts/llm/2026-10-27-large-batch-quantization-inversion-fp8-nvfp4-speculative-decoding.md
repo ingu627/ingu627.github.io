@@ -267,6 +267,14 @@ Speculators의 데이터 추출 및 학습 파이프라인은 검증 모델의 �
 - **네이티브 은닉 상태 추출(Native Hidden-State Extraction)**: 모델 코드를 수동으로 패치할 필요가 없다. vLLM 엔진 내부 훅(Hook)을 통해 지정된 3개 레이어의 은닉 상태를 제로 카피(Zero-copy)로 수집한다.
 - **Gemma 4 전용 가속**: 하이브리드 로컬-글로벌 어텐션 구조를 가진 Gemma 4 패밀리에는 전용 커널이 붙는다. EAGLE3 및 DFlash 어댑터 커널이 기본 내장된 형태다.
 
+vLLM Speculators 문서의 DFlash 구조도는 이 병렬 생성을 그림으로 푼다. 검증 모델의 융합 컨텍스트 특징과 마스크 토큰이 드래프트 레이어 스택을 한 번 통과해 블록 전체를 만든다.
+
+![DFlash 블록 확산 추측 디코딩 구조: 융합 컨텍스트 특징과 마스크 토큰이 드래프트 레이어 스택을 단일 순전파로 통과](/assets/images/llm/official-large-batch-quantization-inversion-fp8-nvfp4-speculative-decoding.webp)
+
+[그림 크게 보기](/assets/images/llm/official-large-batch-quantization-inversion-fp8-nvfp4-speculative-decoding.webp)
+
+*출처: vLLM Speculators, [DFlash Architecture](https://github.com/vllm-project/speculators/blob/db305f14c362c7edb89f99782f1943a8936f61ec/docs/assets/dflash_architecture.png) · [Apache-2.0](https://github.com/vllm-project/speculators/blob/db305f14c362c7edb89f99782f1943a8936f61ec/LICENSE) · WebP 변환*
+
 ```yaml
 # Speculators v0.5.0 DFlash 블록 확산 초안 모델 학습 및 vLLM 서빙 설정 예시
 speculator_config:
