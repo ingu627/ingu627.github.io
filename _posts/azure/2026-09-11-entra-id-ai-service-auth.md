@@ -38,9 +38,11 @@ last_modified_at: 2026-11-28
 
 ---
 
-1편 [Azure VNet과 Private Endpoint](/azure/azure-vnet-private-endpoint/)에서 트래픽 경로를 사설망 안으로 가둔 뒤, 2편 [Azure Container Apps 프로덕션 구성](/azure/azure-container-apps-production/)에서 컴퓨팅과 스케일링을 세웠고, 3편 [APIM 기반 LLM 게이트웨이](/azure/azure-apim-llm-gateway/)에서 모델 호출 경로를 통합했다. 4편에서는 이 플랫폼에 **누가 들어올 수 있는가**를 다룬다. 네트워크가 아무리 닫혀 있어도 인증 주체가 사내 계정 체계와 분리되어 있으면, 퇴사자 계정 하나가 곧 미회수 접근 권한이 된다.
+1편 [Azure VNet과 Private Endpoint](/azure/azure-vnet-private-endpoint/)에서 트래픽 경로를 사설망 안으로 가둔 뒤, 2편 [Azure Container Apps 프로덕션 구성](/azure/azure-container-apps-production/)에서 컴퓨팅과 스케일링을 세웠다. 3편 [APIM 기반 LLM 게이트웨이](/azure/azure-apim-llm-gateway/)에서는 모델 호출 경로를 통합했다. 4편에서는 이 플랫폼에 **누가 들어올 수 있는가**를 다룬다.
 
-이 글은 사내 엔터프라이즈 AI 채팅 플랫폼(A사)에서 Microsoft Entra ID(구 Azure AD)를 OIDC(OpenID Connect) IdP로 붙이고, 토큰의 `roles` 클레임으로 서비스 내부 권한을 매핑한 실제 구성을 정리한 기록이다. 다루는 범위는 다음과 같다.
+네트워크가 아무리 닫혀 있어도 인증 주체가 사내 계정 체계와 분리되어 있으면, 퇴사자 계정 하나가 곧 미회수 접근 권한이 된다.
+
+이 글은 사내 엔터프라이즈 AI 채팅 플랫폼(A사)의 실제 구성을 정리한 기록이다. Microsoft Entra ID(구 Azure AD)를 OIDC(OpenID Connect) IdP로 붙이고, 토큰의 `roles` 클레임으로 서비스 내부 권한을 매핑했다. 다루는 범위는 다음과 같다.
 
 - Entra ID 앱 등록과 Authorization Code Flow 4단계를 구성한다.
 - 토큰의 서명·`aud`·`iss`를 검증하는 기준을 세운다.

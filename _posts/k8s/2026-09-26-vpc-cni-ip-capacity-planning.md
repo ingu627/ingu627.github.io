@@ -248,7 +248,11 @@ SGP 비중이 높은 클러스터에서 IP 계획을 어렵게 만드는 특성�
 
 ### 4.3 EKS Auto Mode에서는 변수 자체가 없다
 
-EKS Auto Mode 클러스터는 노드 네트워킹(ENI 수명주기 포함)을 AWS가 관리하므로 `WARM_*`이나 `MINIMUM_IP_TARGET` 같은 환경 변수가 없다. 대신 NodeClass가 IP 할당을 조절한다. `advancedNetworking.ipv4PrefixSize`는 기본값 `Auto`(프리픽스 위임, 노드마다 /28을 먼저 잡고 부족하면 추가)와 `"32"`(secondary IP 모드, 파드당 1개, 여유 주소는 1개만 유지) 중 하나이고, `advancedNetworking.networkInterfaces`의 `secondaryIPv4Count`·`secondaryIPv4PrefixCount`는 런치 시점에 ENI별 주소 수를 고정하므로 이후에는 주소·프리픽스·ENI가 늘지 않는다.
+EKS Auto Mode 클러스터는 노드 네트워킹(ENI 수명주기 포함)을 AWS가 관리하므로 `WARM_*`이나 `MINIMUM_IP_TARGET` 같은 환경 변수가 없다. 대신 NodeClass가 IP 할당을 조절한다.
+
+`advancedNetworking.ipv4PrefixSize`는 기본값 `Auto`(프리픽스 위임, 노드마다 /28을 먼저 잡고 부족하면 추가)와 `"32"`(secondary IP 모드, 파드당 1개, 여유 주소는 1개만 유지) 중 하나다.
+
+`advancedNetworking.networkInterfaces`의 `secondaryIPv4Count`·`secondaryIPv4PrefixCount`는 런치 시점에 ENI별 주소 수를 고정한다. 따라서 이후에는 주소·프리픽스·ENI가 늘지 않는다.
 
 파드 서브넷은 `podSubnetSelectorTerms`로 노드와 분리한다[^2].
 
@@ -271,7 +275,7 @@ Auto Mode에서 SGP는 지원되지 않는다. `podSubnetSelectorTerms`와 `podS
 | 3 | 커스텀 네트워킹 | `AWS_VPC_K8S_CNI_CUSTOM_NETWORK_CFG=true`와 `ENIConfig` CRD로 파드를 노드와 다른 서브넷에 배치한다 | 노드 자신이 쓸 primary ENI를 파드에 돌려줄 수 없어 노드당 파드 상한이 낮아진다 |
 | 4 | IPv6 | 신규 클러스터라면 IPv4 소진 문제 자체가 사라진다 | IPv6는 프리픽스 위임 모드와 Nitro 인스턴스를 전제로 한다 |
 
-VPC 쪽 쿼터도 같은 표에서 확인한다. 한 VPC에 붙일 수 있는 IPv4 CIDR 블록은 기본 5개(최대 50개), 서브넷 수는 기본 200개이므로 모자라면 상향을 요청한다. 참고로 eksctl이 만드는 기본 VPC는 `192.168.0.0/16`을 /19 서브넷 8개로 쪼개고, 서브넷마다 주소 8,192개가 들어간다[^2].
+VPC 쪽 쿼터도 같은 표에서 확인한다. 한 VPC에 붙일 수 있는 IPv4 CIDR 블록은 기본 5개(최대 50개), 서브넷 수는 기본 200개다. 모자라면 상향을 요청한다. 참고로 eksctl이 만드는 기본 VPC는 `192.168.0.0/16`을 /19 서브넷 8개로 쪼개고, 서브넷마다 주소 8,192개가 들어간다[^2].
 
 warm 타깃을 계속 만지고 애드온 설정이 틀어지는지 감시하는 대신, 노드 네트워킹 운영 자체를 넘기는 선택지도 있다. IP가 자주 마르는 워크로드를 Auto Mode NodePool로 옮기면 예약 단위를 `ipv4PrefixSize`로 고르는 것 외에는 ENI 수명주기와 CNI 업데이트를 AWS가 가져간다. 그 대가로 SGP를 못 쓰고, 노드당 파드가 110개로 묶이고, warm 타깃을 세밀하게 조정할 수 없다.
 
@@ -292,7 +296,7 @@ Karpenter v1(`karpenter.sh/v1`)은 IP 여유를 보고 노드를 옮기는 기�
 
 ### 5.3 노드 크기 fallback을 다루는 구성
 
-크기와 패밀리를 나눈 NodePool 여러 개에 weight를 두어 선호를 표현할 수 있다. 다만 배치·bin-packing과 기존 노드 사용 상황 때문에 낮은 weight의 풀이 선택될 수 있으므로, 단계별 fallback 보장으로 해석하면 안 된다[^2].
+크기와 패밀리를 나눈 NodePool 여러 개에 weight를 두어 선호를 표현할 수 있다. 다만 배치·bin-packing과 기존 노드 사용 상황 때문에 낮은 weight의 풀이 선택될 수 있다. 따라서 단계별 fallback 보장으로 해석하면 안 된다[^2].
 
 ```yaml
 apiVersion: karpenter.sh/v1
@@ -325,7 +329,7 @@ spec:
 
 중간 단계 풀은 `weight: 50`에 `instance-size In ["8xlarge","12xlarge","16xlarge"]`를 걸고, 마지막 4xlarge 풀에는 더 낮은 weight와 `limits`를 준다. `limits`는 eventual consistency로 확인되므로 확장이 빠른 구간에서는 잠깐 넘길 수 있다. 서브넷 주소의 안전장치로 믿지 말고 따로 여유를 계산해 둔다[^2].
 
-DR 상황에서 대형 인스턴스 확보에 실패할 때의 선택지는 세 가지다. 단일 타입을 고정하지 않고 여러 패밀리·크기를 requirements에 허용하고, EC2NodeClass의 `capacityReservationSelectorTerms`로 On-Demand Capacity Reservation을 먼저 소비하며(문서 기준 2026년 9월 Beta, `karpenter.sh/capacity-type: reserved`와 `ec2:DescribeCapacityReservations` 권한 필요), static NodePool의 `replicas`나 overprovisioning으로 노드를 미리 띄워 둔다[^2].
+DR 상황에서 대형 인스턴스 확보에 실패할 때의 선택지는 세 가지다. 단일 타입을 고정하지 않고 여러 패밀리·크기를 requirements에 허용할 수 있다. 또는 EC2NodeClass의 `capacityReservationSelectorTerms`로 On-Demand Capacity Reservation을 먼저 소비할 수 있다. 이 기능은 문서 기준 2026년 9월 Beta이며, `karpenter.sh/capacity-type: reserved`와 `ec2:DescribeCapacityReservations` 권한이 필요하다. static NodePool의 `replicas`나 overprovisioning으로 노드를 미리 띄워 두는 방법도 있다[^2].
 
 ---
 

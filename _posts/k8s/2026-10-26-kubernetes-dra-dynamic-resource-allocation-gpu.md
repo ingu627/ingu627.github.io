@@ -130,9 +130,13 @@ $$C_{\text{pool}} = \prod_{p=1}^{P} |A_p|$$
 
 ### 2.1 스토리지 동적 볼륨 프로비저닝(CSI)에서 영감을 얻은 설계 철학
 
-[쿠버네티스 스토리지와 데이터 운영 가이드](/k8s/kubernetes-storage-data/)[^3]에서 살펴본 **컨테이너 스토리지 인터페이스(Container Storage Interface, CSI)**를 먼저 떠올려 보자. CSI는 과거 파드 스펙에 스토리지 볼륨 경로를 하드코딩하던 방식을 바꿨다. `StorageClass`, `PersistentVolumeClaim(PVC)`, `PersistentVolume(PV)`의 3계층 선언적 모델로 분리했다. DRA는 바로 이 스토리지 동적 프로비저닝의 설계 철학을 GPU·NIC·FPGA 등 하드웨어 디바이스 영역으로 그대로 이식한 아키텍처다[^6]. 부동산 임대에 비유하면 규격표와 빈 호실 목록, 입주 신청서를 따로 관리하는 방식과 같다. 세입자는 건물주에게 전화하지 않고 규격표(`DeviceClass`)와 지금 비어 있는 목록(`ResourceSlice`)만 보고 입주 신청서(`ResourceClaim`)를 낸다.
+[쿠버네티스 스토리지와 데이터 운영 가이드](/k8s/kubernetes-storage-data/)[^3]에서 살펴본 **컨테이너 스토리지 인터페이스(Container Storage Interface, CSI)**를 먼저 떠올려 보자. CSI는 과거 파드 스펙에 스토리지 볼륨 경로를 하드코딩하던 방식을 바꿨다. `StorageClass`, `PersistentVolumeClaim(PVC)`, `PersistentVolume(PV)`의 3계층 선언적 모델로 분리했다.
 
-DRA는 `DeviceClass` 규격과 `ResourceSlice` 가용 장부, `ResourceClaim` 신청서를 매개로 스케줄링 가시성을 확보하고 CDI를 통해 장치 노드를 주입한다. 다만 주의할 점이 있다. DRA 자체는 '요청한 용량의 합산이 가용 용량을 초과하지 않도록 검증'하는 스케줄링 및 런타임 파라미터 전달 규약일 뿐이다. 실제 VRAM 메모리 주소 공간 격리와 CUDA 커널 장애 격리는 DRA가 아니라 기반 하드웨어(MIG 분할)와 드라이버 모드에 의해 결정된다[^10].
+DRA는 바로 이 스토리지 동적 프로비저닝의 설계 철학을 GPU·NIC·FPGA 등 하드웨어 디바이스 영역으로 그대로 이식한 아키텍처다[^6]. 부동산 임대에 비유하면 규격표와 빈 호실 목록, 입주 신청서를 따로 관리하는 방식과 같다. 세입자는 건물주에게 전화하지 않고 규격표(`DeviceClass`)와 지금 비어 있는 목록(`ResourceSlice`)만 보고 입주 신청서(`ResourceClaim`)를 낸다.
+
+DRA는 `DeviceClass` 규격과 `ResourceSlice` 가용 장부, `ResourceClaim` 신청서를 매개로 스케줄링 가시성을 확보하고 CDI를 통해 장치 노드를 주입한다.
+
+다만 주의할 점이 있다. DRA 자체는 '요청한 용량의 합산이 가용 용량을 초과하지 않도록 검증'하는 스케줄링 및 런타임 파라미터 전달 규약일 뿐이다. 실제 VRAM 메모리 주소 공간 격리와 CUDA 커널 장애 격리는 DRA가 아니라 기반 하드웨어(MIG 분할)와 드라이버 모드에 의해 결정된다[^10].
 
 아래 공식 CSI 아키텍처 도식과 비교해 보자. 컨트롤 플레인의 상태 조정 루프와 노드 데몬의 런타임 마운트 분리 구조가 DRA로 어떻게 계승되었는지 확인할 수 있다[^3][^6].
 
@@ -171,7 +175,7 @@ DRA 아키텍처에서는 외부 컨트롤러가 스케줄링 결정을 가로�
 
 스케줄러가 `ResourceClaim`을 특정 노드의 `ResourceSlice` 내 디바이스에 매칭한다. 그리고 예약 결과(`allocation.devices.results`)를 기록한다. 그러면 해당 노드의 `kubelet`이 DRA 노드 플러그인의 `NodePrepareResources` gRPC API를 호출한다[^6][^8].
 
-이때 DRA 플러그인은 컨테이너를 직접 조작하지 않는다. 대신 CNCF 표준인 **컨테이너 디바이스 인터페이스(Container Device Interface, CDI)** 명세를 따른다. `/var/run/cdi/` 디렉터리에 JSON 스펙 파일을 기록하고, `kubelet`에 CDI 디바이스 식별자(예: `nvidia.com/gpu=gpu-0-slice-a`)를 반환한다[^8].
+이때 DRA 플러그인은 컨테이너를 직접 조작하지 않는다. 대신 CNCF 표준인 **컨테이너 디바이스 인터페이스(Container Device Interface, CDI)** 명세를 따른다. `/var/run/cdi/` 디렉터리에 JSON 스펙 파일을 기록한다. 그리고 `kubelet`에 CDI 디바이스 식별자(예: `nvidia.com/gpu=gpu-0-slice-a`)를 반환한다[^8].
 
 이후 `kubelet`이 CRI(Container Runtime Interface)를 통해 `containerd` 또는 `CRI-O`에 컨테이너 생성을 요청한다. 그러면 컨테이너 런타임이 CDI 스펙에 정의된 항목을 컨테이너 네임스페이스에 주입한다[^8]. 주입 대상은 디바이스 노드(`/dev/nvidia0`, `/dev/nvidiactl`), 호스트 드라이버 공유 라이브러리(`.so` 마운트), 환경 변수, 실행 전 훅(Hooks)이다.
 

@@ -153,7 +153,9 @@ aws eks describe-nodegroup --cluster-name $C --nodegroup-name $N --query 'nodegr
 kubectl get clusterrole eks:node-manager && kubectl get clusterrolebinding eks:node-manager
 ```
 
-`AccessDenied` 계열 오류는 대개 `eks:node-manager` ClusterRole 또는 ClusterRoleBinding이 삭제·변경된 탓이다. 핵심은 **EKS 전용 RBAC가 자동 복원되지 않는다**는 점이다.[^1] Kubernetes 기본 시스템 롤(`system:*`)은 API 서버가 다시 맞춰주지만 `eks:*` 계열은 그 대상이 아니다. 복구는 수동 재생성(`kubectl auth reconcile -f <file>`, 권장), 노드 그룹 재생성, 노드 그룹 업그레이드 순으로 시도한다. RBAC 오브젝트를 손대기 전에 백업을 남기는 습관이 필요하다.
+`AccessDenied` 계열 오류는 대개 `eks:node-manager` ClusterRole 또는 ClusterRoleBinding이 삭제·변경된 탓이다. 핵심은 **EKS 전용 RBAC가 자동 복원되지 않는다**는 점이다.[^1] Kubernetes 기본 시스템 롤(`system:*`)은 API 서버가 다시 맞춰주지만 `eks:*` 계열은 그 대상이 아니다.
+
+복구는 수동 재생성(`kubectl auth reconcile -f <file>`, 권장), 노드 그룹 재생성, 노드 그룹 업그레이드 순으로 시도한다. RBAC 오브젝트를 손대기 전에 백업을 남기는 습관이 필요하다.
 
 ### 2.6 Karpenter 프로비저닝이 안 될 때
 
@@ -164,11 +166,15 @@ kubectl logs -f deployment/karpenter -n kube-system
 kubectl describe nodepool <nodepool-name> && kubectl describe ec2nodeclass <nodeclass-name>
 ```
 
-확인할 지점은 네 가지다. NodePool `limits` 초과 여부, EC2NodeClass의 서브넷·보안그룹 셀렉터 정확성, 인스턴스 타입 Service Quotas 여유를 본다. 파드의 `nodeSelector`/`affinity`와 NodePool `requirements` 매칭도 확인한다. Karpenter v1.0(v1 API)부터 `Provisioner`는 `NodePool`로, `AWSNodeTemplate`은 `EC2NodeClass`로 바뀌었다. API 그룹도 `karpenter.sh/v1`이다. v0.x 설정이 남아 있으면 마이그레이션이 필요하다.[^1]
+확인할 지점은 네 가지다. NodePool `limits` 초과 여부, EC2NodeClass의 서브넷·보안그룹 셀렉터 정확성, 인스턴스 타입 Service Quotas 여유를 본다. 파드의 `nodeSelector`/`affinity`와 NodePool `requirements` 매칭도 확인한다.
+
+Karpenter v1.0(v1 API)부터 `Provisioner`는 `NodePool`로, `AWSNodeTemplate`은 `EC2NodeClass`로 바뀌었다. API 그룹도 `karpenter.sh/v1`이다. v0.x 설정이 남아 있으면 마이그레이션이 필요하다.[^1]
 
 ### 2.7 Ready인데 파드가 안 올라올 때
 
-노드는 Ready인데 스케줄링이 멈춘 경우는 준비 시점을 늦추는 장치가 걸려 있을 때다. 노드 쪽은 Node Readiness Controller(커스텀 taint를 선언적으로 관리, 2026.02 공개)가 담당한다. 파드 쪽은 Pod Scheduling Readiness(`schedulingGates`, K8s 1.30 GA)와 Pod Readiness Gates가 담당한다.[^1] Pod Readiness Gates는 AWS LB Controller가 타겟 등록 완료까지 Ready 전환을 지연하는 장치다. GPU 드라이버·CNI·CSI 초기화가 끝나기 전에 워크로드가 붙어 실패하는 문제를, taint가 해제될 때까지 기다리게 만드는 방식으로 풀 수 있다.
+노드는 Ready인데 스케줄링이 멈춘 경우는 준비 시점을 늦추는 장치가 걸려 있을 때다. 노드 쪽은 Node Readiness Controller(커스텀 taint를 선언적으로 관리, 2026.02 공개)가 담당한다. 파드 쪽은 Pod Scheduling Readiness(`schedulingGates`, K8s 1.30 GA)와 Pod Readiness Gates가 담당한다.[^1]
+
+Pod Readiness Gates는 AWS LB Controller가 타겟 등록 완료까지 Ready 전환을 지연하는 장치다. GPU 드라이버·CNI·CSI 초기화가 끝나기 전에 워크로드가 붙어 실패하는 문제를, taint가 해제될 때까지 기다리게 만드는 방식으로 풀 수 있다.
 
 ## 3. 네트워크 레벨: DNS·Service·NetworkPolicy
 

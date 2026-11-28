@@ -37,11 +37,15 @@ last_modified_at: 2026-11-28
 
 ---
 
-클러스터 앞단을 오래 ingress-nginx로 운영해 왔다면, 지금 손에 남은 선택지는 "언제 옮기느냐"뿐이다. 커뮤니티 ingress-nginx 컨트롤러는 2025년 11월에 공식 은퇴(retirement)가 발표됐고, 2026년 3월을 기점으로 유지보수가 끝났다[^1][^5]. 보안 패치가 멈춘 인그레스 컨트롤러를 컴플라이언스 심사 대상 클러스터에 남겨 두는 것은 더 이상 선택 사항이 아니다.
+클러스터 앞단을 오래 ingress-nginx로 운영해 왔다면, 지금 손에 남은 선택지는 "언제 옮기느냐"뿐이다. 커뮤니티 ingress-nginx 컨트롤러는 2025년 11월에 공식 은퇴(retirement)가 발표됐고, 2026년 3월을 기점으로 유지보수가 끝났다[^1][^5].
+
+보안 패치가 멈춘 인그레스 컨트롤러를 컴플라이언스 심사 대상 클러스터에 남겨 두는 것은 더 이상 선택 사항이 아니다.
 
 사내 AI 플랫폼 클러스터의 앞단을 정리하면서, 공개된 EKS 운영 매뉴얼(Engineering Playbook)의 Gateway API 문서 네 편을 기준으로 판단 근거를 다시 세워 봤다[^1][^2][^3][^4]. 이 글은 그 기록이다.
 
-순서는 이렇게 잡는다. 왜 지금인지(§1) → Ingress와 Gateway API가 책임을 어떻게 나누는지(§2) → 어떤 구현체를 고를지(§3) → 기존 어노테이션이 어디로 가는지(§4) → 실제 5단계 전환 절차(§5) → Cilium ENI 모드 게이트웨이를 검토할 때의 개념과 설치 개요(§6) → 마지막으로 전환 계획·검증·롤백 표(실무 적용). Azure에서 Ingress 기반 AGIC(Application Gateway Ingress Controller)를 Gateway API 지원 경로로 옮기는 흐름도 같은 맥락이지만, 수치와 버전은 이 글의 범위 밖이므로 AWS 문서 기준으로만 서술한다.
+먼저 왜 지금 전환해야 하는지(§1)와 Ingress와 Gateway API가 책임을 어떻게 나누는지(§2)를 살펴본다. 이어서 구현체 선택(§3), 기존 어노테이션의 대응 관계(§4), 5단계 전환 절차(§5)를 다룬다. Cilium ENI 모드 게이트웨이의 개념과 설치 개요(§6)를 살펴본 뒤 전환 계획·검증·롤백 표(실무 적용)로 마무리한다.
+
+Azure에서 Ingress 기반 AGIC(Application Gateway Ingress Controller)를 Gateway API 지원 경로로 옮기는 흐름도 같은 맥락이다. 다만 수치와 버전은 이 글의 범위 밖이므로 AWS 문서 기준으로만 서술한다.
 
 ---
 
@@ -321,7 +325,9 @@ kubectl get cm ingress-nginx-controller -n ingress-nginx -o yaml > backup-nginx-
 
 ### 6.1 ENI 모드의 데이터패스
 
-ENI(Elastic Network Interface) 모드는 오버레이 캡슐화 대신 AWS ENI를 직접 써서 파드에 VPC IP를 할당하고, VPC 라우팅 테이블로 네이티브 라우팅한다[^4]. Security Group은 ENI에, NACL은 서브넷에 적용되고 VPC Flow Logs로 흐름을 볼 수 있다. 다만 이 구조가 곧 "파드별 Security Group"을 뜻하지는 않는다(그건 VPC CNI의 별도 기능이다)[^4].
+ENI(Elastic Network Interface) 모드는 오버레이 캡슐화 대신 AWS ENI를 직접 써서 파드에 VPC IP를 할당한다. 라우팅에는 VPC 라우팅 테이블을 사용한다[^4]. Security Group은 ENI에, NACL은 서브넷에 적용되고 VPC Flow Logs로 흐름을 볼 수 있다.
+
+다만 이 구조가 곧 "파드별 Security Group"을 뜻하지는 않는다(그건 VPC CNI의 별도 기능이다)[^4].
 
 요청이 백엔드 파드까지 가는 경로는 네 단계다[^4].
 
@@ -346,7 +352,9 @@ XDP 가속은 지원되는 별도 L4 전달 경로의 옵션이고 TPROXY와 같
 
 ### 6.2 설치 개요
 
-신규 클러스터가 훨씬 깔끔하다. VPC CNI가 설치되지 않은 상태에서 Cilium을 올리면 다운타임 없이 진행된다[^4]. eksctl 설정에서 `addonsConfig.disableDefaultAddons: true`로 기본 애드온(VPC CNI, kube-proxy, CoreDNS)을 끄고 클러스터를 만든 뒤, Gateway API CRD(v1.4.1) → Cilium Helm 설치 순으로 간다[^4].
+신규 클러스터가 훨씬 깔끔하다. VPC CNI가 설치되지 않은 상태에서 Cilium을 올리면 다운타임 없이 진행된다[^4].
+
+먼저 eksctl 설정에서 `addonsConfig.disableDefaultAddons: true`로 기본 애드온(VPC CNI, kube-proxy, CoreDNS)을 끄고 클러스터를 만든다. 그다음 Gateway API CRD(v1.4.1), Cilium Helm 순으로 설치한다[^4].
 
 Helm values에서 봐야 할 축은 다섯 가지다[^4].
 
@@ -358,7 +366,9 @@ Helm values에서 봐야 할 축은 다섯 가지다[^4].
 | kube-proxy | `kubeProxyReplacement: true`, `k8sServiceHost`·`k8sServicePort` | Service 처리를 eBPF로 이관 |
 | Gateway/관측 | `gatewayAPI.enabled: true`, `gatewayAPI.hostNetwork.enabled: false`(NLB 사용 시), `hubble.*` | GatewayClass 제공, Hubble relay/UI/메트릭 |
 
-성능 관련 값(`bpf.preallocateMaps`, `mapDynamicSizeRatio`, `lbMapMax` 등)은 문서가 제시하는 출발점일 뿐이므로, 노드 메모리와 Service 수를 보고 조정한다[^4]. 기존 클러스터 전환은 순서가 더 중요하다. 파드·서비스·인그레스와 `aws-node` DaemonSet 구성을 백업하고, VPC CNI와 kube-proxy DaemonSet을 제거한 뒤 Cilium을 올린다. 이 과정에서 파드 네트워크가 일시적으로 끊긴다는 경고가 문서에 명시돼 있다[^4].
+성능 관련 값(`bpf.preallocateMaps`, `mapDynamicSizeRatio`, `lbMapMax` 등)은 문서가 제시하는 출발점일 뿐이다. 노드 메모리와 Service 수를 보고 조정한다[^4].
+
+기존 클러스터 전환은 순서가 더 중요하다. 파드·서비스·인그레스와 `aws-node` DaemonSet 구성을 백업한다. 그 뒤 VPC CNI와 kube-proxy DaemonSet을 제거하고 Cilium을 올린다. 이 과정에서 파드 네트워크가 일시적으로 끊긴다는 경고가 문서에 명시돼 있다[^4].
 
 ### 6.3 BGP Control Plane v2
 
@@ -372,7 +382,7 @@ VIP 풀은 `CiliumLoadBalancerIPPool`로 정의하고, Service에는 `loadBalanc
 
 하이브리드 노드에서 Cilium이 필요해지는 이유는 단순하다. AWS VPC CNI는 VPC 안의 EC2에서만 동작하므로, 온프레미스 GPU 서버를 EKS Hybrid Nodes로 붙이면 클라우드와 온프레미스 노드의 CNI가 갈라진다[^4]. Cilium을 단일 CNI로 쓰면 CNI 단일화 + Hubble 통합 관측성 + Gateway API 내장을 한 번에 가져간다.
 
-다만 여기서도 구분이 필요하다. **Cilium을 CNI로 쓰는 것과 Cilium Gateway가 InferencePool을 지원하는 것은 별개 기능**이다[^4]. 추론 라우팅은 llm-d 계열 스택과 Gateway API Inference Extension 조합으로 구성하고(문서 기준 llm-d v0.8.1, router v0.9.0, GIE v1.5.0, Gateway API v1.5.1), `InferencePool`은 `inference.networking.k8s.io/v1` API를 쓴다[^4].
+다만 여기서도 구분이 필요하다. **Cilium을 CNI로 쓰는 것과 Cilium Gateway가 InferencePool을 지원하는 것은 별개 기능**이다[^4]. 추론 라우팅은 llm-d 계열 스택과 Gateway API Inference Extension 조합으로 구성한다(문서 기준 llm-d v0.8.1, router v0.9.0, GIE v1.5.0, Gateway API v1.5.1). `InferencePool`은 `inference.networking.k8s.io/v1` API를 쓴다[^4].
 
 프록시 홉이 하나 늘어나는 토폴로지이므로 지연·타임아웃·재시도·스트리밍·인증 헤더 전달을 별도로 검증해야 한다[^4]. Azure 쪽에서도 Azure CNI와 Azure CNI Powered by Cilium 중 무엇을 쓰느냐가 같은 "CNI 단일화" 결정에 해당한다. 데이터패스 구현이 다르므로 이 글의 Cilium 수치를 그대로 옮기지는 않는다.
 
