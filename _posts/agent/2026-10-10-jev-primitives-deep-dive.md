@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 date: 2026-10-10
-last_modified_at: 2026-11-07
+last_modified_at: 2026-11-19
 use_math: true
 ---
 
@@ -86,11 +86,13 @@ TypeSafe AI의 공시 과금 정책은 입력 토큰 기준($0.042 / 1M input to
 - **요청 스펙**:
   - `instructions`: 분류 작업 지침 문자열
   - `criteria`: 각 선택지 라벨과 그 설명을 담은 딕셔너리 (`dict[str, str]`)
+
+API 호출 후 반환되는 응답은 각 질문 식별자 키 아래에 다음과 같은 스키마로 구성된다.
+
 - **응답 스키마 (`answers.<id>`)**:
   - `choice`: 선택된 라벨 문자열 (예: `"returns"`)
   - `confidence`: 결정 신뢰도 부동소수점 (0.0 ~ 1.0)
   - `probabilities`: 전체 후보 라벨별 확률 분포 (`dict[str, float]`)
-
 각 선택지의 `criteria` 설명이 명확할수록 경계 케이스(Boundary case)의 분류 정밀도가 높아진다. 라벨 명칭 자체로 의미가 자명한 경우(예: `tone: {"calm": null, "angry": null}`)는 criteria 값을 `null`로 둘 수 있다.
 
 ### 2.2 Score: 순서형 루브릭 등급 평가
@@ -100,11 +102,13 @@ TypeSafe AI의 공시 과금 정책은 입력 토큰 기준($0.042 / 1M input to
 - **요청 스펙**:
   - `instructions`: 채점 지침 문자열
   - `criteria`: 등급 인덱스(0, 1, 2, ...) 순서대로 나열된 설명 리스트 (`list[str]`)
+
+Score 응답 객체에는 산출된 점수와 함께 신뢰도 및 확률 맵이 실린다.
+
 - **응답 스키마 (`answers.<id>`)**:
   - `score`: **기대값(Expected Value) 실수** (예: `1.88`)
   - `confidence`: 신뢰도 부동소수점 (0.0 ~ 1.0)
   - `probabilities`: 등급 인덱스별 확률 맵 (`{"0": 0.00, "1": 0.12, "2": 0.88}`)
-
 반환되는 `score`가 단순한 최고 확률 인덱스(정수)가 아니라 확률 가중 기대값(float)으로 산출되므로, 모니터링 시스템이나 게이트 로직에서 완만한 연속형 수치로 추세를 추적할 수 있다.
 
 ### 2.3 Noul: 이진(Boolean) 조건 검증
@@ -249,6 +253,8 @@ Jev의 세 가지 프리미티브는 단순한 기능 확장이 아니라, 비�
 불필요한 텍스트 생성과 JSON 정규식 파싱을 걷어내고, 명확한 API 계약에 기반한 직관 판정 레이어를 구축하는 것이 안정적인 에이전트 아키텍처의 핵심 출발점이다.
 
 ---
+
+*이 글은 System One API의 요청·응답 계약과 프리미티브 스키마에 집중한다. 개념과 시장 배경은 [Jev System One 결정 모델](/agent/jev-system-one-decision-model/)에서 다룬다.*
 
 ## References
 

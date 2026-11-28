@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 date: 2026-10-01
-last_modified_at: 2026-11-07
+last_modified_at: 2026-11-19
 ---
 
 ## 이 글을 30초에 파악하기
@@ -39,8 +39,8 @@ last_modified_at: 2026-11-07
 
 사내 LLM 플랫폼을 처음 열면 요청은 거의 항상 하나의 엔드포인트로 들어온다. IDE 플러그인, 사내 챗봇, 배치 스크립트가 모두 같은 `base_url`을 바라본다. 그리고 그 뒤에는 가장 비싼 모델 하나가 서 있다. "일단 제일 좋은 모델로 붙여 두자"는 결정은 첫 달에는 합리적으로 보이지만, 트래픽이 늘면 두 가지가 동시에 무너진다. 비용 그래프가 요청 수에 정비례해 올라가고, 아주 단순한 질문 하나의 응답 시간이 가장 무거운 요청에 맞춰 결정된다.
 
-여기서 필요한 것이 **추론 라우팅(inference routing)** 이다. 요청을 어디로 보낼지 결정하는 계층을 따로 두고, 그 계층이 비용·지연·품질을 동시에 다루게 만드는 것이다. 사내 AI 플랫폼(Azure/Kubernetes 기반 서빙, 자체 vLLM과 외부 프로바이더를 함께 쓰는 구성)을 운영하면서 "게이트웨이를 한 겹 더 두는 게 정말 값어치가 있나"를 여러 번 따져 봤고, 결론은 조건부 찬성이었다.
-
+여기서 필요한 것이 **추론 라우팅(inference routing)** 이다. 요청을 어디로 보낼지 결정하는 계층을 따로 두고, 그 계층이 비용·지연·품질을 동시에 다루게 만드는 것이다.
+사내 AI 플랫폼(자체 vLLM과 외부 프로바이더 병행)을 운영하면서 게이트웨이 추가의 실효성을 여러 번 검토했다. 결론은 조건부 찬성이었다.
 조건은 게이트웨이를 **역할이 다른 두 계층으로 쪼개는 것**이다. 이 글은 그 구조와, 그 위에서 돌아가는 캐스케이딩·캐싱·관측성을 정리한다. 전제와 수치는 [^1], [^2] 문서를 기준으로 삼았고, 연구 인용은 원 논문을 확인해 표시했다.
 
 ---
@@ -85,7 +85,8 @@ Tier 1은 네트워크 계층의 일만 한다. 외부 트래픽을 받아 TLS�
 - **가중치 기반**: `backendRef` 의 weight로 카나리·A/B를 만든다.
 - **복합 조건**: 헤더 + 경로 + 고객 티어를 조합한다.
 
-카나리 배포는 5~10% 트래픽으로 시작해서 올리고, 문제가 보이면 weight를 0으로 되돌려 즉시 롤백한다[^1]. 버전 감각을 하나만 남기면, 문서 기준 Gateway API v1.6.0이 2026-06에 stable(UDPRoute/TCPRoute GA)이 되었고 kgateway 2.3.x는 1.3~1.5(v1.5.1 포함)를 공식 지원한다. 도입 시점에 지원 매트릭스를 다시 확인해야 하는 종류의 항목이다.
+카나리 배포는 5~10% 트래픽으로 시작해서 올리고, 문제가 보이면 weight를 0으로 되돌려 즉시 롤백한다[^1].
+문서 기준 Gateway API v1.6.0은 2026-06에 stable(UDPRoute/TCPRoute GA)이 되었다. kgateway 2.3.x는 1.3~1.5(v1.5.1 포함)를 공식 지원하므로 도입 시점에 지원 매트릭스를 확인해야 한다.
 
 로드 밸런싱은 세 가지를 기억하면 된다.
 
@@ -132,13 +133,14 @@ Tier 2-A는 모델 API를 추상화하는 프로바이더 프록시다. Bifrost�
 
 세부 동작 몇 가지가 실무에서 바로 쓰인다. `X-MCP-Session-ID` 헤더로 세션을 추적하고 sticky 라우팅을 하며, 비활성 세션은 기본 30분 뒤 정리한다. `/mcp/v1`·`/a2a/v1` 경로를 네이티브로 처리한다. 도구 호출은 허용 목록으로 제한하고 `exec_shell`·`read_credentials` 같은 위험 도구를 막으며, 응답 크기 제한과 SHA-256 무결성 검증을 건다. 세션 단위 인가는 JWT 검증 위에서 동작한다.
 
-계보를 하나만 짚으면, agentgateway는 kgateway v2.2 계보에서 분리된 AI 전용 데이터 플레인이고[^7], 2026년 2~3월경 v1.0부터 에이전트 제어 평면 컨트롤러가 이 저장소로 옮겨가 독립 릴리스 체계를 갖췄다[^1]. MCP·A2A 프로토콜 자체가 빠르게 변하는 만큼 버전별 동작 차이를 전제로 봐야 한다.
+agentgateway는 kgateway v2.2 계보에서 분리된 AI 전용 데이터 플레인이다[^7].
+2026년 2~3월경 v1.0부터 에이전트 제어 평면 컨트롤러가 이 저장소로 옮겨가 독립 릴리스 체계를 갖췄다[^1]. MCP·A2A 프로토콜 자체가 빠르게 변하는 만큼 버전별 동작 차이를 전제로 봐야 한다.
 
 ### 2.4 트래픽 플로우와 L1/L2의 구분
 
 두 갈래만 기억하면 된다.
 
-```
+```text
 [외부 LLM 경로]
 Client → kgateway(L1) → Bifrost/LiteLLM(Tier 2-A: 캐스케이딩+캐시) → OpenAI/Anthropic/Bedrock → 응답 + 비용 기록
 
@@ -171,7 +173,8 @@ Tier 1은 네트워크 제어만 하고 모델 선택 로직은 넣지 않는다
 2. **InferencePool selector로 개별 Pod 주소(`podIP:port`)를 다룬다**: Service가 아니라 Pod 단위다.
 3. **모델 서버 메트릭으로 스케줄링한다**: 단순 LB가 아니라 KV 캐시·부하 인지다.
 
-EPP 내부는 단일 함수가 아니라 계층 파이프라인이다. 데이터 계층이 Pod 목록과 vLLM 메트릭을 모으고, 라우팅/정책 계층이 pool 선택과 우선순위를 처리하고, 흐름 제어 계층이 포화 감지기(saturation detector)로 과부하를 막고, 마지막 스케줄링 계층의 **scorer + picker** 가 실제 Pod를 고른다. scorer에는 `prefix-cache-scorer`(프롬프트 블록을 해싱해 prefix를 들고 있는 Pod를 추정) 외에 부하·큐 깊이 인지 scorer, LoRA affinity 등이 있다.
+EPP 내부는 단일 함수가 아니라 계층 파이프라인이다. 데이터 계층이 Pod 목록과 vLLM 메트릭을 모은다. 라우팅/정책 계층이 pool 선택과 우선순위를 처리하고, 흐름 제어 계층의 포화 감지기가 과부하를 막는다.
+마지막 스케줄링 계층의 **scorer + picker** 가 실제 Pod를 고른다. scorer에는 prefix를 들고 있는 Pod를 추정하는 `prefix-cache-scorer` 외에 부하·큐 깊이 인지 scorer, LoRA affinity 등이 있다.
 
 picker는 점수를 종합해 최종 Pod를 정하고, 미지정이면 기본 `max-score-picker` 가 쓴다. 결정은 `x-gateway-destination-endpoint` 헤더와 `dynamic_metadata` 로 함께 전달되며 둘이 일치해야 한다.
 
@@ -192,9 +195,12 @@ L2 구현은 세 갈래로 비교된다.
 | 비용 | EC2 단가 | EC2 대비 15~20% 프리미엄 | EC2 단가 |
 | 락인 | 없음(표준) | 중간 | 없음 |
 
-HyperPod의 관리형 KV-aware는 vLLM에 고정된다는 제약이 있고, TensorRT-LLM의 성능 천장이 필요하면 EKS 위에 Dynamo를 직접 올리고 HyperPod는 노드 복구 계층으로만 쓰는 하이브리드가 가능하다[^1].
+HyperPod의 관리형 KV-aware는 vLLM에 고정된다는 제약이 있다.
+TensorRT-LLM의 성능 천장이 필요하면 EKS 위에 Dynamo를 직접 올리고 HyperPod는 노드 복구 계층으로만 쓰는 하이브리드가 가능하다[^1].
 
-멀티리전 구성은 L2의 물리적 제약을 그대로 드러낸다. 서울에서 인입해 시드니에서 추론하는 구성이라면, 서울은 L1(프로바이더·리전 라우팅, 인증, 예산, PII, failover, 세션 어피니티)을 맡고 시드니는 L2(EPP/HyperPod router/Dynamo) + vLLM을 맡는다. KV 캐시 이득은 시드니 클러스터 내부에서만 발생하고, 크로스 리전 홉은 캐시로 단축되지 않는다. 멀티턴 prefix 재사용을 살리려면 L1이 같은 세션을 같은 엔드포인트로 일관되게 보내는 **세션 어피니티**가 핵심이다.
+멀티리전 구성은 L2의 물리적 제약을 그대로 드러낸다. 서울에서 인입해 시드니에서 추론하는 구성이라면 역할이 나뉜다.
+서울은 L1(프로바이더·리전 라우팅, 인증, 예산, PII, failover, 세션 어피니티)을 맡고 시드니는 L2(EPP/HyperPod router/Dynamo)와 vLLM을 맡는다.
+KV 캐시 이득은 시드니 클러스터 내부에서만 발생하고, 크로스 리전 홉은 캐시로 단축되지 않는다. 멀티턴 prefix 재사용을 살리려면 L1이 같은 세션을 같은 엔드포인트로 일관되게 보내는 **세션 어피니티**가 핵심이다.
 
 ---
 
@@ -221,7 +227,7 @@ L1/Tier 2-A 자리에 올릴 수 있는 것들을 한 표에 모으면 이렇다
 둘의 차이는 성능과 생태계, 그리고 공급망 관점으로 갈린다.
 
 - **Bifrost**: Go 기반이라 Python 대비 메모리 사용이 낮고 처리량이 높다. 공개 벤치 기준 5k RPS에서 오버헤드가 ~11µs(100µs 미만) 수준으로 보고된다. "LiteLLM보다 50배 빠르다"는 태그라인은 벤더 자체 head-to-head 벤치(54x P99, 40x 오버헤드, 9.5x 처리량)를 요약한 것이며 **제3자 검증은 없다**[^1]. 성능 외에 공급망 관점도 선택 요인이 된다. Python 기반 LLM 라우터는 의존성 트리가 넓어 보안 패치 부담이 상대적으로 크고, 단일 정적 바이너리로 배포되는 Go 기반은 런타임 의존성과 공격 표면이 작다. 단 이런 경향은 어디까지나 일반론이고, 실제 노출 위험은 버전과 설정에 따라 달라진다. 도입할 때 각 프로젝트가 공지한 보안 권고를 직접 확인하는 절차를 남겨 둬야 한다[^1]. 조건부 라우팅 룰은 헤더뿐 아니라 프롬프트에서 파생된 `complexity_tier`(SIMPLE/MEDIUM/COMPLEX/REASONING), `model`·`params`·budget 신호에 접근할 수 있다[^5].
-- **LiteLLM**: 100+ 프로바이더를 지원하고 `simple-shuffle`·`latency-based-routing`·`usage-based-routing-v2`·`least-busy`·`cost-based-routing` 같은 내장 전략과 `CustomRoutingStrategyBase` 기반 커스텀 전략을 제공한다. Langfuse 연동은 `success_callback: ["langfuse"]` 한 줄이고 LangChain/LlamaIndex 통합이 네이티브다. 다만 **복잡도 기반 라우팅은 내장 전략이 아니다.** 앞단 classifier나 커스텀 전략으로 직접 구현해야 한다[^6].
+- **LiteLLM**: 100+ 프로바이더를 지원한다. `simple-shuffle`·`latency-based-routing`·`usage-based-routing-v2` 등 내장 전략과 `CustomRoutingStrategyBase` 기반 전략을 제공한다. Langfuse 연동은 `success_callback: ["langfuse"]` 한 줄이고 LangChain/LlamaIndex 통합이 네이티브다. 다만 **복잡도 기반 라우팅은 내장 전략이 아니다.** 앞단 classifier나 커스텀 전략으로 직접 구현해야 한다[^6].
 
 ### 3.3 시나리오별 추천 조합
 
@@ -321,15 +327,19 @@ router_settings:
 | vLLM 단독 + 분류 서비스 가용 | **vLLM Semantic Router** | vLLM 프로젝트 라우터, 경량 |
 | 하이브리드(외부+자체) | **LLM Classifier + LiteLLM** | 자체는 Classifier, 외부는 LiteLLM |
 
-한 가지 반례도 기록해 둔다. Bifrost를 자체 호스팅 vLLM 캐스케이딩에 쓰려던 시도는 네 가지 한계로 접혔다[^2]. 요청 시 `openai/glm-5` 같은 provider/model 포맷을 강제하는 점, provider당 `base_url` 이 하나뿐이라 SLM과 LLM이 다른 Service에 있으면 같은 provider로 라우팅할 수 없는 점, 라우팅 룰이 `complexity_tier` 에는 접근하지만 원시 프롬프트 텍스트를 키워드·정규식으로 직접 매칭하기는 어려운 점, 모델명 정규화(하이픈 제거 등)로 vLLM `served-model-name` 과 어긋나는 점이다.
+한 가지 반례도 기록해 둔다. Bifrost를 자체 호스팅 vLLM 캐스케이딩에 쓰려던 시도는 네 가지 한계로 접혔다[^2].
+요청 시 `openai/glm-5` 포맷을 강제하는 점, 그리고 provider당 `base_url` 이 하나라 SLM과 LLM이 다른 Service에 있으면 한 provider로 묶지 못하는 점이다.
+또한 라우팅 룰이 `complexity_tier` 에는 접근하지만 원시 프롬프트 텍스트를 직접 매칭하기 어렵고, 모델명 정규화로 vLLM `served-model-name` 과 어긋나는 점도 원인이다.
 
 결론은 명확하다. Bifrost는 외부 프로바이더 통합과 failover에 강하고, 자체 vLLM 사이의 지능형 캐스케이딩에는 별도 classifier가 더 유연하다.
 
 ### 4.5 RouteLLM이 가르쳐 준 것
 
-**RouteLLM** 은 LMSYS가 만든 오픈소스 라우팅 프레임워크다. 행렬 분해(Matrix Factorization) 라우터를 Chatbot Arena 선호 데이터로 학습시켰고, MT Bench에서 GPT-4 호출을 26%만 쓰고도 GPT-4 성능의 95%를 유지했다는 결과가 논문(arXiv:2406.18665)으로 검증되었다[^3].
+**RouteLLM** 은 LMSYS가 만든 오픈소스 라우팅 프레임워크다. 행렬 분해(Matrix Factorization) 라우터를 Chatbot Arena 선호 데이터로 학습시켰다. MT Bench에서 GPT-4 호출을 26%만 쓰고도 GPT-4 성능의 95%를 유지했다는 결과가 논문(arXiv:2406.18665)으로 검증되었다[^3].
 
-그런데 쿠버네티스에 그대로 올리는 길은 막혀 있다. `torch`·`transformers`·`sentence-transformers` 의존성 트리가 vLLM 환경과 충돌하고, 분류 모델을 포함하면 이미지가 10GB를 넘고, pip 의존성 해석 실패가 잦고, 연구 프로젝트 성격이라 프로덕션 지원이 없다[^2]. 그래서 가져올 것은 코드가 아니라 **개념**이다. "선호 데이터로 학습한 분류기가 strong/weak를 가른다"는 아이디어는 유효하고, 실전에서는 규칙 기반 경량 classifier로 근사한다.
+그런데 쿠버네티스에 그대로 올리는 길은 막혀 있다.
+`torch`·`transformers` 의존성 트리가 vLLM 환경과 충돌하고, 분류 모델을 포함하면 이미지가 10GB를 넘는다. pip 의존성 해석 실패가 잦고 연구 프로젝트 성격이라 프로덕션 지원이 없다[^2].
+그래서 가져올 것은 코드가 아니라 **개념**이다. "선호 데이터로 학습한 분류기가 strong/weak를 가른다"는 아이디어는 유효하고, 실전에서는 규칙 기반 경량 classifier로 근사한다.
 
 | 항목 | RouteLLM(연구) | LLM Classifier(실전) |
 |---|---|---|
@@ -352,7 +362,9 @@ router_settings:
 
 같은 요청을 전부 Opus 4.7로 처리하면(평균 1K 토큰 입/출력) 하루 `$300`, 월 `$9,000`이다. 즉 **약 63% 절감**이다. 자체 호스팅 시나리오도 방향은 같다.
 
-Qwen3-4B(weak 70%, g6.xlarge L4 Spot ~`$0.31/hr`) 약 `$223`/월, GLM-5 744B(strong 30%, p5en.48xlarge 8xH200 Spot ~`$16/hr`) 약 `$3,456`/월, Langfuse + AMP/AMG 약 `$200`/월을 더하면 약 `$3,879`/월이다. GLM-5를 상시 운영하는 약 `$11,520`/월과 비교하면 **약 66% 절감**이다[^2].
+Qwen3-4B(weak 70%, g6.xlarge L4 Spot ~`$0.31/hr`) 약 `$223`/월이다.
+GLM-5 744B(strong 30%, p5en.48xlarge 8xH200 Spot ~`$16/hr`) 약 `$3,456`/월이 든다.
+여기에 Langfuse + AMP/AMG 약 `$200`/월을 더하면 약 `$3,879`/월이다. GLM-5를 상시 운영하는 약 `$11,520`/월과 비교하면 **약 66% 절감**이다[^2].
 
 이 표를 그대로 예산 계획으로 옮기면 안 된다. 비중(50/30/15/5)이 곧 라우팅 정확도이고, 분류가 틀리면 절감분이 재시도로 새어 나간다. 그래서 다음 두 절이 필요하다.
 
@@ -374,7 +386,8 @@ Qwen3-4B(weak 70%, g6.xlarge L4 Spot ~`$0.31/hr`) 약 `$223`/월, GLM-5 744B(str
 
 여기서 자주 오해되는 제품이 Kong이다. Kong AI Gateway의 `ai-semantic-cache` 플러그인이 하는 일은 "의미가 비슷한 요청이면 앞선 응답을 그대로 돌려준다"이고, 이는 호출 자체를 줄이는 응답 캐시 계층에 속한다[^1]. 반면 "어느 Pod에 prefix KV 캐시가 살아 있는지"를 보고 스케줄하는 일은 별개 계층이다.
 
-Kong의 부하 분산(consistent-hash, lowest-latency 등)은 프로바이더·모델 단위에서 동작하며, Envoy 기반이 아니라 GIE/ext-proc/InferencePool 계열 구현을 갖지 않는다. 그래서 KV-aware 스케줄링이 필요하면 Kong은 엣지(L1)에 남기고 L2는 EPP·HyperPod·Dynamo 쪽에 맡기는 구성이 자연스럽다. 저장소 위치도 짚어 둘 만하다.
+Kong의 부하 분산(consistent-hash, lowest-latency 등)은 프로바이더·모델 단위에서 동작한다. Envoy 기반이 아니므로 GIE/ext-proc/InferencePool 계열 구현을 갖지 않는다.
+그래서 KV-aware 스케줄링이 필요하면 Kong은 엣지(L1)에 남기고 L2는 EPP·HyperPod·Dynamo 쪽에 맡기는 구성이 자연스럽다. 저장소 위치도 짚어 둘 만하다.
 
 Kong은 자체 임베딩을 내장하지 않고 Redis·Valkey·PGVector 같은 외부 저장소에 연결하며, 임베딩 생성도 OpenAI·Bedrock 같은 외부 API 호출로 처리한다[^1].
 
@@ -503,20 +516,23 @@ Kong은 자체 임베딩을 내장하지 않고 Redis·Valkey·PGVector 같은 �
 임계값 조정은 방향을 미리 정해 둔다. 재실행율이 높으면 승격 조건을 완화(임계값 상향)하고, 비용이 예상보다 높으면 승격 조건을 조인다. 두 KPI가 반대 방향으로 당기므로 한 번에 하나만 움직인다.
 
 ### E. 배포 전 체크리스트
+연속된 점검 항목은 목적에 따라 묶어서 관리한다. 먼저 인프라와 배포 정책 점검이다.
 
 - [ ] 클라이언트가 단일 엔드포인트(`base_url`)만 쓰는가
 - [ ] 라우팅 룰이 코드(YAML)로 리뷰되고 버전 관리되는가
 - [ ] 분류 규칙에 버전이 붙어 있고 회귀 테스트가 있는가
-- [ ] 캐시 키에 모델·파라미터·테넌트가 들어가는가
-- [ ] 캐시 응답이 테넌트 경계를 넘지 않는 것을 테스트로 증명했는가
-- [ ] 분류기 장애 시 기본값이 품질 쪽(강한 모델)인가
 - [ ] 타임아웃이 스트리밍 특성(첫 바이트 vs 전체)에 맞게 분리되어 있는가
 - [ ] 재시도 상한이 3회이고 도구 호출 요청의 재시도 정책이 정의되어 있는가
 - [ ] 서킷 브레이커 `maxEjectionPercent` 가 50% 이하인가
+
+다음으로 캐시·보안 및 관측성 점검이다.
+
+- [ ] 캐시 키에 모델·파라미터·테넌트가 들어가는가
+- [ ] 캐시 응답이 테넌트 경계를 넘지 않는 것을 테스트로 증명했는가
+- [ ] 분류기 장애 시 기본값이 품질 쪽(강한 모델)인가
 - [ ] 라우팅 결정이 OTel trace에 남고 Langfuse에서 모델별 비용이 보이는가
 - [ ] misroute 탐지 지표(재질의율·재실행율)가 대시보드에 있는가
 - [ ] 각 단계의 롤백 절차(캐시 off / weight 0 / bypass)를 문서화했는가
-
 ---
 
 ## References

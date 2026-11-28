@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 date: 2026-10-17
-last_modified_at: 2026-11-07
+last_modified_at: 2026-11-19
 use_math: true
 ---
 
@@ -56,7 +56,7 @@ REA는 `morluto/rea` 저장소 기반의 역공학 전용 MCP 서버 겸 CLI 도
 
 REA의 내부 아키텍처는 다음 세 계층으로 구성된다.
 
-1. **프로바이더 어댑터 계층 (Provider Adapters)**: 호스트에 설치된 네이티브 엔진(Hopper Python Bridge, Ghidra Headless Java Bridge, IDA Pro MCP) 및 외부 도구(Node-API, Playwright CDP, WABT, EVMole)를 독립 프로세스 그룹으로 감독(Supervise)한다.
+1. **프로바이더 어댑터 계층 (Provider Adapters)**: 호스트에 설치된 네이티브 엔진(Hopper, Ghidra, IDA Pro)과 외부 도구(Node-API, Playwright, WABT, EVMole)를 연결한다. 각 엔진은 독립 프로세스 그룹으로 감독(Supervise)된다.
 2. **세션 및 라우팅 계층 (SessionProviderRouter)**: 분석 대상 파일(ELF, Mach-O, PE, ASAR, APK)에 대해 불변의 깊은 바인딩(Deep Binding)을 생성하고, 캐시 스냅샷(`AnalysisSnapshotCache`)을 유지한다.
 3. **증거 및 계약 계층 (Contracts & EvidenceLedger)**: 에이전트가 호출할 수 있는 정형화된 MCP 도구 계약을 노출하며, 모든 분석 결과를 불변의 표준 증거(`Evidence`) 레코드로 직렬화한다.
 
@@ -259,7 +259,7 @@ async def filter_candidate_functions(
 
 ### 5.1 22개 계약 모듈 Jevify 실측 결과
 
-실제 `morluto/rea` 저장소의 핵심 계약(Contracts) 22개 모듈을 대상으로 `openrouter/typesafe/jev-1.14-20261014` 모델을 활용해 배치 판정(`judge_batch`)을 수행한 정량적 실측치는 다음과 같다.
+실제 `morluto/rea` 저장소의 핵심 계약(Contracts) 22개 모듈을 대상으로 실측을 진행했다. 모델은 `openrouter/typesafe/jev-1.14-20261014`를 활용해 배치 판정(`judge_batch`)을 수행했다. 도출된 정량적 수치는 다음과 같다.
 
 - **처리 건수**: 22 / 22개 계약 모듈 전수 처리
 - **총 소요 시간**: **0.8초** (단일 패스 병렬 처리)
@@ -291,9 +291,10 @@ async def filter_candidate_functions(
 
 ### 6.1 비생성형 모델의 본질적 한계
 
-Jev는 분류와 확률 보정에 특화된 시스템 1 모델이다. - **코드 생성 및 재구성 불가**: Jev는 C++ 어셈블리를 가독성 높은 Python 코드로 변환하거나 AST를 새로 합성할 수 없다. 이 작업은 반드시 시스템 2(프론티어 LLM)에 위임해야 한다.
+Jev는 분류와 확률 보정에 특화된 시스템 1 모델이다.
 
-- **복합 기호 실행(Symbolic Execution)의 부재**: 동적 분기 조건($x^2 + y = 42$)을 역산하는 복잡한 제약 조건 해결(SMT Solver)은 LLM이나 Jev 모두 불가능하며, Z3나 angr 같은 특수 심볼릭 엔진이 보계(Complement)로 필요하다.
+- **코드 생성 및 재구성 불가**: Jev는 C++ 어셈블리를 가독성 높은 Python 코드로 변환하거나 AST를 새로 합성할 수 없다. 이 작업은 반드시 시스템 2(프론티어 LLM)에 위임해야 한다.
+- **복합 기호 실행(Symbolic Execution)의 부재**: 동적 분기 조건($x^2 + y = 42$)을 푸는 제약 조건 해결(SMT Solver)은 LLM이나 Jev 모두 불가능하다. 따라서 Z3나 angr 같은 특수 심볼릭 엔진이 보계(Complement)로 필요하다.
 
 ### 6.2 타입 안정성과 판정 무오류성의 분리
 

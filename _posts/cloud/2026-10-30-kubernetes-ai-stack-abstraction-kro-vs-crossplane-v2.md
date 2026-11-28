@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 date: 2026-10-30
-last_modified_at: 2026-11-07
+last_modified_at: 2026-11-19
 use_math: true
 ---
 
@@ -153,7 +153,7 @@ $$T_{\text{provision}}(G) = \sum_{d=1}^{D} \max_{r \in L_d} \left( t_{\text{appl
 
 이 절은 클러스터 바깥의 클라우드 자원을 쿠버네티스 API로 다루는 쪽을 정리한다. `kro`가 클러스터 **내부(In-cluster)** 리소스 합성에 집중한다면, 바깥은 다른 도구가 맡는다. VPC, S3 버킷, IAM Role, RDS, Azure CosmosDB 같은 클라우드 외부 관리형 인프라를 쿠버네티스 API로 프로비저닝하는 영역이다. 이 영역의 사실상 표준 도구는 CNCF 프로젝트인 **크로스플레인(Crossplane)**이다[^6]. Crossplane은 이들 자원의 생명주기까지 관리한다.
 
-![Flux GitOps Toolkit 컨트롤러 구조: source·kustomize·helm·notification 컨트롤러가 각각 CRD를 감시하고 클러스터 상태를 수렴시키는 구조](/assets/images/cloud/official-flux-gitops-toolkit.webp)
+![Flux GitOps Toolkit 컨트롤러 구조: source·kustomize·helm·notification 컨트롤러가 각각 CRD를 감시하고 클러스터 상태를 수렴시키는 구조](/assets/images/cloud/official-flux-gitops-toolkit-kro-crossplane-1400.webp)
 *출처: [GitOps Toolkit Components — Flux 공식 문서](https://fluxcd.io/flux/components/), Apache-2.0 License*
 
 위 Flux GitOps Toolkit 아키텍처[^9]는 현대 GitOps 파이프라인의 기본 전제를 보여준다. `source-controller`가 Git 저장소를 폴링한다. `kustomize-controller`가 네임스페이스별 매니페스트를 조정한다. 이 구조는 **네임스페이스(Namespace) 기반 멀티테넌시**를 전제로 동작한다[^4]. 그러나 2025년 이전의 Crossplane v1 아키텍처는 이 네임스페이스 경계 모델과 정면으로 충돌했다. 아래에서 그 구조적 한계를 본다.

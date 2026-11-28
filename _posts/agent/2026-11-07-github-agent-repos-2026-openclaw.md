@@ -8,12 +8,12 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 date: 2026-11-07
-last_modified_at: 2026-11-07
+last_modified_at: 2026-11-19
 ---
 
 ## 이 글을 30초에 파악하기
 
-> **한 줄로** — 2026년 11월 GitHub에서 가장 인기 있는 AI 에이전트 프로젝트는 똑똑한 모델이 아니라, 모델에게 일을 시키는 절차 문서(스킬)와 실행 틀(하네스)이며, 그 인기 숫자를 읽는 방법을 정리한다.
+> **한 줄로** — 2026년 11월 GitHub에서 인기 있는 AI 에이전트 프로젝트는 모델 자체가 아니다. 모델에게 일을 시키는 절차 문서(스킬)와 실행 틀(하네스)이다. 이 글에서는 그 인기 숫자를 읽는 방법을 정리한다.
 
 **읽고 나면 알게 되는 것**
 
@@ -66,13 +66,13 @@ last_modified_at: 2026-11-07
 
 ### 1.2 "가장 많은 스타"라는 표현의 실제 의미
 
-openclaw는 GitHub 전체 누적 순위에서 4위다. 앞에는 build-your-own-x(560,613), sindresorhus/awesome(532,844), freeCodeCamp(458,695)가 있고, 그 뒤로 torvalds/linux(254,726)가 따라온다. 즉 "역대 최다 스타 소프트웨어"라는 문구는 절대 순위가 아니라 **성장 속도**를 가리킬 때만 성립한다. 2025년 11월에 만들어진 저장소가 2022년에 만들어진 리눅스 커널보다 위에 있다는 사실 자체가 그 증거다.
+openclaw는 GitHub 전체 누적 순위에서 4위다. 앞에는 build-your-own-x(560,613), sindresorhus/awesome(532,844), freeCodeCamp(458,695)가 있다. 그 뒤로 torvalds/linux(254,726)가 따라온다. 즉 "역대 최다 스타 소프트웨어"라는 문구는 절대 순위가 아니라 **성장 속도**를 가리킬 때만 성립한다. 2025년 11월에 만들어진 저장소가 2022년에 만들어진 리눅스 커널보다 위에 있다는 사실 자체가 그 증거다.
 
 반대로 2023년에 이름을 올린 프레임워크들은 아래쪽에 있다. langchain 149,151, MetaGPT 71,207, AutoGen 61,738, CrewAI 60,602, LangGraph 44,612다. anthropics/claude-code(154,863)와 openai/codex(133,547)처럼 벤더가 직접 만든 하네스는 중간권에 걸쳐 있다.
 
 ### 1.3 저장소 이름에 드러난 2026년의 어휘
 
-이름만 훑어도 흐름이 보인다. `skills`(mattpocock, anthropics, google), `superpowers`, `harness`(deepseek-harness), `spec-kit`(github)처럼 절차·규격·실행 틀을 가리키는 단어가 상위권에 몰려 있다. 2년 전 상위권을 채웠던 `agent`+`framework` 조합은 태그 통계에서도 3,535개로 가장 작은 분류가 됐다.
+이름만 훑어도 흐름이 보인다. `skills`(mattpocock, anthropics, google)와 `superpowers`, `harness`(deepseek-harness), `spec-kit`(github)이 대표적이다. 이처럼 절차·규격·실행 틀을 가리키는 단어가 상위권에 몰려 있다. 2년 전 상위권을 채웠던 `agent`+`framework` 조합은 태그 통계에서도 3,535개로 가장 작은 분류가 됐다.
 
 ## 2. 스킬 저장소: 프롬프트가 아니라 배포물이 되다
 
@@ -114,7 +114,9 @@ openclaw는 MIT 라이선스에 미국 501(c)(3) 재단이 운영하고, 기업�
 
 ### 3.3 하네스가 여러 개면 공급망이 된다
 
-여러 하네스를 한 화면에서 굴리는 도구가 등장하면서 버전 고정(pin) 문제가 생긴다. paperclip의 v2026.1106.0 릴리스는 515개 커밋과 27명의 기여자를 담았고, Codex 0.160.0, Claude Agent SDK 0.3.286(Claude Code 2.1.286), OpenCode 1.18.34, Copilot CLI 1.0.88을 명시적으로 고정한다[^8]. OpenClaw·Claude Code·Codex·Cursor·Gemini CLI·OpenCode·Pi·Hermes·Grok Build·Kimi Code까지 10종의 하네스를 어댑터로 감싸는 구조에서, 각 하네스의 마이너 업데이트가 전체 동작을 바꾸지 않게 막는 장치다.
+여러 하네스를 한 화면에서 굴리는 도구가 등장하면서 버전 고정(pin) 문제가 생긴다. paperclip의 v2026.1106.0 릴리스는 515개 커밋과 27명의 기여자를 담았다. 여기서는 Codex 0.160.0, Claude Agent SDK 0.3.286(Claude Code 2.1.286), OpenCode 1.18.34, Copilot CLI 1.0.88을 명시적으로 고정한다[^8].
+
+이 도구는 OpenClaw·Claude Code·Codex·Cursor·Gemini CLI·OpenCode·Pi·Hermes·Grok Build·Kimi Code 등 10종의 하네스를 어댑터로 감싼다. 각 하네스의 마이너 업데이트가 전체 동작을 바꾸지 않게 막는 장치다.
 
 같은 릴리스에는 도커 부팅 시 코드 적재 시간을 24초에서 4초 미만으로 줄였다는 변경과, 단순 작업에서 Claude 러너가 약 20% 빨라졌다는 변경이 함께 기록돼 있다. 하네스를 여러 개 묶는 계층에서는 성능 개선도 결국 오케스트레이션 비용에서 나온다.
 
@@ -138,9 +140,9 @@ openclaw는 MIT 라이선스에 미국 501(c)(3) 재단이 운영하고, 기업�
 
 ### 4.2 트렌딩 페이지의 하루·일주일 증가분
 
-2026년 11월 7일 일간 트렌딩 14개 항목 중 에이전트·스킬·도구 저장소는 6개다. cloudflare/security-audit-skill이 하루 2,088개로 가장 많이 늘었고, milind-soni/OpenMausBot이 1,986개, mattpocock/skills가 1,111개, google/skills가 449개, anthropics/skills가 386개, vercel-labs/agent-browser가 180개다[^9]. 같은 날 셜록(sherlock, 1,761개)이나 zed(1,119개)처럼 에이전트와 무관한 저장소도 상위에 있으므로, 트렌딩은 에이전트 전용 지표가 아니다.
+2026년 11월 7일 일간 트렌딩 14개 항목 중 에이전트·스킬·도구 저장소는 6개다. cloudflare/security-audit-skill이 하루 2,088개로 가장 많이 늘었다. 이어 milind-soni/OpenMausBot이 1,986개, mattpocock/skills가 1,111개를 기록했다. 뒤이어 google/skills가 449개, anthropics/skills가 386개, vercel-labs/agent-browser가 180개 증가했다[^9]. 같은 날 셜록(sherlock, 1,761개)이나 zed(1,119개)처럼 에이전트와 무관한 저장소도 상위에 있으므로, 트렌딩은 에이전트 전용 지표가 아니다.
 
-주간 목록에서는 성격이 더 분명해진다. pingdotgg/t3code가 16,782개로 1위이고, mattpocock/skills 9,589개, thedotmack/claude-mem 8,726개, D4Vinci/Scrapling 8,372개, pbakaus/impeccable 8,172개, Nutlope/hallmark 6,900개 순이다[^10]. 주 단위로 보면 스킬과 메모리, 수집 도구가 상위를 나눠 갖는다.
+주간 목록에서는 성격이 더 분명해진다. pingdotgg/t3code가 16,782개로 1위다. 이어 mattpocock/skills가 9,589개, thedotmack/claude-mem이 8,726개, D4Vinci/Scrapling이 8,372개 늘었다. 그 뒤로 pbakaus/impeccable 8,172개, Nutlope/hallmark 6,900개 순이다[^10]. 주 단위로 보면 스킬과 메모리, 수집 도구가 상위를 나눠 갖는다.
 
 ### 4.3 이 숫자를 과신하면 안 되는 이유
 
@@ -160,7 +162,7 @@ openclaw v2026.11.1 릴리스의 데스크톱 자산은 게시 하루 뒤 macOS 
 
 ### 5.3 이슈 수는 유지보수 부담과 신뢰도를 함께 흔든다
 
-hermes-agent는 열린 이슈가 53,507개로 포크 수(57,899)에 맞먹는다[^4]. 이 숫자가 실제 백로그인지, 라벨 운영이나 스팸으로 부풀려진 것인지는 이번 조사에서 감사하지 않았으므로 해석을 붙이지 않는다. 대조적으로 deepseek-harness는 이슈를 아예 꺼 두어 0으로 표시되고, ECC는 240개, openclaw는 7,646개, anthropics/claude-code는 16,777개, openai/codex는 26,823개다.
+hermes-agent는 열린 이슈가 53,507개로 포크 수(57,899)에 맞먹는다[^4]. 이 숫자가 실제 백로그인지, 라벨 운영이나 스팸으로 부풀려진 것인지는 이번 조사에서 감사하지 않았으므로 해석을 붙이지 않는다. 대조적으로 deepseek-harness는 이슈를 아예 꺼 두어 0으로 표시된다. ECC는 240개, openclaw는 7,646개, anthropics/claude-code는 16,777개, openai/codex는 26,823개다.
 
 이슈 0이 건강의 증거는 아니다. 이슈를 끄면 사용자 신고가 저장소 밖으로 나가고, 남은 숫자는 관리된 것처럼 보인다. 도입 판단에서는 이슈 수의 절대값보다 "이슈를 받는 방식이 우리 조직의 문의 경로와 맞는가"를 봐야 한다.
 
@@ -182,13 +184,13 @@ browser-use는 브라우저를 시간 단위로 과금한다. 브라우저는 �
 
 ### 6.2 모델 호출 비용
 
-hermes-agent를 구동하는 Nous Portal은 무료, Plus 월 `$20`, Super 월 `$100`, Ultra 월 `$200`의 네 단계다. Plus는 4GB 메모리·25GB 디스크의 클라우드 에이전트 1개, Ultra는 8GB·100GB까지 포함한다[^12]. DeepSeek API는 deepseek-flash 기준 100만 토큰당 입력 캐시 적중이 `$0.003`~`$0.006`, 캐시 미스가 `$0.15`~`$0.30`, 출력이 `$0.60`~`$1.20`이고, 컨텍스트 100만 토큰에 최대 출력 384K를 제공한다.
+hermes-agent를 구동하는 Nous Portal은 무료, Plus 월 `$20`, Super 월 `$100`, Ultra 월 `$200`의 네 단계다. Plus는 4GB 메모리·25GB 디스크의 클라우드 에이전트 1개, Ultra는 8GB·100GB까지 포함한다[^12]. DeepSeek API는 deepseek-flash 기준 100만 토큰당 입력 캐시 적중이 `$0.003`~`$0.006`, 캐시 미스가 `$0.15`~`$0.30`, 출력이 `$0.60`~`$1.20`이다. 컨텍스트 100만 토큰에 최대 출력 384K를 제공한다.
 
 피크 시간은 평일 01:00~04:00과 06:00~10:00(UTC)이며 그 외는 절반 가격이다[^13].
 
 ### 6.3 수집과 스크래핑 비용
 
-Firecrawl은 무료 1,000 크레딧에서 시작해 Hobby 월 `$19`(5,000 크레딧), Standard 월 `$99`(100,000), Growth 월 `$399`(500,000), Scale 월 `$749`(1,000,000)로 올라간다. 크레딧은 페이지 스크레이프 1개당 1, JSON 형식 추가 4, 프롬프트 인젝션 검사 추가 4처럼 작업 단위로 차감된다[^14]. 에이전트가 웹을 읽는 기능을 붙이는 순간, 고정비가 아니라 사용량 비용이 생긴다.
+Firecrawl은 무료 1,000 크레딧에서 시작한다. 이후 Hobby 월 `$19`(5,000 크레딧), Standard 월 `$99`(100,000), Growth 월 `$399`(500,000), Scale 월 `$749`(1,000,000)로 올라간다. 크레딧은 페이지 스크레이프 1개당 1, JSON 형식 추가 4, 프롬프트 인젝션 검사 추가 4처럼 작업 단위로 차감된다[^14]. 에이전트가 웹을 읽는 기능을 붙이는 순간, 고정비가 아니라 사용량 비용이 생긴다.
 
 ### 6.4 라이선스가 가격표를 가르는 지점
 

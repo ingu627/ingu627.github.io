@@ -8,13 +8,13 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 date: 2026-10-20
-last_modified_at: 2026-11-07
+last_modified_at: 2026-11-19
 use_math: true
 ---
 
 ## 이 글을 30초에 파악하기
 
-> **한 줄로** — 기밀 데이터 때문에 외부 LLM API를 쓸 수 없는 환경에서 수백억~수천억 파라미터 모델을 사내 GPU로 직접 서빙할 때, 무엇을 막고(보안 경계), GPU 여러 대를 어떻게 묶고(병렬화), 응답 지연을 어떻게 낮추는지(프리필·디코드 분리)를 순서대로 정리한다.
+> **한 줄로** — 기밀 데이터 때문에 외부 LLM API를 쓸 수 없는 환경을 다룬다. 사내 GPU로 거대 모델을 직접 서빙할 때 보안 경계, 병렬화 기법, 프리필·디코드 분리(PD Disaggregation) 설계를 순서대로 정리한다.
 
 **읽고 나면 알게 되는 것**
 
@@ -53,15 +53,19 @@ use_math: true
 ![엔터프라이즈 프라이빗 제로트러스트 AI 플랫폼 및 데이터 보호 경계 다이어그램](/assets/images/llm/enterprise-ai-platform-zero-trust-boundary-cognition.webp)
 
 ### 1.1 핵심 인프라 통제 3대 원칙
+네트워크와 인증 통제 원칙은 다음과 같다.
+
 1. **아웃바운드 인터넷 전면 차단 (Default Deny 0.0.0.0/0)**:
-   - 추론 워커 노드는 퍼블릭 IP를 할당받지 않으며, NAT 게이트웨이를 통한 외부 인터넷 연결 역시 방화벽 수준에서 차단된다.
-   - 모델 가중치 파일(Safetensors)은 Hugging Face 직접 다운로드가 아닌, 사전 승인된 사내 전용 암호화 스토리지(Private Object Store)의 프라이빗 엔드포인트(Private Endpoint)를 통해서만 마운트된다.
+   - 추론 워커 노드는 퍼블릭 IP를 할당받지 않으며, NAT 게이트웨이를 통한 외부 연결도 방화벽에서 차단된다.
+   - 모델 가중치 파일(Safetensors)은 Hugging Face 직접 다운로드가 아니다. 사전 승인된 사내 전용 암호화 스토리지(Private Object Store)의 프라이빗 엔드포인트(Private Endpoint)로 마운트된다.
 2. **정적 API 키 배제와 단기 자격 증명 브로커링 (Credential Brokering)**:
    - 애플리케이션 코드에 정적 마스터 토큰(`sk-...`)을 하드코딩하지 않는다.
-   - 호출자는 사내 IdP(Entra ID, Okta, Keycloak)에서 발행한 단기 수명의 JWT/OIDC 토큰을 게이트웨이에 제시하고, 게이트웨이는 인프라 수준의 워크로드 아이덴티티(Managed Identity)로 서빙 파드와 상호 TLS(mTLS) 통신을 수립한다.
+   - 호출자는 사내 IdP(Entra ID, Okta, Keycloak)의 단기 JWT/OIDC 토큰을 제시한다. 게이트웨이는 워크로드 아이덴티티로 서빙 파드와 상호 TLS(mTLS) 통신을 수립한다.
+
+패브릭 격리 원칙도 필수적으로 적용된다.
+
 3. **격리된 텐서 통신 패브릭**:
    - 추론 워커 간의 GPU 다이렉트 RDMA(RoCE v2 또는 InfiniBand) 통신은 일반 관리 트래픽(Kubelet, 로깅)과 물리적으로 분리된 전용 스토리지/패브릭 인터페이스(NIC)로 격리된다.
-
 ---
 
 ## 2. 분산 모델 서빙의 수리적 메커니즘: TP vs. PP
@@ -120,15 +124,19 @@ $$F_{\text{bubble}} = \frac{PP - 1}{M + PP - 1}$$
 
 **PD Disaggregation(Prefill-Decode 분리)**은 이 두 단계를 물리적으로 서로 다른 GPU 워커 풀로 격리한다[^3].
 
+프리필 워커 풀의 구성과 역할은 다음과 같다.
+
 1. **프리필 풀 (Prefill Pool - Compute-Dense Nodes)**:
    - 연산 밀도가 높은 H100/H200 NVLink 노드로 구성.
    - 들어온 프롬프트를 대규모 배치로 병렬 계산하여 KV 캐시 텐서를 즉시 생성.
    - 생성이 완료되면 생성된 KV 캐시를 고속 네트워크(RoCE v2/RDMA)를 통해 디코드 노드로 직접 전송(Remote Direct Memory Access).
+
+디코드 워커 풀의 구성과 역할은 다음과 같다.
+
 2. **디코드 풀 (Decode Pool - Memory-Dense Nodes)**:
    - 대용량 VRAM과 높은 메모리 대역폭을 가진 노드(L40S 또는 H100 NVL)로 구성.
    - 전송받은 KV 캐시를 바탕으로 중단 없는 순차 토큰 생성을 전담.
    - 새로운 대형 프롬프트가 유입되더라도 디코드 배치가 일시 정지(Stall)되지 않으므로, **p99 TPOT 지연 시간이 60% 이상 안정화**된다.
-
 ---
 
 ## 4. 2-Tier 엔터프라이즈 게이트웨이: TypeSafe Jev 사전 필터링
@@ -237,10 +245,12 @@ PD Disaggregation 아키텍처를 도입함으로써, 대용량 입력이 쏟아
 
 ---
 
+*보안 경계와 TP·PP 병렬화, PD 분리의 개요를 다룬다. KVCache 전송과 GAIE 라우팅의 구현 세부는 [분리형 서빙과 KVCache·GAIE](/llm/enterprise-ai-platform-disaggregated-serving-kvcache-gaie/)에서 이어진다.*
+
 ## References
 
 [^1]: Megatron-LM: *Efficient Large-Scale Language Model Training on GPU Clusters Using Tensor Parallelism* (2021). [arXiv:2104.04473](https://arxiv.org/abs/2104.04473)
 [^2]: DeepSpeed: *Pipeline Parallelism for Deep Learning Optimization* (2021). [https://www.deepspeed.ai](https://www.deepspeed.ai)
 [^3]: Mooncake: *A KVCache-Centric Disaggregated Architecture for LLM Serving* (2024). [arXiv:2407.00079](https://arxiv.org/abs/2407.00079)
 [^4]: TypeSafe AI Official Documentation: *Jev Jaggedness & Question Design Guide* (2026). [https://docs.typesafe.ai](https://docs.typesafe.ai)
-[^5]: ingu627.github.io: *Kubernetes 환경에서 초저지연 LLM 서빙: vLLM vs SGLang 접두사 캐싱 아키텍처와 처리량 심층 비교* (2026). [/llm/k8s/k8s-low-latency-llm-serving-vllm-sglang/](/llm/k8s/k8s-low-latency-llm-serving-vllm-sglang/)
+[^5]: ingu627.github.io: *Kubernetes 환경에서 초저지연 LLM 서빙: vLLM vs SGLang 접두사 캐싱 아키텍처와 처리량 심층 비교* (2026). [/llm/k8s-low-latency-llm-serving-vllm-sglang/](/llm/k8s-low-latency-llm-serving-vllm-sglang/)

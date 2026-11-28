@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 date: 2026-10-03
-last_modified_at: 2026-11-07
+last_modified_at: 2026-11-19
 ---
 
 ## 이 글을 30초에 파악하기
@@ -61,7 +61,7 @@ LLM은 함수 호출(function calling)을 하려면 그 함수의 이름과 파�
 
 MCP 서버는 연결 시점에 `list_tools`를 호출하고, 그 결과인 도구 메타데이터 전체를 받아 둔다. 명세가 "필요할 때 가져오라"고 강제하지 않기 때문에, 대부분의 클라이언트는 이 목록을 그대로 시스템 프롬프트 쪽에 붙인다. 이것이 **업프론트 로딩**이다.
 
-```
+```text
 MCP 연결 → tools/list → 도구 메타데이터 전량 수신
                               │
                               ├─ 이름 · 설명 · JSON Schema
@@ -220,7 +220,7 @@ GitHub MCP 서버(94개 도구)를 대상으로 한 실측은 강도와 절감�
 
 툴 압축이 **정의**를 깎는 기법이라면, 코드 실행(Code Execution)은 **중간 결과**를 깎는다. 도구를 JSON 스키마가 아니라 프로그래밍 API(예: TypeScript 파일 트리)로 노출하고, 모델이 샌드박스에서 코드를 작성·실행해 도구를 호출하게 한다. 결정적인 차이는 중간 데이터가 **실행 환경 안에서** 처리된다는 점이다.
 
-```
+```text
 [일반 도구 호출]                       [코드 실행형 호출]
 
   도구 → 10,000행 전체 반환              도구 → 샌드박스가 데이터 보유
@@ -270,7 +270,7 @@ Cloudflare는 같은 발상을 Workers 샌드박스로 구현한 "Code Mode"를 
 
 해법은 **변하지 않는 것을 앞으로, 변하는 것을 뒤로** 모으는 것이다. 정적 도구 목록을 캐시 브레이크포인트(cache breakpoint) 앞에 고정하고, 동적 도구는 그 뒤에 덧붙인다.
 
-```
+```text
 ┌─ 시스템 프롬프트 ────────────────────────────┐
 │  정적 도구 정의 (search_kb, create_ticket…)  │  ← 캐시 대상
 ├─ 캐시 브레이크포인트 ────────────────────────┤
@@ -317,7 +317,9 @@ Anthropic Prompt Caching은 캐시 히트 시 입력 토큰 단가를 크게 낮
 
 ### 7.3 Azure AI Gateway에서의 대응
 
-같은 계층 분담은 Azure에서도 그대로 성립한다. Azure API Management(APIM)를 AI 게이트웨이로 쓰면 `azure-openai-token-limit` 정책으로 토큰 상한을, `azure-openai-semantic-cache-lookup`/`store` 정책으로 시맨틱 캐시를, `azure-openai-emit-token-metric`으로 토큰 계측을 게이트웨이 레벨에서 걸 수 있다. 즉 6장의 캐시 정합성과 7.1의 계측 책임을 애플리케이션 바깥으로 밀어낼 수 있다.
+Azure API Management(APIM)를 AI 게이트웨이로 쓰면 여러 정책을 걸 수 있다. `azure-openai-token-limit` 정책으로 토큰 상한을 통제한다.
+`azure-openai-semantic-cache-lookup`/`store` 정책으로 시맨틱 캐시를 적용하고, `azure-openai-emit-token-metric`으로 토큰 계측을 둔다.
+이를 통해 6장의 캐시 정합성과 7.1의 계측 책임을 애플리케이션 바깥으로 밀어낼 수 있다.
 
 다만 프롬프트 캐시(접두부 일치 기반 단가 할인)와 시맨틱 캐시(의미 유사도 기반 응답 재사용)는 다른 계층의 다른 기법이므로, 지표를 볼 때 합산하지 않는다.
 
@@ -378,6 +380,8 @@ Anthropic Prompt Caching은 캐시 히트 시 입력 토큰 단가를 크게 낮
 롤백은 기법 단위로 한다. 네 기법은 서로 다른 계층에 있으므로 한꺼번에 되돌릴 필요가 없다. 예를 들어 코드 실행에서 품질 문제가 나면 샌드박스만 끄고, 압축 강도와 캐시 배치는 유지한다.
 
 ---
+
+*도구 정의가 토큰 비용을 만드는 구조와 네 가지 절감 기법을 다룬다. 2026-07-28 무상태 전송과 게이트웨이 계층은 [MCP Stateless 코어 스펙과 쿠버네티스 AI 게이트웨이](/agent/mcp-stateless-spec-2026-k8s-ai-gateway/)에서 이어진다.*
 
 ## References
 

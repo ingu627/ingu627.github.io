@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 date: 2026-10-28
-last_modified_at: 2026-11-07
+last_modified_at: 2026-11-19
 use_math: true
 ---
 
@@ -40,7 +40,7 @@ use_math: true
 
 그리고 [/cloud/cloud-security-governance/](/cloud/cloud-security-governance/)[^2]에서 멀티계정 격리와 최소 권한 경계를 다뤘다. 이제는 에이전트 런타임 고유의 비대칭적 트래픽 패턴과 장기 실행 세션 특성을 반영한 **AI 전용 단위 경제학(AI Unit Economics)**이 필요한 시점이다.
 
-특히 2026년 하반기 들어 두 클라우드 진영의 선택지가 크게 세분화되었다. AWS는 **Bedrock AgentCore**와 **SageMaker HyperPod EKS(InstantStart)**를 고도화했다. Microsoft는 **Microsoft Foundry(Copilot Harness, Routines)**와 [/azure/azure-container-apps-production/](/azure/azure-container-apps-production/)[^3]의 확장인 **Container Apps Serverless GPU**를 정식 출시했다.
+특히 2026년 하반기 들어 두 클라우드 진영의 선택지가 크게 세분화되었다. AWS는 **Bedrock AgentCore**와 **SageMaker HyperPod EKS(InstantStart)**를 고도화했다. Microsoft는 **Microsoft Foundry(Copilot Harness, Routines)**를 선보였다. 여기에 [/azure/azure-container-apps-production/](/azure/azure-container-apps-production/)[^3]의 확장인 **Container Apps Serverless GPU**를 정식 출시했다.
 
 여기에 [/azure/entra-id-ai-service-auth/](/azure/entra-id-ai-service-auth/)[^4] 기반의 에이전트 신원 및 이그레스 통제까지 더해졌다. 어떤 런타임을 골라야 하는지가 취향 문제가 아니게 된 셈이다.
 

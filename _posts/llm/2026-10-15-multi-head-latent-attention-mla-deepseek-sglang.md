@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 date: 2026-10-15
-last_modified_at: 2026-11-07
+last_modified_at: 2026-11-19
 use_math: true
 ---
 
@@ -50,7 +50,7 @@ use_math: true
 
 ### 1.1 표준 멀티헤드 어텐션(MHA)의 메모리 폭증
 
-표준 멀티헤드 어텐션(MHA, Multi-Head Attention)에서 배치 크기 $B$, 시퀀스 길이 $N$, 어텐션 헤드 수 $H$, 헤드당 차원 $d_h$에 대해 레이어 하나당 저장해야 하는 KV 캐시 요소 수는 다음과 같다.
+표준 멀티헤드 어텐션(MHA, Multi-Head Attention) 환경을 가정하자. 배치 크기 $B$, 시퀀스 길이 $N$, 어텐션 헤드 수 $H$, 헤드당 차원 $d_h$에 대해 레이어 하나당 저장해야 하는 KV 캐시 요소 수는 다음과 같다.
 
 $$\text{Memory}_{\text{MHA}} = 2 \times B \times N \times H \times d_h \times \text{BytesPerElement}$$
 
@@ -72,14 +72,15 @@ DeepSeek 팀이 고안한 MLA는 헤드 수를 억지로 줄이지 않는다. �
 
 ### 2.1 저랭크 잠재 공간 압축 ($C_{KV}$)
 
-입력 토큰 벡터 $X \in \mathbb{R}^{d \times n}$에 대해, MLA는 곧바로 거대한 $K, V$ 행렬을 생성하지 않는다. 대신 저랭크 다운 프로젝션 가중치 행렬 $W_{DKV} \in \mathbb{R}^{d_c \times d}$를 거쳐 **압축된 잠재 벡터(Compressed Latent Vector) $C_{KV}$**만을 KV 캐시에 저장한다:
+입력 토큰 벡터 $X \in \mathbb{R}^{d \times n}$에 대해, MLA는 곧바로 거대한 $K, V$ 행렬을 생성하지 않는다.
+대신 저랭크 다운 프로젝션 가중치 행렬 $W_{DKV} \in \mathbb{R}^{d_c \times d}$를 거친다. 이를 통해 **압축된 잠재 벡터 $C_{KV}$**만을 KV 캐시에 저장한다:
 
 $$C_{KV} = W_{DKV} X \in \mathbb{R}^{d_c \times n} \quad (\text{단, } d_c \ll 2 d_h H)$$
 
 - $d$: 모델 은닉 차원 (예: 7,168)
 - $d_c$: 압축 잠재 차원 (예: $d_c = 4 d_h = 512$)
 
-이후 복원 시점에는 두 개의 업 프로젝션 행렬 $W_{UK} \in \mathbb{R}^{d_h H \times d_c}$, $W_{UV} \in \mathbb{R}^{d_h H \times d_c}$를 통해 각각 키와 값을 복원한다:
+이후 복원 시점에는 두 개의 업 프로젝션 행렬 $W_{UK} \in \mathbb{R}^{d_h H \times d_c}$와 $W_{UV} \in \mathbb{R}^{d_h H \times d_c}$를 쓴다. 이를 통해 각각 키와 값을 복원한다:
 
 $$K = W_{UK} C_{KV}, \quad V = W_{UV} C_{KV}$$
 
@@ -205,9 +206,9 @@ spec:
 ## 5. 엔지니어링 결론 및 엔진 선택 기준
 
 1. **에이전트 루프 및 다중 턴 서빙에는 SGLang이 기본 표준**:
-   - 접두사 공유율이 높은 대화형 코딩 에이전트, 복합 툴 호출, RAG 워크플로우에서는 SGLang RadixAttention이 p95 레이턴시와 VRAM 효율에서 실측 기준 뚜렷한 우위를 기록한다 (p95 TTFT 최대 41% 단축, 고동시성 처리량 30 tok/s 이상 유지).
+   - 접두사 공유율이 높은 대화형 코딩 에이전트, 복합 툴 호출, RAG 워크플로우에서는 SGLang RadixAttention이 뚜렷한 우위를 기록한다. p95 레이턴시와 VRAM 효율에서 실측 우위가 확인된다(p95 TTFT 최대 41% 단축, 고동시성 처리량 30 tok/s 이상 유지).
 2. **단일 턴 배치 및 특수 하드웨어에는 vLLM**:
-   - 접두사 중복이 없는 독립형 대량 배치 작업, NVIDIA Blackwell(B200) 아키텍처 조기 적용, 혹은 AWS Trainium이나 Google TPU와 같은 비-NVIDIA 가속기 환경에서는 생태계 호환성이 검증된 vLLM을 선택해야 한다.
+   - 접두사 중복이 없는 독립형 대량 배치 작업이나 NVIDIA Blackwell(B200) 아키텍처 조기 적용 시나리오가 있다. 혹은 AWS Trainium이나 Google TPU 같은 비-NVIDIA 가속기 환경에서는 호환성이 검증된 vLLM을 선택해야 한다.
 
 ---
 
@@ -215,5 +216,5 @@ spec:
 
 [^1]: DeepSeek-AI: *DeepSeek-V3 Technical Report: Multi-Head Latent Attention and DualPipe Architecture* (2025). [arXiv:2412.19437](https://arxiv.org/abs/2412.19437)
 [^2]: LMSYS Organization: *SGLang: Efficient Execution of Structured Language Model Programs with RadixAttention* (2024). [arXiv:2312.07104](https://arxiv.org/abs/2312.07104)
-[^3]: ingu627.github.io: *Kubernetes 환경에서 초저지연 LLM 서빙: vLLM vs SGLang 접두사 캐싱 아키텍처와 처리량 심층 비교* (2026). [/llm/k8s/k8s-low-latency-llm-serving-vllm-sglang/](/llm/k8s/k8s-low-latency-llm-serving-vllm-sglang/)
+[^3]: ingu627.github.io: *Kubernetes 환경에서 초저지연 LLM 서빙: vLLM vs SGLang 접두사 캐싱 아키텍처와 처리량 심층 비교* (2026). [/llm/k8s-low-latency-llm-serving-vllm-sglang/](/llm/k8s-low-latency-llm-serving-vllm-sglang/)
 [^4]: ingu627.github.io: *추론 라우팅과 요청 캐스케이딩: 2-Tier 게이트웨이와 시맨틱 캐싱* (2026). [/llm/inference-routing-cascading/](/llm/inference-routing-cascading/)

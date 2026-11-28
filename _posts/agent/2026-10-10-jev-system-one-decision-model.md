@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 date: 2026-10-10
-last_modified_at: 2026-11-07
+last_modified_at: 2026-11-19
 use_math: true
 ---
 
@@ -79,7 +79,7 @@ RLCD는 모델이 산출하는 확률값($0.0 \sim 1.0$)이 대규모 집계(Agg
 
 Jev API는 세 가지 질문 프리미티브를 제공한다[^3]. 모든 응답은 별도의 텍스트 파싱 과정 없이 API 수준에서 구조화된 형태로 전달된다.
 
-```
+```yaml
 1. Noul (Boolean)
    - 질문: "해당 입력에 시스템 명령어 주입 시도가 포함되어 있는가?"
    - 반환: boolean 값 및 조건 충족에 대한 보정 확률 (0.0 ~ 1.0)
@@ -163,6 +163,8 @@ Jev는 빠른 직관 모델인 만큼, 생성형 모델이 가진 강점을 대�
 Jev와 같은 비생성형 System One 모델의 의의는 "모든 생성 모델을 대체하는 것"이 아니라, "생성 모델이 하지 않아도 될 일을 정확히 걷어내는 것"에 있다. 신뢰도 보정에 기반한 선택적 제어(Selective Control)를 통해 빠른 판단과 깊은 추론의 역할을 분리할 수 있다. 그때 비로소 프로덕션 수준의 비용 효율성과 반응 속도를 함께 달성할 수 있다.
 
 ---
+
+*System One의 개념과 배경을 다룬다. API 계약과 스키마 세부는 [Jev 프리미티브 심화](/agent/jev-primitives-deep-dive/)에서 확인할 수 있다.*
 
 ## References
 

@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 date: 2026-10-20
-last_modified_at: 2026-11-07
+last_modified_at: 2026-11-19
 use_math: true
 ---
 
@@ -59,8 +59,8 @@ use_math: true
 - 결과적으로 평균 응답 시간은 200ms임에도 불구하고, **p99 지연 시간이 10~15초 이상으로 폭증**하여 상위 비즈니스 타임아웃이 연쇄적으로 트리거된다.
 
 ### 1.3 노드 간 패브릭 플래핑(Flapping)과 부분 장애
-- 텐서 병렬화($TP=8$)로 묶인 GPU 중 단 1개의 PCIe 또는 NVLink 레인에서 일시적인 하드웨어 에러(ECC 비트 오류, 버스 타임아웃)가 발생하면, 레이어 연산마다 호출되는 All-Reduce 집합 통신이 영구 교착(Deadlock)에 빠진다.
-- 파드 자체는 여전히 `Running` 상태로 남아 있어 쿠버네티스의 기본 livenessProbe(단순 HTTP ping)를 통과하지만, 실제 추론 요청은 무한 대기에 빠지는 '좀비 파드' 상태가 형성된다.
+- 텐서 병렬화($TP=8$) 노드 중 1개의 PCIe 또는 NVLink 레인에서 하드웨어 오류가 발생할 수 있다. 이때 레이어 연산마다 호출되는 All-Reduce 집합 통신이 영구 교착(Deadlock)에 빠진다.
+- 파드 자체는 여전히 `Running` 상태로 남아 있어 쿠버네티스의 기본 livenessProbe(단순 HTTP ping)를 통과한다. 하지만 실제 추론 요청은 무한 대기에 빠지는 '좀비 파드' 상태가 된다.
 
 ---
 
@@ -77,7 +77,7 @@ use_math: true
 
 ### 2.2 계층 2: 그레이스풀 워커 드레인 (Graceful Draining)
 - 노드 점검, 모델 버전 교체, 혹은 서킷 트립으로 인해 워커 파드를 종료할 때 즉시 `SIGKILL`을 보내지 않는다.
-- 쿠버네티스 인그레스에서 해당 파드로의 신규 요청 수신을 즉시 중단(`deregister`)하고, 이미 토큰을 생성 중인 진행 중 세션(In-flight generation)이 안전하게 마지막 토큰을 반환할 때까지 최대 60초의 유예 시간(Grace Period)을 보장한다.
+- 쿠버네티스 인그레스에서 해당 파드로의 신규 요청 수신을 즉시 중단(`deregister`)한다. 이후 토큰을 생성 중인 진행 세션(In-flight)이 응답을 반환할 때까지 최대 60초의 유예 시간(Grace Period)을 보장한다.
 
 ### 2.3 계층 3: 제로 다운타임 가중치 롤아웃 (Canary & Blue-Green Shift)
 - 수백 기가바이트의 모델 가중치가 완전히 VRAM에 로드되어 첫 번째 테스트 추론(Dry-run inference)을 마칠 때까지 인그레스 트래픽을 주입하지 않는다.

@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 date: 2026-10-24
-last_modified_at: 2026-11-07
+last_modified_at: 2026-11-19
 use_math: true
 ---
 
@@ -45,7 +45,7 @@ use_math: true
 
 이 구조적 한계를 해결하기 위해 **MCP `2026-07-28` Stateless 코어 스펙**이 등장했다. 이 스펙은 2026년 5월 21일 릴리스 후보(RC, Release Candidate)로 확정되었고, 2026년 7월 28일 정식 발표되었다[^4][^5]. 핵심은 초기화 핸드셰이크(`initialize`/`initialized`)와 프로토콜 세션 식별자(`Mcp-Session-Id`)를 코어 전송 계층에서 전면 제거한 것이다.
 
-대신 모든 요청이 HTTP 헤더와 본문 메타데이터(`_meta`)만으로 독립 처리된다. 헤더는 `MCP-Protocol-Version`, `Mcp-Method`, `Mcp-Name` 세 가지다. 이렇게 만들어진 구조를 **자기완결적(Self-Contained) 무상태 아키텍처**라고 부른다.
+대신 모든 요청이 HTTP 헤더와 요청 본문 메타데이터(`_meta`)만으로 독립 처리된다. 표준 헤더는 `MCP-Protocol-Version`, `Mcp-Method`, `Mcp-Name`이다. 이렇게 만들어진 구조를 **자기완결적(Self-Contained) 무상태 아키텍처**라고 부른다. 다만 프로토콜 세션이 제거되었다고 해서 분산 시스템의 애플리케이션 상태나 파싱·라우팅 오버헤드가 완전히 0이 되는 것은 아니다. 상태 관리의 책임이 프로토콜 계층에서 핸들과 게이트웨이 파이프라인으로 재배치된 것에 가깝다.
 
 세션 방식은 단골을 외우는 점원과 같다. 점원이 교대하면 주문을 받을 사람이 사라지지만, 주문서에 모든 내용을 적어 보내면 어느 창구에서든 같은 주문이 처리된다.
 
@@ -59,30 +59,28 @@ use_math: true
 
 점심시간 트래픽이 몰릴 때 MCP 서버 파드를 늘렸는데 오히려 도구 호출 실패율이 올라간다. 새로 뜬 파드는 요청을 받지 못하고 기존 파드만 부하를 떠안는다.
 
-이 장은 세션 기반 MCP가 쿠버네티스에서 왜 병목이 되는지부터 설명한다. 먼저 2024년과 2025년 스펙이 강제한 세션 수명주기를 본다. 초기 MCP 사양은 `2024-11-05`의 HTTP+SSE 전송이었다. 후속 `2025-03-26`과 `2025-06-18`은 Streamable HTTP 전송을 쓴다. 두 세대 모두 도구를 단 한 번 호출하기 위해서도 상태 유지형 세션 수명주기를 거치도록 강제했다[^1][^2].
+이 장은 세션 기반 MCP가 쿠버네티스에서 왜 병목이 되는지부터 설명한다. 먼저 2024년과 2025년 스펙이 다룬 세션 수명주기를 본다. 초기 MCP 사양은 `2024-11-05`의 HTTP+SSE 전송이었다. 후속 `2025-03-26`과 `2025-06-18`은 Streamable HTTP 전송을 쓴다[^1][^2]. 여기서 주의할 점은 `2025-06-18` Streamable HTTP 명세에서 세션 ID 발급이 서버의 의무(MUST)가 아니라 선택 사항(MAY)이었다는 점이다. 명세는 "서버가 `InitializeResult` 응답의 `Mcp-Session-Id` 헤더로 세션 ID를 할당할 수 있다(MAY)"고 규정했다. 그러나 서버가 세션을 발급하는 순간, 클라이언트는 후속 모든 요청에 해당 헤더를 의무(MUST)로 실어야 했고, 실무에서는 상태 유지형 세션 수명주기가 쿠버네티스 수평 확장의 제약으로 작용했다.
 
 은행 창구에서 번호표를 받고 처음 창구로 다시 돌아가야만 업무가 끝나는 것과 같다. 창구 직원이 자리를 비우면 표는 무효가 된다.
 
-![MCP 아키텍처 개요: AI 애플리케이션과 데이터 소스·도구를 양방향으로 잇는 표준 프로토콜](/assets/images/agent/official-mcp.webp)
+![MCP 아키텍처 개요: AI 애플리케이션과 데이터 소스·도구를 양방향으로 잇는 표준 프로토콜](/assets/images/agent/official-mcp-stateless-guide.webp)
 *출처: [What is the Model Context Protocol (MCP)? — Model Context Protocol 공식 문서](https://modelcontextprotocol.io/docs/getting-started/intro), MIT License*
 
-구체적으로 기존 프로토콜에서 도구 실행(`tools/call`) 1회를 완료하려면 네 단계를 거쳐야 했다.
+구체적으로 기존 2025 스펙에서 상태 유지형 세션을 운용하는 서버와 통신할 때 도구 실행(`tools/call`)을 완료하려면 다음 단계를 거쳤다.
 
 1. **초기화 요청(`initialize`)**: 클라이언트가 프로토콜 버전과 클라이언트 역량(Capabilities)을 담아 `POST /mcp`로 전송한다.
-2. **세션 발급(`Mcp-Session-Id`)**: 서버가 응답 헤더에 고유 세션 식별자인 `Mcp-Session-Id`를 발급한다. 이어서 인메모리나 외부 저장소에 세션 컨텍스트를 만든다.
-3. **초기화 완료 알림(`notifications/initialized`)**: 클라이언트가 발급받은 `Mcp-Session-Id` 헤더를 첨부해 핸드셰이크 완료를 알린다.
-4. **도구 탐색 및 호출(`tools/list`, `tools/call`)**: 이후 모든 JSON-RPC 요청은 같은 `Mcp-Session-Id`를 포함해야 한다. 서버는 그 세션 상태가 유효할 때만 요청을 처리한다.
+2. **선택적 세션 발급(`Mcp-Session-Id`)**: 서버가 상태 유지를 필요로 할 경우 응답 헤더에 고유 세션 식별자인 `Mcp-Session-Id`를 발급한다(MAY). 서버가 세션을 발급하면 인메모리나 외부 저장소에 세션 컨텍스트가 생성된다.
+3. **초기화 완료 알림(`notifications/initialized`)**: 세션을 발급받은 클라이언트는 해당 `Mcp-Session-Id` 헤더를 첨부해 핸드셰이크 완료를 알린다.
+4. **도구 탐색 및 호출(`tools/list`, `tools/call`)**: 세션이 활성화된 경우 이후 모든 JSON-RPC 요청은 동일한 `Mcp-Session-Id`를 포함해야 한다. 서버는 유효한 세션이 확인될 때만 요청을 정상 처리한다(세션이 없는 독립 서버인 경우 매 요청을 단일 트랜잭션으로 처리할 수 있으나 여전히 핸드셰이크 비용이 발생했다).
 
-데스크톱 IDE가 로컬 자식 프로세스(`stdio`)와 1:1로 통신할 때는 이 구조가 자연스럽다. 문제는 수천 개의 에이전트 워커가 클라우드 로드밸런서 뒤의 MCP 서버 풀(Pool)을 호출할 때 드러난다. 이때 네 가지 치명적인 병목이 동시에 나타난다.
+데스크톱 IDE가 로컬 자식 프로세스(`stdio`)와 1:1로 통신할 때는 이 구조가 자연스럽다. 문제는 수천 개의 에이전트 워커가 클라우드 로드밸런서 뒤의 MCP 서버 풀(Pool)을 호출할 때 드러난다. 세션을 운용하는 서버 풀에서 네 가지 치명적인 병목이 나타난다.
 
 ### 1.2 수평 확장 시 발생하는 4대 인프라 병목과 비용 수식화
 
 이 절은 수평 확장에서 실제로 무엇이 비용이 되는지 네 갈래로 나눠 본다. 병목은 라우팅, 저장소, 게이트웨이 파싱, 소켓 계층에서 각각 발생한다.
+첫째, **세션 운용 시 세션 고정(Sticky Session Pinning) 강제와 트래픽 불균형**이다. 서버가 `Mcp-Session-Id`를 발급해 파드 로컬 메모리에 상태를 유지하면 L7 로드밸런서가 후속 요청을 모두 동일 파드로 고정 라우팅해야 한다. 에이전트 워크로드는 소수의 장기 실행 에이전트가 수백 번의 도구 호출을 집중 발생시킨다.
 
-첫째, **세션 고정(Sticky Session Pinning) 강제와 트래픽 불균형**이다. 특정 파드 메모리에 생성된 `Mcp-Session-Id` 상태를 참조하려면 L7 로드밸런서가 후속 요청을 모두 같은 파드로 고정 라우팅해야 한다. 에이전트 워크로드는 소수의 장기 실행 에이전트가 수백 번의 도구 호출을 집중 발생시킨다.
-
-그래서 파드 간 CPU·메모리 사용량 편차가 벌어진다. 롤링 업데이트(Rolling Update)나 오토스케일링 축소 시에는 인플라이트 세션이 끊긴다. 그 결과 `404 Not Found` 또는 `-32001` 세션 만료 에러가 연쇄 발생한다.
-
+그래서 파드 간 CPU·메모리 사용량 편차가 벌어진다. 롤링 업데이트(Rolling Update)나 오토스케일링 축소 시에는 인플라이트 세션이 끊긴다. 그 결과 `404 Not Found` 또는 `-32001` 세션 만료 에러가 연쇄 발생한다. 반면 세션을 발급하지 않는 서버라도 초기 핸드셰이크 과정은 생략할 수 없어 접속 지연이 누적된다.
 둘째, **공유 세션 저장소(Shared Session Store) 오버헤드**이다. 세션 고정을 피하려고 레디스(Redis)나 포스트그레SQL(PostgreSQL)에 세션 상태를 외부화할 수 있다. 그러면 매 도구 호출마다 게이트웨이와 MCP 서버가 외부 저장소와 최소 1~2회의 네트워크 왕복(RTT, Round-Trip Time)을 추가로 수행한다.
 
 셋째, **API 게이트웨이의 JSON-RPC 바디 파싱(DPI, Deep Packet Inspection) 비용**이다. 기존 스펙에서는 모든 요청이 단일 경로(`POST /mcp`)로 유입된다. HTTP 헤더에는 JSON-RPC 메서드도 도구 이름도 전혀 노출되지 않았다.
@@ -103,11 +101,10 @@ $$
 
 식의 각 항은 다음을 뜻한다. $\mathbb{I}\_{\text{cold}} \in \{0, 1\}$는 신규 세션 또는 파드 재시작으로 인한 핸드셰이크 발생 지시 함수다. $T\_{\text{Handshake}}$는 2-way 초기화 왕복 지연으로, 통상 $15 \sim 45\text{ms}$다.
 
-$T\_{\text{StoreRTT}}$는 외부 Redis 세션 조회 지연이며 $1.5 \sim 4\text{ms}$다. $\alpha\_{\text{parse}} \cdot B$는 바이트당 JSON 본문 파싱 비용이다. 반면 헤더 기반 Stateless 아키텍처에서는 세 항이 모두 0으로 수렴한다.
+$T\_{\text{StoreRTT}}$는 외부 Redis 세션 조회 지연이며 $1.5 \sim 4\text{ms}$다. $\alpha\_{\text{parse}} \cdot B$는 바이트당 JSON 본문 파싱 비용이다. 반면 헤더 기반 Stateless 아키텍처에서는 세션 관련 항($T\_{\text{Handshake}}$, $T\_{\text{StoreRTT}}$)이 사라진다. L7 라우팅 목적의 전수 바디 역직렬화 항($\alpha\_{\text{parse}} \cdot B$)도 프록시 계층에서 0에 가깝게 최적화된다.
 
-$\mathbb{I}\_{\text{cold}} = 0$, $T\_{\text{StoreRTT}} = 0$, $\alpha\_{\text{parse}} = 0$이라는 뜻이다. 남는 항은 L7 헤더 해시 테이블 조회 시간 $T\_{\text{Route}}$ 하나이며, 그 크기는 수십 마이크로초다.
-
-**핵심 요약 — 기존 MCP의 `initialize` 핸드셰이크와 `Mcp-Session-Id` 세션 모델은 네 가지 운영 병목을 낳았다. 첫째는 Sticky Session 강제, 둘째는 공유 스토리지 RTT 추가다. 셋째는 L7 게이트웨이의 JSON 바디 파싱(DPI) 오버헤드, 넷째는 장기 SSE 소켓 고갈이다.**
+$\mathbb{I}\_{\text{cold}} = 0$, $T\_{\text{StoreRTT}} = 0$이 되며, 라우팅용 바디 파싱 비용 역시 L7 헤더 매칭으로 대체된다. 다만 백엔드 MCP 서버 자체의 비즈니스 인자 파싱이나 TLS 복호화, 네트워크 직렬화 비용 자체가 0이 되는 것은 아니다. 프록시 계층에서 남는 항은 L7 헤더 해시 테이블 조회 시간 $T\_{\text{Route}}$ 하나이며, 그 크기는 수십 마이크로초다.
+**핵심 요약 — 기존 2025 MCP에서 세션(`Mcp-Session-Id`)은 서버가 선택적으로 발급(MAY)할 수 있었다. 그러나 세션을 발급하면 Sticky Session 고정, 공유 스토리지 RTT, L7 게이트웨이의 JSON 바디 파싱(DPI), 장기 SSE 소켓 점유라는 운영 병목이 따라왔다.**
 
 ---
 
@@ -116,6 +113,8 @@ $\mathbb{I}\_{\text{cold}} = 0$, $T\_{\text{StoreRTT}} = 0$, $\alpha\_{\text{par
 새 에이전트를 배포한 직후 첫 도구 호출이 유독 느리다. 같은 호출을 두 번째부터 하면 빨라지는데, 다른 파드로 가면 다시 느려진다.
 
 이 장은 새 스펙이 전송 계층에서 무엇을 바꿨는지 정리한다. `2026-07-28` 코어 스펙은 2026년 5월 21일 릴리스 후보(RC)를 거쳐 2026년 7월 28일 확정되었다[^4][^5]. 이 스펙은 전송 계층을 근본부터 재정의했고, 프로토콜 수준의 세션을 제거했다.
+
+![MCP 전송 규격 진화: 2025 Streamable HTTP 선택적 세션과 2026 완전 무상태 요청 비교](/assets/images/agent/mcp-transport-evolution-session-vs-stateless.webp)
 
 ![MCP 2026-07-28 Stateless 코어 스펙과 쿠버네티스 AI 게이트웨이 아키텍처](/assets/images/agent/mcp-stateless-2026-k8s-ai-gateway-cognition.webp)
 
@@ -636,14 +635,16 @@ def evaluate_mcp_tool_call(
 
 ---
 
+*전송 계층과 게이트웨이 아키텍처를 다룬다. 도구 정의를 줄이는 토큰 최적화 기법은 [MCP 토큰 최적화](/llm/mcp-token-optimization/)에서 확인할 수 있다.*
+
 ## References
 
 [^1]: Model Context Protocol Official Documentation: *What is the Model Context Protocol (MCP)?* (2025-2026). [https://modelcontextprotocol.io/docs/getting-started/intro](https://modelcontextprotocol.io/docs/getting-started/intro)
 [^2]: ingu627.github.io: *MCP(Model Context Protocol) 아키텍처와 표준 통신 구조 정리* (2025). [/llm/mcp/](/llm/mcp/)
 [^3]: ingu627.github.io: *엔터프라이즈 바이브 코딩의 이면: MCP 컨텍스트 폭발 제어와 멀티 에이전트 거버넌스* (2026). [/llm/enterprise-vibe-coding-mcp-context-bloat-governance/](/llm/enterprise-vibe-coding-mcp-context-bloat-governance/)
-[^4]: Model Context Protocol Specification Enhancement Proposal: *SEP-2575 — Remove Initialization Handshake & On-Demand `server/discover`* (2026-05-21 RC / 2026-07-28 Release). [https://spec.modelcontextprotocol.io/specification/2026-07-28/](https://spec.modelcontextprotocol.io/specification/2026-07-28/)
-[^5]: Model Context Protocol Specification Enhancement Proposal: *SEP-2567 — Stateless Core Transport, `MCP-Protocol-Version` / `Mcp-Method` / `Mcp-Name` Headers & Handle Pattern* (2026-07-28). [https://spec.modelcontextprotocol.io/specification/2026-07-28/basic/transports/](https://spec.modelcontextprotocol.io/specification/2026-07-28/basic/transports/)
-[^6]: Model Context Protocol Specification Enhancement Proposals: *SEP-2260 & SEP-2322 — Stateless Multi-Roundtrip Elicitation (`InputRequiredResult` & `requestState`)* (2026). [https://spec.modelcontextprotocol.io/specification/2026-07-28/client/elicitation/](https://spec.modelcontextprotocol.io/specification/2026-07-28/client/elicitation/)
+[^4]: Model Context Protocol Specification: *Specification Versioning and Compatibility (`server/discover` & Protocol Negotiation)* (2026-07-28). [https://modelcontextprotocol.io/specification/2026-07-28/basic/versioning.md](https://modelcontextprotocol.io/specification/2026-07-28/basic/versioning.md)
+[^5]: Model Context Protocol Specification: *Streamable HTTP Transport (`MCP-Protocol-Version`, `Mcp-Method`, `Mcp-Name` Headers & Self-Contained Requests)* (2026-07-28). [https://modelcontextprotocol.io/specification/2026-07-28/basic/transports/streamable-http.md](https://modelcontextprotocol.io/specification/2026-07-28/basic/transports/streamable-http.md)
+[^6]: Model Context Protocol Specification: *Multi Round-Trip Requests (MRTR, SEP-2322) & Elicitation Patterns* (2026-07-28). [https://modelcontextprotocol.io/specification/2026-07-28/basic/patterns/mrtr.md](https://modelcontextprotocol.io/specification/2026-07-28/basic/patterns/mrtr.md)
 [^7]: ingu627.github.io: *MCP 토큰 최적화 가이드: 점진적 발견(Progressive Discovery)부터 출력 압축까지* (2026). [/llm/mcp-token-optimization/](/llm/mcp-token-optimization/)
 [^8]: ingu627.github.io: *Skills와 MCP 역할 분담 아키텍처: 절차 지식과 외부 도구 실행의 분리* (2026). [/llm/skills-and-mcp/](/llm/skills-and-mcp/)
 [^9]: Model Context Protocol Specification Enhancement Proposal: *SEP-2549 — Tool List Caching Metadata (`ttlMs` & `cacheScope`) and Client Best Practices* (2026). [https://modelcontextprotocol.io/docs/develop/clients/client-best-practices](https://modelcontextprotocol.io/docs/develop/clients/client-best-practices)

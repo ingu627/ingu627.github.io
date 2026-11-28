@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 date: 2026-11-03
-last_modified_at: 2026-11-03
+last_modified_at: 2026-11-19
 ---
 
 ## 이 글을 30초에 파악하기
@@ -36,7 +36,8 @@ last_modified_at: 2026-11-03
 
 **이런 분께** — 클러스터에 추론 서비스를 올렸거나 올릴 예정이고, 게이트웨이와 라우터를 무엇으로 고를지 결정해야 하는 개발자. 처음 읽을 때는 2.1절 이동 표와 6.1절 버전 표만 먼저 봐도 전체 지도가 잡힌다.
 
-![GAIE는 리소스와 호출 규약을, llm-d는 라우팅 구현을 맡는 2계층 구조](/assets/images/k8s/gaie-1-6-llm-d-inference-routing.webp)
+![추론 라우팅의 계층 분리와 호출 흐름: 게이트웨이와 InferencePool 규약, EPP 질의 및 파드 전달](/assets/images/k8s/gaie-1-6-llm-d-inference-routing.webp)
+*GAIE의 표준 규약(게이트웨이·InferencePool·ext_proc)과 EPP 구현체(llm-d 라우터·LWEPP)의 분업 및 실제 요청 흐름.*
 
 2026년 상반기까지 추론 게이트웨이를 설명하는 문서는 대개 "게이트웨이가 EPP를 불러 파드를 고른다"는 한 문장으로 끝났습니다. 그런데 같은 문장을 8월 이후 문서에서 읽으면 주어가 달라집니다. EPP를 정의하는 저장소와 EPP를 구현하는 저장소가 서로 달라졌기 때문입니다.
 
@@ -68,7 +69,7 @@ Gateway API에서 `HTTPRoute`의 `backendRef`는 보통 Service를 가리킨다.
 
 릴리스 노트를 열면 추가된 항목보다 삭제된 항목이 먼저 눈에 들어온다. 2026-08-17에 나온 GAIE v1.6.0은 알파 API 세 개를 지우고, EPP 본체를 다른 저장소로 옮겼다[^3].
 
-삭제된 것은 `InferenceObjective`(`inference.networking.x-k8s.io/v1alpha2`), `InferenceModelRewrite`(같은 그룹), `EndpointPickerConfig`(`config.inference.networking.k8s.io/v1alpha1`)다. 함께 빠진 것은 EPP 본체, 본문 기반 라우팅(Body-Based Routing, BBR), 지연 예측기(Latency Predictor)다.
+삭제된 API는 `InferenceObjective`와 `InferenceModelRewrite`(`inference.networking.x-k8s.io/v1alpha2`)다. EPP 설정 리소스인 `EndpointPickerConfig`(`config.inference.networking.k8s.io/v1alpha1`)도 함께 삭제됐다. 아울러 EPP 본체, 본문 기반 라우팅(Body-Based Routing, BBR), 지연 예측기(Latency Predictor)가 GAIE에서 빠졌다.
 
 ### 2.1 무엇이 어디로 갔나
 
@@ -96,7 +97,7 @@ Gateway API에서 `HTTPRoute`의 `backendRef`는 보통 Service를 가리킨다.
 
 구현을 전부 넘기고 나면 적합성 테스트를 돌릴 대상이 없어진다. 그래서 GAIE 저장소에는 **LWEPP(Lightweight EPP)** 라는 참조 구현이 남았다. 이미지 이름은 `registry.k8s.io/gateway-api-inference-extension/lwepp:v1.6.2`이고, 설치는 릴리스 매니페스트 한 줄로 끝난다[^5].
 
-```
+```bash
 kubectl apply -f https://github.com/kubernetes-sigs/gateway-api-inference-extension/releases/download/v1.6.2/manifests.yaml
 ```
 
@@ -126,7 +127,7 @@ kubectl apply -f https://github.com/kubernetes-sigs/gateway-api-inference-extens
 
 v1.6.0 기준 적합성 보고서는 두 개뿐이다. agentgateway와 NGINX Gateway Fabric(v2.6.0)이다[^2]. Alibaba Cloud의 ACK Gateway with Inference Extension 보고서(`v1.6.1-apsara.3`)는 v1.5.0 프로필 기준으로 남아 있다[^2]. 저장소에는 v0.4.0부터 v1.6.0까지의 보고서 디렉터리가 있지만, 최신 분할을 반영한 보고서는 아직 많지 않다.
 
-Cilium은 1.20(2026-07-29)부터 GIE를 베타로 지원한다. Gateway API v1.6.3 CRD가 필요하고, `GatewayWeightedAcrossTwoInferencePools` 시나리오를 건너뛰는 부분 적합성이며, `HTTPRoute` 하나에 `InferencePool` 하나만 붙일 수 있다[^6]. "베타"라는 단어와 "부분 적합성"이라는 문구를 같이 읽어야 하는 이유다.
+Cilium은 1.20(2026-07-29)부터 GIE를 베타로 지원한다. Gateway API v1.6.3 CRD가 필요하며 `GatewayWeightedAcrossTwoInferencePools` 시나리오는 생략하는 부분 적합성이다. 또한 `HTTPRoute` 하나에 `InferencePool` 하나만 붙일 수 있다[^6]. "베타"라는 단어와 "부분 적합성"이라는 문구를 같이 읽어야 하는 이유다.
 
 ---
 
@@ -212,7 +213,7 @@ Gemini 플랫폼의 운영 트래픽(코딩 에이전트와 버스트 채팅)에
 
 ### 6.2 업그레이드에서 먼저 확인할 세 가지
 
-1. **삭제된 그룹 이름** — 매니페스트와 Git 저장소에서 `inference.networking.x-k8s.io`, `config.inference.networking.k8s.io`, `EndpointPickerConfig`를 검색한다. 이 셋이 남아 있으면 v1.6 이후 CRD에는 해당 종류가 없다[^3].
+1. **삭제된 그룹 이름** — 매니페스트와 Git 저장소에서 `inference.networking.x-k8s.io`와 `config.inference.networking.k8s.io`를 검색한다. `EndpointPickerConfig` 종류도 함께 점검한다. 이 셋이 남아 있으면 v1.6 이후 CRD에는 해당 종류가 없다[^3].
 2. **`endpointPickerRef` 유무** — 필드가 비어 있으면 `status`에 `EndpointPickerRefMissing`이 남는다[^5]. 게이트웨이 구현이 이 필드를 요구하면 풀이 resolve되지 않고 요청이 전달되지 않는다.
 3. **실패 모드 기본값** — `failureMode`를 따로 적지 않았다면 `FailClose`다[^5]. EPP를 단일 파드로 띄웠다면 그 파드의 재시작이 곧 요청 실패가 된다. llm-d v1.0의 라우터 HA 기능이 이 지점을 겨냥한다[^7].
 
@@ -220,9 +221,9 @@ Gemini 플랫폼의 운영 트래픽(코딩 에이전트와 버스트 채팅)에
 
 kgateway는 이 경로에서 빠졌다. 에이전트게이트웨이 없이 추론 확장을 운용하는 방식이 2.1에서 폐기 예고, 2.2에서 미지원이 됐다[^14]. Volcano 프로젝트의 Kthena는 다른 방향을 택했다. `kthena-router` GatewayClass가 별도 EPP 없이 `InferencePool`을 직접 서빙한다[^17].
 
-관리형 서비스는 비용 구조가 다르다. GKE Inference Gateway는 2025-09-11에 정식 출시됐고[^18], 추가 비용 없이 GKE와 부하 분산기, 가속기 비용만 낸다. 대신 GKE 1.32.3 이상이 필요하고, `InferencePool` CRD는 1.34.0-gke.1626000부터 번들로 들어가며, 백엔드 서비스당 NEG 50개 제한이 targetPorts 설계에 영향을 준다[^19].
+관리형 서비스는 비용 구조가 다르다. GKE Inference Gateway는 2025-09-11에 정식 출시됐고[^18], 추가 비용 없이 GKE와 부하 분산기, 가속기 비용만 낸다. 대신 GKE 1.32.3 이상이 필요하고 `InferencePool` CRD는 1.34.0-gke.1626000부터 번들로 들어간다. 백엔드 서비스당 NEG 50개 제한도 targetPorts 설계에 영향을 준다[^19].
 
-Azure AGFC의 추론 게이트웨이는 미리보기이고, AKS 애드온이 아니라 Helm으로 설치한 ALB Controller가 필요하며, `InferencePool` 기반 경로에서는 `AuthPolicy`의 JWT 검증이 지원되지 않는다[^20].
+Azure AGFC의 추론 게이트웨이는 미리보기다. AKS 애드온이 아니라 Helm으로 설치한 ALB Controller가 필요하며, `InferencePool` 기반 경로에서는 `AuthPolicy`의 JWT 검증이 지원되지 않는다[^20].
 
 ---
 

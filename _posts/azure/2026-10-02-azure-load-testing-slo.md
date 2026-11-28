@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "부하 테스트로 검증하는 오토스케일링: Azure Load Testing과 p95 SLO"
-excerpt: "2편에서 정한 concurrentRequests 10이라는 값이 실제로 맞는지, Azure Load Testing으로 사설망 내부에 부하를 넣어 검증한다. 스케일 임계값 도달과 maxReplicas 도달이라는 두 변곡점을 p95 지연 곡선으로 읽고, 수용량과 병목을 도출하는 과정을 정리한다."
+excerpt: "2편에서 정한 concurrentRequests 10이라는 값이 실제로 맞는지, Azure Load Testing으로 사설망 내부에 부하를 넣어 검증한다. 스케일 임계값 도달과 maxReplicas 도달이라는 두 변곡점을 읽고, 수용량과 병목을 도출하는 과정을 정리한다."
 categories: [azure]
 tags: [azure, load-testing, autoscaling, slo, performance, k6]
 toc: true
@@ -9,12 +9,12 @@ toc_sticky: true
 sidebar_main: true
 
 date: 2026-10-02
-last_modified_at: 2026-11-07
+last_modified_at: 2026-11-19
 ---
 
 ## 이 글을 30초에 파악하기
 
-> **한 줄로** — 2편에서 감으로 넣었던 "동시 요청 10개면 리플리카 추가"라는 규칙이 맞는지 확인하려고, 사설망 안에 부하를 만들어 지연이 목표를 넘기 시작하는 동시 사용자 수를 실제로 재고, 그 한계가 무엇 때문에 생기는지 찾아낸 기록이다.
+> **한 줄로** — 2편의 "동시 요청 10개 시 증설" 규칙을 검증하고자, 사설망 내부에 부하를 발생시켜 지연이 급증하는 동시 사용자 한계와 병목 원인을 찾아낸 기록이다.
 
 **읽고 나면 알게 되는 것**
 
@@ -30,7 +30,7 @@ last_modified_at: 2026-11-07
 |SLO (서비스 수준 목표)|"이 정도 속도는 지키자"고 정해 둔 목표 수준|p95 3초라는 목표를 세우고 넘는지 판정|
 |SLI (서비스 수준 지표)|그 목표를 재기 위해 실제로 측정하는 값|RAG 질문의 p95 응답 지연(ms)|
 |ILB (내부 로드 밸런서)|인터넷에서는 닿지 않고 사설망 안에서만 접근되는 로드 밸런서|부하 생성기가 요청을 보내는 대상|
-|maxReplicas|리플리카를 최대 몇 개까지 늘릴지 정한 상한|지연 곡선의 두 번째 변곡점이 되는 지점|
+|maxReplicas|리플리카를 최대 몇 개까지 늘릴지 정한 상한|부하 한계와 지연 급등의 두 번째 변곡점|
 |TTFT (첫 토큰까지의 시간)|답변이 시작되기까지 걸린 시간|스트리밍 응답에서 지연을 나눠 볼 때 사용|
 |커넥션 풀|DB 연결을 미리 몇 개 열어 두고 돌려 쓰는 방식|동시성이 이 크기를 넘으면 요청이 대기하는 병목|
 |k6|부하 시나리오를 코드로 작성하는 부하 테스트 도구|동시 사용자를 단계적으로 올리는 스크립트 작성|
@@ -44,7 +44,7 @@ last_modified_at: 2026-11-07
 이번 편은 그 질문에 숫자로 답하는 과정이다. 클라이언트를 하나 더 만들어 부하를 흘려 넣고, 스케일 임계값과 최대 리플리카라는 두 개의 변곡점을 지나며 지연이 어떻게 무너지는지 관측한다. 다루는 범위는 다음과 같다.
 
 - 사설망 내부에 부하 생성기를 주입해 내부 로드 밸런서로 트래픽을 흘린다.
-- p95 SLO를 기준으로 동시성에 따른 지연 곡선을 그린다.
+- p95 SLO를 기준으로 동시성에 따른 시스템 응답과 지연 양상을 관찰한다.
 - 스케일 임계값 도달과 maxReplicas 도달이라는 두 변곡점을 읽는다.
 - 수용 용량을 도출하고, 병목을 파싱·검색·생성 구간으로 분해한다.
 
@@ -110,15 +110,23 @@ last_modified_at: 2026-11-07
 
 위 그림이 이 구성이다. 부하 생성기는 위임 서브넷과 같은 VNet 안에서 내부 로드 밸런서 `10.0.4.53`으로 요청을 보내고, 그 뒤로 `aca-webui`가 실제 트래픽을 처리한다. 즉 부하 테스트 환경과 프로덕션 서비스가 같은 사설망을 공유하되, 부하 생성 트래픽만 별도로 격리하는 셈이다.
 
-이 구성의 핵심은 **클라이언트 측 지표와 서버 측 지표를 동시에 볼 수 있다**는 점이다. 부하 생성기가 잰 응답 지연(클라이언트가 체감한 시간)과, Langfuse·Application Insights에 남는 서버 내부 지연(TTFT, 모델 호출 시간, 검색 시간)을 겹쳐서 보면, 느린 지연이 어디서 발생했는지 구분할 수 있다. 클라이언트 p95만 보면 "느리다"까지만 알 수 있지만, 서버 측 지표를 옆에 놓으면 "느린 이유"까지 좁혀진다.
+이 구성의 핵심은 **클라이언트 측 지표와 서버 측 지표를 함께 비교한다**는 점이다. 부하 생성기가 잰 전체 응답 지연과 TTFB(Time To First Byte)는 사용자가 겪은 외부 지연이다. 반면 Langfuse와 Application Insights에 기록되는 각 스팬 지연(서버 측 TTFT, 검색, 모델 추론)은 내부 실행 시간이다. 두 지표를 같은 타임라인에 겹쳐 보면, 지연 증가가 게이트웨이 큐잉 때문인지 내부 처리 때문인지 구별할 수 있다.
+
+Azure Load Testing은 완전 관리형 서비스로 **Apache JMeter(JMX), Locust(Python), URL 기반 테스트**를 지원한다(`testType: JMX | Locust | URL`).
+시나리오 스크립트로 Locust나 JMeter를 등록할 수 있으며, 개발 환경이나 CI 파이프라인에서 k6 스크립트를 직접 실행해 VNet 내부로 부하를 가할 수도 있다.
+Azure Load Testing CLI로 VNet 주입 테스트를 구성할 때는 JMeter나 Locust 스크립트 파일과 함께 사설 서브넷 ID를 지정한다.
 
 ```bash
-# 부하 생성기를 VNet에 주입하는 테스트 생성 (요지)
-az load test create --name lt-chat-slo -g rg-chat-prod \
-  --test-plan loadtest.js \
-  --load-test-config pk-cae-chat-prod-eus2
+# Azure Load Testing: 사설망 서브넷 주입 부하 테스트 생성 예시 (Locust 기준)
+az load test create \
+  --load-test-resource lt-chat-prod \
+  --test-id lt-chat-slo \
+  --resource-group rg-chat-prod \
+  --test-type Locust \
+  --test-plan locustfile.py \
+  --subnet-id "/subscriptions/<SUB_ID>/resourceGroups/rg-chat-prod/providers/Microsoft.Network/virtualNetworks/vnet-chat-prod/subnets/snet-loadtest" \
+  --engine-instances 1
 ```
-
 ### 2.1 부하 생성기 사양과 격리
 
 부하 생성기 자체도 자원을 쓴다. 부족하면 생성기가 병목이 되어 측정값이 왜곡되는데, 이를 흔히 "측정 도구가 측정 대상보다 먼저 죽는" 상황이라고 부른다. 그래서 부하 생성기 인스턴스는 대상 서비스보다 넉넉하게 잡고, 테스트 중에는 생성기 자신의 CPU·네트워크 사용률도 함께 관찰했다.
@@ -162,15 +170,26 @@ az load test create --name lt-chat-slo -g rg-chat-prod \
 
 ### 3.2 시나리오 스크립트
 
-k6 스크립트는 사용자가 하는 일을 그대로 흉내 낸다. 로그인해 세션을 얻고, 질문을 보내고, 스트리밍 응답이 끝날 때까지 기다린다. 핵심은 응답 전체가 아니라 **첫 토큰까지의 시간과 전체 완료 시간을 분리해서 기록**하는 것이다.
+k6 스크립트는 가상 사용자의 요청 흐름을 코드로 기술한다. 로그인 세션을 얻고, 질문을 전송하며, 응답 헤더와 본문 수신 완료 시각을 기록한다.
+
+여기서 흔히 저지르는 실수가 있다. 동기 `http.post` 호출이 끝난 뒤 반환된 단일 시각 차이(`Date.now() - start`)를 첫 토큰 지연(TTFT)과 전체 지연에 똑같이 대입하는 일이다. 동기 HTTP 호출이 반환하는 시점은 응답 본문 전체를 모두 읽은 뒤이므로, 이렇게 기록하면 첫 토큰 지연을 전혀 측정하지 못한다.
+
+k6의 표준 `http.post` 응답 객체는 네트워크 타이밍(`res.timings`)을 세부 단계별로 제공한다.
+
+- `res.timings.waiting`: 요청 전송 완료 후 첫 번째 응답 바이트를 받기까지 기다린 시간(TTFB, Time To First Byte). HTTP 헤더 수신 시점 기준이다.
+- `res.timings.receiving`: 첫 응답 바이트부터 마지막 응답 바이트까지 본문 데이터를 수신하는 데 걸린 시간.
+- `res.timings.duration`: 전체 HTTP 트랜잭션 소요 시간(`sending + waiting + receiving`).
+
+따라서 클라이언트 관점에서는 `res.timings.waiting`을 첫 응답 헤더 도착 지연(TTFB)으로 수집하고, `res.timings.duration`을 전체 왕복 지연으로 기록해야 한다. 실제 스트리밍 첫 토큰(TTFT)의 내부 처리 시간은 서버 측 Langfuse나 Application Insights 스팬 지표를 통해 크로스 체크한다.
 
 ```javascript
 import http from 'k6/http';
 import { check } from 'k6';
 import { Trend } from 'k6/metrics';
 
-const ttft = new Trend('ttft_ms');        // 첫 토큰까지
-const total = new Trend('total_ms');      // 전체 완료까지
+// 클라이언트 HTTP 응답 대기 지표 (TTFB 및 전체 완료 지연)
+const ttfbTrend = new Trend('ttfb_waiting_ms', true);
+const totalDurationTrend = new Trend('total_duration_ms', true);
 
 export const options = {
   stages: [
@@ -180,24 +199,33 @@ export const options = {
     { duration: '2m', target: 0 },        // ramp-down
   ],
   thresholds: {
-    'http_req_duration{expected:true}': ['p(95)<3000'],  // p95 SLO 3초
+    // p95 응답 지연 SLO 3초 판정
+    'http_req_duration{expected:true}': ['p(95)<3000'],
+    'ttfb_waiting_ms': ['p(95)<1500'],
   },
 };
 
 export default function () {
-  const start = Date.now();
-  const res = http.post('https://chat.example.com/api/chat',
-    JSON.stringify({ question: 'RAG 대표 질문 1건' }),
-    { headers: { 'Content-Type': 'application/json' } });
+  const payload = JSON.stringify({ question: 'RAG 대표 질문 1건' });
+  const params = {
+    headers: { 'Content-Type': 'application/json' },
+    tags: { name: 'rag_query' },
+  };
 
-  ttft.add(Date.now() - start);
-  total.add(Date.now() - start);
-  check(res, { 'status 200': (r) => r.status === 200 });
+  const res = http.post('https://chat.example.com/api/chat', payload, params);
+
+  // k6 내장 타이밍: waiting은 서버 첫 응답 바이트까지의 대기 시간(TTFB), duration은 전체 소요 시간
+  ttfbTrend.add(res.timings.waiting);
+  totalDurationTrend.add(res.timings.duration);
+
+  check(res, {
+    'status 200': (r) => r.status === 200,
+    'ttfb under 1500ms': () => res.timings.waiting < 1500,
+  });
 }
 ```
 
 `thresholds`에 p95 기준을 걸어 두면, SLO를 넘는 순간 k6가 실패로 표시한다. 이렇게 하면 테스트 결과를 눈으로 해석하기 전에 "합격/불합격"이 기계적으로 드러난다.
-
 ### 3.3 테스트 데이터를 고정한다
 
 같은 질문을 반복해서 던지면 캐시가 답을 대신해 실제 부하를 숨긴다. 그래서 준비한 질문 풀에서 무작위로 하나를 고르되, 질문 유형(문서 검색형·웹 검색형·순수 생성형)은 고정 비율로 섞었다.
@@ -208,40 +236,35 @@ export default function () {
 
 ## 4. 결과 해석: 수용량 도출
 
-부하 테스트의 결과는 "TPS 몇"이라는 한 숫자로 요약되지 않는다. 대신 동시성에 따른 지연 곡선을 그리고, 그 안의 **변곡점**을 읽는다.
+부하 테스트의 결과는 "TPS 몇"이라는 단일 숫자로 단순화할 수 없다. 대신 동시성에 따른 시스템 반응과 지연 양상을 관찰하고, 그 안에서 나타나는 **두 단계 변곡점**을 구조적으로 읽어야 한다.
 
-아래 곡선은 동시성이 올라갈 때 p95가 어디서 꺾이는지를 보여준다.
+아래 도식은 부하가 점진적으로 유입될 때 오토스케일링 제어 루프와 지연시간 변곡점이 어떻게 맞물리는지 구조적 단계를 보여준다.
 
 ![부하 유입에 따른 오토스케일링 및 p95 SLO 지연시간 변곡점 검증 아키텍처 다이어그램](/assets/images/azure/azure-scaling-slo-validation-cognition.webp)
 
-위 곡선에서 읽어야 할 지점은 두 곳이다. 첫째는 **스케일 임계값 도달 지점**이다. 동시 요청이 인스턴스당 10을 넘기 시작하면 http-scaler가 리플리카를 추가하고, 지연 곡선은 일시적으로 평탄해진다.
+위 도식과 부하 테스트에서 반드시 확인해야 할 지점은 두 곳이다.
 
-리플리카가 부하를 나눠 받기 때문이다. 곡선이 계단처럼 눌린 부분이 바로 스케일이 작동한 흔적이다.
+첫째는 **스케일 임계값 도달 지점**이다. 동시 요청이 인스턴스당 10을 넘기 시작하면 http-scaler가 리플리카를 추가하고, 새로 증설된 리플리카가 트래픽을 나눠 받으면서 지연시간은 일시적으로 안정화된다. 지연시간 상승이 계단식으로 억제되는 구간이 바로 오토스케일링이 정상 작동한 구간이다.
 
-둘째는 **maxReplicas 도달 지점**이다. 리플리카가 상한인 20개에 닿는 순간, 더 이상 늘릴 여지가 없다.
+둘째는 **maxReplicas 도달 지점**이다. 리플리카가 사전에 설정한 상한선인 20개에 닿으면 인프라 증설 여력이 사라진다. 이 지점을 지나면 추가로 유입되는 모든 요청이 기존 인스턴스 앞단의 큐에 누적되며 지연시간이 급격히 치솟고, 결국 p95 3초 SLO 임계치를 초과하게 된다.
 
-이 지점을 지나면 모든 추가 부하가 기존 인스턴스의 큐에 쌓이면서 지연이 가파르게 상승한다. 곡선의 기울기가 확 꺾이는 곳이 여기다.
+두 변곡점 사이가 곧 시스템의 실질 수용 용량이다.
 
-두 지점 사이가 곧 수용 용량이다.
-
-이 두 변곡점 사이가 완만한 구간이고, 이 구간의 최대 동시 사용자가 실질 수용 용량이 된다. 예를 들어 스케일 임계값 도달이 동시 10 부근, maxReplicas 도달이 동시 60 부근이라면, p95가 SLO 안에 머무는 안전 구간은 그보다 여유를 둔 값이 된다. 그래서 2편의 `concurrentRequests: 10`은 "동시 10명까지만 받는다"는 뜻이 아니라, "인스턴스 하나가 동시 10을 넘는 순간 다음 인스턴스를 띄운다"는 트리거라는 점이 분명해진다.
-
+첫 번째 변곡점(스케일 시작)과 두 번째 변곡점(상한선 도달) 사이의 완만하고 안정적인 구간에서 최대 동시 사용자 수를 찾아내는 것이 부하 검증의 목적이다. 예를 들어 스케일 임계값 도달이 동시성 10 부근이고 maxReplicas 도달이 동시성 60 부근이라면, p95가 SLO 안에 머무는 안전 구간은 그보다 여유를 둔 값이 된다. 따라서 2편의 `concurrentRequests: 10`은 "동시 10명까지만 수용한다"는 뜻이 아니라, "인스턴스당 부하가 10을 넘는 순간 다음 인스턴스를 기동한다"는 오토스케일링 트리거 기준임을 알 수 있다.
 결과를 볼 때 세 가지를 함께 확인한다.
 
 - **p95와 함께 p99를 본다**: p99가 p95보다 훨씬 나쁘면 소수의 매우 느린 요청(재시도, 콜드 스타트)이 섞여 있다는 신호다.
 - **오류율을 지연과 분리하지 않는다**: 지연이 튀는 지점에서 5xx가 함께 오르면 그건 큐가 아니라 자원 고갈(커넥션 풀, 메모리)이다.
-- **스케일 지연을 반영한다**: 리플리카가 뜨는 데 걸리는 시간을 곡선에서 빼놓고 보면 수용량을 과대평가한다.
-
+- **스케일 지연을 반영한다**: 리플리카가 뜨는 데 걸리는 시간을 계산에서 빼놓고 보면 수용량을 과대평가한다.
 ### 4.1 단계별 결과를 표로 읽기
 
-곡선을 표로 눌러 보면 변곡점이 어디서 생기는지 더 분명해진다. 아래는 ramp-up 단계에서 동시성에 따라 관찰되는 양상의 일례다.
-
+변곡점이 동시성 단계에 따라 어떻게 나타나는지 정리하면 다음과 같다. 아래는 ramp-up 단계에서 동시성에 따라 관찰되는 양상의 일례다.
 | 동시 사용자 | p50 | p95 | 리플리카 | 해석 |
 | :--- | :--- | :--- | :--- | :--- |
 | 5 | 낮음 | 기준선 | 1 | 스케일 미작동 구간 |
 | 10 | 유지 | 완만한 증가 | 1 → 2 | 스케일 임계값 도달 |
 | 20 | 유지 | 완만 | 2 → 3 | 부하 분산으로 지연 회복 |
-| 40 | 소폭 증가 | 계단 상승 | 4 → 6 | 지연 곡선 완만 구간 |
+| 40 | 소폭 증가 | 계단 상승 | 4 → 6 | 지연 완만 구간 |
 | 60 | 증가 | 가파른 상승 | 20(상한) | maxReplicas 도달 |
 | 80 | 급증 | SLO 이탈 | 20(상한) | 수용 용량 초과 |
 
@@ -339,6 +362,7 @@ RAG 질문 한 건은 뒤에서 여러 번의 DB 조회와 HTTP 호출로 쪼개
 
 - [Azure Load Testing 개요 — Microsoft Learn](https://learn.microsoft.com/ko-kr/azure/load-testing/overview-what-is-azure-load-testing)
 - [가상 네트워크에 부하 테스트 주입 — Microsoft Learn](https://learn.microsoft.com/ko-kr/azure/load-testing/concept-azure-load-testing-vnet-injection)
-- [부하 테스트 계획(Apache JMeter / k6) 구성 — Microsoft Learn](https://learn.microsoft.com/ko-kr/azure/load-testing/concept-load-test-configuration)
+- [부하 테스트 계획(Apache JMeter / Locust) 구성 — Microsoft Learn](https://learn.microsoft.com/ko-kr/azure/load-testing/concept-load-test-configuration)
+- [Grafana k6 HTTP 지표 및 타이밍 공식 문서](https://grafana.com/docs/k6/latest/using-k6/metrics/reference/)
 - [Azure Container Apps의 스케일링 규칙 — Microsoft Learn](https://learn.microsoft.com/ko-kr/azure/container-apps/scale-app)
 - [SLO·SLI 설계 지침 — Google SRE Workbook](https://sre.google/workbook/implementing-slos/)

@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 date: 2026-11-05
-last_modified_at: 2026-11-05
+last_modified_at: 2026-11-19
 ---
 
 ## 이 글을 30초에 파악하기
@@ -78,7 +78,7 @@ API를 쓰는 쪽에서 체감하는 변화는 대개 버전 번호가 아니라
 
 가장 아래는 **Responses API**다. `POST /v1/responses` 하나로 텍스트 생성, 도구 호출, 상태 이어가기가 모두 처리된다[^4]. 그 위의 **Agents API**는 이 표면을 감싸 명령 실행과 세션 재개를 대신하는 관리형 실행 계층이다[^5]. 옆으로 갈라지는 **Decisions API**는 생성이 아니라 판정만 하는 좁은 창구로, 문항 목록에 확률과 선택지만 돌려준다[^6]. 여기에 전이중 음성용 실시간 세션이 별도 축으로 붙는다.
 
-이 구조는 직접 에이전트를 만들 때와 비교하면 역할 분담이 분명해진다. 관리형 실행 계층을 쓰지 않고 하네스를 직접 구현한다면, 도구 노출 방식과 세션 경계를 어디에 둘지가 여전히 설계 문제로 남는다. 그때의 패턴은 [MCP 에이전트 아키텍처 패턴](/agent/mcp-agent-architecture-patterns/)[^7]에서 정리한 내용이 그대로 참고가 된다.
+이 구조는 직접 에이전트를 만들 때와 비교하면 역할 분담이 분명해진다. 관리형 실행 계층을 쓰지 않고 하네스를 직접 구현한다면, 도구 노출 방식과 세션 경계를 어디에 둘지가 여전히 설계 문제로 남는다. 그때의 패턴은 [MCP 에이전트 아키텍처 패턴](/llm/mcp-agent-architecture-patterns/)[^7]에서 정리한 내용이 그대로 참고가 된다.
 
 ### 1.3 같은 계열 안에서 단가가 100배 벌어졌다
 
@@ -149,7 +149,7 @@ GPT-6 계열은 컨텍스트 길이와 입출력 한도가 동일하다. 컨텍�
 |gpt-5.6-sol|`$4`|`$20`|`$0.40`|8월 인하 가격, 프로모션 기간 별도|
 |gpt-6-cyber|`$20`|`$100`|`$2.00`|보안 평가, 접근 등급 제한|
 
-작업당 비용을 직접 비교한 수치도 있다. 6.1 Sol은 DeepSWE v1.1에서 Astra와 같은 수준을 약 5분의 1 비용으로 낸다고 발표됐고, Terminal-Bench Science 0.1에서는 작업당 `$5.47`로 Astra의 `$23.80`, 경쟁 모델의 `$23.21`보다 낮았다[^15]. 같은 발표에서 Astra의 정확도는 68.1%로 가장 높게 기록됐다[^15]. 정확도 1위와 가성비 1위가 서로 다른 칸에 있다는 뜻이다.
+작업당 비용을 직접 비교한 수치도 있다. 6.1 Sol은 DeepSWE v1.1에서 Astra와 같은 수준을 약 5분의 1 비용으로 낸다고 발표됐다. Terminal-Bench Science 0.1에서는 작업당 `$5.47`로 Astra의 `$23.80`, 경쟁 모델의 `$23.21`보다 낮았다[^15]. 같은 발표에서 Astra의 정확도는 68.1%로 가장 높게 기록됐다[^15]. 정확도 1위와 가성비 1위가 서로 다른 칸에 있다는 뜻이다.
 
 Astra의 벤치마크도 조건과 함께 봐야 한다. OSWorld 2.0 오프라인 기준 72.6%로 GPT-5.6 Sol의 65.7%보다 높고, 작업당 소요 시간은 약 75분에서 약 40분으로 줄었다. Terminal-Bench 4.0은 57.9% 대 37.3%, 512K~1M 구간의 MRCR v2는 96.3% 대 73.8%다[^14]. 긴 문맥에서 성능이 유지되는 폭이 가장 크게 벌어진 항목이다.
 
@@ -246,7 +246,7 @@ Decisions API는 10월 6일 베타, 10월 22일 정식 출시됐다. 문항 유�
 
 둘째, 비용을 네 축으로 계산하는 습관이다. 모델 단가, 서비스 티어, 컨텍스트 구간, 캐시 TTL을 곱해서 보지 않으면 견적이 어긋난다. 특히 272K 임계값과 캐시 TTL은 코드 한 줄로 바뀌는 값이므로 배포 전에 자동 점검 대상으로 두는 편이 낫다.
 
-셋째, 위임 경계다. 무엇을 Agents API에 맡기고 무엇을 직접 남길지 정해야 한다. 샌드박스 실행과 세션 재개는 맡기는 쪽이 유리하고, 사내 시스템 접근 권한과 감사 로그는 직접 통제하는 편이 낫다. 이 경계는 [MCP 에이전트 아키텍처 패턴](/agent/mcp-agent-architecture-patterns/)[^7]에서 다룬 도구 노출 범위와 같은 문제다.
+셋째, 위임 경계다. 무엇을 Agents API에 맡기고 무엇을 직접 남길지 정해야 한다. 샌드박스 실행과 세션 재개는 맡기는 쪽이 유리하고, 사내 시스템 접근 권한과 감사 로그는 직접 통제하는 편이 낫다. 이 경계는 [MCP 에이전트 아키텍처 패턴](/llm/mcp-agent-architecture-patterns/)[^7]에서 다룬 도구 노출 범위와 같은 문제다.
 
 ### 6.3 그대로 두어도 되는 것
 
@@ -258,7 +258,8 @@ Chat Completions는 종료일이 없으므로, 단발 텍스트 생성 코드는
 
 ## 한계와 트레이드오프
 
-이 글의 정리는 2026년 11월 7일 공개 자료 기준이며, 발표 글끼리 어긋나는 항목이 남아 있다. Astra 발표 글은 Terminal-Bench Science 0.1을 64.6%로 적었는데 6.1 Sol 발표 글은 같은 항목을 68.1%로 인용하고, FrontierMath Tier 4도 표에는 97.6%, 본문에는 98%로 나온다. 평가 설정 차이로 보이지만 어느 쪽이 기준인지는 공개되지 않았다[^14][^15].
+이 글의 정리는 2026년 11월 7일 공개 자료 기준이며, 발표 글끼리 어긋나는 항목이 남아 있다.
+Astra 발표 글은 Terminal-Bench Science 0.1을 64.6%로 적었으나 6.1 Sol 발표 글은 68.1%로 인용했다. FrontierMath Tier 4도 표에는 97.6%, 본문에는 98%로 나온다. 평가 설정 차이로 보이지만 어느 쪽이 기준인지는 공개되지 않았다[^14][^15].
 
 ARC-AGI-3의 99.9%는 두 설정을 조합한 Responses 하네스에서 나온 값이라, 순수 모델 성능으로 단독 인용하면 과대 해석이 된다[^14]. 마찬가지로 4장의 배수는 표준 티어·짧은 컨텍스트 기준이므로, 장기 컨텍스트와 Ultrafast를 함께 쓰면 같은 작업의 단가가 열 배 이상 벌어질 수 있다.
 
@@ -280,7 +281,7 @@ ARC-AGI-3의 99.9%는 두 설정을 조합한 Responses 하네스에서 나온 �
 [^4]: OpenAI API Guide: *Migrate to Responses* — 아이템 타입, `previous_response_id`, 내장 도구 목록, SWE-bench +3%, 캐시 활용 40~80% 개선, Chat Completions 유지 및 종료일 없음. https://developers.openai.com/api/docs/guides/migrate-to-responses
 [^5]: OpenAI API Guide: *Agents API overview* — agent·environment·session·events, 관리형 하네스의 명령 실행·압축·서브에이전트·재개, 호스팅/자체 호스팅 환경. https://developers.openai.com/api/docs/guides/agents-api/overview
 [^6]: OpenAI API Guide: *Decisions* — predicate·choice·score, 요청당 문항 400개, gpt-6-luna 전용, 출력 요금 없음, ZDR·HIPAA 대상. https://developers.openai.com/api/docs/guides/decisions
-[^7]: ingu627.github.io: *MCP 에이전트 아키텍처 패턴* (2026). https://ingu627.github.io/agent/mcp-agent-architecture-patterns/
+[^7]: ingu627.github.io: *MCP 에이전트 아키텍처 패턴* (2026). https://ingu627.github.io/llm/mcp-agent-architecture-patterns/
 [^8]: OpenAI API Pricing: *모델별 1M 토큰 단가* — Astra `$10`/`$50`, 6.1 Sol `$2`/`$10`, 6.1 Terra `$1`/`$5`, 6 Luna `$0.10`/`$0.50`, Cyber `$20`/`$100`, Rosalind `$15`/`$75`, 티어 배수(Batch·Flex 0.5x, Fast 2x, Ultrafast 6x), 272K 초과 할증. https://developers.openai.com/api/docs/pricing
 [^9]: OpenAI Model Page: *gpt-6-astra* — 컨텍스트 1,050,000, 최대 입력 922,000, 최대 출력 128,000, 지식 기준일 2026-04-30, 도구 호출에 Responses 필요, 분당 요청·토큰 한도. https://developers.openai.com/api/docs/models/gpt-6-astra
 [^10]: OpenAI Model Page: *gpt-6.1-sol* — 지식 기준일 2026-04-30, 캐시 읽기 5% 요율, Ultrafast 지원, `none` 추론 없음. https://developers.openai.com/api/docs/models/gpt-6.1-sol

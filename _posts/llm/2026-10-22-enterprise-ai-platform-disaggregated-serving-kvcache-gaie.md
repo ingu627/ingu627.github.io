@@ -119,7 +119,7 @@ PD 분리 클러스터를 구축하더라도 앞단의 인그레스 프록시가
 
 기존 Envoy나 NGINX 인그레스는 라운드로빈(Round-Robin)이나 최소 연결(Least-Connections) 알고리즘을 쓴다. 두 방식 모두 **HTTP 요청 1건의 무게를 동일하게 취급**한다. 그러나 LLM 서빙에서 200 토큰짜리 단문 요청 1건과 20,000 토큰짜리 장문 요약 요청 1건은 연산량과 HBM 점유량에서 100배 이상 차이가 난다.
 
-더 큰 문제는 **캐시 비인식(Cache-Oblivious) 라우팅**이다. [Kubernetes 환경에서 vLLM과 SGLang의 접두사 캐싱(Prefix Caching) 비교](/llm/k8s/k8s-low-latency-llm-serving-vllm-sglang/)[^8]에서 분석했듯, 다중 턴 대화나 동일한 시스템 프롬프트를 공유하는 RAG 요청이 있다. 이 요청이 이전에 처리된 워커 파드로 다시 라우팅되면 KVCache 히트를 통해 TTFT를 60~80% 줄일 수 있다.
+더 큰 문제는 **캐시 비인식(Cache-Oblivious) 라우팅**이다. [Kubernetes 환경에서 vLLM과 SGLang의 접두사 캐싱(Prefix Caching) 비교](/llm/k8s-low-latency-llm-serving-vllm-sglang/)[^8]에서 분석했듯, 다중 턴 대화나 동일한 시스템 프롬프트를 공유하는 RAG 요청이 있다. 이 요청이 이전에 처리된 워커 파드로 다시 라우팅되면 KVCache 히트를 통해 TTFT를 60~80% 줄일 수 있다.
 
 반면 단순 라운드로빈 라우터는 요청을 매번 다른 파드로 흩뿌린다. 그러면 클러스터 전체에서 동일한 프리필 연산이 중복 수행된다. HBM 공간도 중복 KV 블록으로 채워진다.
 
@@ -510,6 +510,8 @@ data:
 
 ---
 
+*PD 분리와 KVCache 전송, GAIE 라우팅 구현에 집중한다. 제로트러스트 경계와 병렬화 선택의 큰 그림은 [엔터프라이즈 AI 플랫폼 분산 서빙](/llm/enterprise-ai-platform-distributed-serving-architecture/)에서 먼저 정리했다.*
+
 ## References
 
 [^1]: ingu627.github.io: *엔터프라이즈 AI 플랫폼 설계 (1): 프라이빗 인프라 격리와 초거대 분산 서빙 토폴로지* (2026). [/llm/enterprise-ai-platform-distributed-serving-architecture/](/llm/enterprise-ai-platform-distributed-serving-architecture/)
@@ -519,7 +521,7 @@ data:
 [^5]: ingu627.github.io: *Multi-Head Latent Attention(MLA)과 DeepSeek-V3/R1 추론 최적화: SGLang 서빙 아키텍처 해부* (2026). [/llm/multi-head-latent-attention-mla-deepseek-sglang/](/llm/multi-head-latent-attention-mla-deepseek-sglang/)
 [^6]: ingu627.github.io: *EKS 인그레스에서 Gateway API로의 마이그레이션: Cilium CNI 통합 실전* (2026). [/k8s/gateway-api-migration-cilium/](/k8s/gateway-api-migration-cilium/)
 [^7]: Kubernetes Blog: *Introducing Gateway API Inference Extension* (2025). [https://kubernetes.io/blog/2025/06/05/introducing-gateway-api-inference-extension/](https://kubernetes.io/blog/2025/06/05/introducing-gateway-api-inference-extension/)
-[^8]: ingu627.github.io: *Kubernetes 환경에서 초저지연 LLM 서빙: vLLM vs SGLang 접두사 캐싱 아키텍처와 처리량 심층 비교* (2026). [/llm/k8s/k8s-low-latency-llm-serving-vllm-sglang/](/llm/k8s/k8s-low-latency-llm-serving-vllm-sglang/)
+[^8]: ingu627.github.io: *Kubernetes 환경에서 초저지연 LLM 서빙: vLLM vs SGLang 접두사 캐싱 아키텍처와 처리량 심층 비교* (2026). [/llm/k8s-low-latency-llm-serving-vllm-sglang/](/llm/k8s-low-latency-llm-serving-vllm-sglang/)
 [^9]: TypeSafe AI Official Documentation: *System One API & Jev Question Design Guide* (2026). [https://docs.typesafe.ai](https://docs.typesafe.ai)
 [^10]: NVIDIA Developer & GitHub: *NVIDIA Dynamo: A Datacenter Scale Distributed Inference Serving Framework (v1.0 GA)* (2026). [https://github.com/ai-dynamo/dynamo](https://github.com/ai-dynamo/dynamo)
 [^11]: CNCF Sandbox Project: *llm-d: Kubernetes-native Distributed LLM Inference Serving (v0.5)* (2026). [https://github.com/llm-d/llm-d](https://github.com/llm-d/llm-d)

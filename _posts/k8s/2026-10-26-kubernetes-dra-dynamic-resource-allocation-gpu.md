@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 sidebar_main: true
 date: 2026-10-26
-last_modified_at: 2026-11-07
+last_modified_at: 2026-11-19
 use_math: true
 ---
 
@@ -132,7 +132,9 @@ $$C_{\text{pool}} = \prod_{p=1}^{P} |A_p|$$
 
 [쿠버네티스 스토리지와 데이터 운영 가이드](/k8s/kubernetes-storage-data/)[^3]에서 살펴본 **컨테이너 스토리지 인터페이스(Container Storage Interface, CSI)**를 먼저 떠올려 보자. CSI는 과거 파드 스펙에 스토리지 볼륨 경로를 하드코딩하던 방식을 바꿨다. `StorageClass`, `PersistentVolumeClaim(PVC)`, `PersistentVolume(PV)`의 3계층 선언적 모델로 분리했다. DRA는 바로 이 스토리지 동적 프로비저닝의 설계 철학을 GPU·NIC·FPGA 등 하드웨어 디바이스 영역으로 그대로 이식한 아키텍처다[^6]. 부동산 임대에 비유하면 규격표와 빈 호실 목록, 입주 신청서를 따로 관리하는 방식과 같다. 세입자는 건물주에게 전화하지 않고 규격표(`DeviceClass`)와 지금 비어 있는 목록(`ResourceSlice`)만 보고 입주 신청서(`ResourceClaim`)를 낸다.
 
-![쿠버네티스 DRA(Dynamic Resource Allocation) 컨트롤 플레인과 노드 CDI 하드웨어 인벤토리 아키텍처](/assets/images/k8s/kubernetes-dra-gpu-scheduling-cognition.webp)
+![쿠버네티스 DRA 컨트롤 플레인 흐름과 CDI 런타임 주입 및 가속기 격리 경계](/assets/images/k8s/kubernetes-dra-gpu-scheduling-cognition.webp)
+
+위 도식에서 보듯 DRA는 `DeviceClass` 규격과 `ResourceSlice` 가용 장부, `ResourceClaim` 신청서를 매개로 스케줄링 가시성을 확보하고 CDI를 통해 장치 노드를 주입한다. 다만 주의할 점이 있다. DRA 자체는 '요청한 용량의 합산이 가용 용량을 초과하지 않도록 검증'하는 스케줄링 및 런타임 파라미터 전달 규약일 뿐이다. 실제 VRAM 메모리 주소 공간 격리와 CUDA 커널 장애 격리는 DRA가 아니라 기반 하드웨어(MIG 분할)와 드라이버 모드에 의해 결정된다[^10].
 
 아래 공식 CSI 아키텍처 도식과 비교해 보자. 컨트롤 플레인의 상태 조정 루프와 노드 데몬의 런타임 마운트 분리 구조가 DRA로 어떻게 계승되었는지 확인할 수 있다[^3][^6].
 
@@ -212,9 +214,11 @@ $$\sum_{c \in \mathcal{C}(d)} r_{c,k} \le C_{d,k} \quad (\forall k), \qquad \tex
 
 여기서 두 번째 수식이 **`distinctAttribute`** 제약조건을 나타낸다. 하나의 파드가 고가용성 또는 대역폭 분산을 위해 $8\text{ GiB}$ VRAM 슬라이스 2개를 요청하는 경우를 보자. 두 슬라이스는 동일한 물리 GPU 한 장에서 중복 할당되지 않는다.
 
-반드시 서로 다른 물리 GPU나 서로 다른 가상 **네트워크 인터페이스 카드(Network Interface Card, NIC)**에서 할당되도록 강제할 수 있다. 물리 GPU 쪽 조건은 $\text{UUID}(d_1) \neq \text{UUID}(d_2)$로 표현된다[^9]. 이 덕분에 서로 다른 네임스페이스의 파드들이 단일 물리 GPU의 8GiB 슬라이스를 안전하게 나눠 쓴다.
+반드시 서로 다른 물리 GPU나 서로 다른 가상 **네트워크 인터페이스 카드(Network Interface Card, NIC)**에서 할당되도록 강제할 수 있다. 물리 GPU 쪽 조건은 $\text{UUID}(d_1) \neq \text{UUID}(d_2)$로 표현된다[^9].
 
-동시에 단일 워크로드 내의 다중 요청이 동일 물리 장치에 쏠리는 현상은 막는다.
+단, `Consumable Capacity`로 단일 물리 GPU의 VRAM 슬라이스를 복수 클레임이 나누어 쓸 때, DRA 스케줄러는 메모리 합산 한도 초과 여부만 수학적으로 통제한다. 실제 테넌트 간 VRAM 주소 공간 침범 방지와 연산 격리는 드라이버의 시분할(Time-Slicing)이나 MPS 메모리 제한 기능에 의존한다. 하드웨어 수준의 격리는 A100/H100의 MIG 모드에서 제공된다[^10].
+
+동시에 단일 워크로드 내의 다중 요청이 동일 물리 장치에 쏠리는 현상은 `distinctAttribute`로 차단한다.
 
 ### 3.3 Prioritized List(firstAvailable) 기반 폴백 스케줄링
 
